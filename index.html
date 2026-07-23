@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>KYGMIN — Finance × Code</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#F6F6F4;
+  --ink:#141414;
+  --gray:#DDDDD8;
+  --green:#2BB673;
+  --green-deep:#0F6E56;
+  --arch:'Archivo','Pretendard',sans-serif;
+  --sans:'Pretendard',-apple-system,'Apple SD Gothic Neo','Malgun Gothic','Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono','SF Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{transition:none!important;}
+}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:16px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none;}
+a:focus-visible{outline:3px solid var(--green);outline-offset:3px;}
+.wrap{max-width:960px;margin:0 auto;padding:0 24px;}
+
+/* ── Nav ── */
+nav{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:3px solid var(--ink);}
+.nav-inner{
+  max-width:960px;margin:0 auto;padding:14px 24px;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;
+}
+.logo{font-family:var(--arch);font-weight:900;font-size:19px;letter-spacing:-0.5px;}
+.logo em{font-style:normal;background:var(--green);color:var(--paper);padding:0 6px;display:inline-block;transform:rotate(-1.5deg);}
+.nav-links{display:flex;gap:8px;flex-wrap:wrap;}
+.nav-links a{
+  font-family:var(--arch);font-size:12px;font-weight:700;text-transform:uppercase;
+  border:2px solid var(--ink);padding:6px 13px;background:#fff;
+  box-shadow:3px 3px 0 var(--ink);transition:transform .1s, box-shadow .1s;
+}
+.nav-links a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+.nav-links a.on{background:var(--green);color:var(--paper);}
+
+/* ── Hero ── */
+header{padding:80px 0 64px;border-bottom:3px solid var(--ink);}
+.tick{font-family:var(--mono);font-size:12.5px;color:var(--green-deep);letter-spacing:1px;margin-bottom:18px;}
+h1{
+  font-family:var(--arch);font-weight:900;text-transform:uppercase;
+  font-size:clamp(38px, 7vw, 64px);line-height:1.02;letter-spacing:-2px;
+}
+h1 .box{background:var(--ink);color:var(--paper);padding:0 12px;display:inline-block;transform:rotate(-1deg);}
+h1 .grn{color:var(--green-deep);}
+.hero-sub{margin-top:22px;font-size:16.5px;max-width:520px;font-weight:500;}
+.hero-actions{margin-top:34px;display:flex;gap:14px;flex-wrap:wrap;}
+.btn{
+  display:inline-block;font-family:var(--arch);font-size:14px;font-weight:700;text-transform:uppercase;
+  border:3px solid var(--ink);padding:12px 24px;box-shadow:5px 5px 0 var(--ink);
+  transition:transform .1s, box-shadow .1s;background:#fff;
+}
+.btn:hover{transform:translate(2px,2px);box-shadow:3px 3px 0 var(--ink);}
+.btn-green{background:var(--green);color:var(--paper);}
+.hero-strip{
+  margin-top:56px;display:flex;gap:0;border:3px solid var(--ink);
+  box-shadow:5px 5px 0 var(--ink);background:#fff;flex-wrap:wrap;
+}
+.strip-cell{flex:1;min-width:150px;padding:16px 18px;border-right:3px solid var(--ink);}
+.strip-cell:last-child{border-right:none;}
+.strip-cell .k{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--green-deep);}
+.strip-cell .v{font-family:var(--arch);font-weight:700;font-size:14.5px;margin-top:3px;}
+
+/* ── Sections ── */
+section{padding:72px 0;border-bottom:3px solid var(--ink);}
+.sec-tag{
+  display:inline-block;font-family:var(--mono);font-size:11.5px;letter-spacing:2px;text-transform:uppercase;
+  background:var(--ink);color:var(--paper);padding:4px 12px;margin-bottom:14px;
+}
+h2{font-family:var(--arch);font-weight:900;font-size:32px;text-transform:uppercase;letter-spacing:-1px;margin-bottom:36px;}
+h2 .u{box-shadow:inset 0 -12px 0 var(--green);}
+
+/* ── Career ledger ── */
+.ledger{border:3px solid var(--ink);background:#fff;box-shadow:6px 6px 0 var(--ink);}
+.ledger-row{
+  display:grid;grid-template-columns:160px 1fr;gap:20px;
+  padding:24px;border-bottom:3px solid var(--ink);
+}
+.ledger-row:last-child{border-bottom:none;}
+.ledger-date{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--green-deep);padding-top:2px;}
+.ledger-body h3{font-family:var(--arch);font-size:17px;font-weight:700;}
+.ledger-body .org{font-family:var(--mono);font-size:12.5px;color:var(--green-deep);margin-top:2px;}
+.ledger-body p{font-size:14px;margin-top:8px;max-width:560px;color:#3A3A38;}
+.tags{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;}
+.tag{
+  font-family:var(--mono);font-size:11px;font-weight:600;
+  border:2px solid var(--ink);padding:2px 9px;background:var(--gray);
+}
+.tag.g{background:var(--green);color:var(--paper);border-color:var(--ink);}
+
+/* ── Projects ── */
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;}
+.proj{
+  border:3px solid var(--ink);background:#fff;padding:20px 22px;
+  box-shadow:5px 5px 0 var(--ink);display:flex;flex-direction:column;gap:10px;
+  transition:transform .1s, box-shadow .1s;
+}
+.proj:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--ink);}
+.proj-head{display:flex;justify-content:space-between;align-items:center;gap:10px;}
+.proj-name{font-family:var(--mono);font-size:14px;font-weight:600;}
+.badge{
+  font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:1px;
+  border:2px solid var(--ink);padding:2px 8px;
+}
+.badge.live{background:var(--green);color:var(--paper);}
+.badge.wip{background:var(--gray);}
+.proj p{font-size:13.5px;color:#3A3A38;line-height:1.65;}
+.proj .stack{
+  margin-top:auto;padding-top:10px;border-top:2px solid var(--gray);
+  font-family:var(--mono);font-size:11px;color:#6B6B67;
+}
+
+/* ── Footer ── */
+footer{padding:64px 0 80px;}
+.foot{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:flex-start;}
+.foot h2{margin-bottom:10px;}
+.foot p{max-width:380px;font-size:14.5px;color:#3A3A38;}
+.foot-links{display:flex;flex-direction:column;gap:10px;}
+.foot-links a{
+  font-family:var(--mono);font-size:13px;font-weight:600;
+  border-bottom:3px solid var(--green);padding-bottom:1px;width:fit-content;
+  transition:background .1s;
+}
+.foot-links a:hover{background:var(--green);color:var(--paper);}
+.copyright{margin-top:56px;font-family:var(--mono);font-size:11.5px;color:#6B6B67;}
+
+@media(max-width:640px){
+  .ledger-row{grid-template-columns:1fr;gap:6px;}
+  header{padding:56px 0 48px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <span class="logo">KYG<em>MIN</em></span>
+    <div class="nav-links">
+      <a href="#home" class="on">Home</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+      <a href="cv.html" style="background:var(--ink);color:var(--paper);">CV &#128274;</a>
+    </div>
+  </div>
+</nav>
+
+<header id="home" class="wrap">
+  <p class="tick">KYGMIN.COM ▲ SEOUL, KR — EST. 2026</p>
+  <h1>Finance<br/><span class="box">×</span> <span class="grn">Code</span></h1>
+  <p class="hero-sub">
+    낮에는 은행에서 결제 인프라와 자동화를 다루고,
+    밤에는 시장 데이터와 머신러닝으로 궁금한 것들을 직접 만들어봅니다.
+  </p>
+  <div class="hero-actions">
+    <a class="btn btn-green" href="#portfolio">이력 보기</a>
+    <a class="btn" href="#projects">프로젝트</a>
+  </div>
+  <div class="hero-strip">
+    <div class="strip-cell"><div class="k">Now</div><div class="v">Banking Ops</div></div>
+    <div class="strip-cell"><div class="k">Next</div><div class="v">Private Markets</div></div>
+    <div class="strip-cell"><div class="k">Tools</div><div class="v">Python · VBA · SQL</div></div>
+    <div class="strip-cell"><div class="k">Into</div><div class="v">ML · Valuation</div></div>
+  </div>
+</header>
+
+<section id="portfolio">
+  <div class="wrap">
+    <span class="sec-tag">01 — Portfolio</span>
+    <h2>커리어 <span class="u">원장</span></h2>
+    <div class="ledger">
+      <div class="ledger-row">
+        <div class="ledger-date">20XX — NOW</div>
+        <div class="ledger-body">
+          <h3>Operations</h3>
+          <p class="org">Mizuho Bank, Seoul Branch</p>
+          <p>무역금융·결제 업무를 담당하며 ISO 20022 이행(UAT)과
+             VBA·RPA 기반 업무 자동화를 주도. 일일 은행 대사 시스템을 직접 설계·구축.</p>
+          <div class="tags">
+            <span class="tag g">Trade finance</span>
+            <span class="tag">ISO 20022</span>
+            <span class="tag">Automation</span>
+          </div>
+        </div>
+      </div>
+      <div class="ledger-row">
+        <div class="ledger-date">20XX — 20XX</div>
+        <div class="ledger-body">
+          <h3>Equity Research Analyst</h3>
+          <p class="org">Institutional Shareholder Services</p>
+          <p>기관투자자 대상 영문 의결권 행사 보고서 작성.
+             지배구조와 주주가치 관점의 상장사 안건 분석.</p>
+          <div class="tags">
+            <span class="tag g">Proxy research</span>
+            <span class="tag">Governance</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cv-gate" style="padding:48px 0;">
+  <div class="wrap">
+    <div style="border:3px solid var(--ink);background:var(--green);box-shadow:6px 6px 0 var(--ink);padding:26px 28px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;">
+      <div>
+        <p style="font-family:var(--arch);font-weight:900;font-size:20px;color:var(--paper);text-transform:uppercase;">상세 이력서는 잠금 페이지에</p>
+        <p style="font-size:13.5px;color:#EAF7F0;margin-top:4px;max-width:480px;">채용 담당자분께는 제출한 CV에 접근 암호를 함께 안내드립니다.</p>
+      </div>
+      <a class="btn" href="cv.html" style="background:var(--paper);">&#128274; CV 열기</a>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <span class="sec-tag">02 — Projects</span>
+    <h2>직접 <span class="u">만든 것들</span></h2>
+    <div class="proj-grid">
+      <article class="proj">
+        <div class="proj-head"><span class="proj-name">regime-detection</span><span class="badge live">RESEARCH</span></div>
+        <p>Gaussian HMM으로 시장 국면을 분류하는 레짐 감지 시스템. 국면 전환 확률을 자산 배분의 보조 지표로.</p>
+        <p class="stack">Python · hmmlearn</p>
+      </article>
+      <article class="proj">
+        <div class="proj-head"><span class="proj-name">okx-trading-bot</span><span class="badge wip">BUILD</span></div>
+        <p>룰 기반 백테스트에서 시작해 ML 레이어를 얹어가는 자동매매 봇. 체결·리스크 로직 직접 설계.</p>
+        <p class="stack">Python · OKX API</p>
+      </article>
+      <article class="proj">
+        <div class="proj-head"><span class="proj-name">draftnet</span><span class="badge live">RESEARCH</span></div>
+        <p>LoL 밴픽 데이터를 기반으로 승률을 예측하는 ML 모델. 드래프트 순서와 챔피언 시너지를 피처로 설계.</p>
+        <p class="stack">Python · ML</p>
+      </article>
+      <article class="proj">
+        <div class="proj-head"><span class="proj-name">bank-recon-vba</span><span class="badge live">IN USE</span></div>
+        <p>일일 은행 대사를 자동화한 Excel VBA 시스템. 실무에 적용 중인 프로덕션 사내 도구.</p>
+        <p class="stack">Excel VBA</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap foot">
+    <div>
+      <h2>Say <span class="u">hello</span></h2>
+      <p>커리어, 프로젝트, 시장 이야기 — 어떤 주제든 환영합니다.</p>
+    </div>
+    <div class="foot-links">
+      <a href="https://linkedin.com/in/yourhandle">linkedin.com/in/yourhandle</a>
+      <a href="https://github.com/yourhandle">github.com/yourhandle</a>
+      <a href="cv.html">&#128274; 이메일·상세 이력 — CV 페이지</a>
+    </div>
+  </div>
+  <div class="wrap">
+    <p class="copyright">© 2026 KYGMIN.COM — MONO × GREEN, SETTLED T+0</p>
+  </div>
+</footer>
+
+</body>
+</html>
