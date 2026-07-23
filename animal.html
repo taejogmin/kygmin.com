@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>동물 닮은꼴 찾기 — KYGMIN</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#F6F6F4;
+  --ink:#141414;
+  --gray:#DDDDD8;
+  --green:#2BB673;
+  --green-deep:#0F6E56;
+  --red:#A32D2D;
+  --arch:'Archivo','Pretendard',sans-serif;
+  --sans:'Pretendard',-apple-system,'Apple SD Gothic Neo','Malgun Gothic','Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono','SF Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{transition:none!important;}
+}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:16px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none;}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--green);outline-offset:3px;}
+.wrap{max-width:960px;margin:0 auto;padding:0 24px;}
+/* ── Nav ── */
+nav{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:3px solid var(--ink);}
+.nav-inner{
+  max-width:960px;margin:0 auto;padding:14px 24px;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;
+}
+.logo{font-family:var(--arch);font-weight:900;font-size:19px;letter-spacing:-0.5px;}
+.logo em{font-style:normal;background:var(--green);color:var(--paper);padding:0 6px;display:inline-block;transform:rotate(-1.5deg);}
+.nav-links{display:flex;gap:8px;flex-wrap:wrap;}
+.nav-links a{
+  font-family:var(--arch);font-size:12px;font-weight:700;text-transform:uppercase;
+  border:2px solid var(--ink);padding:6px 13px;background:#fff;
+  box-shadow:3px 3px 0 var(--ink);transition:transform .1s, box-shadow .1s;
+}
+.nav-links a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+.nav-links a.on{background:var(--green);color:var(--paper);}
+/* ── Hero ── */
+header{padding:64px 0 44px;border-bottom:3px solid var(--ink);}
+.sec-tag{
+  font-family:var(--mono);font-size:12.5px;font-weight:600;
+  color:var(--green-deep);letter-spacing:1px;display:block;margin-bottom:16px;
+}
+h1{
+  font-family:var(--arch);font-weight:900;text-transform:uppercase;
+  font-size:clamp(32px, 6vw, 54px);line-height:1.04;letter-spacing:-2px;
+}
+h1 .box{background:var(--ink);color:var(--paper);padding:0 12px;display:inline-block;transform:rotate(-1deg);}
+.hero-sub{margin-top:20px;font-size:16px;max-width:540px;font-weight:500;}
+.hero-note{
+  margin-top:14px;font-family:var(--mono);font-size:12px;color:#4A4A46;
+}
+/* ── Main ── */
+main{padding:44px 0 88px;}
+.panel{border:3px solid var(--ink);background:#fff;box-shadow:6px 6px 0 var(--ink);}
+/* upload */
+#uploadZone{
+  display:block;border:3px dashed var(--ink);background:#fff;
+  padding:38px 24px;text-align:center;cursor:pointer;max-width:520px;
+  box-shadow:6px 6px 0 var(--ink);transition:transform .1s, box-shadow .1s, background .1s;
+}
+#uploadZone:hover,#uploadZone.dragover{
+  background:#F0FAF5;transform:translate(2px,2px);box-shadow:4px 4px 0 var(--ink);
+}
+#uploadZone strong{
+  display:block;font-family:var(--arch);font-weight:900;font-size:18px;
+  text-transform:uppercase;letter-spacing:-0.5px;
+}
+#uploadZone span{display:block;font-family:var(--mono);font-size:12px;color:#4A4A46;margin-top:8px;}
+#fileInput{display:none;}
+#status{
+  margin-top:18px;max-width:520px;font-family:var(--mono);font-size:12.5px;
+  color:#4A4A46;min-height:1.5em;line-height:1.6;
+}
+#status.error{color:var(--red);border:2px solid var(--red);background:#FCEBEB;padding:8px 12px;}
+#status.warn{color:#7A5A00;border:2px solid #C89A00;background:#FDF6E0;padding:8px 12px;}
+/* preview */
+.stage{display:none;margin-top:32px;}
+#canvas{display:block;width:100%;max-width:520px;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink);background:#fff;}
+/* result */
+#result{max-width:640px;}
+.winner{
+  border:3px solid var(--ink);background:var(--green);box-shadow:8px 8px 0 var(--ink);
+  padding:30px 28px;color:var(--paper);
+}
+.winner .label{font-family:var(--mono);font-size:12px;letter-spacing:1px;opacity:.9;}
+.winner .animal{
+  font-family:var(--arch);font-weight:900;font-size:clamp(30px,6vw,44px);
+  text-transform:uppercase;letter-spacing:-1.5px;line-height:1.1;margin-top:6px;
+}
+.winner .pct{
+  font-family:var(--arch);font-weight:900;font-size:clamp(46px,10vw,68px);
+  line-height:1;margin-top:6px;background:var(--ink);color:var(--green);
+  display:inline-block;padding:2px 14px;transform:rotate(-1deg);
+  font-variant-numeric:tabular-nums;
+}
+.winner .pct small{font-size:.45em;}
+.block{margin-top:34px;}
+.block h2{
+  font-family:var(--arch);font-weight:900;font-size:15px;text-transform:uppercase;
+  letter-spacing:-0.3px;border-bottom:3px solid var(--ink);padding-bottom:8px;margin-bottom:18px;
+}
+.bar-row{margin-bottom:14px;}
+.bar-row .top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;}
+.bar-row .nm{font-family:var(--arch);font-weight:700;font-size:14px;text-transform:uppercase;}
+.bar-row .v{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--green-deep);font-variant-numeric:tabular-nums;}
+.track{height:16px;border:3px solid var(--ink);background:var(--gray);}
+.fill{height:100%;background:var(--green);width:0;transition:width .5s steps(12,end);}
+.runner{
+  display:flex;align-items:center;gap:12px;
+  border:3px solid var(--ink);background:#fff;padding:10px 14px;margin-bottom:10px;
+  box-shadow:4px 4px 0 var(--ink);
+}
+.runner .rank{font-family:var(--mono);font-size:12px;font-weight:600;background:var(--ink);color:var(--paper);padding:1px 8px;}
+.runner .name{flex:1;font-family:var(--arch);font-weight:700;font-size:15px;}
+.runner .rtrack{flex:1.2;height:10px;border:2px solid var(--ink);background:var(--gray);display:none;}
+.runner .rfill{height:100%;background:var(--ink);}
+.runner .rpct{font-family:var(--mono);font-size:13px;font-weight:600;width:44px;text-align:right;font-variant-numeric:tabular-nums;}
+@media(min-width:520px){ .runner .rtrack{display:block;} }
+.btn{
+  display:inline-block;font-family:var(--arch);font-size:14px;font-weight:700;text-transform:uppercase;
+  border:3px solid var(--ink);padding:12px 24px;box-shadow:5px 5px 0 var(--ink);
+  transition:transform .1s, box-shadow .1s;background:#fff;cursor:pointer;color:var(--ink);
+}
+.btn:hover{transform:translate(2px,2px);box-shadow:3px 3px 0 var(--ink);}
+#retry{margin-top:30px;}
+.disclaimer{
+  margin-top:20px;font-family:var(--mono);font-size:11.5px;color:#4A4A46;
+  border-left:3px solid var(--gray);padding-left:12px;line-height:1.6;
+}
+/* footer */
+footer{border-top:3px solid var(--ink);padding:26px 0;}
+.foot-inner{max-width:960px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:12px;color:#4A4A46;}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="index.html">KYG<em>MIN</em></a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#projects">Projects</a>
+      <a class="on" href="animal.html">Animal</a>
+      <a href="cv.html">CV &#128274;</a>
+    </div>
+  </div>
+</nav>
+<header>
+  <div class="wrap">
+    <span class="sec-tag">PROJECT — FACE GEOMETRY MATCHING</span>
+    <h1>동물 <span class="box">닮은꼴</span> 찾기</h1>
+    <p class="hero-sub">
+      얼굴 랜드마크에서 뽑은 6개의 기하 특징을 13종 동물의 평균 얼굴과 비교합니다.
+      학습된 분류기가 아니라, 비율을 직접 재서 거리를 계산하는 방식이에요.
+    </p>
+    <p class="hero-note">MEDIAPIPE FACE LANDMARKER · 100% CLIENT-SIDE · NO UPLOAD</p>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+    <label id="uploadZone" for="fileInput">
+      <strong>사진 선택 / 드래그</strong>
+      <span>정면에 가깝고 밝은 얼굴 사진일수록 정확합니다</span>
+    </label>
+    <input type="file" id="fileInput" accept="image/*" />
+    <div id="status">MODEL LOADING… 첫 로딩은 몇 초 걸릴 수 있어요</div>
+    <div class="stage" id="previewStage">
+      <canvas id="canvas"></canvas>
+    </div>
+    <div class="stage" id="result">
+      <div class="winner">
+        <div class="label">CLOSEST MATCH</div>
+        <div class="animal" id="winAnimal">–</div>
+        <div class="pct" id="winPct">–<small>%</small></div>
+      </div>
+      <div class="block">
+        <h2>왜 닮았나 — 특징별 일치도</h2>
+        <div id="bars"></div>
+      </div>
+      <div class="block">
+        <h2>다른 후보</h2>
+        <div id="runnerList"></div>
+      </div>
+      <button class="btn" id="retry">다른 사진으로 다시</button>
+      <p class="disclaimer">
+        재미로 만든 실험입니다. 얼굴 비율을 기하학적으로 비교한 결과이며, 과학적·의학적 판정이 아닙니다.
+        업로드한 사진은 브라우저 밖으로 전송되지 않으며 서버에 저장되지 않습니다.
+      </p>
+    </div>
+  </div>
+</main>
+<footer>
+  <div class="foot-inner">
+    <span>© KYGMIN.COM</span>
+    <span>BUILT WITH MEDIAPIPE · 13 SPECIES · 6 FEATURES</span>
+  </div>
+</footer>
+<script type="module">
+import { FaceLandmarker, FilesetResolver } from
+  "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14";
+// ===== 동물 데이터 (라벨링 도구 결과) =====
+const ANIMALS = {
+ "강아지": {faceRatio:0.7129,eyeGapRatio:0.4088,eyeSizeRatio:0.1989,noseLenRatio:0.3015,mouthWidthRatio:0.6535,eyeTiltDeg:-4.282},
+ "고양이": {faceRatio:1.2374,eyeGapRatio:0.2689,eyeSizeRatio:0.2091,noseLenRatio:0.3027,mouthWidthRatio:0.2441,eyeTiltDeg:28.84},
+ "여우": {faceRatio:0.7805,eyeGapRatio:0.4587,eyeSizeRatio:0.2508,noseLenRatio:0.4174,mouthWidthRatio:0.4211,eyeTiltDeg:20.006},
+ "늑대": {faceRatio:0.7354,eyeGapRatio:0.4182,eyeSizeRatio:0.228,noseLenRatio:0.4473,mouthWidthRatio:0.538,eyeTiltDeg:26.914},
+ "사슴": {faceRatio:0.9083,eyeGapRatio:0.4295,eyeSizeRatio:0.1787,noseLenRatio:0.3631,mouthWidthRatio:0.3871,eyeTiltDeg:18.05},
+ "돼지": {faceRatio:1.1193,eyeGapRatio:0.6007,eyeSizeRatio:0.0987,noseLenRatio:0.3958,mouthWidthRatio:0.228,eyeTiltDeg:15.932},
+ "벨루가": {faceRatio:1.3953,eyeGapRatio:0.838,eyeSizeRatio:0.0553,noseLenRatio:0.2033,mouthWidthRatio:0.7257,eyeTiltDeg:4.642},
+ "수달": {faceRatio:1.3987,eyeGapRatio:0.3812,eyeSizeRatio:0.1335,noseLenRatio:0.2723,mouthWidthRatio:0.3553,eyeTiltDeg:5.174},
+ "카피바라": {faceRatio:0.8577,eyeGapRatio:0.6204,eyeSizeRatio:0.0965,noseLenRatio:0.2826,mouthWidthRatio:0.3269,eyeTiltDeg:17.486},
+ "쿼카": {faceRatio:1.5418,eyeGapRatio:0.2825,eyeSizeRatio:0.1135,noseLenRatio:0.2654,mouthWidthRatio:0.3154,eyeTiltDeg:-6.932},
+ "하프물범": {faceRatio:1.3801,eyeGapRatio:0.2915,eyeSizeRatio:0.1919,noseLenRatio:0.2195,mouthWidthRatio:0.3226,eyeTiltDeg:-13.988},
+ "토끼": {faceRatio:1.1193,eyeGapRatio:0.4768,eyeSizeRatio:0.1448,noseLenRatio:0.3773,mouthWidthRatio:0.2465,eyeTiltDeg:21.04},
+};
+const STATS = {
+ faceRatio:{mean:1.0989,sd:0.2939},
+ eyeGapRatio:{mean:0.4563,sd:0.1642},
+ eyeSizeRatio:{mean:0.1583,sd:0.0603},
+ noseLenRatio:{mean:0.3207,sd:0.0784},
+ mouthWidthRatio:{mean:0.397,sd:0.1618},
+ eyeTiltDeg:{mean:11.0735,sd:13.8935},
+};
+const WEIGHTS = {
+ faceRatio:1.2, eyeGapRatio:1.1, eyeSizeRatio:1.0,
+ noseLenRatio:0.9, mouthWidthRatio:0.5, eyeTiltDeg:1.1,
+};
+const FEAT_LABELS = {
+ faceRatio:"얼굴형", eyeGapRatio:"눈 간격", eyeSizeRatio:"눈 크기",
+ noseLenRatio:"코 비율", mouthWidthRatio:"입 크기", eyeTiltDeg:"눈매",
+};
+const FEAT_KEYS = Object.keys(STATS);
+const IDX = {
+  faceLeft:234, faceRight:454, faceTop:10, chin:152,
+  noseTip:1, noseBridge:168, mouthLeft:61, mouthRight:291,
+  eyeA_outer:33, eyeA_inner:133, eyeB_inner:362, eyeB_outer:263,
+};
+const FRONTAL_THRESHOLD = 0.8;
+const statusEl = document.getElementById("status");
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+const previewStage = document.getElementById("previewStage");
+const resultStage = document.getElementById("result");
+const uploadZone = document.getElementById("uploadZone");
+const fileInput = document.getElementById("fileInput");
+let landmarker = null;
+async function init(){
+  try{
+    const vision = await FilesetResolver.forVisionTasks(
+      "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/wasm");
+    landmarker = await FaceLandmarker.createFromOptions(vision, {
+      baseOptions:{ modelAssetPath:
+        "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task" },
+      runningMode:"IMAGE", numFaces:1,
+    });
+    setStatus("READY — 사진을 올려보세요");
+  }catch(e){
+    console.error(e);
+    setStatus("모델 로딩 실패 — 인터넷 연결을 확인하고 새로고침해 주세요.","error");
+  }
+}
+init();
+function setStatus(m,c=""){ statusEl.textContent=m; statusEl.className=c; }
+fileInput.addEventListener("change", ()=>{ if(fileInput.files[0]) handleFile(fileInput.files[0]); });
+["dragover","dragleave","drop"].forEach(ev =>
+  uploadZone.addEventListener(ev, e=>{
+    e.preventDefault();
+    uploadZone.classList.toggle("dragover", ev==="dragover");
+    if(ev==="drop" && e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+  }));
+document.getElementById("retry").addEventListener("click", ()=>{
+  resultStage.style.display="none";
+  previewStage.style.display="none";
+  setStatus("READY — 사진을 올려보세요");
+  window.scrollTo({top:0, behavior:"smooth"});
+});
+function handleFile(file){
+  if(!landmarker){ setStatus("모델이 아직 로딩 중이에요. 잠시 후 다시 시도해 주세요."); return; }
+  if(!file.type.startsWith("image/")){ setStatus("이미지 파일만 올릴 수 있어요.","error"); return; }
+  const img = new Image();
+  img.onload = ()=>{ URL.revokeObjectURL(img.src); processImage(img); };
+  img.onerror = ()=> setStatus("이미지를 읽을 수 없어요.","error");
+  img.src = URL.createObjectURL(file);
+}
+function processImage(img){
+  setStatus("ANALYZING… 얼굴 분석 중");
+  resultStage.style.display="none";
+  const maxSide=900;
+  const scale=Math.min(1, maxSide/Math.max(img.width,img.height));
+  canvas.width=img.width*scale; canvas.height=img.height*scale;
+  ctx.drawImage(img,0,0,canvas.width,canvas.height);
+  previewStage.style.display="block";
+  let result;
+  try{ result = landmarker.detect(canvas); }
+  catch(e){ console.error(e); setStatus("분석 중 오류가 발생했어요.","error"); return; }
+  if(!result.faceLandmarks || result.faceLandmarks.length===0){
+    setStatus("얼굴을 찾지 못했어요. 정면에 가깝고 밝은 사진으로 다시 시도해 보세요.","error");
+    return;
+  }
+  const lm = result.faceLandmarks[0];
+  const dL=dist(lm[IDX.noseTip],lm[IDX.faceLeft]);
+  const dR=dist(lm[IDX.noseTip],lm[IDX.faceRight]);
+  const frontal=Math.min(dL,dR)/Math.max(dL,dR);
+  if(frontal < FRONTAL_THRESHOLD){
+    setStatus(`얼굴이 옆으로 돌아가 있어요 (정면 점수 ${frontal.toFixed(2)} / 기준 ${FRONTAL_THRESHOLD}). 정면 사진으로 다시 올려주세요.`,"warn");
+    return;
+  }
+  const feat = computeFeatures(lm);
+  showResult(matchAnimals(feat));
+  setStatus("DONE — 결과가 아래에 있어요");
+}
+function dist(a,b){
+  const dx=(a.x-b.x)*canvas.width, dy=(a.y-b.y)*canvas.height;
+  return Math.hypot(dx,dy);
+}
+function eyeTiltDeg(inner,outer){
+  const dx=Math.abs(outer.x-inner.x)*canvas.width;
+  const dy=(inner.y-outer.y)*canvas.height;
+  return Math.atan2(dy,dx)*180/Math.PI;
+}
+function computeFeatures(lm){
+  const faceWidth=dist(lm[IDX.faceLeft],lm[IDX.faceRight]);
+  const faceLength=dist(lm[IDX.faceTop],lm[IDX.chin]);
+  const eyeGap=dist(lm[IDX.eyeA_inner],lm[IDX.eyeB_inner]);
+  const eyeSize=(dist(lm[IDX.eyeA_outer],lm[IDX.eyeA_inner])+dist(lm[IDX.eyeB_outer],lm[IDX.eyeB_inner]))/2;
+  const noseLen=dist(lm[IDX.noseBridge],lm[IDX.noseTip]);
+  const mouthWidth=dist(lm[IDX.mouthLeft],lm[IDX.mouthRight]);
+  const tilt=(eyeTiltDeg(lm[IDX.eyeA_inner],lm[IDX.eyeA_outer])+eyeTiltDeg(lm[IDX.eyeB_inner],lm[IDX.eyeB_outer]))/2;
+  return {
+    faceRatio:faceWidth/faceLength, eyeGapRatio:eyeGap/faceWidth,
+    eyeSizeRatio:eyeSize/faceWidth, noseLenRatio:noseLen/faceLength,
+    mouthWidthRatio:mouthWidth/faceWidth, eyeTiltDeg:tilt,
+  };
+}
+function matchAnimals(feat){
+  const userZ={};
+  FEAT_KEYS.forEach(k => userZ[k]=(feat[k]-STATS[k].mean)/STATS[k].sd);
+  const rows = Object.entries(ANIMALS).map(([name,a])=>{
+    let sumW=0,sumWD=0; const perFeat={};
+    for(const k of FEAT_KEYS){
+      const az=(a[k]-STATS[k].mean)/STATS[k].sd;
+      const diff=Math.abs(userZ[k]-az);
+      perFeat[k]=diff; sumW+=WEIGHTS[k]; sumWD+=WEIGHTS[k]*diff*diff;
+    }
+    return {name, dist:Math.sqrt(sumWD/sumW), perFeat};
+  });
+  rows.sort((a,b)=>a.dist-b.dist);
+  return rows;
+}
+function distToPct(d){ return Math.max(30, Math.min(99, 100*Math.exp(-d/2.2))); }
+function featMatchPct(diff){ return Math.round(Math.max(0, Math.min(100, 100*Math.exp(-diff/1.6)))); }
+function showResult(ranked){
+  const win = ranked[0];
+  document.getElementById("winAnimal").textContent = win.name;
+  document.getElementById("winPct").innerHTML = Math.round(distToPct(win.dist)) + "<small>%</small>";
+  const bars = FEAT_KEYS
+    .map(k=>({k, pct:featMatchPct(win.perFeat[k])}))
+    .sort((a,b)=>b.pct-a.pct);
+  document.getElementById("bars").innerHTML = bars.map(b=>`
+    <div class="bar-row">
+      <div class="top"><span class="nm">${FEAT_LABELS[b.k]}</span><span class="v">${b.pct}%</span></div>
+      <div class="track"><div class="fill" data-w="${b.pct}"></div></div>
+    </div>`).join("");
+  document.getElementById("runnerList").innerHTML = ranked.slice(1,5).map((r,i)=>{
+    const p=Math.round(distToPct(r.dist));
+    return `<div class="runner">
+      <span class="rank">${String(i+2).padStart(2,"0")}</span>
+      <span class="name">${r.name}</span>
+      <span class="rtrack"><span class="rfill" style="width:${p}%"></span></span>
+      <span class="rpct">${p}%</span>
+    </div>`;
+  }).join("");
+  resultStage.style.display="block";
+  requestAnimationFrame(()=>{
+    document.querySelectorAll(".fill").forEach(f=> f.style.width = f.dataset.w + "%");
+  });
+  resultStage.scrollIntoView({behavior:"smooth", block:"start"});
+}
+</script>
+</body>
+</html>
