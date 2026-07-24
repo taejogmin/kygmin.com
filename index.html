@@ -302,12 +302,10 @@ footer{padding:64px 0 80px;}
   var POOL = ("ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎㅏㅑㅓㅕㅗㅛㅜㅠㅡㅣ"
     + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-·").split("");
   function esc(c){return c==="&"?"&amp;":c==="<"?"&lt;":c===">"?"&gt;":c;}
-  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   function Scramble(el){ this.el=el; this.raf=null; this.frame=this.frame.bind(this); }
   Scramble.prototype.set=function(txt){
     var old = this.el.dataset.plain!==undefined ? this.el.dataset.plain : this.el.textContent;
-    if(reduce){ this.el.textContent=txt; this.el.dataset.plain=txt; return; }
     var len=Math.max(old.length, txt.length);
     this.q=[];
     for(var i=0;i<len;i++){
