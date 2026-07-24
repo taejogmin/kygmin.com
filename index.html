@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>KYGMIN — Finance × Code</title>
+<title>KYGMIN — Park, Kyung-Min</title>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 <style>
 :root{
@@ -47,6 +47,20 @@ nav{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:3px s
 }
 .nav-links a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
 .nav-links a.on{background:var(--green);color:var(--paper);}
+.nav-links a.new{position:relative;}
+.nav-links a.new::after{content:"";position:absolute;top:-5px;right:-5px;width:9px;height:9px;border-radius:50%;background:var(--green);border:2px solid var(--ink);}
+
+/* ── Language toggle (floating) ── */
+#langtoggle{
+  position:fixed;right:20px;bottom:20px;z-index:50;display:inline-flex;
+  border:2px solid var(--ink);box-shadow:3px 3px 0 var(--ink);background:#fff;
+  font-family:var(--arch);font-weight:700;font-size:12px;overflow:hidden;
+}
+#langtoggle button{font:inherit;border:none;background:none;cursor:pointer;padding:9px 14px;color:var(--ink);letter-spacing:.5px;transition:background .1s,color .1s;}
+#langtoggle button.on{background:var(--green);color:var(--paper);}
+#langtoggle button+button{border-left:2px solid var(--ink);}
+.scr{color:var(--green);}
+.boxg .scr,.box .scr{color:var(--paper);}
 
 /* ── Hero ── */
 header{padding:80px 0 64px;border-bottom:3px solid var(--ink);}
@@ -56,6 +70,7 @@ h1{
   font-size:clamp(38px, 7vw, 64px);line-height:1.02;letter-spacing:-2px;
 }
 h1 .box{background:var(--ink);color:var(--paper);padding:0 12px;display:inline-block;transform:rotate(-1deg);}
+h1 .boxg{background:var(--green-deep);color:var(--paper);padding:0 10px;display:inline-block;transform:rotate(-1deg);}
 h1 .grn{color:var(--green-deep);}
 .hero-sub{margin-top:22px;font-size:16.5px;max-width:520px;font-weight:500;}
 .hero-actions{margin-top:34px;display:flex;gap:14px;flex-wrap:wrap;}
@@ -66,14 +81,6 @@ h1 .grn{color:var(--green-deep);}
 }
 .btn:hover{transform:translate(2px,2px);box-shadow:3px 3px 0 var(--ink);}
 .btn-green{background:var(--green);color:var(--paper);}
-.hero-strip{
-  margin-top:56px;display:flex;gap:0;border:3px solid var(--ink);
-  box-shadow:5px 5px 0 var(--ink);background:#fff;flex-wrap:wrap;
-}
-.strip-cell{flex:1;min-width:150px;padding:16px 18px;border-right:3px solid var(--ink);}
-.strip-cell:last-child{border-right:none;}
-.strip-cell .k{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--green-deep);}
-.strip-cell .v{font-family:var(--arch);font-weight:700;font-size:14.5px;margin-top:3px;}
 
 /* ── Sections ── */
 section{padding:72px 0;border-bottom:3px solid var(--ink);}
@@ -129,14 +136,21 @@ footer{padding:64px 0 80px;}
 .foot{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:flex-start;}
 .foot h2{margin-bottom:10px;}
 .foot p{max-width:380px;font-size:14.5px;color:#3A3A38;}
-.foot-links{display:flex;flex-direction:column;gap:10px;}
+.foot-links{display:flex;flex-wrap:wrap;gap:10px;max-width:380px;}
 .foot-links a{
-  font-family:var(--mono);font-size:13px;font-weight:600;
-  border-bottom:3px solid var(--green);padding-bottom:1px;width:fit-content;
-  transition:background .1s;
+  font-family:var(--arch);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;
+  border:2px solid var(--ink);padding:8px 13px;background:#fff;box-shadow:3px 3px 0 var(--ink);
+  display:inline-flex;align-items:center;gap:6px;
+  transition:transform .1s, box-shadow .1s, background .1s, color .1s;
 }
-.foot-links a:hover{background:var(--green);color:var(--paper);}
-.copyright{margin-top:56px;font-family:var(--mono);font-size:11.5px;color:#6B6B67;}
+.foot-links a:hover{background:var(--green);color:var(--paper);transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+.foot-links a.cv{background:var(--ink);color:var(--paper);}
+.foot-links a.cv:hover{background:var(--green);}
+.foot-links .arw{font-size:11px;opacity:.65;}
+.palette{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:44px;font-family:var(--mono);font-size:12px;font-weight:600;}
+.palette .sw{display:inline-flex;align-items:center;gap:6px;}
+.palette .sq{width:11px;height:11px;border:1.5px solid var(--ink);display:inline-block;}
+.copyright{margin-top:22px;font-family:var(--mono);font-size:11.5px;color:#6B6B67;}
 
 @media(max-width:640px){
   .ledger-row{grid-template-columns:1fr;gap:6px;}
@@ -150,11 +164,10 @@ footer{padding:64px 0 80px;}
   <div class="nav-inner">
     <span class="logo">KYG<em>MIN</em></span>
     <div class="nav-links">
-      <a href="#home" class="on">Home</a>
-      <a href="#portfolio">Portfolio</a>
-      <a href="#projects">Projects</a>
-      <a href="#contact">Contact</a>
-      <a href="animal.html">Animal</a>
+      <a href="#home" class="on tx" data-en="Home" data-kr="홈">Home</a>
+      <a href="#contact" class="tx" data-en="Contact" data-kr="연락처">Contact</a>
+      <!-- NEW: 항상 최신 프로젝트로 href만 바꿔 업데이트 (현재: animal.html) -->
+      <a href="animal.html" class="new">NEW</a>
       <a href="cv.html" style="background:var(--ink);color:var(--paper);">CV &#128274;</a>
     </div>
   </div>
@@ -162,52 +175,59 @@ footer{padding:64px 0 80px;}
 
 <header id="home" class="wrap">
   <p class="tick">KYGMIN.COM ▲ SEOUL, KR — EST. 2026</p>
-  <h1>Finance<br/><span class="box">×</span> <span class="grn">Code</span></h1>
+  <h1><span class="tx" data-en="PARK," data-kr="박">PARK,</span><br/><span class="tx" data-en="KYUNG-" data-kr="경">KYUNG-</span><span class="boxg"><span class="tx" data-en="MIN" data-kr="민">MIN</span></span></h1>
   <p class="hero-sub">
-    낮에는 은행에서 결제 인프라와 자동화를 다루고,
-    밤에는 시장 데이터와 머신러닝으로 궁금한 것들을 직접 만들어봅니다.
+    <strong class="tx" data-en="Welcome — I'm Min." data-kr="안녕하세요 — 민입니다.">Welcome — I'm Min.</strong><br/><br/>
+    <span class="tx" data-en="Second year at Mizuho Bank, currently PM on the ISO 20022 Hybrid. Look around to get to know me, or jump into the Playground." data-kr="미즈호은행 2년차, 현재 ISO 20022 하이브리드 프로젝트의 PM입니다. 편하게 둘러보시고 Playground에서 놀아보세요.">Second year at Mizuho Bank, currently PM on the ISO 20022 Hybrid. Look around to get to know me, or jump into the Playground.</span>
   </p>
   <div class="hero-actions">
-    <a class="btn btn-green" href="#portfolio">이력 보기</a>
-    <a class="btn" href="#projects">프로젝트</a>
-  </div>
-  <div class="hero-strip">
-    <div class="strip-cell"><div class="k">Now</div><div class="v">Banking Ops</div></div>
-    <div class="strip-cell"><div class="k">Next</div><div class="v">Private Markets</div></div>
-    <div class="strip-cell"><div class="k">Tools</div><div class="v">Python · VBA · SQL</div></div>
-    <div class="strip-cell"><div class="k">Into</div><div class="v">ML · Valuation</div></div>
+    <a class="btn btn-green tx" href="#portfolio" data-en="Careers" data-kr="경력">Careers</a>
+    <a class="btn tx" href="#projects" data-en="Playground" data-kr="놀이터">Playground</a>
   </div>
 </header>
 
 <section id="portfolio">
   <div class="wrap">
-    <span class="sec-tag">01 — Portfolio</span>
-    <h2>커리어 <span class="u">원장</span></h2>
+    <span class="sec-tag tx" data-en="01 — Careers" data-kr="01 — 경력">01 — Careers</span>
+    <h2><span class="u"><span class="tx" data-en="Education" data-kr="학력">Education</span></span></h2>
     <div class="ledger">
       <div class="ledger-row">
-        <div class="ledger-date">20XX — NOW</div>
+        <div class="ledger-date tx" data-en="SEP 2018 — MAR 2024" data-kr="2018.09 — 2024.03">SEP 2018 — MAR 2024</div>
         <div class="ledger-body">
-          <h3>Operations</h3>
-          <p class="org">Mizuho Bank, Seoul Branch</p>
-          <p>무역금융·결제 업무를 담당하며 ISO 20022 이행(UAT)과
-             VBA·RPA 기반 업무 자동화를 주도. 일일 은행 대사 시스템을 직접 설계·구축.</p>
+          <h3 class="tx" data-en="B.A. in Economics" data-kr="경제학 학사">B.A. in Economics</h3>
+          <p class="org tx" data-en="Waseda University, School of Political Science and Economics" data-kr="와세다대학교 정치경제학부">Waseda University, School of Political Science and Economics</p>
+          <p><span class="tx" data-en="GPA 3.49 / 4.0." data-kr="GPA 3.49 / 4.0.">GPA 3.49 / 4.0.</span><br/><span class="tx" data-en="Recipient of Waseda University's Reserved Scholarship for Successful International Examinees (2018, 2019) and the Monbukagakusho Honors Scholarship (JASSO, 2019)." data-kr="와세다대학교 우수 외국인 합격자 장학금(2018, 2019)과 몬부카가쿠쇼 명예장학금(JASSO, 2019) 수혜.">Recipient of Waseda University's Reserved Scholarship for Successful International Examinees (2018, 2019) and the Monbukagakusho Honors Scholarship (JASSO, 2019).</span></p>
           <div class="tags">
-            <span class="tag g">Trade finance</span>
-            <span class="tag">ISO 20022</span>
-            <span class="tag">Automation</span>
+            <span class="tag g tx" data-en="Economics" data-kr="경제학">Economics</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <h2 style="margin-top:56px;"><span class="tx" data-en="Work " data-kr="">Work </span><span class="u"><span class="tx" data-en="Experience" data-kr="경력">Experience</span></span></h2>
+    <div class="ledger">
+      <div class="ledger-row">
+        <div class="ledger-date tx" data-en="OCT 2024 — NOW" data-kr="2024.10 — 현재">OCT 2024 — NOW</div>
+        <div class="ledger-body">
+          <h3 class="tx" data-en="Analyst" data-kr="애널리스트">Analyst</h3>
+          <p class="org tx" data-en="Mizuho Bank, Seoul Branch" data-kr="미즈호은행 서울지점">Mizuho Bank, Seoul Branch</p>
+          <p class="tx" data-en="Country PM for the ISO 20022 Hybrid project, recognised with a Mizuho Award. Led an operations-automation initiative — mapping team workflows and building tools to cut manual workload, reducing reporting-process time by 47% and saving 942 hours a year on FX swap deal processing." data-kr="ISO 20022 하이브리드 프로젝트의 컨트리 PM으로 미즈호 어워드를 수상. 운영팀 워크플로우를 분석해 자동화 도구를 구축, 리포팅 업무 시간을 47% 줄이고 FX 스왑 거래 처리에서 연 942시간을 절감했습니다.">Country PM for the ISO 20022 Hybrid project, recognised with a Mizuho Award. Led an operations-automation initiative — mapping team workflows and building tools to cut manual workload, reducing reporting-process time by 47% and saving 942 hours a year on FX swap deal processing.</p>
+          <div class="tags">
+            <span class="tag g tx" data-en="Project management" data-kr="프로젝트 관리">Project management</span>
+            <span class="tag tx" data-en="Automation" data-kr="자동화">Automation</span>
           </div>
         </div>
       </div>
       <div class="ledger-row">
-        <div class="ledger-date">20XX — 20XX</div>
+        <div class="ledger-date tx" data-en="JAN 2024 — MAR 2024" data-kr="2024.01 — 2024.03">JAN 2024 — MAR 2024</div>
         <div class="ledger-body">
-          <h3>Equity Research Analyst</h3>
-          <p class="org">Institutional Shareholder Services</p>
-          <p>기관투자자 대상 영문 의결권 행사 보고서 작성.
-             지배구조와 주주가치 관점의 상장사 안건 분석.</p>
+          <h3 class="tx" data-en="Research Assistant" data-kr="리서치 어시스턴트">Research Assistant</h3>
+          <p class="org tx" data-en="Institutional Shareholder Services" data-kr="기관투자자 의결권 자문사 (ISS)">Institutional Shareholder Services</p>
+          <p class="tx" data-en="Published proxy-voting reports for approximately 1,600 global institutional investors, analysing the shareholder-meeting agendas of 84 listed companies through a corporate-governance and shareholder-value lens." data-kr="약 1,600개 글로벌 기관투자자를 대상으로 의결권 행사 보고서를 발간. 지배구조·주주가치 관점에서 84개 상장사의 주주총회 안건을 분석했습니다.">Published proxy-voting reports for approximately 1,600 global institutional investors, analysing the shareholder-meeting agendas of 84 listed companies through a corporate-governance and shareholder-value lens.</p>
           <div class="tags">
-            <span class="tag g">Proxy research</span>
-            <span class="tag">Governance</span>
+            <span class="tag g tx" data-en="Proxy research" data-kr="의결권 자문">Proxy research</span>
+            <span class="tag tx" data-en="Governance" data-kr="지배구조">Governance</span>
+            <span class="tag">KOSPI</span>
+            <span class="tag">KOSDAQ</span>
           </div>
         </div>
       </div>
@@ -219,43 +239,28 @@ footer{padding:64px 0 80px;}
   <div class="wrap">
     <div style="border:3px solid var(--ink);background:var(--green);box-shadow:6px 6px 0 var(--ink);padding:26px 28px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;">
       <div>
-        <p style="font-family:var(--arch);font-weight:900;font-size:20px;color:var(--paper);text-transform:uppercase;">상세 이력서는 잠금 페이지에</p>
-        <p style="font-size:13.5px;color:#EAF7F0;margin-top:4px;max-width:480px;">채용 담당자분께는 제출한 CV에 접근 암호를 함께 안내드립니다.</p>
+        <p style="font-family:var(--arch);font-weight:900;font-size:20px;color:var(--paper);text-transform:uppercase;"><span class="tx" data-en="Full CV lives behind a lock." data-kr="상세 이력서는 잠금 페이지에">Full CV lives behind a lock.</span></p>
+        <p style="font-size:13.5px;color:#EAF7F0;margin-top:4px;max-width:480px;"><span class="tx" data-en="Recruiters receive the access password along with the submitted CV." data-kr="채용 담당자분께는 제출한 CV에 접근 암호를 함께 안내드립니다.">Recruiters receive the access password along with the submitted CV.</span></p>
       </div>
-      <a class="btn" href="cv.html" style="background:var(--paper);">&#128274; CV 열기</a>
+      <a class="btn" href="cv.html" style="background:var(--paper);">&#128274; <span class="tx" data-en="Open CV" data-kr="CV 열기">Open CV</span></a>
     </div>
   </div>
 </section>
 
 <section id="projects">
   <div class="wrap">
-    <span class="sec-tag">02 — Projects</span>
-    <h2>직접 <span class="u">만든 것들</span></h2>
+    <span class="sec-tag tx" data-en="02 — Playground" data-kr="02 — 놀이터">02 — Playground</span>
+    <h2><span class="tx" data-en="Where I " data-kr="">Where I </span><span class="u"><span class="tx" data-en="tinker" data-kr="실험실">tinker</span></span></h2>
     <div class="proj-grid">
       <a class="proj" href="animal.html">
         <div class="proj-head"><span class="proj-name">animal-lookalike</span><span class="badge live">PLAY &#9658;</span></div>
-        <p>얼굴 랜드마크의 기하 특징을 13종 동물 평균과 비교해 닮은꼴을 찾는 웹 실험. 브라우저에서 바로 실행됩니다.</p>
+        <p class="tx" data-en="Which animal's face is closest to yours? A cat? A dog? Maybe a deer? Find out here." data-kr="당신 얼굴과 가장 닮은 동물은? 고양이? 강아지? 아니면 사슴? 여기서 확인해보세요.">Which animal's face is closest to yours? A cat? A dog? Maybe a deer? Find out here.</p>
         <p class="stack">MediaPipe · JavaScript</p>
       </a>
       <article class="proj">
-        <div class="proj-head"><span class="proj-name">regime-detection</span><span class="badge live">RESEARCH</span></div>
-        <p>Gaussian HMM으로 시장 국면을 분류하는 레짐 감지 시스템. 국면 전환 확률을 자산 배분의 보조 지표로.</p>
-        <p class="stack">Python · hmmlearn</p>
-      </article>
-      <article class="proj">
-        <div class="proj-head"><span class="proj-name">okx-trading-bot</span><span class="badge wip">BUILD</span></div>
-        <p>룰 기반 백테스트에서 시작해 ML 레이어를 얹어가는 자동매매 봇. 체결·리스크 로직 직접 설계.</p>
-        <p class="stack">Python · OKX API</p>
-      </article>
-      <article class="proj">
         <div class="proj-head"><span class="proj-name">draftnet</span><span class="badge live">RESEARCH</span></div>
-        <p>LoL 밴픽 데이터를 기반으로 승률을 예측하는 ML 모델. 드래프트 순서와 챔피언 시너지를 피처로 설계.</p>
+        <p class="tx" data-en="From Iron to Gold, every draft is chaotic warfare. That 'perfect' comp might not be — and the team that looks doomed on paper could be the best Riot has ever seen. Choose the champion that wins the game." data-kr="아이언부터 골드까지, 모든 드래프트는 혼돈의 전장입니다. '완벽한' 조합이 아닐 수도, 망한 것 같은 조합이 라이엇 역사상 최고일 수도 있죠. 승리하는 챔피언을 골라보세요.">From Iron to Gold, every draft is chaotic warfare. That 'perfect' comp might not be — and the team that looks doomed on paper could be the best Riot has ever seen. Choose the champion that wins the game.</p>
         <p class="stack">Python · ML</p>
-      </article>
-      <article class="proj">
-        <div class="proj-head"><span class="proj-name">bank-recon-vba</span><span class="badge live">IN USE</span></div>
-        <p>일일 은행 대사를 자동화한 Excel VBA 시스템. 실무에 적용 중인 프로덕션 사내 도구.</p>
-        <p class="stack">Excel VBA</p>
       </article>
     </div>
   </div>
@@ -264,19 +269,86 @@ footer{padding:64px 0 80px;}
 <footer id="contact">
   <div class="wrap foot">
     <div>
-      <h2>Say <span class="u">hello</span></h2>
-      <p>커리어, 프로젝트, 시장 이야기 — 어떤 주제든 환영합니다.</p>
+      <h2><span class="tx" data-en="Say " data-kr="">Say </span><span class="u"><span class="tx" data-en="hello" data-kr="안녕">hello</span></span></h2>
+      <p class="tx" data-en="Let's connect." data-kr="연결해요.">Let's connect.</p>
     </div>
     <div class="foot-links">
-      <a href="https://linkedin.com/in/yourhandle">linkedin.com/in/yourhandle</a>
-      <a href="https://github.com/yourhandle">github.com/yourhandle</a>
-      <a href="cv.html">&#128274; 이메일·상세 이력 — CV 페이지</a>
+      <a href="https://www.linkedin.com/in/taejogmin" target="_blank" rel="noopener">LinkedIn <span class="arw">&#8599;</span></a>
+      <a href="https://github.com/taejogmin" target="_blank" rel="noopener">GitHub <span class="arw">&#8599;</span></a>
+      <a href="https://instagram.com/min_nano_min" target="_blank" rel="noopener">Instagram <span class="arw">&#8599;</span></a>
+      <a href="https://unsplash.com/ko/@pohelo" target="_blank" rel="noopener">Unsplash <span class="arw">&#8599;</span></a>
+      <a class="cv" href="cv.html">CV &#128274;</a>
     </div>
   </div>
   <div class="wrap">
+    <div class="palette">
+      <span class="sw"><i class="sq" style="background:#F6F6F4"></i><span style="color:#8a8a86">#F6F6F4</span></span>
+      <span class="sw"><i class="sq" style="background:#141414"></i><span style="color:#141414">#141414</span></span>
+      <span class="sw"><i class="sq" style="background:#DDDDD8"></i><span style="color:#9a9a95">#DDDDD8</span></span>
+      <span class="sw"><i class="sq" style="background:#2BB673"></i><span style="color:#2BB673">#2BB673</span></span>
+      <span class="sw"><i class="sq" style="background:#0F6E56"></i><span style="color:#0F6E56">#0F6E56</span></span>
+    </div>
     <p class="copyright">© 2026 KYGMIN.COM — MONO × GREEN, SETTLED T+0</p>
   </div>
 </footer>
+
+<div id="langtoggle" aria-label="Language">
+  <button data-lang="en" class="on">EN</button>
+  <button data-lang="kr">한</button>
+</div>
+
+<script>
+(function(){
+  var POOL = ("ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎㅏㅑㅓㅕㅗㅛㅜㅠㅡㅣ"
+    + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-·").split("");
+  function esc(c){return c==="&"?"&amp;":c==="<"?"&lt;":c===">"?"&gt;":c;}
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function Scramble(el){ this.el=el; this.raf=null; this.frame=this.frame.bind(this); }
+  Scramble.prototype.set=function(txt){
+    var old = this.el.dataset.plain!==undefined ? this.el.dataset.plain : this.el.textContent;
+    if(reduce){ this.el.textContent=txt; this.el.dataset.plain=txt; return; }
+    var len=Math.max(old.length, txt.length);
+    this.q=[];
+    for(var i=0;i<len;i++){
+      var from=old[i]||"", to=txt[i]||"";
+      var start=Math.floor(Math.random()*20);
+      var end=start+Math.floor(Math.random()*25)+12;
+      this.q.push({from:from,to:to,start:start,end:end,ch:null});
+    }
+    if(this.raf) cancelAnimationFrame(this.raf);
+    this.f=0; this.txt=txt; this.frame();
+  };
+  Scramble.prototype.frame=function(){
+    var out="", done=0;
+    for(var i=0;i<this.q.length;i++){
+      var it=this.q[i];
+      if(this.f>=it.end){ done++; out+=esc(it.to); }
+      else if(this.f>=it.start){
+        if(!it.ch || Math.random()<0.3){ it.ch=POOL[Math.floor(Math.random()*POOL.length)]; }
+        out+='<span class="scr">'+esc(it.ch)+'</span>';
+      } else out+=esc(it.from);
+    }
+    this.el.innerHTML=out;
+    if(done===this.q.length){ this.el.dataset.plain=this.txt; }
+    else { this.f++; this.raf=requestAnimationFrame(this.frame); }
+  };
+
+  var els=[].slice.call(document.querySelectorAll('.tx'));
+  els.forEach(function(el){ el.dataset.plain=el.textContent; el._s=new Scramble(el); });
+  var cur='en';
+  function setLang(lang){
+    if(lang===cur) return; cur=lang;
+    document.documentElement.lang = (lang==='kr'?'ko':'en');
+    var btns=document.querySelectorAll('#langtoggle button');
+    for(var i=0;i<btns.length;i++){ btns[i].classList.toggle('on', btns[i].dataset.lang===lang); }
+    els.forEach(function(el){ var t=el.dataset[lang]; if(t!==undefined) el._s.set(t); });
+  }
+  document.getElementById('langtoggle').addEventListener('click', function(e){
+    var b=e.target.closest('button'); if(b) setLang(b.dataset.lang);
+  });
+})();
+</script>
 
 </body>
 </html>
