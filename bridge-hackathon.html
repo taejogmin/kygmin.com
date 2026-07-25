@@ -27,6 +27,7 @@ body{
   background:var(--paper);color:var(--ink);
   font-family:var(--sans);font-size:16px;line-height:1.7;
   -webkit-font-smoothing:antialiased;
+  word-break:keep-all;overflow-wrap:break-word;
 }
 a{color:inherit;text-decoration:none;}
 a:focus-visible,button:focus-visible{outline:3px solid var(--green);outline-offset:3px;}
@@ -47,6 +48,17 @@ nav{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:3px s
 }
 .nav-links a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
 .nav-links a.on{background:var(--green);color:var(--paper);}
+/* ── Language toggle (floating) ── */
+#langtoggle{
+  position:fixed;right:20px;bottom:20px;z-index:50;display:inline-flex;
+  border:2px solid var(--ink);box-shadow:3px 3px 0 var(--ink);background:#fff;
+  font-family:var(--arch);font-weight:700;font-size:12px;overflow:hidden;
+}
+#langtoggle button{font:inherit;border:none;background:none;cursor:pointer;padding:9px 14px;color:var(--ink);letter-spacing:.5px;transition:background .1s,color .1s;}
+#langtoggle button.on{background:var(--green);color:var(--paper);}
+#langtoggle button+button{border-left:2px solid var(--ink);}
+.scr{color:var(--green);}
+.box .scr{color:var(--paper);}
 /* ── Hero ── */
 header{padding:64px 0 44px;border-bottom:3px solid var(--ink);}
 .sec-tag{
@@ -119,10 +131,10 @@ footer{border-top:3px solid var(--ink);padding:26px 0;}
   <div class="nav-inner">
     <a class="logo" href="index.html">KYG<em>MIN</em></a>
     <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="index.html#portfolio">Careers</a>
-      <a class="on" href="bridge-hackathon.html">Bridge Hackathon</a>
-      <a href="solution-challenge.html">Solution Challenge</a>
+      <a href="index.html"><span class="tx" data-en="Home" data-kr="홈">Home</span></a>
+      <a href="index.html#portfolio"><span class="tx" data-en="Careers" data-kr="경력">Careers</span></a>
+      <a class="on" href="bridge-hackathon.html"><span class="tx" data-en="Bridge Hackathon" data-kr="브릿지 해커톤">Bridge Hackathon</span></a>
+      <a href="solution-challenge.html"><span class="tx" data-en="Solution Challenge" data-kr="솔루션 챌린지">Solution Challenge</span></a>
       <a href="cv.html">CV &#128274;</a>
     </div>
   </div>
@@ -130,73 +142,73 @@ footer{border-top:3px solid var(--ink);padding:26px 0;}
 
 <header>
   <div class="wrap">
-    <span class="sec-tag">PROJECT — GOOGLE DEVELOPER STUDENT CLUBS (GDSC) WASEDA</span>
-    <h1>THE <span class="box">BRIDGE</span> HACKATHON</h1>
-    <p class="hero-sub">A one-night, cross-campus hackathon where five GDSC chapters across Korea and Japan built working prototypes for the UN Sustainable Development Goals using Google's products and services. Our team built ClothesBridge — a trust-first way to trade and lend clothes.</p>
-    <p class="hero-note">FEB 11–12, 2023 · EAST ASIA GDSC GLOBAL COLLAB HACKATHON · ROLE: BACKEND, GDSC WASEDA TEAM</p>
+    <span class="sec-tag tx" data-en="PROJECT — GOOGLE DEVELOPER STUDENT CLUBS (GDSC) WASEDA" data-kr="프로젝트 — 구글 개발자 학생 클럽(GDSC) 와세다">PROJECT — GOOGLE DEVELOPER STUDENT CLUBS (GDSC) WASEDA</span>
+    <h1><span class="tx" data-en="THE " data-kr="">THE </span><span class="box"><span class="tx" data-en="BRIDGE" data-kr="브릿지">BRIDGE</span></span><span class="tx" data-en=" HACKATHON" data-kr=" 해커톤"> HACKATHON</span></h1>
+    <p class="hero-sub tx" data-en="A one-night, cross-campus hackathon where five GDSC chapters across Korea and Japan built working prototypes for the UN Sustainable Development Goals using Google's products and services. Our team built ClothesBridge — a trust-first way to trade and lend clothes." data-kr="한국과 일본의 GDSC 5개 챕터가 하룻밤 동안 구글의 제품과 서비스를 활용해 UN 지속가능발전목표(SDGs)에 대한 프로토타입을 만든 크로스캠퍼스 해커톤입니다. 저희 팀은 신뢰를 기반으로 옷을 거래하고 빌려주는 서비스, ClothesBridge를 만들었습니다.">A one-night, cross-campus hackathon where five GDSC chapters across Korea and Japan built working prototypes for the UN Sustainable Development Goals using Google's products and services. Our team built ClothesBridge — a trust-first way to trade and lend clothes.</p>
+    <p class="hero-note tx" data-en="FEB 11–12, 2023 · EAST ASIA GDSC GLOBAL COLLAB HACKATHON · ROLE: BACKEND, GDSC WASEDA TEAM" data-kr="2023.02.11–12 · 동아시아 GDSC 글로벌 콜라보 해커톤 · 역할: 백엔드, GDSC 와세다 팀">FEB 11–12, 2023 · EAST ASIA GDSC GLOBAL COLLAB HACKATHON · ROLE: BACKEND, GDSC WASEDA TEAM</p>
   </div>
 </header>
 
 <main class="wrap">
 
   <div class="section">
-    <h2>The Brief</h2>
-    <p>The Bridge Hackathon (formally the East Asia GDSC Global Collab Hackathon) brought together Google Developer Student Club chapters from GDSC Waseda, GDSC Senshu, GDSC Keio, GDSC SWU, and KUGODS for one overnight sprint. Each team had to pick at least one UN Sustainable Development Goal and build a working solution around it using at least one Google product or service, then present it the following morning.</p>
+    <h2 class="tx" data-en="The Brief" data-kr="개요">The Brief</h2>
+    <p class="tx" data-en="The Bridge Hackathon (formally the East Asia GDSC Global Collab Hackathon) brought together Google Developer Student Club chapters from GDSC Waseda, GDSC Senshu, GDSC Keio, GDSC SWU, and KUGODS for one overnight sprint. Each team had to pick at least one UN Sustainable Development Goal and build a working solution around it using at least one Google product or service, then present it the following morning." data-kr="브릿지 해커톤(정식 명칭 동아시아 GDSC 글로벌 콜라보 해커톤)은 GDSC 와세다, GDSC 센슈, GDSC 게이오, GDSC 서울여대(SWU), KUGODS의 구글 개발자 학생 클럽 챕터들이 하룻밤 동안 함께한 스프린트였습니다. 각 팀은 UN 지속가능발전목표 중 최소 한 가지를 선정하고, 구글 제품이나 서비스를 최소 하나 이상 활용해 실제 작동하는 솔루션을 만든 뒤 다음 날 아침 발표해야 했습니다.">The Bridge Hackathon (formally the East Asia GDSC Global Collab Hackathon) brought together Google Developer Student Club chapters from GDSC Waseda, GDSC Senshu, GDSC Keio, GDSC SWU, and KUGODS for one overnight sprint. Each team had to pick at least one UN Sustainable Development Goal and build a working solution around it using at least one Google product or service, then present it the following morning.</p>
     <div class="meta-row">
-      <span class="meta-chip g">Overnight hackathon</span>
-      <span class="meta-chip">5 GDSC chapters</span>
-      <span class="meta-chip">Korea × Japan</span>
-      <span class="meta-chip">UN SDGs</span>
+      <span class="meta-chip g tx" data-en="Overnight hackathon" data-kr="밤샘 해커톤">Overnight hackathon</span>
+      <span class="meta-chip tx" data-en="5 GDSC chapters" data-kr="GDSC 5개 챕터">5 GDSC chapters</span>
+      <span class="meta-chip tx" data-en="Korea × Japan" data-kr="한국 × 일본">Korea × Japan</span>
+      <span class="meta-chip tx" data-en="UN SDGs" data-kr="UN 지속가능목표">UN SDGs</span>
     </div>
   </div>
 
   <div class="section">
-    <h2>The Idea — ClothesBridge</h2>
-    <p>Fast fashion is cheap because its environmental cost is hidden — carbon-heavy production, huge water use, and microplastic shedding that ends up landfilled or incinerated within a year or two of purchase. We set out to make it easier to keep clothes circulating instead of discarding them: a customer-to-customer trading and lending app, in the spirit of Korea's Danggeun Market (당근마켓), built specifically for clothes.</p>
-    <p>A pure peer-to-peer lending model has an obvious hole, though: moral hazard. If a borrower damages or fails to return an item, the lender has no recourse. So ClothesBridge doesn't just connect two users and step away — it inspects each item's condition before the handover and again afterward. If a discrepancy shows up — damage, loss, non-return — the party responsible is fined, and that fine both compensates the other party and funds the service itself.</p>
+    <h2 class="tx" data-en="The Idea — ClothesBridge" data-kr="아이디어 — ClothesBridge">The Idea — ClothesBridge</h2>
+    <p class="tx" data-en="Fast fashion is cheap because its environmental cost is hidden — carbon-heavy production, huge water use, and microplastic shedding that ends up landfilled or incinerated within a year or two of purchase. We set out to make it easier to keep clothes circulating instead of discarding them: a customer-to-customer trading and lending app, in the spirit of Korea's Danggeun Market (당근마켓), built specifically for clothes." data-kr="패스트패션이 저렴한 이유는 환경 비용이 감춰져 있기 때문입니다 — 탄소 배출이 많은 생산 과정, 막대한 물 사용, 그리고 구매 후 1~2년 안에 매립되거나 소각되며 발생하는 미세플라스틱까지. 저희는 옷을 버리는 대신 계속 순환시킬 수 있도록, 한국의 당근마켓 같은 방식을 옷에 특화한 개인 간(C2C) 거래·대여 앱을 만들기로 했습니다.">Fast fashion is cheap because its environmental cost is hidden — carbon-heavy production, huge water use, and microplastic shedding that ends up landfilled or incinerated within a year or two of purchase. We set out to make it easier to keep clothes circulating instead of discarding them: a customer-to-customer trading and lending app, in the spirit of Korea's Danggeun Market (당근마켓), built specifically for clothes.</p>
+    <p class="tx" data-en="A pure peer-to-peer lending model has an obvious hole, though: moral hazard. If a borrower damages or fails to return an item, the lender has no recourse. So ClothesBridge doesn't just connect two users and step away — it inspects each item's condition before the handover and again afterward. If a discrepancy shows up — damage, loss, non-return — the party responsible is fined, and that fine both compensates the other party and funds the service itself." data-kr="다만 순수한 개인 간 대여 모델에는 뚜렷한 허점이 있습니다 — 바로 도덕적 해이입니다. 빌린 사람이 물건을 훼손하거나 돌려주지 않아도 빌려준 사람은 별다른 대응 수단이 없습니다. 그래서 ClothesBridge는 두 사용자를 연결만 해주고 끝나지 않습니다 — 물건을 주고받기 전과 후, 두 차례 상태를 확인합니다. 손상, 분실, 미반납 등 문제가 발견되면 책임 있는 쪽에 벌금이 부과되며, 이 벌금은 상대방에게 보상을 제공함과 동시에 서비스 운영 재원이 됩니다.">A pure peer-to-peer lending model has an obvious hole, though: moral hazard. If a borrower damages or fails to return an item, the lender has no recourse. So ClothesBridge doesn't just connect two users and step away — it inspects each item's condition before the handover and again afterward. If a discrepancy shows up — damage, loss, non-return — the party responsible is fined, and that fine both compensates the other party and funds the service itself.</p>
     <div class="meta-row">
-      <span class="meta-chip g">C2C trading &amp; lending</span>
-      <span class="meta-chip">Anti fast-fashion waste</span>
-      <span class="meta-chip">Trust &amp; verification layer</span>
+      <span class="meta-chip g tx" data-en="C2C trading &amp; lending" data-kr="C2C 거래·대여">C2C trading &amp; lending</span>
+      <span class="meta-chip tx" data-en="Anti fast-fashion waste" data-kr="패스트패션 폐기물 감축">Anti fast-fashion waste</span>
+      <span class="meta-chip tx" data-en="Trust &amp; verification layer" data-kr="신뢰·검증 시스템">Trust &amp; verification layer</span>
     </div>
   </div>
 
   <div class="section">
-    <h2>How It Works</h2>
+    <h2 class="tx" data-en="How It Works" data-kr="작동 방식">How It Works</h2>
     <ol class="steps">
-      <li>A user lists an item to trade or lend, with photos and condition notes.</li>
-      <li>ClothesBridge logs the item's condition before it changes hands.</li>
-      <li>The item is exchanged directly between users, peer-to-peer.</li>
-      <li>ClothesBridge checks the item's condition again after the trade or the loan period ends.</li>
-      <li>If the condition doesn't match — moral hazard — the responsible party is fined; the fine compensates the other party and is how the service earns revenue.</li>
+      <li class="tx" data-en="A user lists an item to trade or lend, with photos and condition notes." data-kr="사용자가 사진과 상태 메모와 함께 거래하거나 빌려줄 물건을 등록합니다.">A user lists an item to trade or lend, with photos and condition notes.</li>
+      <li class="tx" data-en="ClothesBridge logs the item's condition before it changes hands." data-kr="ClothesBridge가 물건이 오가기 전 상태를 기록합니다.">ClothesBridge logs the item's condition before it changes hands.</li>
+      <li class="tx" data-en="The item is exchanged directly between users, peer-to-peer." data-kr="사용자 간에 물건이 직접 교환됩니다.">The item is exchanged directly between users, peer-to-peer.</li>
+      <li class="tx" data-en="ClothesBridge checks the item's condition again after the trade or the loan period ends." data-kr="거래가 끝나거나 대여 기간이 종료되면 ClothesBridge가 물건 상태를 다시 확인합니다.">ClothesBridge checks the item's condition again after the trade or the loan period ends.</li>
+      <li class="tx" data-en="If the condition doesn't match — moral hazard — the responsible party is fined; the fine compensates the other party and is how the service earns revenue." data-kr="상태가 일치하지 않으면 — 즉 도덕적 해이가 발생하면 — 책임 있는 쪽에 벌금이 부과되고, 이 벌금이 상대방을 보상하는 동시에 서비스의 수익원이 됩니다.">If the condition doesn't match — moral hazard — the responsible party is fined; the fine compensates the other party and is how the service earns revenue.</li>
     </ol>
   </div>
 
   <div class="section">
-    <h2>Design Process</h2>
-    <p>From a paper wireframe and information architecture to a working Android build in well under 24 hours — login, home feed, item posting, product detail, and profile.</p>
+    <h2 class="tx" data-en="Design Process" data-kr="디자인 프로세스">Design Process</h2>
+    <p class="tx" data-en="From a paper wireframe and information architecture to a working Android build in well under 24 hours — login, home feed, item posting, product detail, and profile." data-kr="종이 와이어프레임과 정보 구조(IA) 설계에서 시작해 24시간이 채 되기 전에 실제 작동하는 안드로이드 빌드까지 완성했습니다 — 로그인, 홈 피드, 상품 등록, 상세 페이지, 프로필까지.">From a paper wireframe and information architecture to a working Android build in well under 24 hours — login, home feed, item posting, product detail, and profile.</p>
     <div class="gallery">
       <figure>
         <img src="bridge-wireframe-ia.png" alt="Hand-drawn wireframes and information architecture diagram for ClothesBridge" loading="lazy" />
-        <figcaption>Early paper wireframes and the information architecture (IA) map.</figcaption>
+        <figcaption class="tx" data-en="Early paper wireframes and the information architecture (IA) map." data-kr="초기 종이 와이어프레임과 정보 구조(IA) 맵">Early paper wireframes and the information architecture (IA) map.</figcaption>
       </figure>
       <figure>
         <img src="bridge-design-completion.png" alt="Completed screen designs for launch, login, home, my page, posting, and product pages" loading="lazy" />
-        <figcaption>Completed screens — launch, login, home, posting, and product pages — alongside designs still in progress.</figcaption>
+        <figcaption class="tx" data-en="Completed screens — launch, login, home, posting, and product pages — alongside designs still in progress." data-kr="완성된 화면 — 런칭, 로그인, 홈, 등록, 상품 페이지 — 그리고 아직 진행 중인 디자인들">Completed screens — launch, login, home, posting, and product pages — alongside designs still in progress.</figcaption>
       </figure>
       <figure>
         <img src="bridge-design-system.png" alt="Design system: brand colors, text colors, button colors, and additional product page variants" loading="lazy" />
-        <figcaption>The shared design system — brand palette, type colors, and button states.</figcaption>
+        <figcaption class="tx" data-en="The shared design system — brand palette, type colors, and button states." data-kr="공용 디자인 시스템 — 브랜드 컬러, 텍스트 컬러, 버튼 상태">The shared design system — brand palette, type colors, and button states.</figcaption>
       </figure>
       <figure>
         <img src="bridge-final-screens.png" alt="Final screen set covering launch, search, posting, free and rental product pages, and my page" loading="lazy" />
-        <figcaption>Final screen set: launch, search, posting, free/rental product pages, and profile.</figcaption>
+        <figcaption class="tx" data-en="Final screen set: launch, search, posting, free/rental product pages, and profile." data-kr="최종 화면 세트 — 런칭, 검색, 등록, 무료/대여 상품 페이지, 프로필">Final screen set: launch, search, posting, free/rental product pages, and profile.</figcaption>
       </figure>
     </div>
   </div>
 
   <div class="section">
-    <h2>Built With</h2>
+    <h2 class="tx" data-en="Built With" data-kr="사용 기술">Built With</h2>
     <div class="meta-row">
       <span class="meta-chip g">Android · Kotlin</span>
       <span class="meta-chip">Firebase Authentication</span>
@@ -207,33 +219,33 @@ footer{border-top:3px solid var(--ink);padding:26px 0;}
   </div>
 
   <div class="section">
-    <h2>Presentation &amp; Estimated Impact</h2>
-    <p>At the closing presentation, our team estimated the environmental impact ClothesBridge could offset by keeping clothes in use rather than discarded — modelling reductions in carbon emissions, water use, and microplastic shedding per item kept in circulation.</p>
+    <h2 class="tx" data-en="Presentation &amp; Estimated Impact" data-kr="발표 및 추정 임팩트">Presentation &amp; Estimated Impact</h2>
+    <p class="tx" data-en="At the closing presentation, our team estimated the environmental impact ClothesBridge could offset by keeping clothes in use rather than discarded — modelling reductions in carbon emissions, water use, and microplastic shedding per item kept in circulation." data-kr="마무리 발표에서 저희 팀은 옷을 버리지 않고 계속 사용하게 함으로써 ClothesBridge가 상쇄할 수 있는 환경적 영향을 추정했습니다 — 순환되는 물건 하나당 탄소 배출, 물 사용, 미세플라스틱 발생이 얼마나 줄어드는지 모델링했습니다.">At the closing presentation, our team estimated the environmental impact ClothesBridge could offset by keeping clothes in use rather than discarded — modelling reductions in carbon emissions, water use, and microplastic shedding per item kept in circulation.</p>
     <div class="gallery">
       <figure>
         <img src="bridge-presentation.jpg" alt="Presenting the ClothesBridge impact estimates on stage at the hackathon's closing session" loading="lazy" />
-        <figcaption>Presenting ClothesBridge's estimated impact at the closing session.</figcaption>
+        <figcaption class="tx" data-en="Presenting ClothesBridge's estimated impact at the closing session." data-kr="마무리 세션에서 ClothesBridge의 추정 임팩트를 발표하는 모습">Presenting ClothesBridge's estimated impact at the closing session.</figcaption>
       </figure>
     </div>
     <div class="stat-grid">
-      <div class="stat"><div class="num">342.96 kg</div><div class="lbl">Carbon emissions reduced</div></div>
-      <div class="stat"><div class="num">3,781 L</div><div class="lbl">Water saved</div></div>
-      <div class="stat"><div class="num">4.62 g</div><div class="lbl">Microplastics reduced</div></div>
+      <div class="stat"><div class="num">342.96 kg</div><div class="lbl tx" data-en="Carbon emissions reduced" data-kr="탄소 배출 감축량">Carbon emissions reduced</div></div>
+      <div class="stat"><div class="num">3,781 L</div><div class="lbl tx" data-en="Water saved" data-kr="절약된 물">Water saved</div></div>
+      <div class="stat"><div class="num">4.62 g</div><div class="lbl tx" data-en="Microplastics reduced" data-kr="미세플라스틱 감축량">Microplastics reduced</div></div>
     </div>
-    <p class="stat-note">Figures are the team's own back-of-envelope estimate presented at the hackathon, not an independently audited measurement.</p>
+    <p class="stat-note tx" data-en="Figures are the team's own back-of-envelope estimate presented at the hackathon, not an independently audited measurement." data-kr="수치는 해커톤에서 발표된 팀 자체의 개략적 추정치이며, 독립적으로 검증된 측정값은 아닙니다.">Figures are the team's own back-of-envelope estimate presented at the hackathon, not an independently audited measurement.</p>
   </div>
 
   <div class="section">
-    <h2>Recognition</h2>
-    <p>Certificate of Participation, East Asia GDSC Global Collab Hackathon, February 11–12, 2023 — co-signed by the Korea and Japan head organizers of GDSC SWU, GDSC Senshu, GDSC Waseda, KUGODS, and GDSC Keio.</p>
+    <h2 class="tx" data-en="Recognition" data-kr="수상 및 인증">Recognition</h2>
+    <p class="tx" data-en="Certificate of Participation, East Asia GDSC Global Collab Hackathon, February 11–12, 2023 — co-signed by the Korea and Japan head organizers of GDSC SWU, GDSC Senshu, GDSC Waseda, KUGODS, and GDSC Keio." data-kr="동아시아 GDSC 글로벌 콜라보 해커톤 참가 인증서, 2023년 2월 11–12일 — GDSC 서울여대, GDSC 센슈, GDSC 와세다, KUGODS, GDSC 게이오의 한국·일본 측 대표 주최자들이 공동 서명했습니다.">Certificate of Participation, East Asia GDSC Global Collab Hackathon, February 11–12, 2023 — co-signed by the Korea and Japan head organizers of GDSC SWU, GDSC Senshu, GDSC Waseda, KUGODS, and GDSC Keio.</p>
     <div class="cert-frame">
       <img src="bridge-certificate.jpg" alt="Certificate of Participation in the Bridge Hackathon, awarded to Kyungmin Park" loading="lazy" />
     </div>
   </div>
 
   <div class="link-row">
-    <a class="btn btn-green" href="https://github.com/Giddy-begin/ClothesBridge" target="_blank" rel="noopener">GitHub Repo &#8599;</a>
-    <a class="btn" href="index.html#portfolio">&larr; Back to Careers</a>
+    <a class="btn btn-green" href="https://github.com/Giddy-begin/ClothesBridge" target="_blank" rel="noopener"><span class="tx" data-en="GitHub Repo" data-kr="GitHub 저장소">GitHub Repo</span> &#8599;</a>
+    <a class="btn" href="index.html#portfolio">&larr; <span class="tx" data-en="Back to Careers" data-kr="경력으로 돌아가기">Back to Careers</span></a>
   </div>
 
 </main>
@@ -241,9 +253,65 @@ footer{border-top:3px solid var(--ink);padding:26px 0;}
 <footer>
   <div class="foot-inner">
     <span>© KYGMIN.COM</span>
-    <span>GDSC WASEDA · THE BRIDGE HACKATHON · FEB 2023</span>
+    <span class="tx" data-en="GDSC WASEDA · THE BRIDGE HACKATHON · FEB 2023" data-kr="GDSC 와세다 · 브릿지 해커톤 · 2023.02">GDSC WASEDA · THE BRIDGE HACKATHON · FEB 2023</span>
   </div>
 </footer>
+
+<div id="langtoggle" aria-label="Language">
+  <button data-lang="en" class="on">EN</button>
+  <button data-lang="kr">한</button>
+</div>
+
+<script>
+(function(){
+  var POOL = ("ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎㅏㅑㅓㅕㅗㅛㅜㅠㅡㅣ"
+    + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-·").split("");
+  function esc(c){return c==="&"?"&amp;":c==="<"?"&lt;":c===">"?"&gt;":c;}
+
+  function Scramble(el){ this.el=el; this.raf=null; this.frame=this.frame.bind(this); }
+  Scramble.prototype.set=function(txt){
+    var old = this.el.dataset.plain!==undefined ? this.el.dataset.plain : this.el.textContent;
+    var len=Math.max(old.length, txt.length);
+    this.q=[];
+    for(var i=0;i<len;i++){
+      var from=old[i]||"", to=txt[i]||"";
+      var start=Math.floor(Math.random()*20);
+      var end=start+Math.floor(Math.random()*25)+12;
+      this.q.push({from:from,to:to,start:start,end:end,ch:null});
+    }
+    if(this.raf) cancelAnimationFrame(this.raf);
+    this.f=0; this.txt=txt; this.frame();
+  };
+  Scramble.prototype.frame=function(){
+    var out="", done=0;
+    for(var i=0;i<this.q.length;i++){
+      var it=this.q[i];
+      if(this.f>=it.end){ done++; out+=esc(it.to); }
+      else if(this.f>=it.start){
+        if(!it.ch || Math.random()<0.3){ it.ch=POOL[Math.floor(Math.random()*POOL.length)]; }
+        out+='<span class="scr">'+esc(it.ch)+'</span>';
+      } else out+=esc(it.from);
+    }
+    this.el.innerHTML=out;
+    if(done===this.q.length){ this.el.dataset.plain=this.txt; }
+    else { this.f++; this.raf=requestAnimationFrame(this.frame); }
+  };
+
+  var els=[].slice.call(document.querySelectorAll('.tx'));
+  els.forEach(function(el){ el.dataset.plain=el.textContent; el._s=new Scramble(el); });
+  var cur='en';
+  function setLang(lang){
+    if(lang===cur) return; cur=lang;
+    document.documentElement.lang = (lang==='kr'?'ko':'en');
+    var btns=document.querySelectorAll('#langtoggle button');
+    for(var i=0;i<btns.length;i++){ btns[i].classList.toggle('on', btns[i].dataset.lang===lang); }
+    els.forEach(function(el){ var t=el.dataset[lang]; if(t!==undefined) el._s.set(t); });
+  }
+  document.getElementById('langtoggle').addEventListener('click', function(e){
+    var b=e.target.closest('button'); if(b) setLang(b.dataset.lang);
+  });
+})();
+</script>
 
 </body>
 </html>

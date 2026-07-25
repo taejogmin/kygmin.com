@@ -27,6 +27,7 @@ body{
   background:var(--paper);color:var(--ink);
   font-family:var(--sans);font-size:16px;line-height:1.7;
   -webkit-font-smoothing:antialiased;
+  word-break:keep-all;overflow-wrap:break-word;
 }
 a{color:inherit;text-decoration:none;}
 a:focus-visible,button:focus-visible{outline:3px solid var(--green);outline-offset:3px;}
@@ -47,6 +48,17 @@ nav{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:3px s
 }
 .nav-links a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
 .nav-links a.on{background:var(--green);color:var(--paper);}
+/* ── Language toggle (floating) ── */
+#langtoggle{
+  position:fixed;right:20px;bottom:20px;z-index:50;display:inline-flex;
+  border:2px solid var(--ink);box-shadow:3px 3px 0 var(--ink);background:#fff;
+  font-family:var(--arch);font-weight:700;font-size:12px;overflow:hidden;
+}
+#langtoggle button{font:inherit;border:none;background:none;cursor:pointer;padding:9px 14px;color:var(--ink);letter-spacing:.5px;transition:background .1s,color .1s;}
+#langtoggle button.on{background:var(--green);color:var(--paper);}
+#langtoggle button+button{border-left:2px solid var(--ink);}
+.scr{color:var(--green);}
+.box .scr{color:var(--paper);}
 /* ── Hero ── */
 header{padding:64px 0 44px;border-bottom:3px solid var(--ink);}
 .sec-tag{
@@ -127,10 +139,10 @@ footer{border-top:3px solid var(--ink);padding:26px 0;}
   <div class="nav-inner">
     <a class="logo" href="index.html">KYG<em>MIN</em></a>
     <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="index.html#portfolio">Careers</a>
-      <a class="on" href="solution-challenge.html">Solution Challenge</a>
-      <a href="bridge-hackathon.html">Bridge Hackathon</a>
+      <a href="index.html"><span class="tx" data-en="Home" data-kr="홈">Home</span></a>
+      <a href="index.html#portfolio"><span class="tx" data-en="Careers" data-kr="경력">Careers</span></a>
+      <a class="on" href="solution-challenge.html"><span class="tx" data-en="Solution Challenge" data-kr="솔루션 챌린지">Solution Challenge</span></a>
+      <a href="bridge-hackathon.html"><span class="tx" data-en="Bridge Hackathon" data-kr="브릿지 해커톤">Bridge Hackathon</span></a>
       <a href="cv.html">CV &#128274;</a>
     </div>
   </div>
@@ -138,95 +150,95 @@ footer{border-top:3px solid var(--ink);padding:26px 0;}
 
 <header>
   <div class="wrap">
-    <span class="sec-tag">PROJECT — GOOGLE DEVELOPER STUDENT CLUBS (GDSC) WASEDA</span>
+    <span class="sec-tag tx" data-en="PROJECT — GOOGLE DEVELOPER STUDENT CLUBS (GDSC) WASEDA" data-kr="프로젝트 — 구글 개발자 학생 클럽(GDSC) 와세다">PROJECT — GOOGLE DEVELOPER STUDENT CLUBS (GDSC) WASEDA</span>
     <h1>GIV<span class="box">PLUS</span></h1>
-    <p class="hero-sub">A donation platform built for the 2023 Google Solution Challenge. Givplus combines exchange-rate movement and purchasing-power-parity data into a single score, so the same donation is routed toward the country and organisation where it currently buys the most help.</p>
-    <p class="hero-note">2023 GOOGLE SOLUTION CHALLENGE · UN SDG 17.3.1 · ROLE: FOUNDER &amp; BACKEND, GDSC WASEDA TEAM</p>
+    <p class="hero-sub tx" data-en="A donation platform built for the 2023 Google Solution Challenge. Givplus combines exchange-rate movement and purchasing-power-parity data into a single score, so the same donation is routed toward the country and organisation where it currently buys the most help." data-kr="2023 구글 솔루션 챌린지를 위해 만든 기부 플랫폼입니다. Givplus는 환율 변동과 구매력평가(PPP) 데이터를 하나의 점수로 결합해, 동일한 기부금이 현재 가장 큰 도움이 되는 국가와 단체로 향하도록 설계했습니다.">A donation platform built for the 2023 Google Solution Challenge. Givplus combines exchange-rate movement and purchasing-power-parity data into a single score, so the same donation is routed toward the country and organisation where it currently buys the most help.</p>
+    <p class="hero-note tx" data-en="2023 GOOGLE SOLUTION CHALLENGE · UN SDG 17.3.1 · ROLE: FOUNDER &amp; BACKEND, GDSC WASEDA TEAM" data-kr="2023 구글 솔루션 챌린지 · UN SDG 17.3.1 · 역할: 창업자 &amp; 백엔드, GDSC 와세다 팀">2023 GOOGLE SOLUTION CHALLENGE · UN SDG 17.3.1 · ROLE: FOUNDER &amp; BACKEND, GDSC WASEDA TEAM</p>
   </div>
 </header>
 
 <main class="wrap">
 
   <div class="section">
-    <h2>The Brief</h2>
-    <p>The Google Solution Challenge asks student teams to pick at least one of the UN's 17 Sustainable Development Goals and build a working solution around it using at least one Google product or service. As a Google Developer Student Club (GDSC) Waseda backend member studying economics, I wanted a project that put that major to use — so I started looking for an economic inefficiency worth fixing.</p>
+    <h2 class="tx" data-en="The Brief" data-kr="개요">The Brief</h2>
+    <p class="tx" data-en="The Google Solution Challenge asks student teams to pick at least one of the UN's 17 Sustainable Development Goals and build a working solution around it using at least one Google product or service. As a Google Developer Student Club (GDSC) Waseda backend member studying economics, I wanted a project that put that major to use — so I started looking for an economic inefficiency worth fixing." data-kr="구글 솔루션 챌린지는 학생 팀이 UN의 17개 지속가능발전목표 중 최소 하나를 선정하고, 구글 제품이나 서비스를 최소 하나 이상 활용해 실제 작동하는 솔루션을 만들도록 요구합니다. 경제학을 전공하며 GDSC 와세다 백엔드 팀원으로 활동하던 저는 전공을 살릴 수 있는 프로젝트를 하고 싶었고, 그래서 고쳐볼 만한 경제적 비효율을 찾기 시작했습니다.">The Google Solution Challenge asks student teams to pick at least one of the UN's 17 Sustainable Development Goals and build a working solution around it using at least one Google product or service. As a Google Developer Student Club (GDSC) Waseda backend member studying economics, I wanted a project that put that major to use — so I started looking for an economic inefficiency worth fixing.</p>
     <div class="meta-row">
-      <span class="meta-chip g">Google Solution Challenge 2023</span>
+      <span class="meta-chip g tx" data-en="Google Solution Challenge 2023" data-kr="2023 구글 솔루션 챌린지">Google Solution Challenge 2023</span>
       <span class="meta-chip">SDG 17.3.1</span>
       <span class="meta-chip">Google Cloud + Google Maps</span>
     </div>
   </div>
 
   <div class="section">
-    <h2>The Idea — Why Currency Should Change How You Give</h2>
-    <p>The spark was a news clip about a single tweet: because of the gap between the Korean won and the Turkish lira, the price of three coffees in Korea could buy five blankets for survivors of the 2023 Turkey–Syria earthquake. A "small" donation from Korea was disproportionately large once it crossed the exchange rate.</p>
-    <p>I thought about it the way I think about buying a book on Amazon — if the price and shipping never change, you'd rather check out when $1 buys ₩1,000 than when it buys ₩1,300. The same logic applies to giving: the same ₩1,000 donation can carry more or less real value depending on the exchange rate on the day you give it, yet almost no donation platform accounts for that.</p>
-    <p>I also didn't want Givplus to be a one-disaster platform. The earthquake was the spark, but the people who needed help before it were still there afterward, and disasters aren't the only lens for need — even the United States, one of the wealthiest countries in the world, has a well-documented homelessness problem, though most people picture Sub-Saharan Africa or Southeast Asia first when they think of "who needs help." I wanted a platform that corrected for that imbalance rather than reinforcing it.</p>
-    <p>Exchange rate alone isn't a complete picture, though — a favourable exchange rate doesn't mean a country actually needs the money more. So I paired it with a price-level indicator (purchasing power parity). A rough linear regression across OECD countries showed lower price levels correlating with lower GDP — an imperfect signal (it excludes developing countries and low output isn't strictly poverty) but directionally useful enough to combine with the exchange rate.</p>
-    <h3 class="sub">Why "Givplus"</h3>
-    <p>The name merges <b>Give</b> and <b>surplus</b> — in economics, surplus can mean excess value, which is exactly what a favourable exchange rate creates for a donor. It also happens to sound close to the Korean word for donation, 기부 (gibu), which made it an easy name to say out loud in either language.</p>
+    <h2 class="tx" data-en="The Idea — Why Currency Should Change How You Give" data-kr="아이디어 — 환율이 기부 방식을 바꿔야 하는 이유">The Idea — Why Currency Should Change How You Give</h2>
+    <p class="tx" data-en="The spark was a news clip about a single tweet: because of the gap between the Korean won and the Turkish lira, the price of three coffees in Korea could buy five blankets for survivors of the 2023 Turkey–Syria earthquake. A &quot;small&quot; donation from Korea was disproportionately large once it crossed the exchange rate." data-kr="시작은 트윗 하나를 다룬 뉴스 클립이었습니다 — 한국 원화와 튀르키예 리라 사이의 환율 차이 때문에, 한국에서 커피 세 잔 값이면 2023년 튀르키예-시리아 지진 생존자들에게 담요 다섯 장을 사줄 수 있었습니다. 한국에서는 &#39;작은&#39; 기부금이 환율을 건너는 순간 불균형하게 큰 금액이 된 것입니다.">The spark was a news clip about a single tweet: because of the gap between the Korean won and the Turkish lira, the price of three coffees in Korea could buy five blankets for survivors of the 2023 Turkey–Syria earthquake. A "small" donation from Korea was disproportionately large once it crossed the exchange rate.</p>
+    <p class="tx" data-en="I thought about it the way I think about buying a book on Amazon — if the price and shipping never change, you'd rather check out when $1 buys ₩1,000 than when it buys ₩1,300. The same logic applies to giving: the same ₩1,000 donation can carry more or less real value depending on the exchange rate on the day you give it, yet almost no donation platform accounts for that." data-kr="저는 이를 아마존에서 책을 살 때와 같은 방식으로 생각했습니다 — 가격과 배송비가 그대로라면, $1이 1,300원일 때보다 1,000원일 때 결제하는 게 이득입니다. 기부도 마찬가지입니다 — 똑같은 1,000원을 기부해도 기부하는 날의 환율에 따라 실제 가치는 달라지는데, 이를 반영하는 기부 플랫폼은 거의 없었습니다.">I thought about it the way I think about buying a book on Amazon — if the price and shipping never change, you'd rather check out when $1 buys ₩1,000 than when it buys ₩1,300. The same logic applies to giving: the same ₩1,000 donation can carry more or less real value depending on the exchange rate on the day you give it, yet almost no donation platform accounts for that.</p>
+    <p class="tx" data-en="I also didn't want Givplus to be a one-disaster platform. The earthquake was the spark, but the people who needed help before it were still there afterward, and disasters aren't the only lens for need — even the United States, one of the wealthiest countries in the world, has a well-documented homelessness problem, though most people picture Sub-Saharan Africa or Southeast Asia first when they think of &quot;who needs help.&quot; I wanted a platform that corrected for that imbalance rather than reinforcing it." data-kr="또한 Givplus가 하나의 재난에만 반응하는 플랫폼이 되는 것도 원하지 않았습니다. 지진은 계기였을 뿐, 그 이전부터 도움이 필요했던 사람들은 재난 이후에도 여전히 그 자리에 있었습니다. 그리고 도움이 필요한 이유가 재난만은 아닙니다 — 세계에서 가장 부유한 나라 중 하나인 미국조차 노숙 문제가 잘 알려져 있지만, 대부분의 사람들은 &#39;누가 도움이 필요한가&#39;를 떠올릴 때 사하라 이남 아프리카나 동남아시아를 먼저 떠올립니다. 저는 이런 불균형을 강화하기보다 바로잡는 플랫폼을 만들고 싶었습니다.">I also didn't want Givplus to be a one-disaster platform. The earthquake was the spark, but the people who needed help before it were still there afterward, and disasters aren't the only lens for need — even the United States, one of the wealthiest countries in the world, has a well-documented homelessness problem, though most people picture Sub-Saharan Africa or Southeast Asia first when they think of "who needs help." I wanted a platform that corrected for that imbalance rather than reinforcing it.</p>
+    <p class="tx" data-en="Exchange rate alone isn't a complete picture, though — a favourable exchange rate doesn't mean a country actually needs the money more. So I paired it with a price-level indicator (purchasing power parity). A rough linear regression across OECD countries showed lower price levels correlating with lower GDP — an imperfect signal (it excludes developing countries and low output isn't strictly poverty) but directionally useful enough to combine with the exchange rate." data-kr="다만 환율만으로는 완전한 그림이 아닙니다 — 환율이 유리하다고 해서 그 나라가 실제로 돈이 더 필요하다는 뜻은 아니기 때문입니다. 그래서 물가 수준 지표(구매력평가, PPP)를 함께 사용했습니다. OECD 국가를 대상으로 한 간단한 선형회귀 분석에서 낮은 물가 수준이 낮은 GDP와 상관관계를 보였습니다 — 완벽한 지표는 아니지만(개발도상국이 제외되어 있고, 낮은 생산량이 곧 빈곤을 의미하지도 않습니다) 환율과 결합해 방향성을 판단하기엔 충분히 유용했습니다.">Exchange rate alone isn't a complete picture, though — a favourable exchange rate doesn't mean a country actually needs the money more. So I paired it with a price-level indicator (purchasing power parity). A rough linear regression across OECD countries showed lower price levels correlating with lower GDP — an imperfect signal (it excludes developing countries and low output isn't strictly poverty) but directionally useful enough to combine with the exchange rate.</p>
+    <h3 class="sub tx" data-en="Why &quot;Givplus&quot;" data-kr="&quot;Givplus&quot;라는 이름">Why "Givplus"</h3>
+    <p><span class="tx" data-en="The name merges " data-kr="이 이름은 ">The name merges </span><b class="tx" data-en="Give" data-kr="Give">Give</b><span class="tx" data-en=" and " data-kr="(기부하다)와 "> and </span><b class="tx" data-en="surplus" data-kr="surplus">surplus</b><span class="tx" data-en=" — in economics, surplus can mean excess value, which is exactly what a favourable exchange rate creates for a donor. It also happens to sound close to the Korean word for donation, 기부 (gibu), which made it an easy name to say out loud in either language." data-kr="(잉여)를 합친 것입니다 — 경제학에서 surplus는 초과 가치를 뜻하는데, 이는 유리한 환율이 기부자에게 만들어주는 것과 정확히 같은 개념입니다. 또한 한국어 &#39;기부&#39;와 발음이 비슷해서, 두 언어 어느 쪽으로도 부르기 쉬운 이름이 되었습니다."> — in economics, surplus can mean excess value, which is exactly what a favourable exchange rate creates for a donor. It also happens to sound close to the Korean word for donation, 기부 (gibu), which made it an easy name to say out loud in either language.</span></p>
   </div>
 
   <div class="section">
-    <h2>The Givplus Score</h2>
-    <p>Every country and partner NGO is ranked by a single number that blends two economic indicators: a <b>Forex Score</b> (how favourable the current exchange rate is relative to its own moving-average trend) and <b>PPP</b> (purchasing power parity, inverted so that lower price levels — more need — score higher).</p>
+    <h2 class="tx" data-en="The Givplus Score" data-kr="Givplus 점수">The Givplus Score</h2>
+    <p><span class="tx" data-en="Every country and partner NGO is ranked by a single number that blends two economic indicators: a " data-kr="모든 국가와 파트너 NGO는 두 가지 경제 지표를 결합한 하나의 점수로 순위가 매겨집니다 — 현재 환율이 자체 이동평균 추세 대비 얼마나 유리한지를 나타내는 ">Every country and partner NGO is ranked by a single number that blends two economic indicators: a </span><b class="tx" data-en="Forex Score" data-kr="Forex Score">Forex Score</b><span class="tx" data-en=" (how favourable the current exchange rate is relative to its own moving-average trend) and " data-kr="와, 물가 수준이 낮을수록(즉 필요가 클수록) 높은 점수를 받도록 역산한 "> (how favourable the current exchange rate is relative to its own moving-average trend) and </span><b class="tx" data-en="PPP" data-kr="PPP">PPP</b><span class="tx" data-en=" (purchasing power parity, inverted so that lower price levels — more need — score higher)." data-kr="(구매력평가)입니다."> (purchasing power parity, inverted so that lower price levels — more need — score higher).</span></p>
     <div class="stat-grid">
-      <div class="stat"><div class="num">70%</div><div class="lbl">Weight on Forex Score</div></div>
-      <div class="stat"><div class="num">30%</div><div class="lbl">Weight on PPP</div></div>
-      <div class="stat"><div class="num">5–200d</div><div class="lbl">Moving-average windows</div></div>
+      <div class="stat"><div class="num">70%</div><div class="lbl tx" data-en="Weight on Forex Score" data-kr="Forex Score 가중치">Weight on Forex Score</div></div>
+      <div class="stat"><div class="num">30%</div><div class="lbl tx" data-en="Weight on PPP" data-kr="PPP 가중치">Weight on PPP</div></div>
+      <div class="stat"><div class="num">5–200d</div><div class="lbl tx" data-en="Moving-average windows" data-kr="이동평균 구간">Moving-average windows</div></div>
     </div>
-    <p class="stat-note">Forex intentionally outweighs PPP because it moves faster — price levels barely shift day to day, so weighting PPP too heavily would freeze the leaderboard on the same countries and NGOs every time. Exchange rate is calculated as a weighted moving average across five time windows (5, 20, 60, 120, and 200 days) so the score reflects a stable trend, not daily noise.</p>
+    <p class="stat-note tx" data-en="Forex intentionally outweighs PPP because it moves faster — price levels barely shift day to day, so weighting PPP too heavily would freeze the leaderboard on the same countries and NGOs every time. Exchange rate is calculated as a weighted moving average across five time windows (5, 20, 60, 120, and 200 days) so the score reflects a stable trend, not daily noise." data-kr="Forex가 PPP보다 더 빠르게 움직이기 때문에 의도적으로 더 높은 가중치를 두었습니다 — 물가 수준은 하루 단위로는 거의 변하지 않아서, PPP 비중을 너무 높이면 순위표가 매번 같은 국가와 NGO로 고정될 수 있습니다. 환율은 다섯 개의 시간 구간(5, 20, 60, 120, 200일)에 걸친 가중이동평균으로 계산해, 하루하루의 노이즈가 아니라 안정적인 추세를 반영하도록 했습니다.">Forex intentionally outweighs PPP because it moves faster — price levels barely shift day to day, so weighting PPP too heavily would freeze the leaderboard on the same countries and NGOs every time. Exchange rate is calculated as a weighted moving average across five time windows (5, 20, 60, 120, and 200 days) so the score reflects a stable trend, not daily noise.</p>
     <div class="callout">
-      <b>The Coffee Index</b>
-      Most people don't intuitively understand purchasing power parity, so Givplus translates it into something everyone already prices in their head: coffee. A Coffee Index of 2.3 means one coffee's price at home buys 2.3 coffees in the destination country — a proxy for how far the same donation stretches there.
+      <b class="tx" data-en="The Coffee Index" data-kr="커피 지수">The Coffee Index</b>
+      <span class="tx" data-en="Most people don't intuitively understand purchasing power parity, so Givplus translates it into something everyone already prices in their head: coffee. A Coffee Index of 2.3 means one coffee's price at home buys 2.3 coffees in the destination country — a proxy for how far the same donation stretches there." data-kr="대부분의 사람들은 구매력평가를 직관적으로 이해하기 어렵습니다. 그래서 Givplus는 이를 누구나 머릿속에 가격이 있는 것, 바로 커피로 바꿔 표현합니다. 커피 지수 2.3은 자국에서 커피 한 잔 값이 목적지 국가에서는 커피 2.3잔을 살 수 있다는 뜻으로, 같은 기부금이 그곳에서 얼마나 더 멀리 갈 수 있는지를 보여주는 지표입니다.">Most people don't intuitively understand purchasing power parity, so Givplus translates it into something everyone already prices in their head: coffee. A Coffee Index of 2.3 means one coffee's price at home buys 2.3 coffees in the destination country — a proxy for how far the same donation stretches there.</span>
     </div>
   </div>
 
   <div class="section">
-    <h2>Product Tour</h2>
-    <p>The landing page leads with the story that started the project, then routes donors into a ranked, filterable view of where their currency currently goes furthest.</p>
+    <h2 class="tx" data-en="Product Tour" data-kr="제품 살펴보기">Product Tour</h2>
+    <p class="tx" data-en="The landing page leads with the story that started the project, then routes donors into a ranked, filterable view of where their currency currently goes furthest." data-kr="랜딩 페이지는 프로젝트를 시작하게 된 이야기로 시작한 뒤, 기부자를 현재 자신의 화폐가 가장 멀리 가는 곳을 보여주는 순위·필터 화면으로 안내합니다.">The landing page leads with the story that started the project, then routes donors into a ranked, filterable view of where their currency currently goes furthest.</p>
     <div class="gallery">
       <figure>
         <img src="solution-landing.jpg" alt="Givplus landing page: 'Your dollar is worth more somewhere,' with navigation for Navigate the World, Organization, Contact Us, Give Jar, and Sign up" loading="lazy" />
-        <figcaption>Landing page — the Turkey–Syria earthquake framing that started the project.</figcaption>
+        <figcaption class="tx" data-en="Landing page — the Turkey–Syria earthquake framing that started the project." data-kr="랜딩 페이지 — 프로젝트의 계기가 된 튀르키예-시리아 지진 이야기">Landing page — the Turkey–Syria earthquake framing that started the project.</figcaption>
       </figure>
       <figure>
         <img src="solution-map.jpg" alt="Givplus world map and country ranking table, showing Givplus Ranking, More Giving percentage, and Coffee Index for countries including Lebanon, Syria, Venezuela, and Pakistan" loading="lazy" />
-        <figcaption>The ranking table and world map — Givplus Ranking, "More Giving" %, and Coffee Index side by side.</figcaption>
+        <figcaption class="tx" data-en="The ranking table and world map — Givplus Ranking, &quot;More Giving&quot; %, and Coffee Index side by side." data-kr="순위표와 세계지도 — Givplus 순위, &#39;More Giving&#39; 비율, 커피 지수를 나란히 확인">The ranking table and world map — Givplus Ranking, "More Giving" %, and Coffee Index side by side.</figcaption>
       </figure>
     </div>
   </div>
 
   <div class="section">
-    <h2>How the Platform Is Structured</h2>
-    <p>Beyond the ranking itself, Givplus is a full donor flow: Google sign-in or email auth, a currency-aware "giving jar," a world map that drills down from country to individual project, an NGO/organisation directory, checkout, and a personal account area with donation history, transaction status, tax-receipt declarations, and donation certificates.</p>
+    <h2 class="tx" data-en="How the Platform Is Structured" data-kr="플랫폼 구조">How the Platform Is Structured</h2>
+    <p class="tx" data-en="Beyond the ranking itself, Givplus is a full donor flow: Google sign-in or email auth, a currency-aware &quot;giving jar,&quot; a world map that drills down from country to individual project, an NGO/organisation directory, checkout, and a personal account area with donation history, transaction status, tax-receipt declarations, and donation certificates." data-kr="Givplus는 순위 기능을 넘어 전체 기부자 플로우를 갖추고 있습니다 — 구글 로그인 또는 이메일 인증, 환율을 반영한 &#39;기부 저금통&#39;, 국가부터 개별 프로젝트까지 파고들 수 있는 세계지도, NGO/단체 디렉토리, 결제, 그리고 기부 내역·거래 상태·세액공제 신고·기부 인증서를 확인할 수 있는 개인 계정 영역까지 포함합니다.">Beyond the ranking itself, Givplus is a full donor flow: Google sign-in or email auth, a currency-aware "giving jar," a world map that drills down from country to individual project, an NGO/organisation directory, checkout, and a personal account area with donation history, transaction status, tax-receipt declarations, and donation certificates.</p>
     <div class="gallery">
       <figure>
         <img src="solution-sitemap.png" alt="Givplus site map showing the flow between login, sign-up, currency and giving-jar home views, world navigation, country and project pages, organization pages, payment, and the my-page account area with donation history, settings, transaction status, tax receipts, and certificates" loading="lazy" />
-        <figcaption>Full product site map — auth, currency-aware home, world/country/project drill-down, organisations, payment, and account.</figcaption>
+        <figcaption class="tx" data-en="Full product site map — auth, currency-aware home, world/country/project drill-down, organisations, payment, and account." data-kr="전체 제품 사이트맵 — 인증, 환율 반영 홈, 세계/국가/프로젝트 드릴다운, 단체, 결제, 계정">Full product site map — auth, currency-aware home, world/country/project drill-down, organisations, payment, and account.</figcaption>
       </figure>
     </div>
   </div>
 
   <div class="section">
-    <h2>Team &amp; Planning</h2>
-    <p>It was the pandemic era, so recruiting locally at Waseda made little sense — even inside GDSC Waseda's backend team, most members had never met in person. I posted the idea to the GDSC Waseda Slack and reached back out to people I'd worked with on past projects, ending up with two Waseda engineering students and one student from Nanyang Technological University (NTU), based across South Korea, Japan, and Singapore. We ran the project entirely remotely over Slack, KakaoTalk, Figma, and Zoom, mapping out features and decisions together in Figma before any code was written — including the decision to build Givplus as a web app rather than a native app, since asking someone to download an app just to make a one-time donation felt like the wrong tradeoff.</p>
+    <h2 class="tx" data-en="Team &amp; Planning" data-kr="팀 구성 및 기획">Team &amp; Planning</h2>
+    <p class="tx" data-en="It was the pandemic era, so recruiting locally at Waseda made little sense — even inside GDSC Waseda's backend team, most members had never met in person. I posted the idea to the GDSC Waseda Slack and reached back out to people I'd worked with on past projects, ending up with two Waseda engineering students and one student from Nanyang Technological University (NTU), based across South Korea, Japan, and Singapore. We ran the project entirely remotely over Slack, KakaoTalk, Figma, and Zoom, mapping out features and decisions together in Figma before any code was written — including the decision to build Givplus as a web app rather than a native app, since asking someone to download an app just to make a one-time donation felt like the wrong tradeoff." data-kr="팬데믹 시기라 와세다 내에서 로컬로 팀원을 모집하는 것은 크게 의미가 없었습니다 — GDSC 와세다 백엔드 팀 안에서도 대부분 서로 직접 만난 적이 없었습니다. GDSC 와세다 슬랙에 아이디어를 올리고 과거 프로젝트에서 함께했던 사람들에게 다시 연락을 돌려, 와세다 공학 전공 학생 두 명과 난양공과대학교(NTU) 학생 한 명으로 팀을 꾸렸습니다 — 한국, 일본, 싱가포르에 흩어져 있었습니다. 슬랙, 카카오톡, 피그마, 줌만으로 전 과정을 원격으로 진행했고, 코드를 작성하기 전에 피그마에서 기능과 의사결정을 함께 정리했습니다 — Givplus를 네이티브 앱이 아닌 웹 앱으로 만들기로 한 결정도 그렇게 나왔습니다. 한 번 기부하자고 앱을 다운로드받게 하는 건 맞지 않는 절충이라고 판단했기 때문입니다.">It was the pandemic era, so recruiting locally at Waseda made little sense — even inside GDSC Waseda's backend team, most members had never met in person. I posted the idea to the GDSC Waseda Slack and reached back out to people I'd worked with on past projects, ending up with two Waseda engineering students and one student from Nanyang Technological University (NTU), based across South Korea, Japan, and Singapore. We ran the project entirely remotely over Slack, KakaoTalk, Figma, and Zoom, mapping out features and decisions together in Figma before any code was written — including the decision to build Givplus as a web app rather than a native app, since asking someone to download an app just to make a one-time donation felt like the wrong tradeoff.</p>
     <div class="gallery">
       <figure>
         <img src="solution-planning.png" alt="Miro planning board for the 2023 Google Solution Challenge kickoff: timeline, app description, target languages, monetisation notes, submission criteria, and hand-drawn wireframe sketches" loading="lazy" />
-        <figcaption>The Figma/Miro planning board — app concept, monetisation notes, and early wireframes, mapped out with the team before development began.</figcaption>
+        <figcaption class="tx" data-en="The Figma/Miro planning board — app concept, monetisation notes, and early wireframes, mapped out with the team before development began." data-kr="피그마/미로 기획 보드 — 앱 콘셉트, 수익화 메모, 초기 와이어프레임을 개발 시작 전 팀과 함께 정리했습니다.">The Figma/Miro planning board — app concept, monetisation notes, and early wireframes, mapped out with the team before development began.</figcaption>
       </figure>
     </div>
     <div class="meta-row">
-      <span class="meta-chip g">Fully remote team</span>
-      <span class="meta-chip">Korea · Japan · Singapore</span>
+      <span class="meta-chip g tx" data-en="Fully remote team" data-kr="전원 원격 팀">Fully remote team</span>
+      <span class="meta-chip tx" data-en="Korea · Japan · Singapore" data-kr="한국 · 일본 · 싱가포르">Korea · Japan · Singapore</span>
       <span class="meta-chip">Waseda × NTU</span>
     </div>
   </div>
 
   <div class="section">
-    <h2>Built With</h2>
-    <p>Real-time scoring runs on Google Cloud so the leaderboard reflects current exchange rates rather than a static snapshot, with Google Maps powering the country drill-down.</p>
+    <h2 class="tx" data-en="Built With" data-kr="사용 기술">Built With</h2>
+    <p class="tx" data-en="Real-time scoring runs on Google Cloud so the leaderboard reflects current exchange rates rather than a static snapshot, with Google Maps powering the country drill-down." data-kr="실시간 점수 계산은 구글 클라우드에서 실행되어 순위표가 고정된 스냅샷이 아닌 현재 환율을 반영하며, 국가별 드릴다운은 구글 맵스가 담당합니다.">Real-time scoring runs on Google Cloud so the leaderboard reflects current exchange rates rather than a static snapshot, with Google Maps powering the country drill-down.</p>
     <div class="meta-row">
       <span class="meta-chip g">Django · PostgreSQL</span>
       <span class="meta-chip">React.js</span>
@@ -238,22 +250,22 @@ footer{border-top:3px solid var(--ink);padding:26px 0;}
     <div class="gallery">
       <figure>
         <img src="solution-architecture.png" alt="Google Cloud architecture diagram for Givplus: web clients and mobile apps behind a serving frontend, a batch layer with HDFS and legacy aggregation pipelines, Kubernetes Engine and Bigtable for query and output storage, plus Cloud Storage, BigQuery, and Dataflow" loading="lazy" />
-        <figcaption>Google Cloud architecture — serving frontend, batch scoring pipeline, and storage/query layer.</figcaption>
+        <figcaption class="tx" data-en="Google Cloud architecture — serving frontend, batch scoring pipeline, and storage/query layer." data-kr="구글 클라우드 아키텍처 — 서빙 프론트엔드, 배치 스코어링 파이프라인, 스토리지/쿼리 계층">Google Cloud architecture — serving frontend, batch scoring pipeline, and storage/query layer.</figcaption>
       </figure>
     </div>
   </div>
 
   <div class="section">
-    <h2>Challenges &amp; Outcome</h2>
-    <p>Running the Givplus Score calculation in real time on Google Cloud turned out to be expensive, and the team's limited hands-on experience with GCP and backend infrastructure surfaced plenty of technical problems along the way. When issues piled up, I arranged meetings with Google Japan engineers and the Solution Challenge program staff directly — that got us cost credits to cover the overrun and unstuck several of the technical blockers, and their feedback shaped later iterations of the product.</p>
-    <p>Givplus is inactive today. The revenue model never became sustainable relative to the cost of running it, and there were open theoretical questions about the scoring model I wasn't comfortable brushing aside, so the team made the call to wind it down responsibly rather than keep it running on shaky footing. It's still one of the projects I learned the most from — economics, distributed teamwork, and cloud infrastructure all at once.</p>
+    <h2 class="tx" data-en="Challenges &amp; Outcome" data-kr="어려움과 결과">Challenges &amp; Outcome</h2>
+    <p class="tx" data-en="Running the Givplus Score calculation in real time on Google Cloud turned out to be expensive, and the team's limited hands-on experience with GCP and backend infrastructure surfaced plenty of technical problems along the way. When issues piled up, I arranged meetings with Google Japan engineers and the Solution Challenge program staff directly — that got us cost credits to cover the overrun and unstuck several of the technical blockers, and their feedback shaped later iterations of the product." data-kr="Givplus 점수를 구글 클라우드에서 실시간으로 계산하는 것은 생각보다 비용이 많이 들었고, GCP와 백엔드 인프라에 대한 팀의 실무 경험이 부족해 기술적인 문제도 여러 차례 발생했습니다. 문제가 쌓이자 저는 구글 재팬 엔지니어들과 솔루션 챌린지 프로그램 담당자들에게 직접 미팅을 요청했습니다 — 그 결과 비용 초과분을 충당할 크레딧을 받았고 몇몇 기술적 병목도 풀 수 있었으며, 그들의 피드백은 이후 제품 개선에도 반영되었습니다.">Running the Givplus Score calculation in real time on Google Cloud turned out to be expensive, and the team's limited hands-on experience with GCP and backend infrastructure surfaced plenty of technical problems along the way. When issues piled up, I arranged meetings with Google Japan engineers and the Solution Challenge program staff directly — that got us cost credits to cover the overrun and unstuck several of the technical blockers, and their feedback shaped later iterations of the product.</p>
+    <p class="tx" data-en="Givplus is inactive today. The revenue model never became sustainable relative to the cost of running it, and there were open theoretical questions about the scoring model I wasn't comfortable brushing aside, so the team made the call to wind it down responsibly rather than keep it running on shaky footing. It's still one of the projects I learned the most from — economics, distributed teamwork, and cloud infrastructure all at once." data-kr="Givplus는 현재 운영되고 있지 않습니다. 수익 모델이 운영 비용 대비 지속가능한 수준에 이르지 못했고, 점수 산정 모델에 대해서도 쉽게 넘기기 어려운 이론적 의문들이 남아 있어서, 팀은 불안정한 상태로 계속 운영하기보다 책임감 있게 정리하기로 결정했습니다. 그럼에도 경제학, 분산 협업, 클라우드 인프라를 한꺼번에 배울 수 있었던, 제가 가장 많이 배운 프로젝트 중 하나로 남아 있습니다.">Givplus is inactive today. The revenue model never became sustainable relative to the cost of running it, and there were open theoretical questions about the scoring model I wasn't comfortable brushing aside, so the team made the call to wind it down responsibly rather than keep it running on shaky footing. It's still one of the projects I learned the most from — economics, distributed teamwork, and cloud infrastructure all at once.</p>
   </div>
 
   <div class="link-row">
-    <a class="btn btn-green" href="https://github.com/9907daniel/Givplus" target="_blank" rel="noopener">GitHub Repo &#8599;</a>
-    <a class="btn" href="https://www.youtube.com/watch?v=gSqkXHkcUj8" target="_blank" rel="noopener">Demo Video &#8599;</a>
-    <a class="btn" href="https://kygmin.tistory.com/entry/Givplus-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8" target="_blank" rel="noopener">Full Write-up (Korean) &#8599;</a>
-    <a class="btn" href="index.html#portfolio">&larr; Back to Careers</a>
+    <a class="btn btn-green" href="https://github.com/9907daniel/Givplus" target="_blank" rel="noopener"><span class="tx" data-en="GitHub Repo" data-kr="GitHub 저장소">GitHub Repo</span> &#8599;</a>
+    <a class="btn" href="https://www.youtube.com/watch?v=gSqkXHkcUj8" target="_blank" rel="noopener"><span class="tx" data-en="Demo Video" data-kr="데모 영상">Demo Video</span> &#8599;</a>
+    <a class="btn" href="https://kygmin.tistory.com/entry/Givplus-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8" target="_blank" rel="noopener"><span class="tx" data-en="Full Write-up (Korean)" data-kr="전체 후기 (한국어)">Full Write-up (Korean)</span> &#8599;</a>
+    <a class="btn" href="index.html#portfolio">&larr; <span class="tx" data-en="Back to Careers" data-kr="경력으로 돌아가기">Back to Careers</span></a>
   </div>
 
 </main>
@@ -261,9 +273,65 @@ footer{border-top:3px solid var(--ink);padding:26px 0;}
 <footer>
   <div class="foot-inner">
     <span>© KYGMIN.COM</span>
-    <span>GDSC WASEDA · GIVPLUS · GOOGLE SOLUTION CHALLENGE 2023</span>
+    <span class="tx" data-en="GDSC WASEDA · GIVPLUS · GOOGLE SOLUTION CHALLENGE 2023" data-kr="GDSC 와세다 · Givplus · 2023 구글 솔루션 챌린지">GDSC WASEDA · GIVPLUS · GOOGLE SOLUTION CHALLENGE 2023</span>
   </div>
 </footer>
+
+<div id="langtoggle" aria-label="Language">
+  <button data-lang="en" class="on">EN</button>
+  <button data-lang="kr">한</button>
+</div>
+
+<script>
+(function(){
+  var POOL = ("ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎㅏㅑㅓㅕㅗㅛㅜㅠㅡㅣ"
+    + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-·").split("");
+  function esc(c){return c==="&"?"&amp;":c==="<"?"&lt;":c===">"?"&gt;":c;}
+
+  function Scramble(el){ this.el=el; this.raf=null; this.frame=this.frame.bind(this); }
+  Scramble.prototype.set=function(txt){
+    var old = this.el.dataset.plain!==undefined ? this.el.dataset.plain : this.el.textContent;
+    var len=Math.max(old.length, txt.length);
+    this.q=[];
+    for(var i=0;i<len;i++){
+      var from=old[i]||"", to=txt[i]||"";
+      var start=Math.floor(Math.random()*20);
+      var end=start+Math.floor(Math.random()*25)+12;
+      this.q.push({from:from,to:to,start:start,end:end,ch:null});
+    }
+    if(this.raf) cancelAnimationFrame(this.raf);
+    this.f=0; this.txt=txt; this.frame();
+  };
+  Scramble.prototype.frame=function(){
+    var out="", done=0;
+    for(var i=0;i<this.q.length;i++){
+      var it=this.q[i];
+      if(this.f>=it.end){ done++; out+=esc(it.to); }
+      else if(this.f>=it.start){
+        if(!it.ch || Math.random()<0.3){ it.ch=POOL[Math.floor(Math.random()*POOL.length)]; }
+        out+='<span class="scr">'+esc(it.ch)+'</span>';
+      } else out+=esc(it.from);
+    }
+    this.el.innerHTML=out;
+    if(done===this.q.length){ this.el.dataset.plain=this.txt; }
+    else { this.f++; this.raf=requestAnimationFrame(this.frame); }
+  };
+
+  var els=[].slice.call(document.querySelectorAll('.tx'));
+  els.forEach(function(el){ el.dataset.plain=el.textContent; el._s=new Scramble(el); });
+  var cur='en';
+  function setLang(lang){
+    if(lang===cur) return; cur=lang;
+    document.documentElement.lang = (lang==='kr'?'ko':'en');
+    var btns=document.querySelectorAll('#langtoggle button');
+    for(var i=0;i<btns.length;i++){ btns[i].classList.toggle('on', btns[i].dataset.lang===lang); }
+    els.forEach(function(el){ var t=el.dataset[lang]; if(t!==undefined) el._s.set(t); });
+  }
+  document.getElementById('langtoggle').addEventListener('click', function(e){
+    var b=e.target.closest('button'); if(b) setLang(b.dataset.lang);
+  });
+})();
+</script>
 
 </body>
 </html>
