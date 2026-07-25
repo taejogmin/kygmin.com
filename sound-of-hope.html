@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sound of Hope for the Cambodian Children — KYGMIN</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#F6F6F4;
+  --ink:#141414;
+  --gray:#DDDDD8;
+  --green:#2BB673;
+  --green-deep:#0F6E56;
+  --red:#A32D2D;
+  --arch:'Archivo','Pretendard',sans-serif;
+  --sans:'Pretendard',-apple-system,'Apple SD Gothic Neo','Malgun Gothic','Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono','SF Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{transition:none!important;}
+}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:16px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none;}
+a:focus-visible,button:focus-visible{outline:3px solid var(--green);outline-offset:3px;}
+.wrap{max-width:820px;margin:0 auto;padding:0 24px;}
+/* ── Nav ── */
+nav{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:3px solid var(--ink);}
+.nav-inner{
+  max-width:820px;margin:0 auto;padding:14px 24px;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+}
+.logo{font-family:var(--arch);font-weight:900;font-size:19px;letter-spacing:-0.5px;}
+.logo em{font-style:normal;background:var(--green);color:var(--paper);padding:0 6px;display:inline-block;transform:rotate(-1.5deg);}
+.nav-links{display:flex;gap:8px;flex-wrap:wrap;}
+.nav-links a{
+  font-family:var(--arch);font-size:12px;font-weight:700;text-transform:uppercase;
+  border:2px solid var(--ink);padding:6px 13px;background:#fff;
+  box-shadow:3px 3px 0 var(--ink);transition:transform .1s, box-shadow .1s;
+}
+.nav-links a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+.nav-links a.on{background:var(--green);color:var(--paper);}
+/* ── Hero ── */
+header{padding:64px 0 44px;border-bottom:3px solid var(--ink);}
+.sec-tag{
+  font-family:var(--mono);font-size:12.5px;font-weight:600;
+  color:var(--green-deep);letter-spacing:1px;display:block;margin-bottom:16px;
+}
+h1{
+  font-family:var(--arch);font-weight:900;text-transform:uppercase;
+  font-size:clamp(32px, 6vw, 54px);line-height:1.04;letter-spacing:-2px;
+}
+h1 .box{background:var(--ink);color:var(--paper);padding:0 12px;display:inline-block;transform:rotate(-1deg);}
+.hero-sub{margin-top:20px;font-size:16px;max-width:620px;font-weight:500;}
+.hero-note{margin-top:14px;font-family:var(--mono);font-size:12px;color:#4A4A46;}
+/* ── Main ── */
+main{padding:48px 0 88px;}
+.section{margin-top:52px;}
+.section:first-child{margin-top:0;}
+.section h2{
+  font-family:var(--arch);font-weight:900;font-size:15px;text-transform:uppercase;
+  letter-spacing:-0.3px;border-bottom:3px solid var(--ink);padding-bottom:8px;margin-bottom:18px;
+}
+.section p{font-size:15px;color:#3A3A38;max-width:680px;}
+.section p+p{margin-top:12px;}
+.meta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;}
+.meta-chip{
+  font-family:var(--mono);font-size:11.5px;font-weight:600;
+  border:2px solid var(--ink);padding:4px 10px;background:var(--gray);
+}
+.meta-chip.g{background:var(--green);color:var(--paper);}
+.gallery{display:grid;gap:22px;margin-top:20px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));}
+.gallery.single{grid-template-columns:1fr;max-width:420px;}
+.gallery figure{border:3px solid var(--ink);background:#fff;box-shadow:6px 6px 0 var(--ink);padding:14px;}
+.gallery img{display:block;width:100%;height:auto;border:2px solid var(--ink);}
+.gallery figcaption{margin-top:10px;font-family:var(--mono);font-size:12px;color:#4A4A46;}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px;margin-top:20px;max-width:680px;}
+.stat{border:3px solid var(--ink);background:#fff;box-shadow:5px 5px 0 var(--ink);padding:18px;text-align:center;}
+.stat .num{font-family:var(--arch);font-weight:900;font-size:22px;color:var(--green-deep);}
+.stat .lbl{font-family:var(--mono);font-size:11px;color:#4A4A46;margin-top:6px;}
+.stat-note{margin-top:12px;font-family:var(--mono);font-size:11.5px;color:#6B6B67;max-width:680px;}
+.callout{
+  margin-top:20px;max-width:680px;border:3px solid var(--ink);background:#FBF6E9;
+  box-shadow:5px 5px 0 var(--ink);padding:16px 18px;font-size:14px;color:#3A3A38;
+}
+.callout b{font-family:var(--arch);text-transform:uppercase;font-size:12px;letter-spacing:.3px;display:block;margin-bottom:6px;}
+.program{margin-top:18px;max-width:680px;border:2px solid var(--ink);}
+.program-row{
+  display:grid;grid-template-columns:28px 1fr;gap:12px;padding:9px 12px;
+  font-size:13.5px;color:#3A3A38;border-bottom:1px solid var(--gray);align-items:baseline;
+}
+.program-row:last-child{border-bottom:none;}
+.program-row .n{font-family:var(--mono);font-weight:600;color:#8A8A85;}
+.program-row.me{background:#EAF7F0;}
+.program-row.me .n{color:var(--green-deep);}
+.link-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:22px;}
+.btn{
+  display:inline-block;font-family:var(--arch);font-size:14px;font-weight:700;text-transform:uppercase;
+  border:3px solid var(--ink);padding:12px 24px;box-shadow:5px 5px 0 var(--ink);
+  transition:transform .1s, box-shadow .1s;background:#fff;cursor:pointer;color:var(--ink);
+}
+.btn:hover{transform:translate(2px,2px);box-shadow:3px 3px 0 var(--ink);}
+.btn-green{background:var(--green);color:var(--paper);}
+/* footer */
+footer{border-top:3px solid var(--ink);padding:26px 0;}
+.foot-inner{max-width:820px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:12px;color:#4A4A46;}
+@media(max-width:640px){
+  header{padding:48px 0 36px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="index.html">KYG<em>MIN</em></a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#portfolio">Careers</a>
+      <a class="on" href="sound-of-hope.html">The Concert</a>
+      <a href="cv.html">CV &#128274;</a>
+    </div>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <span class="sec-tag">CHARITY CONCERT — KOREAN YOUTH ASSOCIATION IN CAMBODIA</span>
+    <h1>SOUND OF <span class="box">HOPE</span></h1>
+    <p class="hero-sub">A charity concert series in Phnom Penh, performed by Korean expatriate youth alongside local Cambodian students, raising money for children's medical care. I led the second concert — securing corporate sponsors, recruiting performers, promoting the event, and performing flute on the night.</p>
+    <p class="hero-note">28 JAN 2017 (2ND CONCERT) · PPIIA CONCERT HALL, PHNOM PENH · ROLE: PROJECT LEAD &amp; PERFORMER</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="section">
+    <h2>The Concert</h2>
+    <p>"Sound of Hope for the Cambodian Children" is a charity concert organised by the Korean Youth Association in Cambodia, pairing Korean expatriate students with local Cambodian students for a joint evening of music in Phnom Penh. The first concert, in 2016, raised enough to help sponsor Preah Ang Duong Hospital. Building on that, we staged a second concert on 28 January 2017 at the PPIIA Concert Hall, this time to fund cataract surgeries for two Cambodian children who needed the operations but couldn't afford them.</p>
+    <div class="meta-row">
+      <span class="meta-chip g">2nd annual concert</span>
+      <span class="meta-chip">Phnom Penh, Cambodia</span>
+      <span class="meta-chip">Korean &amp; Cambodian students</span>
+      <span class="meta-chip">Medical fundraiser</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>My Role — Project Lead</h2>
+    <p>I led the 2017 concert end to end: pitching and securing sponsorship from local companies and financial institutions to cover the venue and running costs, recruiting the student performers on both the Korean and Cambodian sides, and promoting the event so the hall would actually fill up. I also performed — flute, alongside the local Cambodian students I'd spent six months rehearsing with.</p>
+    <div class="meta-row">
+      <span class="meta-chip g">Sponsorship &amp; fundraising</span>
+      <span class="meta-chip">Performer recruitment</span>
+      <span class="meta-chip">Event promotion</span>
+      <span class="meta-chip">Flute — "Kiss the Rain"</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Performance Order</h2>
+    <p>Fourteen acts, spanning children's choir to solo piano, guitar, voice, woodwinds, drums, and a closing band number.</p>
+    <div class="program">
+      <div class="program-row"><span class="n">1</span><span>Mirae Vision Children Choir — Holiday, 주의 친절한 팔에 안기세</span></div>
+      <div class="program-row"><span class="n">2</span><span>Ly Sopoirvortey (8) — My Heart Will Go On (Guitar)</span></div>
+      <div class="program-row"><span class="n">3</span><span>Yechan Park (9) — Variations on Canon, Heavenly Sunlight (Piano)</span></div>
+      <div class="program-row"><span class="n">4</span><span>Jiwon Jung (9) — Fantasie on Wings of Song op 17-1 (Flute)</span></div>
+      <div class="program-row"><span class="n">5</span><span>Tishya &amp; Nurul (9) — Take Me to Church (Singing)</span></div>
+      <div class="program-row me"><span class="n">6</span><span><b>Kyung Min Park (11) — Kiss the Rain (Flute)</b></span></div>
+      <div class="program-row"><span class="n">7</span><span>Ju Yeong Lee (11) — The Last Waltz (Clarinet)</span></div>
+      <div class="program-row"><span class="n">8</span><span>Alibi Bolat (11) — Nomads (Guitar)</span></div>
+      <div class="program-row"><span class="n">9</span><span>Woo Jae Chung (11) — Wild Flower (Saxophone)</span></div>
+      <div class="program-row"><span class="n">10</span><span>Won Joon Kim (11) — Raindrop Flower (Piano)</span></div>
+      <div class="program-row"><span class="n">11</span><span>Angelina Prom &amp; Aaron Roberts (11) — Like I'm Gonna Lose You (Piano)</span></div>
+      <div class="program-row"><span class="n">12</span><span>Jin Hoon Kim (11) — Splash by Cotaro Oshio (Guitar)</span></div>
+      <div class="program-row"><span class="n">13</span><span>Woong Gyu Park (11) — Can't Stop the Feeling (Drums)</span></div>
+      <div class="program-row"><span class="n">14</span><span>Seung Jun Cha, Sang Hyun Park, Kyung Min Park, Yechan Park (Grade 11, 11, 11, 9) — 너에게 난 나에게 넌 (Band)</span></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Impact</h2>
+    <p>The concert raised $4,100, donated to Angduong National Eye Hospital to fund eye surgeries for two underprivileged Cambodian children. It followed the first concert's donation the year before, which helped sponsor Preah Ang Duong Hospital in Cambodia.</p>
+    <div class="stat-grid">
+      <div class="stat"><div class="num">$4,100</div><div class="lbl">Raised, Jan 2017 concert</div></div>
+      <div class="stat"><div class="num">2</div><div class="lbl">Children's surgeries funded</div></div>
+      <div class="stat"><div class="num">14</div><div class="lbl">Sponsoring companies</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Materials</h2>
+    <p>The poster, ticket, and program from the second concert — the first concert (2016) isn't documented here, only the 2017 one.</p>
+    <div class="gallery">
+      <figure>
+        <img src="concert-poster.jpg" alt="Poster for Sound of Hope for the Cambodian Children: The Concert, 28 January 2017, PPIIA Concert Hall, Phnom Penh" loading="lazy" />
+        <figcaption>Event poster — 28 Jan 2017, PPIIA Concert Hall 6F, Phnom Penh.</figcaption>
+      </figure>
+      <figure>
+        <img src="concert-ticket.jpg" alt="Ticket for the Sound of Hope for the Cambodian Children concert" loading="lazy" />
+        <figcaption>Concert ticket, issued by Korean Youth Association in Cambodia.</figcaption>
+      </figure>
+      <figure>
+        <img src="concert-program.jpg" alt="Concert program listing the 14-act performance order and the event's corporate sponsors" loading="lazy" />
+        <figcaption>Program — performance order and sponsor list.</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Sponsors</h2>
+    <p>Fourteen companies backed the second concert, secured through direct outreach as part of leading the event.</p>
+    <div class="meta-row">
+      <span class="meta-chip">Phnom Penh Commercial Bank</span>
+      <span class="meta-chip">Shinhan Khmer Bank</span>
+      <span class="meta-chip">Woori Finance Cambodia</span>
+      <span class="meta-chip">CAM Capital</span>
+      <span class="meta-chip">BITUS</span>
+      <span class="meta-chip">Gawon Apparel</span>
+      <span class="meta-chip">POSCO E&amp;C</span>
+      <span class="meta-chip">SABAY Studio</span>
+      <span class="meta-chip">PRIME MF</span>
+      <span class="meta-chip">Cambodian Security Cops</span>
+      <span class="meta-chip">Solomon Accounting &amp; Consulting</span>
+      <span class="meta-chip">Kang Hwa E&amp;C</span>
+      <span class="meta-chip">Yooshin Engineering</span>
+      <span class="meta-chip">GS Logistics</span>
+    </div>
+  </div>
+
+  <div class="link-row">
+    <a class="btn btn-green" href="https://www.dongponews.net/news/articleView.html?idxno=33446" target="_blank" rel="noopener">News Coverage &#8599;</a>
+    <a class="btn" href="index.html#portfolio">&larr; Back to Careers</a>
+  </div>
+
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <span>© KYGMIN.COM</span>
+    <span>KOREAN YOUTH ASSOCIATION IN CAMBODIA · SOUND OF HOPE · JAN 2017</span>
+  </div>
+</footer>
+
+</body>
+</html>
