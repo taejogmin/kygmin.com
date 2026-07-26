@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nine Positions — KYGMIN</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#F6F6F4;
+  --ink:#141414;
+  --gray:#DDDDD8;
+  --green:#2BB673;
+  --green-deep:#0F6E56;
+  --red:#A32D2D;
+  --gold:#C89A00;
+  --arch:'Archivo','Pretendard',sans-serif;
+  --sans:'Pretendard',-apple-system,'Apple SD Gothic Neo','Malgun Gothic','Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono','SF Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{transition:none!important;animation:none!important;}
+}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:16px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  word-break:keep-all;overflow-wrap:break-word;
+}
+a{color:inherit;text-decoration:none;}
+a:focus-visible,button:focus-visible{outline:3px solid var(--green);outline-offset:3px;}
+.wrap{max-width:960px;margin:0 auto;padding:0 24px;}
+
+/* ── Nav ── */
+nav{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:3px solid var(--ink);}
+.nav-inner{
+  max-width:960px;margin:0 auto;padding:14px 24px;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;
+}
+.logo{font-family:var(--arch);font-weight:900;font-size:19px;letter-spacing:-0.5px;}
+.logo em{font-style:normal;background:var(--green);color:var(--paper);padding:0 6px;display:inline-block;transform:rotate(-1.5deg);}
+.nav-links{display:flex;gap:8px;flex-wrap:wrap;}
+.nav-links a{
+  font-family:var(--arch);font-size:12px;font-weight:700;text-transform:uppercase;
+  border:2px solid var(--ink);padding:6px 13px;background:#fff;
+  box-shadow:3px 3px 0 var(--ink);transition:transform .1s, box-shadow .1s;
+}
+.nav-links a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+.nav-links a.on{background:var(--green);color:var(--paper);}
+
+/* ── Language toggle ── */
+#langtoggle{
+  position:fixed;right:20px;bottom:20px;z-index:50;display:inline-flex;
+  border:2px solid var(--ink);box-shadow:3px 3px 0 var(--ink);background:#fff;
+  font-family:var(--arch);font-weight:700;font-size:12px;overflow:hidden;
+}
+#langtoggle button{font:inherit;border:none;background:none;cursor:pointer;padding:9px 14px;color:var(--ink);letter-spacing:.5px;transition:background .1s,color .1s;}
+#langtoggle button.on{background:var(--green);color:var(--paper);}
+#langtoggle button+button{border-left:2px solid var(--ink);}
+.scr{color:var(--green);}
+.box .scr{color:var(--paper);}
+
+/* ── Hero ── */
+header{padding:52px 0 36px;border-bottom:3px solid var(--ink);}
+.sec-tag{
+  font-family:var(--mono);font-size:12.5px;font-weight:600;
+  color:var(--green-deep);letter-spacing:1px;display:block;margin-bottom:14px;
+}
+h1{
+  font-family:var(--arch);font-weight:900;text-transform:uppercase;
+  font-size:clamp(32px, 6vw, 52px);line-height:1.04;letter-spacing:-2px;
+}
+h1 .box{background:var(--ink);color:var(--paper);padding:0 12px;display:inline-block;transform:rotate(-1deg);}
+.hero-sub{margin-top:18px;font-size:15.5px;max-width:600px;font-weight:500;}
+.hero-note{margin-top:12px;font-family:var(--mono);font-size:12px;color:#4A4A46;}
+
+/* ── Main ── */
+main{padding:36px 0 88px;}
+
+/* ladder legend */
+.ladder{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:26px;}
+.ladder .rung{
+  font-family:var(--mono);font-size:11px;font-weight:600;
+  border:2px solid var(--ink);padding:3px 8px;background:#fff;position:relative;
+}
+.ladder .rung .risk{display:block;height:3px;margin-top:3px;}
+.ladder-note{font-family:var(--mono);font-size:11px;color:#6B6B67;margin-bottom:26px;}
+.ladder-note b{color:var(--green-deep);}
+
+/* setup */
+#setup .panel{
+  border:3px solid var(--ink);background:#fff;box-shadow:6px 6px 0 var(--ink);
+  padding:26px 26px 30px;max-width:640px;
+}
+#setup h2{font-family:var(--arch);font-weight:900;font-size:17px;text-transform:uppercase;margin-bottom:14px;}
+#setup ol{margin:0 0 22px 20px;font-size:14.5px;color:#3A3A38;}
+#setup ol li{margin-bottom:6px;}
+.diff-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px;}
+.diff{
+  font-family:var(--arch);font-size:13px;font-weight:700;text-transform:uppercase;
+  border:3px solid var(--ink);padding:10px 18px;background:#fff;cursor:pointer;
+  box-shadow:4px 4px 0 var(--ink);transition:transform .1s, box-shadow .1s;
+}
+.diff:hover{transform:translate(1px,1px);box-shadow:3px 3px 0 var(--ink);}
+.diff.on{background:var(--ink);color:var(--paper);}
+.btn{
+  display:inline-block;font-family:var(--arch);font-size:14px;font-weight:700;text-transform:uppercase;
+  border:3px solid var(--ink);padding:12px 24px;box-shadow:5px 5px 0 var(--ink);
+  transition:transform .1s, box-shadow .1s;background:#fff;cursor:pointer;color:var(--ink);
+}
+.btn:hover{transform:translate(2px,2px);box-shadow:3px 3px 0 var(--ink);}
+.btn-green{background:var(--green);color:var(--paper);}
+.btn:disabled{opacity:.35;cursor:not-allowed;}
+.btn:disabled:hover{transform:none;box-shadow:5px 5px 0 var(--ink);}
+
+/* game board */
+#game{display:none;}
+.board{border:3px solid var(--ink);background:#fff;box-shadow:6px 6px 0 var(--ink);}
+.status-bar{
+  display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
+  border-bottom:3px solid var(--ink);padding:12px 18px;background:var(--ink);color:var(--paper);
+}
+.status-bar .sess{font-family:var(--arch);font-weight:900;font-size:15px;text-transform:uppercase;letter-spacing:.5px;}
+.status-bar .lead{font-family:var(--mono);font-size:12px;color:#B8E6CF;}
+.zone{padding:18px;}
+.zone-label{font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:1px;color:#6B6B67;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;}
+.tokens{display:inline-flex;gap:6px;}
+.token{
+  font-family:var(--mono);font-size:11px;font-weight:600;border:2px solid var(--ink);
+  padding:1px 8px;background:var(--gold);color:var(--ink);
+}
+.token.used{background:var(--gray);color:#8A8A85;text-decoration:line-through;}
+
+/* AI hand */
+.ai-hand{display:flex;gap:6px;flex-wrap:wrap;}
+.mini-card{
+  width:34px;height:48px;border:2px solid var(--ink);background:repeating-linear-gradient(45deg,#2A2A28,#2A2A28 4px,#3A3A38 4px,#3A3A38 8px);
+}
+
+/* table area */
+.table-area{
+  border-top:3px solid var(--ink);border-bottom:3px solid var(--ink);
+  background:#EFEFEA;padding:20px 18px;
+  display:flex;justify-content:center;align-items:center;gap:26px;min-height:150px;flex-wrap:wrap;
+}
+.slot{width:110px;text-align:center;}
+.slot .who{font-family:var(--mono);font-size:11px;font-weight:600;color:#6B6B67;margin-bottom:6px;}
+.play-card{
+  width:96px;height:120px;border:3px solid var(--ink);background:#fff;margin:0 auto;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2px;
+  box-shadow:4px 4px 0 var(--ink);position:relative;
+}
+.play-card.back{background:repeating-linear-gradient(45deg,#2A2A28,#2A2A28 5px,#3A3A38 5px,#3A3A38 10px);}
+.play-card.empty{background:none;border-style:dashed;box-shadow:none;}
+.play-card .num{font-family:var(--arch);font-weight:900;font-size:38px;line-height:1;}
+.play-card .nm{font-family:var(--mono);font-size:10.5px;font-weight:600;color:#3A3A38;padding:0 4px;text-align:center;}
+.play-card .riskbar{position:absolute;bottom:0;left:0;right:0;height:5px;}
+.lev-badge{
+  position:absolute;top:-12px;right:-12px;background:var(--gold);border:2px solid var(--ink);
+  font-family:var(--arch);font-weight:900;font-size:13px;padding:1px 7px;transform:rotate(8deg);
+}
+.vs{font-family:var(--arch);font-weight:900;font-size:20px;color:#8A8A85;}
+
+/* result banner */
+#banner{
+  text-align:center;padding:12px 18px;font-family:var(--arch);font-weight:900;
+  font-size:16px;text-transform:uppercase;letter-spacing:.5px;display:none;
+}
+#banner.win{background:var(--green);color:var(--paper);display:block;}
+#banner.lose{background:var(--red);color:var(--paper);display:block;}
+#banner.draw{background:var(--gray);color:var(--ink);display:block;}
+
+/* player hand */
+.hand{display:flex;gap:10px;flex-wrap:wrap;}
+.card{
+  width:76px;height:100px;border:3px solid var(--ink);background:#fff;cursor:pointer;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2px;
+  box-shadow:4px 4px 0 var(--ink);transition:transform .1s, box-shadow .1s;position:relative;
+  font:inherit;padding:0;
+}
+.card:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink);}
+.card.sel{background:var(--ink);color:var(--paper);transform:translate(-2px,-4px);}
+.card.sel .nm{color:var(--gray);}
+.card .num{font-family:var(--arch);font-weight:900;font-size:30px;line-height:1;}
+.card .nm{font-family:var(--mono);font-size:9.5px;font-weight:600;color:#3A3A38;text-align:center;padding:0 3px;}
+.card .riskbar{position:absolute;bottom:0;left:0;right:0;height:4px;}
+
+/* action row */
+.action-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:16px;}
+.lev-btn{
+  font-family:var(--arch);font-size:13px;font-weight:900;border:3px solid var(--ink);
+  padding:9px 16px;background:var(--gold);cursor:pointer;box-shadow:4px 4px 0 var(--ink);
+  transition:transform .1s, box-shadow .1s;
+}
+.lev-btn:hover{transform:translate(1px,1px);box-shadow:3px 3px 0 var(--ink);}
+.lev-btn.on{background:var(--ink);color:var(--gold);}
+.lev-btn:disabled{background:var(--gray);color:#8A8A85;cursor:not-allowed;box-shadow:4px 4px 0 var(--ink);transform:none;}
+.hint{font-family:var(--mono);font-size:11.5px;color:#6B6B67;margin-top:10px;min-height:1.4em;}
+
+/* scoreboard + log */
+.score-row{display:flex;gap:16px;flex-wrap:wrap;margin-top:22px;}
+.pnl{
+  flex:1;min-width:150px;border:3px solid var(--ink);background:#fff;box-shadow:5px 5px 0 var(--ink);
+  padding:12px 16px;text-align:center;
+}
+.pnl .lbl{font-family:var(--mono);font-size:11px;font-weight:600;color:#6B6B67;}
+.pnl .val{font-family:var(--arch);font-weight:900;font-size:30px;font-variant-numeric:tabular-nums;}
+.pnl.you .val{color:var(--green-deep);}
+.pnl.ai .val{color:var(--red);}
+.log-strip{display:flex;gap:6px;flex-wrap:wrap;margin-top:18px;}
+.log-cell{
+  width:52px;border:2px solid var(--ink);background:#fff;text-align:center;
+  font-family:var(--mono);font-size:10.5px;font-weight:600;padding:4px 0 5px;
+}
+.log-cell .s{color:#8A8A85;display:block;font-size:9.5px;}
+.log-cell.w{background:var(--green);color:var(--paper);}
+.log-cell.w .s{color:#D8F2E4;}
+.log-cell.l{background:var(--red);color:var(--paper);}
+.log-cell.l .s{color:#F2DADA;}
+.log-cell.d{background:var(--gray);}
+
+/* game over */
+#gameover{display:none;margin-top:28px;}
+.verdict{
+  border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:26px 24px;
+  font-family:var(--arch);font-weight:900;text-transform:uppercase;
+  font-size:clamp(24px,5vw,38px);letter-spacing:-1px;text-align:center;
+}
+.verdict.win{background:var(--green);color:var(--paper);}
+.verdict.lose{background:var(--red);color:var(--paper);}
+.verdict.draw{background:var(--gray);}
+.verdict small{display:block;font-family:var(--mono);font-size:13px;font-weight:600;letter-spacing:0;margin-top:8px;text-transform:none;}
+.reveal{margin-top:22px;border:3px solid var(--ink);background:#fff;box-shadow:5px 5px 0 var(--ink);overflow-x:auto;}
+.reveal table{border-collapse:collapse;width:100%;min-width:520px;font-family:var(--mono);font-size:12px;}
+.reveal th,.reveal td{border-bottom:1px solid var(--gray);padding:7px 10px;text-align:center;}
+.reveal th{font-family:var(--arch);font-size:11px;text-transform:uppercase;border-bottom:3px solid var(--ink);background:#EFEFEA;}
+.reveal tr:last-child td{border-bottom:none;}
+.reveal .w{color:var(--green-deep);font-weight:600;}
+.reveal .l{color:var(--red);font-weight:600;}
+#again{margin-top:22px;}
+
+/* how to play */
+.rules{margin-top:56px;}
+.rules h2{
+  font-family:var(--arch);font-weight:900;font-size:15px;text-transform:uppercase;
+  border-bottom:3px solid var(--ink);padding-bottom:8px;margin-bottom:16px;
+}
+.rules p{font-size:14.5px;color:#3A3A38;max-width:680px;}
+.rules p+p{margin-top:10px;}
+
+/* footer */
+footer{border-top:3px solid var(--ink);padding:26px 0;}
+.foot-inner{max-width:960px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:12px;color:#4A4A46;}
+
+@media(max-width:560px){
+  .table-area{gap:12px;}
+  .slot{width:90px;}
+  .play-card{width:82px;height:104px;}
+  .play-card .num{font-size:30px;}
+  .card{width:64px;height:88px;}
+  .card .num{font-size:24px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="/index.html">KYG<em>MIN</em></a>
+    <div class="nav-links">
+      <a href="/index.html"><span class="tx" data-en="Home" data-kr="홈">Home</span></a>
+      <a href="/index.html#projects"><span class="tx" data-en="Playground" data-kr="플레이그라운드">Playground</span></a>
+      <a class="on" href="./"><span class="tx" data-en="Nine Positions" data-kr="나인 포지션">Nine Positions</span></a>
+      <a href="/cv.html">CV &#128274;</a>
+    </div>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <span class="sec-tag tx" data-en="PLAYGROUND — A MARKET MIND GAME" data-kr="플레이그라운드 — 시장 심리 게임">PLAYGROUND — A MARKET MIND GAME</span>
+    <h1>NINE <span class="box"><span class="tx" data-en="POSITIONS" data-kr="POSITIONS">POSITIONS</span></span></h1>
+    <p class="hero-sub tx" data-en="Nine sessions, nine positions each — from 1. Cash to 9. Derivatives. Higher risk wins the session, but when Derivatives meet Cash, the market crashes and Cash is king. Read the AI, bluff with leverage, and finish with the higher P&amp;L." data-kr="9번의 세션, 각자 9장의 포지션 — 1. 현금부터 9. 선물·옵션까지. 높은 리스크가 세션을 이기지만, 선물·옵션이 현금을 만나면 시장이 무너지고 현금이 왕이 됩니다. AI의 수를 읽고, 레버리지로 블러핑하고, 더 높은 P&amp;L로 마무리하세요.">Nine sessions, nine positions each — from 1. Cash to 9. Derivatives. Higher risk wins the session, but when Derivatives meet Cash, the market crashes and Cash is king. Read the AI, bluff with leverage, and finish with the higher P&amp;L.</p>
+    <p class="hero-note tx" data-en="2-PLAYER BLUFFING GAME VS AI · CARDS STAY HIDDEN — ONLY WIN/LOSE IS REVEALED" data-kr="AI와 겨루는 심리전 게임 · 카드는 끝까지 비공개 — 승패만 공개됩니다">2-PLAYER BLUFFING GAME VS AI · CARDS STAY HIDDEN — ONLY WIN/LOSE IS REVEALED</p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <div class="ladder" id="ladder"></div>
+    <p class="ladder-note"><span class="tx" data-en="RISK LADDER — higher number beats lower. Exception: " data-kr="리스크 사다리 — 높은 숫자가 이깁니다. 예외: ">RISK LADDER — higher number beats lower. Exception: </span><b class="tx" data-en="1. Cash beats 9. Derivatives." data-kr="1. 현금은 9. 선물·옵션을 이깁니다.">1. Cash beats 9. Derivatives.</b></p>
+
+    <!-- SETUP -->
+    <section id="setup">
+      <div class="panel">
+        <h2 class="tx" data-en="How it works" data-kr="게임 방법">How it works</h2>
+        <ol>
+          <li class="tx" data-en="Each session, both sides secretly commit one position card. Higher number wins — but 1 beats 9." data-kr="매 세션, 양쪽이 포지션 카드 한 장을 비밀리에 냅니다. 높은 숫자가 이기지만 — 1은 9를 이깁니다.">Each session, both sides secretly commit one position card. Higher number wins — but 1 beats 9.</li>
+          <li class="tx" data-en="Only WIN / LOSE / DRAW is revealed. The cards themselves stay hidden until the end." data-kr="승/패/무만 공개됩니다. 낸 카드는 게임이 끝날 때까지 비공개예요.">Only WIN / LOSE / DRAW is revealed. The cards themselves stay hidden until the end.</li>
+          <li class="tx" data-en="Once per game each, declare 2x or 3x leverage (sessions 1–8): the winner of that session takes 2 or 3 P&amp;L instead of 1." data-kr="게임당 한 번씩 2x·3x 레버리지를 선언할 수 있습니다(1~8세션). 그 세션의 승자는 1점 대신 2~3 P&amp;L을 가져갑니다.">Once per game each, declare 2x or 3x leverage (sessions 1–8): the winner of that session takes 2 or 3 P&amp;L instead of 1.</li>
+        </ol>
+        <div class="diff-row" id="diffRow">
+          <button class="diff" data-d="easy"><span class="tx" data-en="Intern" data-kr="인턴">Intern</span></button>
+          <button class="diff on" data-d="normal"><span class="tx" data-en="Analyst" data-kr="애널리스트">Analyst</span></button>
+          <button class="diff" data-d="hard"><span class="tx" data-en="Managing Director" data-kr="전무">Managing Director</span></button>
+        </div>
+        <button class="btn btn-green" id="startBtn"><span class="tx" data-en="Open the Market" data-kr="장 시작">Open the Market</span> &#9654;</button>
+      </div>
+    </section>
+
+    <!-- GAME -->
+    <section id="game">
+      <div class="board">
+        <div class="status-bar">
+          <span class="sess" id="sessLabel">SESSION 1 / 9</span>
+          <span class="lead" id="leadLabel"></span>
+        </div>
+
+        <div class="zone">
+          <div class="zone-label">
+            <span><span class="tx" data-en="AI DESK" data-kr="AI 데스크">AI DESK</span> · <span id="aiName">ANALYST</span></span>
+            <span class="tokens"><span class="token" id="aiTok2">2x</span><span class="token" id="aiTok3">3x</span></span>
+          </div>
+          <div class="ai-hand" id="aiHand"></div>
+        </div>
+
+        <div class="table-area">
+          <div class="slot">
+            <div class="who" id="aiSlotWho">AI</div>
+            <div class="play-card empty" id="aiPlay"></div>
+          </div>
+          <div class="vs">VS</div>
+          <div class="slot">
+            <div class="who tx" data-en="YOU" data-kr="나">YOU</div>
+            <div class="play-card empty" id="myPlay"></div>
+          </div>
+        </div>
+
+        <div id="banner"></div>
+
+        <div class="zone">
+          <div class="zone-label">
+            <span><span class="tx" data-en="YOUR BOOK" data-kr="내 포지션">YOUR BOOK</span></span>
+            <span class="tokens"><span class="token" id="myTok2">2x</span><span class="token" id="myTok3">3x</span></span>
+          </div>
+          <div class="hand" id="hand"></div>
+          <div class="action-row">
+            <button class="lev-btn" id="lev2">2x <span class="tx" data-en="LEVERAGE" data-kr="레버리지">LEVERAGE</span></button>
+            <button class="lev-btn" id="lev3">3x <span class="tx" data-en="LEVERAGE" data-kr="레버리지">LEVERAGE</span></button>
+            <button class="btn btn-green" id="commitBtn" disabled><span class="tx" data-en="Commit" data-kr="제출">Commit</span></button>
+            <button class="btn" id="nextBtn" style="display:none;"><span class="tx" data-en="Next Session" data-kr="다음 세션">Next Session</span> &#8594;</button>
+          </div>
+          <div class="hint" id="hint"></div>
+        </div>
+      </div>
+
+      <div class="score-row">
+        <div class="pnl you"><div class="lbl"><span class="tx" data-en="YOUR P&amp;L" data-kr="내 P&amp;L">YOUR P&amp;L</span></div><div class="val" id="myScore">0</div></div>
+        <div class="pnl ai"><div class="lbl"><span class="tx" data-en="AI P&amp;L" data-kr="AI P&amp;L">AI P&amp;L</span></div><div class="val" id="aiScore">0</div></div>
+      </div>
+      <div class="log-strip" id="logStrip"></div>
+
+      <div id="gameover">
+        <div class="verdict" id="verdict"></div>
+        <div class="reveal">
+          <table>
+            <thead><tr>
+              <th class="tx" data-en="Session" data-kr="세션">Session</th>
+              <th class="tx" data-en="You" data-kr="나">You</th>
+              <th class="tx" data-en="AI" data-kr="AI">AI</th>
+              <th class="tx" data-en="Stake" data-kr="배점">Stake</th>
+              <th class="tx" data-en="Result" data-kr="결과">Result</th>
+            </tr></thead>
+            <tbody id="revealBody"></tbody>
+          </table>
+        </div>
+        <button class="btn btn-green" id="again"><span class="tx" data-en="Trade Again" data-kr="다시 하기">Trade Again</span> &#8635;</button>
+      </div>
+    </section>
+
+    <!-- RULES -->
+    <div class="rules">
+      <h2 class="tx" data-en="Full Rules" data-kr="전체 규칙">Full Rules</h2>
+      <p class="tx" data-en="Both sides hold the same nine position cards, 1. Cash through 9. Derivatives, each usable exactly once across nine sessions. The previous session's winner commits first (on a draw, the lead stays). Committed cards are never revealed — after each session you learn only who won. A draw means you both played the same position." data-kr="양쪽 모두 1. 현금부터 9. 선물·옵션까지 같은 아홉 장의 포지션 카드를 갖고, 아홉 세션 동안 각 카드를 정확히 한 번씩 사용합니다. 직전 세션의 승자가 먼저 카드를 내고(무승부면 선이 유지), 낸 카드는 공개되지 않습니다 — 매 세션이 끝나면 승패만 알 수 있어요. 무승부는 서로 같은 포지션을 냈다는 뜻입니다.">Both sides hold the same nine position cards, 1. Cash through 9. Derivatives, each usable exactly once across nine sessions. The previous session's winner commits first (on a draw, the lead stays). Committed cards are never revealed — after each session you learn only who won. A draw means you both played the same position.</p>
+      <p class="tx" data-en="Leverage: each side holds one 2x and one 3x token. When committing a card in sessions 1–8, you may attach a token — this is declared openly, so your opponent sees the raised stakes before responding. The session is then worth the highest attached token (win it, take that much P&amp;L; lose it, your opponent takes it). Tokens attached to a drawn session are returned. Leverage cannot be declared in the final session." data-kr="레버리지: 각자 2x 토큰과 3x 토큰을 하나씩 갖습니다. 1~8세션에서 카드를 낼 때 토큰을 함께 걸 수 있고, 선언은 공개되므로 상대는 판돈이 커진 것을 보고 대응합니다. 그 세션의 배점은 걸린 토큰 중 가장 높은 값이 됩니다 (이기면 그만큼의 P&amp;L을 얻고, 지면 상대가 가져갑니다). 무승부가 된 세션에 걸린 토큰은 돌려받습니다. 마지막 세션에는 레버리지를 걸 수 없습니다.">Leverage: each side holds one 2x and one 3x token. When committing a card in sessions 1–8, you may attach a token — this is declared openly, so your opponent sees the raised stakes before responding. The session is then worth the highest attached token (win it, take that much P&amp;L; lose it, your opponent takes it). Tokens attached to a drawn session are returned. Leverage cannot be declared in the final session.</p>
+      <p class="tx" data-en="Why does 1 beat 9? Because when the most leveraged position in the market meets a crash, it gets liquidated — and cash is king. Everything else follows the risk ladder." data-kr="왜 1이 9를 이길까요? 시장에서 가장 큰 레버리지 포지션이 폭락장을 만나면 청산당하기 때문입니다 — 그리고 그때 현금이 왕이죠. 그 외에는 모두 리스크 사다리를 따릅니다.">Why does 1 beat 9? Because when the most leveraged position in the market meets a crash, it gets liquidated — and cash is king. Everything else follows the risk ladder.</p>
+      <p class="tx" data-en="Inspired by classic double-blind number duels; rebuilt with a finance theme, an open leverage system, and an AI that infers your remaining cards from nothing but the win/loss record." data-kr="고전적인 동시 비공개 숫자 대결에서 영감을 받아, 금융 테마와 공개 레버리지 시스템, 그리고 승패 기록만으로 남은 카드를 추리하는 AI로 새로 만들었습니다.">Inspired by classic double-blind number duels; rebuilt with a finance theme, an open leverage system, and an AI that infers your remaining cards from nothing but the win/loss record.</p>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <span>© KYGMIN.COM</span>
+    <span class="tx" data-en="NINE POSITIONS · 9 SESSIONS · 1 BEATS 9 · CASH IS KING" data-kr="NINE POSITIONS · 9세션 · 1은 9를 이긴다 · 현금이 왕이다">NINE POSITIONS · 9 SESSIONS · 1 BEATS 9 · CASH IS KING</span>
+  </div>
+</footer>
+
+<div id="langtoggle" aria-label="Language">
+  <button data-lang="en" class="on">EN</button>
+  <button data-lang="kr">한</button>
+</div>
+
+<!-- 언어 토글: 게임 로직과 독립된 스크립트 (사이트 공통 패턴) -->
+<script>
+window.APP_LANG = 'en';
+window.APP_LANG_LISTENERS = [];
+(function(){
+  var POOL = ("ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎㅏㅑㅓㅕㅗㅛㅜㅠㅡㅣ"
+    + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-·").split("");
+  function esc(c){return c==="&"?"&amp;":c==="<"?"&lt;":c===">"?"&gt;":c;}
+  function Scramble(el){ this.el=el; this.raf=null; this.frame=this.frame.bind(this); }
+  Scramble.prototype.set=function(txt){
+    var old = this.el.dataset.plain!==undefined ? this.el.dataset.plain : this.el.textContent;
+    var len=Math.max(old.length, txt.length);
+    this.q=[];
+    for(var i=0;i<len;i++){
+      var from=old[i]||"", to=txt[i]||"";
+      var start=Math.floor(Math.random()*20);
+      var end=start+Math.floor(Math.random()*25)+12;
+      this.q.push({from:from,to:to,start:start,end:end,ch:null});
+    }
+    if(this.raf) cancelAnimationFrame(this.raf);
+    this.f=0; this.txt=txt; this.frame();
+  };
+  Scramble.prototype.frame=function(){
+    var out="", done=0;
+    for(var i=0;i<this.q.length;i++){
+      var it=this.q[i];
+      if(this.f>=it.end){ done++; out+=esc(it.to); }
+      else if(this.f>=it.start){
+        if(!it.ch || Math.random()<0.3){ it.ch=POOL[Math.floor(Math.random()*POOL.length)]; }
+        out+='<span class="scr">'+esc(it.ch)+'</span>';
+      } else out+=esc(it.from);
+    }
+    this.el.innerHTML=out;
+    if(done===this.q.length){ this.el.dataset.plain=this.txt; }
+    else { this.f++; this.raf=requestAnimationFrame(this.frame); }
+  };
+  var els=[].slice.call(document.querySelectorAll('.tx'));
+  els.forEach(function(el){ el.dataset.plain=el.textContent; el._s=new Scramble(el); });
+  function setLang(lang){
+    if(lang===window.APP_LANG) return;
+    window.APP_LANG = lang;
+    document.documentElement.lang = (lang==='kr'?'ko':'en');
+    var btns=document.querySelectorAll('#langtoggle button');
+    for(var i=0;i<btns.length;i++){ btns[i].classList.toggle('on', btns[i].dataset.lang===lang); }
+    els.forEach(function(el){ var t=el.dataset[lang]; if(t!==undefined) el._s.set(t); });
+    window.APP_LANG_LISTENERS.forEach(function(fn){ try{ fn(lang); }catch(e){ console.error(e); } });
+  }
+  document.getElementById('langtoggle').addEventListener('click', function(e){
+    var b=e.target.closest('button'); if(b) setLang(b.dataset.lang);
+  });
+})();
+</script>
+
+<!-- 게임 엔진 + AI -->
+<script>
+(function(){
+"use strict";
+let LANG = window.APP_LANG || 'en';
+
+// ── 데이터 ──
+const ASSETS = {
+  1:{en:"Cash",kr:"현금"}, 2:{en:"Savings",kr:"예금"}, 3:{en:"Bonds",kr:"채권"},
+  4:{en:"Gold",kr:"금"}, 5:{en:"Real Estate",kr:"부동산"}, 6:{en:"ETF",kr:"ETF"},
+  7:{en:"Stocks",kr:"주식"}, 8:{en:"Crypto",kr:"코인"}, 9:{en:"Derivatives",kr:"선물·옵션"},
+};
+// 리스크 그라데이션 (1 안전 → 9 위험)
+const RISK_COLORS = ["#2BB673","#2BB673","#4CA96B","#7BA05B","#A99A48","#C89A00","#C0703A","#B34A32","#A32D2D"];
+function assetLabel(n){ return n + ". " + ASSETS[n][LANG]; }
+
+const AI_NAMES = { easy:{en:"INTERN",kr:"인턴"}, normal:{en:"ANALYST",kr:"애널리스트"}, hard:{en:"MANAGING DIRECTOR",kr:"전무"} };
+const MSG = {
+  leadYou:{en:"You commit first this session", kr:"이번 세션은 당신이 먼저 냅니다"},
+  leadAi:{en:"AI commits first this session", kr:"이번 세션은 AI가 먼저 냅니다"},
+  aiDeclared:{en:"AI declared LEVERAGE — this session is worth ", kr:"AI가 레버리지를 선언했습니다 — 이번 세션 배점 "},
+  pickCard:{en:"Pick a card, add leverage if you dare, then Commit.", kr:"카드를 고르고, 원하면 레버리지를 걸고, 제출하세요."},
+  lastNoLev:{en:"Final session — leverage not allowed.", kr:"마지막 세션 — 레버리지를 걸 수 없습니다."},
+  youWin:{en:"YOU WIN THE SESSION", kr:"세션 승리"},
+  youLose:{en:"YOU LOSE THE SESSION", kr:"세션 패배"},
+  drawMsg:{en:"DRAW — SAME POSITION. TOKENS RETURNED", kr:"무승부 — 같은 포지션. 토큰 반환"},
+  finalWin:{en:"MARKET CLOSED — YOU WIN", kr:"장 마감 — 당신의 승리"},
+  finalLose:{en:"MARKET CLOSED — AI WINS", kr:"장 마감 — AI의 승리"},
+  finalDraw:{en:"MARKET CLOSED — DEAD EVEN", kr:"장 마감 — 무승부"},
+  finalScore:{en:"Final P&L ", kr:"최종 P&L "},
+  win:{en:"WIN",kr:"승"}, lose:{en:"LOSE",kr:"패"}, draw:{en:"DRAW",kr:"무"},
+};
+function m(k){ return MSG[k][LANG]; }
+
+// ── 승부 판정: a가 b를 상대로 ('W'|'L'|'D') ──
+function duel(a,b){
+  if(a===b) return 'D';
+  if(a===1 && b===9) return 'W';
+  if(a===9 && b===1) return 'L';
+  return a>b ? 'W' : 'L';
+}
+
+// ── 게임 상태 ──
+let S = null;
+function newState(diff){
+  return {
+    diff, session:1,
+    myHand:[1,2,3,4,5,6,7,8,9], aiHand:[1,2,3,4,5,6,7,8,9],
+    myScore:0, aiScore:0,
+    myTok:{2:true,3:true}, aiTok:{2:true,3:true},
+    leader: Math.random()<0.5 ? 'you':'ai',
+    // 이번 세션 임시
+    myCard:null, aiCard:null, myLev:0, aiLev:0,
+    phase:'pick', // pick | resolved | over
+    history:[],   // {sess, my, ai, stake, res('W'|'L'|'D' 내 기준), lead}
+    aiMemory:[],  // AI 관점 기록 {ai:card, res:'W'|'L'|'D' AI 기준}
+  };
+}
+
+// ── AI 추리: 승패 기록으로 플레이어 남은 카드 분포 계산 ──
+function playerCardWeights(mem){
+  const used=new Array(10).fill(false);
+  const counts=new Array(10).fill(0);
+  let total=0;
+  function dfs(i){
+    if(i===mem.length){
+      total++;
+      for(let v=1;v<=9;v++) if(!used[v]) counts[v]++;
+      return;
+    }
+    const h=mem[i];
+    for(let v=1;v<=9;v++){
+      if(used[v]) continue;
+      if(duel(h.ai, v)!==h.res) continue;
+      used[v]=true; dfs(i+1); used[v]=false;
+    }
+  }
+  dfs(0);
+  if(total===0){ for(let v=1;v<=9;v++) counts[v]=1; total=9; } // 방어
+  const w={}; for(let v=1;v<=9;v++) w[v]=counts[v]/total;
+  return w; // P(플레이어가 카드 v를 아직 들고 있음)
+}
+
+// ── AI 카드 선택 ──
+function aiChooseCard(asFollower, playerDeclaredLev){
+  const hand=S.aiHand.slice();
+  const diff=S.diff;
+  if(diff==='easy'){
+    return hand[Math.floor(Math.random()*hand.length)];
+  }
+  let w = playerCardWeights(S.aiMemory);
+  // 플레이어가 레버리지를 선언했다면: 최강 카드 또는 1(저격) 확률 강화
+  if(asFollower && playerDeclaredLev>0){
+    let maxHeld=0; for(let v=9;v>=1;v--){ if(w[v]>0.01){ maxHeld=v; break; } }
+    if(maxHeld) w[maxHeld]*=2.5;
+    if(w[1]>0.01) w[1]*=1.8;
+  }
+  // 정규화된 상대 플레이 분포
+  let sum=0; for(let v=1;v<=9;v++) sum+=w[v];
+  const p={}; for(let v=1;v<=9;v++) p[v]=w[v]/(sum||1);
+  // 각 후보 카드 EV
+  const evs = hand.map(c=>{
+    let ev=0;
+    for(let v=1;v<=9;v++){
+      if(p[v]<=0) continue;
+      const r=duel(c,v);
+      ev += p[v]*(r==='W'?1:r==='L'?-1:0);
+    }
+    // 하드: 1·9의 옵션 가치 보존 (근소한 이득이면 아껴둠)
+    if(diff==='hard' && (c===1||c===9)) ev -= 0.12;
+    return {c, ev};
+  });
+  // softmax 샘플링 (예측 불가능성)
+  const temp = diff==='hard' ? 0.22 : 0.5;
+  const mx=Math.max(...evs.map(e=>e.ev));
+  const weights=evs.map(e=>Math.exp((e.ev-mx)/temp));
+  let r=Math.random()*weights.reduce((a,b)=>a+b,0);
+  for(let i=0;i<evs.length;i++){ r-=weights[i]; if(r<=0) return evs[i].c; }
+  return evs[evs.length-1].c;
+}
+
+// ── AI 레버리지 결정 (카드 확정 후) ──
+function aiChooseLev(card, asFollower, playerDeclaredLev){
+  if(S.session>=9) return 0;
+  const diff=S.diff;
+  const avail=[]; if(S.aiTok[3]) avail.push(3); if(S.aiTok[2]) avail.push(2);
+  if(!avail.length) return 0;
+  if(diff==='easy') return Math.random()<0.15 ? avail[Math.floor(Math.random()*avail.length)] : 0;
+  // 승률 추정
+  let w = playerCardWeights(S.aiMemory);
+  if(asFollower && playerDeclaredLev>0){
+    let maxHeld=0; for(let v=9;v>=1;v--){ if(w[v]>0.01){ maxHeld=v; break; } }
+    if(maxHeld) w[maxHeld]*=2.5;
+    if(w[1]>0.01) w[1]*=1.8;
+  }
+  let sum=0; for(let v=1;v<=9;v++) sum+=w[v];
+  let winP=0, loseP=0;
+  for(let v=1;v<=9;v++){
+    const pv=w[v]/(sum||1); if(pv<=0) continue;
+    const r=duel(card,v);
+    if(r==='W') winP+=pv; else if(r==='L') loseP+=pv;
+  }
+  const t3 = diff==='hard'?0.70:0.80;
+  const t2 = diff==='hard'?0.60:0.70;
+  if(avail.includes(3) && winP>=t3) return 3;
+  if(avail.includes(2) && winP>=t2) return 2;
+  // 하드: 낮은 확률 블러핑 (선공일 때만 — 상대 반응 유도)
+  if(diff==='hard' && !asFollower && avail.includes(2) && winP<0.45 && Math.random()<0.10) return 2;
+  return 0;
+}
+
+// ── DOM ──
+const $=id=>document.getElementById(id);
+const handEl=$('hand'), aiHandEl=$('aiHand'), bannerEl=$('banner'), hintEl=$('hint');
+
+function renderLadder(){
+  $('ladder').innerHTML = Array.from({length:9},(_,i)=>{
+    const n=i+1;
+    return `<span class="rung">${n}. ${ASSETS[n][LANG]}<span class="risk" style="background:${RISK_COLORS[i]}"></span></span>`;
+  }).join('');
+}
+
+function renderTokens(){
+  $('myTok2').className='token'+(S.myTok[2]?'':' used');
+  $('myTok3').className='token'+(S.myTok[3]?'':' used');
+  $('aiTok2').className='token'+(S.aiTok[2]?'':' used');
+  $('aiTok3').className='token'+(S.aiTok[3]?'':' used');
+}
+
+function renderHand(){
+  handEl.innerHTML = S.myHand.map(n=>`
+    <button class="card${S.myCard===n?' sel':''}" data-n="${n}" ${S.phase!=='pick'?'disabled':''}>
+      <span class="num">${n}</span><span class="nm">${ASSETS[n][LANG]}</span>
+      <span class="riskbar" style="background:${RISK_COLORS[n-1]}"></span>
+    </button>`).join('');
+  aiHandEl.innerHTML = S.aiHand.map(()=>'<div class="mini-card"></div>').join('');
+}
+
+function renderTable(){
+  const ai=$('aiPlay'), my=$('myPlay');
+  // AI 슬롯
+  if(S.aiCard!==null && S.phase!=='over'){
+    ai.className='play-card back';
+    ai.innerHTML = S.aiLev? `<span class="lev-badge">${S.aiLev}x</span>`:'';
+  } else { ai.className='play-card empty'; ai.innerHTML=''; }
+  // 내 슬롯
+  if(S.myCard!==null && S.phase==='resolved'){
+    my.className='play-card back';
+    my.innerHTML = S.myLev? `<span class="lev-badge">${S.myLev}x</span>`:'';
+  } else if(S.myCard!==null){
+    my.className='play-card';
+    my.innerHTML=`<span class="num">${S.myCard}</span><span class="nm">${ASSETS[S.myCard][LANG]}</span>
+      <span class="riskbar" style="background:${RISK_COLORS[S.myCard-1]}"></span>`
+      +(S.myLev?`<span class="lev-badge">${S.myLev}x</span>`:'');
+  } else { my.className='play-card empty'; my.innerHTML=''; }
+}
+
+function renderScore(){
+  $('myScore').textContent=S.myScore;
+  $('aiScore').textContent=S.aiScore;
+  $('logStrip').innerHTML = Array.from({length:9},(_,i)=>{
+    const h=S.history[i];
+    if(!h) return `<div class="log-cell"><span class="s">S${i+1}</span>–</div>`;
+    const cls=h.res==='W'?'w':h.res==='L'?'l':'d';
+    const txt=h.res==='D'?m('draw'):(h.res==='W'?'+':'-')+h.stake;
+    return `<div class="log-cell ${cls}"><span class="s">S${i+1}</span>${txt}</div>`;
+  }).join('');
+}
+
+function renderStatus(){
+  $('sessLabel').textContent=`SESSION ${Math.min(S.session,9)} / 9`;
+  $('aiName').textContent=AI_NAMES[S.diff][LANG];
+  let lead = S.leader==='you'? m('leadYou') : m('leadAi');
+  if(S.leader==='ai' && S.aiLev>0 && S.phase==='pick'){
+    lead += ' · ' + m('aiDeclared') + S.aiLev + ' P&L';
+  }
+  $('leadLabel').textContent=lead;
+}
+
+function renderLevBtns(){
+  const last=S.session>=9;
+  const l2=$('lev2'), l3=$('lev3');
+  l2.disabled = last || !S.myTok[2] || S.phase!=='pick';
+  l3.disabled = last || !S.myTok[3] || S.phase!=='pick';
+  l2.className='lev-btn'+(S.myLev===2?' on':'');
+  l3.className='lev-btn'+(S.myLev===3?' on':'');
+}
+
+function renderAll(){
+  renderTokens(); renderHand(); renderTable(); renderScore(); renderStatus(); renderLevBtns();
+  $('commitBtn').disabled = !(S.phase==='pick' && S.myCard!==null);
+  hintEl.textContent = S.phase==='pick' ? (S.session>=9? m('lastNoLev') : m('pickCard')) : '';
+}
+
+// ── 세션 흐름 ──
+function startSession(){
+  S.myCard=null; S.aiCard=null; S.myLev=0; S.aiLev=0; S.phase='pick';
+  bannerEl.className=''; bannerEl.style.display='none';
+  $('nextBtn').style.display='none';
+  if(S.leader==='ai'){
+    // AI 선공: 카드+레버리지를 먼저 확정 (레버리지는 공개)
+    S.aiCard = aiChooseCard(false, 0);
+    S.aiLev = aiChooseLev(S.aiCard, false, 0);
+    if(S.aiLev) S.aiTok[S.aiLev]=false;
+  }
+  renderAll();
+}
+
+function commit(){
+  if(S.myCard===null || S.phase!=='pick') return;
+  if(S.myLev) S.myTok[S.myLev]=false;
+  if(S.leader==='you'){
+    // AI 후공: 내 레버리지 선언을 보고 대응
+    S.aiCard = aiChooseCard(true, S.myLev);
+    S.aiLev = aiChooseLev(S.aiCard, true, S.myLev);
+    if(S.aiLev) S.aiTok[S.aiLev]=false;
+  }
+  resolve();
+}
+
+function resolve(){
+  const res = duel(S.myCard, S.aiCard); // 내 기준
+  const stake = Math.max(1, S.myLev, S.aiLev);
+  if(res==='D'){
+    // 토큰 반환
+    if(S.myLev) S.myTok[S.myLev]=true;
+    if(S.aiLev) S.aiTok[S.aiLev]=true;
+    bannerEl.className='draw'; bannerEl.textContent=m('drawMsg');
+  } else if(res==='W'){
+    S.myScore+=stake; S.leader='you';
+    bannerEl.className='win'; bannerEl.textContent=m('youWin')+' · +'+stake+' P&L';
+  } else {
+    S.aiScore+=stake; S.leader='ai';
+    bannerEl.className='lose'; bannerEl.textContent=m('youLose')+' · -'+stake+' P&L';
+  }
+  S.history.push({sess:S.session, my:S.myCard, ai:S.aiCard, stake:(res==='D'?0:stake), res, lead:S.leader});
+  S.aiMemory.push({ai:S.aiCard, res: res==='D'?'D':(res==='W'?'L':'W')}); // AI 기준으로 반전
+  S.myHand=S.myHand.filter(n=>n!==S.myCard);
+  S.aiHand=S.aiHand.filter(n=>n!==S.aiCard);
+  S.phase='resolved';
+  renderAll();
+  if(S.session>=9){ gameOver(); }
+  else { $('nextBtn').style.display='inline-block'; }
+}
+
+function nextSession(){
+  S.session++;
+  startSession();
+}
+
+function gameOver(){
+  S.phase='over';
+  const v=$('verdict');
+  let cls,txt;
+  if(S.myScore>S.aiScore){ cls='win'; txt=m('finalWin'); }
+  else if(S.myScore<S.aiScore){ cls='lose'; txt=m('finalLose'); }
+  else { cls='draw'; txt=m('finalDraw'); }
+  v.className='verdict '+cls;
+  v.innerHTML=txt+`<small>${m('finalScore')}${S.myScore} : ${S.aiScore}</small>`;
+  $('revealBody').innerHTML = S.history.map(h=>{
+    const rc=h.res==='W'?'w':h.res==='L'?'l':'';
+    const rt=h.res==='W'?m('win'):h.res==='L'?m('lose'):m('draw');
+    return `<tr><td>S${h.sess}</td><td>${assetLabel(h.my)}</td><td>${assetLabel(h.ai)}</td><td>${h.stake||'–'}</td><td class="${rc}">${rt}</td></tr>`;
+  }).join('');
+  $('gameover').style.display='block';
+  $('gameover').scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+// ── 이벤트 ──
+let chosenDiff='normal';
+$('diffRow').addEventListener('click', e=>{
+  const b=e.target.closest('.diff'); if(!b) return;
+  chosenDiff=b.dataset.d;
+  document.querySelectorAll('.diff').forEach(x=>x.classList.toggle('on', x===b));
+});
+$('startBtn').addEventListener('click', ()=>{
+  S=newState(chosenDiff);
+  $('setup').style.display='none';
+  $('game').style.display='block';
+  $('gameover').style.display='none';
+  startSession();
+});
+handEl.addEventListener('click', e=>{
+  const c=e.target.closest('.card'); if(!c || S.phase!=='pick') return;
+  S.myCard=parseInt(c.dataset.n,10);
+  renderAll();
+});
+$('lev2').addEventListener('click', ()=>{ if(S.phase!=='pick') return; S.myLev = S.myLev===2?0:2; renderAll(); });
+$('lev3').addEventListener('click', ()=>{ if(S.phase!=='pick') return; S.myLev = S.myLev===3?0:3; renderAll(); });
+$('commitBtn').addEventListener('click', commit);
+$('nextBtn').addEventListener('click', nextSession);
+$('again').addEventListener('click', ()=>{
+  $('game').style.display='none';
+  $('gameover').style.display='none';
+  $('setup').style.display='block';
+  window.scrollTo({top:0, behavior:'smooth'});
+});
+
+// 언어 전환 시 동적 UI 다시 그리기
+window.APP_LANG_LISTENERS.push(function(lang){
+  LANG=lang;
+  renderLadder();
+  if(S){ renderAll(); if(S.phase==='over') gameOver(); }
+});
+
+renderLadder();
+})();
+</script>
+</body>
+</html>
