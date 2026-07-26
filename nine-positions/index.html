@@ -132,6 +132,7 @@ main{padding:36px 0 88px;}
   font-family:var(--mono);font-size:11px;font-weight:600;border:2px solid var(--ink);
   padding:1px 8px;background:var(--gold);color:var(--ink);
 }
+.token.inv{background:var(--ink);color:var(--paper);}
 .token.used{background:var(--gray);color:#8A8A85;text-decoration:line-through;}
 
 /* AI hand */
@@ -146,6 +147,7 @@ main{padding:36px 0 88px;}
   background:#EFEFEA;padding:20px 18px;
   display:flex;justify-content:center;align-items:center;gap:26px;min-height:150px;flex-wrap:wrap;
 }
+.table-area.flipped{background:#F5E9E9;}
 .slot{width:110px;text-align:center;}
 .slot .who{font-family:var(--mono);font-size:11px;font-weight:600;color:#6B6B67;margin-bottom:6px;}
 .play-card{
@@ -162,7 +164,14 @@ main{padding:36px 0 88px;}
   position:absolute;top:-12px;right:-12px;background:var(--gold);border:2px solid var(--ink);
   font-family:var(--arch);font-weight:900;font-size:13px;padding:1px 7px;transform:rotate(8deg);
 }
+.inv-badge{
+  position:absolute;top:-12px;left:-12px;background:var(--ink);color:var(--paper);border:2px solid var(--ink);
+  font-family:var(--arch);font-weight:900;font-size:12px;padding:1px 7px;transform:rotate(-8deg);
+}
 .vs{font-family:var(--arch);font-weight:900;font-size:20px;color:#8A8A85;}
+.flip-note{
+  width:100%;text-align:center;font-family:var(--mono);font-size:11.5px;font-weight:600;color:var(--red);
+}
 
 /* result banner */
 #banner{
@@ -197,6 +206,8 @@ main{padding:36px 0 88px;}
 }
 .lev-btn:hover{transform:translate(1px,1px);box-shadow:3px 3px 0 var(--ink);}
 .lev-btn.on{background:var(--ink);color:var(--gold);}
+.lev-btn.invb{background:var(--ink);color:var(--paper);}
+.lev-btn.invb.on{background:var(--red);color:var(--paper);}
 .lev-btn:disabled{background:var(--gray);color:#8A8A85;cursor:not-allowed;box-shadow:4px 4px 0 var(--ink);transform:none;}
 .hint{font-family:var(--mono);font-size:11.5px;color:#6B6B67;margin-top:10px;min-height:1.4em;}
 
@@ -234,12 +245,13 @@ main{padding:36px 0 88px;}
 .verdict.draw{background:var(--gray);}
 .verdict small{display:block;font-family:var(--mono);font-size:13px;font-weight:600;letter-spacing:0;margin-top:8px;text-transform:none;}
 .reveal{margin-top:22px;border:3px solid var(--ink);background:#fff;box-shadow:5px 5px 0 var(--ink);overflow-x:auto;}
-.reveal table{border-collapse:collapse;width:100%;min-width:520px;font-family:var(--mono);font-size:12px;}
+.reveal table{border-collapse:collapse;width:100%;min-width:560px;font-family:var(--mono);font-size:12px;}
 .reveal th,.reveal td{border-bottom:1px solid var(--gray);padding:7px 10px;text-align:center;}
 .reveal th{font-family:var(--arch);font-size:11px;text-transform:uppercase;border-bottom:3px solid var(--ink);background:#EFEFEA;}
 .reveal tr:last-child td{border-bottom:none;}
 .reveal .w{color:var(--green-deep);font-weight:600;}
 .reveal .l{color:var(--red);font-weight:600;}
+.reveal .invmark{color:var(--red);font-weight:600;}
 #again{margin-top:22px;}
 
 /* how to play */
@@ -283,7 +295,7 @@ footer{border-top:3px solid var(--ink);padding:26px 0;}
   <div class="wrap">
     <span class="sec-tag tx" data-en="PLAYGROUND — A MARKET MIND GAME" data-kr="플레이그라운드 — 시장 심리 게임">PLAYGROUND — A MARKET MIND GAME</span>
     <h1>NINE <span class="box"><span class="tx" data-en="POSITIONS" data-kr="POSITIONS">POSITIONS</span></span></h1>
-    <p class="hero-sub tx" data-en="Nine sessions, nine positions each — from 1. Cash to 9. Derivatives. Higher risk wins the session, but when Derivatives meet Cash, the market crashes and Cash is king. Read the AI, bluff with leverage, and finish with the higher P&amp;L." data-kr="9번의 세션, 각자 9장의 포지션 — 1. 현금부터 9. 선물·옵션까지. 높은 리스크가 세션을 이기지만, 선물·옵션이 현금을 만나면 시장이 무너지고 현금이 왕이 됩니다. AI의 수를 읽고, 레버리지로 블러핑하고, 더 높은 P&amp;L로 마무리하세요.">Nine sessions, nine positions each — from 1. Cash to 9. Derivatives. Higher risk wins the session, but when Derivatives meet Cash, the market crashes and Cash is king. Read the AI, bluff with leverage, and finish with the higher P&amp;L.</p>
+    <p class="hero-sub tx" data-en="Nine sessions, nine positions each — from 1. Cash to 9. Derivatives. Higher risk wins the session, but when Derivatives meet Cash, the market crashes and Cash is king. Read the AI, bluff with leverage, flip the market with an Inverse, and finish with the higher P&amp;L." data-kr="9번의 세션, 각자 9장의 포지션 — 1. 현금부터 9. 선물·옵션까지. 높은 리스크가 세션을 이기지만, 선물·옵션이 현금을 만나면 시장이 무너지고 현금이 왕이 됩니다. AI의 수를 읽고, 레버리지로 블러핑하고, 인버스로 시장을 뒤집고, 더 높은 P&amp;L로 마무리하세요.">Nine sessions, nine positions each — from 1. Cash to 9. Derivatives. Higher risk wins the session, but when Derivatives meet Cash, the market crashes and Cash is king. Read the AI, bluff with leverage, flip the market with an Inverse, and finish with the higher P&amp;L.</p>
     <p class="hero-note tx" data-en="2-PLAYER BLUFFING GAME VS AI · CARDS STAY HIDDEN — ONLY WIN/LOSE IS REVEALED" data-kr="AI와 겨루는 심리전 게임 · 카드는 끝까지 비공개 — 승패만 공개됩니다">2-PLAYER BLUFFING GAME VS AI · CARDS STAY HIDDEN — ONLY WIN/LOSE IS REVEALED</p>
   </div>
 </header>
@@ -302,6 +314,7 @@ footer{border-top:3px solid var(--ink);padding:26px 0;}
           <li class="tx" data-en="Each session, both sides secretly commit one position card. Higher number wins — but 1 beats 9." data-kr="매 세션, 양쪽이 포지션 카드 한 장을 비밀리에 냅니다. 높은 숫자가 이기지만 — 1은 9를 이깁니다.">Each session, both sides secretly commit one position card. Higher number wins — but 1 beats 9.</li>
           <li class="tx" data-en="Only WIN / LOSE / DRAW is revealed. The cards themselves stay hidden until the end." data-kr="승/패/무만 공개됩니다. 낸 카드는 게임이 끝날 때까지 비공개예요.">Only WIN / LOSE / DRAW is revealed. The cards themselves stay hidden until the end.</li>
           <li class="tx" data-en="Once per game each, declare 2x or 3x leverage (sessions 1–8): the winner of that session takes 2 or 3 P&amp;L instead of 1." data-kr="게임당 한 번씩 2x·3x 레버리지를 선언할 수 있습니다(1~8세션). 그 세션의 승자는 1점 대신 2~3 P&amp;L을 가져갑니다.">Once per game each, declare 2x or 3x leverage (sessions 1–8): the winner of that session takes 2 or 3 P&amp;L instead of 1.</li>
+          <li class="tx" data-en="Once per game each, declare an INVERSE (sessions 1–8): that session the market flips — the lower card wins, and 9 beats 1. If both sides declare it, the two inverses cancel out." data-kr="게임당 한 번씩 인버스를 선언할 수 있습니다(1~8세션): 그 세션은 시장이 뒤집혀 낮은 카드가 이기고, 9가 1을 이깁니다. 양쪽이 모두 선언하면 서로 상쇄됩니다.">Once per game each, declare an INVERSE (sessions 1–8): that session the market flips — the lower card wins, and 9 beats 1. If both sides declare it, the two inverses cancel out.</li>
         </ol>
         <div class="diff-row" id="diffRow">
           <button class="diff" data-d="easy"><span class="tx" data-en="Intern" data-kr="인턴">Intern</span></button>
@@ -323,12 +336,12 @@ footer{border-top:3px solid var(--ink);padding:26px 0;}
         <div class="zone">
           <div class="zone-label">
             <span><span class="tx" data-en="AI DESK" data-kr="AI 데스크">AI DESK</span> · <span id="aiName">ANALYST</span></span>
-            <span class="tokens"><span class="token" id="aiTok2">2x</span><span class="token" id="aiTok3">3x</span></span>
+            <span class="tokens"><span class="token" id="aiTok2">2x</span><span class="token" id="aiTok3">3x</span><span class="token inv" id="aiTokI">INV</span></span>
           </div>
           <div class="ai-hand" id="aiHand"></div>
         </div>
 
-        <div class="table-area">
+        <div class="table-area" id="tableArea">
           <div class="slot">
             <div class="who" id="aiSlotWho">AI</div>
             <div class="play-card empty" id="aiPlay"></div>
@@ -338,6 +351,7 @@ footer{border-top:3px solid var(--ink);padding:26px 0;}
             <div class="who tx" data-en="YOU" data-kr="나">YOU</div>
             <div class="play-card empty" id="myPlay"></div>
           </div>
+          <div class="flip-note" id="flipNote" style="display:none;"></div>
         </div>
 
         <div id="banner"></div>
@@ -345,12 +359,13 @@ footer{border-top:3px solid var(--ink);padding:26px 0;}
         <div class="zone">
           <div class="zone-label">
             <span><span class="tx" data-en="YOUR BOOK" data-kr="내 포지션">YOUR BOOK</span></span>
-            <span class="tokens"><span class="token" id="myTok2">2x</span><span class="token" id="myTok3">3x</span></span>
+            <span class="tokens"><span class="token" id="myTok2">2x</span><span class="token" id="myTok3">3x</span><span class="token inv" id="myTokI">INV</span></span>
           </div>
           <div class="hand" id="hand"></div>
           <div class="action-row">
             <button class="lev-btn" id="lev2">2x <span class="tx" data-en="LEVERAGE" data-kr="레버리지">LEVERAGE</span></button>
             <button class="lev-btn" id="lev3">3x <span class="tx" data-en="LEVERAGE" data-kr="레버리지">LEVERAGE</span></button>
+            <button class="lev-btn invb" id="levInv">&#8645; <span class="tx" data-en="INVERSE" data-kr="인버스">INVERSE</span></button>
             <button class="btn btn-green" id="commitBtn" disabled><span class="tx" data-en="Commit" data-kr="제출">Commit</span></button>
             <button class="btn" id="nextBtn" style="display:none;"><span class="tx" data-en="Next Session" data-kr="다음 세션">Next Session</span> &#8594;</button>
           </div>
@@ -373,6 +388,7 @@ footer{border-top:3px solid var(--ink);padding:26px 0;}
               <th class="tx" data-en="You" data-kr="나">You</th>
               <th class="tx" data-en="AI" data-kr="AI">AI</th>
               <th class="tx" data-en="Stake" data-kr="배점">Stake</th>
+              <th class="tx" data-en="Market" data-kr="시장">Market</th>
               <th class="tx" data-en="Result" data-kr="결과">Result</th>
             </tr></thead>
             <tbody id="revealBody"></tbody>
@@ -387,8 +403,9 @@ footer{border-top:3px solid var(--ink);padding:26px 0;}
       <h2 class="tx" data-en="Full Rules" data-kr="전체 규칙">Full Rules</h2>
       <p class="tx" data-en="Both sides hold the same nine position cards, 1. Cash through 9. Derivatives, each usable exactly once across nine sessions. The previous session's winner commits first (on a draw, the lead stays). Committed cards are never revealed — after each session you learn only who won. A draw means you both played the same position." data-kr="양쪽 모두 1. 현금부터 9. 선물·옵션까지 같은 아홉 장의 포지션 카드를 갖고, 아홉 세션 동안 각 카드를 정확히 한 번씩 사용합니다. 직전 세션의 승자가 먼저 카드를 내고(무승부면 선이 유지), 낸 카드는 공개되지 않습니다 — 매 세션이 끝나면 승패만 알 수 있어요. 무승부는 서로 같은 포지션을 냈다는 뜻입니다.">Both sides hold the same nine position cards, 1. Cash through 9. Derivatives, each usable exactly once across nine sessions. The previous session's winner commits first (on a draw, the lead stays). Committed cards are never revealed — after each session you learn only who won. A draw means you both played the same position.</p>
       <p class="tx" data-en="Leverage: each side holds one 2x and one 3x token. When committing a card in sessions 1–8, you may attach a token — this is declared openly, so your opponent sees the raised stakes before responding. The session is then worth the highest attached token (win it, take that much P&amp;L; lose it, your opponent takes it). Tokens attached to a drawn session are returned. Leverage cannot be declared in the final session." data-kr="레버리지: 각자 2x 토큰과 3x 토큰을 하나씩 갖습니다. 1~8세션에서 카드를 낼 때 토큰을 함께 걸 수 있고, 선언은 공개되므로 상대는 판돈이 커진 것을 보고 대응합니다. 그 세션의 배점은 걸린 토큰 중 가장 높은 값이 됩니다 (이기면 그만큼의 P&amp;L을 얻고, 지면 상대가 가져갑니다). 무승부가 된 세션에 걸린 토큰은 돌려받습니다. 마지막 세션에는 레버리지를 걸 수 없습니다.">Leverage: each side holds one 2x and one 3x token. When committing a card in sessions 1–8, you may attach a token — this is declared openly, so your opponent sees the raised stakes before responding. The session is then worth the highest attached token (win it, take that much P&amp;L; lose it, your opponent takes it). Tokens attached to a drawn session are returned. Leverage cannot be declared in the final session.</p>
+      <p class="tx" data-en="Inverse: each side also holds one Inverse token — a bet on the downside. Declared openly like leverage (sessions 1–8, may be combined with a leverage token). In an inverted session the whole market flips: the lower card wins, and 9 beats 1. If both sides declare an Inverse in the same session, they cancel out and the market trades normally — so a well-timed counter-Inverse can neutralise your opponent's. Inverse tokens on a drawn session are returned." data-kr="인버스: 각자 인버스 토큰도 하나씩 갖습니다 — 하락에 거는 베팅이죠. 레버리지처럼 공개 선언하며(1~8세션, 레버리지 토큰과 동시 선언 가능), 인버스가 걸린 세션은 시장 전체가 뒤집힙니다: 낮은 카드가 이기고, 9가 1을 이깁니다. 같은 세션에 양쪽 모두 인버스를 선언하면 서로 상쇄되어 시장은 정상으로 돌아갑니다 — 타이밍 좋은 카운터 인버스로 상대의 인버스를 무력화할 수 있다는 뜻이에요. 무승부가 된 세션의 인버스 토큰은 돌려받습니다.">Inverse: each side also holds one Inverse token — a bet on the downside. Declared openly like leverage (sessions 1–8, may be combined with a leverage token). In an inverted session the whole market flips: the lower card wins, and 9 beats 1. If both sides declare an Inverse in the same session, they cancel out and the market trades normally — so a well-timed counter-Inverse can neutralise your opponent's. Inverse tokens on a drawn session are returned.</p>
       <p class="tx" data-en="Why does 1 beat 9? Because when the most leveraged position in the market meets a crash, it gets liquidated — and cash is king. Everything else follows the risk ladder." data-kr="왜 1이 9를 이길까요? 시장에서 가장 큰 레버리지 포지션이 폭락장을 만나면 청산당하기 때문입니다 — 그리고 그때 현금이 왕이죠. 그 외에는 모두 리스크 사다리를 따릅니다.">Why does 1 beat 9? Because when the most leveraged position in the market meets a crash, it gets liquidated — and cash is king. Everything else follows the risk ladder.</p>
-      <p class="tx" data-en="Inspired by classic double-blind number duels; rebuilt with a finance theme, an open leverage system, and an AI that infers your remaining cards from nothing but the win/loss record." data-kr="고전적인 동시 비공개 숫자 대결에서 영감을 받아, 금융 테마와 공개 레버리지 시스템, 그리고 승패 기록만으로 남은 카드를 추리하는 AI로 새로 만들었습니다.">Inspired by classic double-blind number duels; rebuilt with a finance theme, an open leverage system, and an AI that infers your remaining cards from nothing but the win/loss record.</p>
+      <p class="tx" data-en="Inspired by classic double-blind number duels; rebuilt with a finance theme, open leverage and inverse systems, and an AI that infers your remaining cards from nothing but the win/loss record." data-kr="고전적인 동시 비공개 숫자 대결에서 영감을 받아, 금융 테마와 공개 레버리지·인버스 시스템, 그리고 승패 기록만으로 남은 카드를 추리하는 AI로 새로 만들었습니다.">Inspired by classic double-blind number duels; rebuilt with a finance theme, open leverage and inverse systems, and an AI that infers your remaining cards from nothing but the win/loss record.</p>
     </div>
 
   </div>
@@ -479,9 +496,14 @@ const AI_NAMES = { easy:{en:"INTERN",kr:"인턴"}, normal:{en:"ANALYST",kr:"애�
 const MSG = {
   leadYou:{en:"You commit first this session", kr:"이번 세션은 당신이 먼저 냅니다"},
   leadAi:{en:"AI commits first this session", kr:"이번 세션은 AI가 먼저 냅니다"},
-  aiDeclared:{en:"AI declared LEVERAGE — this session is worth ", kr:"AI가 레버리지를 선언했습니다 — 이번 세션 배점 "},
-  pickCard:{en:"Pick a card, add leverage if you dare, then Commit.", kr:"카드를 고르고, 원하면 레버리지를 걸고, 제출하세요."},
-  lastNoLev:{en:"Final session — leverage not allowed.", kr:"마지막 세션 — 레버리지를 걸 수 없습니다."},
+  aiDeclaredLev:{en:"AI declared LEVERAGE — worth ", kr:"AI가 레버리지 선언 — 배점 "},
+  aiDeclaredInv:{en:"AI declared an INVERSE — the market flips: lower card wins", kr:"AI가 인버스 선언 — 시장 반전: 낮은 카드가 이깁니다"},
+  pickCard:{en:"Pick a card, add leverage or an inverse if you dare, then Commit.", kr:"카드를 고르고, 원하면 레버리지·인버스를 걸고, 제출하세요."},
+  lastNoLev:{en:"Final session — no leverage, no inverse.", kr:"마지막 세션 — 레버리지·인버스를 걸 수 없습니다."},
+  invHint:{en:"INVERSE armed — this session the LOWER card wins (9 beats 1).", kr:"인버스 장전 — 이번 세션은 낮은 카드가 이깁니다 (9가 1을 이김)."},
+  invCancelHint:{en:"Your INVERSE would cancel the AI's — market back to normal.", kr:"당신의 인버스가 AI의 인버스를 상쇄합니다 — 시장 정상화."},
+  flipActive:{en:"&#8645; INVERTED MARKET — LOWER CARD WINS", kr:"&#8645; 반전된 시장 — 낮은 카드가 이깁니다"},
+  flipCancelled:{en:"&#8645;&#8645; DOUBLE INVERSE — CANCELLED OUT, MARKET NORMAL", kr:"&#8645;&#8645; 더블 인버스 — 상쇄되어 시장 정상"},
   youWin:{en:"YOU WIN THE SESSION", kr:"세션 승리"},
   youLose:{en:"YOU LOSE THE SESSION", kr:"세션 패배"},
   drawMsg:{en:"DRAW — SAME POSITION. TOKENS RETURNED", kr:"무승부 — 같은 포지션. 토큰 반환"},
@@ -490,16 +512,19 @@ const MSG = {
   finalDraw:{en:"MARKET CLOSED — DEAD EVEN", kr:"장 마감 — 무승부"},
   finalScore:{en:"Final P&L ", kr:"최종 P&L "},
   win:{en:"WIN",kr:"승"}, lose:{en:"LOSE",kr:"패"}, draw:{en:"DRAW",kr:"무"},
+  mktNormal:{en:"–",kr:"–"}, mktInv:{en:"INV",kr:"인버스"}, mktCancel:{en:"INVx2",kr:"상쇄"},
 };
 function m(k){ return MSG[k][LANG]; }
 
-// ── 승부 판정: a가 b를 상대로 ('W'|'L'|'D') ──
+// ── 승부 판정: a가 b를 상대로 ('W'|'L'|'D'), inverted면 결과 반전 ──
 function duel(a,b){
   if(a===b) return 'D';
   if(a===1 && b===9) return 'W';
   if(a===9 && b===1) return 'L';
   return a>b ? 'W' : 'L';
 }
+function flipRes(r){ return r==='W'?'L':r==='L'?'W':'D'; }
+function duelInv(a,b,inverted){ const r=duel(a,b); return inverted? flipRes(r):r; }
 
 // ── 게임 상태 ──
 let S = null;
@@ -508,17 +533,16 @@ function newState(diff){
     diff, session:1,
     myHand:[1,2,3,4,5,6,7,8,9], aiHand:[1,2,3,4,5,6,7,8,9],
     myScore:0, aiScore:0,
-    myTok:{2:true,3:true}, aiTok:{2:true,3:true},
+    myTok:{2:true,3:true,inv:true}, aiTok:{2:true,3:true,inv:true},
     leader: Math.random()<0.5 ? 'you':'ai',
-    // 이번 세션 임시
-    myCard:null, aiCard:null, myLev:0, aiLev:0,
+    myCard:null, aiCard:null, myLev:0, aiLev:0, myInv:false, aiInv:false,
     phase:'pick', // pick | resolved | over
-    history:[],   // {sess, my, ai, stake, res('W'|'L'|'D' 내 기준), lead}
-    aiMemory:[],  // AI 관점 기록 {ai:card, res:'W'|'L'|'D' AI 기준}
+    history:[],   // {sess, my, ai, stake, res(내 기준), inverted, cancelled}
+    aiMemory:[],  // AI 관점 {ai:card, res:'W'|'L'|'D' (실제 결과, AI 기준), inv:bool(그 세션 반전 여부)}
   };
 }
 
-// ── AI 추리: 승패 기록으로 플레이어 남은 카드 분포 계산 ──
+// ── AI 추리: 승패 기록(반전 세션 반영)으로 플레이어 남은 카드 분포 ──
 function playerCardWeights(mem){
   const used=new Array(10).fill(false);
   const counts=new Array(10).fill(0);
@@ -532,82 +556,97 @@ function playerCardWeights(mem){
     const h=mem[i];
     for(let v=1;v<=9;v++){
       if(used[v]) continue;
-      if(duel(h.ai, v)!==h.res) continue;
+      if(duelInv(h.ai, v, h.inv)!==h.res) continue;
       used[v]=true; dfs(i+1); used[v]=false;
     }
   }
   dfs(0);
   if(total===0){ for(let v=1;v<=9;v++) counts[v]=1; total=9; } // 방어
   const w={}; for(let v=1;v<=9;v++) w[v]=counts[v]/total;
-  return w; // P(플레이어가 카드 v를 아직 들고 있음)
+  return w;
 }
 
-// ── AI 카드 선택 ──
-function aiChooseCard(asFollower, playerDeclaredLev){
-  const hand=S.aiHand.slice();
-  const diff=S.diff;
-  if(diff==='easy'){
-    return hand[Math.floor(Math.random()*hand.length)];
-  }
+// 상대 플레이 분포 (선언 정보 반영)
+function playerPlayDist(asFollower, pLev, pInv){
   let w = playerCardWeights(S.aiMemory);
-  // 플레이어가 레버리지를 선언했다면: 최강 카드 또는 1(저격) 확률 강화
-  if(asFollower && playerDeclaredLev>0){
+  if(asFollower && pLev>0){
+    // 레버리지 선언 → 최강 보유 카드 또는 1(저격) 가중
     let maxHeld=0; for(let v=9;v>=1;v--){ if(w[v]>0.01){ maxHeld=v; break; } }
     if(maxHeld) w[maxHeld]*=2.5;
     if(w[1]>0.01) w[1]*=1.8;
   }
-  // 정규화된 상대 플레이 분포
+  if(asFollower && pInv){
+    // 인버스 선언 → 최약 보유 카드 또는 9(반전 시 1의 카운터) 가중
+    let minHeld=0; for(let v=1;v<=9;v++){ if(w[v]>0.01){ minHeld=v; break; } }
+    if(minHeld) w[minHeld]*=2.5;
+    if(w[9]>0.01) w[9]*=1.8;
+  }
   let sum=0; for(let v=1;v<=9;v++) sum+=w[v];
   const p={}; for(let v=1;v<=9;v++) p[v]=w[v]/(sum||1);
-  // 각 후보 카드 EV
-  const evs = hand.map(c=>{
-    let ev=0;
+  return p;
+}
+
+// 카드별 EV (주어진 시장 방향)
+function cardEVs(p, inverted){
+  return S.aiHand.map(c=>{
+    let ev=0, winP=0, loseP=0;
     for(let v=1;v<=9;v++){
       if(p[v]<=0) continue;
-      const r=duel(c,v);
-      ev += p[v]*(r==='W'?1:r==='L'?-1:0);
+      const r=duelInv(c,v,inverted);
+      if(r==='W'){ ev+=p[v]; winP+=p[v]; }
+      else if(r==='L'){ ev-=p[v]; loseP+=p[v]; }
     }
-    // 하드: 1·9의 옵션 가치 보존 (근소한 이득이면 아껴둠)
-    if(diff==='hard' && (c===1||c===9)) ev -= 0.12;
-    return {c, ev};
+    if(S.diff==='hard' && (c===1||c===9)) ev -= 0.12; // 1·9 옵션 가치 보존
+    return {c, ev, winP, loseP};
   });
-  // softmax 샘플링 (예측 불가능성)
-  const temp = diff==='hard' ? 0.22 : 0.5;
+}
+function softmaxPick(evs){
+  const temp = S.diff==='hard' ? 0.22 : 0.5;
   const mx=Math.max(...evs.map(e=>e.ev));
   const weights=evs.map(e=>Math.exp((e.ev-mx)/temp));
   let r=Math.random()*weights.reduce((a,b)=>a+b,0);
-  for(let i=0;i<evs.length;i++){ r-=weights[i]; if(r<=0) return evs[i].c; }
-  return evs[evs.length-1].c;
+  for(let i=0;i<evs.length;i++){ r-=weights[i]; if(r<=0) return evs[i]; }
+  return evs[evs.length-1];
 }
 
-// ── AI 레버리지 결정 (카드 확정 후) ──
-function aiChooseLev(card, asFollower, playerDeclaredLev){
-  if(S.session>=9) return 0;
-  const diff=S.diff;
-  const avail=[]; if(S.aiTok[3]) avail.push(3); if(S.aiTok[2]) avail.push(2);
-  if(!avail.length) return 0;
-  if(diff==='easy') return Math.random()<0.15 ? avail[Math.floor(Math.random()*avail.length)] : 0;
-  // 승률 추정
-  let w = playerCardWeights(S.aiMemory);
-  if(asFollower && playerDeclaredLev>0){
-    let maxHeld=0; for(let v=9;v>=1;v--){ if(w[v]>0.01){ maxHeld=v; break; } }
-    if(maxHeld) w[maxHeld]*=2.5;
-    if(w[1]>0.01) w[1]*=1.8;
+// ── AI 통합 결정: {card, lev, inv} ──
+function aiDecide(asFollower, pLev, pInv){
+  const canTok = S.session<9;
+  if(S.diff==='easy'){
+    const card=S.aiHand[Math.floor(Math.random()*S.aiHand.length)];
+    let lev=0, inv=false;
+    if(canTok){
+      const avail=[]; if(S.aiTok[2]) avail.push(2); if(S.aiTok[3]) avail.push(3);
+      if(avail.length && Math.random()<0.15) lev=avail[Math.floor(Math.random()*avail.length)];
+      if(S.aiTok.inv && Math.random()<0.10) inv=true;
+    }
+    return {card, lev, inv};
   }
-  let sum=0; for(let v=1;v<=9;v++) sum+=w[v];
-  let winP=0, loseP=0;
-  for(let v=1;v<=9;v++){
-    const pv=w[v]/(sum||1); if(pv<=0) continue;
-    const r=duel(card,v);
-    if(r==='W') winP+=pv; else if(r==='L') loseP+=pv;
+  const p = playerPlayDist(asFollower, pLev, pInv);
+  // 시나리오: 내(AI) 인버스 미사용 vs 사용 — 유효 반전은 XOR
+  const evN = cardEVs(p, !!pInv);                 // AI 인버스 안 씀
+  const bestN = evN.reduce((a,b)=>a.ev>b.ev?a:b);
+  let useInv=false, evSet=evN;
+  if(canTok && S.aiTok.inv){
+    const evI = cardEVs(p, !pInv);                // AI 인버스 씀 (XOR 반전)
+    const bestI = evI.reduce((a,b)=>a.ev>b.ev?a:b);
+    const margin = S.diff==='hard' ? 0.18 : 0.30;
+    if(bestI.ev > bestN.ev + margin){ useInv=true; evSet=evI; }
   }
-  const t3 = diff==='hard'?0.70:0.80;
-  const t2 = diff==='hard'?0.60:0.70;
-  if(avail.includes(3) && winP>=t3) return 3;
-  if(avail.includes(2) && winP>=t2) return 2;
-  // 하드: 낮은 확률 블러핑 (선공일 때만 — 상대 반응 유도)
-  if(diff==='hard' && !asFollower && avail.includes(2) && winP<0.45 && Math.random()<0.10) return 2;
-  return 0;
+  const pick = softmaxPick(evSet);
+  // 레버리지: 선택된 시장 방향에서의 승률로 결정
+  let lev=0;
+  if(canTok){
+    const avail=[]; if(S.aiTok[3]) avail.push(3); if(S.aiTok[2]) avail.push(2);
+    if(avail.length){
+      const t3 = S.diff==='hard'?0.70:0.80;
+      const t2 = S.diff==='hard'?0.60:0.70;
+      if(avail.includes(3) && pick.winP>=t3) lev=3;
+      else if(avail.includes(2) && pick.winP>=t2) lev=2;
+      else if(S.diff==='hard' && !asFollower && avail.includes(2) && pick.winP<0.45 && Math.random()<0.10) lev=2; // 블러핑
+    }
+  }
+  return {card:pick.c, lev, inv:useInv};
 }
 
 // ── DOM ──
@@ -624,8 +663,10 @@ function renderLadder(){
 function renderTokens(){
   $('myTok2').className='token'+(S.myTok[2]?'':' used');
   $('myTok3').className='token'+(S.myTok[3]?'':' used');
+  $('myTokI').className='token inv'+(S.myTok.inv?'':' used');
   $('aiTok2').className='token'+(S.aiTok[2]?'':' used');
   $('aiTok3').className='token'+(S.aiTok[3]?'':' used');
+  $('aiTokI').className='token inv'+(S.aiTok.inv?'':' used');
 }
 
 function renderHand(){
@@ -637,23 +678,30 @@ function renderHand(){
   aiHandEl.innerHTML = S.aiHand.map(()=>'<div class="mini-card"></div>').join('');
 }
 
+function badges(lev, inv){
+  return (lev?`<span class="lev-badge">${lev}x</span>`:'') + (inv?'<span class="inv-badge">&#8645; INV</span>':'');
+}
 function renderTable(){
   const ai=$('aiPlay'), my=$('myPlay');
-  // AI 슬롯
   if(S.aiCard!==null && S.phase!=='over'){
     ai.className='play-card back';
-    ai.innerHTML = S.aiLev? `<span class="lev-badge">${S.aiLev}x</span>`:'';
+    ai.innerHTML = badges(S.aiLev, S.aiInv);
   } else { ai.className='play-card empty'; ai.innerHTML=''; }
-  // 내 슬롯
   if(S.myCard!==null && S.phase==='resolved'){
     my.className='play-card back';
-    my.innerHTML = S.myLev? `<span class="lev-badge">${S.myLev}x</span>`:'';
+    my.innerHTML = badges(S.myLev, S.myInv);
   } else if(S.myCard!==null){
     my.className='play-card';
     my.innerHTML=`<span class="num">${S.myCard}</span><span class="nm">${ASSETS[S.myCard][LANG]}</span>
       <span class="riskbar" style="background:${RISK_COLORS[S.myCard-1]}"></span>`
-      +(S.myLev?`<span class="lev-badge">${S.myLev}x</span>`:'');
+      + badges(S.myLev, S.myInv);
   } else { my.className='play-card empty'; my.innerHTML=''; }
+  // 시장 반전 표시
+  const flips = (S.myInv?1:0)+(S.aiInv?1:0);
+  const note=$('flipNote');
+  if(flips===1){ note.style.display='block'; note.innerHTML=m('flipActive'); $('tableArea').classList.add('flipped'); }
+  else if(flips===2){ note.style.display='block'; note.innerHTML=m('flipCancelled'); $('tableArea').classList.remove('flipped'); }
+  else { note.style.display='none'; $('tableArea').classList.remove('flipped'); }
 }
 
 function renderScore(){
@@ -672,37 +720,46 @@ function renderStatus(){
   $('sessLabel').textContent=`SESSION ${Math.min(S.session,9)} / 9`;
   $('aiName').textContent=AI_NAMES[S.diff][LANG];
   let lead = S.leader==='you'? m('leadYou') : m('leadAi');
-  if(S.leader==='ai' && S.aiLev>0 && S.phase==='pick'){
-    lead += ' · ' + m('aiDeclared') + S.aiLev + ' P&L';
+  if(S.leader==='ai' && S.phase==='pick'){
+    if(S.aiLev>0) lead += ' · ' + m('aiDeclaredLev') + S.aiLev + ' P&L';
+    if(S.aiInv)   lead += ' · ' + m('aiDeclaredInv');
   }
   $('leadLabel').textContent=lead;
 }
 
 function renderLevBtns(){
   const last=S.session>=9;
-  const l2=$('lev2'), l3=$('lev3');
+  const l2=$('lev2'), l3=$('lev3'), li=$('levInv');
   l2.disabled = last || !S.myTok[2] || S.phase!=='pick';
   l3.disabled = last || !S.myTok[3] || S.phase!=='pick';
+  li.disabled = last || !S.myTok.inv || S.phase!=='pick';
   l2.className='lev-btn'+(S.myLev===2?' on':'');
   l3.className='lev-btn'+(S.myLev===3?' on':'');
+  li.className='lev-btn invb'+(S.myInv?' on':'');
 }
 
 function renderAll(){
   renderTokens(); renderHand(); renderTable(); renderScore(); renderStatus(); renderLevBtns();
   $('commitBtn').disabled = !(S.phase==='pick' && S.myCard!==null);
-  hintEl.textContent = S.phase==='pick' ? (S.session>=9? m('lastNoLev') : m('pickCard')) : '';
+  if(S.phase==='pick'){
+    if(S.session>=9) hintEl.textContent=m('lastNoLev');
+    else if(S.myInv && S.aiInv) hintEl.textContent=m('invCancelHint');
+    else if(S.myInv) hintEl.textContent=m('invHint');
+    else hintEl.textContent=m('pickCard');
+  } else hintEl.textContent='';
 }
 
 // ── 세션 흐름 ──
 function startSession(){
-  S.myCard=null; S.aiCard=null; S.myLev=0; S.aiLev=0; S.phase='pick';
+  S.myCard=null; S.aiCard=null; S.myLev=0; S.aiLev=0; S.myInv=false; S.aiInv=false;
+  S.phase='pick';
   bannerEl.className=''; bannerEl.style.display='none';
   $('nextBtn').style.display='none';
   if(S.leader==='ai'){
-    // AI 선공: 카드+레버리지를 먼저 확정 (레버리지는 공개)
-    S.aiCard = aiChooseCard(false, 0);
-    S.aiLev = aiChooseLev(S.aiCard, false, 0);
+    const d = aiDecide(false, 0, false);
+    S.aiCard=d.card; S.aiLev=d.lev; S.aiInv=d.inv;
     if(S.aiLev) S.aiTok[S.aiLev]=false;
+    if(S.aiInv) S.aiTok.inv=false;
   }
   renderAll();
 }
@@ -710,22 +767,26 @@ function startSession(){
 function commit(){
   if(S.myCard===null || S.phase!=='pick') return;
   if(S.myLev) S.myTok[S.myLev]=false;
+  if(S.myInv) S.myTok.inv=false;
   if(S.leader==='you'){
-    // AI 후공: 내 레버리지 선언을 보고 대응
-    S.aiCard = aiChooseCard(true, S.myLev);
-    S.aiLev = aiChooseLev(S.aiCard, true, S.myLev);
+    const d = aiDecide(true, S.myLev, S.myInv);
+    S.aiCard=d.card; S.aiLev=d.lev; S.aiInv=d.inv;
     if(S.aiLev) S.aiTok[S.aiLev]=false;
+    if(S.aiInv) S.aiTok.inv=false;
   }
   resolve();
 }
 
 function resolve(){
-  const res = duel(S.myCard, S.aiCard); // 내 기준
+  const flips=(S.myInv?1:0)+(S.aiInv?1:0);
+  const inverted = flips===1;
+  const res = duelInv(S.myCard, S.aiCard, inverted); // 내 기준
   const stake = Math.max(1, S.myLev, S.aiLev);
   if(res==='D'){
-    // 토큰 반환
     if(S.myLev) S.myTok[S.myLev]=true;
     if(S.aiLev) S.aiTok[S.aiLev]=true;
+    if(S.myInv) S.myTok.inv=true;
+    if(S.aiInv) S.aiTok.inv=true;
     bannerEl.className='draw'; bannerEl.textContent=m('drawMsg');
   } else if(res==='W'){
     S.myScore+=stake; S.leader='you';
@@ -734,8 +795,10 @@ function resolve(){
     S.aiScore+=stake; S.leader='ai';
     bannerEl.className='lose'; bannerEl.textContent=m('youLose')+' · -'+stake+' P&L';
   }
-  S.history.push({sess:S.session, my:S.myCard, ai:S.aiCard, stake:(res==='D'?0:stake), res, lead:S.leader});
-  S.aiMemory.push({ai:S.aiCard, res: res==='D'?'D':(res==='W'?'L':'W')}); // AI 기준으로 반전
+  const drawn = res==='D';
+  S.history.push({sess:S.session, my:S.myCard, ai:S.aiCard, stake:(drawn?0:stake), res,
+                  inverted:(drawn?false:inverted), cancelled:(drawn?false:flips===2)});
+  S.aiMemory.push({ai:S.aiCard, res: res==='D'?'D':(res==='W'?'L':'W'), inv:(drawn?inverted:inverted)});
   S.myHand=S.myHand.filter(n=>n!==S.myCard);
   S.aiHand=S.aiHand.filter(n=>n!==S.aiCard);
   S.phase='resolved';
@@ -761,7 +824,8 @@ function gameOver(){
   $('revealBody').innerHTML = S.history.map(h=>{
     const rc=h.res==='W'?'w':h.res==='L'?'l':'';
     const rt=h.res==='W'?m('win'):h.res==='L'?m('lose'):m('draw');
-    return `<tr><td>S${h.sess}</td><td>${assetLabel(h.my)}</td><td>${assetLabel(h.ai)}</td><td>${h.stake||'–'}</td><td class="${rc}">${rt}</td></tr>`;
+    const mkt=h.inverted?`<span class="invmark">&#8645; ${m('mktInv')}</span>`:(h.cancelled?m('mktCancel'):m('mktNormal'));
+    return `<tr><td>S${h.sess}</td><td>${assetLabel(h.my)}</td><td>${assetLabel(h.ai)}</td><td>${h.stake||'–'}</td><td>${mkt}</td><td class="${rc}">${rt}</td></tr>`;
   }).join('');
   $('gameover').style.display='block';
   $('gameover').scrollIntoView({behavior:'smooth', block:'nearest'});
@@ -788,6 +852,7 @@ handEl.addEventListener('click', e=>{
 });
 $('lev2').addEventListener('click', ()=>{ if(S.phase!=='pick') return; S.myLev = S.myLev===2?0:2; renderAll(); });
 $('lev3').addEventListener('click', ()=>{ if(S.phase!=='pick') return; S.myLev = S.myLev===3?0:3; renderAll(); });
+$('levInv').addEventListener('click', ()=>{ if(S.phase!=='pick') return; S.myInv = !S.myInv; renderAll(); });
 $('commitBtn').addEventListener('click', commit);
 $('nextBtn').addEventListener('click', nextSession);
 $('again').addEventListener('click', ()=>{
