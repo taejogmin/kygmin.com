@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RPS Predictor — KYGMIN</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#F6F6F4;
+  --ink:#141414;
+  --gray:#DDDDD8;
+  --green:#2BB673;
+  --green-deep:#0F6E56;
+  --red:#A32D2D;
+  --gold:#C89A00;
+  --arch:'Archivo','Pretendard',sans-serif;
+  --sans:'Pretendard',-apple-system,'Apple SD Gothic Neo','Malgun Gothic','Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono','SF Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{transition:none!important;animation:none!important;}
+}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:16px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  word-break:keep-all;overflow-wrap:break-word;
+}
+a{color:inherit;text-decoration:none;}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--green);outline-offset:3px;}
+.wrap{max-width:960px;margin:0 auto;padding:0 24px;}
+
+/* ── Nav ── */
+nav{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:3px solid var(--ink);}
+.nav-inner{
+  max-width:960px;margin:0 auto;padding:14px 24px;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;
+}
+.logo{font-family:var(--arch);font-weight:900;font-size:19px;letter-spacing:-0.5px;}
+.logo em{font-style:normal;background:var(--green);color:var(--paper);padding:0 6px;display:inline-block;transform:rotate(-1.5deg);}
+.nav-links{display:flex;gap:8px;flex-wrap:wrap;}
+.nav-links a{
+  font-family:var(--arch);font-size:12px;font-weight:700;text-transform:uppercase;
+  border:2px solid var(--ink);padding:6px 13px;background:#fff;
+  box-shadow:3px 3px 0 var(--ink);transition:transform .1s, box-shadow .1s;
+}
+.nav-links a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+.nav-links a.on{background:var(--green);color:var(--paper);}
+
+/* ── Language toggle ── */
+#langtoggle{
+  position:fixed;right:20px;bottom:20px;z-index:50;display:inline-flex;
+  border:2px solid var(--ink);box-shadow:3px 3px 0 var(--ink);background:#fff;
+  font-family:var(--arch);font-weight:700;font-size:12px;overflow:hidden;
+}
+#langtoggle button{font:inherit;border:none;background:none;cursor:pointer;padding:9px 14px;color:var(--ink);letter-spacing:.5px;transition:background .1s,color .1s;}
+#langtoggle button.on{background:var(--green);color:var(--paper);}
+#langtoggle button+button{border-left:2px solid var(--ink);}
+.scr{color:var(--green);}
+.box .scr{color:var(--paper);}
+
+/* ── Hero ── */
+header{padding:52px 0 36px;border-bottom:3px solid var(--ink);}
+.sec-tag{
+  font-family:var(--mono);font-size:12.5px;font-weight:600;
+  color:var(--green-deep);letter-spacing:1px;display:block;margin-bottom:14px;
+}
+h1{
+  font-family:var(--arch);font-weight:900;text-transform:uppercase;
+  font-size:clamp(30px, 5.6vw, 50px);line-height:1.04;letter-spacing:-2px;
+}
+h1 .box{background:var(--ink);color:var(--paper);padding:0 12px;display:inline-block;transform:rotate(-1deg);}
+.hero-sub{margin-top:18px;font-size:15.5px;max-width:620px;font-weight:500;}
+.hero-note{margin-top:12px;font-family:var(--mono);font-size:12px;color:#4A4A46;}
+
+/* ── Main ── */
+main{padding:36px 0 88px;}
+
+/* account bar */
+.account-bar{
+  display:none;justify-content:flex-end;align-items:center;gap:10px;flex-wrap:wrap;
+  margin-bottom:22px;font-family:var(--mono);font-size:12px;color:#4A4A46;
+}
+.acct-btn{
+  font-family:var(--arch);font-size:12px;font-weight:700;text-transform:uppercase;
+  border:2px solid var(--ink);padding:7px 14px;background:#fff;cursor:pointer;
+  box-shadow:3px 3px 0 var(--ink);transition:transform .1s, box-shadow .1s;
+}
+.acct-btn:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+.acct-btn.g{background:var(--green);color:var(--paper);}
+
+/* game board */
+.board{border:3px solid var(--ink);background:#fff;box-shadow:6px 6px 0 var(--ink);}
+.status-bar{
+  display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
+  border-bottom:3px solid var(--ink);padding:12px 18px;background:var(--ink);color:var(--paper);
+}
+.status-bar .rounds{font-family:var(--arch);font-weight:900;font-size:15px;text-transform:uppercase;letter-spacing:.5px;}
+.commit-chip{
+  font-family:var(--mono);font-size:11.5px;font-weight:600;color:#B8E6CF;
+  display:inline-flex;align-items:center;gap:6px;cursor:help;
+}
+.commit-chip .dot{width:9px;height:9px;border-radius:50%;background:var(--gold);display:inline-block;}
+.commit-chip.revealed .dot{background:var(--green);}
+
+.duel-area{
+  border-bottom:3px solid var(--ink);background:#EFEFEA;padding:22px 18px;
+  display:flex;justify-content:center;align-items:center;gap:30px;min-height:130px;flex-wrap:wrap;
+}
+.duel-slot{width:120px;text-align:center;}
+.duel-slot .who{font-family:var(--mono);font-size:11px;font-weight:600;color:#6B6B67;margin-bottom:6px;}
+.duel-hand{
+  font-size:52px;line-height:1;height:70px;display:flex;align-items:center;justify-content:center;
+  border:3px solid var(--ink);background:#fff;box-shadow:4px 4px 0 var(--ink);
+}
+.duel-hand.q{font-family:var(--arch);font-weight:900;font-size:34px;color:#8A8A85;}
+.vs{font-family:var(--arch);font-weight:900;font-size:20px;color:#8A8A85;}
+
+#banner{
+  text-align:center;padding:11px 18px;font-family:var(--arch);font-weight:900;
+  font-size:15px;text-transform:uppercase;letter-spacing:.5px;display:none;
+}
+#banner.win{background:var(--green);color:var(--paper);display:block;}
+#banner.lose{background:var(--red);color:var(--paper);display:block;}
+#banner.draw{background:var(--gray);color:var(--ink);display:block;}
+
+.pick-zone{padding:20px 18px;}
+.pick-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+.pick{
+  width:110px;height:110px;border:3px solid var(--ink);background:#fff;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+  box-shadow:5px 5px 0 var(--ink);transition:transform .1s, box-shadow .1s;font:inherit;
+}
+.pick:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink);}
+.pick:active{transform:translate(2px,2px);box-shadow:3px 3px 0 var(--ink);}
+.pick:disabled{opacity:.4;cursor:wait;}
+.pick .emo{font-size:40px;line-height:1;}
+.pick .lbl{font-family:var(--arch);font-weight:900;font-size:12px;text-transform:uppercase;}
+.reveal-line{
+  margin-top:14px;text-align:center;font-family:var(--mono);font-size:11px;color:#6B6B67;
+  min-height:1.5em;word-break:break-all;
+}
+
+/* stats + graph */
+.stat-row{display:flex;gap:16px;flex-wrap:wrap;margin-top:22px;}
+.stat{
+  flex:1;min-width:130px;border:3px solid var(--ink);background:#fff;box-shadow:5px 5px 0 var(--ink);
+  padding:12px 16px;text-align:center;
+}
+.stat .lbl{font-family:var(--mono);font-size:11px;font-weight:600;color:#6B6B67;}
+.stat .val{font-family:var(--arch);font-weight:900;font-size:26px;font-variant-numeric:tabular-nums;}
+.stat.ai .val{color:var(--red);}
+.stat.you .val{color:var(--green-deep);}
+
+.graph-panel{margin-top:26px;border:3px solid var(--ink);background:#fff;box-shadow:6px 6px 0 var(--ink);padding:16px;}
+.graph-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:8px;}
+.graph-head h2{font-family:var(--arch);font-weight:900;font-size:14px;text-transform:uppercase;}
+.legend{font-family:var(--mono);font-size:10.5px;color:#6B6B67;display:flex;gap:14px;flex-wrap:wrap;}
+.legend .sw{display:inline-block;width:18px;height:3px;vertical-align:middle;margin-right:5px;}
+#graph{display:block;width:100%;height:220px;}
+.cross-note{font-family:var(--mono);font-size:11px;color:var(--green-deep);min-height:1.4em;margin-top:6px;}
+
+/* analysis */
+.analysis{margin-top:26px;border:3px solid var(--ink);background:#fff;box-shadow:6px 6px 0 var(--ink);padding:20px;}
+.analysis h2{font-family:var(--arch);font-weight:900;font-size:14px;text-transform:uppercase;border-bottom:3px solid var(--ink);padding-bottom:8px;margin-bottom:14px;}
+.locked-note{font-family:var(--mono);font-size:12.5px;color:#8A8A85;}
+.locked-note .bar{display:inline-block;height:10px;background:var(--gray);vertical-align:middle;border:1px solid #C9C9C4;}
+.habit{font-size:14.5px;color:#3A3A38;margin-bottom:8px;}
+.habit b{color:var(--green-deep);}
+.habit .obs{font-family:var(--mono);font-size:11px;color:#8A8A85;}
+.pvalue-line{margin-top:12px;font-family:var(--mono);font-size:12px;color:var(--green-deep);font-weight:600;}
+
+/* actions */
+.action-row{margin-top:26px;display:flex;gap:12px;flex-wrap:wrap;}
+.btn{
+  display:inline-block;font-family:var(--arch);font-size:14px;font-weight:700;text-transform:uppercase;
+  border:3px solid var(--ink);padding:12px 24px;box-shadow:5px 5px 0 var(--ink);
+  transition:transform .1s, box-shadow .1s;background:#fff;cursor:pointer;color:var(--ink);
+}
+.btn:hover{transform:translate(2px,2px);box-shadow:3px 3px 0 var(--ink);}
+.btn-green{background:var(--green);color:var(--paper);}
+.btn:disabled{opacity:.35;cursor:not-allowed;}
+.btn:disabled:hover{transform:none;box-shadow:5px 5px 0 var(--ink);}
+
+/* modal */
+.modal-back{
+  display:none;position:fixed;inset:0;background:rgba(20,20,20,.55);z-index:60;
+  align-items:center;justify-content:center;padding:20px;
+}
+.modal-back.open{display:flex;}
+.modal{
+  background:var(--paper);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);
+  max-width:420px;width:100%;padding:24px;
+}
+.modal h3{font-family:var(--arch);font-weight:900;font-size:16px;text-transform:uppercase;margin-bottom:12px;}
+.modal p{font-size:13.5px;color:#3A3A38;margin-bottom:14px;}
+.modal input{
+  width:100%;font-family:var(--mono);font-size:14px;border:3px solid var(--ink);
+  background:#fff;padding:10px 14px;margin-bottom:10px;
+}
+.modal .msg{font-family:var(--mono);font-size:11.5px;min-height:1.5em;margin-bottom:10px;}
+.modal .msg.ok{color:var(--green-deep);}
+.modal .msg.err{color:var(--red);}
+.modal .row{display:flex;gap:10px;flex-wrap:wrap;}
+
+/* rules */
+.rules{margin-top:56px;}
+.rules h2{
+  font-family:var(--arch);font-weight:900;font-size:15px;text-transform:uppercase;
+  border-bottom:3px solid var(--ink);padding-bottom:8px;margin-bottom:16px;
+}
+.rules p{font-size:14.5px;color:#3A3A38;max-width:680px;}
+.rules p+p{margin-top:10px;}
+
+/* footer */
+footer{border-top:3px solid var(--ink);padding:26px 0;}
+.foot-inner{max-width:960px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:12px;color:#4A4A46;}
+
+@media(max-width:520px){
+  .pick{width:90px;height:96px;}
+  .pick .emo{font-size:32px;}
+  .duel-slot{width:96px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="/index.html">KYG<em>MIN</em></a>
+    <div class="nav-links">
+      <a href="/index.html"><span class="tx" data-en="Home" data-kr="홈">Home</span></a>
+      <a href="/playhouse/">PLAYHOUSE</a>
+      <a class="on" href="./"><span class="tx" data-en="RPS Predictor" data-kr="가위바위보 예측기">RPS Predictor</span></a>
+      <a href="/cv.html">CV &#128274;</a>
+    </div>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <span class="sec-tag tx" data-en="PLAYHOUSE — YOU ARE NOT AS RANDOM AS YOU THINK" data-kr="플레이하우스 — 당신은 생각보다 랜덤하지 않다">PLAYHOUSE — YOU ARE NOT AS RANDOM AS YOU THINK</span>
+    <h1>RPS <span class="box"><span class="tx" data-en="PREDICTOR" data-kr="PREDICTOR">PREDICTOR</span></span></h1>
+    <p class="hero-sub tx" data-en="Rock, paper, scissors against an AI that learns your habits. Every round it studies how you react to winning and losing — and slowly, the win-rate chart starts tilting its way. When the evidence becomes statistically significant, your habit report unlocks." data-kr="당신의 습관을 학습하는 AI와의 가위바위보. AI는 당신이 이기고 진 뒤에 어떻게 반응하는지를 매판 학습하고 — 승률 그래프는 서서히 AI 쪽으로 기울기 시작합니다. 증거가 통계적으로 유의미해지는 순간, 당신의 습관 분석이 잠금 해제됩니다.">Rock, paper, scissors against an AI that learns your habits. Every round it studies how you react to winning and losing — and slowly, the win-rate chart starts tilting its way. When the evidence becomes statistically significant, your habit report unlocks.</p>
+    <p class="hero-note tx" data-en="MARKOV ENSEMBLE AI · COMMIT–REVEAL FAIRNESS · PLAYS FOREVER" data-kr="마르코프 앙상블 AI · 커밋-리빌 공정성 · 무제한 플레이">MARKOV ENSEMBLE AI · COMMIT–REVEAL FAIRNESS · PLAYS FOREVER</p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <!-- 계정 바 (Supabase 설정 시에만 표시) -->
+    <div class="account-bar" id="accountBar">
+      <span id="acctStatus"></span>
+      <button class="acct-btn" id="nickBtn" style="display:none;"></button>
+      <button class="acct-btn g" id="authBtn"></button>
+    </div>
+
+    <div class="board">
+      <div class="status-bar">
+        <span class="rounds" id="roundLabel">ROUND 1</span>
+        <span class="commit-chip" id="commitChip" title="">
+          <span class="dot"></span><span id="commitText"></span>
+        </span>
+      </div>
+
+      <div class="duel-area">
+        <div class="duel-slot">
+          <div class="who">AI</div>
+          <div class="duel-hand q" id="aiHand">?</div>
+        </div>
+        <div class="vs">VS</div>
+        <div class="duel-slot">
+          <div class="who tx" data-en="YOU" data-kr="나">YOU</div>
+          <div class="duel-hand q" id="myHand">?</div>
+        </div>
+      </div>
+
+      <div id="banner"></div>
+
+      <div class="pick-zone">
+        <div class="pick-row">
+          <button class="pick" data-m="R"><span class="emo">&#9994;</span><span class="lbl tx" data-en="Rock" data-kr="바위">Rock</span></button>
+          <button class="pick" data-m="P"><span class="emo">&#9995;</span><span class="lbl tx" data-en="Paper" data-kr="보">Paper</span></button>
+          <button class="pick" data-m="S"><span class="emo">&#9996;&#65039;</span><span class="lbl tx" data-en="Scissors" data-kr="가위">Scissors</span></button>
+        </div>
+        <div class="reveal-line" id="revealLine"></div>
+      </div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat"><div class="lbl tx" data-en="ROUNDS" data-kr="판수">ROUNDS</div><div class="val" id="stRounds">0</div></div>
+      <div class="stat ai"><div class="lbl tx" data-en="AI WINS" data-kr="AI 승">AI WINS</div><div class="val" id="stAi">0</div></div>
+      <div class="stat you"><div class="lbl tx" data-en="YOUR WINS" data-kr="내 승">YOUR WINS</div><div class="val" id="stYou">0</div></div>
+      <div class="stat"><div class="lbl tx" data-en="DRAWS" data-kr="무승부">DRAWS</div><div class="val" id="stDraw">0</div></div>
+      <div class="stat ai"><div class="lbl tx" data-en="AI WIN RATE" data-kr="AI 승률">AI WIN RATE</div><div class="val" id="stRate">–</div></div>
+    </div>
+
+    <div class="graph-panel">
+      <div class="graph-head">
+        <h2 class="tx" data-en="AI Win Rate — Moving Averages" data-kr="AI 승률 — 이동평균선">AI Win Rate — Moving Averages</h2>
+        <span class="legend">
+          <span><span class="sw" style="background:#2BB673;height:4px;"></span><span class="tx" data-en="long trend" data-kr="장기 추세">long trend</span></span>
+          <span><span class="sw" style="background:#141414;"></span><span class="tx" data-en="short (recent form)" data-kr="단기 (최근 흐름)">short (recent form)</span></span>
+          <span><span class="sw" style="background:#8A8A85;height:1px;"></span>50%</span>
+        </span>
+      </div>
+      <canvas id="graph"></canvas>
+      <div class="cross-note" id="crossNote"></div>
+    </div>
+
+    <div class="analysis" id="analysisPanel">
+      <h2 class="tx" data-en="Your Habit Report" data-kr="당신의 습관 분석">Your Habit Report</h2>
+      <div id="analysisBody"></div>
+    </div>
+
+    <div class="action-row">
+      <button class="btn btn-green" id="cardBtn"><span class="tx" data-en="Download Share Card" data-kr="공유 카드 다운로드">Download Share Card</span> &#8681;</button>
+      <button class="btn" id="resetBtn"><span class="tx" data-en="Reset AI Memory" data-kr="AI 기억 초기화">Reset AI Memory</span></button>
+    </div>
+
+    <!-- rules -->
+    <div class="rules">
+      <h2 class="tx" data-en="How the AI Works" data-kr="AI의 작동 원리">How the AI Works</h2>
+      <p class="tx" data-en="Three Markov predictors run in parallel: one conditioned on your last move, one on your last two moves, and one on the last round's result — the strongest human tells live in how you react to a win or a loss. Whichever predictor has been most accurate lately gets to make the call. Old observations decay, so if you change your strategy the AI follows. When its best guess isn't confident enough, it plays random on purpose so you can't reverse-read it." data-kr="세 개의 마르코프 예측기가 동시에 돌아갑니다: 직전 손 조건, 직전 두 손 조합 조건, 그리고 직전 판 결과 조건 — 사람의 습관은 이기고 진 직후의 반응에서 가장 강하게 드러나거든요. 최근 적중률이 가장 높은 예측기가 그 판의 예측을 맡습니다. 오래된 관측은 감쇠되어 전략을 바꾸면 AI도 따라오고, 확신이 부족할 땐 일부러 랜덤으로 내서 역으로 읽히는 것을 방지합니다.">Three Markov predictors run in parallel: one conditioned on your last move, one on your last two moves, and one on the last round's result — the strongest human tells live in how you react to a win or a loss. Whichever predictor has been most accurate lately gets to make the call. Old observations decay, so if you change your strategy the AI follows. When its best guess isn't confident enough, it plays random on purpose so you can't reverse-read it.</p>
+      <p class="tx" data-en="Fairness — commit &amp; reveal: before you pick, the AI locks its move and shows you a SHA-256 hash of it (top-right of the board). After the round, the move and the random nonce are revealed so you can verify the hash matches. The AI physically cannot see your move and then choose." data-kr="공정성 — 커밋 &amp; 리빌: 당신이 내기 전에 AI는 자기 수를 먼저 확정하고 그 SHA-256 해시를 보드 우상단에 표시합니다. 판이 끝나면 수와 랜덤 논스가 공개되어 해시가 일치하는지 직접 확인할 수 있어요. AI가 당신의 수를 보고 내는 것은 물리적으로 불가능합니다.">Fairness — commit &amp; reveal: before you pick, the AI locks its move and shows you a SHA-256 hash of it (top-right of the board). After the round, the move and the random nonce are revealed so you can verify the hash matches. The AI physically cannot see your move and then choose.</p>
+      <p class="tx" data-en="The habit report unlocks only when the evidence is real: at least 30 decided rounds, p &lt; 0.01 on a one-sided test against 50%, held for 5 consecutive rounds. Individual habits are shown only if they pass their own significance test with enough observations." data-kr="습관 분석은 증거가 진짜일 때만 잠금 해제됩니다: 무승부 제외 30판 이상, 50% 대비 단측검정 p &lt; 0.01, 그리고 그 상태가 5판 연속 유지될 것. 개별 습관도 자체 유의성 검정과 충분한 관측 수를 통과한 것만 표시됩니다.">The habit report unlocks only when the evidence is real: at least 30 decided rounds, p &lt; 0.01 on a one-sided test against 50%, held for 5 consecutive rounds. Individual habits are shown only if they pass their own significance test with enough observations.</p>
+      <p class="tx" data-en="Privacy: your play data is just move counts — no personal data. It lives in your browser (localStorage). If you sign in, it also syncs to your account so you can continue on any device." data-kr="프라이버시: 플레이 데이터는 손 카운트뿐이며 개인정보가 아닙니다. 기본적으로 브라우저(localStorage)에 저장되고, 로그인하면 계정에도 동기화되어 어느 기기에서든 이어할 수 있습니다.">Privacy: your play data is just move counts — no personal data. It lives in your browser (localStorage). If you sign in, it also syncs to your account so you can continue on any device.</p>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <span>© KYGMIN.COM</span>
+    <span class="tx" data-en="RPS PREDICTOR · YOU ARE NOT RANDOM · COMMIT–REVEAL VERIFIED" data-kr="RPS PREDICTOR · 당신은 랜덤하지 않다 · 커밋-리빌 검증">RPS PREDICTOR · YOU ARE NOT RANDOM · COMMIT–REVEAL VERIFIED</span>
+  </div>
+</footer>
+
+<!-- 로그인 모달 -->
+<div class="modal-back" id="authModal">
+  <div class="modal">
+    <h3 class="tx" data-en="Sign in" data-kr="로그인">Sign in</h3>
+    <p class="tx" data-en="Save your progress and continue on any device. Optional — everything works without an account." data-kr="진행 상황을 저장하고 어느 기기에서든 이어하세요. 선택 사항이에요 — 계정 없이도 모든 기능이 동작합니다.">Save your progress and continue on any device. Optional — everything works without an account.</p>
+    <input id="emailInput" type="email" autocomplete="email" />
+    <div class="msg" id="authMsg"></div>
+    <div class="row">
+      <button class="btn btn-green" id="magicBtn" style="font-size:12px;padding:10px 16px;"><span class="tx" data-en="Email me a login link" data-kr="이메일 로그인 링크 받기">Email me a login link</span></button>
+      <button class="btn" id="githubBtn" style="font-size:12px;padding:10px 16px;">GitHub</button>
+      <button class="btn" id="authCancel" style="font-size:12px;padding:10px 16px;"><span class="tx" data-en="Close" data-kr="닫기">Close</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- 닉네임 모달 -->
+<div class="modal-back" id="nickModal">
+  <div class="modal">
+    <h3 class="tx" data-en="Pick your nickname" data-kr="닉네임 설정">Pick your nickname</h3>
+    <p class="tx" data-en="Shown on your share cards and future leaderboards. 2–16 characters: Korean, letters, numbers, underscore." data-kr="공유 카드와 향후 리더보드에 표시됩니다. 2~16자: 한글, 영문, 숫자, 밑줄.">Shown on your share cards and future leaderboards. 2–16 characters: Korean, letters, numbers, underscore.</p>
+    <input id="nickInput" type="text" maxlength="16" autocomplete="off" />
+    <div class="msg" id="nickMsg"></div>
+    <div class="row">
+      <button class="btn" id="nickCheck" style="font-size:12px;padding:10px 16px;"><span class="tx" data-en="Check availability" data-kr="중복 확인">Check availability</span></button>
+      <button class="btn btn-green" id="nickSave" style="font-size:12px;padding:10px 16px;"><span class="tx" data-en="Save" data-kr="저장">Save</span></button>
+      <button class="btn" id="nickCancel" style="font-size:12px;padding:10px 16px;"><span class="tx" data-en="Later" data-kr="나중에">Later</span></button>
+    </div>
+  </div>
+</div>
+
+<div id="langtoggle" aria-label="Language">
+  <button data-lang="en" class="on">EN</button>
+  <button data-lang="kr">한</button>
+</div>
+
+<!-- 언어 토글 (사이트 공통, 독립 스크립트) -->
+<script>
+window.APP_LANG = 'en';
+window.APP_LANG_LISTENERS = [];
+(function(){
+  var POOL = ("ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎㅏㅑㅓㅕㅗㅛㅜㅠㅡㅣ"
+    + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-·").split("");
+  function esc(c){return c==="&"?"&amp;":c==="<"?"&lt;":c===">"?"&gt;":c;}
+  function Scramble(el){ this.el=el; this.raf=null; this.frame=this.frame.bind(this); }
+  Scramble.prototype.set=function(txt){
+    var old = this.el.dataset.plain!==undefined ? this.el.dataset.plain : this.el.textContent;
+    var len=Math.max(old.length, txt.length);
+    this.q=[];
+    for(var i=0;i<len;i++){
+      var from=old[i]||"", to=txt[i]||"";
+      var start=Math.floor(Math.random()*20);
+      var end=start+Math.floor(Math.random()*25)+12;
+      this.q.push({from:from,to:to,start:start,end:end,ch:null});
+    }
+    if(this.raf) cancelAnimationFrame(this.raf);
+    this.f=0; this.txt=txt; this.frame();
+  };
+  Scramble.prototype.frame=function(){
+    var out="", done=0;
+    for(var i=0;i<this.q.length;i++){
+      var it=this.q[i];
+      if(this.f>=it.end){ done++; out+=esc(it.to); }
+      else if(this.f>=it.start){
+        if(!it.ch || Math.random()<0.3){ it.ch=POOL[Math.floor(Math.random()*POOL.length)]; }
+        out+='<span class="scr">'+esc(it.ch)+'</span>';
+      } else out+=esc(it.from);
+    }
+    this.el.innerHTML=out;
+    if(done===this.q.length){ this.el.dataset.plain=this.txt; }
+    else { this.f++; this.raf=requestAnimationFrame(this.frame); }
+  };
+  window.SiteScramble = Scramble; // 잠금 해제 연출에서 재사용
+  var els=[].slice.call(document.querySelectorAll('.tx'));
+  els.forEach(function(el){ el.dataset.plain=el.textContent; el._s=new Scramble(el); });
+  function setLang(lang){
+    if(lang===window.APP_LANG) return;
+    window.APP_LANG = lang;
+    document.documentElement.lang = (lang==='kr'?'ko':'en');
+    var btns=document.querySelectorAll('#langtoggle button');
+    for(var i=0;i<btns.length;i++){ btns[i].classList.toggle('on', btns[i].dataset.lang===lang); }
+    els.forEach(function(el){ var t=el.dataset[lang]; if(t!==undefined) el._s.set(t); });
+    window.APP_LANG_LISTENERS.forEach(function(fn){ try{ fn(lang); }catch(e){ console.error(e); } });
+  }
+  document.getElementById('langtoggle').addEventListener('click', function(e){
+    var b=e.target.closest('button'); if(b) setLang(b.dataset.lang);
+  });
+})();
+</script>
+
+<!-- 게임 + 모델 + 통계 + 카드 -->
+<script>
+(function(){
+"use strict";
+let LANG = window.APP_LANG || 'en';
+
+/* ══════════ Supabase 설정 (배포 시 채움) ══════════
+   비어 있으면 로그인 UI가 숨겨지고 게스트 모드(localStorage)로만 동작한다.
+   필요한 테이블/RLS SQL은 프로젝트 스펙 문서 참고. */
+const SUPABASE_CONFIG = { url: "", anonKey: "" };
+
+// ── 언어 문자열 ──
+const T = {
+  round:{en:"ROUND ",kr:"라운드 "},
+  commitPending:{en:"AI locking move…",kr:"AI 수 확정 중…"},
+  commitLocked:{en:"AI LOCKED · ",kr:"AI 수 확정 · "},
+  commitTitle:{en:"SHA-256 of the AI's move + nonce, fixed before you pick. Revealed after the round.",kr:"당신이 내기 전에 확정된 AI 수+논스의 SHA-256. 판이 끝나면 공개됩니다."},
+  win:{en:"YOU WIN",kr:"승리"}, lose:{en:"AI WINS",kr:"AI 승리"}, draw:{en:"DRAW",kr:"무승부"},
+  verified:{en:"verified",kr:"검증됨"},
+  reveal:{en:"AI committed ",kr:"AI 커밋 "},
+  nonce:{en:" · nonce ",kr:" · 논스 "},
+  hashOk:{en:" → hash matches ✓",kr:" → 해시 일치 ✓"},
+  locked1:{en:"Collecting evidence for your habit report…",kr:"습관 분석을 위한 데이터 수집 중…"},
+  locked2:{en:"(unlocks at n ≥ 30 decided rounds with p < 0.01, held 5 rounds)",kr:"(무승부 제외 30판 이상 · p < 0.01 · 5판 연속 유지 시 해제)"},
+  unlockedHead:{en:"ANALYSIS UNLOCKED — you are not random.",kr:"분석 잠금 해제 — 당신은 랜덤하지 않습니다."},
+  pline:{en:"Probability this is luck: ",kr:"이 결과가 우연일 확률: "},
+  noHabit:{en:"No single habit is individually significant yet — but your overall play is.",kr:"개별 습관은 아직 유의 수준에 못 미치지만, 전체 플레이는 이미 읽히고 있어요."},
+  golden:{en:"GOLDEN CROSS — the AI found a new pattern",kr:"골든크로스 — AI가 새 패턴을 포착"},
+  dead:{en:"DEAD CROSS — you broke the pattern",kr:"데드크로스 — 당신이 패턴을 끊었습니다"},
+  afterWin:{en:"after winning with",kr:"로 이긴 뒤"},
+  afterLose:{en:"after losing with",kr:"로 진 뒤"},
+  afterDraw:{en:"after drawing with",kr:"로 비긴 뒤"},
+  afterPlay:{en:"after playing",kr:"를 낸 뒤"},
+  youPlay:{en:"you play",kr:"확률로"},
+  timesObs:{en:" obs.",kr:"회 관측"},
+  moveName:{R:{en:"Rock",kr:"바위"},P:{en:"Paper",kr:"보"},S:{en:"Scissors",kr:"가위"}},
+  resetConfirm:{en:"Reset the AI's memory of you? Your stats and habit report will start over.",kr:"AI의 기억을 초기화할까요? 통계와 습관 분석이 처음부터 다시 시작됩니다."},
+  cardTitle:{en:"'s RPS habits, analyzed by AI",kr:"의 가위바위보, AI가 분석하다"},
+  cardTitleAnon:{en:"My RPS habits, analyzed by AI",kr:"AI가 분석한 나의 가위바위보"},
+  cardLocked:{en:"Analysis not yet unlocked — keep playing at",kr:"분석 잠금 해제 전 — 계속 플레이하세요:"},
+  signIn:{en:"Sign in",kr:"로그인"}, signOut:{en:"Sign out",kr:"로그아웃"},
+  setNick:{en:"Set nickname",kr:"닉네임 설정"},
+  guest:{en:"Guest — progress saved in this browser",kr:"게스트 — 이 브라우저에 저장 중"},
+  emailPh:{en:"you@example.com",kr:"you@example.com"},
+  magicSent:{en:"Login link sent — check your inbox.",kr:"로그인 링크를 보냈어요 — 메일함을 확인하세요."},
+  nickPh:{en:"e.g. quant_king",kr:"예: 환율의_마법사"},
+  nickBad:{en:"2–16 chars: Korean, letters, numbers, underscore only.",kr:"2~16자: 한글·영문·숫자·밑줄만 가능해요."},
+  nickTaken:{en:"Already taken — try another.",kr:"이미 사용 중이에요 — 다른 이름을 시도해보세요."},
+  nickFree:{en:"Available!",kr:"사용 가능해요!"},
+  nickSaved:{en:"Saved.",kr:"저장했어요."},
+  needCheck:{en:"Checking…",kr:"확인 중…"},
+  netErr:{en:"Network error — try again.",kr:"네트워크 오류 — 다시 시도해주세요."},
+};
+function t(k){ return T[k][LANG]; }
+function mv(m){ return T.moveName[m][LANG]; }
+const EMO={R:"✊",P:"✋",S:"✌️"};
+const MOVES=["R","P","S"];
+const BEATS={R:"S",P:"R",S:"P"};   // key가 이기는 손
+const COUNTER={R:"P",P:"S",S:"R"}; // key를 이기는 손
+
+// ── 모델 ──
+const DECAY=0.9, RAND_THRESHOLD=0.40, EMA_S=0.1, EMA_L=0.03, SCORE_EMA=0.1;
+function freshRow(){ return {R:0,P:0,S:0}; }
+function freshModel(){
+  const m={
+    order1:{}, order2:{}, outcome:{},
+    raw1:{}, raw2:{}, rawOut:{},               // 통계용 비감쇠 정수 카운트
+    predictorScore:{order1:0.5, order2:0.5, outcome:0.5},
+    stats:{rounds:0, aiWins:0, userWins:0, draws:0,
+           emaShort:0.5, emaLong:0.5, sHist:[], lHist:[],
+           consecSig:0, unlocked:false, crosses:[]},
+    lastUser:null, prevUser:null, lastAi:null,
+  };
+  MOVES.forEach(a=>{
+    m.order1[a]=freshRow(); m.raw1[a]=freshRow();
+    MOVES.forEach(b=>{
+      m.order2[a+b]=freshRow(); m.raw2[a+b]=freshRow();
+      m.outcome[a+"_"+b]=freshRow(); m.rawOut[a+"_"+b]=freshRow();
+    });
+  });
+  // 전역 prior: win-stay / lose-shift(R→P→S 순환) / 약한 반복 회피
+  const NEXT={R:"P",P:"S",S:"R"};
+  MOVES.forEach(u=>{
+    m.order1[u][NEXT[u]]+=0.6; m.order1[u][u]+=0.4; m.order1[u][BEATS[u]]+=0.3;
+    MOVES.forEach(a=>{
+      const k=u+"_"+a;
+      if(BEATS[u]===a){ m.outcome[k][u]+=0.9; }               // 유저 승 → win-stay
+      else if(BEATS[a]===u){ m.outcome[k][NEXT[u]]+=0.9; }    // 유저 패 → lose-shift
+      else { m.outcome[k][NEXT[u]]+=0.5; m.outcome[k][u]+=0.4; } // 무승부
+    });
+  });
+  return m;
+}
+let M = loadLocal() || freshModel();
+
+function rowTotal(r){ return r.R+r.P+r.S; }
+function rowBest(r){
+  let best="R"; if(r.P>r[best]) best="P"; if(r.S>r[best]) best="S";
+  const tot=rowTotal(r);
+  return {move:best, prob: tot>0? r[best]/tot : 1/3};
+}
+// 각 예측기의 예측 (유저 다음 손)
+function predictions(){
+  const p={};
+  p.order1 = M.lastUser ? rowBest(M.order1[M.lastUser]) : null;
+  p.order2 = (M.prevUser&&M.lastUser) ? rowBest(M.order2[M.prevUser+M.lastUser]) : null;
+  p.outcome = (M.lastUser&&M.lastAi) ? rowBest(M.outcome[M.lastUser+"_"+M.lastAi]) : null;
+  return p;
+}
+function aiChoose(){
+  const preds=predictions();
+  // 사용 가능한 예측기 중 점수 최고 선택
+  let bestKey=null;
+  for(const k of ["outcome","order2","order1"]){
+    if(!preds[k]) continue;
+    if(bestKey===null || M.predictorScore[k]>M.predictorScore[bestKey]) bestKey=k;
+  }
+  if(!bestKey){
+    // 첫 판: 인간의 바위 선호 prior → 보를 약간 선호
+    const r=Math.random();
+    return r<0.45?"P":(r<0.75?"R":"S");
+  }
+  const pred=preds[bestKey];
+  if(pred.prob < RAND_THRESHOLD) return MOVES[Math.floor(Math.random()*3)];
+  return COUNTER[pred.move];
+}
+function decayAdd(row, move){
+  MOVES.forEach(x=>row[x]*=DECAY);
+  row[move]+=1;
+}
+function learn(userMove){
+  const preds=predictions();
+  // 예측기 점수 갱신 (예측이 실제 유저 손과 일치했는가)
+  for(const k of ["order1","order2","outcome"]){
+    if(preds[k]){
+      const hit = preds[k].move===userMove ? 1:0;
+      M.predictorScore[k] = SCORE_EMA*hit + (1-SCORE_EMA)*M.predictorScore[k];
+    }
+  }
+  if(M.lastUser){ decayAdd(M.order1[M.lastUser], userMove); M.raw1[M.lastUser][userMove]++; }
+  if(M.prevUser&&M.lastUser){ decayAdd(M.order2[M.prevUser+M.lastUser], userMove); M.raw2[M.prevUser+M.lastUser][userMove]++; }
+  if(M.lastUser&&M.lastAi){ decayAdd(M.outcome[M.lastUser+"_"+M.lastAi], userMove); M.rawOut[M.lastUser+"_"+M.lastAi][userMove]++; }
+}
+
+// ── 통계 ──
+function normCdf(z){
+  const tt=1/(1+0.2316419*Math.abs(z));
+  const d=0.3989423*Math.exp(-z*z/2);
+  let p=d*tt*(0.3193815+tt*(-0.3565638+tt*(1.781478+tt*(-1.821256+tt*1.330274))));
+  return z>0?1-p:p;
+}
+function overallP(){
+  const n=M.stats.aiWins+M.stats.userWins;
+  if(n<1) return 1;
+  const z=(M.stats.aiWins/n-0.5)/Math.sqrt(0.25/n);
+  return 1-normCdf(z);
+}
+// 개별 습관: p0=1/3 대비 이항검정(정규근사), p<0.01 & n>=15
+function habits(){
+  const out=[];
+  function test(row, label){
+    const n=rowTotal(row); if(n<15) return;
+    const b=rowBest(row); const k=row[b.move];
+    const z=(k/n-1/3)/Math.sqrt((1/3)*(2/3)/n);
+    const p=1-normCdf(z);
+    if(p<0.01) out.push({label, move:b.move, pct:Math.round(100*k/n), n, p});
+  }
+  MOVES.forEach(u=>MOVES.forEach(a=>{
+    const row=M.rawOut[u+"_"+a];
+    let cond;
+    if(BEATS[u]===a) cond={en:`${t('afterWin')} ${mv(u)}`, kr:`${mv(u)}${T.afterWin.kr}`};
+    else if(BEATS[a]===u) cond={en:`${t('afterLose')} ${mv(u)}`, kr:`${mv(u)}${T.afterLose.kr}`};
+    else cond={en:`${t('afterDraw')} ${mv(u)}`, kr:`${mv(u)}${T.afterDraw.kr}`};
+    test(row, cond[LANG]);
+  }));
+  MOVES.forEach(u=>{
+    test(M.raw1[u], LANG==='kr' ? `${mv(u)}${T.afterPlay.kr}` : `${t('afterPlay')} ${mv(u)}`);
+  });
+  out.sort((a,b)=>a.p-b.p);
+  return out.slice(0,5);
+}
+
+// ── 저장 ──
+const LS_KEY='rps_model_v1';
+function saveLocal(){ try{ localStorage.setItem(LS_KEY, JSON.stringify(M)); }catch(e){} }
+function loadLocal(){
+  try{
+    const s=localStorage.getItem(LS_KEY); if(!s) return null;
+    const m=JSON.parse(s);
+    return m && m.order1 && m.raw1 ? m : null;
+  }catch(e){ return null; }
+}
+
+// ── DOM ──
+const $=id=>document.getElementById(id);
+const picks=[].slice.call(document.querySelectorAll('.pick'));
+let commit=null; // {move, nonce, hash}
+let busy=false;
+
+async function sha256hex(s){
+  const buf=await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
+  return [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+async function newCommit(){
+  commit=null;
+  setPicksEnabled(false);
+  $('commitText').textContent=t('commitPending');
+  $('commitChip').classList.remove('revealed');
+  const move=aiChoose();
+  const nonce=[...crypto.getRandomValues(new Uint8Array(8))].map(b=>b.toString(16).padStart(2,'0')).join('');
+  const hash=await sha256hex(move+":"+nonce);
+  commit={move, nonce, hash};
+  $('commitText').textContent=t('commitLocked')+hash.slice(0,12)+'…';
+  $('commitChip').title=t('commitTitle');
+  setPicksEnabled(true);
+}
+function setPicksEnabled(on){ picks.forEach(b=>b.disabled=!on); }
+
+function startRound(){
+  $('aiHand').textContent='?'; $('aiHand').className='duel-hand q';
+  $('myHand').textContent='?'; $('myHand').className='duel-hand q';
+  $('banner').className=''; $('banner').style.display='none';
+  $('roundLabel').textContent=t('round')+(M.stats.rounds+1);
+  newCommit();
+}
+
+function play(userMove){
+  if(busy || !commit) return;
+  busy=true;
+  const aiMove=commit.move;
+  // 학습은 "이전 상태 → 이번 유저 손" 이므로 상태 갱신 전에 수행
+  learn(userMove);
+  // 상태 갱신
+  M.prevUser=M.lastUser; M.lastUser=userMove; M.lastAi=aiMove;
+  M.stats.rounds++;
+  let res; // 'ai' | 'user' | 'draw'
+  if(userMove===aiMove){ res='draw'; M.stats.draws++; }
+  else if(BEATS[aiMove]===userMove){ res='ai'; M.stats.aiWins++; }
+  else { res='user'; M.stats.userWins++; }
+  // EMA (무승부 제외)
+  if(res!=='draw'){
+    const v=res==='ai'?1:0;
+    M.stats.emaShort=EMA_S*v+(1-EMA_S)*M.stats.emaShort;
+    M.stats.emaLong=EMA_L*v+(1-EMA_L)*M.stats.emaLong;
+    const prevDiff=(M.stats.sHist.length? M.stats.sHist[M.stats.sHist.length-1]-M.stats.lHist[M.stats.lHist.length-1] : 0);
+    M.stats.sHist.push(M.stats.emaShort); M.stats.lHist.push(M.stats.emaLong);
+    if(M.stats.sHist.length>500){ M.stats.sHist.shift(); M.stats.lHist.shift(); M.stats.crosses=M.stats.crosses.map(c=>c-1).filter(c=>c>=0); }
+    const newDiff=M.stats.emaShort-M.stats.emaLong;
+    if(M.stats.sHist.length>10 && prevDiff!==0 && Math.sign(prevDiff)!==Math.sign(newDiff)){
+      M.stats.crosses.push(M.stats.sHist.length-1);
+      $('crossNote').textContent = newDiff>0 ? t('golden') : t('dead');
+    }
+    // 유의성 3중 조건
+    const n=M.stats.aiWins+M.stats.userWins;
+    if(n>=30 && overallP()<0.01) M.stats.consecSig++;
+    else M.stats.consecSig=0;
+    if(!M.stats.unlocked && M.stats.consecSig>=5){
+      M.stats.unlocked=true;
+      renderAnalysis(true); // scramble 연출
+    }
+  }
+  // 표시
+  $('aiHand').textContent=EMO[aiMove]; $('aiHand').className='duel-hand';
+  $('myHand').textContent=EMO[userMove]; $('myHand').className='duel-hand';
+  const bn=$('banner');
+  if(res==='draw'){ bn.className='draw'; bn.textContent=t('draw'); }
+  else if(res==='ai'){ bn.className='lose'; bn.textContent=t('lose'); }
+  else { bn.className='win'; bn.textContent=t('win'); }
+  // 커밋 리빌
+  $('commitChip').classList.add('revealed');
+  $('revealLine').textContent = t('reveal')+EMO[aiMove]+' ('+aiMove+')'+t('nonce')+commit.nonce+t('hashOk');
+  $('revealLine').title = 'SHA-256("'+aiMove+':'+commit.nonce+'") = '+commit.hash;
+  renderStats(); drawGraph();
+  if(M.stats.unlocked) renderAnalysis(false);
+  saveLocal(); cloudSaveDebounced();
+  setTimeout(()=>{ busy=false; startRound(); }, 650);
+}
+
+function renderStats(){
+  $('stRounds').textContent=M.stats.rounds;
+  $('stAi').textContent=M.stats.aiWins;
+  $('stYou').textContent=M.stats.userWins;
+  $('stDraw').textContent=M.stats.draws;
+  const n=M.stats.aiWins+M.stats.userWins;
+  $('stRate').textContent = n>0 ? Math.round(100*M.stats.aiWins/n)+'%' : '–';
+}
+
+// ── 그래프 ──
+function drawGraph(){
+  const cv=$('graph');
+  const dpr=window.devicePixelRatio||1;
+  const w=cv.clientWidth, h=cv.clientHeight||220;
+  cv.width=w*dpr; cv.height=h*dpr;
+  const g=cv.getContext('2d'); g.scale(dpr,dpr);
+  g.clearRect(0,0,w,h);
+  const padL=34, padR=8, padT=8, padB=18;
+  const iw=w-padL-padR, ih=h-padT-padB;
+  const y=v=>padT+(1-v)*ih;
+  // 축/그리드
+  g.strokeStyle='#DDDDD8'; g.lineWidth=1;
+  [0,0.25,0.75,1].forEach(v=>{ g.beginPath(); g.moveTo(padL,y(v)); g.lineTo(w-padR,y(v)); g.stroke(); });
+  g.setLineDash([4,4]); g.strokeStyle='#8A8A85';
+  g.beginPath(); g.moveTo(padL,y(0.5)); g.lineTo(w-padR,y(0.5)); g.stroke();
+  g.setLineDash([]);
+  g.fillStyle='#6B6B67'; g.font='10px "IBM Plex Mono",monospace';
+  ['100%','75%','50%','25%','0%'].forEach((lb,i)=>g.fillText(lb,2,y(1-i*0.25)+3));
+  const S=M.stats.sHist, L=M.stats.lHist;
+  if(S.length<2) return;
+  const x=i=>padL+(S.length===1?0:i/(S.length-1))*iw;
+  function line(arr,color,width){
+    g.strokeStyle=color; g.lineWidth=width; g.beginPath();
+    arr.forEach((v,i)=>{ i===0?g.moveTo(x(i),y(v)):g.lineTo(x(i),y(v)); });
+    g.stroke();
+  }
+  line(L,'#2BB673',3);
+  line(S,'#141414',1.5);
+  // 크로스 마커
+  M.stats.crosses.forEach(i=>{
+    if(i<0||i>=S.length) return;
+    g.fillStyle = S[i]>=L[i] ? '#2BB673' : '#A32D2D';
+    g.beginPath(); g.arc(x(i),y(S[i]),3.5,0,Math.PI*2); g.fill();
+    g.strokeStyle='#141414'; g.lineWidth=1; g.stroke();
+  });
+}
+window.addEventListener('resize', drawGraph);
+
+// ── 분석 패널 ──
+function renderAnalysis(withScramble){
+  const body=$('analysisBody');
+  if(!M.stats.unlocked){
+    body.innerHTML='<div class="locked-note">'+t('locked1')
+      +' <span class="bar" style="width:38%"></span><br>'+t('locked2')+'</div>';
+    return;
+  }
+  const hs=habits();
+  const p=overallP();
+  let html='<div class="habit" id="unlockHead"><b>'+t('unlockedHead')+'</b></div>';
+  if(hs.length===0) html+='<div class="habit">'+t('noHabit')+'</div>';
+  hs.forEach(hb=>{
+    const line = LANG==='kr'
+      ? `${hb.label}, <b>${hb.pct}%</b> 확률로 <b>${mv(hb.move)}</b>를 냈습니다 <span class="obs">(${hb.n}${t('timesObs')})</span>`
+      : `${hb.label}, ${t('youPlay')} <b>${mv(hb.move)}</b> <b>${hb.pct}%</b> of the time <span class="obs">(${hb.n}${t('timesObs')})</span>`;
+    html+='<div class="habit">'+line+'</div>';
+  });
+  html+='<div class="pvalue-line">'+t('pline')+(p<0.0001?'&lt; 0.01%':(100*p).toFixed(2)+'%')+'</div>';
+  body.innerHTML=html;
+  if(withScramble && window.SiteScramble){
+    const head=$('unlockHead').querySelector('b');
+    const txt=head.textContent;
+    const sc=new window.SiteScramble(head);
+    head.dataset.plain='';
+    sc.set(txt);
+  }
+}
+
+// ── 공유 카드 (1200×630 Canvas) ──
+async function makeCard(){
+  await (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve());
+  const W=1200,H=630;
+  const cv=document.createElement('canvas'); cv.width=W; cv.height=H;
+  const g=cv.getContext('2d');
+  // 배경 + 프레임
+  g.fillStyle='#F6F6F4'; g.fillRect(0,0,W,H);
+  g.fillStyle='#141414'; g.fillRect(24,24,W-48,H-48);
+  g.fillStyle='#F6F6F4'; g.fillRect(32,32,W-64,H-64);
+  // 타이틀
+  const nick=(auth.nickname||'').trim();
+  g.fillStyle='#141414';
+  g.font='900 44px Archivo, Pretendard, sans-serif';
+  const title = nick ? (LANG==='kr'? nick+T.cardTitle.kr : nick+T.cardTitle.en) : t('cardTitleAnon');
+  g.fillText(title, 64, 108);
+  g.fillStyle='#2BB673'; g.fillRect(64,126,220,8);
+  const n=M.stats.aiWins+M.stats.userWins;
+  // 스탯 박스
+  const stats=[
+    [String(M.stats.rounds), LANG==='kr'?'총 판수':'ROUNDS'],
+    [(n>0?Math.round(100*M.stats.aiWins/n):0)+'%', LANG==='kr'?'AI 승률':'AI WIN RATE'],
+    [M.stats.unlocked?(overallP()<0.0001?'<0.01%':(100*overallP()).toFixed(2)+'%'):'—', LANG==='kr'?'우연일 확률':'LUCK PROBABILITY'],
+  ];
+  stats.forEach((s,i)=>{
+    const bx=64+i*250, by=170, bw=220, bh=110;
+    g.fillStyle='#141414'; g.fillRect(bx+5,by+5,bw,bh);
+    g.fillStyle='#FFFFFF'; g.fillRect(bx,by,bw,bh);
+    g.strokeStyle='#141414'; g.lineWidth=3; g.strokeRect(bx,by,bw,bh);
+    g.fillStyle= i===1?'#A32D2D':'#0F6E56';
+    g.font='900 40px Archivo, Pretendard, sans-serif';
+    g.fillText(s[0], bx+18, by+56);
+    g.fillStyle='#6B6B67'; g.font='600 15px "IBM Plex Mono", monospace';
+    g.fillText(s[1], bx+18, by+88);
+  });
+  // 미니 그래프
+  const gx=64, gy=320, gw=520, gh=230;
+  g.fillStyle='#141414'; g.fillRect(gx+5,gy+5,gw,gh);
+  g.fillStyle='#FFFFFF'; g.fillRect(gx,gy,gw,gh);
+  g.strokeStyle='#141414'; g.lineWidth=3; g.strokeRect(gx,gy,gw,gh);
+  const S=M.stats.sHist, L=M.stats.lHist;
+  const yv=v=>gy+14+(1-v)*(gh-28);
+  g.setLineDash([4,4]); g.strokeStyle='#8A8A85'; g.lineWidth=1;
+  g.beginPath(); g.moveTo(gx+10,yv(0.5)); g.lineTo(gx+gw-10,yv(0.5)); g.stroke();
+  g.setLineDash([]);
+  if(S.length>=2){
+    const xv=i=>gx+10+(i/(S.length-1))*(gw-20);
+    function pl(arr,color,width){
+      g.strokeStyle=color; g.lineWidth=width; g.beginPath();
+      arr.forEach((v,i)=>{ i===0?g.moveTo(xv(i),yv(v)):g.lineTo(xv(i),yv(v)); });
+      g.stroke();
+    }
+    pl(L,'#2BB673',4); pl(S,'#141414',2);
+  }
+  g.fillStyle='#6B6B67'; g.font='600 13px "IBM Plex Mono", monospace';
+  g.fillText(LANG==='kr'?'AI 승률 이동평균':'AI WIN RATE — MOVING AVG', gx+14, gy+gh-12);
+  // 습관 리스트
+  const hx=620, hy=330;
+  g.fillStyle='#141414'; g.font='900 20px Archivo, Pretendard, sans-serif';
+  g.fillText(LANG==='kr'?'검증된 습관':'VERIFIED HABITS', hx, hy);
+  g.font='500 17px Pretendard, sans-serif';
+  const hs=M.stats.unlocked? habits():[];
+  if(hs.length===0){
+    g.fillStyle='#6B6B67';
+    g.fillText(M.stats.unlocked? t('noHabit') : (LANG==='kr'?'아직 잠금 해제 전':'Not yet unlocked'), hx, hy+34);
+  }
+  hs.slice(0,4).forEach((hb,i)=>{
+    g.fillStyle='#141414';
+    const line = LANG==='kr'
+      ? `· ${hb.label} ${hb.pct}% → ${mv(hb.move)} (${hb.n}회)`
+      : `· ${hb.label}: ${mv(hb.move)} ${hb.pct}% (${hb.n} obs)`;
+    g.fillText(line, hx, hy+34+i*30);
+  });
+  // 하단 워드마크
+  g.fillStyle='#141414'; g.fillRect(64, H-84, W-128, 3);
+  g.font='900 22px Archivo, Pretendard, sans-serif';
+  g.fillStyle='#141414'; g.fillText('KYGMIN', 64, H-46);
+  g.fillStyle='#2BB673'; g.fillText('.COM', 64+g.measureText('KYGMIN').width, H-46);
+  g.fillStyle='#6B6B67'; g.font='600 14px "IBM Plex Mono", monospace';
+  g.fillText('/playhouse — RPS PREDICTOR', 240, H-46);
+  return cv;
+}
+$('cardBtn').addEventListener('click', async ()=>{
+  const cv=await makeCard();
+  cv.toBlob(blob=>{
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download='rps-predictor-kygmin.png';
+    a.click();
+    setTimeout(()=>URL.revokeObjectURL(a.href), 5000);
+  }, 'image/png');
+});
+$('resetBtn').addEventListener('click', ()=>{
+  if(!confirm(t('resetConfirm'))) return;
+  M=freshModel(); saveLocal(); cloudSaveNow();
+  renderStats(); drawGraph(); renderAnalysis(false);
+  $('crossNote').textContent=''; $('revealLine').textContent='';
+  startRound();
+});
+
+// ── Supabase (설정 시에만 활성) ──
+const auth={ client:null, user:null, nickname:null, dirty:0 };
+function cloudSaveDebounced(){
+  if(!auth.client || !auth.user) return;
+  auth.dirty++;
+  if(auth.dirty>=5){ cloudSaveNow(); }
+}
+async function cloudSaveNow(){
+  if(!auth.client || !auth.user) return;
+  auth.dirty=0;
+  try{
+    await auth.client.from('rps_profiles').upsert({user_id:auth.user.id, model:M, updated_at:new Date().toISOString()});
+  }catch(e){ console.warn('cloud save failed', e); }
+}
+function mergeModels(a,b){ // 카운트 원소별 합산 (a에 b를 더함)
+  ['order1','order2','outcome','raw1','raw2','rawOut'].forEach(tb=>{
+    Object.keys(b[tb]||{}).forEach(k=>{
+      if(!a[tb][k]) a[tb][k]=freshRow();
+      MOVES.forEach(x=>a[tb][k][x]+=(b[tb][k][x]||0));
+    });
+  });
+  ['rounds','aiWins','userWins','draws'].forEach(k=>a.stats[k]+=(b.stats[k]||0));
+  // EMA/이력은 로컬(더 최근) 쪽 유지
+  return a;
+}
+function nickValid(s){ return /^[A-Za-z0-9가-힣_]{2,16}$/.test(s); }
+
+async function initSupabase(){
+  if(!SUPABASE_CONFIG.url || !SUPABASE_CONFIG.anonKey) return; // 게스트 모드
+  try{
+    await new Promise((res,rej)=>{
+      const s=document.createElement('script');
+      s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';
+      s.onload=res; s.onerror=rej; document.head.appendChild(s);
+    });
+    auth.client=window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey);
+  }catch(e){ console.warn('supabase load failed', e); return; }
+  $('accountBar').style.display='flex';
+  renderAcct();
+  auth.client.auth.onAuthStateChange(async (_ev, session)=>{
+    auth.user=session? session.user : null;
+    if(auth.user){
+      // 프로필 로드
+      const {data:prof}=await auth.client.from('profiles').select('nickname').eq('user_id',auth.user.id).maybeSingle();
+      auth.nickname=prof? prof.nickname : null;
+      // 모델 로드 + 병합
+      const {data:row}=await auth.client.from('rps_profiles').select('model').eq('user_id',auth.user.id).maybeSingle();
+      if(row && row.model){
+        M=mergeModels(row.model, M); // DB 기반 + 로컬 게스트 진행분 합산
+        localStorage.removeItem(LS_KEY);
+        saveLocal();
+      }
+      await cloudSaveNow();
+      renderStats(); drawGraph(); renderAnalysis(false); startRound();
+      if(!auth.nickname) openNick();
+    }
+    renderAcct();
+  });
+}
+function renderAcct(){
+  if(!auth.client) return;
+  const st=$('acctStatus'), ab=$('authBtn'), nb=$('nickBtn');
+  if(auth.user){
+    st.textContent = auth.nickname ? auth.nickname : (auth.user.email||'');
+    ab.textContent = t('signOut');
+    nb.style.display='inline-block';
+    nb.textContent = auth.nickname ? '✎ '+auth.nickname : t('setNick');
+  } else {
+    st.textContent = t('guest');
+    ab.textContent = t('signIn');
+    nb.style.display='none';
+  }
+}
+$('authBtn').addEventListener('click', async ()=>{
+  if(!auth.client) return;
+  if(auth.user){ await auth.client.auth.signOut(); auth.user=null; auth.nickname=null; renderAcct(); return; }
+  $('authModal').classList.add('open');
+  $('emailInput').placeholder=t('emailPh');
+});
+$('authCancel').addEventListener('click', ()=>$('authModal').classList.remove('open'));
+$('magicBtn').addEventListener('click', async ()=>{
+  const email=$('emailInput').value.trim();
+  const msg=$('authMsg');
+  if(!email){ msg.className='msg err'; msg.textContent=t('netErr'); return; }
+  try{
+    const {error}=await auth.client.auth.signInWithOtp({email, options:{emailRedirectTo:location.href}});
+    if(error) throw error;
+    msg.className='msg ok'; msg.textContent=t('magicSent');
+  }catch(e){ msg.className='msg err'; msg.textContent=e.message||t('netErr'); }
+});
+$('githubBtn').addEventListener('click', async ()=>{
+  try{ await auth.client.auth.signInWithOAuth({provider:'github', options:{redirectTo:location.href}}); }
+  catch(e){ $('authMsg').className='msg err'; $('authMsg').textContent=e.message||t('netErr'); }
+});
+// 닉네임
+function openNick(){
+  $('nickModal').classList.add('open');
+  $('nickInput').value=auth.nickname||'';
+  $('nickInput').placeholder=t('nickPh');
+  $('nickMsg').textContent='';
+}
+$('nickBtn').addEventListener('click', openNick);
+$('nickCancel').addEventListener('click', ()=>$('nickModal').classList.remove('open'));
+$('nickCheck').addEventListener('click', async ()=>{
+  const v=$('nickInput').value.trim(); const msg=$('nickMsg');
+  if(!nickValid(v)){ msg.className='msg err'; msg.textContent=t('nickBad'); return; }
+  msg.className='msg'; msg.textContent=t('needCheck');
+  try{
+    const {data}=await auth.client.from('profiles').select('user_id').ilike('nickname', v).maybeSingle();
+    if(data && data.user_id!==auth.user.id){ msg.className='msg err'; msg.textContent=t('nickTaken'); }
+    else { msg.className='msg ok'; msg.textContent=t('nickFree'); }
+  }catch(e){ msg.className='msg err'; msg.textContent=t('netErr'); }
+});
+$('nickSave').addEventListener('click', async ()=>{
+  const v=$('nickInput').value.trim(); const msg=$('nickMsg');
+  if(!nickValid(v)){ msg.className='msg err'; msg.textContent=t('nickBad'); return; }
+  try{
+    const {error}=await auth.client.from('profiles').upsert({user_id:auth.user.id, nickname:v});
+    if(error){
+      // 23505 = unique_violation (lower(nickname) 유니크 인덱스가 경합까지 차단)
+      if(error.code==='23505'){ msg.className='msg err'; msg.textContent=t('nickTaken'); return; }
+      throw error;
+    }
+    auth.nickname=v;
+    msg.className='msg ok'; msg.textContent=t('nickSaved');
+    renderAcct();
+    setTimeout(()=>$('nickModal').classList.remove('open'), 600);
+  }catch(e){ msg.className='msg err'; msg.textContent=e.message||t('netErr'); }
+});
+
+// ── 이벤트/시작 ──
+picks.forEach(b=>b.addEventListener('click', ()=>play(b.dataset.m)));
+window.APP_LANG_LISTENERS.push(function(lang){
+  LANG=lang;
+  renderStats(); drawGraph(); renderAnalysis(false); renderAcct();
+  $('roundLabel').textContent=t('round')+(M.stats.rounds+1);
+  if(commit) $('commitText').textContent=t('commitLocked')+commit.hash.slice(0,12)+'…';
+});
+renderStats(); drawGraph(); renderAnalysis(false);
+startRound();
+initSupabase();
+})();
+</script>
+</body>
+</html>
