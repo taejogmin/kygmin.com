@@ -351,7 +351,8 @@ footer{border-top:3px solid var(--ink);padding:26px 0;}
     <div class="msg" id="authMsg"></div>
     <div class="row">
       <button class="btn btn-green" id="magicBtn" style="font-size:12px;padding:10px 16px;"><span class="tx" data-en="Email me a login link" data-kr="이메일 로그인 링크 받기">Email me a login link</span></button>
-      <button class="btn" id="githubBtn" style="font-size:12px;padding:10px 16px;">GitHub</button>
+      <button class="btn" id="kakaoBtn" style="font-size:12px;padding:10px 16px;background:#FEE500;color:#191919;">Kakao</button>
+      <button class="btn" id="facebookBtn" style="font-size:12px;padding:10px 16px;background:#1877F2;color:#fff;">Facebook</button>
       <button class="btn" id="authCancel" style="font-size:12px;padding:10px 16px;"><span class="tx" data-en="Close" data-kr="닫기">Close</span></button>
     </div>
   </div>
@@ -976,8 +977,12 @@ $('magicBtn').addEventListener('click', async ()=>{
     msg.className='msg ok'; msg.textContent=t('magicSent');
   }catch(e){ msg.className='msg err'; msg.textContent=e.message||t('netErr'); }
 });
-$('githubBtn').addEventListener('click', async ()=>{
-  try{ await auth.client.auth.signInWithOAuth({provider:'github', options:{redirectTo:location.href}}); }
+$('kakaoBtn').addEventListener('click', async ()=>{
+  try{ await auth.client.auth.signInWithOAuth({provider:'kakao', options:{redirectTo:location.href}}); }
+  catch(e){ $('authMsg').className='msg err'; $('authMsg').textContent=e.message||t('netErr'); }
+});
+$('facebookBtn').addEventListener('click', async ()=>{
+  try{ await auth.client.auth.signInWithOAuth({provider:'facebook', options:{redirectTo:location.href}}); }
   catch(e){ $('authMsg').className='msg err'; $('authMsg').textContent=e.message||t('netErr'); }
 });
 // 닉네임
