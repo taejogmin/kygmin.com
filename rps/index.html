@@ -978,7 +978,14 @@ $('magicBtn').addEventListener('click', async ()=>{
   }catch(e){ msg.className='msg err'; msg.textContent=e.message||t('netErr'); }
 });
 $('kakaoBtn').addEventListener('click', async ()=>{
-  try{ await auth.client.auth.signInWithOAuth({provider:'kakao', options:{redirectTo:location.href, scopes:'profile_nickname'}}); }
+  try{
+    // Kakao 앱에 account_email/profile_image 동의항목이 없으므로 scope를 profile_nickname으로 제한
+    const {data, error}=await auth.client.auth.signInWithOAuth({provider:'kakao', options:{redirectTo:location.href, skipBrowserRedirect:true}});
+    if(error) throw error;
+    const u=new URL(data.url);
+    u.searchParams.set('scope','profile_nickname');
+    location.href=u.toString();
+  }
   catch(e){ $('authMsg').className='msg err'; $('authMsg').textContent=e.message||t('netErr'); }
 });
 $('facebookBtn').addEventListener('click', async ()=>{
