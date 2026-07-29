@@ -978,7 +978,7 @@ $('magicBtn').addEventListener('click', async ()=>{
   }catch(e){ msg.className='msg err'; msg.textContent=e.message||t('netErr'); }
 });
 $('kakaoBtn').addEventListener('click', async ()=>{
-  try{ await auth.client.auth.signInWithOAuth({provider:'kakao', options:{redirectTo:location.href}}); }
+  try{ await auth.client.auth.signInWithOAuth({provider:'kakao', options:{redirectTo:location.href, scopes:'profile_nickname'}}); }
   catch(e){ $('authMsg').className='msg err'; $('authMsg').textContent=e.message||t('netErr'); }
 });
 $('facebookBtn').addEventListener('click', async ()=>{
