@@ -169,8 +169,7 @@ footer{padding:64px 0 80px;}
     <div class="nav-links">
       <a href="#home" class="on tx" data-en="Home" data-kr="홈">Home</a>
       <a href="#contact" class="tx" data-en="Contact" data-kr="연락처">Contact</a>
-      <!-- NEW: 항상 최신 프로젝트로 href만 바꿔 업데이트 (현재: nine-positions/) -->
-      <a href="nine-positions/" class="new">NEW</a>
+      <a href="playhouse/">PLAYHOUSE</a>
       <a href="cv.html" style="background:var(--ink);color:var(--paper);">CV &#128274;</a>
     </div>
   </div>
@@ -181,11 +180,11 @@ footer{padding:64px 0 80px;}
   <h1>PARK,<br/>KYUNG-<span class="boxg">MIN</span></h1>
   <p class="hero-sub">
     <strong class="tx" data-en="Welcome — I'm Min." data-kr="안녕하세요 — 박경민입니다.">Welcome — I'm Min.</strong><br/><br/>
-    <span class="tx" data-en="Second year at Mizuho Bank, currently PM on the ISO 20022 Hybrid. Look around to get to know me, or jump into the Playground." data-kr="미즈호 은행에서 ISO 20022 Hybrid 프로젝트 PM으로 일하고 있습니다. 편하게 둘러보시고, 아래 플레이그라운드에서 재미있게 즐겨보세요!">Second year at Mizuho Bank, currently PM on the ISO 20022 Hybrid. Look around to get to know me, or jump into the Playground.</span>
+    <span class="tx" data-en="Second year at Mizuho Bank, currently PM on the ISO 20022 Hybrid. Look around to get to know me, or jump into the PLAYHOUSE." data-kr="미즈호 은행에서 ISO 20022 Hybrid 프로젝트 PM으로 일하고 있습니다. 편하게 둘러보시고, 플레이하우스에서 재미있게 즐겨보세요!">Second year at Mizuho Bank, currently PM on the ISO 20022 Hybrid. Look around to get to know me, or jump into the PLAYHOUSE.</span>
   </p>
   <div class="hero-actions">
     <a class="btn btn-green tx" href="#portfolio" data-en="Careers" data-kr="경력">Careers</a>
-    <a class="btn tx" href="#projects" data-en="Playground" data-kr="플레이그라운드">Playground</a>
+    <a class="btn" href="playhouse/">PLAYHOUSE</a>
   </div>
 </header>
 
@@ -285,19 +284,23 @@ footer{padding:64px 0 80px;}
 
 <section id="projects">
   <div class="wrap">
-    <span class="sec-tag tx" data-en="02 — Playground" data-kr="02 — 플레이그라운드">02 — Playground</span>
-    <h2><span class="tx" data-en="Where I " data-kr="">Where I </span><span class="u"><span class="tx" data-en="tinker" data-kr="실험실">tinker</span></span></h2>
+    <span class="sec-tag">02 — PLAYHOUSE</span>
+    <h2>PLAY<span class="u">HOUSE</span></h2>
+    <p style="font-size:15px;color:#3A3A38;max-width:620px;margin:-16px 0 28px;" class="tx" data-en="Games and experiments I build for fun — everything runs right in your browser. Here are the two latest; the full collection lives in the PLAYHOUSE." data-kr="재미로 만드는 게임과 실험들 — 전부 브라우저에서 바로 실행돼요. 최신 두 개만 소개하고, 전체 컬렉션은 플레이하우스에 있습니다.">Games and experiments I build for fun — everything runs right in your browser. Here are the two latest; the full collection lives in the PLAYHOUSE.</p>
     <div class="proj-grid">
+      <a class="proj" href="rps/">
+        <div class="proj-head"><span class="proj-name tx" data-en="rps-predictor" data-kr="가위바위보 예측기">rps-predictor</span><span class="badge live">PLAY &#9658;</span></div>
+        <p class="tx" data-en="You are not as random as you think. An AI learns your rock-paper-scissors habits round by round — then unlocks a statistically verified report of your own tells." data-kr="당신은 생각보다 랜덤하지 않습니다. AI가 당신의 가위바위보 습관을 매판 학습하고, 통계적으로 검증된 습관 리포트를 잠금 해제합니다.">You are not as random as you think. An AI learns your rock-paper-scissors habits round by round — then unlocks a statistically verified report of your own tells.</p>
+        <p class="stack">Markov Ensemble · Statistics · Canvas</p>
+      </a>
       <a class="proj" href="nine-positions/">
         <div class="proj-head"><span class="proj-name tx" data-en="nine-positions" data-kr="나인 포지션">nine-positions</span><span class="badge live">PLAY &#9658;</span></div>
         <p class="tx" data-en="A market mind game vs AI. Nine hidden cards from 1. Cash to 9. Derivatives — higher risk wins, but Cash beats Derivatives. Bluff with 2x/3x leverage, flip the market with an Inverse, and outread an AI that infers your hand from the win/loss record alone." data-kr="AI와 겨루는 시장 심리 게임. 1. 현금부터 9. 선물·옵션까지 아홉 장의 비공개 카드 — 높은 리스크가 이기지만, 현금은 선물·옵션을 이깁니다. 2x·3x 레버리지로 블러핑하고, 인버스로 시장을 뒤집고, 승패 기록만으로 당신의 패를 추리하는 AI를 이겨보세요.">A market mind game vs AI. Nine hidden cards from 1. Cash to 9. Derivatives — higher risk wins, but Cash beats Derivatives. Bluff with 2x/3x leverage, flip the market with an Inverse, and outread an AI that infers your hand from the win/loss record alone.</p>
         <p class="stack">Game Theory · Bayesian AI · JavaScript</p>
       </a>
-      <a class="proj" href="animal/">
-        <div class="proj-head"><span class="proj-name tx" data-en="animal-lookalike" data-kr="동물 닮은꼴 찾기">animal-lookalike</span><span class="badge live">PLAY &#9658;</span></div>
-        <p class="tx" data-en="Which animal's face is closest to yours? A cat? A dog? Maybe a deer? Find out here." data-kr="얼굴 랜드마크에서 뽑은 6개의 기하 특징을 12종 동물의 평균 얼굴과 비교합니다. 학습된 분류기가 아니라, 비율을 직접 재서 거리를 계산하는 방식이에요.">Which animal's face is closest to yours? A cat? A dog? Maybe a deer? Find out here.</p>
-        <p class="stack">MediaPipe · JavaScript</p>
-      </a>
+    </div>
+    <div style="margin-top:28px;">
+      <a class="btn btn-green" href="playhouse/"><span class="tx" data-en="Enter the PLAYHOUSE" data-kr="플레이하우스 입장">Enter the PLAYHOUSE</span> &#8594;</a>
     </div>
   </div>
 </section>
