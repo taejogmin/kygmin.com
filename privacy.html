@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Privacy Policy — KYGMIN</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#F6F6F4;
+  --ink:#141414;
+  --gray:#DDDDD8;
+  --green:#2BB673;
+  --green-deep:#0F6E56;
+  --red:#A32D2D;
+  --arch:'Archivo','Pretendard',sans-serif;
+  --sans:'Pretendard',-apple-system,'Apple SD Gothic Neo','Malgun Gothic','Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono','SF Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{transition:none!important;}
+}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:16px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  word-break:keep-all;overflow-wrap:break-word;
+}
+a{color:inherit;text-decoration:none;}
+a:focus-visible,button:focus-visible{outline:3px solid var(--green);outline-offset:3px;}
+.wrap{max-width:820px;margin:0 auto;padding:0 24px;}
+/* ── Nav ── */
+nav{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:3px solid var(--ink);}
+.nav-inner{
+  max-width:820px;margin:0 auto;padding:14px 24px;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+}
+.logo{font-family:var(--arch);font-weight:900;font-size:19px;letter-spacing:-0.5px;}
+.logo em{font-style:normal;background:var(--green);color:var(--paper);padding:0 6px;display:inline-block;transform:rotate(-1.5deg);}
+.nav-links{display:flex;gap:8px;flex-wrap:wrap;}
+.nav-links a{
+  font-family:var(--arch);font-size:12px;font-weight:700;text-transform:uppercase;
+  border:2px solid var(--ink);padding:6px 13px;background:#fff;
+  box-shadow:3px 3px 0 var(--ink);transition:transform .1s, box-shadow .1s;
+}
+.nav-links a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+.nav-links a.on{background:var(--green);color:var(--paper);}
+/* ── Language toggle (floating) ── */
+#langtoggle{
+  position:fixed;right:20px;bottom:20px;z-index:50;display:inline-flex;
+  border:2px solid var(--ink);box-shadow:3px 3px 0 var(--ink);background:#fff;
+  font-family:var(--arch);font-weight:700;font-size:12px;overflow:hidden;
+}
+#langtoggle button{font:inherit;border:none;background:none;cursor:pointer;padding:9px 14px;color:var(--ink);letter-spacing:.5px;transition:background .1s,color .1s;}
+#langtoggle button.on{background:var(--green);color:var(--paper);}
+#langtoggle button+button{border-left:2px solid var(--ink);}
+.scr{color:var(--green);}
+.box .scr{color:var(--paper);}
+/* ── Hero ── */
+header{padding:64px 0 44px;border-bottom:3px solid var(--ink);}
+.sec-tag{
+  font-family:var(--mono);font-size:12.5px;font-weight:600;
+  color:var(--green-deep);letter-spacing:1px;display:block;margin-bottom:16px;
+}
+h1{
+  font-family:var(--arch);font-weight:900;text-transform:uppercase;
+  font-size:clamp(30px, 5.4vw, 50px);line-height:1.08;letter-spacing:-1.5px;
+}
+h1 .box{background:var(--ink);color:var(--paper);padding:0 12px;display:inline-block;transform:rotate(-1deg);}
+.hero-sub{margin-top:20px;font-size:16px;max-width:620px;font-weight:500;}
+.hero-note{margin-top:14px;font-family:var(--mono);font-size:12px;color:#4A4A46;}
+/* ── Main ── */
+main{padding:48px 0 88px;}
+.section{margin-top:52px;}
+.section:first-child{margin-top:0;}
+.section h2{
+  font-family:var(--arch);font-weight:900;font-size:15px;text-transform:uppercase;
+  letter-spacing:-0.3px;border-bottom:3px solid var(--ink);padding-bottom:8px;margin-bottom:18px;
+}
+.section p{font-size:15px;color:#3A3A38;max-width:680px;}
+.section p+p{margin-top:12px;}
+.meta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;}
+.meta-chip{
+  font-family:var(--mono);font-size:11.5px;font-weight:600;
+  border:2px solid var(--ink);padding:4px 10px;background:var(--gray);
+}
+.meta-chip.g{background:var(--green);color:var(--paper);}
+.callout{
+  margin-top:20px;max-width:680px;border:3px solid var(--ink);background:#FBF6E9;
+  box-shadow:5px 5px 0 var(--ink);padding:16px 18px;font-size:14px;color:#3A3A38;
+}
+.callout b{font-family:var(--arch);text-transform:uppercase;font-size:12px;letter-spacing:.3px;display:block;margin-bottom:6px;}
+.tier{margin-top:18px;max-width:680px;border:2px solid var(--ink);}
+.tier-row{
+  display:grid;grid-template-columns:150px 1fr;gap:12px;padding:12px 14px;
+  font-size:13.5px;color:#3A3A38;border-bottom:1px solid var(--gray);align-items:baseline;
+}
+.tier-row:last-child{border-bottom:none;}
+.tier-row .n{font-family:var(--mono);font-weight:600;color:var(--green-deep);font-size:12px;}
+@media(max-width:560px){ .tier-row{grid-template-columns:1fr;gap:4px;} }
+.link-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:22px;}
+.btn{
+  display:inline-block;font-family:var(--arch);font-size:14px;font-weight:700;text-transform:uppercase;
+  border:3px solid var(--ink);padding:12px 24px;box-shadow:5px 5px 0 var(--ink);
+  transition:transform .1s, box-shadow .1s;background:#fff;cursor:pointer;color:var(--ink);
+}
+.btn:hover{transform:translate(2px,2px);box-shadow:3px 3px 0 var(--ink);}
+.btn-green{background:var(--green);color:var(--paper);}
+/* footer */
+footer{border-top:3px solid var(--ink);padding:26px 0;}
+.foot-inner{max-width:820px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:12px;color:#4A4A46;}
+@media(max-width:640px){
+  header{padding:48px 0 36px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="index.html">KYG<em>MIN</em></a>
+    <div class="nav-links">
+      <a href="index.html"><span class="tx" data-en="Home" data-kr="홈">Home</span></a>
+      <a href="playhouse/">PLAYHOUSE</a>
+      <a class="on" href="privacy.html"><span class="tx" data-en="Privacy" data-kr="개인정보">Privacy</span></a>
+      <a href="cv.html">CV &#128274;</a>
+    </div>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <span class="sec-tag tx" data-en="KYGMIN.COM — HOW YOUR DATA IS HANDLED" data-kr="KYGMIN.COM — 데이터 처리 방식">KYGMIN.COM — HOW YOUR DATA IS HANDLED</span>
+    <h1><span class="tx" data-en="PRIVACY " data-kr="개인정보 ">PRIVACY </span><span class="box"><span class="tx" data-en="POLICY" data-kr="처리방침">POLICY</span></span></h1>
+    <p class="hero-sub tx" data-en="KYGMIN.COM is a personal website and playground run by an individual, Kyung Min Park. It collects as little as technically possible, and this page explains — plainly — exactly what is and isn't collected." data-kr="KYGMIN.COM은 개인(박경민)이 운영하는 개인 웹사이트이자 플레이그라운드입니다. 기술적으로 가능한 한 최소한의 정보만 수집하며, 이 페이지에서 무엇을 수집하고 무엇을 수집하지 않는지 있는 그대로 설명합니다.">KYGMIN.COM is a personal website and playground run by an individual, Kyung Min Park. It collects as little as technically possible, and this page explains — plainly — exactly what is and isn't collected.</p>
+    <p class="hero-note tx" data-en="EFFECTIVE: 29 JUL 2026 · CONTACT: TAEJO129129@GMAIL.COM" data-kr="시행일: 2026.07.29 · 문의: TAEJO129129@GMAIL.COM">EFFECTIVE: 29 JUL 2026 · CONTACT: TAEJO129129@GMAIL.COM</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="section">
+    <h2 class="tx" data-en="The Short Version" data-kr="요약">The Short Version</h2>
+    <p class="tx" data-en="No ads, no ad trackers, no selling of data — ever. Your camera photos never leave your browser. Games work fully without an account; if you choose to sign in, only your login identity, a nickname you pick, and anonymous game statistics (like rock/paper/scissors move counts) are stored." data-kr="광고 없음, 광고 추적기 없음, 데이터 판매 없음 — 앞으로도 없습니다. 카메라 사진은 절대 브라우저 밖으로 나가지 않습니다. 모든 게임은 계정 없이도 완전히 동작하며, 로그인을 선택한 경우에만 로그인 식별 정보, 직접 정한 닉네임, 익명 게임 통계(가위바위보 선택 횟수 등)가 저장됩니다.">No ads, no ad trackers, no selling of data — ever. Your camera photos never leave your browser. Games work fully without an account; if you choose to sign in, only your login identity, a nickname you pick, and anonymous game statistics (like rock/paper/scissors move counts) are stored.</p>
+  </div>
+
+  <div class="section">
+    <h2 class="tx" data-en="What Each Part of the Site Handles" data-kr="사이트 각 부분의 데이터 처리">What Each Part of the Site Handles</h2>
+    <div class="tier">
+      <div class="tier-row"><span class="n tx" data-en="ANIMAL LOOKALIKE" data-kr="동물상 테스트">ANIMAL LOOKALIKE</span><span class="tx" data-en="Camera and photo analysis runs 100% inside your browser (on-device machine learning). Photos are never uploaded, never stored, and never seen by anyone — the server receives nothing." data-kr="카메라와 사진 분석은 100% 브라우저 안에서(온디바이스 머신러닝) 이뤄집니다. 사진은 업로드되지 않고, 저장되지 않으며, 누구도 볼 수 없습니다 — 서버는 아무것도 받지 않습니다.">Camera and photo analysis runs 100% inside your browser (on-device machine learning). Photos are never uploaded, never stored, and never seen by anyone — the server receives nothing.</span></div>
+      <div class="tier-row"><span class="n">RPS PREDICTOR</span><span class="tx" data-en="Your play pattern (counts of rock/paper/scissors choices and outcomes) is stored in your own browser (localStorage). If you sign in, that same anonymous statistical model is also saved to your account so you can continue on another device. No photos, no free text, nothing else." data-kr="플레이 패턴(가위·바위·보 선택 및 결과 횟수)은 본인 브라우저(localStorage)에 저장됩니다. 로그인하면 동일한 익명 통계 모델이 계정에도 저장되어 다른 기기에서 이어할 수 있습니다. 사진도, 자유 입력 텍스트도, 그 외 어떤 것도 저장하지 않습니다.">Your play pattern (counts of rock/paper/scissors choices and outcomes) is stored in your own browser (localStorage). If you sign in, that same anonymous statistical model is also saved to your account so you can continue on another device. No photos, no free text, nothing else.</span></div>
+      <div class="tier-row"><span class="n tx" data-en="OTHER GAMES" data-kr="기타 게임">OTHER GAMES</span><span class="tx" data-en="Nine Positions and other playground pages run entirely in your browser and store nothing on any server." data-kr="Nine Positions 등 다른 플레이그라운드 페이지는 전부 브라우저 안에서만 동작하며 어떤 서버에도 아무것도 저장하지 않습니다.">Nine Positions and other playground pages run entirely in your browser and store nothing on any server.</span></div>
+      <div class="tier-row"><span class="n tx" data-en="ACCOUNTS" data-kr="계정">ACCOUNTS</span><span class="tx" data-en="Signing in is optional. If you sign in with email, Kakao, or Facebook, the authentication service stores your account identifier, email address (when provided by the login method), sign-in timestamps, and the nickname you choose. Nicknames are publicly visible (e.g. on share cards)." data-kr="로그인은 선택 사항입니다. 이메일, 카카오, 페이스북으로 로그인하면 인증 서비스에 계정 식별자, 이메일 주소(로그인 수단이 제공하는 경우), 로그인 시각, 그리고 직접 정한 닉네임이 저장됩니다. 닉네임은 공개적으로 표시될 수 있습니다(공유 카드 등).">Signing in is optional. If you sign in with email, Kakao, or Facebook, the authentication service stores your account identifier, email address (when provided by the login method), sign-in timestamps, and the nickname you choose. Nicknames are publicly visible (e.g. on share cards).</span></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="tx" data-en="Third-Party Services" data-kr="제3자 서비스">Third-Party Services</h2>
+    <p class="tx" data-en="This site relies on a small number of infrastructure providers. GitHub Pages hosts the site and, like any web host, may keep standard server logs (such as IP addresses) per GitHub's own privacy policy. Supabase provides authentication and database storage; account and game data is stored in Supabase's Seoul (South Korea) region. Kakao and Facebook (Meta) act only as login providers when you choose to use them — the site receives only your basic account identity from them, never your friend lists, posts, or messages. Fonts are loaded from Google Fonts." data-kr="이 사이트는 소수의 인프라 서비스를 사용합니다. GitHub Pages가 사이트를 호스팅하며, 여느 웹 호스트처럼 GitHub의 개인정보처리방침에 따라 표준 서버 로그(IP 주소 등)를 보관할 수 있습니다. Supabase는 인증과 데이터베이스 저장을 제공하며, 계정 및 게임 데이터는 Supabase 서울(대한민국) 리전에 저장됩니다. 카카오와 페이스북(Meta)은 사용자가 선택한 경우에만 로그인 제공자로 사용되며, 사이트는 기본 계정 식별 정보만 전달받습니다 — 친구 목록, 게시물, 메시지는 절대 받지 않습니다. 폰트는 Google Fonts에서 불러옵니다.">This site relies on a small number of infrastructure providers. GitHub Pages hosts the site and, like any web host, may keep standard server logs (such as IP addresses) per GitHub's own privacy policy. Supabase provides authentication and database storage; account and game data is stored in Supabase's Seoul (South Korea) region. Kakao and Facebook (Meta) act only as login providers when you choose to use them — the site receives only your basic account identity from them, never your friend lists, posts, or messages. Fonts are loaded from Google Fonts.</p>
+    <div class="meta-row">
+      <span class="meta-chip">GitHub Pages</span>
+      <span class="meta-chip">Supabase (Seoul)</span>
+      <span class="meta-chip">Kakao Login</span>
+      <span class="meta-chip">Facebook Login</span>
+      <span class="meta-chip">Google Fonts</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="tx" data-en="Cookies &amp; Local Storage" data-kr="쿠키 및 로컬 저장소">Cookies &amp; Local Storage</h2>
+    <p class="tx" data-en="The site sets no advertising or analytics cookies. Browser storage is used for two things only: keeping you signed in (authentication session tokens) and saving game progress locally. Clearing your browser's site data removes both." data-kr="이 사이트는 광고·분석용 쿠키를 사용하지 않습니다. 브라우저 저장소는 딱 두 가지 용도로만 사용됩니다: 로그인 상태 유지(인증 세션 토큰)와 게임 진행 상황의 로컬 저장. 브라우저의 사이트 데이터를 삭제하면 둘 다 제거됩니다.">The site sets no advertising or analytics cookies. Browser storage is used for two things only: keeping you signed in (authentication session tokens) and saving game progress locally. Clearing your browser's site data removes both.</p>
+  </div>
+
+  <div class="section">
+    <h2 class="tx" data-en="Your Rights &amp; Data Deletion" data-kr="이용자의 권리 및 데이터 삭제">Your Rights &amp; Data Deletion</h2>
+    <p class="tx" data-en="You can use everything on this site without an account. If you have an account and want it — and all data tied to it — deleted, email taejo129129@gmail.com from the address linked to your account (or with your nickname), and it will be removed, typically within 7 days. You may also request a copy of the data held about you." data-kr="이 사이트의 모든 기능은 계정 없이 이용할 수 있습니다. 계정과 그에 연결된 모든 데이터의 삭제를 원하시면, 계정에 연결된 이메일 주소로(또는 닉네임을 함께 적어) taejo129129@gmail.com에 메일을 보내주세요. 통상 7일 이내에 삭제됩니다. 보유 중인 본인 데이터의 사본도 요청할 수 있습니다.">You can use everything on this site without an account. If you have an account and want it — and all data tied to it — deleted, email taejo129129@gmail.com from the address linked to your account (or with your nickname), and it will be removed, typically within 7 days. You may also request a copy of the data held about you.</p>
+    <div class="callout">
+      <b class="tx" data-en="Facebook data deletion" data-kr="페이스북 데이터 삭제">Facebook data deletion</b>
+      <span class="tx" data-en="If you signed in with Facebook and want your data deleted, the same applies: email taejo129129@gmail.com and your account and all associated data will be deleted. This page serves as the data deletion instructions for the Facebook Login integration." data-kr="페이스북으로 로그인한 경우에도 동일합니다: taejo129129@gmail.com으로 메일을 보내주시면 계정과 연결된 모든 데이터가 삭제됩니다. 이 페이지는 페이스북 로그인 연동의 데이터 삭제 안내(Data Deletion Instructions)를 겸합니다.">If you signed in with Facebook and want your data deleted, the same applies: email taejo129129@gmail.com and your account and all associated data will be deleted. This page serves as the data deletion instructions for the Facebook Login integration.</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="tx" data-en="Children" data-kr="아동의 개인정보">Children</h2>
+    <p class="tx" data-en="This site does not knowingly collect personal information from children under 14. If you believe a child has created an account, contact the email above and it will be deleted." data-kr="이 사이트는 만 14세 미만 아동의 개인정보를 의도적으로 수집하지 않습니다. 아동이 계정을 만들었다고 판단되면 위 이메일로 연락 주세요. 즉시 삭제하겠습니다.">This site does not knowingly collect personal information from children under 14. If you believe a child has created an account, contact the email above and it will be deleted.</p>
+  </div>
+
+  <div class="section">
+    <h2 class="tx" data-en="Changes to This Policy" data-kr="처리방침의 변경">Changes to This Policy</h2>
+    <p class="tx" data-en="If this policy changes in a meaningful way, the effective date at the top will be updated. Since the site is open source, the full history of this page is publicly visible on GitHub." data-kr="이 방침이 의미 있게 변경되면 상단의 시행일이 갱신됩니다. 이 사이트는 오픈소스이므로, 이 페이지의 전체 변경 이력을 GitHub에서 공개적으로 확인할 수 있습니다.">If this policy changes in a meaningful way, the effective date at the top will be updated. Since the site is open source, the full history of this page is publicly visible on GitHub.</p>
+  </div>
+
+  <div class="link-row">
+    <a class="btn" href="index.html">&larr; <span class="tx" data-en="Back to Home" data-kr="홈으로 돌아가기">Back to Home</span></a>
+  </div>
+
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <span>© KYGMIN.COM</span>
+    <span class="tx" data-en="PRIVACY POLICY · MINIMAL BY DESIGN" data-kr="개인정보처리방침 · 최소 수집 원칙">PRIVACY POLICY · MINIMAL BY DESIGN</span>
+  </div>
+</footer>
+
+<div id="langtoggle" aria-label="Language">
+  <button data-lang="en" class="on">EN</button>
+  <button data-lang="kr">한</button>
+</div>
+
+<script>
+(function(){
+  var POOL = ("ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎㅏㅑㅓㅕㅗㅛㅜㅠㅡㅣ"
+    + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-·").split("");
+  function esc(c){return c==="&"?"&amp;":c==="<"?"&lt;":c===">"?"&gt;":c;}
+
+  function Scramble(el){ this.el=el; this.raf=null; this.frame=this.frame.bind(this); }
+  Scramble.prototype.set=function(txt){
+    var old = this.el.dataset.plain!==undefined ? this.el.dataset.plain : this.el.textContent;
+    var len=Math.max(old.length, txt.length);
+    this.q=[];
+    for(var i=0;i<len;i++){
+      var from=old[i]||"", to=txt[i]||"";
+      var start=Math.floor(Math.random()*20);
+      var end=start+Math.floor(Math.random()*25)+12;
+      this.q.push({from:from,to:to,start:start,end:end,ch:null});
+    }
+    if(this.raf) cancelAnimationFrame(this.raf);
+    this.f=0; this.txt=txt; this.frame();
+  };
+  Scramble.prototype.frame=function(){
+    var out="", done=0;
+    for(var i=0;i<this.q.length;i++){
+      var it=this.q[i];
+      if(this.f>=it.end){ done++; out+=esc(it.to); }
+      else if(this.f>=it.start){
+        if(!it.ch || Math.random()<0.3){ it.ch=POOL[Math.floor(Math.random()*POOL.length)]; }
+        out+='<span class="scr">'+esc(it.ch)+'</span>';
+      } else out+=esc(it.from);
+    }
+    this.el.innerHTML=out;
+    if(done===this.q.length){ this.el.dataset.plain=this.txt; }
+    else { this.f++; this.raf=requestAnimationFrame(this.frame); }
+  };
+
+  var els=[].slice.call(document.querySelectorAll('.tx'));
+  els.forEach(function(el){ el.dataset.plain=el.textContent; el._s=new Scramble(el); });
+  var cur='en';
+  function setLang(lang){
+    if(lang===cur) return; cur=lang;
+    document.documentElement.lang = (lang==='kr'?'ko':'en');
+    var btns=document.querySelectorAll('#langtoggle button');
+    for(var i=0;i<btns.length;i++){ btns[i].classList.toggle('on', btns[i].dataset.lang===lang); }
+    els.forEach(function(el){ var t=el.dataset[lang]; if(t!==undefined) el._s.set(t); });
+  }
+  document.getElementById('langtoggle').addEventListener('click', function(e){
+    var b=e.target.closest('button'); if(b) setLang(b.dataset.lang);
+  });
+})();
+</script>
+
+</body>
+</html>
