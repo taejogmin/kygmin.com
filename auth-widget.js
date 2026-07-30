@@ -139,6 +139,7 @@
         s.onload=res; s.onerror=rej; document.head.appendChild(s);
       });
       auth.client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      window.KYG_AUTH = auth; // 게임 페이지(대국 로깅 등)에서 재사용
     }catch(e){ console.warn('auth widget: supabase load failed', e); return; }
 
     texts();
