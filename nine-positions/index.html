@@ -259,6 +259,25 @@ main{padding:36px 0 88px;}
 .reveal .invmark{color:var(--red);font-weight:600;}
 #again{margin-top:22px;}
 
+/* track record */
+.record{margin-top:48px;border:3px solid var(--ink);background:#fff;box-shadow:6px 6px 0 var(--ink);padding:20px 22px;}
+.record h2{
+  font-family:var(--arch);font-weight:900;font-size:15px;text-transform:uppercase;
+  border-bottom:3px solid var(--ink);padding-bottom:8px;margin-bottom:14px;
+}
+.record .rec-note{font-family:var(--mono);font-size:12px;color:#6B6B67;line-height:1.7;}
+.record .rec-scroll{overflow-x:auto;}
+.record table{border-collapse:collapse;width:100%;min-width:420px;font-family:var(--mono);font-size:12px;}
+.record th,.record td{border-bottom:1px solid var(--gray);padding:7px 8px;text-align:center;}
+.record th{font-family:var(--arch);font-size:11px;text-transform:uppercase;border-bottom:3px solid var(--ink);background:#EFEFEA;}
+.record th:first-child,.record td:first-child{text-align:left;}
+.record td:first-child{font-family:var(--arch);font-weight:700;font-size:11.5px;text-transform:uppercase;}
+.record .w{color:var(--green-deep);font-weight:600;}
+.record .l{color:var(--red);font-weight:600;}
+.record .rate{font-weight:700;}
+.record tr.tot td{background:#EFEFEA;border-top:3px solid var(--ink);border-bottom:none;font-weight:700;}
+.record .rec-foot{font-family:var(--mono);font-size:11px;color:#8A8A85;margin-top:10px;}
+
 /* how to play */
 .rules{margin-top:56px;}
 .rules h2{
@@ -411,6 +430,12 @@ footer{border-top:3px solid var(--ink);padding:26px 0;}
       </div>
     </section>
 
+    <!-- TRACK RECORD -->
+    <div class="record">
+      <h2 class="tx" data-en="Your Track Record" data-kr="내 전적">Your Track Record</h2>
+      <div id="recBody"></div>
+    </div>
+
     <!-- RULES -->
     <div class="rules">
       <h2 class="tx" data-en="Full Rules" data-kr="전체 규칙">Full Rules</h2>
@@ -530,6 +555,16 @@ const MSG = {
   finalScore:{en:"Final P&L ", kr:"최종 P&L "},
   win:{en:"WIN",kr:"승"}, lose:{en:"LOSE",kr:"패"}, draw:{en:"DRAW",kr:"무"},
   mktNormal:{en:"–",kr:"–"}, mktInv:{en:"INV",kr:"인버스"}, mktCancel:{en:"INVx2",kr:"상쇄"},
+  recSignIn:{en:"Sign in (bottom left) to keep a permanent record of every game you play against the AI desk — win/loss/draw, broken down by difficulty.",
+             kr:"좌측 하단에서 로그인하면 AI 데스크와의 모든 대국 전적이 영구 기록됩니다 — 난이도별 승/패/무."},
+  recLoading:{en:"Loading your record…", kr:"전적을 불러오는 중…"},
+  recEmpty:{en:"No games logged yet. Open the market and your record starts here.",
+            kr:"아직 기록된 대국이 없어요. 장을 열면 여기서부터 전적이 쌓입니다."},
+  recDiff:{en:"Desk",kr:"상대"}, recGames:{en:"Games",kr:"판"},
+  recW:{en:"W",kr:"승"}, recL:{en:"L",kr:"패"}, recD:{en:"D",kr:"무"},
+  recRate:{en:"Win rate",kr:"승률"}, recTotal:{en:"TOTAL",kr:"합계"},
+  recFoot:{en:"Win rate counts wins over all games played, draws included.",
+           kr:"승률은 무승부를 포함한 전체 판수 대비 승수입니다."},
 };
 function m(k){ return MSG[k][LANG]; }
 
@@ -895,9 +930,57 @@ function logGame(){
     }, r));
     A.client.from('np_games').insert(rows).then(function(res){
       if(res && res.error) console.warn('np log rejected', res.error.message);
+      else if(uid) loadRecord(); // 방금 끝난 판을 전적에 반영
     });
   }catch(e){ console.warn('np log failed', e); }
 }
+
+// ── 내 전적 (난이도별 승/패/무) ──
+// np_games 는 쓰기 전용이라 집계는 security definer 함수 np_my_record() 로 받는다.
+let REC = null; // null = 아직 안 불러옴, {} = 기록 없음
+async function loadRecord(){
+  const A=window.KYG_AUTH;
+  if(!A || !A.client || !A.user){ REC=null; renderRecord(); return; }
+  try{
+    const r=await A.client.rpc('np_my_record');
+    if(r.error) throw r.error;
+    const map={};
+    (r.data||[]).forEach(function(row){ map[row.difficulty]=row; });
+    REC=map;
+  }catch(e){ console.warn('record load failed', e); REC={}; }
+  renderRecord();
+}
+function renderRecord(){
+  const el=$('recBody'); if(!el) return;
+  const A=window.KYG_AUTH;
+  if(!A || !A.user){ el.innerHTML='<p class="rec-note">'+m('recSignIn')+'</p>'; return; }
+  if(REC===null){ el.innerHTML='<p class="rec-note">'+m('recLoading')+'</p>'; return; }
+  const order=['easy','normal','hard'].filter(function(d){ return REC[d] && REC[d].games>0; });
+  if(!order.length){ el.innerHTML='<p class="rec-note">'+m('recEmpty')+'</p>'; return; }
+  const tot={games:0,wins:0,losses:0,draws:0};
+  const body=order.map(function(d){
+    const r=REC[d];
+    tot.games+=r.games; tot.wins+=r.wins; tot.losses+=r.losses; tot.draws+=r.draws;
+    return '<tr><td>'+AI_NAMES[d][LANG]+'</td><td>'+r.games+'</td>'
+      + '<td class="w">'+r.wins+'</td><td class="l">'+r.losses+'</td><td>'+r.draws+'</td>'
+      + '<td class="rate">'+Math.round(r.wins/r.games*100)+'%</td></tr>';
+  }).join('');
+  const totRow = order.length>1
+    ? '<tr class="tot"><td>'+m('recTotal')+'</td><td>'+tot.games+'</td>'
+      + '<td class="w">'+tot.wins+'</td><td class="l">'+tot.losses+'</td><td>'+tot.draws+'</td>'
+      + '<td class="rate">'+Math.round(tot.wins/tot.games*100)+'%</td></tr>'
+    : '';
+  el.innerHTML='<div class="rec-scroll"><table><thead><tr>'
+    + '<th>'+m('recDiff')+'</th><th>'+m('recGames')+'</th><th>'+m('recW')+'</th>'
+    + '<th>'+m('recL')+'</th><th>'+m('recD')+'</th><th>'+m('recRate')+'</th>'
+    + '</tr></thead><tbody>'+body+totRow+'</tbody></table></div>'
+    + '<p class="rec-foot">'+m('recFoot')+'</p>';
+}
+window.KYG_AUTH_LISTENERS = window.KYG_AUTH_LISTENERS || [];
+window.KYG_AUTH_LISTENERS.push(function(user){
+  REC=null; renderRecord();
+  if(user) loadRecord();
+});
 
 function gameOver(){
   S.phase='over';
@@ -959,10 +1042,12 @@ $('again').addEventListener('click', ()=>{
 window.APP_LANG_LISTENERS.push(function(lang){
   LANG=lang;
   renderLadder();
+  renderRecord();
   if(S){ renderAll(); if(S.phase==='over') gameOver(); }
 });
 
 renderLadder();
+renderRecord();
 })();
 </script>
 <script src="/auth-widget.js" defer></script>
