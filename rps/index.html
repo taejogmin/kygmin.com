@@ -80,18 +80,7 @@ h1 .box{background:var(--ink);color:var(--paper);padding:0 12px;display:inline-b
 /* ── Main ── */
 main{padding:36px 0 88px;}
 
-/* account bar */
-.account-bar{
-  display:none;justify-content:flex-end;align-items:center;gap:10px;flex-wrap:wrap;
-  margin-bottom:22px;font-family:var(--mono);font-size:12px;color:#4A4A46;
-}
-.acct-btn{
-  font-family:var(--arch);font-size:12px;font-weight:700;text-transform:uppercase;
-  border:2px solid var(--ink);padding:7px 14px;background:#fff;cursor:pointer;
-  box-shadow:3px 3px 0 var(--ink);transition:transform .1s, box-shadow .1s;
-}
-.acct-btn:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
-.acct-btn.g{background:var(--green);color:var(--paper);}
+/* 계정 UI는 사이트 공용 /auth-widget.js (좌측 하단 칩)가 담당한다 */
 
 /* game board */
 .board{border:3px solid var(--ink);background:#fff;box-shadow:6px 6px 0 var(--ink);}
@@ -253,13 +242,6 @@ footer{border-top:3px solid var(--ink);padding:26px 0;}
 <main>
   <div class="wrap">
 
-    <!-- 계정 바 (Supabase 설정 시에만 표시) -->
-    <div class="account-bar" id="accountBar">
-      <span id="acctStatus"></span>
-      <button class="acct-btn" id="nickBtn" style="display:none;"></button>
-      <button class="acct-btn g" id="authBtn"></button>
-    </div>
-
     <div class="board">
       <div class="status-bar">
         <span class="rounds" id="roundLabel">ROUND 1</span>
@@ -342,36 +324,7 @@ footer{border-top:3px solid var(--ink);padding:26px 0;}
   </div>
 </footer>
 
-<!-- 로그인 모달 -->
-<div class="modal-back" id="authModal">
-  <div class="modal">
-    <h3 class="tx" data-en="Sign in" data-kr="로그인">Sign in</h3>
-    <p class="tx" data-en="Save your progress and continue on any device. Optional — everything works without an account." data-kr="진행 상황을 저장하고 어느 기기에서든 이어하세요. 선택 사항이에요 — 계정 없이도 모든 기능이 동작합니다.">Save your progress and continue on any device. Optional — everything works without an account.</p>
-    <input id="emailInput" type="email" autocomplete="email" />
-    <div class="msg" id="authMsg"></div>
-    <div class="row">
-      <button class="btn btn-green" id="magicBtn" style="font-size:12px;padding:10px 16px;"><span class="tx" data-en="Email me a login link" data-kr="이메일 로그인 링크 받기">Email me a login link</span></button>
-      <button class="btn" id="kakaoBtn" style="font-size:12px;padding:10px 16px;background:#FEE500;color:#191919;">Kakao</button>
-      <button class="btn" id="facebookBtn" style="font-size:12px;padding:10px 16px;background:#1877F2;color:#fff;">Facebook</button>
-      <button class="btn" id="authCancel" style="font-size:12px;padding:10px 16px;"><span class="tx" data-en="Close" data-kr="닫기">Close</span></button>
-    </div>
-  </div>
-</div>
-
-<!-- 닉네임 모달 -->
-<div class="modal-back" id="nickModal">
-  <div class="modal">
-    <h3 class="tx" data-en="Pick your nickname" data-kr="닉네임 설정">Pick your nickname</h3>
-    <p class="tx" data-en="Shown on your share cards and future leaderboards. 2–16 characters: Korean, letters, numbers, underscore." data-kr="공유 카드와 향후 리더보드에 표시됩니다. 2~16자: 한글, 영문, 숫자, 밑줄.">Shown on your share cards and future leaderboards. 2–16 characters: Korean, letters, numbers, underscore.</p>
-    <input id="nickInput" type="text" maxlength="16" autocomplete="off" />
-    <div class="msg" id="nickMsg"></div>
-    <div class="row">
-      <button class="btn" id="nickCheck" style="font-size:12px;padding:10px 16px;"><span class="tx" data-en="Check availability" data-kr="중복 확인">Check availability</span></button>
-      <button class="btn btn-green" id="nickSave" style="font-size:12px;padding:10px 16px;"><span class="tx" data-en="Save" data-kr="저장">Save</span></button>
-      <button class="btn" id="nickCancel" style="font-size:12px;padding:10px 16px;"><span class="tx" data-en="Later" data-kr="나중에">Later</span></button>
-    </div>
-  </div>
-</div>
+<!-- 로그인·닉네임 모달은 사이트 공용 /auth-widget.js 가 주입한다 -->
 
 <div id="langtoggle" aria-label="Language">
   <button data-lang="en" class="on">EN</button>
@@ -438,10 +391,8 @@ window.APP_LANG_LISTENERS = [];
 "use strict";
 let LANG = window.APP_LANG || 'en';
 
-/* ══════════ Supabase 설정 (배포 시 채움) ══════════
-   비어 있으면 로그인 UI가 숨겨지고 게스트 모드(localStorage)로만 동작한다.
-   필요한 테이블/RLS SQL은 프로젝트 스펙 문서 참고. */
-const SUPABASE_CONFIG = { url: "https://zcytvhniwqqrhhqepemy.supabase.co", anonKey: "sb_publishable_YvweaCTk_QXhzDkA4xIeYw_RQ1hJT3A" };
+/* 로그인/닉네임 UI와 Supabase 클라이언트는 사이트 공용 /auth-widget.js 가 담당한다.
+   이 페이지는 window.KYG_AUTH_LISTENERS 로 로그인 상태만 받아 모델 동기화에 쓴다. */
 
 // ── 언어 문자열 ──
 const T = {
@@ -887,7 +838,7 @@ $('resetBtn').addEventListener('click', ()=>{
   startRound();
 });
 
-// ── Supabase (설정 시에만 활성) ──
+// ── 클라우드 동기화 (로그인 UI는 /auth-widget.js) ──
 const auth={ client:null, user:null, nickname:null, dirty:0 };
 function cloudSaveDebounced(){
   if(!auth.client || !auth.user) return;
@@ -912,134 +863,37 @@ function mergeModels(a,b){ // 카운트 원소별 합산 (a에 b를 더함)
   // EMA/이력은 로컬(더 최근) 쪽 유지
   return a;
 }
-function nickValid(s){ return /^[A-Za-z0-9가-힣_]{2,16}$/.test(s); }
-
-async function initSupabase(){
-  if(!SUPABASE_CONFIG.url || !SUPABASE_CONFIG.anonKey) return; // 게스트 모드
+// 공용 위젯이 로그인 상태를 알려준다 (위젯 로드 전에 push해도 안전)
+window.KYG_AUTH_LISTENERS = window.KYG_AUTH_LISTENERS || [];
+window.KYG_AUTH_LISTENERS.push(async function(user, nickname, client){
+  const prevId = auth.user ? auth.user.id : null;
+  const nextId = user ? user.id : null;
+  auth.client=client; auth.nickname=nickname; auth.user=user;
+  if(!user || prevId===nextId) return; // 토큰 갱신·닉네임 변경 시 재병합 방지
   try{
-    await new Promise((res,rej)=>{
-      const s=document.createElement('script');
-      s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';
-      s.onload=res; s.onerror=rej; document.head.appendChild(s);
-    });
-    auth.client=window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey);
-  }catch(e){ console.warn('supabase load failed', e); return; }
-  $('accountBar').style.display='flex';
-  renderAcct();
-  auth.client.auth.onAuthStateChange(async (_ev, session)=>{
-    auth.user=session? session.user : null;
-    if(auth.user){
-      // 프로필 로드
-      const {data:prof}=await auth.client.from('profiles').select('nickname').eq('user_id',auth.user.id).maybeSingle();
-      auth.nickname=prof? prof.nickname : null;
-      // 모델 로드 + 병합
-      const {data:row}=await auth.client.from('rps_profiles').select('model').eq('user_id',auth.user.id).maybeSingle();
-      if(row && row.model){
-        M=mergeModels(row.model, M); // DB 기반 + 로컬 게스트 진행분 합산
-        localStorage.removeItem(LS_KEY);
-        saveLocal();
-      }
-      await cloudSaveNow();
-      renderStats(); drawGraph(); renderAnalysis(false); startRound();
-      if(!auth.nickname) openNick();
+    const {data:row}=await client.from('rps_profiles').select('model').eq('user_id',user.id).maybeSingle();
+    if(row && row.model){
+      M=mergeModels(row.model, M); // DB 기반 + 로컬 게스트 진행분 합산
+      localStorage.removeItem(LS_KEY);
+      saveLocal();
     }
-    renderAcct();
-  });
-}
-function renderAcct(){
-  if(!auth.client) return;
-  const st=$('acctStatus'), ab=$('authBtn'), nb=$('nickBtn');
-  if(auth.user){
-    st.textContent = auth.nickname ? auth.nickname : (auth.user.email||'');
-    ab.textContent = t('signOut');
-    nb.style.display='inline-block';
-    nb.textContent = auth.nickname ? '✎ '+auth.nickname : t('setNick');
-  } else {
-    st.textContent = t('guest');
-    ab.textContent = t('signIn');
-    nb.style.display='none';
-  }
-}
-$('authBtn').addEventListener('click', async ()=>{
-  if(!auth.client) return;
-  if(auth.user){ await auth.client.auth.signOut(); auth.user=null; auth.nickname=null; renderAcct(); return; }
-  $('authModal').classList.add('open');
-  $('emailInput').placeholder=t('emailPh');
-});
-$('authCancel').addEventListener('click', ()=>$('authModal').classList.remove('open'));
-$('magicBtn').addEventListener('click', async ()=>{
-  const email=$('emailInput').value.trim();
-  const msg=$('authMsg');
-  if(!email){ msg.className='msg err'; msg.textContent=t('netErr'); return; }
-  try{
-    const {error}=await auth.client.auth.signInWithOtp({email, options:{emailRedirectTo:location.href}});
-    if(error) throw error;
-    msg.className='msg ok'; msg.textContent=t('magicSent');
-  }catch(e){ msg.className='msg err'; msg.textContent=e.message||t('netErr'); }
-});
-$('kakaoBtn').addEventListener('click', async ()=>{
-  try{
-    // Kakao 앱에 account_email/profile_image 동의항목이 없으므로 scope를 profile_nickname으로 제한
-    const {data, error}=await auth.client.auth.signInWithOAuth({provider:'kakao', options:{redirectTo:location.href, skipBrowserRedirect:true}});
-    if(error) throw error;
-    const u=new URL(data.url);
-    u.searchParams.set('scope','profile_nickname');
-    location.href=u.toString();
-  }
-  catch(e){ $('authMsg').className='msg err'; $('authMsg').textContent=e.message||t('netErr'); }
-});
-$('facebookBtn').addEventListener('click', async ()=>{
-  try{ await auth.client.auth.signInWithOAuth({provider:'facebook', options:{redirectTo:location.href}}); }
-  catch(e){ $('authMsg').className='msg err'; $('authMsg').textContent=e.message||t('netErr'); }
-});
-// 닉네임
-function openNick(){
-  $('nickModal').classList.add('open');
-  $('nickInput').value=auth.nickname||'';
-  $('nickInput').placeholder=t('nickPh');
-  $('nickMsg').textContent='';
-}
-$('nickBtn').addEventListener('click', openNick);
-$('nickCancel').addEventListener('click', ()=>$('nickModal').classList.remove('open'));
-$('nickCheck').addEventListener('click', async ()=>{
-  const v=$('nickInput').value.trim(); const msg=$('nickMsg');
-  if(!nickValid(v)){ msg.className='msg err'; msg.textContent=t('nickBad'); return; }
-  msg.className='msg'; msg.textContent=t('needCheck');
-  try{
-    const {data}=await auth.client.from('profiles').select('user_id').ilike('nickname', v).maybeSingle();
-    if(data && data.user_id!==auth.user.id){ msg.className='msg err'; msg.textContent=t('nickTaken'); }
-    else { msg.className='msg ok'; msg.textContent=t('nickFree'); }
-  }catch(e){ msg.className='msg err'; msg.textContent=t('netErr'); }
-});
-$('nickSave').addEventListener('click', async ()=>{
-  const v=$('nickInput').value.trim(); const msg=$('nickMsg');
-  if(!nickValid(v)){ msg.className='msg err'; msg.textContent=t('nickBad'); return; }
-  try{
-    const {error}=await auth.client.from('profiles').upsert({user_id:auth.user.id, nickname:v});
-    if(error){
-      // 23505 = unique_violation (lower(nickname) 유니크 인덱스가 경합까지 차단)
-      if(error.code==='23505'){ msg.className='msg err'; msg.textContent=t('nickTaken'); return; }
-      throw error;
-    }
-    auth.nickname=v;
-    msg.className='msg ok'; msg.textContent=t('nickSaved');
-    renderAcct();
-    setTimeout(()=>$('nickModal').classList.remove('open'), 600);
-  }catch(e){ msg.className='msg err'; msg.textContent=e.message||t('netErr'); }
+    await cloudSaveNow();
+    renderStats(); drawGraph(); renderAnalysis(false); startRound();
+  }catch(e){ console.warn('cloud model sync failed', e); }
 });
 
 // ── 이벤트/시작 ──
 picks.forEach(b=>b.addEventListener('click', ()=>play(b.dataset.m)));
 window.APP_LANG_LISTENERS.push(function(lang){
   LANG=lang;
-  renderStats(); drawGraph(); renderAnalysis(false); renderAcct();
+  renderStats(); drawGraph(); renderAnalysis(false);
   $('roundLabel').textContent=t('round')+(M.stats.rounds+1);
   if(commit) $('commitText').textContent=t('commitLocked')+commit.hash.slice(0,12)+'…';
 });
 renderStats(); drawGraph(); renderAnalysis(false);
 startRound();
-initSupabase();
 })();
 </script>
+<script src="/auth-widget.js" defer></script>
 </body>
 </html>
