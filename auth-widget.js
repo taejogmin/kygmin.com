@@ -2,7 +2,12 @@
    - Supabase 세션은 localStorage(sb-<ref>-auth-token)에 저장되므로
      같은 도메인의 모든 페이지에서 자동 공유된다 (rps 포함).
    - 페이지 요구사항: 없음. window.APP_LANG / APP_LANG_LISTENERS 가 있으면 EN/KR 연동.
-   - rps/index.html 은 자체 계정바를 갖고 있으므로 이 스크립트를 로드하지 않는다. */
+   - 사이트 전체가 이 위젯 하나로 로그인 UI를 통일한다 (rps 포함).
+   - 게임 페이지 연동:
+       window.KYG_AUTH = {client, user, nickname}      ← Supabase 클라이언트 재사용
+       window.KYG_AUTH_LISTENERS.push(fn(user, nickname, client))
+       위젯 로드 전에 배열을 만들어 push해도 안전하다:
+       window.KYG_AUTH_LISTENERS = window.KYG_AUTH_LISTENERS || []; */
 (function(){
   'use strict';
   var SUPABASE_URL = 'https://zcytvhniwqqrhhqepemy.supabase.co';
@@ -100,6 +105,16 @@
   function $(id){ return document.getElementById(id); }
   var auth = { client:null, user:null, nickname:null };
 
+  // 게임 페이지가 로그인 상태 변화에 반응할 수 있게 하는 훅
+  window.KYG_AUTH_LISTENERS = window.KYG_AUTH_LISTENERS || [];
+  function notify(){
+    var ls = window.KYG_AUTH_LISTENERS;
+    for(var i=0;i<ls.length;i++){
+      try{ ls[i](auth.user, auth.nickname, auth.client); }
+      catch(e){ console.warn('auth listener failed', e); }
+    }
+  }
+
   function texts(){
     $('kwAuthTitle').textContent=t('title'); $('kwAuthSub').textContent=t('sub');
     $('kwEmail').placeholder=t('emailPh'); $('kwMagic').textContent=t('magic'); $('kwAuthClose').textContent=t('close');
@@ -157,6 +172,7 @@
         auth.nickname=null;
       }
       renderChip();
+      notify();
     });
 
     // ── 이벤트 ──
@@ -215,7 +231,7 @@
         }
         auth.nickname=v;
         msg.className='kw-msg ok'; msg.textContent=t('nickSaved');
-        renderChip();
+        renderChip(); notify();
         setTimeout(function(){ $('kwNickModal').classList.remove('open'); }, 600);
       }catch(e){ msg.className='kw-msg err'; msg.textContent=e.message||t('err'); }
     });
