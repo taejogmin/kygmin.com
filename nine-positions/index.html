@@ -545,9 +545,32 @@ function duelInv(a,b,inverted){ const r=duel(a,b); return inverted? flipRes(r):r
 
 // ── 게임 상태 ──
 let S = null;
+// 게임마다 다른 "성격"을 부여해 패턴 읽기를 어렵게 한다 (혼합 전략의 값싼 근사)
+function makePersona(diff){
+  const j=(base,spread)=>base+(Math.random()*2-1)*spread;
+  if(diff==='hard') return {
+    temp: Math.max(0.16, j(0.26,0.08)),      // softmax 온도 (기존 0.22 고정)
+    invMargin: Math.max(0.08, j(0.15,0.05)), // 인버스 EV 마진 (기존 0.18 고정)
+    invMix: Math.max(0, j(0.10,0.04)),       // 마진 무시하고 느슨하게 인버스 쓰는 확률
+    t3: j(0.67,0.06), t2: j(0.57,0.06),      // 레버리지 임계 (기존 0.70/0.60 고정)
+    bluffLev: Math.max(0, j(0.12,0.05)),     // 약한 패 레버리지 블러핑 (기존 0.10)
+    optPenalty: Math.max(0.04, j(0.12,0.04)) // 1·9 옵션 가치 보존
+  };
+  return { // normal
+    temp: Math.max(0.3, j(0.5,0.12)),
+    invMargin: Math.max(0.15, j(0.27,0.06)),
+    invMix: Math.max(0, j(0.05,0.03)),
+    t3: j(0.78,0.06), t2: j(0.68,0.06),
+    bluffLev: Math.max(0, j(0.05,0.03)),
+    optPenalty: 0
+  };
+}
 function newState(diff, potRule){
   return {
     diff, potRule, pot:0, session:1,
+    persona: makePersona(diff),
+    gameId: (window.crypto&&crypto.randomUUID)? crypto.randomUUID() : 'g'+Date.now()+'-'+Math.random().toString(16).slice(2),
+    logRows: [], logged:false,
     myHand:[1,2,3,4,5,6,7,8,9], aiHand:[1,2,3,4,5,6,7,8,9],
     myScore:0, aiScore:0,
     myTok:{2:true,3:true,inv:true}, aiTok:{2:true,3:true,inv:true},
@@ -613,12 +636,12 @@ function cardEVs(p, inverted){
       if(r==='W'){ ev+=p[v]; winP+=p[v]; }
       else if(r==='L'){ ev-=p[v]; loseP+=p[v]; }
     }
-    if(S.diff==='hard' && (c===1||c===9)) ev -= 0.12; // 1·9 옵션 가치 보존
+    if(S.persona.optPenalty && (c===1||c===9)) ev -= S.persona.optPenalty; // 1·9 옵션 가치 보존
     return {c, ev, winP, loseP};
   });
 }
 function softmaxPick(evs){
-  const temp = S.diff==='hard' ? 0.22 : 0.5;
+  const temp = S.persona.temp;
   const mx=Math.max(...evs.map(e=>e.ev));
   const weights=evs.map(e=>Math.exp((e.ev-mx)/temp));
   let r=Math.random()*weights.reduce((a,b)=>a+b,0);
@@ -644,23 +667,26 @@ function aiDecide(asFollower, pLev, pInv){
   const evN = cardEVs(p, !!pInv);                 // AI 인버스 안 씀
   const bestN = evN.reduce((a,b)=>a.ev>b.ev?a:b);
   let useInv=false, evSet=evN;
+  const P = S.persona;
   if(canTok && S.aiTok.inv){
     const evI = cardEVs(p, !pInv);                // AI 인버스 씀 (XOR 반전)
     const bestI = evI.reduce((a,b)=>a.ev>b.ev?a:b);
-    const margin = S.diff==='hard' ? 0.18 : 0.30;
+    // 판마다·결정마다 흔들리는 마진 + 가끔은 마진을 거의 무시(혼합 전략)
+    const loose = Math.random() < P.invMix;
+    const margin = loose ? 0.02 : Math.max(0.04, P.invMargin + (Math.random()*2-1)*0.05);
     if(bestI.ev > bestN.ev + margin){ useInv=true; evSet=evI; }
   }
   const pick = softmaxPick(evSet);
-  // 레버리지: 선택된 시장 방향에서의 승률로 결정
+  // 레버리지: 선택된 시장 방향에서의 승률로 결정 (임계값도 매 결정 지터)
   let lev=0;
   if(canTok){
     const avail=[]; if(S.aiTok[3]) avail.push(3); if(S.aiTok[2]) avail.push(2);
     if(avail.length){
-      const t3 = S.diff==='hard'?0.70:0.80;
-      const t2 = S.diff==='hard'?0.60:0.70;
+      const t3 = Math.min(0.95, Math.max(0.5, P.t3 + (Math.random()*2-1)*0.05));
+      const t2 = Math.min(0.9,  Math.max(0.4, P.t2 + (Math.random()*2-1)*0.05));
       if(avail.includes(3) && pick.winP>=t3) lev=3;
       else if(avail.includes(2) && pick.winP>=t2) lev=2;
-      else if(S.diff==='hard' && !asFollower && avail.includes(2) && pick.winP<0.45 && Math.random()<0.10) lev=2; // 블러핑
+      else if(!asFollower && pick.winP<0.5 && Math.random()<P.bluffLev) lev=avail[avail.length-1]; // 약패 블러핑 (2x 우선)
     }
   }
   return {card:pick.c, lev, inv:useInv};
@@ -798,6 +824,7 @@ function commit(){
 }
 
 function resolve(){
+  const leadYou = S.leader==='you'; // 세션 시작 시점의 선공 (아래에서 leader가 바뀌기 전에 캡처)
   const flips=(S.myInv?1:0)+(S.aiInv?1:0);
   const inverted = flips===1;
   const res = duelInv(S.myCard, S.aiCard, inverted); // 내 기준
@@ -826,6 +853,10 @@ function resolve(){
   S.history.push({sess:S.session, my:S.myCard, ai:S.aiCard, stake:(drawn?0:stake), res,
                   inverted:(drawn?false:inverted), cancelled:(drawn?false:flips===2)});
   S.aiMemory.push({ai:S.aiCard, res: res==='D'?'D':(res==='W'?'L':'W'), inv:(drawn?inverted:inverted)});
+  S.logRows.push({ session_no:S.session, player_lead:leadYou,
+    player_card:S.myCard, ai_card:S.aiCard,
+    player_lev:S.myLev||0, ai_lev:S.aiLev||0, player_inv:!!S.myInv, ai_inv:!!S.aiInv,
+    result:res, pnl:(res==='W'?stake:res==='L'?-stake:0), pot_after:(S.potRule?S.pot:0) });
   S.myHand=S.myHand.filter(n=>n!==S.myCard);
   S.aiHand=S.aiHand.filter(n=>n!==S.aiCard);
   S.phase='resolved';
@@ -839,8 +870,38 @@ function nextSession(){
   startSession();
 }
 
+// ── 대국 로그 (AI 개선용 · 익명 게임 기록만) ──
+function guestId(){
+  try{
+    let g=localStorage.getItem('kyg_guest_id');
+    if(!g){
+      g=(window.crypto&&crypto.randomUUID)? crypto.randomUUID() : 'g'+Date.now()+'-'+Math.random().toString(16).slice(2);
+      localStorage.setItem('kyg_guest_id', g);
+    }
+    return g;
+  }catch(e){ return null; }
+}
+function logGame(){
+  try{
+    if(S.logged) return;
+    const A=window.KYG_AUTH;
+    if(!A || !A.client || !S.logRows.length) return;
+    S.logged=true;
+    const uid = A.user ? A.user.id : null;
+    const rows = S.logRows.map(r=>Object.assign({
+      game_id:S.gameId, user_id:uid, guest_id:(uid?null:guestId()),
+      difficulty:S.diff, pot_rule:!!S.potRule,
+      final_player:S.myScore, final_ai:S.aiScore
+    }, r));
+    A.client.from('np_games').insert(rows).then(function(res){
+      if(res && res.error) console.warn('np log rejected', res.error.message);
+    });
+  }catch(e){ console.warn('np log failed', e); }
+}
+
 function gameOver(){
   S.phase='over';
+  logGame();
   const v=$('verdict');
   let cls,txt;
   if(S.myScore>S.aiScore){ cls='win'; txt=m('finalWin'); }
