@@ -81,14 +81,27 @@ h1 .box{background:var(--ink);color:var(--paper);padding:0 12px;display:inline-b
 main{padding:36px 0 88px;}
 
 /* tier ladder */
-.ladder{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;}
+.ladder{margin-bottom:26px;}
+.ladder-row{display:flex;flex-wrap:wrap;align-items:flex-start;gap:6px;}
+.ladder-row + .ladder-row{margin-top:10px;}
+.ladder .lbl{
+  font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:1.2px;
+  color:#6B6B67;align-self:center;min-width:46px;
+}
 .ladder .rung{
   font-family:var(--mono);font-size:11px;font-weight:600;
   border:2px solid var(--ink);padding:3px 8px;background:#fff;
+  min-width:34px;text-align:center;
 }
 .ladder .rung .risk{display:block;height:3px;margin-top:3px;}
-.ladder-note{font-family:var(--mono);font-size:11px;color:#6B6B67;margin-bottom:26px;}
-.ladder-note b{color:var(--green-deep);}
+.ladder .cmp{
+  font-family:var(--mono);font-size:11px;font-weight:700;color:#B5B5B0;
+  align-self:center;margin:0 -1px;
+}
+/* 무늬 서열: 글리프를 카드와 같은 크기·색으로 보여준다 */
+.ladder .rung.st{padding:2px 8px 3px;}
+.ladder .rung.st .gl{display:block;font-size:17px;line-height:1.15;font-family:var(--sans);}
+.ladder .rung.st.red .gl{color:var(--red);}
 
 /* setup */
 #setup .panel{
@@ -378,7 +391,6 @@ footer{border-top:3px solid var(--ink);padding:26px 0;}
   <div class="wrap">
 
     <div class="ladder" id="ladder"></div>
-    <p class="ladder-note"><span class="tx" data-en="CARD LADDER — 2 is weakest, then 3…A, then the two jokers. Suits break every tie: " data-kr="카드 서열 — 2가 가장 약하고, 3…A, 그 위에 조커 두 장. 같은 숫자는 무늬로 갈립니다: ">CARD LADDER — 2 is weakest, then 3…A, then the two jokers. Suits break every tie: </span><b class="tx" data-en="clubs &lt; hearts &lt; diamonds &lt; spades. There are no ties." data-kr="클로버 &lt; 하트 &lt; 다이아 &lt; 스페이드. 완전히 같은 패는 없습니다.">clubs &lt; hearts &lt; diamonds &lt; spades. There are no ties.</b></p>
 
     <!-- SETUP -->
     <section id="setup">
@@ -1040,6 +1052,8 @@ const MSG = {
   recMargin:   {en:"Net margin",       kr:"누적 마진"},
   recBest:     {en:"Best",             kr:"최고"},
   recTotal:    {en:"TOTAL",            kr:"합계"},
+  ladRank:     {en:"RANK",             kr:"숫자"},
+  ladSuit:     {en:"SUIT",             kr:"무늬"},
   recFoot:     {en:"Net chips is your closing stack minus the 2,000 you sat down with, summed over every game. Net margin is your stack minus theirs, summed the same way — the two differ because chips spent on information are burned rather than won.",
                 kr:"누적 손익은 매 판 (최종 칩 − 시작 칩 2,000)의 합계입니다. 누적 마진은 매 판 (내 칩 − 상대 칩)의 합계입니다. 정보 구매에 쓴 칩은 소각되므로 두 값은 일치하지 않습니다."}
 };
@@ -1441,13 +1455,24 @@ function lerpGreen(f){
   return 'rgb(' + a.map(function(v,i){ return Math.round(v + (b[i]-v)*f); }).join(',') + ')';
 }
 function renderLadder(){
-  const out = [];
-  for(let r=0;r<13;r++) out.push({t:RANKS[r], c:lerpGreen(r/14)});
-  out.push({t:'JKR-B', c:'var(--gold)'});
-  out.push({t:'JKR-C', c:'var(--gold)'});
-  $('ladder').innerHTML = out.map(function(it){
+  /* 1행: 숫자 서열, 2행: 무늬 서열 — 글 대신 그림과 부등호로만 읽히게 한다 */
+  const rank = [];
+  for(let r=0;r<13;r++) rank.push({t:RANKS[r], c:lerpGreen(r/14)});
+  rank.push({t:'JKR-B', c:'var(--gold)'});
+  rank.push({t:'JKR-C', c:'var(--gold)'});
+  const rankHtml = rank.map(function(it){
     return '<span class="rung">' + it.t + '<span class="risk" style="background:' + it.c + '"></span></span>';
-  }).join('');
+  }).join('<span class="cmp">&lt;</span>');
+
+  const suit = [0,1,2,3].map(function(s,i){
+    return '<span class="rung st' + (s===1||s===2 ? ' red' : '') + '">'
+         + '<span class="gl">' + SUITS[s] + '</span>'
+         + '<span class="risk" style="background:' + lerpGreen((i+1)/5) + '"></span></span>';
+  }).join('<span class="cmp">&lt;</span>');
+
+  $('ladder').innerHTML =
+      '<div class="ladder-row"><span class="lbl">' + m('ladRank') + '</span>' + rankHtml + '</div>'
+    + '<div class="ladder-row"><span class="lbl">' + m('ladSuit') + '</span>' + suit + '</div>';
 }
 function cardCls(c){ return 'pcard' + (c === 53 ? ' jkc' : (isRed(c) ? ' red' : '')); }
 function cardInner(c){
