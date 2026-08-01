@@ -239,6 +239,27 @@ main{padding:36px 0 88px;}
 .log-cell.l .s{color:#F2DADA;}
 .log-cell.d{background:var(--gray);}
 
+/* 추론 원장 (인턴·애널리스트 전용) */
+.ledger{margin-top:18px;border:3px solid var(--ink);background:#fff;box-shadow:5px 5px 0 var(--ink);padding:12px 14px 13px;}
+.led-head{font-family:var(--arch);font-weight:900;font-size:12px;letter-spacing:.5px;text-transform:uppercase;margin-bottom:9px;}
+.led-strip{display:flex;gap:5px;flex-wrap:wrap;}
+.led-cell{
+  width:34px;height:34px;border:2px solid var(--ink);background:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--arch);font-weight:900;font-size:15px;
+}
+.led-cell.held{background:var(--green);color:var(--paper);}
+.led-cell.gone{background:var(--gray);color:#9A9A95;text-decoration:line-through;}
+.led-rows{margin-top:10px;font-family:var(--mono);font-size:11px;color:#4A4A47;line-height:1.7;}
+.led-rows b{font-weight:600;color:var(--ink);}
+.led-rows .iv{color:var(--red);font-weight:600;}
+.led-legend{margin-top:9px;font-family:var(--mono);font-size:10.5px;color:#6B6B67;display:flex;gap:14px;flex-wrap:wrap;align-items:center;}
+.led-legend i{width:12px;height:12px;border:2px solid var(--ink);display:inline-block;vertical-align:-2px;margin-right:5px;background:#fff;}
+.led-legend i.held{background:var(--green);}
+.led-legend i.gone{background:var(--gray);}
+.led-foot{margin-top:8px;font-family:var(--mono);font-size:10.5px;color:#8A8A85;}
+.led-lock{font-family:var(--mono);font-size:11.5px;color:#6B6B67;}
+
 /* game over */
 #gameover{display:none;margin-top:28px;}
 .verdict{
@@ -420,6 +441,7 @@ footer{border-top:3px solid var(--ink);padding:26px 0;}
         <div class="pnl ai"><div class="lbl"><span class="tx" data-en="AI P&amp;L" data-kr="AI P&amp;L">AI P&amp;L</span></div><div class="val" id="aiScore">0</div></div>
       </div>
       <div class="log-strip" id="logStrip"></div>
+      <div class="ledger" id="ledger" style="display:none;"></div>
 
       <div id="gameover">
         <div class="verdict" id="verdict"></div>
@@ -567,6 +589,19 @@ const MSG = {
   finalScore:{en:"Final P&L ", kr:"최종 P&L "},
   win:{en:"WIN",kr:"승"}, lose:{en:"LOSE",kr:"패"}, draw:{en:"DRAW",kr:"무"},
   mktNormal:{en:"–",kr:"–"}, mktInv:{en:"INV",kr:"인버스"}, mktCancel:{en:"INVx2",kr:"상쇄"},
+  ledTitle:{en:"POSITION LEDGER", kr:"추론 원장"},
+  ledLocked:{en:"Locked on this desk. Against a Managing Director or Mr. Market you count the cards yourself — that is the whole test.",
+             kr:"이 난이도에서는 잠깁니다. 전무·미스터 마켓을 상대할 때는 직접 세셔야 해요 — 그게 시험대입니다."},
+  ledEmpty:{en:"Nothing to go on yet. After each session your own card and the result narrow down what the AI could have played.",
+            kr:"아직 단서가 없습니다. 매 세션이 끝날 때마다 내가 낸 카드와 결과만으로 AI가 낼 수 있었던 카드가 좁혀집니다."},
+  ledHeld:{en:"still held", kr:"보유 확정"},
+  ledGone:{en:"spent", kr:"소진 확정"},
+  ledOpen:{en:"unknown", kr:"미확정"},
+  ledPlayed:{en:"you played", kr:"내 카드"},
+  ledArrow:{en:"AI held one of", kr:"AI는 이 중 하나"},
+  ledExact:{en:"AI played", kr:"AI 확정"},
+  ledFoot:{en:"Deduced from public information only — your own card, the session result, and whether the market was inverted. The AI runs the same deduction on you.",
+           kr:"공개 정보만으로 추론합니다 — 내가 낸 카드, 세션 결과, 시장 반전 여부. AI도 당신에게 똑같은 추론을 하고 있습니다."},
   recSignIn:{en:"Sign in (bottom left) to keep a permanent record of every game you play against the AI desk — win/loss/draw, broken down by difficulty.",
              kr:"좌측 하단에서 로그인하면 AI 데스크와의 모든 대국 전적이 영구 기록됩니다 — 난이도별 승/패/무."},
   recLoading:{en:"Loading your record…", kr:"전적을 불러오는 중…"},
@@ -1046,6 +1081,71 @@ function renderScore(){
   }).join('');
 }
 
+// ── 추론 원장 ────────────────────────────────────────────────────────────
+// 공개 정보만 쓴다: 내가 낸 카드 · 세션 결과 · 그 세션의 시장 반전 여부.
+// 세션마다 "AI가 낼 수 있었던 카드" 집합이 정해지고, AI의 9장은 서로 다르므로
+// 집합에서 서로 다른 값을 고르는 모든 배정을 전수 열거하면
+// 어떤 카드가 반드시 소진됐고 어떤 카드가 반드시 남아 있는지가 확정된다.
+// (AI 쪽 playerCardWeights() 가 당신에게 하는 계산과 정확히 같은 것)
+function ledgerDeduce(hist){
+  const n=hist.length;
+  const sets=hist.map(h=>{
+    let s=0;
+    for(let v=1;v<=9;v++) if(duelInv(h.my, v, !!h.inverted)===h.res) s|=1<<(v-1);
+    return s;
+  });
+  const per=new Array(n).fill(0), cur=new Array(n).fill(0);
+  let anyUsed=0, allUsed=0x1FF, feas=0;
+  (function dfs(i, used){
+    if(i===n){ feas++; for(let k=0;k<n;k++) per[k]|=cur[k]; anyUsed|=used; allUsed&=used; return; }
+    let mm=sets[i]&~used;
+    while(mm){ const b=mm&(-mm); mm^=b; cur[i]=b; dfs(i+1, used|b); }
+  })(0,0);
+  if(!feas) return null;                       // 논리적으로 불가능 — 나오면 안 되는 상태
+  return { per, gone:allUsed, held:(~anyUsed)&0x1FF };
+}
+function maskList(mask){
+  const a=[]; for(let v=1;v<=9;v++) if(mask&(1<<(v-1))) a.push(v);
+  return a;
+}
+function renderLedger(){
+  const el=$('ledger');
+  if(!S || S.phase==='over'){ el.style.display='none'; return; }
+  el.style.display='block';
+  const head=`<div class="led-head">${m('ledTitle')}</div>`;
+  if(S.diff==='hard' || S.diff==='market'){
+    el.innerHTML = head + `<div class="led-lock">${m('ledLocked')}</div>`;
+    return;
+  }
+  const d=ledgerDeduce(S.history);
+  let strip='';
+  for(let v=1;v<=9;v++){
+    const b=1<<(v-1);
+    const cls = !d ? 'open' : (d.held&b) ? 'held' : (d.gone&b) ? 'gone' : 'open';
+    strip+=`<div class="led-cell ${cls}">${v}</div>`;
+  }
+  let rows='';
+  if(!S.history.length){
+    rows=`<div class="led-rows">${m('ledEmpty')}</div>`;
+  } else if(d){
+    rows='<div class="led-rows">'+S.history.map((h,k)=>{
+      const cand=maskList(d.per[k]);
+      const iv = h.inverted? ' <span class="iv">&#8645;</span>' : '';
+      const rs = h.res==='W'? m('win') : h.res==='L'? m('lose') : m('draw');
+      const tail = cand.length===1
+        ? `${m('ledExact')} <b>${cand[0]}</b>`
+        : `${m('ledArrow')} <b>${cand.join(' ')}</b>`;
+      return `S${h.sess}${iv} · ${m('ledPlayed')} <b>${h.my}</b> · ${rs} &#8594; ${tail}`;
+    }).join('<br>')+'</div>';
+  }
+  const legend=`<div class="led-legend">`
+    +`<span><i class="held"></i>${m('ledHeld')}</span>`
+    +`<span><i class="gone"></i>${m('ledGone')}</span>`
+    +`<span><i></i>${m('ledOpen')}</span></div>`;
+  el.innerHTML = head + `<div class="led-strip">${strip}</div>` + rows + legend
+               + `<div class="led-foot">${m('ledFoot')}</div>`;
+}
+
 function renderStatus(){
   $('sessLabel').textContent=`SESSION ${Math.min(S.session,9)} / 9`;
   const pc=$('potChip');
@@ -1072,7 +1172,7 @@ function renderLevBtns(){
 }
 
 function renderAll(){
-  renderTokens(); renderHand(); renderTable(); renderScore(); renderStatus(); renderLevBtns();
+  renderTokens(); renderHand(); renderTable(); renderScore(); renderStatus(); renderLevBtns(); renderLedger();
   $('commitBtn').disabled = !(S.phase==='pick' && S.myCard!==null);
   if(S.phase==='pick'){
     if(S.session>=9) hintEl.textContent=m('lastNoLev');
@@ -1311,6 +1411,7 @@ window.KYG_AUTH_LISTENERS.push(function(user){
 
 function gameOver(){
   S.phase='over';
+  $('ledger').style.display='none';   // 전체 공개 리플레이가 원장을 대체한다
   logGame();
   const v=$('verdict');
   let cls,txt;
