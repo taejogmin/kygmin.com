@@ -612,7 +612,8 @@ function makePersona(diff){
     invMix: Math.max(0, j(0.10,0.04)),       // 마진 무시하고 느슨하게 인버스 쓰는 확률
     t3: j(0.67,0.06), t2: j(0.57,0.06),      // 레버리지 임계 (기존 0.70/0.60 고정)
     bluffLev: Math.max(0, j(0.12,0.05)),     // 약한 패 레버리지 블러핑 (기존 0.10)
-    optPenalty: Math.max(0.04, j(0.12,0.04)) // 1·9 옵션 가치 보존
+    corr: 1,                                 // 미래비용 보정 강도. 정확히 1 이어야 카드 선택이
+                                             // 완전 균등이 되고 착취가능성이 0 이 된다 (지터 금지)
   };
   return { // normal
     temp: Math.max(0.3, j(0.5,0.12)),
@@ -620,7 +621,7 @@ function makePersona(diff){
     invMix: Math.max(0, j(0.05,0.03)),
     t3: j(0.78,0.06), t2: j(0.68,0.06),
     bluffLev: Math.max(0, j(0.05,0.03)),
-    optPenalty: 0
+    corr: Math.max(0.30, Math.min(0.80, j(0.55,0.12))) // 일부러 덜 보정 → 읽히는 여지를 남긴다
   };
 }
 function newState(diff, potRule){
@@ -640,44 +641,107 @@ function newState(diff, potRule){
   };
 }
 
-// ── AI 추리: 승패 기록(반전 세션 반영)으로 플레이어 남은 카드 분포 ──
-function playerCardWeights(mem){
+// ── AI 추리 ──
+// 승패 기록(반전 세션 반영)과 논리적으로 모순되지 않는 '상대 카드 배열'을 전부 세어서
+// 다음에 무엇을 낼지 분포를 만든다. 여기에 상대의 성향까지 같이 추정한다.
+//
+// 성향 θ: 매 세션 남은 패 중 순위가 낮은 카드부터 태우면 θ<0, 큰 카드부터면 θ>0, 균등이면 0.
+// 각 θ 아래에서 관측된 승패열이 얼마나 그럴듯한지(우도)를 재고, 그 사후확률로 예측분포를 섞는다.
+// θ=0 하나만 쓰면 예전의 '균등 카운팅'과 정확히 같은 값이 나온다 → 기준선은 이걸 쓴다.
+const NP_STYLES=[-1.4,-0.7,0,0.7,1.4], NP_S0=2, NP_K=5;   // NP_S0 = θ=0 의 인덱스
+// 남은 장수 n, 성향 k 일 때 'n장 중 j번째로 작은 카드를 낼 확률' — 미리 계산해 둔다
+const NP_PR=(function(){
+  const T=[];
+  for(let n=1;n<=9;n++){
+    const byStyle=[];
+    for(let k=0;k<NP_K;k++){
+      const th=NP_STYLES[k], a=new Array(n); let sum=0;
+      for(let j=0;j<n;j++){ a[j]=(n===1)?1:Math.exp(th*(j/(n-1)-0.5)); sum+=a[j]; }
+      for(let j=0;j<n;j++) a[j]/=sum;
+      byStyle.push(a);
+    }
+    T[n]=byStyle;
+  }
+  return T;
+})();
+const NP_BUF=(function(){ const b=[]; for(let d=0;d<=9;d++) b.push(new Array(10)); return b; })();
+let npCache=null;
+function npBeliefs(mem){
+  if(npCache && npCache.mem===mem && npCache.n===mem.length) return npCache.out;
+  const L=mem.length;
   const used=new Array(10).fill(false);
-  const counts=new Array(10).fill(0);
-  let total=0;
+  const counts=[]; for(let k=0;k<NP_K;k++) counts.push(new Array(10).fill(0));
+  const totals=new Array(NP_K).fill(0);
+  const lw=[]; for(let d=0;d<=L;d++) lw.push(new Array(NP_K).fill(0));
+  for(let k=0;k<NP_K;k++) lw[0][k]=1;
   function dfs(i){
-    if(i===mem.length){
-      total++;
-      for(let v=1;v<=9;v++) if(!used[v]) counts[v]++;
+    const rem=NP_BUF[i]; let n=0;
+    for(let v=1;v<=9;v++) if(!used[v]) rem[n++]=v;
+    const tbl=NP_PR[n], cur=lw[i];
+    if(i===L){
+      for(let k=0;k<NP_K;k++){
+        const w=cur[k]; if(w<=0) continue;
+        totals[k]+=w;
+        const pr=tbl[k], ck=counts[k];
+        for(let j=0;j<n;j++) ck[rem[j]]+=w*pr[j];   // '다음에 이 카드를 낼' 확률질량
+      }
       return;
     }
-    const h=mem[i];
-    for(let v=1;v<=9;v++){
-      if(used[v]) continue;
-      if(duelInv(h.ai, v, h.inv)!==h.res) continue;
+    const h=mem[i], nxt=lw[i+1];
+    for(let j=0;j<n;j++){
+      const v=rem[j];
+      if(duelInv(h.ai, v, h.inv)!==h.res) continue;   // 결과와 모순되는 배열은 잘라낸다
+      for(let k=0;k<NP_K;k++) nxt[k]=cur[k]*tbl[k][j];
       used[v]=true; dfs(i+1); used[v]=false;
     }
   }
   dfs(0);
-  if(total===0){ for(let v=1;v<=9;v++) counts[v]=1; total=9; } // 방어
-  const w={}; for(let v=1;v<=9;v++) w[v]=counts[v]/total;
+  const out={counts, totals};
+  npCache={mem, n:L, out};
+  return out;
+}
+
+// 읽기 없음의 기준선 = 상대가 남은 패에서 균등하게 낸다는 가정 (θ=0)
+function playerCardWeights(mem){
+  const {counts,totals}=npBeliefs(mem);
+  const w={};
+  if(totals[NP_S0]>0){ for(let v=1;v<=9;v++) w[v]=counts[NP_S0][v]/totals[NP_S0]; }
+  else { for(let v=1;v<=9;v++) w[v]=1/9; }               // 방어
+  return w;
+}
+// 성향까지 읽은 신념. 표본이 적을 땐 기준선 쪽으로 수축시킨다(λ).
+// 첫 수(기록 0개)에서는 λ=0 이라 기준선과 완전히 같아지고, 그래야 카드 선택이 정확히 균등해진다.
+function playerReadWeights(mem){
+  const base=playerCardWeights(mem);
+  const m=mem.length; if(m===0) return base;
+  const {counts,totals}=npBeliefs(mem);
+  const ev=totals.reduce((a,b)=>a+b,0);
+  if(!(ev>0)) return base;
+  const mix={}; for(let v=1;v<=9;v++) mix[v]=0;
+  for(let k=0;k<NP_STYLES.length;k++){
+    if(totals[k]<=0) continue;
+    const post=totals[k]/ev;
+    for(let v=1;v<=9;v++) mix[v]+=post*counts[k][v]/totals[k];
+  }
+  const lam=m/(m+3);
+  const w={}; for(let v=1;v<=9;v++) w[v]=(1-lam)*base[v]+lam*mix[v];
   return w;
 }
 
-// 상대 플레이 분포 (선언 정보 반영)
+// 상대 플레이 분포 (성향 읽기 + 선언 정보 반영)
 function playerPlayDist(asFollower, pLev, pInv){
-  let w = playerCardWeights(S.aiMemory);
+  let w = playerReadWeights(S.aiMemory);
   if(asFollower && pLev>0){
     // 레버리지 선언 → 최강 보유 카드 또는 1(저격) 가중
-    let maxHeld=0; for(let v=9;v>=1;v--){ if(w[v]>0.01){ maxHeld=v; break; } }
+    let maxHeld=0; for(let v=9;v>=1;v--){ if(w[v]>1e-6){ maxHeld=v; break; } }
     if(maxHeld) w[maxHeld]*=2.5;
-    if(w[1]>0.01) w[1]*=1.8;
+    if(w[1]>1e-6) w[1]*=1.8;
   }
   if(asFollower && pInv){
     // 인버스 선언 → 최약 보유 카드 또는 9(반전 시 1의 카운터) 가중
-    let minHeld=0; for(let v=1;v<=9;v++){ if(w[v]>0.01){ minHeld=v; break; } }
+    let minHeld=0; for(let v=1;v<=9;v++){ if(w[v]>1e-6){ minHeld=v; break; } }
     if(minHeld) w[minHeld]*=2.5;
-    if(w[9]>0.01) w[9]*=1.8;
+    if(w[9]>1e-6) w[9]*=1.8;
   }
   let sum=0; for(let v=1;v<=9;v++) sum+=w[v];
   const p={}; for(let v=1;v<=9;v++) p[v]=w[v]/(sum||1);
@@ -694,9 +758,36 @@ function cardEVs(p, inverted){
       if(r==='W'){ ev+=p[v]; winP+=p[v]; }
       else if(r==='L'){ ev-=p[v]; loseP+=p[v]; }
     }
-    if(S.persona.optPenalty && (c===1||c===9)) ev -= S.persona.optPenalty; // 1·9 옵션 가치 보존
     return {c, ev, winP, loseP};
   });
+}
+
+// 상대가 '남은 패에서 균등하게' 낸다고 볼 때의 신념 = 읽기(read) 없음의 기준선
+function baseCardBelief(mem){
+  const w=playerCardWeights(mem);
+  let s=0; for(let v=1;v<=9;v++) s+=w[v];
+  const p={}; for(let v=1;v<=9;v++) p[v]=w[v]/(s||1);
+  return p;
+}
+
+// 이번 세션의 무게 (평범한 세션 = 1). 판돈이 쌓여 있으면 이번 세션이 더 비싸다.
+// 선공이면 상대 선언을 아직 못 봤으니 기본 1, 후공이면 상대가 선언한 배수가 그대로 판돈.
+function sessionWeights(asFollower, pLev){
+  const pot = (S.pot||0)/2;
+  const w = (asFollower ? Math.max(1, pLev||0) : 1) + pot;
+  return {win:w, lose:w};
+}
+
+// 카드 점수 = w·(이번 세션 EV) − corr·(기준선 EV)
+//   기준선을 빼는 이유: 토큰을 뺀 순수 카드게임을 전부 풀어보면 균형이 '균등 랜덤'이고
+//   게임 가치가 정확히 0이다. 지금 8을 내서 버는 만큼 나중에 8이 없어서 잃는다는 뜻이고,
+//   그 미래 비용이 바로 기준선 EV다. 읽을 거리가 없으면 두 항이 상쇄돼 완전 균등이 되고,
+//   그때 착취가능성은 정확히 0이 된다. (기존의 1·9 optPenalty 를 이론값으로 대체)
+function cardScores(p, p0, inverted, ww, corr){
+  const ev=cardEVs(p, inverted), ev0=cardEVs(p0, inverted);
+  const base={}; ev0.forEach(e=>{ base[e.c]=e.ev; });
+  return ev.map(e=>({c:e.c, ev: ww.win*e.winP - ww.lose*e.loseP - corr*base[e.c],
+                     winP:e.winP, loseP:e.loseP, rawEV:e.ev}));
 }
 function softmaxPick(evs){
   const temp = S.persona.temp;
@@ -720,31 +811,35 @@ function aiDecide(asFollower, pLev, pInv){
     }
     return {card, lev, inv};
   }
-  const p = playerPlayDist(asFollower, pLev, pInv);
-  // 시나리오: 내(AI) 인버스 미사용 vs 사용 — 유효 반전은 XOR
-  const evN = cardEVs(p, !!pInv);                 // AI 인버스 안 씀
-  const bestN = evN.reduce((a,b)=>a.ev>b.ev?a:b);
-  let useInv=false, evSet=evN;
-  const P = S.persona;
+  const P  = S.persona;
+  const p  = playerPlayDist(asFollower, pLev, pInv);   // 선언까지 반영한 신념
+  const p0 = baseCardBelief(S.aiMemory);               // 읽기 없음의 기준선
+  const ww = sessionWeights(asFollower, pLev);
+  const dir = !!pInv;                                // 상대 인버스만 반영한 기본 시장 방향
+
+  // 1) 카드 — 읽을 거리도 없고 판돈 압력도 없으면 점수가 전부 같아져 균등 랜덤이 된다
+  const pick = softmaxPick(cardScores(p, p0, dir, ww, P.corr));
+
+  // 2) 인버스 — 낼 카드를 정한 뒤에 판단한다. 전략적 가치는 전부 선언층에 있다.
+  let useInv=false;
+  let cur = cardEVs(p, dir).find(e=>e.c===pick.c);
   if(canTok && S.aiTok.inv){
-    const evI = cardEVs(p, !pInv);                // AI 인버스 씀 (XOR 반전)
-    const bestI = evI.reduce((a,b)=>a.ev>b.ev?a:b);
-    // 판마다·결정마다 흔들리는 마진 + 가끔은 마진을 거의 무시(혼합 전략)
-    const loose = Math.random() < P.invMix;
+    const flip = cardEVs(p, !dir).find(e=>e.c===pick.c);   // 유효 반전은 XOR
+    const loose = Math.random() < P.invMix;                // 가끔 마진을 거의 무시(혼합)
     const margin = loose ? 0.02 : Math.max(0.04, P.invMargin + (Math.random()*2-1)*0.05);
-    if(bestI.ev > bestN.ev + margin){ useInv=true; evSet=evI; }
+    if(flip.ev > cur.ev + margin){ useInv=true; cur=flip; }
   }
-  const pick = softmaxPick(evSet);
-  // 레버리지: 선택된 시장 방향에서의 승률로 결정 (임계값도 매 결정 지터)
+
+  // 3) 레버리지: 최종 시장 방향에서의 승률로 결정 (임계값도 매 결정 지터)
   let lev=0;
   if(canTok){
     const avail=[]; if(S.aiTok[3]) avail.push(3); if(S.aiTok[2]) avail.push(2);
     if(avail.length){
       const t3 = Math.min(0.95, Math.max(0.5, P.t3 + (Math.random()*2-1)*0.05));
       const t2 = Math.min(0.9,  Math.max(0.4, P.t2 + (Math.random()*2-1)*0.05));
-      if(avail.includes(3) && pick.winP>=t3) lev=3;
-      else if(avail.includes(2) && pick.winP>=t2) lev=2;
-      else if(!asFollower && pick.winP<0.5 && Math.random()<P.bluffLev) lev=avail[avail.length-1]; // 약패 블러핑 (2x 우선)
+      if(avail.includes(3) && cur.winP>=t3) lev=3;
+      else if(avail.includes(2) && cur.winP>=t2) lev=2;
+      else if(!asFollower && cur.winP<0.5 && Math.random()<P.bluffLev) lev=avail[avail.length-1]; // 약패 블러핑 (2x 우선)
     }
   }
   return {card:pick.c, lev, inv:useInv};
