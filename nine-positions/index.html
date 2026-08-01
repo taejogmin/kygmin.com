@@ -277,6 +277,13 @@ main{padding:36px 0 88px;}
 .record .rate{font-weight:700;}
 .record tr.tot td{background:#EFEFEA;border-top:3px solid var(--ink);border-bottom:none;font-weight:700;}
 .record .rec-foot{font-family:var(--mono);font-size:11px;color:#8A8A85;margin-top:10px;}
+.record .rec-sub{
+  font-family:var(--arch);font-weight:900;font-size:13px;text-transform:uppercase;
+  letter-spacing:.5px;margin:26px 0 12px;padding-top:16px;border-top:3px solid var(--ink);
+}
+.record .pop-lock{color:#B4B4AE;}
+.record .pop-top{color:var(--green-deep);font-weight:700;}
+.record td.mine{background:#F4F8F2;}
 
 /* how to play */
 .rules{margin-top:56px;}
@@ -434,6 +441,8 @@ footer{border-top:3px solid var(--ink);padding:26px 0;}
     <div class="record">
       <h2 class="tx" data-en="Your Track Record" data-kr="내 전적">Your Track Record</h2>
       <div id="recBody"></div>
+      <h3 class="rec-sub tx" data-en="Everyone Else" data-kr="전체 플레이어">Everyone Else</h3>
+      <div id="popBody"></div>
     </div>
 
     <!-- RULES -->
@@ -565,6 +574,20 @@ const MSG = {
   recRate:{en:"Win rate",kr:"승률"}, recTotal:{en:"TOTAL",kr:"합계"},
   recFoot:{en:"Win rate counts wins over all games played, draws included.",
            kr:"승률은 무승부를 포함한 전체 판수 대비 승수입니다."},
+  popLoading:{en:"Loading the field…", kr:"전체 통계를 불러오는 중…"},
+  popEmpty:{en:"No games on the board yet. Yours would be the first.",
+            kr:"아직 집계된 대국이 없어요. 네가 첫 기록이 됩니다."},
+  popPlayers:{en:"Players",kr:"인원"}, popField:{en:"Field",kr:"전체 승률"},
+  popMine:{en:"You",kr:"내 승률"}, popRank:{en:"Rank",kr:"순위"},
+  popTop:{en:"top",kr:"상위"},
+  popSignIn:{en:"Field win rates are public. Sign in (bottom left) to see how you stack up against them.",
+             kr:"전체 승률은 누구나 볼 수 있어요. 좌측 하단에서 로그인하면 그 안에서 내 위치를 볼 수 있습니다."},
+  popNeedGames:{en:"Play {n} games on a desk to enter the rankings for it.",
+                kr:"한 상대와 {n}판을 채우면 그 난이도의 순위에 들어갑니다."},
+  popNeedPlayers:{en:"Rankings open once {n} qualified players are on the board. Currently {cur}.",
+                  kr:"자격을 갖춘 플레이어가 {n}명 모이면 순위가 열려요. 현재 {cur}명."},
+  popFoot:{en:"Ranked against every player with {n}+ games on that desk. Lower is better.",
+           kr:"같은 상대와 {n}판 이상 둔 모든 플레이어 중에서의 순위입니다. 숫자가 작을수록 위."},
 };
 function m(k){ return MSG[k][LANG]; }
 
@@ -930,7 +953,7 @@ function logGame(){
     }, r));
     A.client.from('np_games').insert(rows).then(function(res){
       if(res && res.error) console.warn('np log rejected', res.error.message);
-      else if(uid) loadRecord(); // 방금 끝난 판을 전적에 반영
+      else { if(uid) loadRecord(); loadPop(); } // 방금 끝난 판을 전적·전체 통계에 반영
     });
   }catch(e){ console.warn('np log failed', e); }
 }
@@ -940,7 +963,7 @@ function logGame(){
 let REC = null; // null = 아직 안 불러옴, {} = 기록 없음
 async function loadRecord(){
   const A=window.KYG_AUTH;
-  if(!A || !A.client || !A.user){ REC=null; renderRecord(); return; }
+  if(!A || !A.client || !A.user){ REC=null; renderRecord(); renderPop(); return; }
   try{
     const r=await A.client.rpc('np_my_record');
     if(r.error) throw r.error;
@@ -949,6 +972,7 @@ async function loadRecord(){
     REC=map;
   }catch(e){ console.warn('record load failed', e); REC={}; }
   renderRecord();
+  renderPop(); // '내 승률' 열이 REC 에 의존한다
 }
 function renderRecord(){
   const el=$('recBody'); if(!el) return;
@@ -976,10 +1000,84 @@ function renderRecord(){
     + '</tr></thead><tbody>'+body+totRow+'</tbody></table></div>'
     + '<p class="rec-foot">'+m('recFoot')+'</p>';
 }
+// ── 전체 플레이어 통계 + 백분위 ──
+// np_pop_stats() 는 익명 허용(집계값만), np_my_rank() 는 로그인 전용(내 한 줄만).
+// 표본이 얇을 때 백분위는 무의미하므로 두 개의 게이트를 둔다:
+//   본인 POP_MIN_GAMES 판 이상  →  순위 풀 진입
+//   풀에 POP_MIN_PLAYERS 명 이상 →  백분위 표시
+const POP_MIN_GAMES = 5;
+const POP_MIN_PLAYERS = 10;
+let POP = null, RANK = null; // null = 아직 안 불러옴
+function sub(s, o){ return s.replace(/\{(\w+)\}/g, function(_,k){ return o[k]; }); }
+
+async function loadPop(){
+  const A=window.KYG_AUTH;
+  if(!A || !A.client){ return; }
+  try{
+    const r=await A.client.rpc('np_pop_stats');
+    if(r.error) throw r.error;
+    const map={}; (r.data||[]).forEach(function(row){ map[row.difficulty]=row; });
+    POP=map;
+  }catch(e){ console.warn('pop load failed', e); POP={}; }
+  RANK=null;
+  if(A.user){
+    try{
+      const r=await A.client.rpc('np_my_rank', {min_games: POP_MIN_GAMES});
+      if(r.error) throw r.error;
+      const map={}; (r.data||[]).forEach(function(row){ map[row.difficulty]=row; });
+      RANK=map;
+    }catch(e){ console.warn('rank load failed', e); RANK={}; }
+  }
+  renderPop();
+}
+
+function renderPop(){
+  const el=$('popBody'); if(!el) return;
+  const A=window.KYG_AUTH;
+  if(POP===null){ el.innerHTML='<p class="rec-note">'+m('popLoading')+'</p>'; return; }
+  const order=['easy','normal','hard','market'].filter(function(d){
+    return AI_NAMES[d] && POP[d] && POP[d].games>0;
+  });
+  if(!order.length){ el.innerHTML='<p class="rec-note">'+m('popEmpty')+'</p>'; return; }
+
+  let anyRanked=false, bestPool=0, qualified=false;
+  const body=order.map(function(d){
+    const p=POP[d];
+    const field=Math.round(p.wins/p.games*100)+'%';
+    const my=(REC && REC[d] && REC[d].games>0)
+      ? Math.round(REC[d].wins/REC[d].games*100)+'%' : '—';
+    const rk=RANK && RANK[d];
+    let rank='<span class="pop-lock">—</span>';
+    if(rk){
+      qualified=true;
+      bestPool=Math.max(bestPool, rk.ranked_players);
+      if(rk.ranked_players>=POP_MIN_PLAYERS){
+        anyRanked=true;
+        rank='<span class="pop-top">'+m('popTop')+' '+rk.top_pct+'%</span>';
+      }
+    }
+    return '<tr><td>'+AI_NAMES[d][LANG]+'</td><td>'+p.players+'</td><td>'+p.games+'</td>'
+      + '<td class="rate">'+field+'</td><td class="mine rate">'+my+'</td><td>'+rank+'</td></tr>';
+  }).join('');
+
+  let foot;
+  if(!A || !A.user)      foot=m('popSignIn');
+  else if(anyRanked)     foot=sub(m('popFoot'), {n:POP_MIN_GAMES});
+  else if(qualified)     foot=sub(m('popNeedPlayers'), {n:POP_MIN_PLAYERS, cur:bestPool});
+  else                   foot=sub(m('popNeedGames'), {n:POP_MIN_GAMES});
+
+  el.innerHTML='<div class="rec-scroll"><table><thead><tr>'
+    + '<th>'+m('recDiff')+'</th><th>'+m('popPlayers')+'</th><th>'+m('recGames')+'</th>'
+    + '<th>'+m('popField')+'</th><th>'+m('popMine')+'</th><th>'+m('popRank')+'</th>'
+    + '</tr></thead><tbody>'+body+'</tbody></table></div>'
+    + '<p class="rec-foot">'+foot+'</p>';
+}
+
 window.KYG_AUTH_LISTENERS = window.KYG_AUTH_LISTENERS || [];
 window.KYG_AUTH_LISTENERS.push(function(user){
   REC=null; renderRecord();
   if(user) loadRecord();
+  loadPop();
 });
 
 function gameOver(){
@@ -1043,11 +1141,15 @@ window.APP_LANG_LISTENERS.push(function(lang){
   LANG=lang;
   renderLadder();
   renderRecord();
+  renderPop();
   if(S){ renderAll(); if(S.phase==='over') gameOver(); }
 });
 
 renderLadder();
 renderRecord();
+renderPop();
+// auth 위젯이 붙기 전(혹은 supabase 로드 실패)에도 전체 통계는 익명으로 볼 수 있어야 한다.
+if(window.KYG_AUTH && window.KYG_AUTH.client) loadPop();
 })();
 </script>
 <script src="/auth-widget.js" defer></script>
