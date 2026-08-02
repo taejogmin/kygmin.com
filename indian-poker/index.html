@@ -349,6 +349,51 @@ main{padding:36px 0 88px;}
 .record tr.tot td{background:#EFEFEA;border-top:3px solid var(--ink);border-bottom:none;font-weight:700;}
 .record .rec-foot{font-family:var(--mono);font-size:11px;color:#8A8A85;margin-top:10px;}
 
+/* ── ask earendel ── */
+.ask{margin-top:56px;}
+.ask h2{
+  font-family:var(--arch);font-weight:900;font-size:15px;text-transform:uppercase;
+  border-bottom:3px solid var(--ink);padding-bottom:8px;margin-bottom:16px;
+}
+.ask-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;}
+.ask-name{
+  font-family:var(--arch);font-weight:900;font-size:12px;letter-spacing:2.5px;
+  background:var(--ink);color:var(--paper);padding:4px 10px;
+}
+.ask-role{font-family:var(--mono);font-size:11px;color:#8A8A85;letter-spacing:.5px;text-transform:uppercase;}
+.ask-log{
+  border:3px solid var(--ink);background:#fff;padding:16px 18px;
+  min-height:132px;max-height:340px;overflow-y:auto;
+}
+.ask-log .q{
+  font-family:var(--mono);font-size:12.5px;color:#6A6A64;
+  margin:16px 0 8px;text-align:right;word-break:break-word;
+}
+.ask-log .q:first-child{margin-top:0;}
+.ask-log .a{
+  font-size:15px;line-height:1.75;color:var(--ink);
+  border-left:3px solid var(--green);padding-left:12px;max-width:620px;
+}
+.ask-log .a + .a{margin-top:4px;}
+.ask-hint{
+  width:100%;font-family:var(--mono);font-size:11px;color:#8A8A85;
+  text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;
+}
+.ask-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+.ask-chip{
+  font-family:var(--sans);font-size:12.5px;line-height:1.4;color:var(--ink);
+  border:2px solid var(--ink);background:var(--paper);padding:5px 10px;
+  cursor:pointer;text-align:left;transition:background .12s,color .12s;
+}
+.ask-chip:hover{background:var(--ink);color:var(--paper);}
+.ask-row{display:flex;gap:10px;margin-top:14px;}
+.ask-row input{
+  flex:1;min-width:0;font-family:var(--sans);font-size:15px;padding:11px 12px;
+  border:3px solid var(--ink);background:#fff;color:var(--ink);border-radius:0;
+}
+.ask-row input:focus{outline:3px solid var(--green);outline-offset:2px;}
+.ask-foot{font-family:var(--mono);font-size:11px;color:#8A8A85;margin-top:10px;}
+
 /* rules */
 .rules{margin-top:56px;}
 .rules h2{
@@ -363,6 +408,9 @@ footer{border-top:3px solid var(--ink);padding:26px 0;}
 .foot-inner{max-width:960px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:12px;color:#4A4A46;}
 
 @media(max-width:600px){
+  .ask-row{flex-wrap:wrap;}
+  .ask-row input{flex:1 1 100%;}
+  .ask-log{padding:14px;}
   .table-area{gap:14px;}
   .slot{width:126px;}
   .pcard{width:88px;height:118px;}
@@ -523,6 +571,22 @@ footer{border-top:3px solid var(--ink);padding:26px 0;}
     <div class="record">
       <h2 class="tx" data-en="Your Track Record" data-kr="내 전적">Your Track Record</h2>
       <div id="recBody"></div>
+    </div>
+
+    <!-- ASK EARENDEL -->
+    <div class="ask" id="ask">
+      <h2 class="tx" data-en="Ask Earendel" data-kr="에어렌들에게 묻기">Ask Earendel</h2>
+      <div class="ask-head">
+        <span class="ask-name">EARENDEL</span>
+        <span class="ask-role tx" data-en="Guide &#183; Rules desk" data-kr="길잡이 &#183; 규칙 안내">Guide &#183; Rules desk</span>
+      </div>
+      <div class="ask-log" id="askLog" aria-live="polite"></div>
+      <div class="ask-chips" id="askChips"></div>
+      <div class="ask-row">
+        <input id="askInput" type="text" autocomplete="off" aria-label="Ask Earendel" />
+        <button class="btn btn-green" id="askBtn"><span class="tx" data-en="Ask" data-kr="묻기">Ask</span></button>
+      </div>
+      <p class="ask-foot" id="askFoot"></p>
     </div>
 
     <!-- RULES -->
@@ -2057,6 +2121,339 @@ renderRecord();
 
 })();
 </script>
+
+<!-- ASK EARENDEL: 규칙 카드 라우터 (모델 없음) -->
+<script>
+/* ── ASK EARENDEL ── 규칙 안내 패널
+   답변은 고정 카드에서 코드가 원문 그대로 출력한다. 모델을 거치지 않는다.
+   말씨 축: L0 = 비로그인/닉네임 미설정(해요체) · L1 = 로그인+닉네임(해체)
+   명세: claude/ai-guide-persona-spec.md */
+(function(){
+"use strict";
+if(!document.getElementById('ask')) return;
+var $ = function(id){ return document.getElementById(id); };
+var LANG = window.APP_LANG || 'en';
+
+const CARDS=[{"i":"ip-basic-01","t":"기본","q":"이 게임 어떻게 하는 거예요?","Q":"How do I play?","k":["어떻게","방법","규칙","룰","설명","플레이","하는","시작","진행","뭐부터","처음","초보","입문","어떤게임","게임설명","하는법","모르겠","무슨게임"],"e":["how","play","rules","explain","start","works","game","played","new","beginner"],"a":"카드를 보지 않고 이마에 붙여요. 상대 카드는 보이고 내 카드는 안 보여요. 27라운드 치르고 칩이 많은 쪽이 이겨요.","b":"카드를 보지 않고 이마에 붙여. 상대 카드는 보이고 내 카드는 안 보여. 27라운드 치르고 칩이 많은 쪽이 이겨.","n":"You stick a card on your forehead without looking. You see theirs, never your own. Twenty-seven rounds, and the bigger stack wins."},{"i":"ip-basic-02","t":"기본","q":"내 카드를 왜 못 봐요?","Q":"Why can't I see my own card?","k":["내카드","못보","안보","자기카드","이마","가려","왜못","자기패","내패","못봐","안보이","왜안","나만","모르는","이마에","붙여","붙이","안알려","비공개","내것"],"e":["own","card","see","cannot","hidden","forehead","mine","why","blind","myself"],"a":"그게 이 게임의 전부예요. 둘이 지식을 합치면 완전정보인데, 각자 정확히 절반씩 엇갈려 갖고 있어요.","b":"그게 이 게임의 전부야. 둘이 지식을 합치면 완전정보인데, 각자 정확히 절반씩 엇갈려 갖고 있어.","n":"That is the whole game. Together you hold complete information, split crosswise down the middle."},{"i":"ip-basic-03","t":"기본","q":"몇 라운드예요?","Q":"How many rounds?","k":["라운드","몇","판","길이","27","스물일곱","몇번","몇라운드","전체","얼마나","게임길이","몇판","끝나","분량","총몇판","라운드수"],"e":["rounds","how","many","long","27","total","twenty","seven","length","game"],"a":"27라운드요. 각자 27장씩 갖고 시작하니까 딱 한 번씩 다 써요.","b":"27라운드. 각자 27장씩 갖고 시작하니까 딱 한 번씩 다 써.","n":"Twenty-seven. You each hold twenty-seven cards and spend them one per round."},{"i":"ip-basic-04","t":"기본","q":"어떻게 이겨요?","Q":"How do I win?","k":["이겨","승리","이기","승패","판정","최종","이길","끝나면","정해","결정","가리","누가이기","승자","기준","이긴","우승","어떻게이겨","판가름","이긴걸로"],"e":["win","wins","winner","decided","beat","end","determine","decides","determined"],"a":"27라운드가 끝났을 때 칩이 많으면 이겨요. 중간에 한쪽 스택이 0이 되면 그 자리에서 끝나고요.","b":"27라운드가 끝났을 때 칩이 많으면 이겨. 중간에 한쪽 스택이 0이 되면 그 자리에서 끝나고.","n":"Most chips after twenty-seven rounds. If either stack hits zero it ends there."},{"i":"ip-basic-05","t":"기본","q":"시작 칩이 얼마예요?","Q":"What is the starting stack?","k":["시작","칩","스택","2000","초기","자금","바이인","몇개","처음에","얼마로","시작칩","밑천","줘","칩몇","보유칩","초기칩"],"e":["starting","stack","chips","2000","buyin","begin","start","begins","each"],"a":"각자 2,000칩이에요.","b":"각자 2,000칩이야.","n":"Two thousand chips each."},{"i":"ip-basic-06","t":"기본","q":"한 라운드 순서가 어떻게 돼요?","Q":"What happens in a round?","k":["순서","흐름","단계","페이즈","차례로","한라운드","진행","진행순서","한판","라운드진행","뭐부터뭐","쇼다운전","언제하","구조","순서대로","어떤순서","안에서"],"e":["order","sequence","happens","phase","steps","structure","round","during","within"],"a":"앤티, 베팅, 전달자 질문, 베팅, 정보 구매, 베팅, 쇼다운. 이 순서예요.","b":"앤티, 베팅, 전달자 질문, 베팅, 정보 구매, 베팅, 쇼다운. 이 순서야.","n":"Ante, bet, ask the givers, bet, buy information, bet, showdown."},{"i":"ip-basic-07","t":"기본","q":"무승부도 있어요?","Q":"Can it be a draw?","k":["무승부","비기","동점","드로우","타이","같으면","비길","비김","무승","같은패","똑같","동일","비기면","같은세기","비겨","세기면"],"e":["draw","tie","tied","equal","same","level","ties","identical"],"a":"쇼다운은 절대 안 비겨요. 카드가 전부 유일하니까요. 27라운드 끝에 칩이 정확히 같으면 그건 무승부고요.","b":"쇼다운은 절대 안 비겨. 카드가 전부 유일하니까. 27라운드 끝에 칩이 정확히 같으면 그건 무승부고.","n":"A showdown never ties — every card is unique. The game itself ties only if the stacks end exactly level."},{"i":"ip-basic-08","t":"기본","q":"블러핑이 되나요?","Q":"Can I bluff?","k":["블러핑","블러프","속이","허세","기만","뻥","뻥카","구라","속임수","심리","거짓","페이크","연기","속일수","신호줘","거짓신호","허풍"],"e":["bluff","bluffing","deceive","fake","lie","mislead","trick"],"a":"돼요. 방향이 반대일 뿐이에요. 내 패를 속이는 게 아니라 상대가 자기 카드를 오독하게 만드는 거예요.","b":"돼. 방향이 반대일 뿐이야. 내 패를 속이는 게 아니라 상대가 자기 카드를 오독하게 만드는 거야.","n":"Yes, but backwards. You are not hiding your hand — you are making them misread theirs."},{"i":"ip-basic-09","t":"기본","q":"전체 규칙은 어디서 봐요?","Q":"Where are the full rules?","k":["전체규칙","전체","자세","문서","풀룰","어디서봐","룰북","규칙문서","어디","전문","다보","풀룰어디","규칙어디","규칙전문","자세히","상세","정식","보고싶"],"e":["full","rules","complete","detail","where","document","everything","read"],"a":"이 아래 FULL RULES에 다 있어요.","b":"이 아래 FULL RULES에 다 있어.","n":"Right below this, under FULL RULES."},{"i":"ip-basic-10","t":"기본","q":"이길 방법 있어요?","Q":"Any tips?","k":["팁","전략","요령","잘하","조언","공략","비법","잘하는법","이기는법","고수","법","어떻게잘","초보가","알아둘","꿀팁","잘하려면","노하우","연습","조심"],"e":["tips","strategy","advice","better","help","hints","improve","good","should","know"],"a":"상대 카드를 세고, 상대가 언제 접는지 보세요. 나머지는 직접 하셔야 하고요.","b":"상대 카드를 세고, 상대가 언제 접는지 봐. 나머지는 직접 해야 하고.","n":"Count their cards and watch when they fold. The rest is yours to do."},{"i":"ip-card-01","t":"카드","q":"덱은 몇 장이에요?","Q":"How many cards in the deck?","k":["덱","54","한벌","몇장","장","전체카드","구성","덱구성","카드수","총몇","조커포함","카드몇","장수","매수","몇개","몇장으로","포함"],"e":["deck","cards","how","many","54","total","including","size","joker"],"a":"54장이에요. 52장에 조커 두 장.","b":"54장이야. 52장에 조커 두 장.","n":"Fifty-four. A standard fifty-two plus two jokers."},{"i":"ip-card-02","t":"카드","q":"카드 서열이 어떻게 돼요?","Q":"What is the card ranking?","k":["서열","순위","랭크","강한","높은","위아래","센","제일센","가장센","제일","가장","숫자순","강약","높은순","세","높","킹","퀸","에이스","a가","숫자","어느게세","강한순","순서","위야","높아"],"e":["ranking","rank","order","strongest","higher","beats","ace","king","queen","stronger","strong","top"],"a":"2부터 A까지 올라가고, 그 위가 흑백 조커, 맨 위가 컬러 조커예요.","b":"2부터 A까지 올라가고, 그 위가 흑백 조커, 맨 위가 컬러 조커야.","n":"Two up to Ace, then the monochrome joker, then the colour joker on top."},{"i":"ip-card-03","t":"카드","q":"문양 순서가 어떻게 돼요?","Q":"How do suits rank?","k":["문양","무늬","스페이드","하트","다이아","클로버","같은숫자","강약","문양순","무늬순","제일","가장","스페이드가","수트","같으면","같을때","판정","동일숫자","무늬로","같은숫자면"],"e":["suit","suits","spade","heart","diamond","club","clubs","tie","same","rank","ranks","matter"],"a":"클로버, 하트, 다이아, 스페이드 순이에요. 숫자가 같을 때만 봐요.","b":"클로버, 하트, 다이아, 스페이드 순이야. 숫자가 같을 때만 봐.","n":"Clubs, hearts, diamonds, spades. It only matters when the ranks match."},{"i":"ip-card-04","t":"카드","q":"조커가 제일 세요?","Q":"Is the joker the strongest card?","k":["조커","제일","최강","가장","컬러","흑백","조커두장","조커차이","광대","최고","젤센","조커가","두장차이","조커끼리"],"e":["joker","jokers","strongest","highest","colour","color","two","top","difference","between"],"a":"컬러 조커가 제일 세고 그 아래가 흑백 조커예요. 둘 다 A보다 위예요.","b":"컬러 조커가 제일 세고 그 아래가 흑백 조커야. 둘 다 A보다 위야.","n":"The colour joker is the top card, the monochrome joker sits just under it. Both beat the Ace."},{"i":"ip-card-05","t":"카드","q":"같은 카드가 나올 수 있어요?","Q":"Can the same card come up twice?","k":["같은카드","중복","두번","유일","겹치","같은숫자","숫자","나와","또나와","한장씩","하나뿐","똑같은카드","두장","중복카드","덱에중복","같은게"],"e":["same","twice","duplicate","unique","repeat","copies","two","exist","appear"],"a":"없어요. 한 벌을 27장씩 나눠 갖는 거라 모든 카드가 하나뿐이에요.","b":"없어. 한 벌을 27장씩 나눠 갖는 거라 모든 카드가 하나뿐이야.","n":"No. One deck split in two, so every card exists exactly once."},{"i":"ip-card-06","t":"카드","q":"카드는 어떻게 나눠요?","Q":"How are the cards dealt?","k":["나눠","딜","분배","섞","배분","뽑","나누","방식","배분방식","딜링","27장","내몫","자기몫","따로","어떻게나","셔플","비공개로","어디서뽑","몫이"],"e":["deal","dealt","split","shuffle","distributed","draw","own","pile","half","private","each"],"a":"덱을 섞어서 27장씩 비공개로 나눠요. 각자 자기 몫에서만 뽑고요.","b":"덱을 섞어서 27장씩 비공개로 나눠. 각자 자기 몫에서만 뽑고.","n":"Shuffled and split into two private stacks of twenty-seven. You only ever draw from your own."},{"i":"ip-bet-01","t":"베팅","q":"앤티가 얼마예요?","Q":"What is the ante?","k":["앤티","안테","참가비","기본판돈","무조건내","강제","판돈","기본","내는칩","앤티올라","처음에내","의무","깔고","무조건"],"e":["ante","antes","blind","forced","pay","mandatory","posted","second"],"a":"1~22라운드는 20, 23라운드부터는 60이에요. 나중에 행동하는 쪽만 내고, 27라운드만 양쪽 다 내요.","b":"1~22라운드는 20, 23라운드부터는 60이야. 나중에 행동하는 쪽만 내고, 27라운드만 양쪽 다 내.","n":"Twenty through round 22, sixty from round 23. Only the second player to act pays it — except round 27, where both do."},{"i":"ip-bet-02","t":"베팅","q":"한 번에 얼마씩 걸어요?","Q":"How much can I bet?","k":["단위","리밋","금액","벳","걸어","베팅액","얼마씩","정해져","고정","베팅액수","얼마나","한번에","원하는만큼","자유","액수","얼마걸","베팅크기","상한선","스트리트마다","마음대로"],"e":["bet","limit","size","amount","much","wager","fixed","free","any","per"],"a":"고정 리밋이에요. 스트리트별로 20, 20, 40.","b":"고정 리밋이야. 스트리트별로 20, 20, 40.","n":"Fixed limit — twenty, twenty, forty across the three streets."},{"i":"ip-bet-03","t":"베팅","q":"베팅 스트리트가 몇 번이에요?","Q":"How many betting streets?","k":["스트리트","세번","베팅횟수","몇번베팅","베팅몇","몇번돌","라운드에베팅","세차례","베팅기회","몇차례","몇번이나"],"e":["street","streets","betting","three","rounds","times","many","per","round"],"a":"라운드당 세 번이에요. 전달자 질문 전에 한 번, 뒤에 한 번, 정보 구매 뒤에 한 번.","b":"라운드당 세 번이야. 전달자 질문 전에 한 번, 뒤에 한 번, 정보 구매 뒤에 한 번.","n":"Three per round — before the givers, after the givers, and after the purchase phase."},{"i":"ip-bet-04","t":"베팅","q":"레이즈 몇 번까지 돼요?","Q":"How many raises are allowed?","k":["레이즈","올리","캡","상한","재레이즈","몇번올","계속올","올릴수","리레이즈","네번","횟수","제한","몇번까지올"],"e":["raise","raises","cap","reraise","allowed","many","limit","times"],"a":"한 스트리트에 벳 하나에 레이즈 셋, 합쳐서 네 번이에요.","b":"한 스트리트에 벳 하나에 레이즈 셋, 합쳐서 네 번이야.","n":"Four actions per street — one bet and three raises."},{"i":"ip-bet-05","t":"베팅","q":"폴드하면 어떻게 돼요?","Q":"What happens if I fold?","k":["폴드","접","포기","다이","죽으","잃으","얼마잃","손실","칩잃","접으면","중간에접","포기하면","폴드하면","얼마손해","손해","버리면"],"e":["fold","folds","folding","quit","lose","cost","much","give"],"a":"상대가 팟을 가져가요. 그리고 그 라운드 카드는 끝까지 못 본 채로 버려져요.","b":"상대가 팟을 가져가. 그리고 그 라운드 카드는 끝까지 못 본 채로 버려져.","n":"They take the pot, and your card is discarded without you ever seeing it."},{"i":"ip-bet-06","t":"베팅","q":"폴드하면 내 카드 안 보여줘요?","Q":"Do I see my card after folding?","k":["폴드","보여","공개","확인","버려","안알려","죽으면","폴드후","안보여주","버린내","접고나서","내용","폴드한카드","끝나고"],"e":["fold","see","reveal","shown","after","discard","told","later","never","known"],"a":"안 보여줘요. 그 라운드 전달자 답도 영영 검증 못 하고, 카운팅에도 빈칸이 남아요. 칩보다 정보를 잃는 거예요.","b":"안 보여줘. 그 라운드 전달자 답도 영영 검증 못 하고, 카운팅에도 빈칸이 남아. 칩보다 정보를 잃는 거야.","n":"No. The givers' answers that round stay unverified forever and your count keeps a hole. You lose more information than chips."},{"i":"ip-bet-07","t":"베팅","q":"누가 먼저 행동해요?","Q":"Who acts first?","k":["먼저","선공","순번","포지션","선후","선","누구","선이","앞사람","행동순서","누가먼저","순서정","액션","먼저하","선후정"],"e":["first","acts","who","position","turn","order","acting","action","goes"],"a":"라운드마다 번갈아요. 나중에 행동하는 쪽이 앤티를 내고요.","b":"라운드마다 번갈아. 나중에 행동하는 쪽이 앤티를 내고.","n":"It alternates each round. Whoever acts second pays the ante."},{"i":"ip-bet-08","t":"베팅","q":"상대가 베팅하면 무슨 뜻이에요?","Q":"What does their betting mean?","k":["상대베팅","무슨뜻","의미","해석","밀면","신호","읽","자꾸올","베팅의미","올리면","왜베팅","뜻이","읽는법","밀어","레이즈하면","무슨의미"],"e":["their","bet","betting","means","meaning","signal","reading","interpret","mean","push","aggressive"],"a":"상대 패가 아니라 내 패에 대한 진술이에요. 밀었다는 건 내 이마가 약해 보인다는 뜻이고요.","b":"상대 패가 아니라 내 패에 대한 진술이야. 밀었다는 건 내 이마가 약해 보인다는 뜻이고.","n":"It is a statement about your card, not theirs. If they push, your forehead looks weak."},{"i":"ip-giver-01","t":"전달자","q":"전달자가 뭐예요?","Q":"What are the givers?","k":["전달자","기버","세명","abc","물어보","세사람","누구한테","뭐하는","질문하","물어볼사람","전달자가뭐","대답해주","세명이","사람들","물어봐"],"e":["giver","givers","who","three","ask","people","answer","tell"],"a":"A, B, C 세 명이에요. 내 카드가 상대보다 높은지 물으면 예 아니오로 답해줘요.","b":"A, B, C 세 명이야. 내 카드가 상대보다 높은지 물으면 예 아니오로 답해줘.","n":"Three of them — A, B and C. Ask whether your card beats theirs and you get a yes or a no."},{"i":"ip-giver-02","t":"전달자","q":"몇 명한테 물어볼 수 있어요?","Q":"How many givers can I ask?","k":["몇명","물어","질문","두명","셋중","횟수","물어볼수","인원","몇한테","둘만","세명다","전부물어","몇명한테","몇사람"],"e":["how","many","ask","two","three","question","each"],"a":"라운드마다 셋 중 둘이에요. 누구한테 물었는지는 상대가 몰라요.","b":"라운드마다 셋 중 둘이야. 누구한테 물었는지는 상대가 몰라.","n":"Two of the three, every round. They never learn which two you picked."},{"i":"ip-giver-03","t":"전달자","q":"전달자가 거짓말해요?","Q":"Do the givers lie?","k":["거짓말","거짓","진실","믿","확률","80","50","20","정직","진실만","말해","참말","솔직","틀려","자주틀","맞아","신뢰","사실","얼마나맞","확률로"],"e":["lie","lies","truth","truthful","honest","trust","wrong","accurate","often","rate"],"a":"셋이 각각 80%, 50%, 20% 확률로 진실을 말해요. 누가 누군지는 안 알려주고요.","b":"셋이 각각 80%, 50%, 20% 확률로 진실을 말해. 누가 누군지는 안 알려주고.","n":"They tell the truth eighty, fifty and twenty percent of the time. Which is which is never stated."},{"i":"ip-giver-04","t":"전달자","q":"누가 80%인지 어떻게 알아요?","Q":"How do I find the honest giver?","k":["누가","알아내","특정","찾","고정","배정","정직한","찾는","찾는법","가려내","80을","80퍼","골라내","누가80","어느게80","식별","알아내는"],"e":["find","which","identify","reliable","assignment","fixed","honest","who","spot","pick"],"a":"직접 알아내야 해요. 배정은 게임 내내 고정이고 끝까지 공개 안 돼요.","b":"직접 알아내야 해. 배정은 게임 내내 고정이고 끝까지 공개 안 돼.","n":"You work it out yourself. The assignment is fixed for the whole game and never revealed."},{"i":"ip-giver-05","t":"전달자","q":"전달자 답이 맞았는지 언제 알아요?","Q":"When can I verify an answer?","k":["검증","맞았","확인","쇼다운","진위","언제알","언제확인","맞았는지","쇼다운때","사후","답이맞","확인되","검증시점"],"e":["verify","check","when","showdown","confirm","truth","later"],"a":"쇼다운까지 갔을 때만요. 그때 내 카드가 뭐였는지 알게 되니까요. 폴드하면 영영 미검증이고요.","b":"쇼다운까지 갔을 때만. 그때 내 카드가 뭐였는지 알게 되니까. 폴드하면 영영 미검증이고.","n":"Only at a showdown, when your own card finally turns over. Fold and those answers stay unverified forever."},{"i":"ip-giver-06","t":"전달자","q":"전달자를 어떻게 추리해요?","Q":"How do I work out who is lying?","k":["추리","알아내","요령","판별","분석","어떻게추","추론","추론법","어떻게추론","알아내는법","뻥치는지","누가거짓","파악법","읽는법","누가뻥","가려낼"],"e":["work","figure","deduce","tell","lying","identify","method","liar"],"a":"상대 이마에 2가 붙어 있으면 내가 높은 게 거의 확정이에요. 그때 답을 들으면 칩 한 푼 안 쓰고 채점할 수 있어요.","b":"상대 이마에 2가 붙어 있으면 내가 높은 게 거의 확정이야. 그때 답을 들으면 칩 한 푼 안 쓰고 채점할 수 있어.","n":"When a two is stuck to their forehead you already know the answer. Ask then, and you grade them for free."},{"i":"ip-giver-07","t":"전달자","q":"답이 엇갈리는 것만 봐도 돼요?","Q":"Can I just compare their answers?","k":["엇갈","일치","불일치","비교","패턴","대칭","대조","답만","답비교","그것만","답만보","대조만","만으로","답만놓","비교만","패턴만","대조하","놓고비교"],"e":["compare","answers","pattern","agree","disagree","alone","just","only","comparing"],"a":"그것만으로는 누가 50%인지밖에 못 알아내요. 80과 20은 구분이 안 돼요. 라벨이 대칭이라서요.","b":"그것만으로는 누가 50%인지밖에 못 알아내. 80과 20은 구분이 안 돼. 라벨이 대칭이라서.","n":"That only finds the fifty. Eighty and twenty are symmetric under it — patterns alone can never separate them."},{"i":"ip-giver-08","t":"전달자","q":"상대도 내가 뭘 물었는지 알아요?","Q":"Does my opponent see my questions?","k":["상대도","비공개","숨겨","들키","보이나","물어본","내질문","상대가봐","질문이","공유","누구한테물었","상대가알","내가뭘","질문공개","알아"],"e":["opponent","see","know","questions","private","hidden","sees"],"a":"몰라요. 누구한테 물었는지도, 무슨 답을 들었는지도요.","b":"몰라. 누구한테 물었는지도, 무슨 답을 들었는지도.","n":"No. Not who you asked, not what you heard."},{"i":"ip-giver-09","t":"전달자","q":"왜 이름이 전달자예요?","Q":"Why are they called givers?","k":["이름","유래","부르","명칭","왜전달","왜전달자","불러","왜하필","이름이왜","전달자라고","작명"],"e":["name","called","why","origin","giver","named","term"],"a":"건네는 쪽도 그게 어디로 이어지는지 모르니까요. 받는 쪽도 좋은 건지 알 수 없고요.","b":"건네는 쪽도 그게 어디로 이어지는지 모르니까. 받는 쪽도 좋은 건지 알 수 없고.","n":"Because the one who hands it over does not know where it leads, and neither do you."},{"i":"ip-giver-10","t":"전달자","q":"몇 라운드쯤이면 파악돼요?","Q":"How long until I know who is who?","k":["몇라운드","파악","언제쯤","특정률","걸려","얼마나","몇판","판이면","걸리","언제쯤알","라운드쯤","감잡","보통몇","언제쯤파악","몇라운드면","알게되"],"e":["long","until","rounds","typically","pin","know","identify","before","take"],"a":"10라운드쯤이면 80과 20이 각각 79% 정도 특정돼요. 확신은 아니고 기울어진 믹스예요.","b":"10라운드쯤이면 80과 20이 각각 79% 정도 특정돼. 확신은 아니고 기울어진 믹스야.","n":"By round ten you pin the eighty and the twenty about seventy-nine percent of the time. That is a lean, not a certainty."},{"i":"ip-buy-01","t":"구매","q":"정보를 살 수 있어요?","Q":"What can I buy?","k":["구매","구입","정보","상점","살수","세가지","판매","뭐있","살거","목록","팔아","무엇을살","칩으로","구매항목","항목","뭘살","파는","상품","몇개야","살수있는"],"e":["buy","purchase","information","shop","products","available","sell","items","options"],"a":"세 가지예요. 몬티홀, 소진 열람, 전달자 교대.","b":"세 가지야. 몬티홀, 소진 열람, 전달자 교대.","n":"Three things — Monty Hall, Lookback, and the handover."},{"i":"ip-buy-02","t":"구매","q":"몬티홀이 뭐예요?","Q":"What is Monty Hall?","k":["몬티","몬티홀","두장","좁혀","후보","무엇","설명","후보좁","카드후보","좁히","몬티홀이뭐","두장으로","좁혀주","뭐였지","후보를"],"e":["monty","hall","narrow","candidates","two","narrows","reduce"],"a":"내 카드를 두 장으로 좁혀줘요. 진짜 한 장과 미끼 한 장인데, 어느 쪽인지는 안 알려줘요.","b":"내 카드를 두 장으로 좁혀줘. 진짜 한 장과 미끼 한 장인데, 어느 쪽인지는 안 알려줘.","n":"It narrows your own card to two — the real one and a decoy. You are never told which."},{"i":"ip-buy-03","t":"구매","q":"몬티홀 얼마예요?","Q":"How much is Monty Hall?","k":["몬티","가격","비용","100","200","400","상한","세번","몬티홀","얼마","몇번까지","횟수","얼마야","얼마예","세번까지","값","한판에몇"],"e":["monty","hall","price","cost","much","times","many","cap"],"a":"100, 200, 400으로 올라가요. 게임당 세 번까지고요.","b":"100, 200, 400으로 올라가. 게임당 세 번까지고.","n":"A hundred, then two hundred, then four hundred. Three times per game."},{"i":"ip-buy-04","t":"구매","q":"미끼는 어떻게 골라요?","Q":"How is the decoy chosen?","k":["미끼","가짜","골라","디코이","뽑히","어디서","출처","어디서와","어느풀","내풀","가짜카드","미끼는","어디서뽑","어떻게정","뽑아오"],"e":["decoy","fake","chosen","picked","selected","where","comes","from","pool"],"a":"내 카운팅으로 아직 못 지운 카드 중에서 뽑아요. 상대 스택에 있는 카드도 들어가고요. 그래서 세는 걸로는 못 걸러내요.","b":"내 카운팅으로 아직 못 지운 카드 중에서 뽑아. 상대 스택에 있는 카드도 들어가고. 그래서 세는 걸로는 못 걸러내.","n":"From the cards your count has not ruled out yet — including ones still in their stack. Counting alone can never expose it."},{"i":"ip-buy-05","t":"구매","q":"소진 열람이 뭐예요?","Q":"What is Lookback?","k":["소진","열람","버린","지난","과거","태운","룩백","무엇","설명","버린카드","내가버린","소진열람이","지난카드","볼수있","태운카드","이미쓴"],"e":["lookback","burned","spent","past","discarded","look","see","own"],"a":"앞 라운드에서 못 보고 버린 내 카드를 최대 세 장 공개해요.","b":"앞 라운드에서 못 보고 버린 내 카드를 최대 세 장 공개해.","n":"It reveals up to three of your own cards that were burned in earlier rounds without you ever seeing them."},{"i":"ip-buy-06","t":"구매","q":"소진 열람 얼마예요?","Q":"How much is Lookback?","k":["소진","열람","가격","비용","50","두배","배로","얼마","두번째","더비싸","값","열람가격","살때마다"],"e":["lookback","price","cost","much","doubles","doubling","look","each"],"a":"50부터 시작해서 쓸 때마다 두 배예요.","b":"50부터 시작해서 쓸 때마다 두 배야.","n":"Fifty to start, doubling with every use."},{"i":"ip-buy-07","t":"구매","q":"소진 열람은 언제 사야 해요?","Q":"When should I buy Lookback?","k":["언제","타이밍","사야","미리","종반","닫히","소진","열람","언제사","사는게","타이밍은","늦게사","미리사","언제사야","막판에","닫히기","늦으면"],"e":["when","should","timing","early","late","before","look","deadline"],"a":"22라운드까지요. 23라운드부터 구매가 닫히는데 값어치는 종반에 터져요. 미리 사두거나 아예 안 사거나예요.","b":"22라운드까지. 23라운드부터 구매가 닫히는데 값어치는 종반에 터져. 미리 사두거나 아예 안 사거나야.","n":"By round 22. Buying shuts at 23, but the value only lands at the end. Buy it in advance or not at all."},{"i":"ip-buy-08","t":"구매","q":"전달자 교대가 뭐예요?","Q":"What is the handover?","k":["교대","넘겨","후임","교체","리셋","바꾸","전달자교대","재배정","다시섞","섞는거","다시배정","전달자바꾸","교대가뭐"],"e":["handover","replace","swap","reset","successor","reshuffle","reassign","change"],"a":"세 전달자가 자리를 넘겨요. 배정이 새로 섞이고, 산 사람만 새 배치를 정확히 알아요.","b":"세 전달자가 자리를 넘겨. 배정이 새로 섞이고, 산 사람만 새 배치를 정확히 알아.","n":"The three givers hand their seats to replacements. The assignment reshuffles, and only the buyer knows the new one."},{"i":"ip-buy-09","t":"구매","q":"전달자 교대 얼마예요?","Q":"How much is the handover?","k":["교대","가격","비용","300","언제살","라운드","얼마","교대가격","아무때나","언제살수","살수있","몇라운드에","라운드에만","한번만"],"e":["handover","price","cost","much","when","rounds","between","only","once"],"a":"300이에요. 10~15라운드에만 보이고, 양쪽 통틀어 게임당 한 번뿐이에요.","b":"300이야. 10~15라운드에만 보이고, 양쪽 통틀어 게임당 한 번뿐이야.","n":"Three hundred. Visible only in rounds ten to fifteen, and once per game across both players."},{"i":"ip-buy-10","t":"구매","q":"교대하면 상대는 어떻게 돼요?","Q":"What does the handover do to my opponent?","k":["교대","초기화","백지","추론","날아","지워","상대추론","날아가","무효","상대는","블랭크","상대가한","추론이","상대영향","리셋"],"e":["handover","opponent","reset","wiped","blank","inference","posterior"],"a":"상대가 열 라운드 동안 쌓은 추론이 전부 백지가 돼요. 초기화됐다는 건 알지만 뭘로 바뀌었는지는 몰라요.","b":"상대가 열 라운드 동안 쌓은 추론이 전부 백지가 돼. 초기화됐다는 건 알지만 뭘로 바뀌었는지는 몰라.","n":"Ten rounds of their inference now points at people who are not there. They know they were reset, not to what."},{"i":"ip-buy-11","t":"구매","q":"교대를 산 걸 상대가 알아요?","Q":"Is the handover secret?","k":["교대","비밀","숨기","들키","공개되","들켜","산거","알아채","상대가알","티나","모르게","비밀로","공개적","알려지","숨길수"],"e":["handover","secret","hidden","announced","visible","know","public"],"a":"알아요. 스택이 300 줄어드는 걸 그대로 보니까요. 숨기는 수가 아니라 선언하는 수예요.","b":"알아. 스택이 300 줄어드는 걸 그대로 보니까. 숨기는 수가 아니라 선언하는 수야.","n":"They see it — three hundred leaves your stack in plain view. It is a declaration, not a trick."},{"i":"ip-buy-12","t":"구매","q":"정보에 쓴 칩은 팟으로 가요?","Q":"Do the chips I spend go into the pot?","k":["팟으로","소각","쓴칩","사라지","어디로","불태","팟","들어가","정보값","정보에쓴","쌓이","돌려받","쓴돈","어디가","회수","소모","환불"],"e":["pot","burned","spent","chips","where","gone","back","refund","added","disappear"],"a":"아니요. 소각돼요. 그래서 한 게임이 시작보다 적은 총 칩으로 끝날 수 있어요.","b":"아니. 소각돼. 그래서 한 게임이 시작보다 적은 총 칩으로 끝날 수 있어.","n":"No. They are burned. A game can end with fewer chips on the table than it started with."},{"i":"ip-blind-01","t":"블라인드","q":"블라인드 페이즈가 뭐예요?","Q":"What is the blind phase?","k":["블라인드","페이즈","23","종반","후반","마지막다섯","23라운드부터","후반부","달라져","막판","뭐가바뀌","끝무렵"],"e":["blind","phase","late","endgame","23","changes","final","last"],"a":"23라운드부터예요. 앤티가 60으로 오르고 전달자도 구매도 전부 닫혀요. 남는 건 카운팅뿐이고요.","b":"23라운드부터야. 앤티가 60으로 오르고 전달자도 구매도 전부 닫혀. 남는 건 카운팅뿐이고.","n":"From round 23. The ante triples to sixty, the givers close, every purchase closes. Only your count is left."},{"i":"ip-blind-02","t":"블라인드","q":"23라운드부터는 전달자한테 못 물어요?","Q":"Can I ask the givers after round 23?","k":["못물","닫혀","막히","안되","질문못","23","23라운드","이후","닫히","물어볼","더못","막판에","전달자못","못써","사용못","질문불가"],"e":["ask","closed","after","cannot","still","shut","round","givers"],"a":"못 물어요. 구매도 안 되고요.","b":"못 물어. 구매도 안 되고.","n":"No. Buying is shut too."},{"i":"ip-blind-03","t":"블라인드","q":"올인이 뭐예요?","Q":"What is the all-in?","k":["올인","전액","다걸","몰빵","쉬브","설명","무엇","올인이","뒤집","역전수단","올인이뭐","한방","전부걸","올인이란"],"e":["allin","shove","everything","push","comeback","reverse"],"a":"블라인드 페이즈에서 뒤진 쪽이 유효 스택 전액을 한 번 걸 수 있어요. 상대는 콜 아니면 폴드만 할 수 있고요.","b":"블라인드 페이즈에서 뒤진 쪽이 유효 스택 전액을 한 번 걸 수 있어. 상대는 콜 아니면 폴드만 할 수 있고.","n":"In the blind phase the trailing player can push their whole effective stack, once. The other side may only call or fold."},{"i":"ip-blind-04","t":"블라인드","q":"올인 조건이 뭐예요?","Q":"When am I allowed to go all-in?","k":["올인","조건","자격","500","뒤진","언제할","지고있","뒤지","아무때나","조건이","언제가능","뒤지고","밀리","밀리고"],"e":["allin","when","allowed","condition","behind","eligible","conditions","qualify"],"a":"23라운드부터, 500칩 이상 뒤졌을 때, 게임당 한 번이에요.","b":"23라운드부터, 500칩 이상 뒤졌을 때, 게임당 한 번이야.","n":"From round 23, only when you are behind by five hundred or more, and only once per game."},{"i":"ip-blind-05","t":"블라인드","q":"올인은 얼마를 걸어요?","Q":"How much goes in on an all-in?","k":["올인","얼마","금액","유효스택","전부","다걸리","얼마걸","얼마나걸","스택전부","전액을"],"e":["allin","much","amount","effective","stack","everything","whole"],"a":"유효 스택 전액이에요. 내 스택과 상대 스택 중 적은 쪽.","b":"유효 스택 전액이야. 내 스택과 상대 스택 중 적은 쪽.","n":"The effective stack — whichever of the two is smaller."},{"i":"ip-blind-06","t":"블라인드","q":"올인한 라운드는 어떻게 진행돼요?","Q":"What happens in an all-in round?","k":["올인","진행","전달자없","구매없","그라운드","올인한판","판에도","어떻게진행","콜만","폴드만","그판은"],"e":["allin","round","happens","givers","purchase","skipped","call","fold","only","during"],"a":"전달자도 구매도 없어요. 앤티 내고 바로 걸어요.","b":"전달자도 구매도 없어. 앤티 내고 바로 걸어.","n":"No givers, no purchases. Ante, then the shove."},{"i":"ip-blind-07","t":"블라인드","q":"왜 올인이 있어요?","Q":"Why does the all-in exist?","k":["왜올인","이유","도입","역전","근거","넣었","왜","올인왜","왜넣","있는이유","없으면","왜만들","도입이유","왜있"],"e":["why","exist","reason","comeback","added","without","purpose"],"a":"올인이 없으면 23라운드 칩 리더가 81%로 이겼어요. 1,000칩 이상 벌어진 판은 98.6%였고요. 마지막 다섯 라운드가 장식이었다는 뜻이에요.","b":"올인이 없으면 23라운드 칩 리더가 81%로 이겼어. 1,000칩 이상 벌어진 판은 98.6%였고. 마지막 다섯 라운드가 장식이었다는 뜻이야.","n":"Without it the round-23 chip leader won 81% of games, and 98.6% of the ones over a thousand ahead. The last five rounds were decoration."},{"i":"ip-blind-08","t":"블라인드","q":"접전이면 올인이 안 나와요?","Q":"What if the game is close?","k":["접전","비슷하","안나와","제안","가까우","비슷","칩비슷","못해","차이적","박빙","칩차이","얼마나야","차이나야","500","벌어져야","근소"],"e":["close","tight","even","offered","near","difference","gap","ahead","behind"],"a":"500칩 안쪽이면 아예 제안되지 않아요. 비상구는 비상구로 남아야 하니까요.","b":"500칩 안쪽이면 아예 제안되지 않아. 비상구는 비상구로 남아야 하니까.","n":"Inside five hundred it is never offered. An emergency exit should stay an emergency exit."},{"i":"ip-blind-09","t":"블라인드","q":"스택이 0이 되면 어떻게 돼요?","Q":"What if a stack hits zero?","k":["스택0","제로","파산","바닥","다잃","잃으","끝이","칩다","제로되","털리","바닥나","다떨어","즉시패","0이되","전부잃"],"e":["zero","broke","bust","bankrupt","runs","out","hits","empty","immediately","over"],"a":"그 자리에서 게임이 끝나요. 남은 쪽이 이기고요.","b":"그 자리에서 게임이 끝나. 남은 쪽이 이기고.","n":"The game ends right there and the other side wins."},{"i":"ip-count-01","t":"카운팅","q":"카드 카운팅이 뭐예요?","Q":"What is card counting here?","k":["카운팅","카운트","세는","추적","기억","나온카드","카드세","의미있","세는게","계산","기억해","세서"],"e":["counting","count","track","remember","cards","seen","memory"],"a":"상대 이마에 나온 카드를 세는 거예요. 27라운드에 덱이 정확히 한 번 소모되니까 셀수록 좁혀져요.","b":"상대 이마에 나온 카드를 세는 거야. 27라운드에 덱이 정확히 한 번 소모되니까 셀수록 좁혀져.","n":"Tracking every card that appears on their forehead. The deck is spent exactly once over twenty-seven rounds, so it narrows as you go."},{"i":"ip-count-02","t":"카운팅","q":"카운팅 표가 어디 있어요?","Q":"Where is the counting grid?","k":["카운팅","그리드","표","화면","목록","어디있","어디서확인","뭐가나왔","확인해","화면에","어디있어","표가","보이는곳","나온거"],"e":["counting","grid","where","table","screen","list","see","find","displayed"],"a":"보드 아래 카운트 그리드에 나와요. 확정된 카드가 표시돼요.","b":"보드 아래 카운트 그리드에 나와. 확정된 카드가 표시돼.","n":"In the counted-cards grid under the board. Anything settled shows up there."},{"i":"ip-count-03","t":"카운팅","q":"카운팅이 전달자 추리에 도움돼요?","Q":"Does counting help me read the givers?","k":["카운팅","도움","연결","입력","관계","같이","전달자추리","쓸모","활용","도움돼","읽는데","추론에","쓸모있","쓰이"],"e":["counting","givers","help","connect","input","relate","useful","inference","read"],"a":"그게 핵심이에요. 카운팅이 추리의 입력이에요. 그거 없이는 80과 20을 못 갈라요.","b":"그게 핵심이야. 카운팅이 추리의 입력이야. 그거 없이는 80과 20을 못 갈라.","n":"That is the whole design. Counting is the input to the inference — without it you cannot separate the eighty from the twenty."},{"i":"ip-count-04","t":"카운팅","q":"마지막 라운드엔 다 알 수 있어요?","Q":"Do I know my own cards by the end?","k":["마지막","27라운드","다알","확정","끝에","전부알","알아","확실","내카드알","끝에가","끝나면다","후반가면","확정돼","내패확정","전부알수","좁혀지"],"e":["last","final","know","everything","end","certain","own","narrow","eventually"],"a":"27라운드에 상대 마지막 카드가 열리면 내 27장 집합이 확정돼요. 그중 어느 게 이미 소진됐는지는 별개고요.","b":"27라운드에 상대 마지막 카드가 열리면 내 27장 집합이 확정돼. 그중 어느 게 이미 소진됐는지는 별개고.","n":"When their last card turns over, the set of twenty-seven you held is fixed. Which of them already burned is a separate question."},{"i":"ip-diff-01","t":"난이도","q":"상대가 몇 명이에요?","Q":"Who can I play against?","k":["난이도","상대","몇명","종류","목록","레벨","단계선택","누구랑","붙어","대전","상대누구","몇가지","어떤","뭐뭐","고를수","선택","상대목록","어떤상대","붙을"],"e":["difficulty","opponents","who","levels","choose","list","against","available"],"a":"넷이에요. 초짜, 선수, 타짜, 라플라스의 악마.","b":"넷이야. 초짜, 선수, 타짜, 라플라스의 악마.","n":"Four — Rookie, Player, Sharper, and Laplace's Demon."},{"i":"ip-diff-02","t":"난이도","q":"초짜랑 선수가 뭐가 달라요?","Q":"Rookie versus Player?","k":["초짜","선수","차이","쉬운","아래두","루키","플레이어","제일쉬운","가장쉬운","초보상대","둘차이","초짜가","선수가","약한상대"],"e":["rookie","player","difference","versus","easier","easy","easiest","weakest"],"a":"초짜는 카운팅을 안 하고 전달자를 전부 진실이라 믿어요. 선수는 정확히 계산하지만 상대 베팅은 잡음으로 버려요.","b":"초짜는 카운팅을 안 하고 전달자를 전부 진실이라 믿어. 선수는 정확히 계산하지만 상대 베팅은 잡음으로 버려.","n":"Rookie does not count and takes every giver at face value. Player computes exactly but throws your betting away as noise."},{"i":"ip-diff-03","t":"난이도","q":"타짜는 뭐가 달라요?","Q":"What makes Sharper different?","k":["타짜","달라","차이","독법","읽는","샤퍼","특징","베팅읽","왜어려","어려워","타짜가","강한이유","타짜는","다른점"],"e":["sharper","different","reads","reading","special","harder","betting"],"a":"타짜는 내 베팅을 증거로 읽어요. 그거 하나로 선수를 83.5%로 이겨요.","b":"타짜는 내 베팅을 증거로 읽어. 그거 하나로 선수를 83.5%로 이겨.","n":"Sharper reads your betting as evidence about your own card. That one idea beats Player 83.5% of the time."},{"i":"ip-diff-04","t":"난이도","q":"라플라스의 악마가 뭐예요?","Q":"What is Laplace's Demon?","k":["악마","라플라스","최고","학습","최상위","제일센","제일센상대","최고난이도","가장센","제일어려","최강상대"],"e":["demon","laplace","top","hardest","learns","strongest","best"],"a":"그 독법을 당신 전용으로 학습해요. 15~20판이면 타짜랑 갈라져요.","b":"그 독법을 너 전용으로 학습해. 15~20판이면 타짜랑 갈라져.","n":"It learns that reading for you specifically. Fifteen to twenty games and it pulls away from Sharper."},{"i":"ip-diff-05","t":"난이도","q":"AI가 내 카드를 봐요?","Q":"Does the AI see my card?","k":["ai","치트","속임","엿보","반칙","보나","ai가","내패","패를봐","엿보나","보이나","컴퓨터","내이마","알고있","커닝","들여다","치팅"],"e":["ai","see","cheat","peek","know","unfair","computer","cheating","peeking","knows"],"a":"당신 이마에 있는 건 보죠. 규칙이 그러니까요. 자기 카드는 AI도 못 봐요.","b":"네 이마에 있는 건 보지. 규칙이 그러니까. 자기 카드는 AI도 못 봐.","n":"What is on your forehead, yes — that is the rule. Its own card it cannot see either."},{"i":"ip-diff-06","t":"난이도","q":"악마를 어떻게 이겨요?","Q":"How do I beat the demon?","k":["악마","이겨","공략","이기는","대응","이기","꺾","전략","어떻게이겨","공략법","최고난이도공략","이길방법"],"e":["beat","demon","against","defeat","counter","strategy"],"a":"많이 접으면 배울 게 없어요. 대신 당신도 전달자를 검증 못 하고요. 그게 정당한 경로예요.","b":"많이 접으면 배울 게 없어. 대신 너도 전달자를 검증 못 하고. 그게 정당한 경로야.","n":"Fold often and it has nothing to learn from. The cost is that you cannot verify the givers either. That trade is a fair route."},{"i":"ip-diff-07","t":"난이도","q":"왜 이름이 라플라스의 악마예요?","Q":"Why Laplace's Demon?","k":["이름","라플라스","유래","악마이름","왜그런","왜","왜라플라스","이름유래","붙은이유","악마라는","이름왜","명칭","왜악마"],"e":["why","name","laplace","called","origin","named","meaning"],"a":"라플라스는 확률이 우리 무지를 재는 척도일 뿐이라고 했어요. 그가 상상한 악마에게는 그 무지가 없고요.","b":"라플라스는 확률이 우리 무지를 재는 척도일 뿐이라고 했어. 그가 상상한 악마에게는 그 무지가 없고.","n":"Laplace held probability to be only the measure of our ignorance. The demon he imagined has none."},{"i":"ip-rec-01","t":"기록","q":"내 전적 어디서 봐요?","Q":"Where is my record?","k":["전적","기록","성적","통계","어디서봐","보기","내성적","확인해","전적페이지","기록어디","내기록","히스토리"],"e":["record","stats","where","history","track","see","view"],"a":"이 페이지 아래 전적 패널에 있어요. 난이도별로 나와요.","b":"이 페이지 아래 전적 패널에 있어. 난이도별로 나와.","n":"In the track record panel below, broken out by opponent."},{"i":"ip-rec-02","t":"기록","q":"로그인 안 하면 기록 남아요?","Q":"Do I need to sign in?","k":["로그인","비회원","저장","계정","게스트","남아","로그인안","게스트로","저장돼","기록남","비회원으로","가입"],"e":["login","sign","guest","saved","account","without","save","need"],"a":"안 남아요. 로그인해야 저장돼요.","b":"안 남아. 로그인해야 저장돼.","n":"It does not. Sign in and it saves."},{"i":"ip-rec-03","t":"기록","q":"순 칩이랑 순 마진이 뭐가 달라요?","Q":"Net chips versus net margin?","k":["순칩","마진","차이","누적","두값","달라","순마진","다른","계산","마진이랑","왜달라","둘차이","계산방식","무슨차이"],"e":["net","chips","margin","difference","versus","mean","calculated","between"],"a":"순 칩은 최종 스택에서 2,000을 뺀 합이에요. 순 마진은 내 스택 빼기 상대 스택이고요. 정보에 태운 칩만큼 둘이 벌어져요.","b":"순 칩은 최종 스택에서 2,000을 뺀 합이야. 순 마진은 내 스택 빼기 상대 스택이고. 정보에 태운 칩만큼 둘이 벌어져.","n":"Net chips is your closing stack minus the two thousand buy-in. Net margin is your stack minus theirs. The gap between them is what you burned on information."},{"i":"ip-rec-04","t":"기록","q":"전적이 비어 있어요","Q":"My record is empty","k":["비어","안보여","공백","기록없","텅","기록이","안나와","안뜨","비어있","아무것도","방금한판","안올라","반영안","업데이트","기록이없"],"e":["empty","nothing","missing","blank","showing","updated","appear"],"a":"로그인했는데 비어 있으면 아직 한 판도 끝내지 않은 거예요. 중간에 나간 게임은 안 들어가요.","b":"로그인했는데 비어 있으면 아직 한 판도 끝내지 않은 거야. 중간에 나간 게임은 안 들어가.","n":"If you are signed in and it is empty, no game has finished yet. Abandoned games do not count."},{"i":"ip-meta-01","t":"메타","q":"누가 만들었어요?","Q":"Who made this?","k":["만든","제작","개발","만들었","작자","누가","제작자","누가만들","개발자","저자","만든사람"],"e":["made","built","created","who","author","developer","creator"],"a":"김경민이요. 여행자 #0001이에요. 여기에 기록을 남기고 갔어요.","b":"김경민. 여행자 #0001이야. 여기에 기록을 남기고 갔어.","n":"Kyung-Min Park. Traveller #0001. He left his records here and moved on."},{"i":"ip-meta-02","t":"메타","q":"원래 인디안 포커랑 뭐가 달라요?","Q":"How is this different from normal Indian poker?","k":["원래","변형","기존","진짜","보통","달라진","다른","차이","일반","오리지널","원래인디안","보통인디안","뭐가달라","차이점"],"e":["different","normal","original","variant","standard","usual","real","changed","classic"],"a":"이마에 붙이는 건 같아요. 전달자, 정보 구매, 27라운드 카운팅이 얹혀 있고요.","b":"이마에 붙이는 건 같아. 전달자, 정보 구매, 27라운드 카운팅이 얹혀 있고.","n":"The forehead part is the same. The givers, the purchases and the twenty-seven-round count are laid on top."}];
+const PANEL_TRIG=[[["전달자","기버","giver","givers"],"전달자"],[["몬티","monty","열람","소진","lookback","미끼","decoy","교대","handover","구매","구입","정보를","살수","buy","purchase","product"],"구매"],[["올인","allin","블라인드","blind","shove","23"],"블라인드"],[["카운팅","카운트","counting","그리드","grid"],"카운팅"],[["난이도","초짜","타짜","악마","라플라스","rookie","sharper","demon","laplace","difficulty","opponent","opponents"],"난이도"],[["전적","승률","기록","record","records","마진","margin","통계","stats"],"기록"],[["만든","제작","개발","made","built","created","author"],"메타"],[["문양","무늬","조커","joker","jokers","suit","suits","서열","ranking","덱","deck"],"카드"],[["앤티","ante","폴드","fold","레이즈","raise","스트리트","street","베팅","bet","betting"],"베팅"]];
+const PANEL_STARTERS=["ip-basic-01","ip-basic-02","ip-giver-01","ip-buy-01","ip-blind-03","ip-diff-01","ip-count-01","ip-rec-01"];
+// ── EARENDEL 룰 라우터 v1 : 키워드 + 표제질문 유사도 매처 (모델 없음) ──
+// 페이지와 테스트가 같은 소스를 쓴다.
+function buildMatcher(CARDS, P){
+  P = P || {};
+  var W_KW    = P.W_KW    !== undefined ? P.W_KW    : 1.0;   // 키워드 가중
+  var W_SIM   = P.W_SIM   !== undefined ? P.W_SIM   : 5.0;   // 표제질문 유사도 가중
+  var OFFTOP  = P.OFFTOP  !== undefined ? P.OFFTOP  : 0.5;   // 주제 밖 카드 감쇠
+  var THRESH  = P.THRESH  !== undefined ? P.THRESH  : 2.4;   // 미매칭 컷
+  var H1      = P.H1      !== undefined ? P.H1      : 0.8;   // 한 글자 한글 키워드 감쇠
+  var W_ANS   = P.W_ANS   !== undefined ? P.W_ANS   : 0.7;   // 답변문 유사도 할인
+  var LMIN    = P.LMIN    !== undefined ? P.LMIN    : 0.45;  // 짧은 질의 컷 완화 하한
+  var W_OVL   = P.W_OVL   !== undefined ? P.W_OVL   : 0.55;  // 포함계수(overlap) 성분 비중
+
+  var N = CARDS.length;
+  var HAN = /[가-힣]/;
+
+  // 주제 트리거: 질의에 이 말이 있으면 해당 topic 카드만 정상 가중
+  var TRIG = P.TRIG || [
+    [['레버리지','배수','2배','3배','2x','3x','leverage','leveraged'], '레버리지'],
+    [['인버스','inverse','inverted','반전','뒤집'], '인버스'],
+    [['팟','pot'], '팟'],
+    [['원장','ledger','추론'], '원장'],
+    [['난이도','미스터','마켓','mrmarket','전무','인턴','애널리스트','difficulty','difficulties','intern','analyst','director'], '난이도'],
+    [['전적','승률','순위','상위','퍼센','기록','record','records','percentile','rank','ranking','winrate','saved'], '기록'],
+    [['만든','제작','개발','따라','made','built','created','author','based','inspired'], '메타']
+  ];
+
+  function norm(s){ return String(s||'').toLowerCase().replace(/[^0-9a-z가-힣]+/g,''); }
+  function toks(s){ return String(s||'').toLowerCase().replace(/[^0-9a-z가-힣]+/g,' ').split(' ').filter(Boolean); }
+  function bigrams(s){
+    var o = {}, n = 0;
+    if(s.length === 1){ o[s] = 1; return {g:o, n:1}; }
+    for(var i=0;i<s.length-1;i++){ var g=s.slice(i,i+2); if(!o[g]){ o[g]=1; n++; } }
+    return {g:o, n:n};
+  }
+  function sim2(a, b){
+    if(!a.n || !b.n) return {d:0, o:0};
+    var hit = 0;
+    for(var g in a.g) if(b.g[g]) hit++;
+    return { d: 2*hit/(a.n + b.n), o: hit/Math.min(a.n, b.n) };
+  }
+  function blend(a, b){ var r = sim2(a,b); return (1-W_OVL)*r.d + W_OVL*r.o; }
+
+  // df
+  var df = {};
+  CARDS.forEach(function(c){
+    var seen = {};
+    c.k.concat(c.e).forEach(function(w){ if(!seen[w]){ seen[w]=1; df[w]=(df[w]||0)+1; } });
+  });
+  var LOGN = Math.log(1+N);
+  function wgt(w){
+    var lf = w.length >= 3 ? 1 : (w.length === 2 ? 0.8 : (HAN.test(w) ? H1 : 0.55));
+    var id = 0.45 + 0.75 * Math.log(1 + N/(df[w]||1)) / LOGN;   // idf를 완만하게
+    return lf * id;
+  }
+
+  // 카드 전처리
+  var IDX = CARDS.map(function(c){
+    var qk = norm(c.q), qe = norm(c.Q);
+    return {
+      c: c,
+      bK: bigrams(qk),
+      bA: bigrams(norm(c.a)),
+      bE: bigrams(qe),
+      tE: toks(c.Q + ' ' + c.e.join(' '))
+    };
+  });
+
+  function hit(qn, qt, w){
+    if(!w) return 0;
+    var base = wgt(w);
+    if(HAN.test(w) || /^[0-9]+$/.test(w)){
+      if(w.length === 1){
+        for(var i=0;i<qt.length;i++){ if(qt[i].indexOf(w)===0) return base; }
+        return 0;
+      }
+      return qn.indexOf(w) >= 0 ? base : 0;
+    }
+    for(var j=0;j<qt.length;j++){
+      var t = qt[j];
+      if(t === w) return base;
+      // 'ai가', 'monty홀' 처럼 라틴 낱말에 조사가 붙은 토큰
+      if(t.length > w.length && t.indexOf(w) === 0 && HAN.test(t.charAt(w.length))) return base;
+      if(w.length >= 4 && (t.indexOf(w)===0 || w.indexOf(t)===0) && Math.abs(t.length-w.length) <= 3) return base*0.8;
+    }
+    return 0;
+  }
+
+  return function match(q){
+    var qn = norm(q), qt = toks(q);
+    if(qn.length < 2) return null;
+    var qb = bigrams(qn);
+
+    // 주제 판정
+    var topics = {}, any = false;
+    for(var t=0;t<TRIG.length;t++){
+      for(var w=0;w<TRIG[t][0].length;w++){
+        if(qn.indexOf(norm(TRIG[t][0][w])) >= 0){ topics[TRIG[t][1]] = 1; any = true; break; }
+      }
+    }
+
+    var all = [];
+    for(var i=0;i<IDX.length;i++){
+      var x = IDX[i], c = x.c, s = 0;
+      for(var a=0;a<c.k.length;a++) s += hit(qn, qt, c.k[a]);
+      for(var b=0;b<c.e.length;b++) s += hit(qn, qt, c.e[b]);
+      s *= W_KW;
+
+      // 표제질문 유사도 (KR 바이그램 / EN 토큰 자카드 중 큰 쪽)
+      var simK = Math.max(blend(qb, x.bK), W_ANS * blend(qb, x.bA));
+      var jac = 0;
+      if(qt.length){
+        var hitn = 0, seen = {};
+        for(var u=0;u<qt.length;u++){
+          if(seen[qt[u]]) continue; seen[qt[u]] = 1;
+          if(x.tE.indexOf(qt[u]) >= 0) hitn++;
+        }
+        jac = hitn / Math.max(qt.length, 3);
+      }
+      s += W_SIM * Math.max(simK, jac * 0.55);
+
+      if(any && !topics[c.t]) s *= OFFTOP;
+      all.push({card:c, score:s});
+    }
+    all.sort(function(a,b){ return b.score - a.score; });
+    var cut = THRESH * Math.min(1, Math.max(LMIN, LMIN + (1-LMIN)*(qb.n-2)/5));
+    var near = all.slice(0,3).filter(function(r){ return r.score > cut*0.45; }).map(function(r){ return r.card; });
+    if(!all.length || all[0].score < cut) return { card:null, score: all.length?all[0].score:0, near: near };
+    return { card: all[0].card, score: all[0].score, margin: all[0].score - (all[1]?all[1].score:0),
+             conf: all[0].score >= cut*1.45 ? 'hi' : 'mid', near: near };
+  };
+}
+
+var CFG = {W_SIM:3, OFFTOP:0.5, H1:0.8, LMIN:0.45, W_ANS:0.6, W_OVL:0.3, THRESH:2.0};
+if(typeof PANEL_TRIG !== 'undefined') CFG.TRIG = PANEL_TRIG;   // 카드 파일이 주제표를 주면 그걸 쓴다
+var match = buildMatcher(CARDS, CFG);
+
+var T = {
+  ph:      {en:"Ask about the rules", kr:"규칙에 대해 물어보세요"},
+  btn:     {en:"Ask", kr:"묻기"},
+  foot:    {en:"Rule answers are read from a fixed card set, word for word. Nothing is generated.",
+            kr:"규칙 답변은 고정된 카드에서 그대로 읽어옵니다. 지어내지 않아요."},
+  hintMore:{en:"You could also ask", kr:"이런 것도 물어볼 수 있어요", kr1:"이런 것도 있어"},
+  hintNear:{en:"Did you mean one of these?", kr:"이거였을까요?", kr1:"이거였어?"},
+  missKr0: "그건 제가 모르는 거예요. 아래 FULL RULES에 있을지도 몰라요.",
+  missKr1: "그건 나도 몰라. 아래 FULL RULES 봐.",
+  missEn:  "I don't have that one. Check FULL RULES below."
+};
+function t(k){ var o=T[k]; return (LANG==='kr') ? o.kr : o.en; }
+function t1(k){ var o=T[k]; return (LANG==='kr') ? (lv()===1 && o.kr1 ? o.kr1 : o.kr) : o.en; }
+
+// ── 여행자 번호: 게임 로직과 같은 guest id 를 쓴다 ──
+function guestId(){
+  try{
+    var g = localStorage.getItem('kyg_guest_id');
+    if(!g){
+      g = (window.crypto && crypto.randomUUID) ? crypto.randomUUID()
+        : 'g'+Date.now()+'-'+Math.random().toString(16).slice(2);
+      localStorage.setItem('kyg_guest_id', g);
+    }
+    return g;
+  }catch(e){ return 'anon'; }
+}
+function travNum(){
+  var g = guestId(), h = 0;
+  for(var i=0;i<g.length;i++){ h = (h*31 + g.charCodeAt(i)) >>> 0; }
+  return 1000 + (h % 9000);              // #0001 은 여행자 #0001 의 것이라 나오지 않는다
+}
+function lv(){
+  var A = window.KYG_AUTH;
+  return (A && A.user && A.nickname) ? 1 : 0;
+}
+function named(){ try{ return localStorage.getItem('kyg_ear_named') === '1'; }catch(e){ return false; } }
+function markNamed(){ try{ localStorage.setItem('kyg_ear_named','1'); }catch(e){} }
+
+// ── 대사 ──
+var NAMED_NOW = false;                          // 이번 방문에서 작명 이벤트가 일어났는가
+function greetLines(){
+  // 이미 이름을 아는 상대에게 번호를 다시 붙이지 않는다
+  if(lv() === 1 && named() && !NAMED_NOW){
+    var A = window.KYG_AUTH, n = (A && A.nickname) ? A.nickname : '';
+    if(LANG === 'kr'){ return [n + '.', '또 왔네. 규칙은 물어보면 알려줄게.']; }
+    return [n + '.', "Back again. Ask and I'll tell you."];
+  }
+  if(LANG === 'kr'){
+    return ['여행자 #' + travNum() + '.',
+            '에어렌들이에요. 여기 안내를 맡고 있어요.',
+            '규칙은 물어보면 알려드릴게요. 나머지는 직접 하셔야 하고요.'];
+  }
+  return ['Traveller #' + travNum() + '.',
+          'Earendel. I keep the rules desk here.',
+          "Ask and I'll tell you. The rest is yours to do."];
+}
+function nameLines(){
+  var A = window.KYG_AUTH, n = (A && A.nickname) ? A.nickname : '';
+  if(LANG === 'kr'){
+    return [n + '.', '이제 번호로 안 불러도 되네.', '렌이라고 불러도 돼. 다들 그렇게는 안 부르지만.'];
+  }
+  return [n + '.', 'No more numbers, then.', "You can call me Ren. Most people don't."];
+}
+function answerOf(c){
+  if(LANG !== 'kr') return c.n;
+  return lv() === 1 ? c.b : c.a;
+}
+function missLine(){
+  if(LANG !== 'kr') return T.missEn;
+  return lv() === 1 ? T.missKr1 : T.missKr0;
+}
+function qOf(c){ return LANG === 'kr' ? c.q : c.Q; }
+
+// ── 로그 (언어 전환 시 다시 그릴 수 있게 구조로 보관) ──
+var LOG = [];                                   // {k:'greet'|'name'|'q'|'a'|'miss', v}
+var CHIPS = { mode:'more', ids:[] };
+
+var STARTERS = (typeof PANEL_STARTERS !== 'undefined') ? PANEL_STARTERS
+  : ['np-basic-01','np-basic-05','np-lev-01','np-inv-01','np-pot-01','np-diff-01','np-led-01','np-rec-01'];
+var byId = {}; CARDS.forEach(function(c){ byId[c.i] = c; });
+
+function esc(s){ return String(s).replace(/[&<>"]/g, function(ch){
+  return ch==='&'?'&amp;':ch==='<'?'&lt;':ch==='>'?'&gt;':'&quot;'; }); }
+
+function renderLog(){
+  var el = $('askLog'), h = '';
+  LOG.forEach(function(e){
+    if(e.k === 'q'){ h += '<div class="q">' + esc(e.v) + '</div>'; }
+    else if(e.k === 'a'){ h += '<div class="a">' + esc(answerOf(byId[e.v])) + '</div>'; }
+    else if(e.k === 'miss'){ h += '<div class="a">' + esc(missLine()) + '</div>'; }
+    else if(e.k === 'greet'){ greetLines().forEach(function(l){ h += '<div class="a">' + esc(l) + '</div>'; }); }
+    else if(e.k === 'name'){ nameLines().forEach(function(l){ h += '<div class="a">' + esc(l) + '</div>'; }); }
+  });
+  el.innerHTML = h;
+  el.scrollTop = el.scrollHeight;
+}
+function renderChips(){
+  var el = $('askChips'), ids = CHIPS.ids.filter(function(i){ return byId[i]; });
+  if(!ids.length){ el.innerHTML = ''; return; }
+  var hint = CHIPS.mode === 'near' ? t1('hintNear') : t1('hintMore');
+  el.innerHTML = '<div class="ask-hint">' + esc(hint) + '</div>'
+    + ids.map(function(i){ return '<button type="button" class="ask-chip" data-cid="' + i + '">'
+        + esc(qOf(byId[i])) + '</button>'; }).join('');
+}
+function renderChrome(){
+  $('askInput').placeholder = t('ph');
+  $('askFoot').textContent = t('foot');
+}
+function renderAll(){ renderChrome(); renderLog(); renderChips(); }
+
+// ── 후속 칩: 같은 주제의 다른 질문 ──
+function followUps(card){
+  var out = [];
+  for(var i=0;i<CARDS.length && out.length<3;i++){
+    if(CARDS[i].t === card.t && CARDS[i].i !== card.i) out.push(CARDS[i].i);
+  }
+  if(out.length < 3){
+    for(var j=0;j<STARTERS.length && out.length<3;j++){
+      if(STARTERS[j] !== card.i && out.indexOf(STARTERS[j]) < 0) out.push(STARTERS[j]);
+    }
+  }
+  return out;
+}
+
+function ask(q){
+  q = String(q||'').trim();
+  if(!q) return;
+  LOG.push({k:'q', v:q});
+  var r = match(q);
+  if(r && r.card){
+    LOG.push({k:'a', v:r.card.i});
+    if(r.conf === 'hi'){ CHIPS = {mode:'more', ids: followUps(r.card)}; }
+    else {
+      CHIPS = {mode:'near', ids: r.near.filter(function(c){ return c.i !== r.card.i; })
+                                       .slice(0,3).map(function(c){ return c.i; })};
+      if(!CHIPS.ids.length) CHIPS = {mode:'more', ids: followUps(r.card)};
+    }
+  } else {
+    LOG.push({k:'miss'});
+    var near = (r && r.near) ? r.near.slice(0,3).map(function(c){ return c.i; }) : [];
+    CHIPS = near.length ? {mode:'near', ids:near} : {mode:'more', ids:STARTERS.slice(0,4)};
+  }
+  if(LOG.length > 40) LOG = LOG.slice(-40);
+  renderLog(); renderChips();
+}
+
+// ── 배선 ──
+$('askBtn').addEventListener('click', function(){
+  var v = $('askInput').value; $('askInput').value = ''; ask(v);
+});
+$('askInput').addEventListener('keydown', function(e){
+  if(e.key === 'Enter'){ e.preventDefault(); $('askBtn').click(); }
+});
+$('askChips').addEventListener('click', function(e){
+  var b = e.target.closest ? e.target.closest('.ask-chip') : null;
+  if(!b) return;
+  var c = byId[b.getAttribute('data-cid')];
+  if(c) ask(qOf(c));
+});
+
+window.APP_LANG_LISTENERS = window.APP_LANG_LISTENERS || [];
+window.APP_LANG_LISTENERS.push(function(lang){ LANG = lang; renderAll(); });
+
+window.KYG_AUTH_LISTENERS = window.KYG_AUTH_LISTENERS || [];
+window.KYG_AUTH_LISTENERS.push(function(user, nickname){
+  if(user && nickname && !named()){
+    markNamed();
+    NAMED_NOW = true;                          // 인사는 L0 그대로 두고, 그 뒤에 작명이 온다
+    LOG.push({k:'name'});
+    CHIPS = {mode:'more', ids: STARTERS.slice(0,4)};
+    renderLog(); renderChips();
+  } else { renderLog(); renderChips(); }   // 말씨 축이 바뀌면 기존 답변도 다시 읽는다
+});
+
+LOG.push({k:'greet'});
+CHIPS = {mode:'more', ids: STARTERS.slice(0,4)};
+renderAll();
+})();
+</script>
+
 <script src="/auth-widget.js" defer></script>
 </body>
 </html>
