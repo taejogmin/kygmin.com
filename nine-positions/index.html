@@ -1743,7 +1743,14 @@ function named(){ try{ return localStorage.getItem('kyg_ear_named') === '1'; }ca
 function markNamed(){ try{ localStorage.setItem('kyg_ear_named','1'); }catch(e){} }
 
 // ── 대사 ──
+var NAMED_NOW = false;                          // 이번 방문에서 작명 이벤트가 일어났는가
 function greetLines(){
+  // 이미 이름을 아는 상대에게 번호를 다시 붙이지 않는다
+  if(lv() === 1 && named() && !NAMED_NOW){
+    var A = window.KYG_AUTH, n = (A && A.nickname) ? A.nickname : '';
+    if(LANG === 'kr'){ return [n + '.', '또 왔네. 규칙은 물어보면 알려줄게.']; }
+    return [n + '.', "Back again. Ask and I'll tell you."];
+  }
   if(LANG === 'kr'){
     return ['여행자 #' + travNum() + '.',
             '에어렌들이에요. 여기 안내를 맡고 있어요.',
@@ -1863,6 +1870,7 @@ window.KYG_AUTH_LISTENERS = window.KYG_AUTH_LISTENERS || [];
 window.KYG_AUTH_LISTENERS.push(function(user, nickname){
   if(user && nickname && !named()){
     markNamed();
+    NAMED_NOW = true;                          // 인사는 L0 그대로 두고, 그 뒤에 작명이 온다
     LOG.push({k:'name'});
     CHIPS = {mode:'more', ids: STARTERS.slice(0,4)};
     renderLog(); renderChips();
