@@ -160,6 +160,17 @@ footer{padding:64px 0 80px;}
   header{padding:56px 0 48px;}
 }
 </style>
+<!-- 언어 기억: 선택한 언어를 저장해 두고, 다음 페이지에서 첫 페인트 전에 복원한다 -->
+<script>
+window.KYG_LANG=(function(){try{var v=localStorage.getItem('kyg_lang');if(v==='kr'||v==='en')return v;}catch(e){}return 'en';})();
+window.APP_LANG=window.KYG_LANG;
+if(window.KYG_LANG!=='en'){
+  document.documentElement.setAttribute('lang','ko');
+  document.documentElement.className+=' lang-pending';
+  setTimeout(function(){document.documentElement.classList.remove('lang-pending');},2000);
+}
+</script>
+<style>html.lang-pending .tx{visibility:hidden}</style>
 </head>
 <body>
 
@@ -373,9 +384,18 @@ footer{padding:64px 0 80px;}
 
   var els=[].slice.call(document.querySelectorAll('.tx'));
   els.forEach(function(el){ el.dataset.plain=el.textContent; el._s=new Scramble(el); });
-  var cur='en';
+  // 저장된 언어를 애니메이션 없이 즉시 반영한다 (페이지 이동 후 복원)
+  (function(){
+    var L = window.KYG_LANG || 'en';
+    var btns=document.querySelectorAll('#langtoggle button');
+    for(var i=0;i<btns.length;i++){ btns[i].classList.toggle('on', btns[i].dataset.lang===L); }
+    if(L!=='en') els.forEach(function(el){ var t=el.dataset[L]; if(t!==undefined){ el.textContent=t; el.dataset.plain=t; } });
+    document.documentElement.classList.remove('lang-pending');
+  })();
+  var cur=(window.KYG_LANG==='kr'?'kr':'en');
   function setLang(lang){
     if(lang===cur) return; cur=lang;
+    try{ localStorage.setItem('kyg_lang', lang); }catch(e){}
     document.documentElement.lang = (lang==='kr'?'ko':'en');
     var btns=document.querySelectorAll('#langtoggle button');
     for(var i=0;i<btns.length;i++){ btns[i].classList.toggle('on', btns[i].dataset.lang===lang); }
