@@ -1,0 +1,1871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pyrrhus &amp; Co. — KYGMIN</title>
+<meta name="description" content="4인 밀봉 경매. 20라운드. 하우스는 항상 이긴다." />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<script>
+window.KYG_LANG=(function(){try{var v=localStorage.getItem('kyg_lang');if(v==='kr'||v==='en')return v;}catch(e){}return 'en';})();
+window.APP_LANG=window.KYG_LANG;
+window.APP_LANG_LISTENERS=[];
+if(window.KYG_LANG!=='en'){
+  document.documentElement.setAttribute('lang','ko');
+  document.documentElement.className+=' lang-pending';
+  setTimeout(function(){document.documentElement.classList.remove('lang-pending');},2000);
+}
+</script>
+<style>html.lang-pending .tx{visibility:hidden}</style>
+<style>
+/* ============================================================
+   피로스 옥션 하우스 — MONO × GREEN 네오브루탈리스트.
+   토큰은 pyrrhus-co-reveal-v1.2.html 과 동일하다.
+   ============================================================ */
+:root{
+  --paper:#F6F6F4;
+  --white:#FFFFFF;
+  --sunken:#EFEFEA;
+  --ink:#141414;
+  --ink-4:#6B6B67;
+  --ink-6:#9A9A95;
+  --gray:#DDDDD8;
+  --green:#2BB673;
+  --green-deep:#0F6E56;
+  --red:#A32D2D;
+  --gold:#C89A00;
+
+  --arch:'Archivo','Helvetica Neue',Arial,sans-serif;
+  --sans:'Pretendard',-apple-system,'Apple SD Gothic Neo','Malgun Gothic','Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace;
+
+  --art-size:288px;
+  /* 리빌 규격 (reveal-v1.2): 작품 336px = 24×24 스프라이트 ×14,
+     스탬프 232px = 48×48 스탬프 ×4.83 (작품의 69%) */
+  --rv-art:336px;
+  --rv-stamp:232px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition:none!important;animation:none!important}
+}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:16px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  word-break:keep-all;overflow-wrap:break-word;
+}
+a{color:inherit;text-decoration:none}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--green);outline-offset:3px}
+.wrap{max-width:960px;margin:0 auto;padding:0 24px}
+
+/* ── Nav ── */
+nav{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:3px solid var(--ink)}
+.nav-inner{max-width:960px;margin:0 auto;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.logo{font-family:var(--arch);font-weight:900;font-size:19px;letter-spacing:-0.5px}
+.logo em{font-style:normal;background:var(--green);color:var(--paper);padding:0 6px;display:inline-block;transform:rotate(-1.5deg)}
+.nav-links{display:flex;gap:8px;flex-wrap:wrap}
+.nav-links a{font-family:var(--arch);font-size:12px;font-weight:700;text-transform:uppercase;
+  border:2px solid var(--ink);padding:6px 13px;background:#fff;box-shadow:3px 3px 0 var(--ink);
+  transition:transform .1s,box-shadow .1s}
+.nav-links a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink)}
+.nav-links a.on{background:var(--green);color:var(--paper)}
+
+/* ── 언어 토글 ── */
+#langtoggle{position:fixed;right:20px;bottom:20px;z-index:50;display:inline-flex;
+  border:2px solid var(--ink);box-shadow:3px 3px 0 var(--ink);background:#fff;
+  font-family:var(--arch);font-weight:700;font-size:12px;overflow:hidden}
+#langtoggle button{font:inherit;border:none;background:none;cursor:pointer;padding:9px 14px;color:var(--ink);letter-spacing:.5px}
+#langtoggle button.on{background:var(--green);color:var(--paper)}
+#langtoggle button+button{border-left:2px solid var(--ink)}
+
+/* ── Hero ── */
+header{padding:52px 0 34px;border-bottom:3px solid var(--ink)}
+.sec-tag{font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--green-deep);letter-spacing:1px;display:block;margin-bottom:14px}
+h1{font-family:var(--arch);font-weight:900;text-transform:uppercase;font-size:clamp(32px,6vw,52px);line-height:1.04;letter-spacing:-2px}
+h1 .box{background:var(--ink);color:var(--paper);padding:0 12px;display:inline-block;transform:rotate(-1deg)}
+.hero-sub{margin-top:18px;font-size:15.5px;max-width:620px;font-weight:500}
+.hero-note{margin-top:12px;font-family:var(--mono);font-size:12px;color:var(--ink-4)}
+
+main{padding:34px 0 96px}
+
+/* ── 공통 파츠 ── */
+.panel{border:3px solid var(--ink);background:var(--white);box-shadow:6px 6px 0 var(--ink);padding:22px}
+.btn{display:inline-block;font-family:var(--arch);font-size:13px;font-weight:700;text-transform:uppercase;
+  border:3px solid var(--ink);padding:11px 20px;box-shadow:4px 4px 0 var(--ink);
+  transition:transform .1s,box-shadow .1s;background:#fff;cursor:pointer;color:var(--ink)}
+.btn:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
+.btn-green{background:var(--green);color:var(--paper)}
+.btn-ink{background:var(--ink);color:var(--paper)}
+.btn[hidden]{display:none}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.btn:disabled:hover{transform:none;box-shadow:4px 4px 0 var(--ink)}
+.btn-sm{font-size:11px;padding:6px 11px;box-shadow:3px 3px 0 var(--ink);border-width:2px}
+.btn-sm:hover{box-shadow:2px 2px 0 var(--ink)}
+.btn-sm:disabled:hover{box-shadow:3px 3px 0 var(--ink)}
+.label{font-family:var(--mono);font-size:10px;letter-spacing:1.4px;color:var(--ink-6);text-transform:uppercase}
+.mono{font-family:var(--mono)}
+.n{font-family:var(--arch);font-weight:900;letter-spacing:-0.5px;font-variant-numeric:tabular-nums;line-height:1.1}
+
+/* 피로스 대사 */
+.say{display:flex;gap:12px;align-items:flex-start;border-left:3px solid var(--ink);
+  background:var(--sunken);padding:11px 14px;margin-bottom:20px}
+.say .hat{flex:0 0 auto;width:22px;height:22px;margin-top:2px}
+.say .v{font-size:14.5px;line-height:1.6}
+.say.quiet{visibility:hidden}
+
+/* ── 개회 ── */
+#screen-open .rules{margin:18px 0 22px;border-top:2px solid var(--gray);border-bottom:2px solid var(--gray);padding:14px 0}
+#screen-open .rules div{display:flex;gap:12px;font-size:14px;padding:4px 0;align-items:baseline}
+#screen-open .rules b{flex:0 0 116px;font-family:var(--mono);font-size:11px;letter-spacing:1px;
+  color:var(--ink-6);font-weight:600;text-transform:uppercase}
+.tier-row{display:flex;gap:9px;flex-wrap:wrap;margin:10px 0 8px}
+.tier{font-family:var(--arch);font-size:12.5px;font-weight:700;text-transform:uppercase;
+  border:3px solid var(--ink);padding:9px 15px;background:#fff;cursor:pointer;box-shadow:4px 4px 0 var(--ink);
+  transition:transform .1s,box-shadow .1s}
+.tier:hover{transform:translate(1px,1px);box-shadow:3px 3px 0 var(--ink)}
+.tier.on{background:var(--ink);color:var(--paper)}
+.tier-note{font-size:13px;color:var(--ink-4);min-height:2.4em;margin-bottom:18px;max-width:60ch}
+
+/* ── 라운드 ── */
+.hud{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+  border:3px solid var(--ink);background:var(--ink);color:var(--paper);padding:11px 16px;margin-bottom:20px}
+.hud .lot{font-family:var(--arch);font-weight:900;font-size:15px;letter-spacing:.5px;text-transform:uppercase}
+.hud .stats{display:flex;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:12px}
+.hud .stats b{color:var(--green);font-weight:600}
+
+.stage{display:grid;grid-template-columns:var(--art-size) 1fr;gap:28px;align-items:start}
+.art{width:var(--art-size);height:var(--art-size);background:var(--sunken);border:3px solid var(--ink);
+  display:flex;align-items:center;justify-content:center}
+.art svg{width:100%;height:100%}
+.lot-name{font-family:var(--arch);font-weight:700;font-size:21px;letter-spacing:-0.5px;margin:6px 0 8px}
+.lot-desc{font-size:14px;line-height:1.7;color:var(--ink);max-width:52ch}
+
+.est{display:flex;gap:0;margin:18px 0 0;border:3px solid var(--ink)}
+.est > div{flex:1;padding:9px 13px;display:flex;flex-direction:column;gap:2px}
+.est > div + div{border-left:3px solid var(--ink)}
+.est .n{font-size:19px}
+.est .wide{color:var(--green-deep)}
+
+.appr{margin-top:16px;border:3px solid var(--ink);background:var(--sunken);padding:12px 14px;
+  display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.appr .got{display:flex;flex-direction:column;gap:2px}
+.appr .got .n{font-size:22px;color:var(--green-deep)}
+.appr .hint{font-size:12px;color:var(--ink-4);flex-basis:100%}
+
+.bidbox{margin-top:16px;border:3px solid var(--ink);padding:14px}
+.bidrow{display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.bidrow .cur{font-family:var(--arch);font-weight:900;font-size:22px}
+input[type=number]{font-family:var(--arch);font-weight:900;font-size:22px;letter-spacing:-0.5px;
+  border:3px solid var(--ink);background:#fff;padding:6px 10px;width:170px;color:var(--ink);
+  font-variant-numeric:tabular-nums}
+input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+input[type=number]{-moz-appearance:textfield}
+.quick{display:flex;gap:7px;flex-wrap:wrap;margin-top:11px}
+.bid-hint{font-family:var(--mono);font-size:11.5px;color:var(--ink-4);margin-top:10px;min-height:1.6em}
+.bid-hint.bad{color:var(--red)}
+.bidact{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+
+/* ── 순위/좌석표 ── */
+.board{border:3px solid var(--ink);background:var(--white);box-shadow:5px 5px 0 var(--ink);margin-top:24px}
+.board .bh{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 14px;
+  border-bottom:3px solid var(--ink);font-family:var(--mono);font-weight:600;font-size:10.5px;
+  letter-spacing:1.4px;text-transform:uppercase}
+table{width:100%;border-collapse:collapse}
+th,td{padding:9px 14px;text-align:left;font-family:var(--mono);font-size:12px;border-bottom:2px solid var(--gray)}
+th{color:var(--ink-6);font-weight:600;font-size:10px;letter-spacing:1.2px;text-transform:uppercase}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+tr:last-child td{border-bottom:none}
+tr.you td{background:var(--sunken);font-weight:600}
+.seat-badge{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;
+  border:2px solid var(--ink);font-family:var(--mono);font-size:9px;font-weight:600;margin-right:7px;
+  vertical-align:-4px}
+
+/* ── 라운드 결과 ── */
+.verdict{border:3px solid var(--ink);padding:16px 18px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.verdict.won{background:var(--green);color:var(--paper)}
+.verdict.lost{background:var(--white)}
+.verdict.passed{background:var(--gray)}
+.verdict .ico{flex:0 0 auto;width:34px;height:34px}
+/* 가운데 칸(작은 라벨 + 이름)은 세로로 쌓는다. 안 그러면 한 줄로 붙어 버린다. */
+.verdict>span:not(.ico):not(.amt){display:flex;flex-direction:column;gap:4px;min-width:0}
+.verdict .who{font-family:var(--arch);font-weight:900;font-size:19px;letter-spacing:-0.5px}
+.verdict.won .label{color:#D8F3E6}
+.verdict .amt{font-family:var(--arch);font-weight:900;font-size:26px;letter-spacing:-1px;margin-left:auto;font-variant-numeric:tabular-nums}
+.disclose{margin-top:16px;border-top:2px solid var(--gray);padding-top:13px;font-size:13.5px;display:flex;gap:10px;align-items:flex-start}
+.disclose .ico{flex:0 0 auto;width:20px;height:20px;margin-top:2px}
+
+/* 소장품 */
+.holdings{margin-top:22px}
+.hold-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:11px;margin-top:10px}
+.hold{border:3px solid var(--ink);background:var(--white);padding:9px;display:flex;flex-direction:column;gap:7px}
+.hold .thumb{width:100%;aspect-ratio:1/1;background:var(--sunken);border:2px solid var(--ink);display:flex;align-items:center;justify-content:center}
+.hold .thumb svg{width:100%;height:100%}
+.hold .nm{font-family:var(--arch);font-weight:700;font-size:11.5px;line-height:1.25;text-transform:uppercase;letter-spacing:-0.2px}
+.hold .meta{font-family:var(--mono);font-size:10.5px;color:var(--ink-4);display:flex;justify-content:space-between;gap:6px}
+.hold .est-mine{font-family:var(--mono);font-size:10.5px;color:var(--green-deep);font-weight:600}
+.hold .acts{display:flex;gap:5px;flex-wrap:wrap}
+.empty{font-family:var(--mono);font-size:12px;color:var(--ink-6);padding:12px 0}
+
+/* ── 매입 창 ── */
+.window-tag{display:inline-block;font-family:var(--arch);font-weight:900;font-size:11px;letter-spacing:1.5px;
+  text-transform:uppercase;background:var(--gold);color:var(--ink);border:2px solid var(--ink);padding:2px 9px;
+  transform:rotate(-1.5deg);margin-bottom:12px}
+.botlog{margin-top:16px;border-top:2px solid var(--gray);padding-top:12px;font-family:var(--mono);font-size:12px;color:var(--ink-4)}
+.botlog div{padding:2px 0}
+
+/* ── 리빌 (reveal-v1.2 이식) ──
+   순서: 그림 → 이름·설명 → 낙찰가 → 뜸 → 실가치 카운트업 + 스탬프 → 사유 → 순위표.
+   .shown 이 붙는 순간이 전부 타이머로 관리된다. */
+.rv-stage{display:grid;grid-template-columns:auto auto;gap:56px;align-items:center;justify-content:center}
+.rv-art{width:var(--rv-art);height:var(--rv-art);opacity:0;transition:opacity .12s linear}
+.rv-right{display:flex;flex-direction:column;gap:18px;align-items:center}
+
+/* 스탬프. 회전 주인은 이 래퍼다 — renderPixels 에는 tilt 를 넘기지 않는다.
+   둘 다 걸면 −9°가 되고, reduced-motion 의 transform:none 이 SVG 내부 transform 에는 닿지 않는다. */
+.rv-stamp{width:var(--rv-stamp);height:var(--rv-stamp);display:flex;align-items:center;justify-content:center;
+  transform:rotate(-4.5deg);visibility:hidden}
+.rv-stamp.on{visibility:visible}
+.rv-stamp svg{width:100%;height:100%}
+
+.rv-ledger{width:var(--rv-stamp);border:3px solid var(--ink);background:var(--white);
+  box-shadow:4px 4px 0 var(--ink);display:flex;flex-direction:column}
+.rv-ledger > div{padding:10px 14px;display:flex;flex-direction:column;gap:2px}
+.rv-paid{border-bottom:3px solid var(--ink);opacity:0;transition:opacity .12s linear}
+.rv-worth{opacity:0;transition:opacity .12s linear}
+.rv-paid .n{font-size:19px;color:var(--ink-4)}
+.rv-worth .n{font-size:34px}
+.rv-swing{font-family:var(--mono);font-size:11.5px;letter-spacing:.4px;opacity:0;transition:opacity .12s linear;min-height:1.5em}
+.rv-swing.up{color:var(--green-deep)}
+.rv-swing.down{color:var(--red)}
+.rv-swing.flat{color:var(--ink-4)}
+
+.rv-info{margin-top:20px;opacity:0;transition:opacity .12s linear}
+.rv-reason{margin-top:18px;border-top:3px solid var(--ink);padding-top:14px;
+  display:flex;gap:12px;align-items:flex-start;opacity:0;transition:opacity .12s linear}
+.rv-reason .hat{flex:0 0 auto;width:22px;height:22px;margin-top:2px}
+.rv-reason .v{font-size:14px;line-height:1.6}
+.shown{opacity:1}
+
+tr.bump td{background:var(--green);color:var(--paper)}
+tr.bump .delta{color:var(--paper)}
+.delta{font-size:11px;color:var(--green-deep)}
+.delta.down{color:var(--red)}
+.rankmove{font-size:10px;color:var(--ink-6);margin-left:5px}
+.rv-acts{margin-top:22px;display:flex;gap:10px;flex-wrap:wrap}
+
+/* ── 클로징: 하우스의 몫 ──
+   경기 내내 어디에도 없던 숫자다. 종이 위가 아니라 먹지 위에 올린다 —
+   여기서 처음이자 마지막으로 한 번, 하우스가 제 이름으로 나선다. */
+.house{margin-top:26px;border:3px solid var(--ink);background:var(--ink);color:var(--paper);
+  box-shadow:6px 6px 0 var(--green-deep);padding:22px 24px}
+.house[hidden]{display:none}
+.house-head{display:flex;align-items:center;gap:12px;border-bottom:2px solid var(--ink-4);padding-bottom:14px}
+.house-head .ico{flex:0 0 auto;width:26px;height:26px;display:flex}
+.house-head .ico svg{width:100%;height:100%}
+.house-head .nm{font-family:var(--arch);font-weight:900;font-size:15px;letter-spacing:2px;text-transform:uppercase}
+.cut-row{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:11px 0;
+  border-bottom:1px solid #3A3A36;opacity:0;transition:opacity .14s linear}
+.cut-row .nm{display:flex;flex-direction:column;gap:3px;min-width:0;
+  font-family:var(--arch);font-weight:700;font-size:13.5px;letter-spacing:.3px}
+.cut-row .nm em{font-style:normal;font-family:var(--mono);font-size:10.5px;letter-spacing:.2px;
+  color:var(--ink-6);font-weight:400;text-transform:none}
+.cut-row .n{font-family:var(--mono);font-size:15px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.house-total{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-top:18px;
+  opacity:0;transition:opacity .14s linear}
+.house-total .nm{font-family:var(--arch);font-weight:900;font-size:13px;letter-spacing:2px;
+  text-transform:uppercase;color:var(--green)}
+.house-total .n{font-family:var(--arch);font-weight:900;font-size:38px;letter-spacing:-1.5px;
+  font-variant-numeric:tabular-nums;color:var(--green);white-space:nowrap}
+.house-vs{margin-top:16px;border-top:2px solid var(--ink-4);padding-top:14px;
+  font-size:13.5px;line-height:1.65;color:#D8D8D2;opacity:0;transition:opacity .14s linear}
+/* 공용 .shown 이 이 블록보다 위에 있다. 특정도가 같으니 그대로 두면 여기 opacity:0 이 이긴다. */
+.cut-row.shown,.house-total.shown,.house-vs.shown{opacity:1}
+
+/* ── 전적 패널 ──
+   화면(.screen) 바깥에 있어 언제나 아래에 깔려 있다. 사이트의 다른 두 게임과 같은 자리다.
+   여기 실리는 것은 끝난 판의 숫자뿐 — 지금 굴러가는 판에 대해서는 한 글자도 말하지 않는다. */
+.record{margin-top:48px;border:3px solid var(--ink);background:#fff;box-shadow:6px 6px 0 var(--ink);padding:20px 22px}
+.record h2{font-family:var(--arch);font-weight:900;font-size:15px;letter-spacing:2px;text-transform:uppercase;
+  border-bottom:3px solid var(--ink);padding-bottom:8px;margin:0 0 14px}
+.record .rec-note{font-family:var(--mono);font-size:12px;color:var(--ink-4);line-height:1.7;margin:0}
+.record .rec-scroll{overflow-x:auto}
+.record table{border-collapse:collapse;width:100%;min-width:480px;font-family:var(--mono);font-size:12px}
+.record th,.record td{border-bottom:1px solid var(--gray);padding:7px 8px;text-align:right;
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+.record th{font-family:var(--arch);font-size:11px;letter-spacing:1px;text-transform:uppercase;
+  border-bottom:3px solid var(--ink);background:var(--sunken)}
+.record th:first-child,.record td:first-child{text-align:left}
+.record td:first-child{font-family:var(--arch);font-weight:700;font-size:11.5px;letter-spacing:1px;text-transform:uppercase}
+.record .first{color:var(--green-deep);font-weight:700}
+.record .rate{font-weight:700}
+.record tr.tot td{background:var(--sunken);border-top:3px solid var(--ink);border-bottom:none;font-weight:700}
+/* 하우스를 넘어선 판. 0이 정상이고 1이 사건이라, 0일 때와 아닐 때 무게를 다르게 준다. */
+.record .rec-foot{font-family:var(--mono);font-size:11.5px;color:var(--ink-4);margin:12px 0 0;line-height:1.7}
+.record .rec-foot b{font-family:var(--arch);letter-spacing:.5px}
+.record .rec-foot.hit{color:var(--ink)}
+.record .rec-foot.hit b{color:var(--green-deep)}
+
+.screen{display:none}
+.screen.on{display:block}
+
+@media (max-width:760px){
+  .stage{grid-template-columns:1fr;gap:20px}
+  .art{width:100%;height:auto;aspect-ratio:1/1}
+  .hud{flex-direction:column;align-items:flex-start;gap:8px}
+  .rv-stage{grid-template-columns:1fr;gap:22px;justify-content:stretch}
+  .rv-art{width:100%;height:auto;aspect-ratio:1/1}
+  .rv-right{align-items:stretch}
+  .rv-stamp,.rv-ledger{width:100%}
+  .house{padding:18px 16px}
+  .house-total{flex-direction:column;align-items:flex-start;gap:2px}
+  .house-total .n{font-size:30px}
+  .record{padding:18px 16px}
+}
+@media (prefers-reduced-motion:reduce){
+  .rv-stamp{transform:none}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="/index.html">KYG<em>MIN</em></a>
+    <div class="nav-links">
+      <a href="/index.html"><span class="tx" data-en="Home" data-kr="홈">Home</span></a>
+      <a href="/playhouse/">PLAYHOUSE</a>
+      <a class="on" href="./"><span class="tx" data-en="Pyrrhus &amp; Co." data-kr="피로스 옥션 하우스">Pyrrhus &amp; Co.</span></a>
+      <a href="/cv.html">CV &#128274;</a>
+    </div>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <span class="sec-tag tx" data-en="PLAYHOUSE — A SEALED-BID AUCTION" data-kr="플레이하우스 — 밀봉 입찰 경매">PLAYHOUSE — A SEALED-BID AUCTION</span>
+    <h1>PYRRHUS <span class="box">&amp; CO.</span></h1>
+    <p class="hero-sub tx" data-en="Four seats, one billion each, twenty lots. You never see what a piece is worth until the room is empty." data-kr="자리는 넷, 예산은 각자 10억 파운드, 출품작은 스무 점. 값은 경매장이 비고 나서야 드러납니다.">Four seats, one billion each, twenty lots. You never see what a piece is worth until the room is empty.</p>
+    <p class="hero-note tx" data-en="SEALED FIRST-PRICE · 20 ROUNDS · SEAT FEE 15%" data-kr="밀봉 1차가격 · 20라운드 · 자리세 15%">SEALED FIRST-PRICE · 20 ROUNDS · SEAT FEE 15%</p>
+  </div>
+</header>
+
+<main><div class="wrap">
+
+  <!-- ═══ 개회 ═══ -->
+  <section id="screen-open" class="screen on">
+    <div class="panel" style="max-width:660px">
+      <div class="say" id="open-say"><span class="hat" id="open-hat"></span><span class="v" id="open-line"></span></div>
+      <div class="rules" id="open-rules"></div>
+      <span class="label" id="tier-label"></span>
+      <div class="tier-row" id="tier-row"></div>
+      <p class="tier-note" id="tier-note"></p>
+      <button class="btn btn-green" id="btn-start"></button>
+    </div>
+  </section>
+
+  <!-- ═══ 라운드 ═══ -->
+  <section id="screen-round" class="screen">
+    <div class="hud">
+      <span class="lot" id="hud-lot"></span>
+      <span class="stats" id="hud-stats"></span>
+    </div>
+    <div class="say" id="round-say"><span class="hat" id="round-hat"></span><span class="v" id="round-line"></span></div>
+    <div class="panel">
+      <div class="stage">
+        <div class="art" id="round-art"></div>
+        <div>
+          <span class="label" id="round-tag"></span>
+          <h2 class="lot-name" id="round-name"></h2>
+          <p class="lot-desc" id="round-desc"></p>
+          <div class="est" id="round-est"></div>
+          <div class="appr" id="round-appr"></div>
+          <div class="bidbox" id="round-bidbox"></div>
+        </div>
+      </div>
+    </div>
+    <div class="board" id="round-board"></div>
+  </section>
+
+  <!-- ═══ 라운드 결과 ═══ -->
+  <section id="screen-result" class="screen">
+    <div class="hud">
+      <span class="lot" id="res-lot"></span>
+      <span class="stats" id="res-stats"></span>
+    </div>
+    <div class="say" id="res-say"><span class="hat" id="res-hat"></span><span class="v" id="res-line"></span></div>
+    <div class="panel">
+      <div class="verdict" id="res-verdict"></div>
+      <div class="disclose" id="res-disclose"></div>
+      <div class="holdings" id="res-holdings"></div>
+    </div>
+    <div class="board" id="res-board"></div>
+    <div style="margin-top:22px"><button class="btn btn-green" id="btn-next"></button></div>
+  </section>
+
+  <!-- ═══ 하우스 매입 창 ═══ -->
+  <section id="screen-buyback" class="screen">
+    <div class="hud">
+      <span class="lot" id="bb-lot"></span>
+      <span class="stats" id="bb-stats"></span>
+    </div>
+    <div class="say" id="bb-say"><span class="hat" id="bb-hat"></span><span class="v" id="bb-line"></span></div>
+    <div class="panel">
+      <span class="window-tag" id="bb-tag"></span>
+      <p style="font-size:13.5px;color:var(--ink-4);max-width:60ch" id="bb-rule"></p>
+      <div class="holdings" id="bb-holdings"></div>
+      <div class="botlog" id="bb-botlog"></div>
+    </div>
+    <div style="margin-top:22px"><button class="btn btn-green" id="btn-bb-close"></button></div>
+  </section>
+
+  <!-- ═══ 리빌 ═══ -->
+  <section id="screen-reveal" class="screen">
+    <div class="hud">
+      <span class="lot" id="rv-lot"></span>
+      <span class="stats" id="rv-stats"></span>
+    </div>
+    <div class="say" id="rv-say"><span class="hat" id="rv-hat"></span><span class="v" id="rv-line"></span></div>
+    <div class="panel">
+      <div class="rv-stage">
+        <div class="art rv-art" id="rv-art"></div>
+        <div class="rv-right">
+          <div class="rv-stamp" id="rv-stamp"></div>
+          <div class="rv-ledger">
+            <div class="rv-paid" id="rv-paid">
+              <span class="label" id="rv-paid-label"></span>
+              <span class="n" id="rv-paid-value">—</span>
+            </div>
+            <div class="rv-worth" id="rv-worth">
+              <span class="label" id="rv-worth-label"></span>
+              <span class="n" id="rv-worth-value">£0M</span>
+              <span class="rv-swing" id="rv-swing"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="rv-info" id="rv-info">
+        <span class="label" id="rv-tag"></span>
+        <h2 class="lot-name" id="rv-name"></h2>
+        <p class="lot-desc" id="rv-desc"></p>
+      </div>
+      <div class="rv-reason" id="rv-reason">
+        <span class="hat" id="rv-reason-hat"></span>
+        <span class="v" id="rv-reason-line"></span>
+      </div>
+    </div>
+    <div class="board" id="rv-board"></div>
+    <div class="rv-acts">
+      <button class="btn btn-green" id="btn-rv-next"></button>
+      <button class="btn" id="btn-rv-skip"></button>
+    </div>
+  </section>
+
+  <!-- ═══ 클로징 — 승자 발표 → 하우스 몫 → 폐회 (룰북 §9) ═══ -->
+  <section id="screen-end" class="screen">
+    <div class="say" id="end-say"><span class="hat" id="end-hat"></span><span class="v" id="end-line"></span></div>
+    <div class="panel">
+      <h2 class="lot-name" id="end-title"></h2>
+      <div class="board" style="margin-top:14px;box-shadow:none" id="end-board"></div>
+      <div class="holdings" id="end-holdings"></div>
+    </div>
+
+    <!-- 2단계에서 처음 열린다. 진행 중에도, 리빌에도 이 숫자는 없다. -->
+    <section class="house" id="end-house" hidden>
+      <div class="house-head">
+        <span class="ico" id="house-ico"></span>
+        <span class="nm" id="house-label"></span>
+      </div>
+      <div id="house-terms"></div>
+      <div class="house-total" id="house-total">
+        <span class="nm" id="house-total-label"></span>
+        <span class="n" id="house-total-value"></span>
+      </div>
+      <div class="house-vs" id="house-vs"></div>
+    </section>
+
+    <div class="rv-acts">
+      <button class="btn btn-green" id="btn-close-next"></button>
+      <button class="btn btn-ink" id="btn-again" hidden></button>
+    </div>
+  </section>
+
+  <!-- ═══ 전적 — 화면 밖. 어느 단계에서도 아래에 깔려 있다 ═══ -->
+  <div class="record">
+    <h2 id="rec-title"></h2>
+    <div id="rec-body"></div>
+  </div>
+
+</div></main>
+
+<div id="langtoggle">
+  <button data-lang="en" class="on">EN</button>
+  <button data-lang="kr">한</button>
+</div>
+
+<script>
+/* ── 언어 토글 (사이트 공통 규약: kyg_lang + lang-pending 마스크) ── */
+(function(){
+  var els=[].slice.call(document.querySelectorAll('.tx'));
+  function paint(lang){
+    els.forEach(function(el){ var t=el.dataset[lang]; if(t!==undefined) el.innerHTML=t; });
+    var btns=document.querySelectorAll('#langtoggle button');
+    for(var i=0;i<btns.length;i++){ btns[i].classList.toggle('on', btns[i].dataset.lang===lang); }
+  }
+  function setLang(lang){
+    if(lang===window.APP_LANG) return;
+    window.APP_LANG=lang;
+    document.documentElement.lang=(lang==='kr'?'ko':'en');
+    try{ localStorage.setItem('kyg_lang', lang); }catch(e){}
+    paint(lang);
+    window.APP_LANG_LISTENERS.forEach(function(fn){ try{ fn(lang); }catch(e){ console.error(e); } });
+  }
+  paint(window.KYG_LANG||'en');
+  document.documentElement.classList.remove('lang-pending');
+  document.getElementById('langtoggle').addEventListener('click', function(e){
+    var b=e.target.closest('button'); if(b) setLang(b.dataset.lang);
+  });
+})();
+</script>
+
+<script>
+/* ============================================================
+   피로스 옥션 하우스 — 게임 엔진 + 20라운드 상태 기계
+   룰북 v1.2 / 엔진 v7. 상수는 헤드리스 검증(findings v7-port)을 통과한 값이며
+   바꾸면 티어 승률이 어긋난다.
+   ============================================================ */
+(function(){
+"use strict";
+
+/* ── 에셋 (빌드 시 주입) ── */
+var SPRITES = {"framed-painting":["000000000000000000000000","000000000000000000000000","000444444444444444444000","000433333333333333334000","000434444444444444434000","000434111111111111434000","000434111111111111434000","000434111111166111434000","000434111111666611434000","000434111111666611434000","000434111111166111434000","000434111111111111434000","000434111122211111434000","000434112222222111434000","000434222222222222434000","000434555555555555434000","000434555555555555434000","000434444444444444434000","000433333333333333334000","000444444444444444444000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"porcelain-vase":["000000000000000000000000","000000000000000000000000","000000000444444000000000","000000000411114000000000","000000000041240000000000","000000000041240000000000","000000000041240000000000","000000000411224000000000","000000004111222400000000","000000041111222340000000","000000411111222234000000","000000411111222234000000","000000455555555554000000","000000455555555554000000","000000411111222234000000","000000041111222340000000","000000004111223400000000","000000000411234000000000","000000000444444000000000","000000004444444400000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"pocket-watch":["000000000000000000000000","000000000004400000000000","000000000040040000000000","000000000040040000000000","000000000044440000000000","000000000043340000000000","000000000444444000000000","000000044222222440000000","000000442222222244000000","000004421114411124400000","000044211111111112440000","000044211111511112440000","000044211111511112440000","000044211111555112440000","000044211115511112440000","000044211111111112440000","000044211114411112440000","000044222222222222440000","000004422222222224400000","000000442222222244000000","000000044222222440000000","000000000444444000000000","000000000000000000000000","000000000000000000000000"],"violin":["000000000000000000000000","000000000444444000000000","000000000411114000000000","000000000414414000000000","000000000411114000000000","000000000411114000000000","000000000411114000000000","000000000411114000000000","000000000411114000000000","000000000411114000000000","000000044111111440000000","000000441111111144000000","000000441111111144000000","000000044111111440000000","000000004411114400000000","000000004411114400000000","000000044111111440000000","000000441111111144000000","000004411111111114400000","000004411115511114400000","000000441111111144000000","000000044444444440000000","000000004444444400000000","000000000000000000000000"],"crown":["000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000004400000000000","000000000041140000000000","000004400411114004400000","000041144111111441140000","000411112211112211114000","000411112211112211114000","000444444444444444444000","000411111111111111114000","000411331115511133114000","000411331115511133114000","000422222222222222224000","000444444444444444444000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"carousel-horse":["000000000000000000000000","000000000000000000000000","000000000004300000000000","000000000004300000000000","000000000004300000000000","000000000004300000000000","000044444004300000000000","000411124004300000000000","004111124004300000000000","004411224004300000000000","000004111244300000000000","000000411111111124000000","000004111155511122400000","000004111155511122400000","000004111111112222400000","000000411111122224000000","000000411111122224000000","000000041400004140000000","000000041400004140000000","000000041400004140000000","000000044400004440000000","000444444444444444444000","000433333333333333334000","000444444444444444444000"],"scroll":["000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000444000000000000444000","000424000000000000424000","000424444444444444424000","000424411111111114424000","000424412222222114424000","000424411111111114424000","000424412222222114424000","000424411111111114424000","000424412222222114424000","000424411111111114424000","000424411115511114424000","000424411111111114424000","000424444444444444424000","000424000000000000424000","000444000000000000444000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"embroidered-robe":["000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000004444444400000000","000000004115511400000000","000421111113311111124000","000421111113311111124000","000421111113311111124000","000422211113311112224000","000000411113311114000000","000000411113311114000000","000000411113311224000000","000000411113311224000000","000000411113311224000000","000000411113311224000000","000000411113311224000000","000000444444444444000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"woven-rug":["000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000044444444440000000","000000042222222240000000","000000421111111124000000","000000421111111124000000","000004211133331112400000","000004213325223312400000","000042113322223311240000","000042111133331111240000","000421111111111111124000","000422222222222222224000","004444444444444444444400","004111111111111111111400","004222222222222222222400","004444444444444444444400","000000000000000000000000","000000000000000000000000"],"bust":["000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000444444000000000","000000004111111400000000","000000004111111400000000","000000004131131400000000","000000004111111400000000","000000004112211400000000","000000004113311400000000","000000004111111400000000","000000000411114000000000","000000000042240000000000","000004111111111111400000","000041111111111111140000","000041111115511112240000","000041111111111222240000","000044444444444444440000","000000444444444444000000","000000433333333334000000","000000444444444444000000","000000000000000000000000","000000000000000000000000"],"dancer-statue":["000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000044444400000000","000000000466664000000000","000000000464644000000000","000000000466664000000000","000000000466664000000000","000000000041140000000000","000000044411114440000000","000000042111111240000000","000000042111111240000000","000000041211112140000000","000000411125521114000000","000000411111111114000000","000004121111111112440000","000041211112111111214000","000412111112111211121400","004121111112111121112140","004211111112111121111240","004444444444444444444440","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"folding-screen":["000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000444444000000000","000000000411114000000000","000444444411114444444000","000422224411114433334000","000422224411114433334000","000422224411114433334000","000422224411114433334000","000422224415114433334000","000422224411514433334000","000422224415114433334000","000422224411114433334000","000422224411114433334000","000422224411114433334000","000422224411114433334000","000422224411114433334000","000444444411114444444000","000000000444444000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"round-portrait":["000000000000000000000000","000000000000000000000000","000000000000000000000000","000000004444444400000000","000000441111111144000000","000004411222222114400000","000044112444422211440000","000041124444442221140000","000411224466664222114000","000412224466664222214000","000412224466666422214000","000412224466466422214000","000412224466664222214000","000412224666666422214000","000412224666644222214000","000411222466422222114000","000041144455444221140000","000044112222222211440000","000004411222222114400000","000000441111111144000000","000000004444444400000000","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"tapestry":["000000000000000000000000","000000000000000000000000","000000000000000000000000","000400000000000000004000","004444444444444444444400","000404111111111111404000","000004111111111111400000","000004111111111111400000","000004222222222222400000","000004111111111111400000","000004111111111111400000","000004111115511111400000","000004111115511111400000","000004111111111111400000","000004111111111111400000","000004222222222222400000","000004111111111111400000","000004111111111111400000","000004444444444444400000","000004040404040404000000","000003030303030303000000","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"ink-drawing":["000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","004222222222222222222400","004111141131114111111400","004111141311114115111400","004111143111114151111400","004131343111114311111400","004113141113114111111400","004111341111314111111400","004111141111134311111400","004111141111114111111400","004111141111114111111400","004222222222222222222400","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"tea-bowl":["000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000044444444444444440000","000042222555555222240000","000004111111111111400000","000004111111111222400000","000000411111112224000000","000000044111122440000000","000000000444444000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"lidded-jar":["000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000005500000000000","000000000005500000000000","000000000443344000000000","000000004333333400000000","000004443333333344400000","000000041111111140000000","000000411111111114000000","000000411111111114000000","000000411111122224000000","000000411111122224000000","000000411111122224000000","000000411111122224000000","000000041111122240000000","000000004111122400000000","000000000444444000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"glass-decanter":["000000000000000000000000","000000000000000000000000","000000000444444000000000","000000000411114000000000","000000000041140000000000","000000000041140000000000","000000000041140000000000","000000000041140000000000","000000004411114400000000","000000446111111144000000","000000466111111114000000","000000461111111114000000","000000411111111114000000","000000411111111114000000","000000422222222224000000","000000422222222224000000","000000422255222224000000","000000444444444444000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"ceramic-plate":["000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000444444000000000","000000044111111440000000","000000441666566144000000","000000416262662614000000","000004162666666261400000","000004166666666661400000","000004126666666261400000","000004162666666621400000","000004166666666661400000","000004162666666261400000","000000416266262614000000","000000441662666144000000","000000044111111440000000","000000000444444000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"oil-lamp":["000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","004444444444444400000000","040041111111111144455000","040044111111122244440000","004440411112222400000000","000000041122224000000000","000000004444440000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"mantel-clock":["000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000044440000000000","000000000411114000000000","000000004111111400000000","000000041111111140000000","000000411144441114000000","000000414466664414000000","000000414664666414000000","000000446664666644000000","000000446664446644000000","000000446666666644000000","000000414666666414000000","000000414466664414000000","000000411144441114000000","000000411111111114000000","000000411115511114000000","000004111111111111400000","000004444444444444400000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"hourglass":["000000000000000000000000","000000000000000000000000","000444444444444444444000","000434333333333333434000","000040411111111114040000","000040411111111114040000","000040041111111140040000","000040004222222400040000","000040000422224000040000","000040000042240000040000","000040000004400000040000","000040000004400000040000","000040000042140000040000","000040000412114000040000","000040004112111400040000","000040041122221140040000","000040412222522214040000","000040422222222224040000","000434333333333333434000","000444444444444444444000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"brass-compass":["000000000000000000000000","000000000000000000000000","000000004444444400000000","000000004222222400000000","000000004222222400000000","000000004222222400000000","000000004444444400000000","000000044664466440000000","000000446666666644000000","000000466666666664000000","000004666665566666400000","000004666665566666400000","000044666644446666440000","000044466664466664440000","000044666664466666440000","000004666664466666400000","000004666666666666400000","000000466666666664000000","000000446666666644000000","000000044664466440000000","000000000444444000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"ceremonial-sword":["000000000000000000000000","000000000000000000000000","000000000045540000000000","000000000041140000000000","000000000004400000000000","000000000004400000000000","000000044442244440000000","000000000041140000000000","000000000041140000000000","000000000041140000000000","000000000041140000000000","000000000042240000000000","000000000041140000000000","000000000041140000000000","000000000041140000000000","000000000042240000000000","000000000041140000000000","000000000041140000000000","000000000042240000000000","000000000041140000000000","000000000004400000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"round-shield":["000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000004400000000000","000000004442244400000000","000000442422224244000000","000004422211112224400000","000004221111111122400000","000042211144441112240000","000044211466664112440000","000042114666666411240000","000422114665566411224000","000422114666666411224000","000042111466664111240000","000044211144441112440000","000042211111111112240000","000004221111111122400000","000004422211112224400000","000000442422224244000000","000000004442244400000000","000000000004400000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"helmet":["000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000445544000000000","000000004111111444000000","000000041111111113440000","000000411111111114044000","000004111111111114000000","000004111111111114000000","000004111111111124000000","000004144441111124000000","000441111111111124000000","000412111111111240000000","000412111111111240000000","000412141111111240000000","000444404111111124000000","000000000444444444000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"bronze-bell":["000000000000000000000000","000000000044440000000000","000000000040040000000000","000000000044440000000000","000000000041140000000000","000000000411114000000000","000000000411114000000000","000000000411114000000000","000000004111112400000000","000000004111112400000000","000000004111112400000000","000000004111112400000000","000000041111112240000000","000000041111112240000000","000000411111112224000000","000004111111111222400000","000041111111111122240000","000444444444444444444000","000444444444444444444000","000000000005500000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"pendant-necklace":["000000000000000000000000","000000000000000000000000","000400000000000000004000","000200000000000000002000","000040000000000000040000","000020000000000000020000","000004000000000000400000","000000200000000002000000","000000040000000040000000","000000002000000200000000","000000000400004000000000","000000000020020000000000","000000000004400000000000","000000000004400000000000","000000000041140000000000","000000000411114000000000","000000000415514000000000","000000000411224000000000","000000000041240000000000","000000000004400000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"signet-ring":["000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000044440000000000","000000004441144400000000","000000004115511400000000","000000004115511400000000","000000044441144440000000","000000411144441114000000","000004111144441111400000","000041114400004421140000","000041140000000042140000","000041140000000042140000","000411400000000004214000","000411400000000004214000","000411400000000004114000","000041140000000041140000","000041140000000041140000","000041114400004411140000","000004111144441111400000","000000411111111114000000","000000044411114440000000","000000000044440000000000","000000000000000000000000"],"hair-pin":["000000000000000000000000","000000000000000000000000","000000000000000000444000","000000000000000004111400","000000000000000004551400","000000000000000004111400","000000000000000004444000","000000000000000044000000","000000000000000440000000","000000000000004400000000","000000000000044000000000","000000000000440000000000","000000000004400000000000","000000000044000000000000","000000000440000000000000","000000004400000000000000","000000044000000000000000","000000440000000000000000","000004400000000000000000","000044000000000000000000","000440000000000000000000","004400000000000000000000","000000000000000000000000","000000000000000000000000"],"beaded-bracelet":["000000000000000000000000","000000000000000000000000","000000000004400000000000","000000000041140000000000","000000000411114000000000","000000440411114044000000","000004114041140411400000","000004114004400411400000","000000440000000044000000","000044000000000000440000","000411400000000004114000","004111140000000041111400","004111140000000041111400","000411400000000004114000","000044000000000000440000","000000440000000044000000","000004114004400455400000","000004114041140455400000","000000440411114044000000","000000000411114000000000","000000000041140000000000","000000000004400000000000","000000000000000000000000","000000000000000000000000"],"lion-figure":["000000000000000000000000","000000000000000000000000","000000004444444400000000","000000442222222244000000","000000422222222224000000","000004222666666222400000","000004222666666222400000","000042222646646222240000","000004222666666222400000","000044222662266222440000","000000422664466224000000","000004422222222224400000","000000042222222240000000","000000004111111400000000","000000041115511140000000","000000411111111124000000","000004111121121122444000","000004111121121122112400","000004111121121121144400","000004111144441121400000","000004444400004444400000","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"totem-post":["000000000000000000000000","000000000000000000000000","000000044444444440000000","000000041111111240000000","000004411441144214400000","000004111441144211400000","000004411111111214400000","000000041144441140000000","000000042222222240000000","000000041111111240000000","000004411411114214400000","000004111112211211400000","000004411555555114400000","000000041111111140000000","000000042222222240000000","000000041111111240000000","000004411411114214400000","000004111412214211400000","000004411114411114400000","000000041111111240000000","000000041111111240000000","000000044444444440000000","000000000000000000000000","000000000000000000000000"],"bird-carving":["000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000044440000000","000000000000411114000000","000000000000411414000000","000000000000411114450000","000000000000411140450000","000000004444111114000000","000444441111221114000000","000444111111222114000000","000000411112221140000000","000000041112211400000000","000000004411444000000000","000000000044000000000000","000000000044000000000000","000044444422444444440000","000043333333333333340000","000043333333333333340000","000044444444444444440000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"bound-book":["000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000440000000440000000","000004114000004114000000","000041111400041111400000","000411222240422221140000","004155111114111111114000","004155111113111111114000","004122222213122222214000","004111111113111111114000","004122222213122222214000","004111111113111111114000","004422222113122222144000","000044444443444444400000","000042222222222222400000","000004333333333334000000","000000044444444400000000","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"folded-map":["000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000044444444444444440000","000411113111211111114000","000411113111211151114000","000411113311211111114000","000411111311211131114000","000411111131211111114000","000422222232222222224000","000411111331211111114000","000411111311211113114000","000411111131211113114000","000411111133211111114000","000411111113211111114000","000411111113211111114000","000044444444444444440000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"letter-bundle":["000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000444444444444440000","000000422111411112240000","000000411221411221140000","000004411112422111140000","000004411111421111140000","000004444444554444440000","000444111122521111400000","000424111112411111400000","000414444444444444400000","000411112222411140000000","000411111221411140000000","000444444444444440000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"small-harp":["000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000045440000000000000000","000045144000000000000000","000041404400000000000000","000041400440000000000000","000041400244000000000000","000041400204400000000000","000041400202440000000000","000041400202044000000000","000041400202024400000000","000041400202020440000000","000041400202020244000000","000041400202020204400000","000041400202020202440000","000041400202020202044000","000041400202020202000000","000041144444444444440000","000041222222222222140000","000004444444444444400000","000000000000000000000000","000000000000000000000000"],"hand-drum":["000000000000000000000000","000000000000000000000000","000000004445444000000000","000000444222424440000000","000004422114112244000000","000044211111111124400000","000442111111111114440000","000444111111111114240000","004421111111111111244000","004211111111111111124000","004211111111111111124000","004211111111111111124000","004211111111111111124000","004211111111111111124000","004421111111111111244000","000424111111111114440000","000444111111111112440000","000044211111111124400000","000004422114112244000000","000000444242224440000000","000000004444444000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"pan-flute":["000000000000000000000000","000000000000000000000000","000000000000000000000000","004440444044404440444000","004240424042404240424000","004140414041404140414000","004140414041404140414000","004140414041404140414000","004440444044404540444000","004440444044404540444000","004140414041404140414000","004140414041404140414000","004140414041404140414000","004440414041404140414000","000000414041404140414000","000000444041404140414000","000000000041404140414000","000000000044404140414000","000000000000004140414000","000000000000004440414000","000000000000000000414000","000000000000000000444000","000000000000000000000000","000000000000000000000000"],"small-chest":["000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000004444444400000000","000000442222222244000000","000004111111111111400000","000042222222222222240000","000041113111111311140000","000041113114411311140000","000041113115511311140000","000041113111111311140000","000041113111111311140000","000041113111111311140000","000044444444444444440000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"folding-fan":["000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000004444444400000000","000000441111311144000000","000044311111311113440000","000411131111311131114000","004111131111311131111400","043111133111311331111340","413311113111311311113314","411331113311313311133114","441133111111111111331144","004441311111111113144400","000004411111111114400000","000000044411114440000000","000000000045540000000000","000000000004400000000000","000000000004400000000000","000000000004400000000000","000000000004400000000000"],"candle-stand":["000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000020000005000000200000","000020000005000000200000","000414000041400004140000","000414000041400004140000","000414000041400004140000","000414000041400004140000","000414000041400004140000","004434400433340044434000","000040000041400000040000","000044444411144444440000","000044444411144444440000","000000000041400000000000","000000000041400000000000","000000000041400000000000","000000000041400000000000","000000000041400000000000","000000044422244440000000","000000444444444444000000","000000000000000000000000","000000000000000000000000"],"mirror-stand":["000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000004400000000000","000000000443344000000000","000000004311113400000000","000000041111111140000000","000000431111111134000000","000000411611111114000000","000000411161111114000000","000000411116111114000000","000000411111611114000000","000000411111161114000000","000000411111111114000000","000000431111111134000000","000000041111111140000000","000000004311113400000000","000000000444444000000000","000000000041140000000000","000000044415514440000000","000000444444444444000000","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"wind-up-bird":["000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000444000000000000000","000004111400000000000000","000041411140444400000000","005511111140044000000000","000441111140044000000000","000004111114444400000000","000000411111111140000000","000000041111144114444000","000000411111433411124000","000000411122144111124000","000000411112211114444000","000000041111221140000000","000000041111111140000000","000000004114411400000000","000000000440044000000000","000000000440044000000000","000000004444444400000000","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"music-box":["000000000000000000000000","000000000000000000000000","000000000000444444440000","000000000004111111140000","000000000004111111400000","000000000041111111400000","000000000041111114000000","000000000411111114000000","000000000411111140000000","000000004444444440000000","000000004444444444444000","000000044442425242444000","000000444442333332444000","000004444444444444444000","000004111111111111434000","000004111111111111434000","000004112222222211434000","000004112111111211444000","000004112222222211400000","000004111111111111400000","000004444444444444400000","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"rocking-horse":["000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000044444000000000000000","000044111400000000000000","000004112400000000000000","000000411240000000000000","000000041124000004440000","000000411133444441114000","000004111135531111144000","000004111111111111400000","000000411144441114000000","000000041400004140000000","000000041400004140000000","004400041400004140004400","004444044444444440444400","000044440000000044440000","000000444444444444000000","000000004444444400000000","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"feathered-hat":["000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000220000000000","000000000000022000000000","000000000000002200000000","000000000000000220000000","000000004444444422000000","000000041111222242200000","000000041111222242200000","000000411111222224200000","000000433355533334000000","000000433333333334000000","000004444444444444400000","004111111111111111111400","004222222222222222222400","000444444444444444444000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"mounted-fossil":["000000000000000000000000","000000000000000000000000","000000000000000000000000","000444444444444444444000","000422222222222222224000","000421111111111111124000","000421111444444411124000","000421114422222441124000","000421144221412244124000","000421142144444124124000","000421142441114424424000","000421142415511412424000","000421142441441411424000","000421142144411411424000","000421144221114414424000","000421114421144114124000","000421111444441144124000","000421111111111441124000","000423111111111111324000","000422222222222222224000","000444444444444444444000","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"glass-dome-specimen":["000000000004400000000000","000000000444444000000000","000000044000000440000000","000000400000000004000000","000004000044440000400000","000004000411514000400000","000004004115511400400000","000004000411114000400000","000004000041140000400000","000004000004400000400000","000004000003200000400000","000004000003200000400000","000004003223200000400000","000004000303200000400000","000004000003200000400000","000004000003222300400000","000004010003203000400000","000004010003200000400000","000004000003200000400000","000004000003200000400000","000004444444444444400000","000444444444444444444000","000433333333333333334000","000444444444444444444000"]};
+var ICONS   = {"hammer":["000000000000000000000000","000000000000000000000000","000004400000000000440000","000004444444444444440000","000004444444444444440000","000004444444444444440000","000004400004400000440000","000000000004400000000000","000000000004400000000000","000000000004400000000000","000000000004400000000000","000000000004400000000000","000000000004400000000000","000000000004400000000000","000000000004400000000000","000000000004400000000000","000000000004400000000000","000000000004400000000000","000044444444444444444000","000044444444444444444000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"loupe":["000000000000000000000000","000000000000000000000000","000000000000000000000000","000000004444400000000000","000000044444440000000000","000000444000444000000000","000004440000044400000000","000044400000004440000000","000044000000000440000000","000044000000000440000000","000044000000000440000000","000044400000004440000000","000004440000044400000000","000000444000444440000000","000000044444444444000000","000000004444404444400000","000000000000000444440000","000000000000000044444000","000000000000000004444000","000000000000000000444000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"handover":["000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000444444440","000000000000000444444440","000000000000000444444440","000000000040000444444440","000000000044000444444440","000000000044400440000440","044444444444440440440440","044444444444440440440440","000000000044400440000440","000000000044000444444440","000000000040000444444440","000000000000000444444440","000000000000000444444440","000000000000000444444440","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"budget":["000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000044444400000000","000000000044444400000000","000000004440004400000000","000000004440004400000000","000000004440000000000000","000000004440000000000000","000000004440000000000000","000000004440000000000000","000004444444444400000000","000004444444444400000000","000000004440000000000000","000000004440000000000000","000000004440000000000000","000000004440000000000000","000004444444444444400000","000004444444444444400000","000004444444444444400000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"appraised":["000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000044444444440000000","000000444444444444000000","000004000000000000400000","000044000000000000440000","000044000000000000440000","000044000000000055440000","000044000000000555440000","000044000000005550440000","000044005500005500440000","000044005550055500440000","000044000555555000440000","000044000055550000440000","000044000005500000440000","000004000000000000400000","000000444444444444000000","000000044444444440000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000"],"pyrrhos":["000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000004444444440000000","000000004444444440000000","000000004444444440000000","000000004444444440000000","000000004444444440000000","000000004444444440000000","000000004444444440000000","000000004444444440000000","000000004444444440000000","000000004444444440000000","000444444444444444444400","000444444444444444444400","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000","000000000000000000000000"]};
+var STAMPS  = {"genuine_kr":["000000000000000000000000000100000000000000000000","000000000000000000000002100000000000000000000000","000000000000100000110021112220000000000000000000","000000000000000112112002111111110000000000000000","000000000100012111111001111111112110000000000000","000000000011111111100000020012111110000000000000","000000000011111110000000000000001212110000000000","000000000211010000000000000000000021110000000000","000000002112000000011111010000000001112000000000","000000011111000012000000000001000000111200000000","000001111110002100000000000000002000111110000000","000002111000000000000000000000001000011111000000","000121120000100011020002012020010000002211000000","000011100000000000000000000000000000000011100000","010002100021000000000000000000000001100021110000","000021200020000000000000000000000000200001120000","000111000200000000000000000000000000000002120000","012110000111111111011000001121211111000002110000","000000000000011000011000000011002100000000000000","000000000000100100011000000011001200000000000000","000000000002000010012000001211121112000000000000","000000000010000001011000000000000000000000000000","000000000000000000021000021211111122100000000000","000000000000000000000000000000220000000000000000","000000000002200000000000000000120000000000000000","000000000002100000000000000122121110000000000000","000000000001100000000000000110000110000000000000","000000000002200000000000000120000110000000000000","000000000001100000000000000220000210000000000000","000110000002111211212000000211111110020001210000","000111000200000000000000000000000000010000021000","000212000000000000000000000000000000000000000200","000111200010000000000000000000000001000012100000","000211110001000000000000000000000001000011100000","000021100000000000011010022011010020000111000000","000002111000001000000000000000001100001111000000","000001111210002000000000000000011000001111000000","000000112110000000000000000000200000111200000000","000000010111000000121021122110000021111200000000","000000000212020000000000000000000211111000000000","000000000211212000000000000000211111000000000000","000000000021111111111000000112111110000000000000","000000000000121111112001212111112010000000000000","000000000000001211112001111111220200000000000000","000000000000000010112021211120020000000000000000","000000000000001100000000000010000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000"],"genuine_en":["000000000000000000000000000000000000000000000000","000000000000000000000011100000000000000000000000","000000000000000001120011112202200100000000000000","000000000002000001121021111111110000000000000000","000000000000021121002000011112212110000000000000","000000000012211110000000001100011111010000000000","000000000111111120000000000000011111100000000000","000000002111120000000000000000000021110000000000","000000011112000000111120101110000011111000000000","000000111110000010000000000000200002111110000000","000000111100002100000000000000010000211112000000","000001111000011000000000000000002100002111000000","000011110000100000000000000000000000000112000000","000111200002000000000000000000000000000111110000","000111100002000000000000000000000001100111110000","000111000000000021000002001021010000100002111000","000111000100000000000000000000000000000000110000","002111000000000000000000000000000000010002120000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000002110201011101020112010101110102210000000","000000001010101002001010200022000100102000000000","000000001110202002001120112021200100201000000000","000000002010102001001020200001100200101000000000","000000002020121001001010221010100200201120000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","001111000000000021020010022012010000000001110000","000212000100000000000000000000000000010000000000","000111100000000000000000000000000000100000000200","000111100002000000000000000000000001100011100000","000011110000000000000000000000000000000111200000","000211110000000000000000000000000020002111000000","000001111000001000000000000000000000000211000000","000000111200001100000000000000000000011110000000","000001111110000001000000000000100001211100000000","000000011112000000120210110110000011111101000000","000000001111100000000000000000000011110000000000","000000000011112000000000000000211111100000000000","000000000011111121100000000002111111000000000000","000000000000011111111022111111121110000000000000","000000000000001020111011111111000000000000000000","000000000000000000221021111111000100000000000000","000000000000000000000000111000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000"],"fake_kr":["000000000000000000000000000000000000000000000000","000000000000000000000000000000000000100000000000","000000000000000000000000010000000000000000000000","000000000000000000000000000000000000000000000000","000000121212111100000121111110111202011121000200","000000211111111200000111111111111111111111000000","000001111211011200000211121221021122112221100100","000021200000000000000000000000000000000002100000","000011100212120100111101010000121101111200210000","000011200000000000000000000000000000000001120000","000011200000000000000000000000000000000002110000","000011000000000000000000000000000000000001110000","000011200000000000000000000000000000000001120000","000021100000000001001102201002100000000002200000","000021000000000000000000000000000000000001120100","000000000000000000000000000000000000000001110000","000000000000000000000000000000000000000001110000","000000000001211112011000001111111211000000110000","000000000000000012011000000012002200000002110000","000011200000000011011000000012002200000002120000","010011200000000110022000001111121112000001112000","000011100000000110012000000000000000000001120000","000011200000002100021120011212111221100001110000","000011200000001100011110000000110000000001110000","010001100000011000011000000000220000000002110000","000011200000012000021000000221222210000001110000","000011100000110000011000000210000110000002120000","000021000000110000011000000110000210000001110000","010021100001200000012000000110000120000001120000","000001200001200000012000000121111110000000001000","000011100000000000000000000000000000000000001000","000021200000000000000000000000000000000000000000","000011200000000000000000000000000000000000000000","000011100000000001102201201200000000000000000000","000011100000000000000000000000000000000001110000","000011100000000000000000000000000000000001110000","000021100000000000000000000000000000000001110000","000011200000000000000000000000000000000001110000","000012000000000000000000000000000000000001110000","000012000101101001111111110110112021111001110000","000021100000000000000000000000000000000001110000","000011111211011111111212111000000111211121120000","000001111111211111111111111200000021111111200000","000002112101111112211111212200000212121212000000","000000000000000000000000000000000000000000000000","000000000000000000002000000000000002000000000200","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000"],"fake_en":["000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000001211111221100000111202121111101221002000200","000011111111112100000211111111111111111121100000","001011111112110100000121101112111011121111100000","000011100000000000000000000000000000000001110000","000011201120112120122110100021101100010201110000","000011100000000000000000000000000000000002120000","000011100000000000000000000000000000000001100000","000011100000000000000000000000000000000002110000","000011200000000000000000000000000000000000110000","000021100000000000000000000000000000000000110000","000011100000000001102102100100000000000001110000","000000000000000000000000000000000000000002120000","000000000000000000000000000000000000000001110000","000000000000000000000000000000000000000001120000","000000000000000000000000000000000000000001120000","000012000000000000000000000000000000000001110100","000011100000121000022100011120002000100001110000","000021000001000200100020010001002000200002110000","010011100002000000200010010002000101000002120000","000011100001000000100020011110000020000001110000","000021100001000000100010020000000010000002110000","000011100001000200100010010000000010000001120000","000021200000212000011200020000000010000001110000","000021200000000000000000000000000000000002120000","000011200000000000000000000000000000000001120000","000011100000000000000000000000000000000000000000","000021100000000000000000000000000000000000000000","000011000000000000001102001101100000000000000000","000021100000000000000000000000000000000000000000","002001100000000000000000000000000000000000000000","000011100000000000000000000000000000000001110000","000011200000000000000000000000000000000001110000","000011100000000000000000000000000000000002120000","000021000000000000000000000000000000000001120000","000021100000000000000000000000000000000000120000","000011102221020101101111102001010120000102120000","000011100000000000000000000000000000000002110000","000002121211112212111212111100000011122111210000","000002111111111111111111111100000112111112000000","000000111121111212202222111000000210222011200000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000001100000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000"],"passed_en":["000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000010000000000000000000000000000000000000010000","000000000000000000000000000000000000000000000000","000021121111111111110002111221111112011112210000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000012101120212011100210110000000000000","000000000000010102020100010000000101000000000000","000000000000021101120011010102120101000000000000","000000000000020001010002000102000201000000000000","000000000000010001010011021101110110000000000000","000000000000000000000000000000000000000000000000","000010000000000000000000000000000000000000010000","000010000000000000000000000000000000000000010000","000012111111111112010002010121111110201011210000","000020000000000000000000000000000000000000010000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000"],"passed_kr":["000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000010000000000000000000000000000000000000010000","000000000000000000000000000000000000000000000000","000021121111111111110002111221111112011112210000","000000000000000000000000000000000000000000000000","000000000000000111110000000001000010000000000000","000000000000001000001000001111111010000000000000","000000000000001000001000000010100011100000000000","000000000000000111110000000100010010000000000000","000000000000000000000000000000000000000000000000","000000000000111111111110001111111111100000000000","000000000000000100010000000000000000100000000000","000000000000000100010000001111111111100000000000","000000000000000100010000001000000000000000000000","000010000000000100010000001111111111100000010000","000010000000000000000000000000000000000000010000","000012111111111112010002010121111110201011210000","000020000000000000000000000000000000000000010000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000","000000000000000000000000000000000000000000000000"]};
+var LOTDATA = {"lots":[{"id":"001","slug":"framed-painting","category":"paintings","name":{"kr":"액자 그림","en":"FRAMED PAINTING"},"desc":{"kr":"화면 아래쪽에 지워진 서명이 있는 듯하다","en":"A SIGNATURE SEEMS RUBBED OUT BELOW"},"vindicated":{"kr":"지워진 자리 아래에서 원래 서명이 그대로 드러났습니다","en":"The original signature was still intact beneath the erasure"},"debunked":{"kr":"지운 흔적 자체가 나중에 만들어진 것이었습니다","en":"The erasure itself had been staged later"}},{"id":"008","slug":"folding-screen","category":"paintings","name":{"kr":"접이 병풍","en":"FOLDING SCREEN"},"desc":{"kr":"세 폭 중 한 폭만 나중에 덧댄 것으로 보인다","en":"ONE PANEL SEEMS ADDED LATER"},"vindicated":{"kr":"덧댄 한 폭이 오히려 원본이고 나머지가 복원분이었습니다","en":"The odd panel was the original; the other two were restorations"},"debunked":{"kr":"세 폭 모두 서로 다른 병풍에서 떼어 붙인 것이었습니다","en":"All three panels came from different screens"}},{"id":"009","slug":"round-portrait","category":"paintings","name":{"kr":"원형 초상","en":"ROUND PORTRAIT"},"desc":{"kr":"뒷면에 이름이 적혀 있으나 읽기 어렵다","en":"A NAME ON THE BACK, BARELY LEGIBLE"},"vindicated":{"kr":"이름이 판독되어 기록에 남은 인물과 일치했습니다","en":"The name was read and matched a figure on record"},"debunked":{"kr":"판독해 보니 근래에 쓰인 필기구의 글씨였습니다","en":"The writing was made with a modern implement"}},{"id":"010","slug":"tapestry","category":"paintings","name":{"kr":"벽걸이 천","en":"TAPESTRY"},"desc":{"kr":"아래쪽 술이 한 번 새로 엮인 듯하다","en":"THE FRINGE SEEMS RE-KNOTTED"},"vindicated":{"kr":"술만 손봤을 뿐 본체의 짜임은 손대지 않았습니다","en":"Only the fringe was reworked; the weave was untouched"},"debunked":{"kr":"본체까지 절반 이상이 다시 짜인 것이었습니다","en":"More than half the weave had been rewoven"}},{"id":"011","slug":"ink-drawing","category":"paintings","name":{"kr":"먹 그림","en":"INK DRAWING"},"desc":{"kr":"종이가 그림보다 오래되어 보인다","en":"THE PAPER LOOKS OLDER THAN THE INK"},"vindicated":{"kr":"오래된 종이를 아껴 두었다 쓴 당대의 관행이었습니다","en":"Saving old paper for later use was common practice then"},"debunked":{"kr":"옛 종이를 구해 뒤늦게 그린 것이었습니다","en":"Old paper had been sourced and painted on recently"}},{"id":"002","slug":"porcelain-vase","category":"ceramics","name":{"kr":"도자기 병","en":"PORCELAIN VASE"},"desc":{"kr":"굽 안쪽에 지워진 표식이 있는 듯하다","en":"A MARK INSIDE THE FOOT, WORN AWAY"},"vindicated":{"kr":"표식의 잔획이 알려진 가마의 것과 맞아떨어졌습니다","en":"Traces of the mark matched a documented kiln"},"debunked":{"kr":"표식이 있던 자리는 애초에 아무것도 없던 자리였습니다","en":"There had never been a mark in that spot"}},{"id":"012","slug":"tea-bowl","category":"ceramics","name":{"kr":"찻사발","en":"TEA BOWL"},"desc":{"kr":"입가의 이가 오래전 메워진 것으로 보인다","en":"THE CHIPPED RIM SEEMS LONG REPAIRED"},"vindicated":{"kr":"메운 수법이 당대의 것이라 수리조차 유물이 되었습니다","en":"The repair was period work, making even the mend historic"},"debunked":{"kr":"최근의 접착제가 확인되었고 파손 범위도 넓었습니다","en":"Modern adhesive was found, and the damage ran deep"}},{"id":"013","slug":"lidded-jar","category":"ceramics","name":{"kr":"뚜껑 항아리","en":"LIDDED JAR"},"desc":{"kr":"뚜껑과 몸의 무늬가 미묘하게 어긋난다","en":"LID AND BODY PATTERNS DON'T QUITE MATCH"},"vindicated":{"kr":"손으로 그린 무늬라 생긴 자연스러운 차이였습니다","en":"Hand-painted patterns naturally vary that much"},"debunked":{"kr":"뚜껑은 다른 항아리의 것을 맞춰 얹은 것이었습니다","en":"The lid had been matched to the body from elsewhere"}},{"id":"014","slug":"glass-decanter","category":"ceramics","name":{"kr":"유리 병","en":"GLASS DECANTER"},"desc":{"kr":"마개가 원래 짝이 아닌 듯하다","en":"THE STOPPER MAY NOT BE THE ORIGINAL"},"vindicated":{"kr":"마개만 후대의 것이고 병은 원형 그대로였습니다","en":"Only the stopper was later; the vessel was original"},"debunked":{"kr":"병과 마개 모두 근래의 복제품이었습니다","en":"Both vessel and stopper were recent reproductions"}},{"id":"015","slug":"ceramic-plate","category":"ceramics","name":{"kr":"접시","en":"CERAMIC PLATE"},"desc":{"kr":"뒷면 유약 아래로 옅은 글자가 비친다","en":"FAINT LETTERS SHOW UNDER THE GLAZE"},"vindicated":{"kr":"유약 아래 글자는 굽기 전에 쓴 제작자의 표시였습니다","en":"The letters were written before firing, by the maker"},"debunked":{"kr":"글자는 유약 위에 덧쓰고 다시 구운 것이었습니다","en":"The letters were added over the glaze and refired"}},{"id":"016","slug":"oil-lamp","category":"ceramics","name":{"kr":"기름등잔","en":"OIL LAMP"},"desc":{"kr":"주둥이의 그을음이 실제로 쓰였음을 말해준다","en":"SOOT AT THE SPOUT SUGGESTS REAL USE"},"vindicated":{"kr":"그을음의 침착이 오랜 세월의 사용을 증명했습니다","en":"The soot had settled over long years of genuine use"},"debunked":{"kr":"그을음은 최근에 인위적으로 입힌 것이었습니다","en":"The soot had been applied recently by hand"}},{"id":"003","slug":"pocket-watch","category":"instruments","name":{"kr":"회중시계","en":"POCKET WATCH"},"desc":{"kr":"속의 부품 일부가 교체된 것으로 보인다","en":"SOME INNER PARTS LOOK REPLACED"},"vindicated":{"kr":"교체된 것은 소모품뿐이고 주요 기구는 원형이었습니다","en":"Only consumable parts were replaced; the movement was original"},"debunked":{"kr":"겉만 옛것이고 속은 통째로 다른 시계였습니다","en":"The case was old, the works entirely another watch"}},{"id":"017","slug":"mantel-clock","category":"instruments","name":{"kr":"탁상시계","en":"MANTEL CLOCK"},"desc":{"kr":"문자판의 숫자가 두 번 칠해진 듯하다","en":"THE NUMERALS SEEM PAINTED TWICE"},"vindicated":{"kr":"아래층 숫자가 원래의 것으로 그대로 남아 있었습니다","en":"The original numerals survived beneath the upper layer"},"debunked":{"kr":"문자판 전체가 나중에 새로 만들어진 것이었습니다","en":"The whole dial was a later replacement"}},{"id":"018","slug":"hourglass","category":"instruments","name":{"kr":"모래시계","en":"HOURGLASS"},"desc":{"kr":"모래가 다 흐르는 데 한 시간이 못 된다","en":"THE SAND RUNS OUT SHORT OF AN HOUR"},"vindicated":{"kr":"당대에는 이 길이가 한 단위로 쓰였습니다","en":"This length was itself a unit of measure at the time"},"debunked":{"kr":"모래가 나중에 채워져 원래의 양을 알 수 없었습니다","en":"The sand had been refilled; the original quantity is unknown"}},{"id":"019","slug":"brass-compass","category":"instruments","name":{"kr":"나침반","en":"COMPASS"},"desc":{"kr":"바늘이 여전히 북을 가리킨다","en":"THE NEEDLE STILL FINDS NORTH"},"vindicated":{"kr":"수백 년이 지나도 자성이 살아 있는 드문 상태였습니다","en":"The magnetism had survived centuries, which is rare"},"debunked":{"kr":"바늘만 근래의 것으로 갈아 끼운 것이었습니다","en":"Only the needle had been recently replaced"}},{"id":"020","slug":"bust","category":"sculpture","name":{"kr":"흉상","en":"BUST"},"desc":{"kr":"누구를 새긴 것인지 알려지지 않았다","en":"THE SITTER HAS NEVER BEEN IDENTIFIED"},"vindicated":{"kr":"옷깃의 문양으로 신원이 밝혀졌습니다","en":"The collar motif identified the sitter"},"debunked":{"kr":"특정 인물이 아니라 견본으로 만든 얼굴이었습니다","en":"It was a workshop specimen, not any particular person"}},{"id":"021","slug":"lion-figure","category":"sculpture","name":{"kr":"사자상","en":"LION FIGURE"},"desc":{"kr":"원래 한 쌍 중 하나였다고 전해진다","en":"SAID TO BE ONE OF AN ORIGINAL PAIR"},"vindicated":{"kr":"짝이 되는 다른 하나가 실제로 확인되었습니다","en":"Its matching pair was located and confirmed"},"debunked":{"kr":"한 쌍이었다는 이야기를 뒷받침할 근거가 없었습니다","en":"Nothing supported the story of a pair"}},{"id":"022","slug":"dancer-statue","category":"sculpture","name":{"kr":"춤추는 인물상","en":"DANCER STATUE"},"desc":{"kr":"뻗은 팔이 다시 붙여진 흔적이 있다","en":"THE RAISED ARM SHOWS A REJOIN"},"vindicated":{"kr":"팔은 제작 당시부터 따로 만들어 끼우는 방식이었습니다","en":"The arm was made separately by design from the start"},"debunked":{"kr":"부러진 팔을 다른 상의 것으로 대체한 것이었습니다","en":"A broken arm had been replaced from another figure"}},{"id":"023","slug":"totem-post","category":"sculpture","name":{"kr":"기둥 조각","en":"TOTEM POST"},"desc":{"kr":"가운데 얼굴만 조각 수법이 다르다","en":"THE MIDDLE FACE IS CARVED DIFFERENTLY"},"vindicated":{"kr":"스승과 제자가 함께 새긴 흔적으로 읽혔습니다","en":"It read as master and apprentice carving together"},"debunked":{"kr":"가운데만 후대에 파내고 다시 새긴 것이었습니다","en":"The middle face had been recut much later"}},{"id":"024","slug":"bird-carving","category":"sculpture","name":{"kr":"새 조각","en":"BIRD CARVING"},"desc":{"kr":"받침과 새가 다른 나무로 보인다","en":"BASE AND BIRD LOOK LIKE DIFFERENT WOODS"},"vindicated":{"kr":"받침만 교체됐을 뿐 새는 원형 그대로였습니다","en":"Only the base was replaced; the bird was original"},"debunked":{"kr":"받침도 새도 서로 무관한 물건을 합친 것이었습니다","en":"Bird and base were unrelated pieces joined together"}},{"id":"005","slug":"crown","category":"jewellery","name":{"kr":"관","en":"CROWN"},"desc":{"kr":"가운데 돌만 나중에 끼운 듯하다","en":"THE CENTRE STONE MAY BE A LATER SETTING"},"vindicated":{"kr":"원래 돌이 빠진 자리에 같은 시기의 돌을 끼운 것이었습니다","en":"A stone of the same period replaced one that had fallen out"},"debunked":{"kr":"틀까지 근래에 만들어 옛 형식을 흉내 낸 것이었습니다","en":"Even the setting was a recent imitation of an old form"}},{"id":"025","slug":"pendant-necklace","category":"jewellery","name":{"kr":"목걸이","en":"PENDANT NECKLACE"},"desc":{"kr":"줄과 장식의 세공 방식이 서로 다르다","en":"CHAIN AND PENDANT ARE WORKED DIFFERENTLY"},"vindicated":{"kr":"장식이 본래의 것이고 줄만 나중에 이은 것이었습니다","en":"The pendant was original; only the chain was later"},"debunked":{"kr":"장식과 줄 모두 각기 다른 물건에서 떼어 온 것이었습니다","en":"Pendant and chain were both taken from other pieces"}},{"id":"026","slug":"signet-ring","category":"jewellery","name":{"kr":"인장 반지","en":"SIGNET RING"},"desc":{"kr":"새겨진 문양이 어느 가문인지 불분명하다","en":"THE ENGRAVED CREST IS UNIDENTIFIED"},"vindicated":{"kr":"문양이 기록에 남은 가문의 인장과 일치했습니다","en":"The crest matched a family on record"},"debunked":{"kr":"실재하지 않는 가문의 문양을 지어낸 것이었습니다","en":"The crest belonged to a family that never existed"}},{"id":"027","slug":"hair-pin","category":"jewellery","name":{"kr":"비녀","en":"HAIR PIN"},"desc":{"kr":"머리 부분이 한 번 다시 붙여진 듯하다","en":"THE HEAD SEEMS TO HAVE BEEN REATTACHED"},"vindicated":{"kr":"붙인 자리 아래로 원래의 접합 구조가 남아 있었습니다","en":"The original joint structure survived beneath the repair"},"debunked":{"kr":"머리와 몸대가 서로 다른 비녀의 부분이었습니다","en":"Head and shaft came from two different pins"}},{"id":"028","slug":"beaded-bracelet","category":"jewellery","name":{"kr":"구슬 팔찌","en":"BEADED BRACELET"},"desc":{"kr":"구슬 몇 알이 나중에 보충된 것으로 보인다","en":"A FEW BEADS LOOK LIKE LATER ADDITIONS"},"vindicated":{"kr":"보충된 알은 셋뿐이고 나머지는 모두 원래 것이었습니다","en":"Only three beads were later additions"},"debunked":{"kr":"원래의 알은 두어 개뿐이고 대부분이 근래의 것이었습니다","en":"Barely two of the beads were original"}},{"id":"007","slug":"scroll","category":"documents","name":{"kr":"두루마리","en":"SCROLL"},"desc":{"kr":"봉인이 한 번도 뜯기지 않은 듯하다","en":"THE SEAL APPEARS NEVER TO HAVE BEEN BROKEN"},"vindicated":{"kr":"봉인이 온전해 내용이 처음으로 확인되었습니다","en":"The seal was intact, and the contents read for the first time"},"debunked":{"kr":"봉인은 최근에 다시 찍어 붙인 것이었습니다","en":"The seal had been recently restamped"}},{"id":"029","slug":"bound-book","category":"documents","name":{"kr":"장정본","en":"BOUND BOOK"},"desc":{"kr":"표지가 본문보다 나중 것으로 보인다","en":"THE COVER LOOKS LATER THAN THE PAGES"},"vindicated":{"kr":"본문은 초판 그대로이고 표지만 다시 씌운 것이었습니다","en":"The text block was the first printing; only the cover was later"},"debunked":{"kr":"본문마저 후대의 필사본이었습니다","en":"Even the text was a later manuscript copy"}},{"id":"030","slug":"folded-map","category":"documents","name":{"kr":"접힌 지도","en":"FOLDED MAP"},"desc":{"kr":"없는 해안선이 그려져 있다","en":"IT SHOWS A COASTLINE THAT DOESN'T EXIST"},"vindicated":{"kr":"당시로서는 최신이었던 탐사 기록이 반영된 것이었습니다","en":"It reflected survey records that were current at the time"},"debunked":{"kr":"존재한 적 없는 지형을 그려 넣은 창작물이었습니다","en":"It charted land that had never existed"}},{"id":"031","slug":"letter-bundle","category":"documents","name":{"kr":"편지 묶음","en":"LETTER BUNDLE"},"desc":{"kr":"필체가 도중에 바뀌는 듯하다","en":"THE HANDWRITING SEEMS TO CHANGE PARTWAY"},"vindicated":{"kr":"대필자가 바뀐 것으로, 두 필체 모두 당대의 것이었습니다","en":"The scribe changed, but both hands were of the period"},"debunked":{"kr":"뒷부분은 나중에 지어내 덧붙인 편지였습니다","en":"The later letters were invented and appended"}},{"id":"004","slug":"violin","category":"music","name":{"kr":"현악기","en":"VIOLIN"},"desc":{"kr":"안쪽 딱지의 글자가 덧쓰인 듯하다","en":"THE INNER LABEL LOOKS OVERWRITTEN"},"vindicated":{"kr":"덧쓴 것은 수리 기록이고 원래 딱지는 그대로였습니다","en":"The overwriting was a repair note; the label was original"},"debunked":{"kr":"딱지를 통째로 갈아 붙여 다른 공방을 사칭한 것이었습니다","en":"The label was swapped to claim another workshop"}},{"id":"032","slug":"small-harp","category":"music","name":{"kr":"작은 하프","en":"SMALL HARP"},"desc":{"kr":"줄받이만 근래에 손본 것으로 보인다","en":"ONLY THE BRIDGE LOOKS RECENTLY WORKED"},"vindicated":{"kr":"연주를 위한 최소한의 손질이었고 몸통은 원형이었습니다","en":"Minimal work done to make it playable; the body was original"},"debunked":{"kr":"몸통까지 새로 짜 맞춘 것이었습니다","en":"Even the body had been rebuilt"}},{"id":"033","slug":"hand-drum","category":"music","name":{"kr":"손북","en":"HAND DRUM"},"desc":{"kr":"가죽이 한 번 갈린 것으로 보인다","en":"THE HEAD APPEARS TO HAVE BEEN REPLACED"},"vindicated":{"kr":"가죽은 소모품이고 테는 원래의 것이었습니다","en":"The head is consumable; the rim was original"},"debunked":{"kr":"테까지 근래의 재료로 만들어진 것이었습니다","en":"Even the rim was made from modern material"}},{"id":"034","slug":"pan-flute","category":"music","name":{"kr":"팬플루트","en":"PAN FLUTE"},"desc":{"kr":"관 하나가 음이 맞지 않는다","en":"ONE PIPE IS OUT OF TUNE WITH THE REST"},"vindicated":{"kr":"그 지역 고유의 음계에 맞춘 것이었습니다","en":"It was tuned to a scale local to its region"},"debunked":{"kr":"음정을 고려하지 않고 길이만 흉내 낸 것이었습니다","en":"The lengths were copied without regard to pitch"}},{"id":"035","slug":"small-chest","category":"furniture","name":{"kr":"작은 궤","en":"SMALL CHEST"},"desc":{"kr":"자물쇠에 맞는 열쇠가 남아 있지 않다","en":"NO KEY SURVIVES FOR THE LOCK"},"vindicated":{"kr":"열어 보니 안쪽에 제작자의 표시가 남아 있었습니다","en":"Opened, it revealed the maker's mark inside"},"debunked":{"kr":"자물쇠는 장식일 뿐 애초에 열리지 않는 구조였습니다","en":"The lock was decorative and never opened at all"}},{"id":"036","slug":"folding-fan","category":"furniture","name":{"kr":"부채","en":"FOLDING FAN"},"desc":{"kr":"살 하나가 다른 부채의 것인 듯하다","en":"ONE RIB SEEMS TO COME FROM ANOTHER FAN"},"vindicated":{"kr":"살 하나만 교체됐을 뿐 종이는 원래의 것이었습니다","en":"Only one rib was replaced; the paper was original"},"debunked":{"kr":"살도 종이도 여러 부채를 조합한 것이었습니다","en":"Ribs and paper were assembled from several fans"}},{"id":"037","slug":"candle-stand","category":"furniture","name":{"kr":"촛대","en":"CANDLE STAND"},"desc":{"kr":"세 가지 중 하나만 길이가 다르다","en":"ONE OF THE THREE ARMS IS A DIFFERENT LENGTH"},"vindicated":{"kr":"손으로 두드려 만든 흔적으로, 당대의 제작 방식이었습니다","en":"Hammered by hand, which was the practice of the day"},"debunked":{"kr":"한 가지는 나중에 만들어 붙인 것이었습니다","en":"One arm was made and attached later"}},{"id":"038","slug":"mirror-stand","category":"furniture","name":{"kr":"거울","en":"MIRROR STAND"},"desc":{"kr":"뒷판이 한 번 열렸던 흔적이 있다","en":"THE BACKING SHOWS SIGNS OF BEING OPENED"},"vindicated":{"kr":"뒷판 안쪽에서 제작 연도가 발견되었습니다","en":"A date of manufacture was found inside the backing"},"debunked":{"kr":"뒷판을 열고 거울면을 통째로 교체한 것이었습니다","en":"The backing was opened to swap the glass entirely"}},{"id":"039","slug":"ceremonial-sword","category":"arms","name":{"kr":"의장검","en":"CEREMONIAL SWORD"},"desc":{"kr":"칼과 칼집이 원래 짝인지 확실치 않다","en":"BLADE AND SHEATH MAY NOT BE A PAIR"},"vindicated":{"kr":"칼날의 굴곡과 칼집 안쪽이 정확히 맞물렸습니다","en":"Blade and sheath interior matched exactly"},"debunked":{"kr":"서로 다른 시대의 칼과 칼집이었습니다","en":"Blade and sheath were from different centuries"}},{"id":"040","slug":"round-shield","category":"arms","name":{"kr":"방패","en":"ROUND SHIELD"},"desc":{"kr":"실제로 맞은 자국인지 판단이 갈린다","en":"OPINIONS DIFFER ON WHETHER THE DENTS ARE REAL"},"vindicated":{"kr":"자국의 방향과 깊이가 실제 타격과 일치했습니다","en":"Direction and depth were consistent with real blows"},"debunked":{"kr":"자국은 도구로 일부러 낸 것이었습니다","en":"The marks had been made deliberately with a tool"}},{"id":"041","slug":"helmet","category":"arms","name":{"kr":"투구","en":"HELMET"},"desc":{"kr":"가리개의 경첩만 새것으로 보인다","en":"ONLY THE GUARD'S HINGE LOOKS NEW"},"vindicated":{"kr":"경첩만 교체됐을 뿐 몸체는 한 번도 손대지 않았습니다","en":"Only the hinge was replaced; the body was never touched"},"debunked":{"kr":"몸체도 근래에 두들겨 만든 것이었습니다","en":"The body too had been beaten out recently"}},{"id":"042","slug":"bronze-bell","category":"arms","name":{"kr":"종","en":"BRONZE BELL"},"desc":{"kr":"안쪽에 새겨진 글이 절반만 남았다","en":"HALF THE INSCRIPTION INSIDE REMAINS"},"vindicated":{"kr":"남은 절반만으로도 봉헌한 사찰이 특정되었습니다","en":"The surviving half was enough to identify the temple"},"debunked":{"kr":"글은 주조 후에 새겨 넣은 것이었습니다","en":"The inscription was cut after casting"}},{"id":"006","slug":"carousel-horse","category":"toys","name":{"kr":"회전목마 말","en":"CAROUSEL HORSE"},"desc":{"kr":"어느 놀이터에서 나왔는지 알 수 없다","en":"NO ONE KNOWS WHICH FAIRGROUND IT CAME FROM"},"vindicated":{"kr":"발굽 안쪽 번호로 출처가 확인되었습니다","en":"A number inside the hoof confirmed its origin"},"debunked":{"kr":"놀이기구에 쓰인 적 없는 장식용 모형이었습니다","en":"It was a display model, never used on a ride"}},{"id":"043","slug":"wind-up-bird","category":"toys","name":{"kr":"태엽 새","en":"WIND-UP BIRD"},"desc":{"kr":"태엽은 감기지만 소리는 나지 않는다","en":"IT WINDS, BUT MAKES NO SOUND"},"vindicated":{"kr":"소리 장치만 빠졌을 뿐 기계 부분은 온전했습니다","en":"Only the sound unit was missing; the mechanism was sound"},"debunked":{"kr":"애초에 소리 장치가 들어간 적 없는 껍데기였습니다","en":"It never had a sound unit to begin with"}},{"id":"044","slug":"music-box","category":"toys","name":{"kr":"오르골","en":"MUSIC BOX"},"desc":{"kr":"곡목이 알려진 어느 것과도 맞지 않는다","en":"THE TUNE MATCHES NO KNOWN RECORD"},"vindicated":{"kr":"주문 제작된 단 하나의 곡으로 밝혀졌습니다","en":"The tune was commissioned, and exists nowhere else"},"debunked":{"kr":"원통의 돌기를 무작위로 박아 넣은 것이었습니다","en":"The pins had been set into the cylinder at random"}},{"id":"045","slug":"rocking-horse","category":"toys","name":{"kr":"흔들목마","en":"ROCKING HORSE"},"desc":{"kr":"받침만 나중에 갈아 끼운 듯하다","en":"THE ROCKERS SEEM TO HAVE BEEN REPLACED"},"vindicated":{"kr":"받침만 교체됐고 몸체는 처음 그대로였습니다","en":"Only the rockers were replaced; the body was as made"},"debunked":{"kr":"몸체까지 근래에 깎아 만든 것이었습니다","en":"Even the body had been carved recently"}},{"id":"046","slug":"embroidered-robe","category":"textiles","name":{"kr":"자수 옷","en":"EMBROIDERED ROBE"},"desc":{"kr":"소매의 자수만 솜씨가 다르다","en":"THE SLEEVE EMBROIDERY IS BY ANOTHER HAND"},"vindicated":{"kr":"여러 사람이 나눠 놓는 당대의 작업 방식이었습니다","en":"Dividing work among several hands was the practice then"},"debunked":{"kr":"소매만 다른 옷에서 떼어 이어 붙인 것이었습니다","en":"The sleeves were taken from another garment"}},{"id":"047","slug":"woven-rug","category":"textiles","name":{"kr":"융단","en":"WOVEN RUG"},"desc":{"kr":"가운데 무늬가 한쪽으로 치우쳐 있다","en":"THE CENTRE MOTIF SITS OFF-CENTRE"},"vindicated":{"kr":"손으로 짜며 생긴 어긋남으로, 기계 직조가 아님을 보여줍니다","en":"The irregularity proves it was worked by hand, not machine"},"debunked":{"kr":"도안을 잘못 옮긴 근래의 모작이었습니다","en":"The pattern was a recent copy, transferred wrongly"}},{"id":"048","slug":"feathered-hat","category":"textiles","name":{"kr":"깃털 모자","en":"FEATHERED HAT"},"desc":{"kr":"깃이 원래 것인지 판단이 어렵다","en":"HARD TO SAY IF THE PLUME IS ORIGINAL"},"vindicated":{"kr":"깃의 고정 방식이 제작 당시의 것과 같았습니다","en":"The plume was fixed in the original manner"},"debunked":{"kr":"깃은 물론 챙까지 나중에 손댄 것이었습니다","en":"Both plume and brim had been reworked later"}},{"id":"049","slug":"mounted-fossil","category":"natural","name":{"kr":"화석 표본","en":"MOUNTED FOSSIL"},"desc":{"kr":"지금은 멸종된 생물의 것으로 보인다","en":"SEEMS TO BE FROM AN EXTINCT SPECIES"},"vindicated":{"kr":"기록이 드문 종으로 확인되었습니다","en":"It proved to be a species with few surviving records"},"debunked":{"kr":"돌에 형태만 새겨 넣은 모조품이었습니다","en":"The form had merely been carved into the stone"}},{"id":"050","slug":"glass-dome-specimen","category":"natural","name":{"kr":"유리종 표본","en":"DOMED SPECIMEN"},"desc":{"kr":"유리종 안에 마른 꽃 한 송이가 놓여 있다","en":"A SINGLE DRIED FLOWER UNDER THE DOME"},"vindicated":{"kr":"표본과 유리종 모두 제작 당시의 한 벌이었습니다","en":"Specimen and dome were a set from the day it was made"},"debunked":{"kr":"꽃은 종이로 만든 모형이었습니다","en":"The flower was made of paper"}}]};
+var CHAR    = {"lines":{"opening":{"variants":[{"kr":"피로스 옥션 하우스에 오신 것을 환영합니다. 오늘 출품작은 스무 점입니다.","en":"Welcome to Pyrrhus & Co. Twenty lots today."},{"kr":"자리는 넷. 예산은 각자 10억 파운드. 그 이상은 없습니다.","en":"Four seats. One billion each. Nothing beyond that."},{"kr":"감정가는 참고일 뿐입니다. 값은 여러분이 정하십시오.","en":"The estimates are guidance. You set the price."},{"kr":"시작하겠습니다. 하우스는 여러분의 판단에 관여하지 않습니다.","en":"We begin. The house takes no part in your judgement."}]},"lotIntro":{"variants":[{"kr":"{lot}. 시작가 {amount}입니다.","en":"{lot}. Opening at {amount}."},{"kr":"다음 품목, {lot}.","en":"Next, {lot}."},{"kr":"{lot}. 입찰 받겠습니다.","en":"{lot}. Bids, please."}]},"appraisalOffer":{"variants":[{"kr":"정밀 감정을 원하시는 분은 지금 신청하십시오. 결과는 본인만 보십니다.","en":"Close appraisal is available now. The result is yours alone."},{"kr":"감정료는 {amount}입니다. 사실 여부는 하우스가 보증합니다.","en":"The fee is {amount}. The house stands behind the finding."}]},"hammer":{"variants":[{"kr":"낙찰! {name}, {amount}.","en":"Sold! {name}, at {amount}."},{"kr":"{amount}에 {name}께 낙찰되었습니다.","en":"To {name}, at {amount}."},{"kr":"낙찰. 다음으로 넘어가겠습니다.","en":"Sold. We move on."}]},"passed":{"variants":[{"kr":"유찰입니다. 이 품목은 하우스가 회수합니다.","en":"Passed. The house withdraws this lot."},{"kr":"입찰이 없었습니다. 다음 품목으로 넘어갑니다.","en":"No bids. Moving on."},{"kr":"시작가에 닿는 응찰이 없었습니다.","en":"No bid reached the opening price."},{"kr":"유찰. 목록에서 내리겠습니다.","en":"Passed. We take it off the list."},{"kr":"이 품목은 여기서 멈춥니다.","en":"This lot stops here."}]},"revealOpen":{"variants":[{"kr":"경매가 끝났습니다. 이제 값을 공개하겠습니다.","en":"The sale is concluded. We now reveal the values."},{"kr":"스무 점의 감정이 모두 끝났습니다. 한 점씩 보시지요.","en":"All twenty have been assessed. One at a time."}]},"revealItem":{"variants":[{"kr":"{lot}.","en":"{lot}."},{"kr":"{lot}. {name}께서 {amount}에 가져가셨습니다.","en":"{lot}. Taken by {name} at {amount}."},{"kr":"{lot}. 이 품목의 값은—","en":"{lot}. This lot is valued at—"}]},"revealUnsold":{"variants":[{"kr":"아무도 손을 들지 않았던 품목입니다.","en":"No one raised a hand for this one."},{"kr":"이 품목에는 응찰이 없었습니다. 값은—","en":"This lot drew no bids. Its value—"},{"kr":"팔리지 않은 채 목록에 남았던 물건입니다.","en":"It stayed on the list, unsold."},{"kr":"이 품목은 경매장을 떠나지 않았습니다.","en":"This lot never left the room."},{"kr":"값을 부르는 이가 없었습니다.","en":"No one named a price."}]},"closing":{"winner":[{"kr":"오늘의 승자는 {name}. 최종 {amount}입니다.","en":"The winner today is {name}, at {amount}."},{"kr":"{name}께서 가장 높은 값을 손에 쥐셨습니다.","en":"{name} holds the highest total."}],"houseCut":[{"kr":"그리고 하우스의 몫은 {amount}이었습니다.","en":"And the house takes {amount}."},{"kr":"자리세와 수수료를 합쳐, 오늘 하우스가 받은 것은 {amount}입니다.","en":"Seat fees and commissions together, the house received {amount}."},{"kr":"여러분이 겨루시는 동안 하우스는 {amount}을 받았습니다.","en":"While you competed, the house collected {amount}."}],"farewell":[{"kr":"다음에 또 뵙겠습니다.","en":"Until next time."},{"kr":"문을 닫겠습니다. 안녕히 가십시오.","en":"We close the doors. Good evening."},{"kr":"오늘도 즐거운 거래였습니다.","en":"A good sale, as always."}]},"buybackOpen":{"variants":[{"kr":"하우스가 매입에 나섭니다. 넘기실 분은 한 점씩 올려주십시오.","en":"The house is buying. One lot each, if you wish."},{"kr":"감정을 마치신 소장품에 한해 값을 쳐드립니다.","en":"We make offers only on lots you have had appraised."},{"kr":"값은 하우스가 정합니다. 흥정은 받지 않습니다.","en":"The house sets the price. There is no negotiation."}]},"buybackOffer":{"variants":[{"kr":"{lot}. {amount} 드리겠습니다.","en":"{lot}. We offer {amount}."},{"kr":"{lot}에 {amount}. 그 이상은 없습니다.","en":"{amount} for {lot}. Nothing more."}]},"buybackClose":{"variants":[{"kr":"매입은 여기까지입니다. 남은 다섯 점은 정산까지 손에 남습니다.","en":"The house buys no more. What you take from the last five, you keep."}]},"appraisalDisclosure":{"variants":[{"kr":"이 품목은 {names}께서 감정을 신청하셨습니다.","en":"This lot was appraised for {names}."},{"kr":"감정을 받으셨던 분은 {names}입니다. 내용은 밝히지 않습니다.","en":"{names} had this one appraised. The finding stays with them."},{"kr":"아무도 감정을 신청하지 않으셨습니다.","en":"No one asked for an appraisal on this lot."}]}},"bots":{"pool":[{"no":6,"kr":"6번","en":"No. 6"},{"no":11,"kr":"11번","en":"No. 11"},{"no":17,"kr":"17번","en":"No. 17"},{"no":23,"kr":"23번","en":"No. 23"},{"no":28,"kr":"28번","en":"No. 28"},{"no":34,"kr":"34번","en":"No. 34"},{"no":41,"kr":"41번","en":"No. 41"},{"no":46,"kr":"46번","en":"No. 46"},{"no":52,"kr":"52번","en":"No. 52"},{"no":59,"kr":"59번","en":"No. 59"},{"no":63,"kr":"63번","en":"No. 63"},{"no":70,"kr":"70번","en":"No. 70"},{"no":77,"kr":"77번","en":"No. 77"},{"no":84,"kr":"84번","en":"No. 84"},{"no":88,"kr":"88번","en":"No. 88"},{"no":91,"kr":"91번","en":"No. 91"}],"user_label":{"kr":"나","en":"You","note":"유저는 번호를 받지 않는다. 순위표에서 즉시 자기 행을 찾을 수 있어야 한다."}}};
+
+var LOTS = LOTDATA.lots;
+var LINES = CHAR.lines;
+var BOTPOOL = CHAR.bots.pool;
+var USER_LABEL = CHAR.bots.user_label;
+
+/* ── 픽셀 렌더러 하나로 통일 (인수인계 §5) ──
+   스프라이트·아이콘·스탬프가 전부 이 함수를 쓴다. 격자는 문자열 배열,
+   팔레트는 문자 → 색. 회전은 옵션이며 기본은 걸지 않는다. */
+var PX = {'0':'transparent','1':'#DDDDD8','2':'#B5B5B0','3':'#4A4A46','4':'#141414','5':'#2BB673','6':'#F6F6F4'};
+function renderPixels(rows, palette, opts){
+  opts = opts || {};
+  var size = rows.length, scale = opts.scale || 5, tilt = opts.tilt || 0;
+  var out = [];
+  for (var y=0; y<size; y++){
+    var row = rows[y], x = 0;
+    while (x < row.length){
+      var v = row.charAt(x), fill = palette[v];
+      if (!fill || fill === 'transparent'){ x++; continue; }
+      var run = 1;
+      while (row.charAt(x+run) === v) run++;
+      out.push('<rect x="'+x+'" y="'+y+'" width="'+run+'" height="1" fill="'+fill+'"/>');
+      x += run;
+    }
+  }
+  var g = tilt ? '<g transform="rotate('+tilt+' '+(size/2)+' '+(size/2)+')">'+out.join('')+'</g>' : out.join('');
+  return '<svg width="'+(size*scale)+'" height="'+(size*scale)+'" viewBox="0 0 '+size+' '+size+
+         '" shape-rendering="crispEdges" style="image-rendering:pixelated;display:block" aria-hidden="true">'+g+'</svg>';
+}
+function icon(id, scale, color){
+  var pal = PX;
+  if (color){ pal = {}; for (var k in PX) pal[k] = (PX[k]==='transparent'?'transparent':color); }
+  return renderPixels(ICONS[id], pal, {scale: scale||1});
+}
+/* 스탬프는 팔레트가 따로다 (0 투명 / 1 잉크 / 2 번진 가장자리). 회전은 .rv-stamp 래퍼가 건다. */
+var STAMP_PAL = {
+  genuine: {'0':'transparent','1':'#2BB673','2':'#0F6E56'},
+  fake:    {'0':'transparent','1':'#141414','2':'#4A4A46'},
+  passed:  {'0':'transparent','1':'#4A4A46','2':'#B5B5B0'}
+};
+function stampHTML(kind, lang){
+  var g = STAMPS[kind+'_'+lang] || STAMPS[kind+'_en'];
+  return renderPixels(g, STAMP_PAL[kind], {scale: 232/48});
+}
+
+/* ── 경량 RNG (mulberry32). 검증용 MT19937 과 인터페이스가 같다. ── */
+function FastRandom(seed){ this.s = (seed>>>0) || 1; this.gaussNext = null; }
+FastRandom.prototype._u32 = function(){
+  this.s = (this.s + 0x6D2B79F5) >>> 0;
+  var t = this.s;
+  t = Math.imul(t ^ (t >>> 15), t | 1);
+  t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+  return (t ^ (t >>> 14)) >>> 0;
+};
+FastRandom.prototype.random = function(){
+  var hi = this._u32() >>> 5, lo = this._u32() >>> 6;
+  return (hi * 67108864.0 + lo) * (1.0 / 9007199254740992.0);
+};
+FastRandom.prototype.below = function(n){ return Math.floor(this.random()*n); };
+FastRandom.prototype.choice = function(a){ return a[this.below(a.length)]; };
+FastRandom.prototype.uniform = function(a,b){ return a + (b-a)*this.random(); };
+FastRandom.prototype.gauss = function(mu, sigma){
+  var z = this.gaussNext; this.gaussNext = null;
+  if (z === null){
+    var x2pi = this.random()*2*Math.PI;
+    var g2rad = Math.sqrt(-2.0*Math.log(1.0 - this.random()));
+    z = Math.cos(x2pi)*g2rad;
+    this.gaussNext = Math.sin(x2pi)*g2rad;
+  }
+  return mu + z*sigma;
+};
+
+/* ── 룰북 확정 상수 (엔진 v7 1:1) ── */
+var BUDGET = 1000.0;
+var N_ITEMS = 20;
+var POOL_RATIO = 1.30;
+var SIT_FEE = 0.15;
+var APPR_FEE = 10.0;
+var BUYBACK_RATE = 0.58;
+var BUYBACK_ROUNDS = {5:1, 10:1, 15:1};
+
+var FAKE_RATE = 0.35;
+var FAKE_MED = 15.0, FAKE_SD = 0.7;
+var GEN_SD = 0.9;
+var EPS_SD = 0.30;
+var TAIL_P = 0.05, TAIL_SD = 0.80;
+var K_CHOICES = [1.5, 2.0, 2.5];
+var PRECISE_SD = 0.10;
+var START_LO = 0.10, START_HI = 0.30;
+var PACE_LO = 0.55, PACE_HI = 1.60;
+var POOL_TARGET = BUDGET * 4 * POOL_RATIO;
+
+/*            acc   risk  appr  pace */
+var CARDS = {
+  RECKLESS: [0.35, 0.98, 0.35, 0.00],
+  EAGER:    [0.30, 0.90, 0.50, 0.20],
+  STEADY:   [0.22, 0.82, 0.55, 0.45],
+  CAREFUL:  [0.16, 0.74, 0.70, 0.65],
+  SHARK:    [0.11, 0.68, 0.85, 0.85]
+};
+var TIERS = {
+  EASY:   [['RECKLESS','RECKLESS','EAGER'],['RECKLESS','EAGER','EAGER'],['RECKLESS','RECKLESS','STEADY']],
+  NORMAL: [['RECKLESS','EAGER','STEADY'],['EAGER','EAGER','STEADY'],['RECKLESS','STEADY','STEADY']],
+  HARD:   [['EAGER','STEADY','CAREFUL'],['STEADY','STEADY','CAREFUL'],['EAGER','CAREFUL','CAREFUL']],
+  BRUTAL: [['STEADY','CAREFUL','SHARK'],['CAREFUL','CAREFUL','SHARK'],['CAREFUL','SHARK','SHARK']]
+};
+var TIER_ORDER = ['EASY','NORMAL','HARD','BRUTAL'];
+
+/* ── 생성 ── */
+function genItems(rng){
+  var evTarget = POOL_TARGET / N_ITEMS;
+  var evFake = FAKE_MED * Math.exp((FAKE_SD*FAKE_SD)/2);
+  var genMed = (evTarget - FAKE_RATE*evFake) / ((1-FAKE_RATE) * Math.exp((GEN_SD*GEN_SD)/2));
+  var items = [];
+  for (var i=0; i<N_ITEMS; i++){
+    var fake = rng.random() < FAKE_RATE;
+    var v = fake ? FAKE_MED * Math.exp(rng.gauss(0, FAKE_SD))
+                 : genMed  * Math.exp(rng.gauss(0, GEN_SD));
+    var sd = rng.random() < TAIL_P ? TAIL_SD : EPS_SD;
+    var c = v * Math.exp(rng.gauss(0, sd));      // 빗나간 중심
+    var k = rng.choice(K_CHOICES);
+    var lo = c/k, hi = c*k;
+    var start = lo * rng.uniform(START_LO, START_HI);   // 실가치는 입력이 아니다
+    items.push({
+      idx:i, value:v, fake:fake, lo:lo, hi:hi, start:start,
+      gm: Math.sqrt(lo*hi), owner:-1, paid:0.0,
+      appraisedByOwner:false, preciseEst:0.0, soldToHouse:false, lot:null
+    });
+  }
+  return items;
+}
+
+/* 소진 압박. 양방향이다 — 단방향으로 구현하면 봇이 후반에 자멸한다 (findings v6 §3-1). */
+function paceFactor(bot, rd){
+  if (bot.pace <= 0) return 1.0;
+  var roundsLeft = N_ITEMS - rd + 1;
+  var onPace = BUDGET * roundsLeft / N_ITEMS;
+  var ratio = bot.cash / Math.max(onPace, 1.0);
+  return Math.min(PACE_HI, Math.max(PACE_LO, Math.pow(ratio, bot.pace)));
+}
+function perceived(bot, item, rng){ return item.gm * Math.exp(rng.gauss(0, bot.acc)); }
+
+function buyAppraisal(bot, item, rng){
+  var wide = item.hi/item.lo >= 3.0;
+  var p = bot.apprProb * (wide ? 1.4 : 0.8);
+  if (bot.cash > APPR_FEE + item.start && rng.random() < p){
+    bot.cash -= APPR_FEE; bot.apprCount += 1; bot.feesPaid += APPR_FEE;
+    return item.value * Math.exp(rng.gauss(0, PRECISE_SD));
+  }
+  return null;
+}
+
+/* ============================================================
+   상태
+   ============================================================ */
+var LANG = window.APP_LANG || 'en';
+var G = null;
+var said = {};          // 대사 사용 이력 (세션 내 반복 회피)
+
+var $ = function(id){ return document.getElementById(id); };
+/* 음수는 하우스 몫의 매입 차익 한 줄에서만 나온다 — 하우스가 창에서 비싸게 산 판이다.
+   부호를 파운드 기호 뒤에 두면 '£-17M' 처럼 읽히므로 앞으로 뺀다. */
+var money = function(n){
+  var r = Math.round(n);
+  return (r < 0 ? '−£' : '£') + Math.abs(r).toLocaleString('en-GB') + 'M';
+};
+var esc = function(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); };
+
+var TX = {
+  budget:      {kr:'예산',        en:'Budget'},
+  rounds:      {kr:'라운드',      en:'Rounds'},
+  format:      {kr:'방식',        en:'Format'},
+  seatFee:     {kr:'자리세',      en:'Seat fee'},
+  apprFee:     {kr:'감정료',      en:'Appraisal'},
+  win:         {kr:'승리 조건',   en:'Winner'},
+  vBudget:     {kr:'1인 £1,000M. 그 이상은 없습니다.', en:'£1,000M each. Nothing beyond that.'},
+  vRounds:     {kr:'20라운드, 한 라운드에 한 점.', en:'Twenty rounds, one lot each.'},
+  vFormat:     {kr:'밀봉 1차가격. 최고가가 자기가 쓴 금액에 낙찰받습니다.', en:'Sealed first-price. The top bid pays what it wrote.'},
+  vSeatFee:    {kr:'최종 잔액의 15%를 하우스가 가져갑니다.', en:'The house takes 15% of your closing balance.'},
+  vApprFee:    {kr:'£10M 고정. 정밀 감정 결과는 본인만 봅니다.', en:'£10M flat. The finding is yours alone.'},
+  vWin:        {kr:'소장품 실가치 + 잔액 × 0.85. 값은 폐회 때 드러납니다.', en:'Collection value + balance × 0.85, revealed at closing.'},
+  tierPick:    {kr:'상대를 고르십시오', en:'Choose the room'},
+  start:       {kr:'경매 시작', en:'Open the sale'},
+  lot:         {kr:'출품', en:'Lot'},
+  cash:        {kr:'잔액', en:'Balance'},
+  held:        {kr:'소장', en:'Lots'},
+  appraised:   {kr:'감정', en:'Appraisals'},
+  player:      {kr:'참가자', en:'Player'},
+  seats:       {kr:'좌석', en:'The room'},
+  estRange:    {kr:'공개 감정가', en:'Public estimate'},
+  startPrice:  {kr:'시작가', en:'Opening price'},
+  spread:      {kr:'범위 폭', en:'Spread'},
+  wideNote:    {kr:'넓음', en:'Wide'},
+  buyAppr:     {kr:'정밀 감정 £10M', en:'Close appraisal £10M'},
+  apprGot:     {kr:'정밀 감정 (본인만)', en:'Close appraisal (yours only)'},
+  apprHint:    {kr:'공개 감정가보다 훨씬 좁습니다. 감정 사실은 라운드가 끝난 뒤 전원에게 공개되지만, 숫자는 끝까지 본인만 봅니다.',
+                en:'Far tighter than the public estimate. The fact that you appraised is disclosed after the round; the number never leaves you.'},
+  apprOffer:   {kr:'감정 사실은 라운드 종료 후에 공개됩니다. 숫자는 공개되지 않습니다.',
+                en:'The fact of the appraisal is disclosed after the round. The number is not.'},
+  yourBid:     {kr:'입찰 금액', en:'Your bid'},
+  submit:      {kr:'입찰', en:'Bid'},
+  pass:        {kr:'기권', en:'Pass'},
+  qStart:      {kr:'시작가', en:'Opening'},
+  qLow:        {kr:'감정 하한', en:'Low est.'},
+  qMid:        {kr:'감정 중심', en:'Mid est.'},
+  qAll:        {kr:'전액', en:'All in'},
+  hintAfter:   {kr:'낙찰되면 잔액 {a}이 남습니다.', en:'Winning leaves you {a}.'},
+  hintLow:     {kr:'시작가 {a} 미만은 무효입니다.', en:'Below the opening price of {a} the bid is void.'},
+  hintOver:    {kr:'잔액 {a}을 넘길 수 없습니다.', en:'You cannot exceed your balance of {a}.'},
+  sold:        {kr:'낙찰', en:'Sold'},
+  passedTag:   {kr:'유찰', en:'Passed'},
+  youWon:      {kr:'내가 낙찰받았습니다', en:'You won this lot'},
+  hammer:      {kr:'낙찰가', en:'Hammer price'},
+  discloseNone:{kr:'아무도 감정을 신청하지 않았습니다.', en:'No one asked for an appraisal on this lot.'},
+  discloseSome:{kr:'이 품목을 감정한 참가자: {n}. 내용은 밝히지 않습니다.', en:'Appraised for: {n}. The findings stay with them.'},
+  myLots:      {kr:'내 소장품', en:'Your collection'},
+  noLots:      {kr:'아직 손에 든 것이 없습니다.', en:'Nothing in hand yet.'},
+  paidFor:     {kr:'낙찰가', en:'Paid'},
+  next:        {kr:'다음 품목', en:'Next lot'},
+  toBuyback:   {kr:'매입 창으로', en:'To the buying window'},
+  toEnd:       {kr:'정산으로', en:'To settlement'},
+  bbTag:       {kr:'하우스 매입 창', en:'House buying window'},
+  bbTitle:     {kr:'{r}라운드 뒤 매입 창', en:'Buying window after round {r}'},
+  bbRule:      {kr:'정밀 감정을 마친 소장품만 넘길 수 있습니다. 창당 한 사람이 한 점. 매입가는 공개 감정가 기하평균의 58%로 고정이며 흥정은 받지 않습니다. 16라운드부터는 매입이 없습니다.',
+                en:'Only appraised lots can be sold, one per person per window. The price is fixed at 58% of the public estimate’s geometric mean, and there is no negotiation. From round 16 the house buys nothing.'},
+  bbOffer:     {kr:'매입가', en:'Offer'},
+  bbSell:      {kr:'하우스에 넘기기', en:'Sell to the house'},
+  bbApprFirst: {kr:'감정해야 넘길 수 있습니다', en:'Appraise it first'},
+  bbUsed:      {kr:'이번 창은 이미 한 점을 넘기셨습니다.', en:'You have already sold one lot in this window.'},
+  bbSoldMine:  {kr:'{l} — {a}에 하우스로 넘겼습니다.', en:'{l} — sold to the house at {a}.'},
+  bbBotSold:   {kr:'{n}께서 한 점을 하우스에 넘기셨습니다.', en:'{n} sold one lot to the house.'},
+  bbBotNone:   {kr:'다른 참가자는 아무것도 넘기지 않았습니다.', en:'No one else sold anything.'},
+  bbClose:     {kr:'창 닫기', en:'Close the window'},
+  revealTag:   {kr:'값 공개', en:'The reveal'},
+  standings:   {kr:'순위표', en:'Standings'},
+  equity:      {kr:'자산', en:'Equity'},
+  noBid:       {kr:'응찰 없음', en:'No bids'},
+  unsoldPaid:  {kr:'낙찰 없음', en:'Unsold'},
+  gain:        {kr:'이득', en:'Gain'},
+  loss:        {kr:'손실', en:'Loss'},
+  toHouse:     {kr:'매입 창에서 하우스로 넘어간 품목입니다.', en:'This lot went to the house at a buying window.'},
+  rvSkip:      {kr:'전체 건너뛰기', en:'Skip the reveal'},
+  endTitle:    {kr:'경매 종료', en:'The sale is over'},
+  toHouseCut:  {kr:'하우스의 몫', en:'The house cut'},
+  closeDoors:  {kr:'폐회', en:'Close the doors'},
+  houseCut:    {kr:'하우스의 몫', en:'The house cut'},
+  cutSeat:     {kr:'자리세', en:'Seat fees'},
+  cutSeatN:    {kr:'네 분의 마지막 잔액에서 15%', en:'15% of every closing balance'},
+  cutFees:     {kr:'정밀 감정료', en:'Appraisal fees'},
+  cutFeesN:    {kr:'£10M × 감정하신 횟수', en:'£10M for every appraisal bought'},
+  cutBuy:      {kr:'매입 차익', en:'Buying-window margin'},
+  cutBuyN:     {kr:'하우스가 받아 둔 것의 실가치에서 치른 값을 뺀 것',
+                en:'True value of what the house bought, less what it paid'},
+  cutUnsold:   {kr:'유찰품', en:'Passed lots'},
+  cutUnsoldN:  {kr:'아무도 부르지 않아 그대로 하우스에 남은 것',
+                en:'Nobody bid; they stayed with the house'},
+  cutTotal:    {kr:'합계', en:'Total'},
+  cutVs:       {kr:'오늘 가장 높은 값은 {top}이었습니다. 하우스는 {house}을 가져갔습니다.',
+                en:'The best total in the room was {top}. The house took {house}.'},
+  score:       {kr:'최종 점수', en:'Final score'},
+  trueValue:   {kr:'실가치', en:'True value'},
+  again:       {kr:'다시 하기', en:'Play again'},
+  yourLots:    {kr:'내가 가져간 것', en:'What you took home'},
+  unsoldTag:   {kr:'유찰', en:'Passed'},
+  none:        {kr:'없음', en:'None'},
+
+  /* ── 전적 패널 ── */
+  recTitle:    {kr:'내 전적', en:'Your track record'},
+  recSignIn:   {kr:'좌측 하단에서 로그인하시면 앉으신 모든 판이 기록됩니다 — 티어별 등수와 최고 점수.',
+                en:'Sign in (bottom left) and every sale you sit through is kept — placings and best totals, by room.'},
+  recLoading:  {kr:'전적을 불러오는 중…', en:'Loading your record…'},
+  recEmpty:    {kr:'아직 앉으신 판이 없습니다. 한 판 끝내시면 여기서부터 쌓입니다.',
+                en:'No sales logged yet. Finish one and your record starts here.'},
+  recRoom:     {kr:'방', en:'Room'},
+  recGames:    {kr:'판', en:'Sales'},
+  recFirst:    {kr:'1등', en:'1st'},
+  recBest:     {kr:'최고 점수', en:'Best'},
+  recAvg:      {kr:'평균 점수', en:'Average'},
+  recRate:     {kr:'1등률', en:'1st rate'},
+  recTotal:    {kr:'합계', en:'Total'},
+  /* 하우스보다 많이 가져간 판. 설계상 거의 나오지 않는다 (자가대전 p/v 0.98~1.16). */
+  recBeat0:    {kr:'하우스보다 많이 가져가신 판 — <b>아직 없습니다</b>.',
+                en:'Sales where you took more than the house — <b>none yet</b>.'},
+  recBeatN:    {kr:'하우스보다 많이 가져가신 판 — <b>{n}판</b>.',
+                en:'Sales where you took more than the house — <b>{n}</b>.'}
+};
+var TIER_NOTE = {
+  EASY:   {kr:'서두르는 방입니다. 값을 크게 부르고 감정은 잘 하지 않습니다.',
+           en:'A hasty room. They bid big and rarely pay for an appraisal.'},
+  NORMAL: {kr:'섞인 방입니다. 지르는 사람과 재는 사람이 함께 앉습니다.',
+           en:'A mixed room. Someone lunges, someone measures.'},
+  HARD:   {kr:'참을성 있는 방입니다. 후반까지 실탄을 남겨 둡니다.',
+           en:'A patient room. They keep powder dry into the late lots.'},
+  BRUTAL: {kr:'조용한 방입니다. 감정을 자주 하고, 좀처럼 넘치게 부르지 않습니다.',
+           en:'A quiet room. They appraise often and seldom overreach.'}
+};
+function t(k, vars){
+  var s = TX[k] ? TX[k][LANG] : k;
+  if (vars) for (var v in vars) s = s.split('{'+v+'}').join(vars[v]);
+  return s;
+}
+
+/* 피로스 대사. 한 세션 안에서 같은 문구를 반복하지 않는다.
+   언어를 바꿔도 같은 자리의 문구가 바뀌면 안 되므로, 화면에 떠 있는 대사는
+   그룹 이름이 아니라 확정된 선택(그룹 + 인덱스)을 들고 있는다. */
+function linePool(group){
+  return group.indexOf('.') > 0
+    ? group.split('.').reduce(function(o,k){ return o[k]; }, LINES)
+    : LINES[group].variants;
+}
+function fixSay(group, vars){
+  var pool = linePool(group);
+  var used = said[group] || (said[group] = []);
+  if (used.length >= pool.length) used.length = 0;
+  var pick, guard = 0;
+  do { pick = G ? G.rng.below(pool.length) : Math.floor(Math.random()*pool.length); guard++; }
+  while (used.indexOf(pick) >= 0 && guard < 40);
+  used.push(pick);
+  return {group: group, i: pick, vars: vars || {}};
+}
+function renderSay(ref){
+  if (!ref) return '';
+  var s = linePool(ref.group)[ref.i][LANG];
+  for (var v in ref.vars) s = s.split('{'+v+'}').join(ref.vars[v](LANG));
+  return s;
+}
+function seatName(p){ return p.label[LANG]; }
+function lotName(item){ return item.lot.name[LANG]; }
+
+/* ============================================================
+   판 만들기
+   ============================================================ */
+function shuffled(arr, rng){
+  var a = arr.slice();
+  for (var i=a.length-1; i>0; i--){ var j = rng.below(i+1); var tmp=a[i]; a[i]=a[j]; a[j]=tmp; }
+  return a;
+}
+/* 별명 3개는 서로 6 이상 떨어지게 뽑는다. 간격이 좁으면 순위표에서 헷갈린다 (인수인계 §5). */
+function pickNumbers(rng){
+  for (var attempt=0; attempt<200; attempt++){
+    var pick = shuffled(BOTPOOL, rng).slice(0,3);
+    var ok = true;
+    for (var i=0;i<3;i++) for (var j=i+1;j<3;j++)
+      if (Math.abs(pick[i].no - pick[j].no) < 6) ok = false;
+    if (ok) return pick;
+  }
+  return [BOTPOOL[0], BOTPOOL[6], BOTPOOL[12]];   // 6 / 41 / 77 — 안전한 대체
+}
+
+function newGame(tier){
+  var seed = (Date.now() ^ Math.floor(Math.random()*0xffffffff)) >>> 0;
+  var rng = new FastRandom(seed);
+  said = {};
+
+  var items = genItems(rng);
+  var lots = shuffled(LOTS, rng).slice(0, N_ITEMS);
+  for (var i=0;i<N_ITEMS;i++) items[i].lot = lots[i];
+
+  /* 조합을 뽑고 좌석 순서를 다시 섞는다 — 좌석 번호가 성격을 암시하면 안 된다. */
+  var combo = shuffled(rng.choice(TIERS[tier]), rng);
+  var nums = pickNumbers(rng);
+
+  var players = [{
+    isUser:true, label:USER_LABEL, badge:'',
+    cash:BUDGET, items:[], apprCount:0, feesPaid:0,
+    acc:0, risk:0, apprProb:0, pace:0, card:null
+  }];
+  for (var s=0; s<3; s++){
+    var c = CARDS[combo[s]];
+    players.push({
+      isUser:false, label:{kr:nums[s].kr, en:nums[s].en}, badge:String(nums[s].no),
+      cash:BUDGET, items:[], apprCount:0, feesPaid:0,
+      acc:c[0], risk:c[1], apprProb:c[2], pace:c[3], card:combo[s]
+    });
+  }
+
+  G = {
+    seed:seed, rng:rng, tier:tier, items:items, players:players,
+    gameId:uuid4(), logged:false,
+    round:0, house:{fees:0, buyback:0, unsold:0},
+    pre:null, userEst:null, userBid:null, result:null,
+    bbSoldByUser:false, bbLog:[], bbRound:0,
+    lotIntroAt:0, sayRef:null, unsold:0
+  };
+  beginRound();
+}
+
+/* ── 라운드 시작 ── */
+function beginRound(){
+  G.round += 1;
+  var item = G.items[G.round-1];
+  G.pre = {};
+  G.userEst = null;
+  G.userBid = null;
+  G.result = null;
+
+  /* 사전 감정으로 봇의 잔액이 움직이기 전 상태를 떠 둔다. 입찰 화면 좌석표가 이걸 쓴다. */
+  G.snap = G.players.map(function(p){ return {cash: p.cash, appr: p.apprCount}; });
+
+  /* 봇의 사전 정밀 감정. 결과는 라운드가 끝날 때까지 공개하지 않는다. */
+  for (var i=1;i<4;i++){
+    var est = buyAppraisal(G.players[i], item, G.rng);
+    if (est !== null){ G.pre[i] = est; G.house.fees += APPR_FEE; }
+  }
+
+  /* lotIntro 는 3~4점마다 한 번. 스무 점 전부에 대사를 붙이지 않는다. */
+  if (G.round === 1 || G.round - G.lotIntroAt >= 3 + G.rng.below(2)){
+    G.lotIntroAt = G.round;
+    G.sayRef = fixSay('lotIntro', {
+      lot: function(L){ return item.lot.name[L]; },
+      amount: function(){ return money(item.start); }
+    });
+  } else {
+    G.sayRef = null;
+  }
+
+  show('round');
+  renderRound();
+}
+
+/* ── 입찰 마감 ── */
+function resolveRound(userBid){
+  var item = G.items[G.round-1];
+  var bids = [];
+  if (userBid !== null && userBid >= item.start) bids.push([userBid, 0]);
+
+  for (var i=1;i<4;i++){
+    var b = G.players[i];
+    var est = (G.pre[i] !== undefined) ? G.pre[i] : perceived(b, item, G.rng);
+    var ceiling = b.risk * est / (1 - SIT_FEE);
+    var bid = Math.min(b.cash, paceFactor(b, G.round) * ceiling * G.rng.uniform(0.97, 1.03));
+    if (bid >= item.start) bids.push([bid, i]);
+  }
+
+  if (bids.length){
+    bids.sort(function(x,y){ return (y[0]-x[0]) || (y[1]-x[1]); });   // 동점이면 좌석 번호가 큰 쪽
+    var price = bids[0][0], w = bids[0][1];
+    item.owner = w; item.paid = price;
+    G.players[w].cash -= price;
+    G.players[w].items.push(item);
+    if (w === 0 && G.userEst !== null){ item.appraisedByOwner = true; item.preciseEst = G.userEst; }
+    if (w !== 0 && G.pre[w] !== undefined){ item.appraisedByOwner = true; item.preciseEst = G.pre[w]; }
+    G.result = {winner:w, price:price};
+    G.sayRef = fixSay('hammer', {
+      name: function(L){ return G.players[w].label[L]; },
+      amount: function(){ return money(price); }
+    });
+  } else {
+    G.unsold += 1;
+    G.house.unsold += item.value;
+    G.result = {winner:-1, price:0};
+    G.sayRef = fixSay('passed');
+  }
+
+  /* 감정 사실 공개 — 낙찰 확정 후에만 (룰북 §5, findings v5) */
+  var names = [];
+  if (G.userEst !== null) names.push(0);
+  for (var k in G.pre) names.push(Number(k));
+  names.sort(function(a,b){ return a-b; });
+  G.result.appraisers = names;
+
+  show('result');
+  renderResult();
+}
+
+/* ── 라운드 뒤 처리 ── */
+function afterResult(){
+  if (BUYBACK_ROUNDS[G.round]) { openBuyback(); return; }
+  if (G.round >= N_ITEMS) { startReveal(); return; }
+  beginRound();
+}
+
+/* ============================================================
+   하우스 매입 창 (5·10·15 라운드 뒤)
+   ============================================================ */
+function openBuyback(){
+  G.bbRound = G.round;
+  G.bbSoldByUser = false;
+  G.bbLog = [];
+
+  /* 사후 정밀 감정 — 봇은 소유 작품을 스스로 다시 본다. */
+  for (var i=1;i<4;i++){
+    var b = G.players[i];
+    for (var j=0;j<b.items.length;j++){
+      var it = b.items[j];
+      if (it.appraisedByOwner) continue;
+      var wide = it.hi/it.lo >= 3.0;
+      var p = b.apprProb * (wide ? 1.5 : 0.7);
+      if (b.cash >= APPR_FEE && G.rng.random() < p){
+        b.cash -= APPR_FEE; b.apprCount += 1; b.feesPaid += APPR_FEE;
+        G.house.fees += APPR_FEE;
+        it.appraisedByOwner = true;
+        it.preciseEst = it.value * Math.exp(G.rng.gauss(0, PRECISE_SD));
+      }
+    }
+  }
+
+  /* 봇의 매도 판단. 창당 1인 1점. */
+  for (var i2=1;i2<4;i2++){
+    var bb = G.players[i2], best = null, bestGain = 0.0;
+    for (var m=0;m<bb.items.length;m++){
+      var itm = bb.items[m];
+      if (!itm.appraisedByOwner) continue;
+      var gain = BUYBACK_RATE*itm.gm - itm.preciseEst;
+      if (gain > bestGain){ best = itm; bestGain = gain; }
+    }
+    if (best === null) continue;
+    var offer = BUYBACK_RATE * best.gm;
+    bb.items.splice(bb.items.indexOf(best), 1);
+    bb.cash += offer;
+    best.soldToHouse = true;
+    G.house.buyback += best.value - offer;
+    G.bbLog.push({seat:i2});
+  }
+
+  G.sayRef = fixSay('buybackOpen');
+  show('buyback');
+  renderBuyback();
+}
+
+function userAppraiseOwned(idx){
+  var me = G.players[0], it = me.items[idx];
+  if (!it || it.appraisedByOwner || me.cash < APPR_FEE) return;
+  me.cash -= APPR_FEE; me.apprCount += 1; me.feesPaid += APPR_FEE;
+  G.house.fees += APPR_FEE;
+  it.appraisedByOwner = true;
+  it.preciseEst = it.value * Math.exp(G.rng.gauss(0, PRECISE_SD));
+  renderBuyback();
+}
+function userSell(idx){
+  if (G.bbSoldByUser) return;
+  var me = G.players[0], it = me.items[idx];
+  if (!it || !it.appraisedByOwner) return;
+  var offer = BUYBACK_RATE * it.gm;
+  me.items.splice(idx, 1);
+  me.cash += offer;
+  it.soldToHouse = true;
+  G.house.buyback += it.value - offer;
+  G.bbSoldByUser = true;
+  G.bbLog.push({seat:0, lot:it, offer:offer});
+  renderBuyback();
+}
+function closeBuyback(){
+  if (G.round >= N_ITEMS) startReveal(); else beginRound();
+}
+
+/* ============================================================
+   리빌 (룰북 §9)
+   한 점씩, 값이 큰 놀라움일수록 뒤로. 순위는 공개할 때마다 다시 매긴다.
+   하우스 몫은 이 화면 어디에도 나오지 않는다 — 클로징이 첫 공개다.
+   ============================================================ */
+var RVT = {ART:0, INFO:240, PAID:520, HOLD:1180, COUNT:700, TICK:40,
+           STAMP:60, SWING:140, REASON:2050, BOARD:2380, BUMP:800};
+var REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* 공개 순서용 "놀라움". 정의는 세 경우 모두 같다 — 치른 값과 실제의 차이.
+   유찰품은 아무도 값을 치르지 않았으므로 실가치 전체가 그대로 괴리다. */
+function surprise(it){
+  if (it.owner < 0) return it.value;
+  if (it.soldToHouse) return Math.abs(it.value - BUYBACK_RATE * it.gm);
+  return Math.abs(it.value - it.paid);
+}
+function heldBy(it){ return (it.owner >= 0 && !it.soldToHouse) ? it.owner : -1; }
+
+function startReveal(){
+  var order = G.items.slice().sort(function(a,b){
+    return (surprise(a) - surprise(b)) || (a.idx - b.idx);
+  });
+  G.reveal = {order:order, i:-1, timers:[], settled:false};
+  show('reveal');
+  rvGoto(0);
+}
+
+function rvClear(){
+  if (!G.reveal) return;
+  G.reveal.timers.forEach(function(c){ c(); });
+  G.reveal.timers = [];
+}
+function rvAt(ms, fn){
+  var h = setTimeout(fn, ms);
+  G.reveal.timers.push(function(){ clearTimeout(h); });
+}
+function rvCurrent(){ return G.reveal.order[G.reveal.i]; }
+function rvKind(it){ return it.owner < 0 ? 'passed' : (it.fake ? 'fake' : 'genuine'); }
+
+/* n점까지 공개했을 때의 자산. 잔액은 처음부터 확정이고, 값이 드러난 소장품만 더해진다.
+   20점을 다 공개하면 endGame 의 최종 점수와 정확히 같아진다. */
+function rvEquity(upTo){
+  var eq = G.players.map(function(p){ return (1-SIT_FEE) * p.cash; });
+  var lots = [0,0,0,0];
+  for (var k=0; k<upTo; k++){
+    var it = G.reveal.order[k], h = heldBy(it);
+    if (h >= 0){ eq[h] += it.value; lots[h] += 1; }
+  }
+  return {eq:eq, lots:lots};
+}
+function rvRank(eq){
+  var idx = [0,1,2,3].slice();
+  idx.sort(function(a,b){ return (eq[b]-eq[a]) || (a-b); });
+  var rank = [0,0,0,0];
+  idx.forEach(function(seat, i){ rank[seat] = i+1; });
+  return {order:idx, rank:rank};
+}
+
+function rvGoto(i){
+  var R = G.reveal;
+  R.i = i;
+  var it = rvCurrent();
+  if (i === 0){
+    G.sayRef = fixSay('revealOpen');
+  } else if (it.owner < 0){
+    G.sayRef = fixSay('revealUnsold');
+  } else {
+    G.sayRef = fixSay('revealItem', {
+      lot:    function(L){ return it.lot.name[L]; },
+      name:   function(L){ return G.players[it.owner].label[L]; },
+      amount: function(){ return money(it.paid); }
+    });
+  }
+  renderReveal();
+}
+
+/* 정적인 부분을 전부 다시 칠하고, 애니메이션은 처음부터 다시 돌린다.
+   언어 전환도 이 경로를 탄다 — 이미 끝난 로트면 최종 상태로 바로 앉힌다. */
+function renderReveal(){
+  var R = G.reveal, it = rvCurrent(), passed = (it.owner < 0);
+  rvClear();
+
+  $('rv-lot').textContent = t('revealTag') + ' — ' + t('lot') + ' '
+    + String(R.i+1).padStart(2,'0') + ' / ' + N_ITEMS;
+  $('rv-stats').innerHTML = hudHTML();
+  sayInto('rv-say','rv-hat','rv-line');
+
+  $('rv-art').innerHTML = renderPixels(SPRITES[it.lot.slug], PX, {scale:14});
+  $('rv-tag').textContent = t('lot') + ' ' + String(R.i+1).padStart(2,'0') + ' · ' + it.lot.category.toUpperCase();
+  $('rv-name').textContent = it.lot.name[LANG];
+  $('rv-desc').textContent = it.lot.desc[LANG];
+
+  $('rv-paid-label').textContent = passed ? t('unsoldPaid') : t('hammer');
+  $('rv-paid-value').textContent = passed ? '—' : money(it.paid);
+  $('rv-worth-label').textContent = t('trueValue');
+  $('rv-stamp').innerHTML = stampHTML(rvKind(it), LANG);
+  $('rv-reason-hat').innerHTML = icon('pyrrhos', 22/24);
+  $('rv-reason-line').textContent = (it.fake ? it.lot.debunked : it.lot.vindicated)[LANG];
+
+  $('btn-rv-next').textContent = (R.i + 1 >= N_ITEMS) ? t('toEnd') : t('next');
+  $('btn-rv-skip').textContent = t('rvSkip');
+
+  if (R.settled){ rvSettle(); return; }
+
+  ['rv-art','rv-info','rv-paid','rv-worth','rv-reason'].forEach(function(id){ $(id).classList.remove('shown'); });
+  $('rv-stamp').classList.remove('on');
+  $('rv-swing').className = 'rv-swing';
+  $('rv-swing').textContent = '';
+  $('rv-worth-value').textContent = money(0);
+  rvBoard(false);
+
+  if (REDUCED){ rvSettle(); return; }
+
+  rvAt(RVT.ART,  function(){ $('rv-art').classList.add('shown'); });
+  rvAt(RVT.INFO, function(){ $('rv-info').classList.add('shown'); });
+  rvAt(RVT.PAID, function(){ $('rv-paid').classList.add('shown'); });
+  /* RVT.PAID ~ RVT.HOLD 는 뜸이다. 의도적으로 비어 있다. */
+  rvAt(RVT.HOLD, function(){ $('rv-worth').classList.add('shown'); rvCountUp(it.value); });
+  rvAt(RVT.HOLD + RVT.STAMP, function(){ $('rv-stamp').classList.add('on'); });
+  rvAt(RVT.HOLD + RVT.COUNT + RVT.SWING, rvSwing);
+  rvAt(RVT.REASON, function(){ $('rv-reason').classList.add('shown'); });
+  rvAt(RVT.BOARD, function(){ rvBoard(true); G.reveal.settled = true; });
+}
+
+/* 0에서 target 까지 dur 동안 굴린다. 멈추는 방법은 호출한 쪽이 보관한다 —
+   리빌과 클로징이 각자 자기 타이머 목록을 들고 있기 때문이다. */
+function countUp(el, target, dur, tick, keep){
+  var steps = Math.max(1, Math.round(dur / tick)), n = 0;
+  var h = setInterval(function(){
+    n++;
+    el.textContent = money(target * (n/steps));
+    if (n >= steps){ clearInterval(h); el.textContent = money(target); }
+  }, tick);
+  keep(function(){ clearInterval(h); });
+}
+function rvCountUp(target){
+  countUp($('rv-worth-value'), target, RVT.COUNT, RVT.TICK, function(c){ G.reveal.timers.push(c); });
+}
+
+/* 손익 한 줄. 유찰이면 금액 귀속을 쓰지 않는다 — 실가치는 위에서 이미 공개됐고,
+   그 값이 누구에게 갔는지는 클로징에서 처음 드러나야 한다 (룰북 §9). */
+function rvSwing(){
+  var it = rvCurrent(), el = $('rv-swing');
+  if (it.owner < 0){ el.className = 'rv-swing flat shown'; el.textContent = t('noBid'); return; }
+  if (it.soldToHouse){ el.className = 'rv-swing flat shown'; el.textContent = t('toHouse'); return; }
+  var d = it.value - it.paid;
+  el.className = 'rv-swing shown ' + (d >= 0 ? 'up' : 'down');
+  el.textContent = (d >= 0 ? '+' : '−') + money(Math.abs(d)) + ' · ' + (d >= 0 ? t('gain') : t('loss'));
+}
+
+/* 순위표. applyDelta 면 이번 로트를 반영한 뒤 자산 기준으로 다시 정렬하고 변동을 표시한다. */
+function rvBoard(applyDelta){
+  var R = G.reveal;
+  var before = rvEquity(R.i), after = rvEquity(R.i + (applyDelta ? 1 : 0));
+  var rBefore = rvRank(before.eq), rAfter = rvRank(after.eq);
+
+  var head = '<div class="bh"><span>'+t('standings')+'</span><span>'
+    + t('lot')+' '+String(R.i+1).padStart(2,'0')+' / '+N_ITEMS+'</span></div>';
+  var body = rAfter.order.map(function(seat, i){
+    var p = G.players[seat], rank = i+1, d = after.eq[seat] - before.eq[seat];
+    var badge = p.isUser ? '' : '<span class="seat-badge">'+p.badge+'</span>';
+    var moved = applyDelta && rank !== rBefore.rank[seat];
+    var arrow = moved ? '<span class="rankmove">'+(rank < rBefore.rank[seat] ? '▲' : '▼')+'</span>' : '';
+    var delta = Math.round(d) === 0
+      ? '<span class="delta">—</span>'
+      : '<span class="delta'+(d < 0 ? ' down' : '')+'">'+(d > 0 ? '+' : '−')+money(Math.abs(d))+'</span>';
+    return '<tr class="'+(p.isUser?'you':'')+(Math.round(d) !== 0 ? ' bump' : '')+'">'
+      + '<td>'+rank+arrow+'</td>'
+      + '<td>'+badge+esc(seatName(p))+'</td>'
+      + '<td class="num">'+after.lots[seat]+'</td>'
+      + '<td class="num">'+money(after.eq[seat])+'</td>'
+      + '<td class="num">'+delta+'</td></tr>';
+  }).join('');
+  $('rv-board').innerHTML = head + '<table><thead><tr><th>#</th><th>'+t('player')+'</th>'
+    + '<th class="num">'+t('held')+'</th><th class="num">'+t('equity')+'</th>'
+    + '<th class="num">Δ</th></tr></thead><tbody>'+body+'</tbody></table>';
+
+  if (applyDelta){
+    rvAt(RVT.BUMP, function(){
+      [].slice.call($('rv-board').querySelectorAll('tr.bump')).forEach(function(tr){ tr.classList.remove('bump'); });
+    });
+  }
+}
+
+/* 연출 중간에 [다음]을 누르면 먼저 이 상태로 건너뛴다. */
+function rvSettle(){
+  rvClear();
+  var it = rvCurrent();
+  ['rv-art','rv-info','rv-paid','rv-worth','rv-reason'].forEach(function(id){ $(id).classList.add('shown'); });
+  $('rv-stamp').classList.add('on');
+  $('rv-worth-value').textContent = money(it.value);
+  rvSwing();
+  rvBoard(true);
+  G.reveal.settled = true;
+}
+
+function rvAdvance(){
+  if (!G.reveal.settled){ rvSettle(); return; }
+  if (G.reveal.i + 1 >= N_ITEMS){ endGame(); return; }
+  G.reveal.settled = false;
+  rvGoto(G.reveal.i + 1);
+}
+function rvSkipAll(){ rvClear(); endGame(); }
+
+/* ============================================================
+   클로징 (룰북 §9) — 승자 발표 → 하우스 몫 → 폐회.
+   순서는 규칙이다. 하우스 몫은 이 화면의 2단계에서 처음 나오고,
+   그 전 어느 화면에도 부분합조차 실려 있지 않다.
+   ============================================================ */
+var CLT = {TERM0:140, TERM:300, WAIT:520, COUNT:900, TICK:45, VS:520};
+
+function endGame(){
+  rvClear();
+  var rows = G.players.map(function(p, i){
+    var held = p.items.reduce(function(s,it){ return s + it.value; }, 0);
+    return {i:i, p:p, held:held, score: held + (1-SIT_FEE)*p.cash};
+  });
+  rows.sort(function(a,b){ return b.score - a.score; });
+  G.final = rows;
+
+  /* 네 항목을 합쳐 두지 않고 따로 들고 있는다. 클로징에서 하나씩 펴야 하고,
+     펴 놓은 것들의 합이 총액과 맞는지 눈으로도 검산할 수 있어야 한다.
+     자리세만 누적해 둔 곳이 없다 — 마지막 잔액에서 지금 뗀다 (룰북 §7). */
+  var seat = G.players.reduce(function(s,p){ return s + p.cash * SIT_FEE; }, 0);
+  G.cut = {
+    seat: seat, fees: G.house.fees, buyback: G.house.buyback, unsold: G.house.unsold,
+    total: seat + G.house.fees + G.house.buyback + G.house.unsold
+  };
+
+  G.close = {stage:0, timers:[], settled:false};
+  G.sayRef = fixSay('closing.winner', {
+    name:   function(L){ return rows[0].p.label[L]; },
+    amount: function(){ return money(rows[0].score); }
+  });
+  show('end');
+  renderEnd();
+  /* 판이 끝난 뒤에야 한 줄 쓴다. 연출은 아직 진행 중이지만 숫자는 이미 다 확정됐다. */
+  logGame();
+}
+
+function clClear(){
+  if (!G.close) return;
+  G.close.timers.forEach(function(c){ c(); });
+  G.close.timers = [];
+}
+function clAt(ms, fn){
+  var h = setTimeout(fn, ms);
+  G.close.timers.push(function(){ clearTimeout(h); });
+}
+
+/* 연출 중간에 [폐회]를 누르면 먼저 이 상태로 건너뛴다. 리빌과 같은 규칙이다. */
+function clSettle(){
+  clClear();
+  [].slice.call($('house-terms').children).forEach(function(el){ el.classList.add('shown'); });
+  $('house-total').classList.add('shown');
+  $('house-total-value').textContent = money(G.cut.total);
+  $('house-vs').classList.add('shown');
+  G.close.settled = true;
+}
+
+function clAdvance(){
+  var C = G.close;
+  if (C.stage === 0){
+    C.stage = 1; C.settled = false;
+    G.sayRef = fixSay('closing.houseCut', { amount: function(){ return money(G.cut.total); } });
+    renderEnd();
+    $('end-house').scrollIntoView({behavior: REDUCED ? 'auto' : 'smooth', block:'center'});
+    return;
+  }
+  if (C.stage === 1){
+    if (!C.settled){ clSettle(); return; }
+    C.stage = 2;
+    G.sayRef = fixSay('closing.farewell');
+    renderEnd();
+    window.scrollTo({top:0, behavior: REDUCED ? 'auto' : 'smooth'});
+  }
+}
+
+/* ============================================================
+   렌더
+   ============================================================ */
+function show(name){
+  ['open','round','result','buyback','reveal','end'].forEach(function(s){
+    $('screen-'+s).classList.toggle('on', s===name);
+  });
+  G && (G.screen = name);
+  window.scrollTo({top:0, behavior:'auto'});
+}
+
+function hudHTML(){
+  var me = G.players[0];
+  return '<b>'+t('cash')+'</b> '+money(me.cash)
+       + ' &nbsp; <b>'+t('held')+'</b> '+me.items.length
+       + ' &nbsp; <b>'+t('appraised')+'</b> '+me.apprCount;
+}
+function lotTag(){
+  return t('lot')+' '+String(G.round).padStart(2,'0')+' / '+N_ITEMS;
+}
+
+/* 입찰 중에는 봇의 현금·감정 횟수를 라운드 시작 시점(사전 감정 이전)의 값으로 보여준다.
+   그러지 않으면 £10M 줄어든 잔액과 +1 늘어난 감정 횟수가 "이번 판에 누가 감정했는지"를
+   입찰 전에 그대로 알려 준다. 룰북 §5는 그 사실을 낙찰 뒤에만 공개하도록 한다.
+   내 줄은 내 정보이므로 언제나 실시간이다. */
+function boardHTML(frozen){
+  var head = '<div class="bh"><span>'+t('seats')+'</span><span>'+lotTag()+'</span></div>';
+  var body = G.players.map(function(p, i){
+    var badge = p.isUser ? '' : '<span class="seat-badge">'+p.badge+'</span>';
+    var snap = (frozen && !p.isUser && G.snap) ? G.snap[i] : null;
+    var cash = snap ? snap.cash : p.cash;
+    var appr = snap ? snap.appr : p.apprCount;
+    return '<tr class="'+(p.isUser?'you':'')+'">'
+      + '<td>'+badge+esc(seatName(p))+'</td>'
+      + '<td class="num">'+p.items.length+'</td>'
+      + '<td class="num">'+money(cash)+'</td>'
+      + '<td class="num">'+appr+'</td></tr>';
+  }).join('');
+  return head + '<table><thead><tr><th>'+t('player')+'</th><th class="num">'+t('held')
+    + '</th><th class="num">'+t('cash')+'</th><th class="num">'+t('appraised')
+    + '</th></tr></thead><tbody>'+body+'</tbody></table>';
+}
+
+function sayInto(sayId, hatId, lineId){
+  var box = $(sayId);
+  var txt = renderSay(G.sayRef);
+  box.classList.toggle('quiet', !txt);
+  $(hatId).innerHTML = icon('pyrrhos', 22/24);
+  $(lineId).textContent = txt;
+}
+
+/* ── 개회 ── */
+var openTier = 'NORMAL';
+var openSayRef = null;
+function renderOpen(){
+  if (!openSayRef) openSayRef = {group:'opening', i:Math.floor(Math.random()*LINES.opening.variants.length), vars:{}};
+  $('open-hat').innerHTML = icon('pyrrhos', 22/24);
+  $('open-line').textContent = LINES.opening.variants[openSayRef.i][LANG];
+  var rows = [['budget','vBudget'],['rounds','vRounds'],['format','vFormat'],
+              ['apprFee','vApprFee'],['seatFee','vSeatFee'],['win','vWin']];
+  $('open-rules').innerHTML = rows.map(function(r){
+    return '<div><b>'+t(r[0])+'</b><span>'+esc(t(r[1]))+'</span></div>';
+  }).join('');
+  $('tier-label').textContent = t('tierPick');
+  $('tier-row').innerHTML = TIER_ORDER.map(function(k){
+    return '<button class="tier'+(k===openTier?' on':'')+'" data-tier="'+k+'">'+k+'</button>';
+  }).join('');
+  $('tier-note').textContent = TIER_NOTE[openTier][LANG];
+  $('btn-start').textContent = t('start');
+}
+
+/* ── 라운드 ── */
+function renderRound(){
+  var item = G.items[G.round-1], me = G.players[0];
+  $('hud-lot').textContent = lotTag();
+  $('hud-stats').innerHTML = hudHTML();
+  sayInto('round-say','round-hat','round-line');
+
+  $('round-art').innerHTML = renderPixels(SPRITES[item.lot.slug], PX, {scale:12});
+  $('round-tag').textContent = t('lot')+' '+String(G.round).padStart(2,'0')+' · '+item.lot.category.toUpperCase();
+  $('round-name').textContent = lotName(item);
+  $('round-desc').textContent = item.lot.desc[LANG];
+
+  var wide = item.hi/item.lo >= 3.0;
+  $('round-est').innerHTML =
+      '<div><span class="label">'+t('estRange')+'</span><span class="n">'+money(item.lo)+' – '+money(item.hi)+'</span></div>'
+    + '<div><span class="label">'+t('spread')+'</span><span class="n'+(wide?' wide':'')+'">×'+(item.hi/item.lo).toFixed(1)
+      + (wide ? ' <span style="font-family:var(--mono);font-size:11px">'+t('wideNote')+'</span>' : '')+'</span></div>'
+    + '<div><span class="label">'+t('startPrice')+'</span><span class="n">'+money(item.start)+'</span></div>';
+
+  if (G.userEst === null){
+    $('round-appr').innerHTML =
+        '<span style="font-size:13px;color:var(--ink-4);max-width:44ch">'+esc(t('apprOffer'))+'</span>'
+      + '<button class="btn btn-sm" id="btn-appr"'+(me.cash < APPR_FEE ? ' disabled' : '')+'>'+t('buyAppr')+'</button>';
+    var ba = $('btn-appr');
+    if (ba) ba.onclick = function(){
+      if (me.cash < APPR_FEE) return;
+      me.cash -= APPR_FEE; me.apprCount += 1; me.feesPaid += APPR_FEE;
+      G.house.fees += APPR_FEE;
+      G.userEst = item.value * Math.exp(G.rng.gauss(0, PRECISE_SD));
+      renderRound();
+    };
+  } else {
+    $('round-appr').innerHTML =
+        '<span class="got"><span class="label">'+t('apprGot')+'</span><span class="n">'+money(G.userEst)+'</span></span>'
+      + '<span class="ico" style="width:26px;height:26px">'+icon('appraised', 26/24)+'</span>'
+      + '<span class="hint">'+esc(t('apprHint'))+'</span>';
+  }
+
+  var maxBid = Math.floor(me.cash);
+  $('round-bidbox').innerHTML =
+      '<span class="label">'+t('yourBid')+'</span>'
+    + '<div class="bidrow" style="margin-top:6px"><span class="cur">£</span>'
+    + '<input type="number" id="bid-input" min="0" max="'+maxBid+'" step="1" value="'+Math.ceil(item.start)+'" />'
+    + '<span class="cur" style="font-size:16px">M</span></div>'
+    + '<div class="quick">'
+    +   '<button class="btn btn-sm" data-bid="'+Math.ceil(item.start)+'">'+t('qStart')+'</button>'
+    +   '<button class="btn btn-sm" data-bid="'+Math.min(maxBid, Math.round(item.lo))+'">'+t('qLow')+'</button>'
+    +   '<button class="btn btn-sm" data-bid="'+Math.min(maxBid, Math.round(item.gm))+'">'+t('qMid')+'</button>'
+    +   '<button class="btn btn-sm" data-bid="'+maxBid+'">'+t('qAll')+'</button>'
+    + '</div>'
+    + '<div class="bid-hint" id="bid-hint"></div>'
+    + '<div class="bidact">'
+    +   '<button class="btn btn-green" id="btn-bid">'+t('submit')+'</button>'
+    +   '<button class="btn" id="btn-pass">'+t('pass')+'</button>'
+    + '</div>';
+
+  var input = $('bid-input');
+  function checkBid(){
+    var v = Number(input.value);
+    var h = $('bid-hint');
+    if (!(v >= 0) || isNaN(v)){ h.className='bid-hint'; h.textContent=''; return null; }
+    if (v > me.cash){ h.className='bid-hint bad'; h.textContent = t('hintOver',{a:money(me.cash)}); return null; }
+    if (v < item.start){ h.className='bid-hint bad'; h.textContent = t('hintLow',{a:money(item.start)}); return null; }
+    h.className='bid-hint'; h.textContent = t('hintAfter',{a:money(me.cash - v)});
+    return v;
+  }
+  input.addEventListener('input', checkBid);
+  input.addEventListener('keydown', function(e){ if (e.key === 'Enter'){ e.preventDefault(); $('btn-bid').click(); } });
+  [].slice.call($('round-bidbox').querySelectorAll('[data-bid]')).forEach(function(b){
+    b.onclick = function(){ input.value = b.dataset.bid; checkBid(); input.focus(); };
+  });
+  $('btn-bid').onclick = function(){ var v = checkBid(); if (v === null) { input.focus(); return; } resolveRound(v); };
+  $('btn-pass').onclick = function(){ resolveRound(null); };
+  checkBid();
+
+  $('round-board').innerHTML = boardHTML(true);   // 입찰 중 — 봇 열은 라운드 시작 시점
+}
+
+/* ── 라운드 결과 ── */
+function renderResult(){
+  var item = G.items[G.round-1], r = G.result;
+  $('res-lot').textContent = lotTag();
+  $('res-stats').innerHTML = hudHTML();
+  sayInto('res-say','res-hat','res-line');
+
+  var v = $('res-verdict');
+  if (r.winner < 0){
+    v.className = 'verdict passed';
+    v.innerHTML = '<span class="ico">'+icon('handover', 34/24)+'</span>'
+      + '<span><span class="label">'+t('passedTag')+'</span><span class="who">'+esc(lotName(item))+'</span></span>';
+  } else {
+    var mine = r.winner === 0;
+    v.className = 'verdict ' + (mine ? 'won' : 'lost');
+    var who = mine ? t('youWon') : seatName(G.players[r.winner]);
+    v.innerHTML = '<span class="ico">'+icon('hammer', 34/24, mine ? '#F6F6F4' : null)+'</span>'
+      + '<span><span class="label">'+t('sold')+' · '+esc(lotName(item))+'</span>'
+      + '<span class="who">'+esc(who)+'</span></span>'
+      + '<span class="amt">'+money(r.price)+'</span>';
+  }
+
+  var names = r.appraisers.map(function(i){ return seatName(G.players[i]); });
+  $('res-disclose').innerHTML = '<span class="ico">'+icon('loupe', 20/24)+'</span><span>'
+    + esc(names.length ? t('discloseSome',{n:names.join(', ')}) : t('discloseNone')) + '</span>';
+
+  $('res-holdings').innerHTML = holdingsHTML(false);
+  $('res-board').innerHTML = boardHTML();
+  $('btn-next').textContent = BUYBACK_ROUNDS[G.round] ? t('toBuyback')
+                            : (G.round >= N_ITEMS ? t('toEnd') : t('next'));
+}
+
+function holdingsHTML(withActions){
+  var me = G.players[0];
+  var head = '<span class="label">'+t('myLots')+' — '+me.items.length+'</span>';
+  if (!me.items.length) return head + '<div class="empty">'+t('noLots')+'</div>';
+  var cards = me.items.map(function(it, i){
+    var acts = '';
+    if (withActions){
+      if (!it.appraisedByOwner){
+        acts = '<div class="acts"><button class="btn btn-sm" data-appr="'+i+'"'
+             + (me.cash < APPR_FEE ? ' disabled' : '') + '>'+t('buyAppr')+'</button></div>'
+             + '<span class="est-mine" style="color:var(--ink-6)">'+t('bbApprFirst')+'</span>';
+      } else {
+        var offer = BUYBACK_RATE * it.gm;
+        acts = '<span class="est-mine">'+t('bbOffer')+' '+money(offer)+'</span>'
+             + '<div class="acts"><button class="btn btn-sm btn-green" data-sell="'+i+'"'
+             + (G.bbSoldByUser ? ' disabled' : '') + '>'+t('bbSell')+'</button></div>';
+      }
+    }
+    return '<div class="hold">'
+      + '<div class="thumb">'+renderPixels(SPRITES[it.lot.slug], PX, {scale:6})+'</div>'
+      + '<div class="nm">'+esc(it.lot.name[LANG])+'</div>'
+      + '<div class="meta"><span>'+t('paidFor')+'</span><span>'+money(it.paid)+'</span></div>'
+      + (it.appraisedByOwner ? '<div class="est-mine">'+t('apprGot')+' '+money(it.preciseEst)+'</div>' : '')
+      + acts + '</div>';
+  }).join('');
+  return head + '<div class="hold-grid">'+cards+'</div>';
+}
+
+/* ── 매입 창 ── */
+function renderBuyback(){
+  $('bb-lot').textContent = t('bbTitle',{r:G.bbRound});
+  $('bb-stats').innerHTML = hudHTML();
+  sayInto('bb-say','bb-hat','bb-line');
+  $('bb-tag').textContent = t('bbTag');
+  $('bb-rule').textContent = t('bbRule');
+  $('bb-holdings').innerHTML = holdingsHTML(true);
+
+  [].slice.call($('bb-holdings').querySelectorAll('[data-appr]')).forEach(function(b){
+    b.onclick = function(){ userAppraiseOwned(Number(b.dataset.appr)); };
+  });
+  [].slice.call($('bb-holdings').querySelectorAll('[data-sell]')).forEach(function(b){
+    b.onclick = function(){ userSell(Number(b.dataset.sell)); };
+  });
+
+  var lines = G.bbLog.map(function(e){
+    if (e.seat === 0) return t('bbSoldMine', {l: e.lot.lot.name[LANG], a: money(e.offer)});
+    return t('bbBotSold', {n: seatName(G.players[e.seat])});
+  });
+  if (G.bbSoldByUser) lines.push(t('bbUsed'));
+  var botSales = G.bbLog.filter(function(e){ return e.seat !== 0; }).length;
+  if (!botSales) lines.push(t('bbBotNone'));      // 내가 판 건 봇 기록이 아니다
+  $('bb-botlog').innerHTML = lines.map(function(l){ return '<div>'+esc(l)+'</div>'; }).join('');
+  $('btn-bb-close').textContent = G.round >= N_ITEMS ? t('toEnd') : t('bbClose');
+}
+
+/* ── 클로징 ── */
+function renderEnd(){
+  clClear();
+  sayInto('end-say','end-hat','end-line');
+  $('end-title').textContent = t('endTitle');
+  var head = '<div class="bh"><span>'+t('score')+'</span><span>'+t('lot')+' '+N_ITEMS+' / '+N_ITEMS+'</span></div>';
+  var body = G.final.map(function(row, rank){
+    var p = row.p;
+    var badge = p.isUser ? '' : '<span class="seat-badge">'+p.badge+'</span>';
+    return '<tr class="'+(p.isUser?'you':'')+'">'
+      + '<td>'+(rank+1)+'</td>'
+      + '<td>'+badge+esc(seatName(p))+'</td>'
+      + '<td class="num">'+p.items.length+'</td>'
+      + '<td class="num">'+money(row.held)+'</td>'
+      + '<td class="num">'+money(p.cash)+'</td>'
+      + '<td class="num">'+money(row.score)+'</td></tr>';
+  }).join('');
+  $('end-board').innerHTML = head + '<table><thead><tr><th>#</th><th>'+t('player')+'</th>'
+    + '<th class="num">'+t('held')+'</th><th class="num">'+t('trueValue')+'</th>'
+    + '<th class="num">'+t('cash')+'</th><th class="num">'+t('score')+'</th></tr></thead><tbody>'
+    + body + '</tbody></table>';
+
+  var me = G.players[0];
+  var cards = me.items.map(function(it){
+    return '<div class="hold">'
+      + '<div class="thumb">'+renderPixels(SPRITES[it.lot.slug], PX, {scale:6})+'</div>'
+      + '<div class="nm">'+esc(it.lot.name[LANG])+'</div>'
+      + '<div class="meta"><span>'+t('paidFor')+'</span><span>'+money(it.paid)+'</span></div>'
+      + '<div class="meta"><span>'+t('trueValue')+'</span><span>'+money(it.value)+'</span></div>'
+      + '</div>';
+  }).join('');
+  $('end-holdings').innerHTML = '<span class="label">'+t('yourLots')+' — '+me.items.length+'</span>'
+    + (me.items.length ? '<div class="hold-grid">'+cards+'</div>' : '<div class="empty">'+t('none')+'</div>');
+  var C = G.close;
+  $('btn-close-next').textContent = C.stage === 0 ? t('toHouseCut') : t('closeDoors');
+  $('btn-close-next').hidden = (C.stage >= 2);
+  $('btn-again').textContent = t('again');
+  $('btn-again').hidden = (C.stage < 2);
+  $('end-house').hidden = (C.stage < 1);
+  if (C.stage < 1) return;
+  renderHouse();
+}
+
+/* 하우스 몫. 네 항목이 차례로 얹히고 마지막에 합계가 굴러 나온다.
+   합계는 언제나 방 안 최고 점수보다 크다 — 그게 이 집의 이름값이다. */
+function renderHouse(){
+  var C = G.close;
+  $('house-ico').innerHTML = icon('pyrrhos', 26/24, '#F6F6F4');
+  $('house-label').textContent = t('houseCut');
+  $('house-total-label').textContent = t('cutTotal');
+
+  var TERMS = [
+    ['cutSeat',   'cutSeatN',   G.cut.seat],
+    ['cutFees',   'cutFeesN',   G.cut.fees],
+    ['cutBuy',    'cutBuyN',    G.cut.buyback],
+    ['cutUnsold', 'cutUnsoldN', G.cut.unsold]
+  ];
+  $('house-terms').innerHTML = TERMS.map(function(r){
+    return '<div class="cut-row">'
+      + '<span class="nm">'+esc(t(r[0]))+'<em>'+esc(t(r[1]))+'</em></span>'
+      + '<span class="n">'+money(r[2])+'</span></div>';
+  }).join('');
+  $('house-vs').textContent = t('cutVs', {
+    top:   money(G.final[0].score),
+    house: money(G.cut.total)
+  });
+
+  if (C.settled || REDUCED){ clSettle(); return; }
+
+  var rows = [].slice.call($('house-terms').children);
+  $('house-total').classList.remove('shown');
+  $('house-vs').classList.remove('shown');
+  $('house-total-value').textContent = money(0);
+
+  rows.forEach(function(el, k){ clAt(CLT.TERM0 + k*CLT.TERM, function(){ el.classList.add('shown'); }); });
+  var at = CLT.TERM0 + rows.length*CLT.TERM + CLT.WAIT;
+  clAt(at, function(){
+    $('house-total').classList.add('shown');
+    countUp($('house-total-value'), G.cut.total, CLT.COUNT, CLT.TICK, function(c){ G.close.timers.push(c); });
+  });
+  clAt(at + CLT.COUNT + CLT.VS, function(){
+    $('house-vs').classList.add('shown');
+    G.close.settled = true;
+  });
+}
+
+/* ============================================================
+   전적 — 끝난 판만
+   ------------------------------------------------------------
+   이 패널은 화면(.screen) 밖에 있어 경매 중에도 아래에 깔려 있다.
+   그래서 여기에는 '지금 굴러가는 판'에 대한 숫자가 한 개도 실리면 안 된다.
+   행은 폐회 때 딱 한 번 쓰고, 읽기는 집계 RPC로만 한다.
+   ============================================================ */
+function guestId(){
+  try{
+    var g = localStorage.getItem('kyg_guest_id');
+    if (!g){
+      g = (window.crypto && crypto.randomUUID)
+        ? crypto.randomUUID()
+        : 'g' + Date.now() + '-' + Math.random().toString(16).slice(2);
+      localStorage.setItem('kyg_guest_id', g);
+    }
+    return g;
+  }catch(e){ return null; }
+}
+function uuid4(){
+  if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c){
+    var r = Math.random()*16|0, v = (c === 'x') ? r : ((r&0x3)|0x8);
+    return v.toString(16);
+  });
+}
+
+/* 낙찰품 집계는 G.items 에서 훑는다 — 매입 창에서 넘긴 물건은
+   p.items 에서 빠져나가므로 소지품만 보면 치른 돈이 사라진다. */
+function logGame(){
+  try{
+    if (!G || G.logged) return;
+    var A = window.KYG_AUTH;
+    if (!A || !A.client) return;
+    G.logged = true;
+
+    var meRow = null;
+    for (var i=0;i<G.final.length;i++) if (G.final[i].i === 0) meRow = {rank:i+1, row:G.final[i]};
+    if (!meRow) return;
+
+    var won=0, sold=0, paid=0, val=0;
+    G.items.forEach(function(it){
+      if (it.owner !== 0) return;
+      won += 1; paid += it.paid; val += it.value;
+      if (it.soldToHouse) sold += 1;
+    });
+
+    var uid = A.user ? A.user.id : null;
+    var row = {
+      game_id: G.gameId, user_id: uid, guest_id: (uid ? null : guestId()),
+      difficulty: G.tier.toLowerCase(), rules_ver: 'v1.2',
+      rank: meRow.rank,
+      score: Math.round(meRow.row.score),
+      top_score: Math.round(G.final[0].score),
+      house_cut: Math.round(G.cut.total),
+      cut_seat: Math.round(G.cut.seat), cut_fees: Math.round(G.cut.fees),
+      cut_buyback: Math.round(G.cut.buyback), cut_unsold: Math.round(G.cut.unsold),
+      lots_won: won, lots_sold: sold, appraisals: G.players[0].apprCount,
+      paid_total: Math.round(paid), value_total: Math.round(val)
+    };
+    A.client.from('pyr_games').insert([row]).then(function(res){
+      if (res && res.error) console.warn('pyr log rejected', res.error.message);
+      else if (uid) loadRecord();
+    });
+  }catch(e){ console.warn('pyr log failed', e); }
+}
+
+var REC = null;   // null = 아직 못 불러옴(또는 비로그인), {} = 로그인했으나 기록 없음
+async function loadRecord(){
+  var A = window.KYG_AUTH;
+  if (!A || !A.client || !A.user){ REC = null; renderRecord(); return; }
+  try{
+    var r = await A.client.rpc('pyr_my_record');
+    if (r.error) throw r.error;
+    var map = {};
+    (r.data || []).forEach(function(x){ map[x.difficulty] = x; });
+    REC = map;
+  }catch(e){ console.warn('pyr record load failed', e); REC = {}; }
+  renderRecord();
+}
+
+var REC_TIERS = ['easy','normal','hard','brutal'];
+function renderRecord(){
+  $('rec-title').textContent = t('recTitle');
+  var body = $('rec-body'), A = window.KYG_AUTH;
+
+  if (!A || !A.user){
+    body.innerHTML = '<p class="rec-note">' + t('recSignIn') + '</p>';
+    return;
+  }
+  if (REC === null){
+    body.innerHTML = '<p class="rec-note">' + t('recLoading') + '</p>';
+    return;
+  }
+  var rows = REC_TIERS.filter(function(d){ return REC[d] && REC[d].games > 0; });
+  if (!rows.length){
+    body.innerHTML = '<p class="rec-note">' + t('recEmpty') + '</p>';
+    return;
+  }
+
+  var G_ = 0, F_ = 0, B_ = 0, BEST = 0, SUM = 0;
+  var trs = rows.map(function(d){
+    var r = REC[d], n = r.games|0, f = r.firsts|0;
+    G_ += n; F_ += f; B_ += (r.beat_house|0);
+    if (r.best > BEST) BEST = r.best;
+    SUM += (r.avg_score|0) * n;
+    var rate = n ? Math.round(f * 1000 / n) / 10 : 0;
+    return '<tr><td>' + TIER_LABEL(d) + '</td>'
+      + '<td>' + n + '</td>'
+      + '<td class="' + (f ? 'first' : '') + '">' + f + '</td>'
+      + '<td>' + money(r.best) + '</td>'
+      + '<td>' + money(r.avg_score) + '</td>'
+      + '<td class="rate">' + rate.toFixed(1) + '%</td></tr>';
+  }).join('');
+
+  var tRate = G_ ? Math.round(F_ * 1000 / G_) / 10 : 0;
+  trs += '<tr class="tot"><td>' + t('recTotal') + '</td>'
+    + '<td>' + G_ + '</td><td class="' + (F_ ? 'first' : '') + '">' + F_ + '</td>'
+    + '<td>' + money(BEST) + '</td>'
+    + '<td>' + money(G_ ? SUM / G_ : 0) + '</td>'
+    + '<td class="rate">' + tRate.toFixed(1) + '%</td></tr>';
+
+  body.innerHTML =
+    '<div class="rec-scroll"><table><thead><tr>'
+    + '<th>' + t('recRoom') + '</th><th>' + t('recGames') + '</th><th>' + t('recFirst') + '</th>'
+    + '<th>' + t('recBest') + '</th><th>' + t('recAvg') + '</th><th>' + t('recRate') + '</th>'
+    + '</tr></thead><tbody>' + trs + '</tbody></table></div>'
+    + '<p class="rec-foot' + (B_ ? ' hit' : '') + '">'
+    + (B_ ? t('recBeatN', {n: B_}) : t('recBeat0')) + '</p>';
+}
+function TIER_LABEL(d){ return d.toUpperCase(); }
+
+/* ============================================================
+   배선
+   ============================================================ */
+$('tier-row').addEventListener('click', function(e){
+  var b = e.target.closest('.tier'); if (!b) return;
+  openTier = b.dataset.tier;
+  renderOpen();
+});
+$('btn-start').onclick = function(){ newGame(openTier); };
+$('btn-next').onclick = function(){ afterResult(); };
+$('btn-bb-close').onclick = function(){ closeBuyback(); };
+$('btn-rv-next').onclick = function(){ rvAdvance(); };
+$('btn-rv-skip').onclick = function(){ rvSkipAll(); };
+$('btn-close-next').onclick = function(){ clAdvance(); };
+$('btn-again').onclick = function(){ clClear(); G = null; show('open'); renderOpen(); };
+
+window.APP_LANG_LISTENERS.push(function(lang){
+  LANG = lang;
+  renderOpen();
+  renderRecord();
+  if (!G) return;
+  if (G.screen === 'round')  renderRound();
+  if (G.screen === 'result') renderResult();
+  if (G.screen === 'buyback')renderBuyback();
+  if (G.screen === 'reveal') renderReveal();
+  if (G.screen === 'end')    renderEnd();
+});
+
+/* 로그인 상태가 바뀌면 전적을 처음부터 다시 잡는다.
+   로그아웃 시 REC 를 비우지 않으면 남의 숫자가 화면에 남는다. */
+window.KYG_AUTH_LISTENERS = window.KYG_AUTH_LISTENERS || [];
+window.KYG_AUTH_LISTENERS.push(function(user){
+  REC = null; renderRecord();
+  if (user) loadRecord();
+});
+
+renderOpen();
+renderRecord();
+/* auth-widget.js 는 defer 라 보통 이 뒤에 붙는다 — 그때는 위 리스너가 불러 준다.
+   캐시가 빨라 먼저 앉아 있는 경우에는 아무도 안 부르므로 여기서 한 번 확인한다. */
+if (window.KYG_AUTH && window.KYG_AUTH.user) loadRecord();
+})();
+</script>
+<script src="/auth-widget.js" defer></script>
+</body>
+</html>
