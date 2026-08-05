@@ -104,12 +104,15 @@ main{padding:26px 0 88px;}
 .btn.go{background:var(--green);color:var(--paper);}
 .btn.stop{background:var(--red);color:var(--paper);}
 .btn.sm{font-size:11px;padding:7px 13px;box-shadow:3px 3px 0 var(--ink);}
-select{font-family:var(--mono);font-size:13px;border:3px solid var(--ink);background:#fff;padding:9px 12px;color:var(--ink);}
+select{font-family:var(--mono);font-size:13px;border:3px solid var(--ink);background:#fff;padding:9px 12px;color:var(--ink);max-width:100%;}
 .hint{font-family:var(--mono);font-size:11.5px;color:#6B6B67;}
 
 /* Sentence card */
 .card{border:3px solid var(--ink);background:var(--paper);padding:18px 20px;margin:16px 0;}
 .card-kr{font-size:clamp(24px,4.4vw,34px);font-weight:700;letter-spacing:-.5px;line-height:1.35;}
+.card-kr.long{font-size:clamp(16px,2.1vw,21px);letter-spacing:-.2px;line-height:1.7;font-weight:600;white-space:pre-line;}
+.card-src{font-family:var(--mono);font-size:11px;color:#8A8A85;margin-top:10px;letter-spacing:.02em;}
+.card-src:empty{display:none;}
 .card-why{font-family:var(--mono);font-size:11.5px;color:var(--green-deep);margin-top:8px;font-weight:600;}
 .card-syl{font-family:var(--mono);font-size:11.5px;color:#6B6B67;margin-top:4px;}
 
@@ -208,6 +211,7 @@ footer{border-top:3px solid var(--ink);padding:26px 0;}
 
       <div class="card">
         <div class="card-kr" id="sentKr">밥 먹었어.</div>
+        <div class="card-src" id="sentSrc"></div>
         <div class="card-why" id="sentWhy"></div>
         <div class="card-syl" id="sentSyl"></div>
       </div>
@@ -842,16 +846,26 @@ if (typeof module !== 'undefined' && module.exports) module.exports = BS;
 
 /* ---------- 문장 세트 (문헌 개정판 v0.2) ---------- */
 window.BS_SENTENCES = [
-  { id:1, kr:'밥 먹었어.', syl:4,
+  { id:1, kind:'short', maxSec:12, kr:'밥 먹었어.', syl:4,
     why:{en:'DECLARATIVE BASELINE — normalises your register', kr:'평서 기준선 — 당신의 음역을 정규화'} },
-  { id:2, kr:'밥 먹었어?', syl:4,
+  { id:2, kind:'short', maxSec:12, kr:'밥 먹었어?', syl:4,
     why:{en:'YES/NO QUESTION — the final rise is the strongest known discriminator', kr:'판정의문 — 문말 급상승이 가장 강한 판별자'} },
-  { id:3, kr:'뭐 먹었어?', syl:4,
+  { id:3, kind:'short', maxSec:12, kr:'뭐 먹었어?', syl:4,
     why:{en:'WH-QUESTION — segmentally near-identical to #2', kr:'설명의문 — 2번과 분절음이 거의 동일'} },
-  { id:4, kr:'블루베리 스무디', syl:7,
+  { id:4, kind:'short', maxSec:12, kr:'블루베리 스무디', syl:7,
     why:{en:'LOANWORD PHRASE TONE — and a syllable-boundary stress test', kr:'외래어 어절 성조 — 그리고 음절 경계 검출 시험'} },
-  { id:5, kr:'오늘 날씨 좋다', syl:6,
-    why:{en:'SYLLABLE DURATION — the Chungcheong axis', kr:'음절 지속시간 — 충청 축'} }
+  { id:5, kind:'short', maxSec:12, kr:'오늘 날씨 좋다', syl:6,
+    why:{en:'SYLLABLE DURATION — the Chungcheong axis', kr:'음절 지속시간 — 충청 축'} },
+  { id:6, kind:'long', maxSec:25, syl:81,
+    kr:'무엇에든지 참되며 무엇에든지 경건하며 무엇에든지 옳으며 무엇에든지 정결하며 무엇에든지 사랑 받을 만하며 무엇에든지 칭찬 받을 만하며 무슨 덕이 있든지 무슨 기림이 있든지 이것들을 생각하라.',
+    src:{en:'Philippians 4:8 · Korean Revised Version, quoted', kr:'빌립보서 4:8 · 개역개정, 인용'},
+    pick:{en:'Philippians 4:8 — parallel list, 81 syllables', kr:'빌립보서 4:8 — 병렬 나열, 81음절'},
+    why:{en:'PARALLEL LIST — the same frame seven times, in one recording', kr:'병렬 나열 — 동일한 틀이 한 녹음 안에서 일곱 번'} },
+  { id:7, kind:'long', maxSec:25, syl:45,
+    kr:'별 하나에 추억과\n별 하나에 사랑과\n별 하나에 쓸쓸함과\n별 하나에 동경과\n별 하나에 시와\n별 하나에 어머니, 어머니',
+    src:{en:'Yun Dong-ju, “Counting the Stars at Night” (1941) · public domain', kr:'윤동주 「별 헤는 밤」 (1941) · 퍼블릭 도메인'},
+    pick:{en:'Yun Dong-ju, Counting the Stars at Night — 45 syllables', kr:'윤동주 별 헤는 밤 — 45음절'},
+    why:{en:'REPEATED OPENING — five lines start identically, and the last word is said twice', kr:'반복 도입 — 다섯 행이 똑같이 시작하고, 마지막 단어는 두 번 발화'} }
 ];
 
 window.BS_TOPICS = [
@@ -873,6 +887,12 @@ window.BS_UI = {
   rec:{en:'RECORD',kr:'녹음'},
   stop:{en:'STOP',kr:'정지'},
   hintA:{en:'Read the sentence once, at your normal speed. Max 12 s.',kr:'문장을 평소 속도로 한 번 읽어주세요. 최대 12초.'},
+  hintALong:{en:'Read the whole passage at your normal pace. Max 25 s.',kr:'지문 전체를 평소 속도로 읽어주세요. 최대 25초.'},
+  grpShort:{en:'SHORT SENTENCES',kr:'짧은 문장'},
+  grpLong:{en:'LONG PASSAGES',kr:'긴 지문'},
+  maxRec:{en:'max',kr:'최대'},
+  capDoneLong:{en:'Shaded blocks = intonation phrases · arrows = phrase-final pitch movement',kr:'음영 블록 = 억양구 · 화살표 = 억양구 문말 피치 이동'},
+  sylTol:{en:'A long passage always loses a few syllable boundaries to fast speech and voiceless stretches. The phrase-level numbers above do not depend on this count.',kr:'긴 지문은 빠른 발화와 무성 구간 때문에 음절 경계를 몇 개씩 놓칩니다. 위의 억양구 단위 값들은 이 개수에 의존하지 않아요.'},
   hintB:{en:'Talk freely. Recording stops automatically at 90 s.',kr:'편하게 이야기하세요. 90초에서 자동으로 멈춥니다.'},
   capIdle:{en:'Pitch curve, in semitones relative to your own median. Press RECORD.',kr:'본인 중앙값 대비 semitone 음높이 곡선. 녹음을 눌러주세요.'},
   capLive:{en:'LIVE — provisional median, the curve will shift once analysis runs.',kr:'실시간 — 중앙값이 잠정값이라 분석 후 곡선이 이동합니다.'},
@@ -1224,20 +1244,46 @@ A.typeTag = function(t){
 var S = { idx:0, live:new Live(), last:null, running:false, slotA:null, slotB:null };
 A.S = S;
 
+A.cur = function(){ return window.BS_SENTENCES[S.idx]; };
+A.maxSec = function(){ return A.cur().maxSec || 12; };
+A.isLong = function(s){ return (s || A.cur()).kind === 'long'; };
+
+/* 선택기에 쓸 짧은 라벨 (긴 지문은 전문 대신 pick 라벨) */
+A.label = function(s){ return s.pick ? L(s.pick) : s.kr; };
+
 A.paintSentence = function(){
-  var s = window.BS_SENTENCES[S.idx];
+  var s = A.cur(), lng = A.isLong(s);
   $('sentKr').textContent = s.kr;
+  $('sentKr').classList.toggle('long', lng);
+  $('sentSrc').textContent = s.src ? L(s.src) : '';
   $('sentWhy').textContent = L(s.why);
-  $('sentSyl').textContent = L(U.expected) + ' ' + s.syl + ' ' + L(U.syl);
+  $('sentSyl').textContent = L(U.expected) + ' ' + s.syl + ' ' + L(U.syl) +
+                             ' · ' + L(U.maxRec) + ' ' + (s.maxSec || 12) + 's';
+  $('hintA').textContent = L(lng ? U.hintALong : U.hintA);
 };
 
 A.fillPicker = function(){
   var sel = $('sentPick'), cur = sel.value;
   sel.innerHTML = '';
-  window.BS_SENTENCES.forEach(function(s, i){
-    var o = document.createElement('option');
-    o.value = i; o.textContent = s.id + '. ' + s.kr;
-    sel.appendChild(o);
+  var groups = [
+    { kind:'short', label:L(U.grpShort) },
+    { kind:'long',  label:L(U.grpLong)  }
+  ];
+  groups.forEach(function(g){
+    var items = [];
+    window.BS_SENTENCES.forEach(function(s, i){
+      if ((s.kind || 'short') === g.kind) items.push([s, i]);
+    });
+    if (!items.length) return;
+    var og = document.createElement('optgroup');
+    og.label = g.label;
+    items.forEach(function(pair){
+      var o = document.createElement('option');
+      o.value = pair[1];
+      o.textContent = pair[0].id + '. ' + A.label(pair[0]);
+      og.appendChild(o);
+    });
+    sel.appendChild(og);
   });
   sel.value = cur || String(S.idx);
 };
@@ -1255,9 +1301,11 @@ A.analyzeRead = function(pcm, sr){
 /* 언어 전환 시 결과 화면을 그대로 다시 그린다 (재분석 없음) */
 A.renderRead = function(){
   if (!S.raw) return;
+  var expect0 = window.BS_SENTENCES[S.raw.idx];
+  if (expect0.kind === 'long'){ A.renderPassage(S.raw.r, expect0); return; }
   var r = S.raw.r;
   var voiced = r.frames.filter(function(f){ return f.st != null; });
-  var expect = window.BS_SENTENCES[S.raw.idx];
+  var expect = expect0;
   var nuclei = r.syllables.nuclei;
   var lastPh = r.phrases.length ? r.phrases[r.phrases.length - 1] : { s:0, e:r.frames.length - 1 };
   var fin = window.BS.finalSlope(r.frames, lastPh, { hopSec:0.010, nuclei:nuclei });
@@ -1312,8 +1360,111 @@ A.renderRead = function(){
   $('resA').innerHTML = html;
 
   S.last = {
+    id: expect.id, label: A.label(expect),
     sentence: expect.kr, nSyl: nuclei.length, expSyl: expect.syl,
     delta: fin ? fin.delta : null, type: fin ? fin.type : null,
+    range: range, f0: r.medianF0, dur: durSec
+  };
+};
+
+/* =================== 긴 지문 =================== */
+/* 억양구별 중앙 semitone */
+function phraseMedians(r){
+  return r.phrases.map(function(p){
+    var v = [];
+    for (var i = p.s; i <= p.e && i < r.frames.length; i++){
+      if (r.frames[i].st != null) v.push(r.frames[i].st);
+    }
+    return v.length ? window.BS.medianOf(v) : null;
+  });
+}
+
+/* 최소제곱 기울기 (st / 억양구) */
+function slopeOf(ys){
+  var xs = [], vs = [];
+  ys.forEach(function(y, i){ if (y != null){ xs.push(i); vs.push(y); } });
+  var n = xs.length;
+  if (n < 3) return null;
+  var mx = 0, my = 0, i;
+  for (i = 0; i < n; i++){ mx += xs[i]; my += vs[i]; }
+  mx /= n; my /= n;
+  var num = 0, den = 0;
+  for (i = 0; i < n; i++){ num += (xs[i]-mx)*(vs[i]-my); den += (xs[i]-mx)*(xs[i]-mx); }
+  return den > 0 ? num/den : null;
+}
+
+A.renderPassage = function(r, expect){
+  var voiced = r.frames.filter(function(f){ return f.st != null; });
+  var nuclei = r.syllables.nuclei;
+  var nP = r.phrases.length;
+  var lastPh = nP ? r.phrases[nP-1] : { s:0, e:r.frames.length-1 };
+
+  window.BS_draw($('cvA'), {
+    frames:r.frames, hopSec:0.010,
+    i0:Math.max(0, (nP ? r.phrases[0].s : 0) - 20),
+    i1:Math.min(r.frames.length-1, lastPh.e + 20),
+    phrases:r.phrases, finals:r.finals, nuclei:[], boundaries:[], labelFinals:false
+  });
+  $('capA').textContent = L(U.capDoneLong);
+
+  var sts = voiced.map(function(f){ return f.st; }).sort(function(a,b){ return a-b; });
+  var range = sts.length ? sts[Math.floor(sts.length*0.95)] - sts[Math.floor(sts.length*0.05)] : 0;
+  var durSec = ((nP ? lastPh.e : r.frames.length-1) - (nP ? r.phrases[0].s : 0) + 1) * 0.010;
+
+  /* 연결 상승 = 마지막 억양구를 뺀 나머지 중 상승 비율 */
+  var contRise = null;
+  if (nP >= 2){
+    var nR = 0, nC = 0;
+    for (var i = 0; i < nP-1; i++){
+      var f = r.finals[i];
+      if (!f) continue;
+      nC++; if (f.type === 'rise') nR++;
+    }
+    if (nC) contRise = nR / nC;
+  }
+  var decl = slopeOf(phraseMedians(r));
+  var endFin = r.finals[nP-1] || null;
+  var rate = durSec > 0 ? nuclei.length / durSec : 0;
+
+  var html = '<h2 class="sub">' + L({en:'PASSAGE MEASUREMENT',kr:'지문 측정값'}) + '</h2>';
+  html += '<div class="stat-grid">' +
+    A.stat(L({en:'PHRASES',kr:'억양구'}), nP, '') +
+    A.stat(L({en:'CONTINUING RISES',kr:'연결 상승'}), contRise==null?'—':Math.round(contRise*100), '%') +
+    A.stat(L({en:'DECLINATION',kr:'하강 추세'}), decl==null?'—':(decl>=0?'+':'')+decl.toFixed(2), 'st/' + L({en:'phrase',kr:'억양구'})) +
+    A.stat(L({en:'FINAL MOVE',kr:'문말 이동'}), endFin ? (endFin.delta>=0?'+':'')+endFin.delta.toFixed(1) : '—', 'st') +
+    A.stat(L({en:'CONTOUR',kr:'문말 유형'}), endFin ? A.typeTag(endFin.type) : '—', '') +
+    A.stat(L({en:'PITCH RANGE',kr:'음역 폭'}), range.toFixed(1), 'st') +
+    A.stat(L({en:'SPEECH RATE',kr:'발화 속도'}), rate.toFixed(2), 'syl/s') +
+    A.stat(L({en:'DURATION',kr:'길이'}), durSec.toFixed(2), 's') +
+    A.stat(L({en:'MEDIAN f0',kr:'중앙 f0'}), Math.round(r.medianF0), 'Hz') +
+    '</div>';
+
+  if (nP){
+    html += '<h2 class="sub">' + L({en:'PHRASE ENDINGS',kr:'억양구 문말'}) + '</h2>';
+    html += '<table class="ph"><tr><th>#</th><th>' + L({en:'START',kr:'시작'}) + '</th><th>' +
+            L({en:'LENGTH',kr:'길이'}) + '</th><th>Δ semitone</th><th>' + L({en:'TYPE',kr:'유형'}) + '</th></tr>';
+    r.phrases.forEach(function(p, i){
+      var ff = r.finals[i];
+      html += '<tr><td>' + (i+1) + '</td><td>' + (p.s*0.01).toFixed(1) + 's</td><td>' +
+              ((p.e-p.s+1)*0.01).toFixed(2) + 's</td><td>' +
+              (ff ? (ff.delta>=0?'+':'')+ff.delta.toFixed(2) : '—') + '</td><td>' +
+              (ff ? A.typeTag(ff.type) : '—') + '</td></tr>';
+    });
+    html += '</table>';
+  }
+
+  html += '<div class="note">' + L(U.expected) + ' ' + expect.syl + ' ' + L(U.syl) +
+          ' / ' + L(U.detected) + ' ' + nuclei.length + ' — ' + L(U.sylTol) + '</div>';
+  html += '<div class="note">' + L({
+    en:'Both long passages repeat one frame over and over, so the phrase list above is closer to several measurements of the same thing than to several different ones. Declination is the least-squares slope of those phrase medians; a negative value means your pitch drifted down across the passage. That drift cannot be measured from a single short sentence at all.',
+    kr:'긴 지문은 둘 다 같은 틀을 계속 반복하기 때문에, 위의 억양구 목록은 서로 다른 여러 개의 측정이라기보다 같은 것을 여러 번 잰 값에 가깝습니다. 하강 추세는 그 억양구 중앙값들의 최소제곱 기울기예요 — 음수면 지문을 읽는 동안 음높이가 아래로 흘렀다는 뜻입니다. 이 흐름은 짧은 문장 하나로는 아예 잴 수 없어요.'}) + '</div>';
+
+  $('resA').innerHTML = html;
+
+  S.last = {
+    id: expect.id, label: A.label(expect),
+    sentence: expect.kr, nSyl: nuclei.length, expSyl: expect.syl,
+    delta: endFin ? endFin.delta : null, type: endFin ? endFin.type : null,
     range: range, f0: r.medianF0, dur: durSec
   };
 };
@@ -1325,7 +1476,7 @@ A.readError = function(msg){
 
 A.slotText = function(o){
   if (!o) return '—';
-  return o.sentence + '\n' + L({en:'final',kr:'문말'}) + ' ' +
+  return (o.label || o.sentence) + '\n' + L({en:'final',kr:'문말'}) + ' ' +
          (o.delta==null?'—':(o.delta>=0?'+':'')+o.delta.toFixed(2)+'st (' + o.type + ')') +
          ' · ' + L({en:'range',kr:'음역'}) + ' ' + o.range.toFixed(1) + 'st · ' + Math.round(o.f0) + 'Hz';
 };
@@ -1336,7 +1487,9 @@ A.paintAB = function(){
   var d = $('abDiff');
   if (!S.slotA || !S.slotB){ d.innerHTML = ''; return; }
   var dd = (S.slotA.delta==null||S.slotB.delta==null) ? null : (S.slotB.delta - S.slotA.delta);
-  var same = S.slotA.sentence === S.slotB.sentence;
+  var same = (S.slotA.id != null && S.slotB.id != null)
+             ? S.slotA.id === S.slotB.id
+             : S.slotA.sentence === S.slotB.sentence;
   var html = '<div class="stat-grid" style="margin-top:14px">' +
     A.stat('Δ ' + L({en:'FINAL',kr:'문말'}), dd==null?'—':(dd>=0?'+':'')+dd.toFixed(2), 'st') +
     A.stat('Δ ' + L({en:'RANGE',kr:'음역'}), (S.slotB.range-S.slotA.range).toFixed(2), 'st') +
@@ -1425,6 +1578,8 @@ function renderFree(){
 function wire(o){
   var btn = $(o.btn), lvl = $(o.lvl), cvId = o.cv, capId = o.cap;
   btn.addEventListener('click', function(){
+    /* 상한은 클릭 시점에 정한다 — 긴 지문은 25초, 짧은 문장은 12초 */
+    var maxSec = (typeof o.maxSec === 'function') ? o.maxSec() : o.maxSec;
     if (o.state.running){ window.BS_Rec.stop(); return; }
     if (!window.BS_Rec.supported()){
       $(o.res).innerHTML = '<div class="warn">' + L(U.micFail) + '</div>'; return;
@@ -1438,7 +1593,7 @@ function wire(o){
     $(capId).textContent = L(U.capLive);
 
     var lastPaint = 0;
-    window.BS_Rec.start(o.maxSec, function(chunk){
+    window.BS_Rec.start(maxSec, function(chunk){
       lvl.style.width = A.levelPct(A.rmsDb(chunk)) + '%';
       o.state.live.push(chunk, window.BS_Rec.sr);
       var now = (typeof performance !== 'undefined' ? performance.now() : 0);
@@ -1446,7 +1601,7 @@ function wire(o){
         lastPaint = now;
         window.BS_draw($(cvId), {
           frames:o.state.live.frames, hopSec:0.020,
-          i0:0, i1:Math.max(Math.round(o.maxSec * 0.25 / 0.020), o.state.live.frames.length),
+          i0:0, i1:Math.max(Math.round(maxSec * 0.25 / 0.020), o.state.live.frames.length),
           live:true
         });
       }
@@ -1488,7 +1643,6 @@ function relabel(){
   A.renderRead();
   renderFree();
   A.setMic(A.S.running || F.running ? 'rec' : 'off');
-  $('hintA').textContent = L(U.hintA);
   $('hintB').textContent = L(U.hintB);
   $('topicKr').textContent = L(window.BS_TOPICS[F.topic]);
   if (!A.S.running && !A.S.last) $('capA').textContent = L(U.capIdle);
@@ -1512,7 +1666,7 @@ $('saveA').addEventListener('click', function(){ if (A.S.last){ A.S.slotA = A.S.
 $('saveB').addEventListener('click', function(){ if (A.S.last){ A.S.slotB = A.S.last; A.paintAB(); } });
 
 wire({ btn:'recA', lvl:'lvlA', cv:'cvA', cap:'capA', res:'resA',
-       state:A.S, maxSec:12, analyze:A.analyzeRead });
+       state:A.S, maxSec:A.maxSec, analyze:A.analyzeRead });
 wire({ btn:'recB', lvl:'lvlB', cv:'cvB', cap:'capB', res:'resB',
        state:F, maxSec:90, analyze:analyzeFree });
 
