@@ -152,7 +152,7 @@ main{padding:34px 0 96px}
 .appr{margin-top:16px;border:3px solid var(--ink);background:var(--sunken);padding:12px 14px;
   display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:space-between}
 .appr .got{display:flex;flex-direction:column;gap:2px}
-.appr .got .n{font-size:22px;color:var(--green-deep)}
+.appr .got .n{font-size:22px;color:var(--green-deep);white-space:nowrap}
 .appr .hint{font-size:12px;color:var(--ink-4);flex-basis:100%}
 
 .bidbox{margin-top:16px;border:3px solid var(--ink);padding:14px}
@@ -632,24 +632,31 @@ var GEN_SD = 0.9;
 var EPS_SD = 0.30;
 var TAIL_P = 0.05, TAIL_SD = 0.80;
 var K_CHOICES = [1.5, 2.0, 2.5];
-var PRECISE_SD = 0.10;
+var PRECISE_SD = 0.18;          // v8. 정밀 감정은 답이 아니라 좁은 폭이다
+var BAND_Z = 1.645;             // 9/10 구간. 폭 = est × exp(±Z·sd)
 var START_LO = 0.10, START_HI = 0.30;
 var PACE_LO = 0.55, PACE_HI = 1.60;
 var POOL_TARGET = BUDGET * 4 * POOL_RATIO;
 
-/*            acc   risk  appr  pace */
+/* v8 줍기 방지 (findings v8). 봇이 예산을 다 태우고 나면 후반 물건이 시작가에
+   떨어졌다. 두 개를 건다 — 끝까지 남기는 입찰용 잔돈, 그리고 헐값 줍기. */
+var RESERVE_FLOOR = 0.13;       // 예산의 13% 는 마지막까지 손대지 않는다
+var BARGAIN_EDGE = 4.0;         // 값어치가 시작가의 4배를 넘으면 헐값으로 본다
+var SNIPE_LO = 1.00, SNIPE_HI = 1.15;
+
+/*            acc   risk  appr  pace  snipe */
 var CARDS = {
-  RECKLESS: [0.35, 0.98, 0.35, 0.00],
-  EAGER:    [0.30, 0.90, 0.50, 0.20],
-  STEADY:   [0.22, 0.82, 0.55, 0.45],
-  CAREFUL:  [0.16, 0.74, 0.70, 0.65],
-  SHARK:    [0.11, 0.68, 0.85, 0.85]
+  RECKLESS: [0.35, 0.98, 0.35, 0.00, 0.02],
+  EAGER:    [0.30, 0.90, 0.50, 0.20, 0.20],
+  STEADY:   [0.22, 0.92, 0.55, 0.45, 0.60],
+  CAREFUL:  [0.16, 0.82, 0.70, 0.65, 0.90],
+  SHARK:    [0.11, 0.64, 0.85, 0.85, 0.98]
 };
 var TIERS = {
   EASY:   [['RECKLESS','RECKLESS','EAGER'],['RECKLESS','EAGER','EAGER'],['RECKLESS','RECKLESS','STEADY']],
-  NORMAL: [['RECKLESS','EAGER','STEADY'],['EAGER','EAGER','STEADY'],['RECKLESS','STEADY','STEADY']],
+  NORMAL: [['RECKLESS','RECKLESS','STEADY'],['RECKLESS','EAGER','STEADY'],['RECKLESS','EAGER','EAGER']],
   HARD:   [['EAGER','STEADY','CAREFUL'],['STEADY','STEADY','CAREFUL'],['EAGER','CAREFUL','CAREFUL']],
-  BRUTAL: [['STEADY','CAREFUL','SHARK'],['CAREFUL','CAREFUL','SHARK'],['CAREFUL','SHARK','SHARK']]
+  BRUTAL: [['CAREFUL','CAREFUL','SHARK'],['CAREFUL','SHARK','SHARK'],['SHARK','SHARK','SHARK']]
 };
 var TIER_ORDER = ['EASY','NORMAL','HARD','BRUTAL'];
 
@@ -687,6 +694,9 @@ function paceFactor(bot, rd){
 }
 function perceived(bot, item, rng){ return item.gm * Math.exp(rng.gauss(0, bot.acc)); }
 
+/* 봇이 마지막 라운드까지 들고 있어야 하는 입찰용 잔돈. 사람 자리에는 걸지 않는다. */
+function reserveAt(bot){ return bot.isUser ? 0 : RESERVE_FLOOR * BUDGET; }
+
 function buyAppraisal(bot, item, rng){
   var wide = item.hi/item.lo >= 3.0;
   var p = bot.apprProb * (wide ? 1.4 : 0.8);
@@ -713,6 +723,23 @@ var money = function(n){
 };
 var esc = function(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); };
 
+/* v8 — 정밀 감정은 답이 아니라 좁은 폭이다.
+   감정가 est 를 받았을 때 실가치가 열 번에 아홉 번 들어오는 구간 = est × exp(±Z·sd).
+   숫자 하나를 주면 그 위로는 아무도 부르지 않게 되고, 그래서 봇이 늘 손해를 본다. */
+var bandOf = function(est){
+  var f = Math.exp(BAND_Z * PRECISE_SD);
+  return [est / f, est * f];
+};
+var bandText = function(est){
+  var b = bandOf(est);
+  return money(b[0]) + ' – ' + money(b[1]);
+};
+/* 잔액은 자리세를 떼고 셈해지므로, 값어치 v 짜리는 v 가 아니라 v/(1−자리세) 까지가
+   본전이다. 이 줄을 감정 옆에 붙여 둔다 — 폭만 주고 셈은 감추면 불친절하다. */
+var beText = function(){
+  return t('breakEven', { c:(1 - SIT_FEE).toFixed(2), m:(1/(1 - SIT_FEE)).toFixed(2) });
+};
+
 var TX = {
   budget:      {kr:'예산',        en:'Budget'},
   rounds:      {kr:'라운드',      en:'Rounds'},
@@ -724,7 +751,7 @@ var TX = {
   vRounds:     {kr:'20라운드, 한 라운드에 한 점.', en:'Twenty rounds, one lot each.'},
   vFormat:     {kr:'밀봉 1차가격. 최고가가 자기가 쓴 금액에 낙찰받습니다.', en:'Sealed first-price. The top bid pays what it wrote.'},
   vSeatFee:    {kr:'최종 잔액의 15%를 하우스가 가져갑니다.', en:'The house takes 15% of your closing balance.'},
-  vApprFee:    {kr:'£10M 고정. 정밀 감정 결과는 본인만 봅니다.', en:'£10M flat. The finding is yours alone.'},
+  vApprFee:    {kr:'£10M 고정. 답이 아니라 좁은 폭이 나오고, 그 폭은 본인만 봅니다.', en:'£10M flat. It returns a narrow band, not an answer, and the band is yours alone.'},
   vWin:        {kr:'소장품 실가치 + 잔액 × 0.85. 값은 폐회 때 드러납니다.', en:'Collection value + balance × 0.85, revealed at closing.'},
   tierPick:    {kr:'상대를 고르십시오', en:'Choose the room'},
   start:       {kr:'경매 시작', en:'Open the sale'},
@@ -740,10 +767,14 @@ var TX = {
   wideNote:    {kr:'넓음', en:'Wide'},
   buyAppr:     {kr:'정밀 감정 £10M', en:'Close appraisal £10M'},
   apprGot:     {kr:'정밀 감정 (본인만)', en:'Close appraisal (yours only)'},
-  apprHint:    {kr:'공개 감정가보다 훨씬 좁습니다. 감정 사실은 라운드가 끝난 뒤 전원에게 공개되지만, 숫자는 끝까지 본인만 봅니다.',
-                en:'Far tighter than the public estimate. The fact that you appraised is disclosed after the round; the number never leaves you.'},
-  apprOffer:   {kr:'감정 사실은 라운드 종료 후에 공개됩니다. 숫자는 공개되지 않습니다.',
-                en:'The fact of the appraisal is disclosed after the round. The number is not.'},
+  apprHint:    {kr:'공개 감정가보다 훨씬 좁습니다. 감정 사실은 라운드가 끝난 뒤 전원에게 공개되지만, 폭은 끝까지 본인만 봅니다.',
+                en:'Far tighter than the public estimate. The fact that you appraised is disclosed after the round; the band never leaves you.'},
+  bandNote:    {kr:'열 번에 아홉 번은 이 폭 안에 들어옵니다. 나머지 한 번은 밖으로 나갑니다.',
+                en:'Nine times in ten the true value sits inside this band. The tenth time it does not.'},
+  breakEven:   {kr:'폐회 때 현금 £1M 은 £{c}M 으로 셈해집니다. 그래서 손익분기는 값어치의 {m}배입니다.',
+                en:'At closing, £1M in cash counts as £{c}M. So break-even on a lot is {m}× what it is worth.'},
+  apprOffer:   {kr:'정밀 감정은 답이 아니라 좁은 폭을 알려줍니다. 감정 사실은 라운드 종료 후에 공개되고, 폭은 공개되지 않습니다.',
+                en:'A close appraisal returns a narrow band, not an answer. The fact of it is disclosed after the round; the band is not.'},
   yourBid:     {kr:'입찰 금액', en:'Your bid'},
   submit:      {kr:'입찰', en:'Bid'},
   pass:        {kr:'기권', en:'Pass'},
@@ -910,14 +941,14 @@ function newGame(tier){
   var players = [{
     isUser:true, label:USER_LABEL, badge:'',
     cash:BUDGET, items:[], apprCount:0, feesPaid:0,
-    acc:0, risk:0, apprProb:0, pace:0, card:null
+    acc:0, risk:0, apprProb:0, pace:0, snipe:0, card:null
   }];
   for (var s=0; s<3; s++){
     var c = CARDS[combo[s]];
     players.push({
       isUser:false, label:{kr:nums[s].kr, en:nums[s].en}, badge:String(nums[s].no),
       cash:BUDGET, items:[], apprCount:0, feesPaid:0,
-      acc:c[0], risk:c[1], apprProb:c[2], pace:c[3], card:combo[s]
+      acc:c[0], risk:c[1], apprProb:c[2], pace:c[3], snipe:c[4], card:combo[s]
     });
   }
 
@@ -976,7 +1007,14 @@ function resolveRound(userBid){
     var est = (G.pre[i] !== undefined) ? G.pre[i] : perceived(b, item, G.rng);
     var ceiling = b.risk * est / (1 - SIT_FEE);
     var bid = Math.min(b.cash, paceFactor(b, G.round) * ceiling * G.rng.uniform(0.97, 1.03));
-    if (bid >= item.start) bids.push([bid, i]);
+    bid = Math.min(bid, Math.max(0, b.cash - reserveAt(b)));
+    /* 헐값 줍기 — 페이스보다 우선한다. 눈앞의 £10M 짜리 £100M 은 줍는 게 맞다.
+       알아채는 확률은 성격마다 다르다: 막 지르는 쪽은 거의 못 보고, 여우는 놓치지 않는다. */
+    if (b.snipe > 0 && est > item.start * BARGAIN_EDGE &&
+        b.cash >= item.start && G.rng.random() < b.snipe){
+      bid = Math.max(bid, Math.min(b.cash, item.start * G.rng.uniform(SNIPE_LO, SNIPE_HI)));
+    }
+    if (bid >= item.start && bid <= b.cash) bids.push([bid, i]);
   }
 
   if (bids.length){
@@ -1473,9 +1511,9 @@ function renderRound(){
     };
   } else {
     $('round-appr').innerHTML =
-        '<span class="got"><span class="label">'+t('apprGot')+'</span><span class="n">'+money(G.userEst)+'</span></span>'
+        '<span class="got"><span class="label">'+t('apprGot')+'</span><span class="n">'+bandText(G.userEst)+'</span></span>'
       + '<span class="ico" style="width:26px;height:26px">'+icon('appraised', 26/24)+'</span>'
-      + '<span class="hint">'+esc(t('apprHint'))+'</span>';
+      + '<span class="hint">'+esc(t('apprHint'))+' '+esc(t('bandNote'))+'<br>'+esc(beText())+'</span>';
   }
 
   var maxBid = Math.floor(me.cash);
@@ -1572,7 +1610,8 @@ function holdingsHTML(withActions){
       + '<div class="thumb">'+renderPixels(SPRITES[it.lot.slug], PX, {scale:6})+'</div>'
       + '<div class="nm">'+esc(it.lot.name[LANG])+'</div>'
       + '<div class="meta"><span>'+t('paidFor')+'</span><span>'+money(it.paid)+'</span></div>'
-      + (it.appraisedByOwner ? '<div class="est-mine">'+t('apprGot')+' '+money(it.preciseEst)+'</div>' : '')
+      + (it.appraisedByOwner ? '<div class="est-mine">'+t('apprGot')
+          + '<br><span style="white-space:nowrap">'+bandText(it.preciseEst)+'</span></div>' : '')
       + acts + '</div>';
   }).join('');
   return head + '<div class="hold-grid">'+cards+'</div>';
