@@ -154,6 +154,11 @@ main{padding:34px 0 96px}
 .appr .got{display:flex;flex-direction:column;gap:2px}
 .appr .got .n{font-size:22px;color:var(--green-deep);white-space:nowrap}
 .appr .hint{font-size:12px;color:var(--ink-4);flex-basis:100%}
+/* 감정 소견 한 줄. 폭 밑에 붙는 도장이지 버튼이 아니다 — 테두리를 주지 않는다. */
+.appr-verdict{font-family:var(--mono);font-size:11px;letter-spacing:1.5px;font-weight:700;
+  display:inline-block;align-self:flex-start;padding:3px 9px;
+  background:var(--green);color:var(--paper)}
+.appr-verdict.fake{background:var(--ink);color:var(--paper)}
 
 .bidbox{margin-top:16px;border:3px solid var(--ink);padding:14px}
 .bidrow{display:flex;gap:9px;align-items:center;flex-wrap:wrap}
@@ -628,6 +633,16 @@ var BUYBACK_ROUNDS = {5:1, 10:1, 15:1};
 
 var FAKE_RATE = 0.35;
 var FAKE_MED = 15.0, FAKE_SD = 0.7;
+/* v9 위작 쪼개기. v8 까지 위작은 그냥 '싼 물건'이었다 — 공개 감정가가 실가치에서
+   나오니 위작(중앙값 £15M)과 진품(£261M)이 겹치지 않았고, 3000판에서 겹침이
+   0.2% 였다. 이름만 위작이지 아무 일도 하지 않았다는 뜻이다.
+   이제 위작의 절반 남짓은 진품의 옷을 입는다: 공개 감정가를 '진품이었다면'
+   값에서 뽑고, 실가치는 그대로 £15M 근처에 둔다. */
+var DISGUISE_RATE = 0.55;       // 위작 중 옷 입은 비율 (= 전체 출품의 19%)
+var FOOL_RATE = 0.12;           // 옷 입은 위작 중 정밀 감정까지 속이는 비율
+/* 옷을 입히면 공개 감정가는 더 이상 값어치의 정직한 추정치가 아니다. 감정 없이
+   보는 눈은 그만큼 깎아서 봐야 한다 — 안 깎으면 승자의 저주가 터진다. */
+var SHADE = 0.68;
 var GEN_SD = 0.9;
 var EPS_SD = 0.30;
 var TAIL_P = 0.05, TAIL_SD = 0.80;
@@ -639,10 +654,18 @@ var PACE_LO = 0.55, PACE_HI = 1.60;
 var POOL_TARGET = BUDGET * 4 * POOL_RATIO;
 
 /* v8 줍기 방지 (findings v8). 봇이 예산을 다 태우고 나면 후반 물건이 시작가에
-   떨어졌다. 두 개를 건다 — 끝까지 남기는 입찰용 잔돈, 그리고 헐값 줍기. */
-var RESERVE_FLOOR = 0.13;       // 예산의 13% 는 마지막까지 손대지 않는다
+   떨어졌다. 두 개를 건다 — 끝까지 남기는 입찰용 잔돈, 그리고 헐값 줍기.
+   v9 정정: v8 의 잔돈은 'cash − reserve' 로 걸려 있어서 끝까지 못 쓰는 돈이었다.
+   후반에 부르라고 만든 돈이 후반에도 잠겨 있었던 것이다. 이제 라운드가 줄면
+   같이 풀리고, 푸는 양을 성격(pace)에 비례시킨다 — RECKLESS 는 애초에 안 아끼고
+   SHARK 는 크게 아꼈다가 끝에 쏟는다. 그래야 티어 곡선이 납작해지지 않는다. */
+var RESERVE_FLOOR = 0.02;       // 끝까지 잠그는 최소 잔돈
+var RESERVE_PACE  = 0.55;       // pace 에 비례해 후반으로 갈수록 풀리는 몫
 var BARGAIN_EDGE = 4.0;         // 값어치가 시작가의 4배를 넘으면 헐값으로 본다
 var SNIPE_LO = 1.00, SNIPE_HI = 1.15;
+/* 감정료는 물건 크기에 비하면 정액이다. £10M 은 £800M 짜리 앞에서 거의 공짜고
+   £20M 짜리 앞에서는 비싸다. 봇도 그걸 보고 감정을 산다. */
+var SIZE_REF = 250, SIZE_POW = 0.5, SIZE_LO = 0.5, SIZE_HI = 1.8;
 
 /*            acc   risk  appr  pace  snipe */
 var CARDS = {
@@ -671,13 +694,23 @@ function genItems(rng){
     var v = fake ? FAKE_MED * Math.exp(rng.gauss(0, FAKE_SD))
                  : genMed  * Math.exp(rng.gauss(0, GEN_SD));
     var sd = rng.random() < TAIL_P ? TAIL_SD : EPS_SD;
-    var c = v * Math.exp(rng.gauss(0, sd));      // 빗나간 중심
+    /* 난수 뽑는 순서는 위작 여부와 무관하게 고정한다 — 조건부로 뽑으면 같은 시드가 갈린다. */
+    var disguised = fake && rng.random() < DISGUISE_RATE;
+    var fools = rng.random() < FOOL_RATE;
+    var shadow = genMed * Math.exp(rng.gauss(0, GEN_SD));   // '진품이었다면' 값어치
+    var shown = disguised ? shadow : v;
+    var c = shown * Math.exp(rng.gauss(0, sd));   // 빗나간 중심 (옷 입은 위작은 옷에서 나온다)
+    var cHouse = v * Math.exp(rng.gauss(0, sd));  // 하우스가 자기 눈으로 본 중심 (항상 뽑는다)
     var k = rng.choice(K_CHOICES);
     var lo = c/k, hi = c*k;
     var start = lo * rng.uniform(START_LO, START_HI);   // 실가치는 입력이 아니다
     items.push({
       idx:i, value:v, fake:fake, lo:lo, hi:hi, start:start,
       gm: Math.sqrt(lo*hi), owner:-1, paid:0.0,
+      disguised: disguised,                 // 진품의 옷을 입었나
+      foolsAppr: disguised && fools,        // 정밀 감정까지 속이나 (정교한 위작)
+      shadowValue: shadow,                  // '진품이었다면' 값어치
+      houseGm: disguised ? cHouse : c,      // 하우스 매입가는 이걸 쓴다 — 하우스는 옷에 안 속는다
       appraisedByOwner:false, preciseEst:0.0, soldToHouse:false, lot:null
     });
   }
@@ -692,17 +725,32 @@ function paceFactor(bot, rd){
   var ratio = bot.cash / Math.max(onPace, 1.0);
   return Math.min(PACE_HI, Math.max(PACE_LO, Math.pow(ratio, bot.pace)));
 }
-function perceived(bot, item, rng){ return item.gm * Math.exp(rng.gauss(0, bot.acc)); }
+/* 감정 없이 보는 눈. 옷 입은 위작이 섞여 있으므로 공개 중심값을 SHADE 만큼 깎는다. */
+function perceived(bot, item, rng){ return item.gm * Math.exp(rng.gauss(0, bot.acc)) * SHADE; }
 
-/* 봇이 마지막 라운드까지 들고 있어야 하는 입찰용 잔돈. 사람 자리에는 걸지 않는다. */
-function reserveAt(bot){ return bot.isUser ? 0 : RESERVE_FLOOR * BUDGET; }
+/* 정밀 감정이 보는 값. 정교한 위작은 '진품이었다면' 값을 돌려준다 —
+   감정이 몰래 틀리는 게 아니라, 물건이 감정을 속이는 것이다. */
+function apprBase(item){ return item.foolsAppr ? item.shadowValue : item.value; }
+
+/* 감정료 £10M 이 물건 크기에 비해 싼지 비싼지. 큰 물건일수록 봇이 확인한다. */
+function sizeFactor(item){
+  return Math.min(SIZE_HI, Math.max(SIZE_LO, Math.pow(item.gm / SIZE_REF, SIZE_POW)));
+}
+
+/* 봇이 들고 있어야 하는 입찰용 잔돈. 사람 자리에는 걸지 않는다.
+   끝까지 잠그는 몫 + 라운드가 남은 만큼 아끼는 몫(성격 비례). */
+function reserveAt(bot, rd){
+  if (bot.isUser) return 0;
+  return RESERVE_FLOOR * BUDGET +
+         RESERVE_PACE * bot.pace * BUDGET * Math.max(0, N_ITEMS - rd) / N_ITEMS;
+}
 
 function buyAppraisal(bot, item, rng){
   var wide = item.hi/item.lo >= 3.0;
-  var p = bot.apprProb * (wide ? 1.4 : 0.8);
+  var p = bot.apprProb * (wide ? 1.4 : 0.8) * sizeFactor(item);
   if (bot.cash > APPR_FEE + item.start && rng.random() < p){
     bot.cash -= APPR_FEE; bot.apprCount += 1; bot.feesPaid += APPR_FEE;
-    return item.value * Math.exp(rng.gauss(0, PRECISE_SD));
+    return apprBase(item) * Math.exp(rng.gauss(0, PRECISE_SD));
   }
   return null;
 }
@@ -730,6 +778,16 @@ var bandOf = function(est){
   var f = Math.exp(BAND_Z * PRECISE_SD);
   return [est / f, est * f];
 };
+/* 정밀 감정의 소견. 폭만 봐도 읽히지만 (£15M 짜리 폭이 £300M 짜리 창 밑에
+   붙어 있으면 그게 답이다) 한 줄로 적어 준다. 정교한 위작 앞에서는 감정이
+   '진품' 이라고 말한다 — 감정이 틀린 게 아니라 물건이 감정을 속인 것이다. */
+var apprVerdict = function(item){ return item.foolsAppr ? false : item.fake; };
+var verdictHTML = function(item){
+  var isFake = apprVerdict(item);
+  return '<span class="appr-verdict' + (isFake ? ' fake' : '') + '">'
+    + esc(t(isFake ? 'vdFake' : 'vdGenuine')) + '</span>';
+};
+
 var bandText = function(est){
   var b = bandOf(est);
   return money(b[0]) + ' – ' + money(b[1]);
@@ -753,6 +811,9 @@ var TX = {
   vSeatFee:    {kr:'최종 잔액의 15%를 하우스가 가져갑니다.', en:'The house takes 15% of your closing balance.'},
   vApprFee:    {kr:'£10M 고정. 답이 아니라 좁은 폭이 나오고, 그 폭은 본인만 봅니다.', en:'£10M flat. It returns a narrow band, not an answer, and the band is yours alone.'},
   vWin:        {kr:'소장품 실가치 + 잔액 × 0.85. 값은 폐회 때 드러납니다.', en:'Collection value + balance × 0.85, revealed at closing.'},
+  fakes:       {kr:'위작',        en:'Counterfeits'},
+  vFakes:      {kr:'출품의 35%가 위작입니다. 그중 절반 남짓은 진품의 공개 감정가를 달고 나오므로, 창만 보고는 가려낼 수 없습니다. 정밀 감정은 거의 다 잡아내지만 정교한 위작 몇 점은 감정도 속입니다.',
+                en:'Thirty-five percent of the lots are counterfeit. Rather more than half of those carry a genuine lot\u2019s public estimate, so the room alone will not tell you. A close appraisal catches nearly all of them; a few of the best fool it too.'},
   tierPick:    {kr:'상대를 고르십시오', en:'Choose the room'},
   start:       {kr:'경매 시작', en:'Open the sale'},
   lot:         {kr:'출품', en:'Lot'},
@@ -767,6 +828,8 @@ var TX = {
   wideNote:    {kr:'넓음', en:'Wide'},
   buyAppr:     {kr:'정밀 감정 £10M', en:'Close appraisal £10M'},
   apprGot:     {kr:'정밀 감정 (본인만)', en:'Close appraisal (yours only)'},
+  vdGenuine:   {kr:'진품으로 봅니다', en:'Reads as genuine'},
+  vdFake:      {kr:'위작으로 봅니다', en:'Reads as counterfeit'},
   apprHint:    {kr:'공개 감정가보다 훨씬 좁습니다. 감정 사실은 라운드가 끝난 뒤 전원에게 공개되지만, 폭은 끝까지 본인만 봅니다.',
                 en:'Far tighter than the public estimate. The fact that you appraised is disclosed after the round; the band never leaves you.'},
   bandNote:    {kr:'열 번에 아홉 번은 이 폭 안에 들어옵니다. 나머지 한 번은 밖으로 나갑니다.',
@@ -1007,7 +1070,7 @@ function resolveRound(userBid){
     var est = (G.pre[i] !== undefined) ? G.pre[i] : perceived(b, item, G.rng);
     var ceiling = b.risk * est / (1 - SIT_FEE);
     var bid = Math.min(b.cash, paceFactor(b, G.round) * ceiling * G.rng.uniform(0.97, 1.03));
-    bid = Math.min(bid, Math.max(0, b.cash - reserveAt(b)));
+    bid = Math.min(bid, Math.max(0, b.cash - reserveAt(b, G.round)));
     /* 헐값 줍기 — 페이스보다 우선한다. 눈앞의 £10M 짜리 £100M 은 줍는 게 맞다.
        알아채는 확률은 성격마다 다르다: 막 지르는 쪽은 거의 못 보고, 여우는 놓치지 않는다. */
     if (b.snipe > 0 && est > item.start * BARGAIN_EDGE &&
@@ -1070,12 +1133,12 @@ function openBuyback(){
       var it = b.items[j];
       if (it.appraisedByOwner) continue;
       var wide = it.hi/it.lo >= 3.0;
-      var p = b.apprProb * (wide ? 1.5 : 0.7);
+      var p = b.apprProb * (wide ? 1.5 : 0.7) * sizeFactor(it);
       if (b.cash >= APPR_FEE && G.rng.random() < p){
         b.cash -= APPR_FEE; b.apprCount += 1; b.feesPaid += APPR_FEE;
         G.house.fees += APPR_FEE;
         it.appraisedByOwner = true;
-        it.preciseEst = it.value * Math.exp(G.rng.gauss(0, PRECISE_SD));
+        it.preciseEst = apprBase(it) * Math.exp(G.rng.gauss(0, PRECISE_SD));
       }
     }
   }
@@ -1086,11 +1149,11 @@ function openBuyback(){
     for (var m=0;m<bb.items.length;m++){
       var itm = bb.items[m];
       if (!itm.appraisedByOwner) continue;
-      var gain = BUYBACK_RATE*itm.gm - itm.preciseEst;
+      var gain = BUYBACK_RATE*itm.houseGm - itm.preciseEst;
       if (gain > bestGain){ best = itm; bestGain = gain; }
     }
     if (best === null) continue;
-    var offer = BUYBACK_RATE * best.gm;
+    var offer = BUYBACK_RATE * best.houseGm;
     bb.items.splice(bb.items.indexOf(best), 1);
     bb.cash += offer;
     best.soldToHouse = true;
@@ -1109,14 +1172,14 @@ function userAppraiseOwned(idx){
   me.cash -= APPR_FEE; me.apprCount += 1; me.feesPaid += APPR_FEE;
   G.house.fees += APPR_FEE;
   it.appraisedByOwner = true;
-  it.preciseEst = it.value * Math.exp(G.rng.gauss(0, PRECISE_SD));
+  it.preciseEst = apprBase(it) * Math.exp(G.rng.gauss(0, PRECISE_SD));
   renderBuyback();
 }
 function userSell(idx){
   if (G.bbSoldByUser) return;
   var me = G.players[0], it = me.items[idx];
   if (!it || !it.appraisedByOwner) return;
-  var offer = BUYBACK_RATE * it.gm;
+  var offer = BUYBACK_RATE * it.houseGm;
   me.items.splice(idx, 1);
   me.cash += offer;
   it.soldToHouse = true;
@@ -1142,7 +1205,7 @@ var REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: r
    유찰품은 아무도 값을 치르지 않았으므로 실가치 전체가 그대로 괴리다. */
 function surprise(it){
   if (it.owner < 0) return it.value;
-  if (it.soldToHouse) return Math.abs(it.value - BUYBACK_RATE * it.gm);
+  if (it.soldToHouse) return Math.abs(it.value - BUYBACK_RATE * it.houseGm);
   return Math.abs(it.value - it.paid);
 }
 function heldBy(it){ return (it.owner >= 0 && !it.soldToHouse) ? it.owner : -1; }
@@ -1466,7 +1529,7 @@ function renderOpen(){
   $('open-hat').innerHTML = icon('pyrrhos', 22/24);
   $('open-line').textContent = LINES.opening.variants[openSayRef.i][LANG];
   var rows = [['budget','vBudget'],['rounds','vRounds'],['format','vFormat'],
-              ['apprFee','vApprFee'],['seatFee','vSeatFee'],['win','vWin']];
+              ['apprFee','vApprFee'],['fakes','vFakes'],['seatFee','vSeatFee'],['win','vWin']];
   $('open-rules').innerHTML = rows.map(function(r){
     return '<div><b>'+t(r[0])+'</b><span>'+esc(t(r[1]))+'</span></div>';
   }).join('');
@@ -1506,12 +1569,13 @@ function renderRound(){
       if (me.cash < APPR_FEE) return;
       me.cash -= APPR_FEE; me.apprCount += 1; me.feesPaid += APPR_FEE;
       G.house.fees += APPR_FEE;
-      G.userEst = item.value * Math.exp(G.rng.gauss(0, PRECISE_SD));
+      G.userEst = apprBase(item) * Math.exp(G.rng.gauss(0, PRECISE_SD));
       renderRound();
     };
   } else {
     $('round-appr').innerHTML =
-        '<span class="got"><span class="label">'+t('apprGot')+'</span><span class="n">'+bandText(G.userEst)+'</span></span>'
+        '<span class="got"><span class="label">'+t('apprGot')+'</span><span class="n">'+bandText(G.userEst)+'</span>'
+      + verdictHTML(item)+'</span>'
       + '<span class="ico" style="width:26px;height:26px">'+icon('appraised', 26/24)+'</span>'
       + '<span class="hint">'+esc(t('apprHint'))+' '+esc(t('bandNote'))+'<br>'+esc(beText())+'</span>';
   }
@@ -1600,7 +1664,7 @@ function holdingsHTML(withActions){
              + (me.cash < APPR_FEE ? ' disabled' : '') + '>'+t('buyAppr')+'</button></div>'
              + '<span class="est-mine" style="color:var(--ink-6)">'+t('bbApprFirst')+'</span>';
       } else {
-        var offer = BUYBACK_RATE * it.gm;
+        var offer = BUYBACK_RATE * it.houseGm;
         acts = '<span class="est-mine">'+t('bbOffer')+' '+money(offer)+'</span>'
              + '<div class="acts"><button class="btn btn-sm btn-green" data-sell="'+i+'"'
              + (G.bbSoldByUser ? ' disabled' : '') + '>'+t('bbSell')+'</button></div>';
@@ -1611,7 +1675,8 @@ function holdingsHTML(withActions){
       + '<div class="nm">'+esc(it.lot.name[LANG])+'</div>'
       + '<div class="meta"><span>'+t('paidFor')+'</span><span>'+money(it.paid)+'</span></div>'
       + (it.appraisedByOwner ? '<div class="est-mine">'+t('apprGot')
-          + '<br><span style="white-space:nowrap">'+bandText(it.preciseEst)+'</span></div>' : '')
+          + '<br><span style="white-space:nowrap">'+bandText(it.preciseEst)+'</span>'
+          + '<br>'+verdictHTML(it)+'</div>' : '')
       + acts + '</div>';
   }).join('');
   return head + '<div class="hold-grid">'+cards+'</div>';
