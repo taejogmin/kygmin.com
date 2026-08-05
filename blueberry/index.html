@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Blueberry Smoothie — Intonation Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#F6F6F4;
+  --ink:#141414;
+  --gray:#DDDDD8;
+  --green:#2BB673;
+  --green-deep:#0F6E56;
+  --red:#A32D2D;
+  --blue:#3A5BD9;
+  --arch:'Archivo','Pretendard',sans-serif;
+  --sans:'Pretendard',-apple-system,'Apple SD Gothic Neo','Malgun Gothic','Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono','SF Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{transition:none!important;}
+}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:16px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  word-break:keep-all;overflow-wrap:break-word;
+}
+a{color:inherit;text-decoration:none;}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--green);outline-offset:3px;}
+.wrap{max-width:960px;margin:0 auto;padding:0 24px;}
+
+/* Nav */
+nav{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:3px solid var(--ink);}
+.nav-inner{max-width:960px;margin:0 auto;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;}
+.logo{font-family:var(--arch);font-weight:900;font-size:19px;letter-spacing:-0.5px;}
+.logo em{font-style:normal;background:var(--green);color:var(--paper);padding:0 6px;display:inline-block;transform:rotate(-1.5deg);}
+.nav-links{display:flex;gap:8px;flex-wrap:wrap;}
+.nav-links a{font-family:var(--arch);font-size:12px;font-weight:700;text-transform:uppercase;border:2px solid var(--ink);padding:6px 13px;background:#fff;box-shadow:3px 3px 0 var(--ink);transition:transform .1s, box-shadow .1s;}
+.nav-links a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+.nav-links a.on{background:var(--green);color:var(--paper);}
+
+/* Language toggle */
+#langtoggle{position:fixed;right:20px;bottom:20px;z-index:50;display:inline-flex;border:2px solid var(--ink);box-shadow:3px 3px 0 var(--ink);background:#fff;font-family:var(--arch);font-weight:700;font-size:12px;overflow:hidden;}
+#langtoggle button{font:inherit;border:none;background:none;cursor:pointer;padding:9px 14px;color:var(--ink);letter-spacing:.5px;transition:background .1s,color .1s;}
+#langtoggle button.on{background:var(--green);color:var(--paper);}
+#langtoggle button+button{border-left:2px solid var(--ink);}
+.scr{color:var(--green);}
+.box .scr{color:var(--paper);}
+
+/* Hero */
+header{padding:48px 0 34px;border-bottom:3px solid var(--ink);}
+.sec-tag{font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--green-deep);letter-spacing:1px;display:block;margin-bottom:14px;}
+h1{font-family:var(--arch);font-weight:900;text-transform:uppercase;font-size:clamp(30px, 5.6vw, 50px);line-height:1.02;letter-spacing:-2px;}
+h1 .box{background:var(--ink);color:var(--paper);padding:0 12px;display:inline-block;transform:rotate(-1deg);}
+.hero-sub{margin-top:18px;font-size:15.5px;max-width:640px;font-weight:500;}
+.hero-note{margin-top:12px;font-family:var(--mono);font-size:12px;color:#4A4A46;}
+
+main{padding:26px 0 88px;}
+
+/* Privacy bar — 항상 보이는 안전장치 표시 */
+.privacy{
+  position:sticky;top:59px;z-index:9;
+  border:3px solid var(--ink);background:#fff;box-shadow:5px 5px 0 var(--ink);
+  padding:14px 18px;margin-bottom:26px;
+}
+.privacy-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.privacy-dot{width:12px;height:12px;border:2px solid var(--ink);background:var(--gray);flex:none;}
+.privacy-dot.rec{background:var(--red);animation:blink 1s steps(2,end) infinite;}
+@keyframes blink{50%{opacity:.25}}
+.privacy-title{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.5px;}
+.privacy-state{font-family:var(--mono);font-size:12px;color:var(--green-deep);font-weight:600;margin-left:auto;}
+.privacy-body{font-size:13px;color:#3A3A38;margin-top:8px;line-height:1.6;}
+.privacy details{margin-top:8px;}
+.privacy summary{font-family:var(--mono);font-size:11.5px;cursor:pointer;color:var(--green-deep);font-weight:600;}
+.privacy details ul{margin:8px 0 0 18px;font-family:var(--mono);font-size:11.5px;color:#4A4A46;line-height:1.9;}
+
+/* Tabs */
+.tabs{display:flex;gap:0;margin-bottom:0;}
+.tabs button{
+  font-family:var(--arch);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.5px;
+  border:3px solid var(--ink);border-bottom:none;background:#fff;color:var(--ink);
+  padding:11px 20px;cursor:pointer;transition:background .1s,color .1s;
+}
+.tabs button+button{border-left:none;}
+.tabs button.on{background:var(--ink);color:var(--paper);}
+.panel{border:3px solid var(--ink);background:#fff;box-shadow:5px 5px 0 var(--ink);padding:22px;}
+.panel[hidden]{display:none;}
+
+/* Controls */
+.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;}
+.row+.row{margin-top:14px;}
+.btn{
+  font-family:var(--arch);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.5px;
+  border:3px solid var(--ink);background:#fff;color:var(--ink);padding:11px 20px;cursor:pointer;
+  box-shadow:4px 4px 0 var(--ink);transition:transform .1s,box-shadow .1s,background .1s,color .1s;
+}
+.btn:hover:not(:disabled){transform:translate(1px,1px);box-shadow:3px 3px 0 var(--ink);}
+.btn:disabled{opacity:.4;cursor:not-allowed;box-shadow:4px 4px 0 var(--gray);border-color:#8A8A85;}
+.btn.go{background:var(--green);color:var(--paper);}
+.btn.stop{background:var(--red);color:var(--paper);}
+.btn.sm{font-size:11px;padding:7px 13px;box-shadow:3px 3px 0 var(--ink);}
+select{font-family:var(--mono);font-size:13px;border:3px solid var(--ink);background:#fff;padding:9px 12px;color:var(--ink);}
+.hint{font-family:var(--mono);font-size:11.5px;color:#6B6B67;}
+
+/* Sentence card */
+.card{border:3px solid var(--ink);background:var(--paper);padding:18px 20px;margin:16px 0;}
+.card-kr{font-size:clamp(24px,4.4vw,34px);font-weight:700;letter-spacing:-.5px;line-height:1.35;}
+.card-why{font-family:var(--mono);font-size:11.5px;color:var(--green-deep);margin-top:8px;font-weight:600;}
+.card-syl{font-family:var(--mono);font-size:11.5px;color:#6B6B67;margin-top:4px;}
+
+/* Canvas */
+.cv-box{border:3px solid var(--ink);background:#fff;margin-top:16px;position:relative;}
+canvas{display:block;width:100%;height:auto;}
+.cv-cap{font-family:var(--mono);font-size:11px;color:#6B6B67;padding:7px 10px;border-top:2px solid var(--gray);}
+.level{height:12px;border:3px solid var(--ink);background:#fff;margin-top:12px;position:relative;overflow:hidden;}
+.level i{display:block;height:100%;width:0;background:var(--green);transition:width .06s linear;}
+
+/* Results */
+.res{margin-top:18px;}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:12px;}
+.stat{border:2px solid var(--ink);padding:11px 13px;background:var(--paper);}
+.stat b{display:block;font-family:var(--mono);font-size:10.5px;font-weight:600;color:#6B6B67;letter-spacing:.5px;text-transform:uppercase;}
+.stat span{font-family:var(--mono);font-size:19px;font-weight:600;display:block;margin-top:3px;}
+.stat em{font-style:normal;font-family:var(--mono);font-size:11px;color:#6B6B67;}
+table.ph{width:100%;border-collapse:collapse;margin-top:12px;font-family:var(--mono);font-size:12px;}
+table.ph th,table.ph td{border:2px solid var(--ink);padding:6px 9px;text-align:left;}
+table.ph th{background:var(--ink);color:var(--paper);font-size:10.5px;letter-spacing:.5px;text-transform:uppercase;}
+.tag-rise{color:var(--blue);font-weight:600;}
+.tag-fall{color:var(--red);font-weight:600;}
+.tag-level{color:#6B6B67;font-weight:600;}
+.warn{border:3px dashed var(--red);color:var(--red);padding:12px 15px;font-family:var(--mono);font-size:12px;margin-top:14px;}
+.note{border-left:4px solid var(--green);padding:2px 0 2px 13px;font-size:13px;color:#3A3A38;margin-top:14px;}
+h2.sub{font-family:var(--arch);font-weight:900;font-size:17px;text-transform:uppercase;letter-spacing:-.3px;margin-top:26px;padding-top:18px;border-top:3px solid var(--ink);}
+h2.sub:first-child{margin-top:0;padding-top:0;border-top:none;}
+
+/* A/B slots */
+.ab{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px;}
+.slot{border:3px solid var(--ink);padding:13px 15px;background:var(--paper);}
+.slot h3{font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;}
+.slot p{font-family:var(--mono);font-size:12px;color:#3A3A38;margin-top:6px;min-height:38px;}
+
+footer{border-top:3px solid var(--ink);padding:26px 0;}
+.foot-inner{max-width:960px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:12px;color:#4A4A46;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="/index.html">KYG<em>MIN</em></a>
+    <div class="nav-links">
+      <a href="/index.html"><span class="tx" data-en="Home" data-kr="홈">Home</span></a>
+      <a href="/playhouse/">PLAYHOUSE</a>
+      <a class="on" href="./">BLUEBERRY</a>
+    </div>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <span class="sec-tag tx" data-en="PROSODY LAB · v0" data-kr="억양 실험실 · v0">PROSODY LAB · v0</span>
+    <h1>BLUEBERRY<br /><span class="box">SMOOTHIE</span></h1>
+    <p class="hero-sub tx" data-en="Say a sentence and watch your own pitch drawn as a curve. This is a measuring instrument, not a dialect quiz — v0 shows you what your voice actually did and never tells you where you are from." data-kr="문장을 말하면 당신의 음높이가 곡선으로 그려집니다. 이건 방언 맞히기 퀴즈가 아니라 측정기예요 — v0은 당신의 목소리가 실제로 무엇을 했는지만 보여주고, 어디 출신인지는 말하지 않습니다.">Say a sentence and watch your own pitch drawn as a curve. This is a measuring instrument, not a dialect quiz — v0 shows you what your voice actually did and never tells you where you are from.</p>
+    <p class="hero-note tx" data-en="AUDIO NEVER LEAVES YOUR DEVICE · NOTHING IS STORED · NO ACCOUNT" data-kr="음성은 기기를 떠나지 않음 · 저장 없음 · 계정 불필요">AUDIO NEVER LEAVES YOUR DEVICE · NOTHING IS STORED · NO ACCOUNT</p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <div class="privacy">
+      <div class="privacy-head">
+        <span class="privacy-dot" id="privDot"></span>
+        <span class="privacy-title tx" data-en="MICROPHONE" data-kr="마이크">MICROPHONE</span>
+        <span class="privacy-state" id="privState">OFF</span>
+      </div>
+      <p class="privacy-body tx" data-en="Your voice is analysed entirely inside this page. No audio is uploaded, no recording is saved to disk, and this version stores no results at all — closing the tab erases everything. The microphone is only open while the indicator above is red." data-kr="목소리는 전부 이 페이지 안에서 분석됩니다. 오디오는 업로드되지 않고, 녹음이 디스크에 저장되지도 않으며, 이 버전은 결과조차 저장하지 않습니다 — 탭을 닫으면 전부 사라져요. 마이크는 위 표시가 빨간 동안에만 열려 있습니다.">Your voice is analysed entirely inside this page. No audio is uploaded, no recording is saved to disk, and this version stores no results at all — closing the tab erases everything. The microphone is only open while the indicator above is red.</p>
+      <details>
+        <summary class="tx" data-en="What is measured (full list)" data-kr="무엇을 재는지 (전체 목록)">What is measured (full list)</summary>
+        <ul>
+          <li class="tx" data-en="f0 per 10 ms frame → semitones relative to your own median" data-kr="10 ms 프레임마다의 f0 → 본인 중앙값 대비 semitone">f0 per 10 ms frame → semitones relative to your own median</li>
+          <li class="tx" data-en="Syllable nuclei and boundaries from the energy envelope" data-kr="에너지 포락선에서 뽑은 음절 핵과 경계">Syllable nuclei and boundaries from the energy envelope</li>
+          <li class="tx" data-en="Phrase boundaries from pauses (≥200 ms)" data-kr="휴지(200 ms 이상)로 잡은 억양구 경계">Phrase boundaries from pauses (≥200 ms)</li>
+          <li class="tx" data-en="Pitch movement over the last two targets of each phrase" data-kr="억양구마다 마지막 두 피치 타깃의 이동량">Pitch movement over the last two targets of each phrase</li>
+          <li class="tx" data-en="Pitch range, variability, speech rate, pause structure" data-kr="음역 폭, 변동성, 발화 속도, 휴지 구조">Pitch range, variability, speech rate, pause structure</li>
+          <li class="tx" data-en="No words are transcribed. No speech recognition runs anywhere." data-kr="단어는 전사되지 않습니다. 음성 인식은 어디에서도 돌지 않습니다.">No words are transcribed. No speech recognition runs anywhere.</li>
+        </ul>
+      </details>
+    </div>
+
+    <div class="tabs">
+      <button id="tabA" class="on tx" data-en="READ ALOUD" data-kr="정독">READ ALOUD</button>
+      <button id="tabB" class="tx" data-en="FREESTYLE" data-kr="프리스타일">FREESTYLE</button>
+    </div>
+
+    <!-- ============ 정독 ============ -->
+    <section class="panel" id="panelA">
+      <div class="row">
+        <select id="sentPick"></select>
+        <button class="btn go" id="recA"><span class="tx" data-en="RECORD" data-kr="녹음">RECORD</span></button>
+        <span class="hint" id="hintA"></span>
+      </div>
+
+      <div class="card">
+        <div class="card-kr" id="sentKr">밥 먹었어.</div>
+        <div class="card-why" id="sentWhy"></div>
+        <div class="card-syl" id="sentSyl"></div>
+      </div>
+
+      <div class="level"><i id="lvlA"></i></div>
+
+      <div class="cv-box">
+        <canvas id="cvA" width="1800" height="620"></canvas>
+        <div class="cv-cap" id="capA"></div>
+      </div>
+
+      <div class="res" id="resA"></div>
+
+      <h2 class="sub tx" data-en="A / B SELF-COMPARISON" data-kr="A / B 자기 비교">A / B SELF-COMPARISON</h2>
+      <p class="note tx" data-en="Read the same sentence twice — once in your everyday voice, once deliberately imitating another dialect. If the instrument cannot separate those two, it cannot separate two real speakers either. Slots live in memory only." data-kr="같은 문장을 두 번 읽어보세요 — 한 번은 평소 말투로, 한 번은 다른 방언을 일부러 흉내 내서. 이 둘을 구분하지 못하는 측정기는 실제 화자 두 명도 구분하지 못합니다. 슬롯은 메모리에만 남습니다.">Read the same sentence twice — once in your everyday voice, once deliberately imitating another dialect. If the instrument cannot separate those two, it cannot separate two real speakers either. Slots live in memory only.</p>
+      <div class="ab">
+        <div class="slot">
+          <h3>SLOT A</h3>
+          <p id="slotAtxt">—</p>
+          <button class="btn sm" id="saveA"><span class="tx" data-en="SAVE LAST" data-kr="직전 결과 저장">SAVE LAST</span></button>
+        </div>
+        <div class="slot">
+          <h3>SLOT B</h3>
+          <p id="slotBtxt">—</p>
+          <button class="btn sm" id="saveB"><span class="tx" data-en="SAVE LAST" data-kr="직전 결과 저장">SAVE LAST</span></button>
+        </div>
+      </div>
+      <div id="abDiff"></div>
+    </section>
+
+    <!-- ============ 프리스타일 ============ -->
+    <section class="panel" id="panelB" hidden>
+      <div class="row">
+        <button class="btn go" id="recB"><span class="tx" data-en="RECORD" data-kr="녹음">RECORD</span></button>
+        <button class="btn sm" id="newTopic"><span class="tx" data-en="ANOTHER TOPIC" data-kr="다른 주제">ANOTHER TOPIC</span></button>
+        <span class="hint" id="hintB"></span>
+      </div>
+
+      <div class="card">
+        <div class="card-why tx" data-en="TALK FOR 30–90 SECONDS ABOUT" data-kr="30~90초 동안 이야기해 주세요">TALK FOR 30–90 SECONDS ABOUT</div>
+        <div class="card-kr" id="topicKr" style="font-size:clamp(19px,3.2vw,26px);margin-top:6px;"></div>
+        <div class="card-syl tx" data-en="Say it however you normally would. Nothing is transcribed — only the shape of your pitch is measured." data-kr="평소 말하듯 편하게 하세요. 내용은 전사되지 않고, 음높이의 모양만 측정됩니다.">Say it however you normally would. Nothing is transcribed — only the shape of your pitch is measured.</div>
+      </div>
+
+      <div class="level"><i id="lvlB"></i></div>
+
+      <div class="cv-box">
+        <canvas id="cvB" width="1800" height="620"></canvas>
+        <div class="cv-cap" id="capB"></div>
+      </div>
+
+      <div class="res" id="resB"></div>
+    </section>
+
+    <p class="note tx" data-en="v0 deliberately gives no dialect verdict. The literature can support one claim — whether a speaker rises sharply at the end of a yes/no question — and even that needs a validated baseline this page does not yet have. Until then it only shows you the measurement." data-kr="v0은 의도적으로 방언 판정을 내리지 않습니다. 문헌이 지지할 수 있는 주장은 하나뿐이고 — 판정의문문 끝에서 급격히 올라가는가 — 그마저도 이 페이지에 아직 없는 검증된 기준선이 필요해요. 그때까지는 측정값만 보여줍니다.">v0 deliberately gives no dialect verdict. The literature can support one claim — whether a speaker rises sharply at the end of a yes/no question — and even that needs a validated baseline this page does not yet have. Until then it only shows you the measurement.</p>
+
+  </div>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <span>© KYGMIN.COM</span>
+    <span class="tx" data-en="BLUEBERRY SMOOTHIE · v0 · CLIENT-SIDE ONLY" data-kr="블루베리 스무디 · v0 · 전부 클라이언트 실행">BLUEBERRY SMOOTHIE · v0 · CLIENT-SIDE ONLY</span>
+  </div>
+</footer>
+
+<div id="langtoggle" aria-label="Language">
+  <button data-lang="en" class="on">EN</button>
+  <button data-lang="kr">한</button>
+</div>
+
+<!-- 언어 토글 (사이트 공통 패턴, 독립 스크립트) -->
+<script>
+window.APP_LANG = 'en';
+window.APP_LANG_LISTENERS = [];
+(function(){
+  var POOL = ("ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎㅏㅑㅓㅕㅗㅛㅜㅠㅡㅣ"
+    + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-·").split("");
+  function esc(c){return c==="&"?"&amp;":c==="<"?"&lt;":c===">"?"&gt;":c;}
+  function Scramble(el){ this.el=el; this.raf=null; this.frame=this.frame.bind(this); }
+  Scramble.prototype.set=function(txt){
+    var old = this.el.dataset.plain!==undefined ? this.el.dataset.plain : this.el.textContent;
+    var len=Math.max(old.length, txt.length);
+    this.q=[];
+    for(var i=0;i<len;i++){
+      var from=old[i]||"", to=txt[i]||"";
+      var start=Math.floor(Math.random()*20);
+      var end=start+Math.floor(Math.random()*25)+12;
+      this.q.push({from:from,to:to,start:start,end:end,ch:null});
+    }
+    if(this.raf) cancelAnimationFrame(this.raf);
+    this.f=0; this.txt=txt; this.frame();
+  };
+  Scramble.prototype.frame=function(){
+    var out="", done=0;
+    for(var i=0;i<this.q.length;i++){
+      var it=this.q[i];
+      if(this.f>=it.end){ done++; out+=esc(it.to); }
+      else if(this.f>=it.start){
+        if(!it.ch || Math.random()<0.3){ it.ch=POOL[Math.floor(Math.random()*POOL.length)]; }
+        out+='<span class="scr">'+esc(it.ch)+'</span>';
+      } else out+=esc(it.from);
+    }
+    this.el.innerHTML=out;
+    if(done===this.q.length){ this.el.dataset.plain=this.txt; }
+    else { this.f++; this.raf=requestAnimationFrame(this.frame); }
+  };
+  var els=[].slice.call(document.querySelectorAll('.tx'));
+  els.forEach(function(el){ el.dataset.plain=el.textContent; el._s=new Scramble(el); });
+  function setLang(lang){
+    if(lang===window.APP_LANG) return;
+    window.APP_LANG = lang;
+    document.documentElement.lang = (lang==='kr'?'ko':'en');
+    var btns=document.querySelectorAll('#langtoggle button');
+    for(var i=0;i<btns.length;i++){ btns[i].classList.toggle('on', btns[i].dataset.lang===lang); }
+    els.forEach(function(el){ var t=el.dataset[lang]; if(t!==undefined) el._s.set(t); });
+    window.APP_LANG_LISTENERS.forEach(function(fn){ try{ fn(lang); }catch(e){ console.error(e); } });
+  }
+  document.getElementById('langtoggle').addEventListener('click', function(e){
+    var b=e.target.closest('button'); if(b) setLang(b.dataset.lang);
+  });
+})();
+</script>
+
+<!-- ===== 분석 엔진 (BS) — 노드에서 34/34 합성신호 테스트 통과 ===== -->
+<script>
+/* ============================================================
+   블루베리스무디 — DSP 엔진 v0
+   YIN F0 · semitone 변환 · 옥타브 오류 전역 보정
+   RMS 포락선 음절 핵 검출 · VAD 억양구 분할
+   브라우저/Node 공용. 외부 의존 없음.
+   ============================================================ */
+(function (root) {
+'use strict';
+
+var BS = {};
+
+/* ---------- 0. 상수 ---------- */
+BS.FMIN = 60;      // Hz. 저음 남성 화자 하한
+BS.FMAX = 500;     // Hz. 고음 여성 화자 상한
+BS.YIN_THRESHOLD = 0.15;
+
+/* ---------- 1. YIN ----------
+   de Cheveigné & Kawahara (2002).
+   단계 1~5 중 1~4 구현 (5단계 best-local-estimate는 전역 보정이 대신함).
+   반환: {f0, conf, rms}  — f0 0이면 무성/무음
+*/
+BS.yin = function (buf, sampleRate, opts) {
+  opts = opts || {};
+  var fmin = opts.fmin || BS.FMIN;
+  var fmax = opts.fmax || BS.FMAX;
+  var thresh = opts.threshold != null ? opts.threshold : BS.YIN_THRESHOLD;
+
+  var W = buf.length;
+  var tauMin = Math.max(2, Math.floor(sampleRate / fmax));
+  var tauMax = Math.min(W >> 1, Math.ceil(sampleRate / fmin));
+  if (tauMax <= tauMin) return { f0: 0, conf: 0, rms: 0 };
+
+  // RMS 먼저 (무음 조기 반환)
+  var s = 0, i, j;
+  for (i = 0; i < W; i++) s += buf[i] * buf[i];
+  var rms = Math.sqrt(s / W);
+  if (rms < 1e-5) return { f0: 0, conf: 0, rms: rms };
+
+  // 적분 구간: 모든 tau에서 동일하게 유지해야 편향이 없다
+  var N = W - tauMax;
+
+  // 단계 1-2: 차이 함수 d(tau)
+  var d = new Float64Array(tauMax + 1);
+  for (var tau = 1; tau <= tauMax; tau++) {
+    var sum = 0;
+    for (i = 0; i < N; i++) {
+      var diff = buf[i] - buf[i + tau];
+      sum += diff * diff;
+    }
+    d[tau] = sum;
+  }
+
+  // 단계 3: 누적 평균 정규화 차이 d'(tau)
+  var dp = new Float64Array(tauMax + 1);
+  dp[0] = 1;
+  var running = 0;
+  for (tau = 1; tau <= tauMax; tau++) {
+    running += d[tau];
+    dp[tau] = running === 0 ? 1 : (d[tau] * tau) / running;
+  }
+
+  // 단계 4: 절대 임계값 + 국소 최소
+  var bestTau = -1;
+  for (tau = tauMin; tau <= tauMax; tau++) {
+    if (dp[tau] < thresh) {
+      // 임계값 아래에서 첫 국소 최소까지 내려간다
+      while (tau + 1 <= tauMax && dp[tau + 1] < dp[tau]) tau++;
+      bestTau = tau;
+      break;
+    }
+  }
+  if (bestTau < 0) {
+    // 임계값을 못 넘으면 전역 최소를 쓰되 신뢰도를 낮게 준다
+    var mn = Infinity;
+    for (tau = tauMin; tau <= tauMax; tau++) {
+      if (dp[tau] < mn) { mn = dp[tau]; bestTau = tau; }
+    }
+    if (bestTau < 0 || mn > 0.6) return { f0: 0, conf: 0, rms: rms };
+  }
+
+  // 포물선 보간 (주기 해상도 개선)
+  var t = bestTau, better = t;
+  if (t > tauMin && t < tauMax) {
+    var a = dp[t - 1], b = dp[t], c = dp[t + 1];
+    var denom = 2 * (2 * b - a - c);
+    if (denom !== 0) {
+      var shift = (c - a) / denom;
+      if (shift > -1 && shift < 1) better = t + shift;
+    }
+  }
+
+  var f0 = sampleRate / better;
+  if (f0 < fmin || f0 > fmax) return { f0: 0, conf: 0, rms: rms };
+  return { f0: f0, conf: Math.max(0, 1 - dp[bestTau]), rms: rms };
+};
+
+/* ---------- 2. 트랙 추출 ----------
+   전체 PCM을 훑어 프레임별 {t, f0, conf, rms} 배열을 만든다.
+*/
+BS.track = function (pcm, sampleRate, opts) {
+  opts = opts || {};
+  var win = opts.win || Math.round(sampleRate * 0.096);   // 96 ms
+  var hop = opts.hop || Math.round(sampleRate * 0.010);   // 10 ms
+  var frames = [];
+  for (var off = 0; off + win <= pcm.length; off += hop) {
+    var seg = pcm.subarray ? pcm.subarray(off, off + win) : pcm.slice(off, off + win);
+    var r = BS.yin(seg, sampleRate, opts);
+    frames.push({
+      t: (off + win / 2) / sampleRate,
+      f0: r.f0,
+      conf: r.conf,
+      rms: r.rms,
+      db: r.rms > 0 ? 20 * Math.log10(r.rms) : -120
+    });
+  }
+  return frames;
+};
+
+/* ---------- 3. 옥타브 오류 전역 보정 ----------
+   실시간 인과적 규칙("직전 프레임 대비 6반음 이상 점프 버리기")은
+   첫 프레임이 틀리면 전체가 틀어진다. 녹음 전체를 놓고 고치면 그 문제가 없다.
+
+   단순히 "전역 중앙값에 가까운 후보로 스냅"하면 진짜 상승을 죽인다.
+   중앙값 115Hz 화자가 문말에서 170Hz로 올라가면 |log2(170/115)|=0.56 >
+   |log2(85/115)|=0.44 이므로 정답이 85Hz로 뒤집힌다. 이건 이 페이지가
+   재려는 신호 그 자체를 파괴한다.
+
+   그래서 후보 {f/2, f, f*2}에 대한 비터비 경로로 바꾼다:
+     노드 비용 = λ·(YIN 원값이 아님) + K·max(0, |log2(c/중앙값)| - 0.5)
+     간선 비용 = w(간격)·|log2(c'/c)|
+   힌지 덕분에 중앙값 ±6반음 안쪽 값은 건드리지 않고(=진짜 억양은 보존),
+   한 옥타브 밖으로 튄 구간만 교정된다. λ는 한 음절 통째로 잘못된 옥타브를
+   유지하는 해석에 음절 길이만큼 비용을 물려 고립 오류와 구분한다.
+*/
+BS.medianOf = function (arr) {
+  if (!arr.length) return 0;
+  var a = arr.slice().sort(function (x, y) { return x - y; });
+  var m = a.length >> 1;
+  return a.length % 2 ? a[m] : (a[m - 1] + a[m]) / 2;
+};
+
+BS.fixOctaves = function (frames, opts) {
+  opts = opts || {};
+  var fmin = opts.fmin || BS.FMIN, fmax = opts.fmax || BS.FMAX;
+  var voiced = frames.filter(function (f) { return f.f0 > 0; });
+  if (voiced.length < 5) return frames;
+
+  var LAM = opts.octLambda != null ? opts.octLambda : 0.40;  // 원값 이탈 비용
+  var KHI = opts.octK != null ? opts.octK : 2.0;             // 중앙값 이탈 비용
+  var HIN = opts.octHinge != null ? opts.octHinge : 0.5;     // 무비용 구간 (옥타브)
+  var GAP = opts.octGap != null ? opts.octGap : 8;           // 연속성 감쇠 (프레임)
+  var WED = opts.octEdge != null ? opts.octEdge : 1.2;       // 간선 가중
+
+  var gm = BS.medianOf(voiced.map(function (f) { return f.f0; }));
+  var lgm = Math.log2(gm);
+
+  // 유성 프레임 인덱스만 모아 비터비
+  var idx = [];
+  for (var i = 0; i < frames.length; i++) if (frames[i].f0 > 0) idx.push(i);
+
+  var RATIO = [0.5, 1, 2];
+  var cands = [], costs = [];
+  for (var n = 0; n < idx.length; n++) {
+    var f0 = frames[idx[n]].f0;
+    var cc = [], nc = [];
+    for (var k = 0; k < 3; k++) {
+      var c = f0 * RATIO[k];
+      if (c < fmin || c > fmax) continue;
+      var dev = Math.abs(Math.log2(c) - lgm);
+      cc.push(c);
+      nc.push((k === 1 ? 0 : LAM) + KHI * Math.max(0, dev - HIN));
+    }
+    if (!cc.length) { cc = [f0]; nc = [0]; }
+    cands.push(cc); costs.push(nc);
+  }
+
+  var prevBest = costs[0].slice(), back = [];
+  for (n = 1; n < idx.length; n++) {
+    var gap = idx[n] - idx[n - 1];
+    var w = WED / (1 + gap / GAP);
+    var cur = [], bp = [];
+    for (var b = 0; b < cands[n].length; b++) {
+      var lb = Math.log2(cands[n][b]);
+      var best = Infinity, arg = 0;
+      for (var a = 0; a < cands[n - 1].length; a++) {
+        var v = prevBest[a] + w * Math.abs(lb - Math.log2(cands[n - 1][a]));
+        if (v < best) { best = v; arg = a; }
+      }
+      cur.push(best + costs[n][b]); bp.push(arg);
+    }
+    prevBest = cur; back.push(bp);
+  }
+
+  var at = 0;
+  for (b = 1; b < prevBest.length; b++) if (prevBest[b] < prevBest[at]) at = b;
+  for (n = idx.length - 1; n >= 0; n--) {
+    frames[idx[n]].f0 = cands[n][at];
+    if (n > 0) at = back[n - 1][at];
+  }
+
+  // 마무리: 5점 중앙값 필터 (유성 프레임만)
+  var out = frames.map(function (f) { return f.f0; });
+  for (var i = 0; i < frames.length; i++) {
+    if (!frames[i].f0) continue;
+    var w = [];
+    for (var j = Math.max(0, i - 2); j <= Math.min(frames.length - 1, i + 2); j++) {
+      if (out[j] > 0) w.push(out[j]);
+    }
+    if (w.length >= 3) frames[i].f0 = BS.medianOf(w);
+  }
+  return frames;
+};
+
+/* ---------- 4. semitone 변환 ----------
+   절대 Hz를 절대 쓰지 않는다. 화자 자신의 중앙값 대비 상대값.
+*/
+BS.toSemitones = function (frames) {
+  var voiced = frames.filter(function (f) { return f.f0 > 0; });
+  if (!voiced.length) return { median: 0, frames: frames };
+  var med = BS.medianOf(voiced.map(function (f) { return f.f0; }));
+  frames.forEach(function (f) {
+    f.st = f.f0 > 0 ? 12 * Math.log2(f.f0 / med) : null;
+  });
+  return { median: med, frames: frames };
+};
+
+/* ---------- 5. 음절 핵 검출 ----------
+   한국어는 모음 하나 = 에너지 봉우리 하나.
+   de Jong & Wempe (2009) 방식: 강도 봉우리 + 양쪽 골짜기 낙차(prominence) + 유성 조건.
+*/
+BS.smoothDb = function (frames, winFrames) {
+  var n = frames.length, out = new Float64Array(n);
+  var half = winFrames >> 1;
+  for (var i = 0; i < n; i++) {
+    var s = 0, c = 0;
+    for (var j = Math.max(0, i - half); j <= Math.min(n - 1, i + half); j++) { s += frames[j].db; c++; }
+    out[i] = s / c;
+  }
+  return out;
+};
+
+BS.syllables = function (frames, opts) {
+  opts = opts || {};
+  var hopSec = opts.hopSec || 0.010;
+  var dipDb = opts.dipDb != null ? opts.dipDb : 3;      // 양옆 낙차 최소
+  var floorDb = opts.floorDb != null ? opts.floorDb : 25; // 최댓값 대비 하한
+  var minSepSec = opts.minSepSec != null ? opts.minSepSec : 0.075;
+  var n = frames.length;
+  if (n < 3) return { nuclei: [], boundaries: [] };
+
+  var sm = BS.smoothDb(frames, Math.max(3, Math.round(0.045 / hopSec))); // ~45ms
+  var maxDb = -Infinity;
+  for (var i = 0; i < n; i++) if (sm[i] > maxDb) maxDb = sm[i];
+  var thr = maxDb - floorDb;
+
+  // 후보 봉우리
+  var peaks = [];
+  for (i = 1; i < n - 1; i++) {
+    if (sm[i] >= sm[i - 1] && sm[i] > sm[i + 1] && sm[i] > thr) peaks.push(i);
+  }
+  if (!peaks.length) return { nuclei: [], boundaries: [] };
+
+  // 양옆 낙차 검사: 인접 봉우리 사이 최저점이 dipDb 이상 낮아야 별개 음절
+  var kept = [peaks[0]];
+  for (var p = 1; p < peaks.length; p++) {
+    var prev = kept[kept.length - 1], cur = peaks[p];
+    var valley = Infinity;
+    for (i = prev; i <= cur; i++) if (sm[i] < valley) valley = sm[i];
+    var dipOk = (Math.min(sm[prev], sm[cur]) - valley) >= dipDb;
+    var sepOk = (cur - prev) * hopSec >= minSepSec;
+    if (dipOk && sepOk) kept.push(cur);
+    else if (sm[cur] > sm[prev]) kept[kept.length - 1] = cur; // 더 큰 쪽으로 대체
+  }
+
+  // 유성 조건: 핵 주변 ±3프레임에 유성 프레임이 있어야 함
+  var nuclei = kept.filter(function (idx) {
+    for (var j = Math.max(0, idx - 3); j <= Math.min(n - 1, idx + 3); j++) {
+      if (frames[j].f0 > 0) return true;
+    }
+    return false;
+  });
+
+  // 경계 = 인접 핵 사이의 최저 에너지 지점
+  var boundaries = [];
+  for (var q = 1; q < nuclei.length; q++) {
+    var a = nuclei[q - 1], b = nuclei[q], vi = a, vv = Infinity;
+    for (i = a; i <= b; i++) if (sm[i] < vv) { vv = sm[i]; vi = i; }
+    boundaries.push(vi);
+  }
+  return { nuclei: nuclei, boundaries: boundaries, smooth: sm, thr: thr };
+};
+
+/* ---------- 6. VAD · 억양구 분할 ----------
+   프리스타일용. 무엇을 말했는지는 몰라도 어디서 끊었는지는 알 수 있다.
+*/
+BS.phrases = function (frames, opts) {
+  opts = opts || {};
+  var hopSec = opts.hopSec || 0.010;
+  var minPauseSec = opts.minPauseSec != null ? opts.minPauseSec : 0.20;
+  var minPhraseSec = opts.minPhraseSec != null ? opts.minPhraseSec : 0.30;
+  var hangoverSec = opts.hangoverSec != null ? opts.hangoverSec : 0.08;
+  var n = frames.length;
+  if (!n) return [];
+
+  var dbs = frames.map(function (f) { return f.db; });
+  var sorted = dbs.slice().sort(function (a, b) { return a - b; });
+  var noiseFloor = sorted[Math.floor(sorted.length * 0.10)];
+  var peak = sorted[Math.floor(sorted.length * 0.95)];
+  // 잡음 바닥 +8dB, 단 최댓값 -35dB 밑으로는 안 내려가게
+  var thr = Math.max(noiseFloor + 8, peak - 35);
+
+  var sm = BS.smoothDb(frames, Math.max(3, Math.round(0.030 / hopSec)));
+  var active = [];
+  for (var i = 0; i < n; i++) active.push(sm[i] > thr);
+
+  // hangover: 짧은 골짜기 메우기
+  var hang = Math.round(hangoverSec / hopSec);
+  for (i = 0; i < n; i++) {
+    if (active[i]) continue;
+    var j = i; while (j < n && !active[j]) j++;
+    if (i > 0 && j < n && (j - i) <= hang) { for (var k = i; k < j; k++) active[k] = true; }
+    i = j;
+  }
+
+  // 구간 추출
+  var out = [], start = -1;
+  var minPause = Math.round(minPauseSec / hopSec);
+  for (i = 0; i < n; i++) {
+    if (active[i] && start < 0) start = i;
+    if (!active[i] && start >= 0) {
+      var j2 = i; while (j2 < n && !active[j2]) j2++;
+      if ((j2 - i) >= minPause || j2 >= n) {
+        if ((i - start) * hopSec >= minPhraseSec) out.push({ s: start, e: i - 1 });
+        start = -1;
+      }
+      i = j2 - 1;
+    }
+  }
+  if (start >= 0 && (n - start) * hopSec >= minPhraseSec) out.push({ s: start, e: n - 1 });
+  return out;
+};
+
+/* ---------- 7. 억양구 문말 억양 ----------
+   문말 상승은 두 가지로 실현된다:
+     (a) 마지막 음절 안에서의 활강  — 창(window) 회귀로 잡힘
+     (b) 앞 음절에서 마지막 음절로의 계단식 도약 — 창 회귀로는 안 잡힘
+   (b)를 놓치면 실제 상승 발화를 전부 level로 오분류한다.
+   그래서 Lee(2008)의 "마지막 두 피치 타깃의 차이" 방식을 쓴다:
+     anchor   = 끝에서 두 번째 음절 핵의 semitone 중앙값
+     endpoint = 마지막 유성 구간 끝 60ms의 semitone 중앙값
+     delta    = endpoint - anchor   (계단 + 활강을 한 수에 담음)
+   tailSlope는 마지막 음절 내부 활강만 따로 보는 보조 지표.
+*/
+BS.finalSlope = function (frames, ph, opts) {
+  opts = opts || {};
+  var tailSec = opts.tailSec != null ? opts.tailSec : 0.22;
+  var endSec = opts.endSec != null ? opts.endSec : 0.06;
+  var nucSec = opts.nucSec != null ? opts.nucSec : 0.04;
+  var hopSec = opts.hopSec || 0.010;
+  var riseSt = opts.riseSt != null ? opts.riseSt : 1.5;
+
+  // 구간 내 마지막 유성 프레임
+  var last = -1, i;
+  for (i = ph.e; i >= ph.s; i--) { if (frames[i].st != null) { last = i; break; } }
+  if (last < 0) return null;
+
+  function medSt(a, b) {
+    var v = [];
+    for (var k = Math.max(ph.s, a); k <= Math.min(ph.e, b); k++) {
+      if (frames[k].st != null) v.push(frames[k].st);
+    }
+    return v.length ? BS.medianOf(v) : null;
+  }
+
+  // 음절 핵 (호출자가 미리 구했으면 재사용)
+  var nuc = opts.nuclei;
+  if (!nuc) {
+    var sub = frames.slice(ph.s, ph.e + 1);
+    nuc = BS.syllables(sub, { hopSec: hopSec }).nuclei.map(function (x) { return x + ph.s; });
+  }
+
+  // endpoint: 마지막 유성 60ms
+  var endN = Math.round(endSec / hopSec);
+  var endpoint = medSt(last - endN, last);
+  if (endpoint == null) return null;
+
+  // anchor: 끝에서 두 번째 음절 핵. 없으면 tailSec 앞 지점.
+  var nucN = Math.round(nucSec / hopSec);
+  var anchor = null, anchorIdx = null;
+  if (nuc.length >= 2) {
+    anchorIdx = nuc[nuc.length - 2];
+    anchor = medSt(anchorIdx - nucN, anchorIdx + nucN);
+  }
+  if (anchor == null) {
+    anchorIdx = Math.max(ph.s, last - Math.round(tailSec / hopSec));
+    anchor = medSt(anchorIdx, anchorIdx + nucN);
+  }
+  if (anchor == null) return null;
+
+  // 보조: 마지막 tailSec 내부 회귀 기울기
+  var first = Math.max(ph.s, last - Math.round(tailSec / hopSec));
+  var xs = [], ys = [];
+  for (i = first; i <= last; i++) {
+    if (frames[i].st == null) continue;
+    xs.push((i - first) * hopSec); ys.push(frames[i].st);
+  }
+  var tailSlope = 0, tailDelta = 0;
+  if (xs.length >= 4) {
+    var n = xs.length, sx = 0, sy = 0, sxx = 0, sxy = 0;
+    for (i = 0; i < n; i++) { sx += xs[i]; sy += ys[i]; sxx += xs[i] * xs[i]; sxy += xs[i] * ys[i]; }
+    var den = n * sxx - sx * sx;
+    tailSlope = den === 0 ? 0 : (n * sxy - sx * sy) / den;
+    tailDelta = ys[n - 1] - ys[0];
+  }
+
+  var delta = endpoint - anchor;
+  var type = 'level';
+  if (delta >= riseSt) type = 'rise';
+  else if (delta <= -riseSt) type = 'fall';
+
+  return {
+    delta: delta, type: type,
+    anchor: anchor, endpoint: endpoint,
+    anchorIdx: anchorIdx, endIdx: last,
+    tailSlope: tailSlope, tailDelta: tailDelta,
+    slope: tailSlope, // 하위호환
+    from: first, to: last
+  };
+};
+
+/* ---------- 8. 화자 통계 (프리스타일) ---------- */
+BS.speakerStats = function (frames, phs, opts) {
+  opts = opts || {};
+  var hopSec = opts.hopSec || 0.010;
+  var sts = frames.filter(function (f) { return f.st != null; }).map(function (f) { return f.st; });
+  if (sts.length < 20) return null;
+  var srt = sts.slice().sort(function (a, b) { return a - b; });
+  function pct(p) { return srt[Math.min(srt.length - 1, Math.floor(srt.length * p))]; }
+
+  var mean = sts.reduce(function (a, b) { return a + b; }, 0) / sts.length;
+  var varr = sts.reduce(function (a, b) { return a + (b - mean) * (b - mean); }, 0) / sts.length;
+
+  // 음절 속도 (발화 구간 기준)
+  var speechFrames = 0, nSyl = 0;
+  phs.forEach(function (p) {
+    speechFrames += (p.e - p.s + 1);
+    var sub = frames.slice(p.s, p.e + 1);
+    nSyl += BS.syllables(sub, { hopSec: hopSec }).nuclei.length;
+  });
+  var speechSec = speechFrames * hopSec;
+  var totalSec = frames.length * hopSec;
+
+  // 문말 유형 분포
+  var types = { rise: 0, fall: 0, level: 0 }, deltas = [];
+  phs.forEach(function (p) {
+    var f = BS.finalSlope(frames, p, opts);
+    if (f) { types[f.type]++; deltas.push(f.delta); }
+  });
+  var nPh = types.rise + types.fall + types.level;
+
+  return {
+    stRange: pct(0.95) - pct(0.05),
+    stSd: Math.sqrt(varr),
+    voicedRatio: sts.length / frames.length,
+    speechRatio: totalSec > 0 ? speechSec / totalSec : 0,
+    nPhrases: phs.length,
+    meanPhraseSec: phs.length ? speechSec / phs.length : 0,
+    syllablesPerSec: speechSec > 0 ? nSyl / speechSec : 0,
+    nSyllables: nSyl,
+    finalTypes: types,
+    riseRatio: nPh ? types.rise / nPh : 0,
+    meanFinalDelta: deltas.length ? deltas.reduce(function (a, b) { return a + b; }, 0) / deltas.length : 0,
+    totalSec: totalSec,
+    speechSec: speechSec
+  };
+};
+
+/* ---------- 9. 원스톱 분석 ---------- */
+BS.analyze = function (pcm, sampleRate, opts) {
+  opts = opts || {};
+  var hopSec = opts.hopSec || 0.010;
+  var frames = BS.track(pcm, sampleRate, { hop: Math.round(sampleRate * hopSec), win: opts.win });
+  BS.fixOctaves(frames, opts);
+  var st = BS.toSemitones(frames);
+  var syl = BS.syllables(frames, { hopSec: hopSec });
+  var phs = BS.phrases(frames, { hopSec: hopSec });
+  var finals = phs.map(function (p) { return BS.finalSlope(frames, p, { hopSec: hopSec }); });
+  var stats = BS.speakerStats(frames, phs, { hopSec: hopSec });
+  return {
+    frames: frames, medianF0: st.median, syllables: syl,
+    phrases: phs, finals: finals, stats: stats, hopSec: hopSec
+  };
+};
+
+root.BS = BS;
+if (typeof module !== 'undefined' && module.exports) module.exports = BS;
+
+})(typeof globalThis !== 'undefined' ? globalThis : this);
+
+</script>
+
+<!-- ===== 데이터 · 오디오 캡처 ===== -->
+<script>
+(function(){
+'use strict';
+
+/* ---------- 문장 세트 (문헌 개정판 v0.2) ---------- */
+window.BS_SENTENCES = [
+  { id:1, kr:'밥 먹었어.', syl:4,
+    why:{en:'DECLARATIVE BASELINE — normalises your register', kr:'평서 기준선 — 당신의 음역을 정규화'} },
+  { id:2, kr:'밥 먹었어?', syl:4,
+    why:{en:'YES/NO QUESTION — the final rise is the strongest known discriminator', kr:'판정의문 — 문말 급상승이 가장 강한 판별자'} },
+  { id:3, kr:'뭐 먹었어?', syl:4,
+    why:{en:'WH-QUESTION — segmentally near-identical to #2', kr:'설명의문 — 2번과 분절음이 거의 동일'} },
+  { id:4, kr:'블루베리 스무디', syl:7,
+    why:{en:'LOANWORD PHRASE TONE — and a syllable-boundary stress test', kr:'외래어 어절 성조 — 그리고 음절 경계 검출 시험'} },
+  { id:5, kr:'오늘 날씨 좋다', syl:6,
+    why:{en:'SYLLABLE DURATION — the Chungcheong axis', kr:'음절 지속시간 — 충청 축'} }
+];
+
+window.BS_TOPICS = [
+  { en:'What you ate today, in as much detail as you can manage', kr:'오늘 뭘 먹었는지, 최대한 자세히' },
+  { en:'How you get from your home to where you work or study', kr:'집에서 일터나 학교까지 가는 길' },
+  { en:'A film or show you watched recently — the plot, not your review', kr:'최근에 본 영화나 드라마 — 감상 말고 줄거리' },
+  { en:'How to make something you can actually cook', kr:'실제로 만들 줄 아는 음식의 조리법' },
+  { en:'The layout of the room you are sitting in', kr:'지금 앉아 있는 방의 구조' },
+  { en:'What you did last weekend, hour by hour', kr:'지난 주말에 뭘 했는지, 시간 순서대로' },
+  { en:'Explain the rules of a game you know well to someone who has never played it', kr:'잘 아는 게임의 규칙을 처음 듣는 사람에게 설명하기' },
+  { en:'The route of a walk you take often', kr:'자주 걷는 산책 코스' }
+];
+
+/* ---------- UI 문자열 ---------- */
+window.BS_UI = {
+  privOff:{en:'OFF',kr:'꺼짐'},
+  privRec:{en:'RECORDING',kr:'녹음 중'},
+  privBusy:{en:'ANALYSING',kr:'분석 중'},
+  rec:{en:'RECORD',kr:'녹음'},
+  stop:{en:'STOP',kr:'정지'},
+  hintA:{en:'Read the sentence once, at your normal speed. Max 12 s.',kr:'문장을 평소 속도로 한 번 읽어주세요. 최대 12초.'},
+  hintB:{en:'Talk freely. Recording stops automatically at 90 s.',kr:'편하게 이야기하세요. 90초에서 자동으로 멈춥니다.'},
+  capIdle:{en:'Pitch curve, in semitones relative to your own median. Press RECORD.',kr:'본인 중앙값 대비 semitone 음높이 곡선. 녹음을 눌러주세요.'},
+  capLive:{en:'LIVE — provisional median, the curve will shift once analysis runs.',kr:'실시간 — 중앙값이 잠정값이라 분석 후 곡선이 이동합니다.'},
+  capDone:{en:'Filled circles = syllable nuclei · dashed lines = detected boundaries',kr:'채운 원 = 음절 핵 · 점선 = 검출된 경계'},
+  expected:{en:'expected',kr:'예상'},
+  detected:{en:'detected',kr:'검출'},
+  syl:{en:'syllables',kr:'음절'},
+  noVoice:{en:'No voiced speech was found. Check that the right microphone is selected and try speaking closer to it.',kr:'유성음이 검출되지 않았어요. 마이크가 올바르게 선택됐는지 확인하고 조금 더 가까이서 말해보세요.'},
+  micFail:{en:'Microphone access was refused or unavailable. Nothing was recorded.',kr:'마이크 접근이 거부되었거나 사용할 수 없어요. 아무것도 녹음되지 않았습니다.'},
+  mismatch:{en:'Detected syllable count does not match the sentence — the boundaries below are unreliable, and so is anything measured per-syllable.',kr:'검출된 음절 수가 문장과 맞지 않아요 — 아래 경계는 신뢰할 수 없고, 음절 단위 측정값도 마찬가지입니다.'},
+  tooShort:{en:'Recording too short to analyse.',kr:'분석하기에 녹음이 너무 짧아요.'}
+};
+
+/* ---------- 리샘플러 (16 kHz 고정) ---------- */
+window.BS_resample16k = function(pcm, sr){
+  if (Math.abs(sr - 16000) < 1) return pcm;
+  var ratio = sr / 16000;
+  var box = Math.max(1, Math.floor(ratio));           // 값싼 저역통과
+  var out = new Float32Array(Math.floor(pcm.length / ratio));
+  for (var i = 0; i < out.length; i++){
+    var pos = i * ratio, a = Math.floor(pos);
+    var s = 0, c = 0;
+    for (var k = 0; k < box; k++){ var j = a + k; if (j < pcm.length){ s += pcm[j]; c++; } }
+    out[i] = c ? s / c : 0;
+  }
+  return out;
+};
+
+/* ---------- 캡처 ---------- */
+var WORKLET = "class C extends AudioWorkletProcessor{process(i){const c=i[0]&&i[0][0];" +
+  "if(c)this.port.postMessage(new Float32Array(c));return true}}registerProcessor('bscap',C)";
+
+window.BS_Rec = {
+  ctx:null, stream:null, node:null, src:null, sink:null,
+  chunks:[], n:0, sr:16000, running:false, maxSec:12,
+  onChunk:null, onStop:null, _timer:null,
+
+  supported:function(){
+    return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia &&
+             (window.AudioContext || window.webkitAudioContext));
+  },
+
+  start:function(maxSec, onChunk, onStop, onError){
+    var R = this;
+    if (R.running) return;
+    R.maxSec = maxSec; R.onChunk = onChunk; R.onStop = onStop;
+    R.chunks = []; R.n = 0;
+
+    var AC = window.AudioContext || window.webkitAudioContext;
+    try { R.ctx = new AC({ sampleRate: 16000 }); }
+    catch(e){ try { R.ctx = new AC(); } catch(e2){ onError && onError(e2); return; } }
+    R.sr = R.ctx.sampleRate;
+
+    navigator.mediaDevices.getUserMedia({ audio:{
+      echoCancellation:false, noiseSuppression:false, autoGainControl:false,
+      channelCount:1
+    }}).then(function(stream){
+      R.stream = stream;
+      R.src = R.ctx.createMediaStreamSource(stream);
+      R.sink = R.ctx.createGain(); R.sink.gain.value = 0;
+      R.sink.connect(R.ctx.destination);
+
+      function push(buf){
+        if (!R.running) return;
+        R.chunks.push(buf); R.n += buf.length;
+        if (R.onChunk) R.onChunk(buf);
+        if (R.n / R.sr >= R.maxSec) R.stop();
+      }
+
+      function useScriptProcessor(){
+        var sp = R.ctx.createScriptProcessor(1024, 1, 1);
+        sp.onaudioprocess = function(ev){
+          push(new Float32Array(ev.inputBuffer.getChannelData(0)));
+        };
+        R.node = sp; R.src.connect(sp); sp.connect(R.sink);
+        R.running = true; R._arm();
+      }
+
+      if (R.ctx.audioWorklet){
+        var url = URL.createObjectURL(new Blob([WORKLET], { type:'application/javascript' }));
+        R.ctx.audioWorklet.addModule(url).then(function(){
+          URL.revokeObjectURL(url);
+          var wn = new AudioWorkletNode(R.ctx, 'bscap');
+          wn.port.onmessage = function(ev){ push(ev.data); };
+          R.node = wn; R.src.connect(wn); wn.connect(R.sink);
+          R.running = true; R._arm();
+        }).catch(function(){ URL.revokeObjectURL(url); useScriptProcessor(); });
+      } else {
+        useScriptProcessor();
+      }
+      if (R.ctx.state === 'suspended') R.ctx.resume();
+    }).catch(function(err){ R._teardown(); onError && onError(err); });
+  },
+
+  _arm:function(){
+    var R = this;
+    clearTimeout(R._timer);
+    R._timer = setTimeout(function(){ if (R.running) R.stop(); }, (R.maxSec + 2) * 1000);
+  },
+
+  stop:function(){
+    var R = this;
+    if (!R.running) return;
+    R.running = false;
+    clearTimeout(R._timer);
+    var pcm = new Float32Array(R.n), off = 0;
+    for (var i = 0; i < R.chunks.length; i++){ pcm.set(R.chunks[i], off); off += R.chunks[i].length; }
+    var sr = R.sr;
+    R.chunks = [];
+    R._teardown();
+    if (R.onStop) R.onStop(pcm, sr);
+  },
+
+  _teardown:function(){
+    var R = this;
+    try { if (R.node) R.node.disconnect(); } catch(e){}
+    try { if (R.src) R.src.disconnect(); } catch(e){}
+    try { if (R.sink) R.sink.disconnect(); } catch(e){}
+    if (R.stream){ R.stream.getTracks().forEach(function(t){ t.stop(); }); }
+    try { if (R.ctx && R.ctx.close) R.ctx.close(); } catch(e){}
+    R.node = R.src = R.sink = R.stream = R.ctx = null;
+    R.running = false;
+  }
+};
+})();
+</script>
+
+<!-- ===== 캔버스 렌더러 ===== -->
+<script>
+(function(){
+'use strict';
+var PAD = { l:78, r:26, t:26, b:52 };
+
+function pick(o){ return (window.APP_LANG === 'kr' ? o.kr : o.en); }
+
+window.BS_draw = function(cv, d){
+  d = d || {};
+  var ctx = cv.getContext('2d');
+  var W = cv.width, H = cv.height;
+  var frames = d.frames || [];
+  var hop = d.hopSec || 0.010;
+  var i0 = d.i0 || 0;
+  var i1 = (d.i1 != null ? d.i1 : frames.length - 1);
+  if (i1 <= i0) i1 = Math.max(i0 + 1, frames.length - 1);
+  var dur = (i1 - i0 + 1) * hop || 1;
+
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle = '#fff'; ctx.fillRect(0,0,W,H);
+
+  /* y 범위 */
+  var lo = -8, hi = 8;
+  for (var i=i0;i<=i1 && i<frames.length;i++){
+    var s = frames[i].st;
+    if (s == null) continue;
+    if (s < lo) lo = s; if (s > hi) hi = s;
+  }
+  lo = Math.floor(lo) - 1.5; hi = Math.ceil(hi) + 1.5;
+
+  var PW = W - PAD.l - PAD.r, PH = H - PAD.t - PAD.b;
+  function X(i){ return PAD.l + ((i - i0) / (i1 - i0)) * PW; }
+  function XT(t){ return X(i0 + t / hop); }
+  function Y(s){ return PAD.t + (1 - (s - lo) / (hi - lo)) * PH; }
+
+  /* 프레임 */
+  ctx.strokeStyle = '#141414'; ctx.lineWidth = 5;
+  ctx.strokeRect(PAD.l, PAD.t, PW, PH);
+
+  /* 격자 */
+  ctx.font = '500 22px "IBM Plex Mono", monospace';
+  ctx.textBaseline = 'middle'; ctx.textAlign = 'right';
+  [-12,-6,-3,0,3,6,12].forEach(function(g){
+    if (g < lo || g > hi) return;
+    var y = Y(g);
+    ctx.beginPath();
+    ctx.setLineDash(g === 0 ? [] : [7,9]);
+    ctx.strokeStyle = g === 0 ? '#141414' : '#DDDDD8';
+    ctx.lineWidth = g === 0 ? 3.5 : 2.5;
+    ctx.moveTo(PAD.l, y); ctx.lineTo(PAD.l + PW, y); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#6B6B67';
+    ctx.fillText((g > 0 ? '+' : '') + g, PAD.l - 12, y);
+  });
+  ctx.textAlign = 'left';
+  ctx.fillStyle = '#6B6B67';
+  ctx.save();
+  ctx.translate(20, PAD.t + PH/2); ctx.rotate(-Math.PI/2);
+  ctx.textAlign = 'center'; ctx.fillText('semitone', 0, 0);
+  ctx.restore();
+
+  /* 시간 눈금 */
+  var step = dur > 40 ? 10 : dur > 15 ? 5 : dur > 6 ? 2 : 1;
+  ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+  for (var t = 0; t <= dur + 1e-6; t += step){
+    var x = XT(t);
+    if (x > PAD.l + PW) break;
+    ctx.beginPath(); ctx.strokeStyle = '#DDDDD8'; ctx.lineWidth = 2.5;
+    ctx.moveTo(x, PAD.t); ctx.lineTo(x, PAD.t + PH); ctx.stroke();
+    ctx.fillStyle = '#6B6B67'; ctx.fillText(t.toFixed(0) + 's', x, PAD.t + PH + 12);
+  }
+
+  /* 억양구 음영 */
+  (d.phrases || []).forEach(function(p, k){
+    var x0 = X(p.s), x1 = X(p.e + 1);
+    ctx.fillStyle = k % 2 ? 'rgba(43,182,115,0.055)' : 'rgba(43,182,115,0.10)';
+    ctx.fillRect(x0, PAD.t + 3, Math.max(2, x1 - x0), PH - 6);
+  });
+
+  /* 음절 경계 */
+  ctx.setLineDash([9,8]); ctx.strokeStyle = '#141414'; ctx.lineWidth = 2.5;
+  (d.boundaries || []).forEach(function(bi){
+    var x = X(bi);
+    ctx.beginPath(); ctx.moveTo(x, PAD.t + 4); ctx.lineTo(x, PAD.t + PH - 4); ctx.stroke();
+  });
+  ctx.setLineDash([]);
+
+  /* 곡선 */
+  ctx.strokeStyle = d.live ? '#0F6E56' : '#2BB673';
+  ctx.lineWidth = 5; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+  var pen = false;
+  ctx.beginPath();
+  for (i = i0; i <= i1 && i < frames.length; i++){
+    var st = frames[i].st;
+    if (st == null){ pen = false; continue; }
+    var px = X(i), py = Y(st);
+    if (!pen){ ctx.moveTo(px, py); pen = true; } else ctx.lineTo(px, py);
+  }
+  ctx.stroke();
+
+  /* 음절 핵 */
+  ctx.font = '600 21px "IBM Plex Mono", monospace';
+  ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
+  (d.nuclei || []).forEach(function(ni, k){
+    var f = frames[ni]; if (!f || f.st == null) return;
+    var x = X(ni), y = Y(f.st);
+    ctx.beginPath(); ctx.arc(x, y, 9, 0, Math.PI*2);
+    ctx.fillStyle = '#141414'; ctx.fill();
+    ctx.fillStyle = '#141414'; ctx.fillText(String(k+1), x, y - 15);
+  });
+
+  /* 문말 이동 (anchor → endpoint) */
+  (d.finals || []).forEach(function(f){
+    if (!f) return;
+    var x0 = X(f.anchorIdx), y0 = Y(f.anchor);
+    var x1 = X(f.endIdx),    y1 = Y(f.endpoint);
+    var col = f.type === 'rise' ? '#3A5BD9' : f.type === 'fall' ? '#A32D2D' : '#8A8A85';
+    ctx.strokeStyle = col; ctx.lineWidth = 4; ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1); ctx.stroke();
+    var ang = Math.atan2(y1 - y0, x1 - x0);
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x1 - 15*Math.cos(ang - 0.42), y1 - 15*Math.sin(ang - 0.42));
+    ctx.lineTo(x1 - 15*Math.cos(ang + 0.42), y1 - 15*Math.sin(ang + 0.42));
+    ctx.closePath(); ctx.fillStyle = col; ctx.fill();
+    if (d.labelFinals !== false){
+      ctx.fillStyle = col;
+      ctx.font = '600 20px "IBM Plex Mono", monospace';
+      ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+      ctx.fillText((f.delta >= 0 ? '+' : '') + f.delta.toFixed(1), x1 + 10, y1);
+    }
+  });
+
+  /* 빈 상태 */
+  if (!frames.length){
+    ctx.fillStyle = '#8A8A85';
+    ctx.font = '500 24px "IBM Plex Mono", monospace';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(pick({en:'no signal yet', kr:'아직 신호 없음'}), PAD.l + PW/2, PAD.t + PH*0.3);
+  }
+};
+})();
+</script>
+
+<!-- ===== 앱: 공통 + 정독 탭 ===== -->
+<script>
+window.BSApp = (function(){
+'use strict';
+var A = {};
+var U = window.BS_UI;
+function L(o){ return (window.APP_LANG === 'kr' ? o.kr : o.en); }
+function $(id){ return document.getElementById(id); }
+A.L = L; A.$ = $;
+
+/* ---------- 프라이버시 표시 ---------- */
+A.setMic = function(state){          // 'off' | 'rec' | 'busy'
+  var dot = $('privDot'), s = $('privState');
+  dot.classList.toggle('rec', state === 'rec');
+  s.textContent = state === 'rec' ? L(U.privRec) : state === 'busy' ? L(U.privBusy) : L(U.privOff);
+  s.style.color = state === 'rec' ? 'var(--red)' : 'var(--green-deep)';
+};
+
+/* ---------- 실시간 f0 트래커 ---------- */
+function Live(){
+  this.buf = new Float32Array(0);
+  this.frames = [];
+  this.f0s = [];
+  this.hopSec = 0.020;
+}
+Live.prototype.reset = function(){ this.buf = new Float32Array(0); this.frames = []; this.f0s = []; };
+Live.prototype.push = function(chunk, sr){
+  var c = window.BS_resample16k(chunk, sr);
+  var merged = new Float32Array(this.buf.length + c.length);
+  merged.set(this.buf, 0); merged.set(c, this.buf.length);
+  this.buf = merged;
+
+  var win = 1536, hop = 320;                    // 96 ms / 20 ms @16k
+  var have = this.frames.length;
+  while ((have + 1) * hop + win <= this.buf.length + hop){
+    var off = have * hop;
+    if (off + win > this.buf.length) break;
+    var r = window.BS.yin(this.buf.subarray(off, off + win), 16000);
+    if (r.f0 > 0) this.f0s.push(r.f0);
+    this.frames.push({ f0:r.f0, st:null, db: r.rms > 0 ? 20*Math.log10(r.rms) : -120 });
+    have++;
+  }
+  if (this.f0s.length > 8){
+    var med = window.BS.medianOf(this.f0s);
+    for (var i = 0; i < this.frames.length; i++){
+      var f = this.frames[i];
+      f.st = f.f0 > 0 ? 12 * Math.log2(f.f0 / med) : null;
+    }
+  }
+  // 트리밍: 메모리 상한 (버퍼는 최종 분석에 쓰지 않음)
+  if (this.buf.length > 16000 * 100){
+    this.buf = this.buf.subarray(this.buf.length - 16000 * 100);
+    this.frames = []; this.f0s = [];
+  }
+};
+A.Live = Live;
+
+A.rmsDb = function(chunk){
+  var s = 0;
+  for (var i = 0; i < chunk.length; i++) s += chunk[i] * chunk[i];
+  var r = Math.sqrt(s / Math.max(1, chunk.length));
+  return r > 0 ? 20 * Math.log10(r) : -120;
+};
+A.levelPct = function(db){ return Math.max(0, Math.min(100, (db + 55) / 45 * 100)); };
+
+/* ---------- 결과 HTML 조각 ---------- */
+A.stat = function(label, value, unit){
+  return '<div class="stat"><b>' + label + '</b><span>' + value +
+         (unit ? ' <em>' + unit + '</em>' : '') + '</span></div>';
+};
+A.typeTag = function(t){
+  var k = { rise:{en:'RISE',kr:'상승'}, fall:{en:'FALL',kr:'하강'}, level:{en:'LEVEL',kr:'평탄'} }[t];
+  return '<span class="tag-' + t + '">' + L(k) + '</span>';
+};
+
+/* =================== 정독 탭 =================== */
+var S = { idx:0, live:new Live(), last:null, running:false, slotA:null, slotB:null };
+A.S = S;
+
+A.paintSentence = function(){
+  var s = window.BS_SENTENCES[S.idx];
+  $('sentKr').textContent = s.kr;
+  $('sentWhy').textContent = L(s.why);
+  $('sentSyl').textContent = L(U.expected) + ' ' + s.syl + ' ' + L(U.syl);
+};
+
+A.fillPicker = function(){
+  var sel = $('sentPick'), cur = sel.value;
+  sel.innerHTML = '';
+  window.BS_SENTENCES.forEach(function(s, i){
+    var o = document.createElement('option');
+    o.value = i; o.textContent = s.id + '. ' + s.kr;
+    sel.appendChild(o);
+  });
+  sel.value = cur || String(S.idx);
+};
+
+A.analyzeRead = function(pcm, sr){
+  var s16 = window.BS_resample16k(pcm, sr);
+  if (s16.length < 16000 * 0.4){ A.readError(L(U.tooShort)); return; }
+  var r = window.BS.analyze(s16, 16000, { hopSec:0.010 });
+  var voiced = r.frames.filter(function(f){ return f.st != null; });
+  if (voiced.length < 15){ A.readError(L(U.noVoice)); return; }
+  S.raw = { r:r, idx:S.idx };
+  A.renderRead();
+};
+
+/* 언어 전환 시 결과 화면을 그대로 다시 그린다 (재분석 없음) */
+A.renderRead = function(){
+  if (!S.raw) return;
+  var r = S.raw.r;
+  var voiced = r.frames.filter(function(f){ return f.st != null; });
+  var expect = window.BS_SENTENCES[S.raw.idx];
+  var nuclei = r.syllables.nuclei;
+  var lastPh = r.phrases.length ? r.phrases[r.phrases.length - 1] : { s:0, e:r.frames.length - 1 };
+  var fin = window.BS.finalSlope(r.frames, lastPh, { hopSec:0.010, nuclei:nuclei });
+
+  // 앞뒤 무음을 뺀 실제 발화 구간 (여백 120 ms)
+  var spanS = Math.max(0, (r.phrases.length ? r.phrases[0].s : 0) - 12);
+  var spanE = Math.min(r.frames.length - 1, lastPh.e + 12);
+
+  window.BS_draw($('cvA'), {
+    frames:r.frames, hopSec:0.010, i0:spanS, i1:spanE,
+    nuclei:nuclei, boundaries:r.syllables.boundaries,
+    finals: fin ? [fin] : [], phrases:[]
+  });
+  $('capA').textContent = L(U.capDone);
+
+  var sts = voiced.map(function(f){ return f.st; }).sort(function(a,b){ return a-b; });
+  var range = sts[Math.floor(sts.length*0.95)] - sts[Math.floor(sts.length*0.05)];
+  var durSec = ((r.phrases.length ? lastPh.e : r.frames.length - 1) -
+                (r.phrases.length ? r.phrases[0].s : 0) + 1) * 0.010;
+
+  var html = '<h2 class="sub">' + L({en:'MEASUREMENT',kr:'측정값'}) + '</h2>';
+  if (nuclei.length !== expect.syl){
+    html += '<div class="warn">' + L(U.mismatch) + '<br />' +
+            L(U.expected) + ' ' + expect.syl + ' / ' + L(U.detected) + ' ' + nuclei.length + '</div>';
+  }
+  html += '<div class="stat-grid">' +
+    A.stat(L({en:'SYLLABLES',kr:'음절'}), nuclei.length, '/ ' + expect.syl) +
+    A.stat(L({en:'FINAL MOVE',kr:'문말 이동'}), fin ? (fin.delta>=0?'+':'') + fin.delta.toFixed(1) : '—', 'st') +
+    A.stat(L({en:'CONTOUR',kr:'문말 유형'}), fin ? A.typeTag(fin.type) : '—', '') +
+    A.stat(L({en:'PITCH RANGE',kr:'음역 폭'}), range.toFixed(1), 'st') +
+    A.stat(L({en:'DURATION',kr:'길이'}), durSec.toFixed(2), 's') +
+    A.stat(L({en:'MEDIAN f0',kr:'중앙 f0'}), Math.round(r.medianF0), 'Hz') +
+    '</div>';
+
+  if (nuclei.length){
+    html += '<table class="ph"><tr><th>#</th><th>' + L({en:'SEMITONE',kr:'semitone'}) +
+            '</th><th>' + L({en:'DURATION',kr:'지속시간'}) + '</th></tr>';
+    var bs = r.syllables.boundaries;
+    for (var i = 0; i < nuclei.length; i++){
+      var a = i === 0 ? Math.min(nuclei[0], r.phrases.length ? r.phrases[0].s : 0) : bs[i-1];
+      var b = i < bs.length ? bs[i] : Math.max(nuclei[i], lastPh.e);
+      var v = [];
+      for (var j = Math.max(0, nuclei[i]-4); j <= Math.min(r.frames.length-1, nuclei[i]+4); j++){
+        if (r.frames[j].st != null) v.push(r.frames[j].st);
+      }
+      var st = v.length ? window.BS.medianOf(v) : null;
+      html += '<tr><td>' + (i+1) + '</td><td>' + (st==null?'—':(st>=0?'+':'')+st.toFixed(2)) +
+              '</td><td>' + Math.round((b-a)*10) + ' ms</td></tr>';
+    }
+    html += '</table>';
+  }
+  $('resA').innerHTML = html;
+
+  S.last = {
+    sentence: expect.kr, nSyl: nuclei.length, expSyl: expect.syl,
+    delta: fin ? fin.delta : null, type: fin ? fin.type : null,
+    range: range, f0: r.medianF0, dur: durSec
+  };
+};
+
+A.readError = function(msg){
+  $('resA').innerHTML = '<div class="warn">' + msg + '</div>';
+  S.last = null;
+};
+
+A.slotText = function(o){
+  if (!o) return '—';
+  return o.sentence + '\n' + L({en:'final',kr:'문말'}) + ' ' +
+         (o.delta==null?'—':(o.delta>=0?'+':'')+o.delta.toFixed(2)+'st (' + o.type + ')') +
+         ' · ' + L({en:'range',kr:'음역'}) + ' ' + o.range.toFixed(1) + 'st · ' + Math.round(o.f0) + 'Hz';
+};
+
+A.paintAB = function(){
+  $('slotAtxt').textContent = A.slotText(S.slotA);
+  $('slotBtxt').textContent = A.slotText(S.slotB);
+  var d = $('abDiff');
+  if (!S.slotA || !S.slotB){ d.innerHTML = ''; return; }
+  var dd = (S.slotA.delta==null||S.slotB.delta==null) ? null : (S.slotB.delta - S.slotA.delta);
+  var same = S.slotA.sentence === S.slotB.sentence;
+  var html = '<div class="stat-grid" style="margin-top:14px">' +
+    A.stat('Δ ' + L({en:'FINAL',kr:'문말'}), dd==null?'—':(dd>=0?'+':'')+dd.toFixed(2), 'st') +
+    A.stat('Δ ' + L({en:'RANGE',kr:'음역'}), (S.slotB.range-S.slotA.range).toFixed(2), 'st') +
+    A.stat('Δ ' + L({en:'MEDIAN f0',kr:'중앙 f0'}), Math.round(S.slotB.f0-S.slotA.f0), 'Hz') +
+    '</div>';
+  if (!same){
+    html += '<div class="warn">' + L({en:'The two slots hold different sentences — the difference below is not interpretable.',
+      kr:'두 슬롯의 문장이 달라요 — 아래 차이값은 해석할 수 없습니다.'}) + '</div>';
+  } else if (dd != null && Math.abs(dd) < 1.0){
+    html += '<div class="note">' + L({
+      en:'Under 1 semitone apart. Either you produced the two readings alike, or this instrument cannot tell them apart — v0 cannot distinguish those two cases.',
+      kr:'차이가 1 semitone 미만이에요. 두 발화를 실제로 비슷하게 했거나, 이 측정기가 둘을 구분하지 못하거나 — v0은 그 둘을 구별하지 못합니다.'}) + '</div>';
+  }
+  d.innerHTML = html;
+};
+
+return A;
+})();
+</script>
+
+<!-- ===== 앱: 프리스타일 탭 + 배선 ===== -->
+<script>
+(function(){
+'use strict';
+var A = window.BSApp, U = window.BS_UI, L = A.L, $ = A.$;
+var F = { live:new A.Live(), topic:0, running:false };
+
+/* ---------- 프리스타일 분석 ---------- */
+function analyzeFree(pcm, sr){
+  var s16 = window.BS_resample16k(pcm, sr);
+  if (s16.length < 16000 * 3){ F.raw = null; $('resB').innerHTML = '<div class="warn">' + L(U.tooShort) + '</div>'; return; }
+  var r = window.BS.analyze(s16, 16000, { hopSec:0.010 });
+  var voiced = r.frames.filter(function(f){ return f.st != null; });
+  if (voiced.length < 60 || !r.stats){ F.raw = null; $('resB').innerHTML = '<div class="warn">' + L(U.noVoice) + '</div>'; return; }
+  F.raw = r;
+  renderFree();
+}
+
+/* 언어 전환 시 결과 화면 재출력 (재분석 없음) */
+function renderFree(){
+  if (!F.raw) return;
+  var r = F.raw;
+  var st = r.stats;
+  window.BS_draw($('cvB'), {
+    frames:r.frames, hopSec:0.010,
+    i0:Math.max(0, (r.phrases.length ? r.phrases[0].s : 0) - 20),
+    i1:Math.min(r.frames.length-1, (r.phrases.length ? r.phrases[r.phrases.length-1].e : r.frames.length-1) + 20),
+    phrases:r.phrases, finals:r.finals, nuclei:[], boundaries:[], labelFinals:false
+  });
+  $('capB').textContent = L({en:'Shaded blocks = intonation phrases · arrows = final pitch movement',
+                             kr:'음영 블록 = 억양구 · 화살표 = 문말 피치 이동'});
+
+  var html = '<h2 class="sub">' + L({en:'YOUR VOICE, MEASURED',kr:'측정된 당신의 목소리'}) + '</h2>';
+  html += '<div class="stat-grid">' +
+    A.stat(L({en:'PHRASES',kr:'억양구'}), st.nPhrases, '') +
+    A.stat(L({en:'RISING ENDINGS',kr:'상승 종결'}), Math.round(st.riseRatio*100), '%') +
+    A.stat(L({en:'MEAN FINAL MOVE',kr:'평균 문말 이동'}), (st.meanFinalDelta>=0?'+':'')+st.meanFinalDelta.toFixed(2), 'st') +
+    A.stat(L({en:'PITCH RANGE',kr:'음역 폭'}), st.stRange.toFixed(1), 'st') +
+    A.stat(L({en:'VARIABILITY',kr:'변동성'}), st.stSd.toFixed(2), 'st sd') +
+    A.stat(L({en:'SPEECH RATE',kr:'발화 속도'}), st.syllablesPerSec.toFixed(2), 'syl/s') +
+    A.stat(L({en:'MEAN PHRASE',kr:'평균 억양구'}), st.meanPhraseSec.toFixed(2), 's') +
+    A.stat(L({en:'SPEAKING TIME',kr:'발화 비율'}), Math.round(st.speechRatio*100), '%') +
+    A.stat(L({en:'MEDIAN f0',kr:'중앙 f0'}), Math.round(r.medianF0), 'Hz') +
+    '</div>';
+
+  html += '<h2 class="sub">' + L({en:'PHRASE ENDINGS',kr:'억양구 문말'}) + '</h2>';
+  html += '<table class="ph"><tr><th>#</th><th>' + L({en:'START',kr:'시작'}) + '</th><th>' +
+          L({en:'LENGTH',kr:'길이'}) + '</th><th>Δ semitone</th><th>' + L({en:'TYPE',kr:'유형'}) + '</th></tr>';
+  r.phrases.forEach(function(p, i){
+    var f = r.finals[i];
+    html += '<tr><td>' + (i+1) + '</td><td>' + (p.s*0.01).toFixed(1) + 's</td><td>' +
+            ((p.e-p.s+1)*0.01).toFixed(2) + 's</td><td>' +
+            (f ? (f.delta>=0?'+':'')+f.delta.toFixed(2) : '—') + '</td><td>' +
+            (f ? A.typeTag(f.type) : '—') + '</td></tr>';
+  });
+  html += '</table>';
+
+  html += '<div class="note">' + L({
+    en:'Nothing above is a dialect judgement. Read speech and spontaneous speech cannot be pooled, and every published baseline is read speech — so there is no literature to compare these numbers against yet. They describe this recording, and nothing more.',
+    kr:'위의 어떤 값도 방언 판정이 아닙니다. 낭독 발화와 자유 발화는 같이 묶을 수 없는데 발표된 기준선은 전부 낭독 발화예요 — 그래서 이 숫자들과 비교할 문헌이 아직 없습니다. 이 값들은 이 녹음 하나를 설명할 뿐입니다.'}) + '</div>';
+
+  $('resB').innerHTML = html;
+}
+
+/* ---------- 녹음 배선 ---------- */
+function wire(o){
+  var btn = $(o.btn), lvl = $(o.lvl), cvId = o.cv, capId = o.cap;
+  btn.addEventListener('click', function(){
+    if (o.state.running){ window.BS_Rec.stop(); return; }
+    if (!window.BS_Rec.supported()){
+      $(o.res).innerHTML = '<div class="warn">' + L(U.micFail) + '</div>'; return;
+    }
+    o.state.running = true;
+    o.state.live.reset();
+    $(o.res).innerHTML = '';
+    btn.classList.remove('go'); btn.classList.add('stop');
+    btn.querySelector('.tx').textContent = L(U.stop);
+    A.setMic('rec');
+    $(capId).textContent = L(U.capLive);
+
+    var lastPaint = 0;
+    window.BS_Rec.start(o.maxSec, function(chunk){
+      lvl.style.width = A.levelPct(A.rmsDb(chunk)) + '%';
+      o.state.live.push(chunk, window.BS_Rec.sr);
+      var now = (typeof performance !== 'undefined' ? performance.now() : 0);
+      if (now - lastPaint > 60){
+        lastPaint = now;
+        window.BS_draw($(cvId), {
+          frames:o.state.live.frames, hopSec:0.020,
+          i0:0, i1:Math.max(Math.round(o.maxSec * 0.25 / 0.020), o.state.live.frames.length),
+          live:true
+        });
+      }
+    }, function(pcm, sr){
+      o.state.running = false;
+      lvl.style.width = '0%';
+      btn.classList.remove('stop'); btn.classList.add('go');
+      btn.querySelector('.tx').textContent = L(U.rec);
+      A.setMic('busy');
+      setTimeout(function(){
+        try { o.analyze(pcm, sr); }
+        catch(e){ $(o.res).innerHTML = '<div class="warn">' + (e && e.message ? e.message : 'error') + '</div>'; }
+        A.setMic('off');
+      }, 30);
+    }, function(){
+      o.state.running = false;
+      lvl.style.width = '0%';
+      btn.classList.remove('stop'); btn.classList.add('go');
+      btn.querySelector('.tx').textContent = L(U.rec);
+      A.setMic('off');
+      $(o.res).innerHTML = '<div class="warn">' + L(U.micFail) + '</div>';
+    });
+  });
+}
+
+/* ---------- 탭 ---------- */
+function showTab(which){
+  var a = which === 'A';
+  $('tabA').classList.toggle('on', a);
+  $('tabB').classList.toggle('on', !a);
+  $('panelA').hidden = !a;
+  $('panelB').hidden = a;
+}
+
+/* ---------- 초기화 ---------- */
+function relabel(){
+  A.fillPicker();
+  A.paintSentence();
+  A.renderRead();
+  renderFree();
+  A.setMic(A.S.running || F.running ? 'rec' : 'off');
+  $('hintA').textContent = L(U.hintA);
+  $('hintB').textContent = L(U.hintB);
+  $('topicKr').textContent = L(window.BS_TOPICS[F.topic]);
+  if (!A.S.running && !A.S.last) $('capA').textContent = L(U.capIdle);
+  if (!F.running) $('capB').textContent = $('capB').textContent || L(U.capIdle);
+  A.paintAB();
+}
+
+A.fillPicker();
+A.paintSentence();
+$('sentPick').addEventListener('change', function(e){
+  A.S.idx = parseInt(e.target.value, 10) || 0;
+  A.paintSentence();
+});
+$('tabA').addEventListener('click', function(){ showTab('A'); });
+$('tabB').addEventListener('click', function(){ showTab('B'); });
+$('newTopic').addEventListener('click', function(){
+  F.topic = (F.topic + 1) % window.BS_TOPICS.length;
+  $('topicKr').textContent = L(window.BS_TOPICS[F.topic]);
+});
+$('saveA').addEventListener('click', function(){ if (A.S.last){ A.S.slotA = A.S.last; A.paintAB(); } });
+$('saveB').addEventListener('click', function(){ if (A.S.last){ A.S.slotB = A.S.last; A.paintAB(); } });
+
+wire({ btn:'recA', lvl:'lvlA', cv:'cvA', cap:'capA', res:'resA',
+       state:A.S, maxSec:12, analyze:A.analyzeRead });
+wire({ btn:'recB', lvl:'lvlB', cv:'cvB', cap:'capB', res:'resB',
+       state:F, maxSec:90, analyze:analyzeFree });
+
+F.topic = Math.floor(Math.random() * window.BS_TOPICS.length);
+window.APP_LANG_LISTENERS.push(relabel);
+relabel();
+window.BS_draw($('cvA'), {});
+window.BS_draw($('cvB'), {});
+$('capA').textContent = L(U.capIdle);
+$('capB').textContent = L(U.capIdle);
+})();
+</script>
+<script src="/auth-widget.js" defer></script>
+</body>
+</html>
