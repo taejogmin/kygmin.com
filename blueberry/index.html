@@ -130,6 +130,24 @@ canvas{display:block;width:100%;height:auto;}
 .stat b{display:block;font-family:var(--mono);font-size:10.5px;font-weight:600;color:#6B6B67;letter-spacing:.5px;text-transform:uppercase;}
 .stat span{font-family:var(--mono);font-size:19px;font-weight:600;display:block;margin-top:3px;}
 .stat em{font-style:normal;font-family:var(--mono);font-size:11px;color:#6B6B67;}
+.stat i{display:block;font-style:normal;font-size:11.5px;line-height:1.45;color:#6B6B67;margin-top:6px;padding-top:6px;border-top:1px dotted #C9C9C4;}
+.stat.bad{border-color:var(--red);}
+.stat.bad span{color:var(--red);}
+.stat.bad i{color:var(--red);border-top-color:var(--red);}
+
+/* 접이식 해설 */
+details.how{border:2px solid var(--ink);background:var(--paper);margin-top:18px;}
+details.how>summary{cursor:pointer;list-style:none;padding:11px 14px;font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;background:var(--ink);color:var(--paper);}
+details.how>summary::-webkit-details-marker{display:none;}
+details.how>summary::after{content:' +';float:right;}
+details.how[open]>summary::after{content:' \2212';}
+details.how .hbody{padding:4px 14px 14px;}
+details.how h3{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;margin:16px 0 5px;padding-top:12px;border-top:1px solid #C9C9C4;}
+details.how h3:first-child{border-top:none;padding-top:0;margin-top:12px;}
+details.how p{font-size:13px;line-height:1.6;color:#3A3A38;margin:4px 0;}
+details.how p b{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;color:#6B6B67;margin-right:6px;}
+details.how p.risk b{color:var(--red);}
+table.ph td.bad{color:var(--red);font-weight:600;}
 table.ph{width:100%;border-collapse:collapse;margin-top:12px;font-family:var(--mono);font-size:12px;}
 table.ph th,table.ph td{border:2px solid var(--ink);padding:6px 9px;text-align:left;}
 table.ph th{background:var(--ink);color:var(--paper);font-size:10.5px;letter-spacing:.5px;text-transform:uppercase;}
@@ -466,11 +484,24 @@ BS.track = function (pcm, sampleRate, opts) {
    재려는 신호 그 자체를 파괴한다.
 
    그래서 후보 {f/2, f, f*2}에 대한 비터비 경로로 바꾼다:
-     노드 비용 = λ·(YIN 원값이 아님) + K·max(0, |log2(c/중앙값)| - 0.5)
+     노드 비용 = λ(방향)·(YIN 원값이 아님) + K·max(0, |log2(c/기준)| - 힌지)
      간선 비용 = w(간격)·|log2(c'/c)|
-   힌지 덕분에 중앙값 ±6반음 안쪽 값은 건드리지 않고(=진짜 억양은 보존),
+   힌지 덕분에 기준 ±6반음 안쪽 값은 건드리지 않고(=진짜 억양은 보존),
    한 옥타브 밖으로 튄 구간만 교정된다. λ는 한 음절 통째로 잘못된 옥타브를
    유지하는 해석에 음절 길이만큼 비용을 물려 고립 오류와 구분한다.
+
+   v0.4에서 고친 두 가지 (반값 오류가 살아남던 원인):
+   1) 기준값. 예전엔 원 f0의 단순 중앙값을 썼다. 반값 오류 프레임이 중앙값을
+      아래로 끌어내리면 그 오류가 기준에 가까워져 스스로를 정당화한다.
+      실제 사례: 참값 110Hz 화자의 끝 0.5초가 55Hz로 잘못 나오면 중앙값이
+      105Hz로 내려가고, 55Hz의 이탈이 0.59옥타브밖에 안 돼(힌지 0.5 바로 밖)
+      유지 비용 0.19 < 교정 비용 0.40이 되어 오류가 살아남았다.
+      이제 BS.octaveReference로 접어서 다시 재므로 기준이 110Hz로 유지되고,
+      이탈이 1.0옥타브가 되어 유지 비용 1.0 > 교정 비용 0.30으로 뒤집힌다.
+   2) 비대칭. YIN은 구조적으로 f0/2를 더 자주 낸다(주기 배가). 위로 올리는
+      교정(λ↑=0.30)을 아래로 내리는 교정(λ↓=0.55)보다 싸게 매겨 그 편향을 상쇄한다.
+   보정은 2회 반복한다. 1회차 결과로 기준을 다시 재고 한 번 더 돌리면
+   기준 추정과 경로가 함께 수렴한다. 회귀 시험은 octtest.js.
 */
 BS.medianOf = function (arr) {
   if (!arr.length) return 0;
@@ -479,74 +510,114 @@ BS.medianOf = function (arr) {
   return a.length % 2 ? a[m] : (a[m - 1] + a[m]) / 2;
 };
 
+/* 옥타브 오류에 둔감한 기준 주파수.
+   단순 중앙값의 문제: 반값 오류 프레임이 중앙값을 아래로 끌어내리면 그 오류가
+   기준에 가까워져 스스로를 정당화한다(오류가 많을수록 더 안 고쳐진다).
+
+   그래서 중앙값을 반복해서 다시 잰다. 매 회차마다 기준에서 thr 옥타브 넘게
+   떨어진 프레임만 가장 가까운 옥타브로 접어 중앙값 계산에 넣는다.
+   thr=0.75 옥타브(=9반음)는 사람 억양이 잘 넘지 않는 선이라, 진짜 억양 봉우리는
+   접히지 않고 옥타브 오류만 접힌다. 전부 접는 크로마 방식은 옥타브 불변이라
+   더 견고해 보이지만, 1옥타브에 가까운 진짜 억양 폭을 통째로 접어버린다. */
+BS.octaveReference = function (f0s, thr) {
+  var n = f0s.length, i;
+  if (!n) return 0;
+  thr = thr == null ? 0.75 : thr;
+  var lg = [];
+  for (i = 0; i < n; i++) lg.push(Math.log2(f0s[i]));
+
+  var ref = BS.medianOf(lg);
+  for (var it = 0; it < 5; it++) {
+    var fold = [];
+    for (i = 0; i < n; i++) {
+      var d = lg[i] - ref;
+      fold.push(Math.abs(d) > thr ? lg[i] - Math.round(d) : lg[i]);
+    }
+    var nr = BS.medianOf(fold);
+    var done = Math.abs(nr - ref) < 1e-4;
+    ref = nr;
+    if (done) break;
+  }
+  return Math.pow(2, ref);
+};
+
 BS.fixOctaves = function (frames, opts) {
   opts = opts || {};
   var fmin = opts.fmin || BS.FMIN, fmax = opts.fmax || BS.FMAX;
   var voiced = frames.filter(function (f) { return f.f0 > 0; });
   if (voiced.length < 5) return frames;
 
-  var LAM = opts.octLambda != null ? opts.octLambda : 0.40;  // 원값 이탈 비용
-  var KHI = opts.octK != null ? opts.octK : 2.0;             // 중앙값 이탈 비용
-  var HIN = opts.octHinge != null ? opts.octHinge : 0.5;     // 무비용 구간 (옥타브)
-  var GAP = opts.octGap != null ? opts.octGap : 8;           // 연속성 감쇠 (프레임)
-  var WED = opts.octEdge != null ? opts.octEdge : 1.2;       // 간선 가중
-
-  var gm = BS.medianOf(voiced.map(function (f) { return f.f0; }));
-  var lgm = Math.log2(gm);
+  var LUP = opts.octLambdaUp != null ? opts.octLambdaUp : 0.30;   // 위로 올리는 교정 비용
+  var LDN = opts.octLambdaDn != null ? opts.octLambdaDn : 0.55;   // 아래로 내리는 교정 비용
+  var KHI = opts.octK != null ? opts.octK : 2.0;                  // 기준 이탈 비용
+  var HIN = opts.octHinge != null ? opts.octHinge : 0.5;          // 무비용 구간 (옥타브)
+  var GAP = opts.octGap != null ? opts.octGap : 8;                // 연속성 감쇠 (프레임)
+  var WED = opts.octEdge != null ? opts.octEdge : 1.2;            // 간선 가중
+  var PASSES = opts.octPasses != null ? opts.octPasses : 2;
 
   // 유성 프레임 인덱스만 모아 비터비
   var idx = [];
   for (var i = 0; i < frames.length; i++) if (frames[i].f0 > 0) idx.push(i);
 
   var RATIO = [0.5, 1, 2];
-  var cands = [], costs = [];
-  for (var n = 0; n < idx.length; n++) {
-    var f0 = frames[idx[n]].f0;
-    var cc = [], nc = [];
-    for (var k = 0; k < 3; k++) {
-      var c = f0 * RATIO[k];
-      if (c < fmin || c > fmax) continue;
-      var dev = Math.abs(Math.log2(c) - lgm);
-      cc.push(c);
-      nc.push((k === 1 ? 0 : LAM) + KHI * Math.max(0, dev - HIN));
-    }
-    if (!cc.length) { cc = [f0]; nc = [0]; }
-    cands.push(cc); costs.push(nc);
-  }
+  var LAM = [LDN, 0, LUP];
 
-  var prevBest = costs[0].slice(), back = [];
-  for (n = 1; n < idx.length; n++) {
-    var gap = idx[n] - idx[n - 1];
-    var w = WED / (1 + gap / GAP);
-    var cur = [], bp = [];
-    for (var b = 0; b < cands[n].length; b++) {
-      var lb = Math.log2(cands[n][b]);
-      var best = Infinity, arg = 0;
-      for (var a = 0; a < cands[n - 1].length; a++) {
-        var v = prevBest[a] + w * Math.abs(lb - Math.log2(cands[n - 1][a]));
-        if (v < best) { best = v; arg = a; }
+  for (var pass = 0; pass < PASSES; pass++) {
+    var cur0 = [];
+    for (var q = 0; q < idx.length; q++) cur0.push(frames[idx[q]].f0);
+    var lgm = Math.log2(BS.octaveReference(cur0));
+
+    var cands = [], costs = [], n, k, b, a;
+    for (n = 0; n < idx.length; n++) {
+      var f0 = frames[idx[n]].f0;
+      var cc = [], nc = [];
+      for (k = 0; k < 3; k++) {
+        var c = f0 * RATIO[k];
+        if (c < fmin || c > fmax) continue;
+        var dev = Math.abs(Math.log2(c) - lgm);
+        cc.push(c);
+        nc.push(LAM[k] + KHI * Math.max(0, dev - HIN));
       }
-      cur.push(best + costs[n][b]); bp.push(arg);
+      if (!cc.length) { cc = [f0]; nc = [0]; }
+      cands.push(cc); costs.push(nc);
     }
-    prevBest = cur; back.push(bp);
-  }
 
-  var at = 0;
-  for (b = 1; b < prevBest.length; b++) if (prevBest[b] < prevBest[at]) at = b;
-  for (n = idx.length - 1; n >= 0; n--) {
-    frames[idx[n]].f0 = cands[n][at];
-    if (n > 0) at = back[n - 1][at];
+    var prevBest = costs[0].slice(), back = [];
+    for (n = 1; n < idx.length; n++) {
+      var gap = idx[n] - idx[n - 1];
+      var w = WED / (1 + gap / GAP);
+      var cur = [], bp = [];
+      for (b = 0; b < cands[n].length; b++) {
+        var lb = Math.log2(cands[n][b]);
+        var best = Infinity, arg = 0;
+        for (a = 0; a < cands[n - 1].length; a++) {
+          var v = prevBest[a] + w * Math.abs(lb - Math.log2(cands[n - 1][a]));
+          if (v < best) { best = v; arg = a; }
+        }
+        cur.push(best + costs[n][b]); bp.push(arg);
+      }
+      prevBest = cur; back.push(bp);
+    }
+
+    var at = 0, changed = 0;
+    for (b = 1; b < prevBest.length; b++) if (prevBest[b] < prevBest[at]) at = b;
+    for (n = idx.length - 1; n >= 0; n--) {
+      if (frames[idx[n]].f0 !== cands[n][at]) changed++;
+      frames[idx[n]].f0 = cands[n][at];
+      if (n > 0) at = back[n - 1][at];
+    }
+    if (!changed) break;   // 수렴
   }
 
   // 마무리: 5점 중앙값 필터 (유성 프레임만)
   var out = frames.map(function (f) { return f.f0; });
-  for (var i = 0; i < frames.length; i++) {
-    if (!frames[i].f0) continue;
-    var w = [];
-    for (var j = Math.max(0, i - 2); j <= Math.min(frames.length - 1, i + 2); j++) {
-      if (out[j] > 0) w.push(out[j]);
+  for (var i2 = 0; i2 < frames.length; i2++) {
+    if (!frames[i2].f0) continue;
+    var win = [];
+    for (var j = Math.max(0, i2 - 2); j <= Math.min(frames.length - 1, i2 + 2); j++) {
+      if (out[j] > 0) win.push(out[j]);
     }
-    if (w.length >= 3) frames[i].f0 = BS.medianOf(w);
+    if (win.length >= 3) frames[i2].f0 = BS.medianOf(win);
   }
   return frames;
 };
@@ -903,7 +974,134 @@ window.BS_UI = {
   noVoice:{en:'No voiced speech was found. Check that the right microphone is selected and try speaking closer to it.',kr:'유성음이 검출되지 않았어요. 마이크가 올바르게 선택됐는지 확인하고 조금 더 가까이서 말해보세요.'},
   micFail:{en:'Microphone access was refused or unavailable. Nothing was recorded.',kr:'마이크 접근이 거부되었거나 사용할 수 없어요. 아무것도 녹음되지 않았습니다.'},
   mismatch:{en:'Detected syllable count does not match the sentence — the boundaries below are unreliable, and so is anything measured per-syllable.',kr:'검출된 음절 수가 문장과 맞지 않아요 — 아래 경계는 신뢰할 수 없고, 음절 단위 측정값도 마찬가지입니다.'},
-  tooShort:{en:'Recording too short to analyse.',kr:'분석하기에 녹음이 너무 짧아요.'}
+  tooShort:{en:'Recording too short to analyse.',kr:'분석하기에 녹음이 너무 짧아요.'},
+  octFail:{en:'MEASUREMENT SUSPECT',kr:'측정 실패 의심'},
+  octWhy:{en:'A final move larger than one octave (12 st) is not something a speaking voice does. Either the anchor syllable or the endpoint was detected an octave off. The value is shown struck through and should not be used.',kr:'문말 이동이 한 옥타브(12반음)를 넘는 건 말하는 목소리가 낼 수 있는 값이 아니에요. 기준 음절이나 끝점 중 하나가 옥타브를 잘못 잡은 겁니다. 값은 취소선으로만 표시하고 쓰지 마세요.'}
+};
+
+/* ---------- 숫자 해설 ----------
+   타일마다 한 줄 요약(sh) + 접이식 상세(how 어떻게 재나 / typ 보통 범위 / bad 언제 못 믿나) */
+window.BS_HELP = {
+  title:{en:'HOW TO READ THESE NUMBERS',kr:'이 숫자 읽는 법'},
+  hHow:{en:'HOW',kr:'어떻게 재나'},
+  hTyp:{en:'TYPICAL',kr:'보통 범위'},
+  hBad:{en:'WHEN NOT TO TRUST IT',kr:'언제 못 믿나'},
+
+  syllables:{
+    name:{en:'SYLLABLES',kr:'음절'},
+    sh:{en:'Syllable peaks found, against the sentence',kr:'검출된 음절 봉우리 / 문장의 글자 수'},
+    how:{en:'Peaks in the loudness envelope that drop off enough on both sides and carry voicing. Nothing reads the text — the count comes from the sound alone.',kr:'소리 크기 곡선의 봉우리 중 양옆으로 충분히 떨어지고 유성인 것만 셉니다. 글자를 읽는 게 아니라 소리만 보고 세요.'},
+    typ:{en:'A short sentence should match exactly.',kr:'짧은 문장은 두 값이 정확히 맞아야 정상이에요.'},
+    bad:{en:'If the two numbers differ, the per-syllable table below is unreliable. Phrase-level numbers are not affected.',kr:'두 값이 다르면 아래 음절 단위 표는 믿지 마세요. 억양구 단위 값은 영향을 안 받습니다.'}
+  },
+  phrases:{
+    name:{en:'PHRASES',kr:'억양구'},
+    sh:{en:'Breath groups the passage broke into',kr:'지문이 나뉜 숨 단위 개수'},
+    how:{en:'Cut wherever loudness stays at the floor long enough. Real pauses, not punctuation.',kr:'소리 크기가 일정 시간 이상 바닥에 머무는 곳에서 자릅니다. 문장부호가 아니라 실제 쉼이에요.'},
+    typ:{en:'4–8 for these passages. Reading slowly raises it; running clauses together lowers it.',kr:'이 지문들은 4~8개. 천천히 읽으면 늘고 한 호흡에 몰아 읽으면 줄어요.'},
+    bad:{en:'Room noise fills in the pauses and lowers the count; breath hitting the mic raises it.',kr:'주변 소음이 크면 쉼이 묻혀 개수가 줄고, 숨소리가 마이크에 닿으면 늘어납니다.'}
+  },
+  contRise:{
+    name:{en:'CONTINUING RISES',kr:'연결 상승'},
+    sh:{en:'Share of non-final phrases that ended on a rise',kr:'마지막을 뺀 억양구 중 끝을 올린 비율'},
+    how:{en:'Every phrase except the last is checked for a rising final move; this is the proportion that rose.',kr:'마지막 억양구를 뺀 나머지의 문말 이동을 보고 상승인 것의 비율을 냅니다.'},
+    typ:{en:'40–70% in Korean read speech. A rise says "not finished yet", so list-like passages sit high.',kr:'한국어 낭독에서 40~70%. "아직 안 끝났다"는 신호라 나열문에서 높게 나옵니다.'},
+    bad:{en:'With two phrases or fewer there is only one sample, so it shows —.',kr:'억양구가 2개 이하면 표본이 하나뿐이라 —로 나옵니다.'}
+  },
+  decl:{
+    name:{en:'DECLINATION',kr:'하강 추세'},
+    sh:{en:'How far pitch drifted down across the passage',kr:'지문을 읽는 동안 음높이가 아래로 흐른 정도'},
+    how:{en:'Least-squares slope of the per-phrase median semitone against phrase number.',kr:'억양구별 중앙 semitone을 억양구 번호에 대해 최소제곱 직선으로 맞춘 기울기예요.'},
+    typ:{en:'−1.5 to 0 st per phrase. Negative is the normal, relaxed pattern. Near zero means you reset your pitch at every phrase — common in parallel clauses.',kr:'−1.5 ~ 0 st/억양구. 음수가 자연스럽습니다. 0 근처면 억양구마다 음높이를 다시 올려 잡았다는 뜻이고, 나열문에서 흔해요.'},
+    bad:{en:'Fewer than three phrases gives no slope at all.',kr:'억양구가 3개 미만이면 기울기를 못 냅니다.'}
+  },
+  finalMove:{
+    name:{en:'FINAL MOVE',kr:'문말 이동'},
+    sh:{en:'End of the utterance, minus its second-to-last syllable',kr:'끝에서 두 번째 음절 대비 마지막 소리의 높이 차'},
+    how:{en:'Anchor = median semitone within ±40 ms of the second-to-last detected syllable nucleus. Endpoint = median semitone of the last 60 ms of voicing. The value is endpoint minus anchor.',kr:'기준점 = 끝에서 두 번째로 검출된 음절 핵 ±40 ms의 중앙 semitone. 끝점 = 유성 구간 마지막 60 ms의 중앙 semitone. 끝점에서 기준점을 뺀 값입니다.'},
+    typ:{en:'−6 to +6 st. Statements go negative, questions positive.',kr:'−6 ~ +6 st. 평서문은 음수, 의문문은 양수로 나옵니다.'},
+    bad:{en:'Above 12 st in size it is a failure, not a measurement — a speaking voice spans about 6–8 st in total, so a 12 st jump at the end means the anchor or the endpoint landed an octave off. Those values are struck through.',kr:'크기가 12 st를 넘으면 측정이 아니라 실패입니다 — 말소리의 음역 폭 자체가 보통 6~8 st인데 문말 하나가 12 st를 움직였다면 기준점이나 끝점이 옥타브를 잘못 잡은 거예요. 그런 값은 취소선으로 표시합니다.'}
+  },
+  contour:{
+    name:{en:'CONTOUR',kr:'문말 유형'},
+    sh:{en:'The final move, sorted into three labels',kr:'문말 이동을 세 칸으로 나눈 이름표'},
+    how:{en:'Rise at +1.5 st or more, fall at −1.5 st or less, level in between.',kr:'+1.5 st 이상이면 상승, −1.5 st 이하면 하강, 그 사이면 평탄.'},
+    typ:{en:'The cut-off is arbitrary. +1.4 and +1.6 are the same utterance in practice but get different labels — read the number first.',kr:'경계는 임의로 그은 선이에요. +1.4와 +1.6은 사실상 같은 발화인데 이름표가 달라집니다. 숫자를 먼저 보세요.'},
+    bad:{en:'Whenever the final move cannot be trusted, neither can this.',kr:'문말 이동을 못 믿는 상황이면 이것도 못 믿습니다.'}
+  },
+  range:{
+    name:{en:'PITCH RANGE',kr:'음역 폭'},
+    sh:{en:'How wide a pitch band this recording used',kr:'이 녹음에서 실제로 쓴 음높이의 폭'},
+    how:{en:'95th percentile minus 5th percentile of the voiced semitones — not max minus min, so a single stray frame cannot inflate it.',kr:'유성 프레임 semitone의 95번째 백분위에서 5번째 백분위를 뺀 값이에요. 최고−최저가 아니라 양 끝 5%를 잘라내므로 튄 프레임 하나에 부풀지 않습니다.'},
+    typ:{en:'6–10 st reading aloud; over 12 st with strong emotion.',kr:'낭독 6~10 st, 감정을 실으면 12 st 이상.'},
+    bad:{en:'Under about two seconds of speech there are too few frames and the value jumps around.',kr:'발화가 2초 미만이면 프레임이 적어 값이 들쭉날쭉합니다.'}
+  },
+  rate:{
+    name:{en:'SPEECH RATE',kr:'발화 속도'},
+    sh:{en:'Detected syllables per second — detected, not printed',kr:'초당 검출된 음절 수 — 글자 수가 아니라 검출 개수'},
+    how:{en:'Detected syllable nuclei divided by speaking time. It counts what the microphone found, not what the passage contains.',kr:'검출된 음절 핵 개수를 발화 길이로 나눕니다. 지문에 적힌 글자 수가 아니라 마이크가 찾아낸 개수예요.'},
+    typ:{en:'5–6 syl/s for Korean read speech.',kr:'한국어 낭독은 5~6 syl/s.'},
+    bad:{en:'Compare with the detected-vs-expected count below. If detection ran at 65%, this number reads about 35% low — that is a detection shortfall, not slow speech.',kr:'아래의 검출/예상 개수를 같이 보세요. 검출이 65%에 그쳤다면 이 값도 그만큼 낮게 나옵니다. 천천히 읽은 게 아니라 검출이 모자란 거예요.'}
+  },
+  dur:{
+    name:{en:'DURATION',kr:'길이'},
+    sh:{en:'Speaking time, with the silence at both ends removed',kr:'앞뒤 무음을 뺀 실제 발화 시간'},
+    how:{en:'From the start of the first phrase to the end of the last.',kr:'첫 억양구 시작부터 마지막 억양구 끝까지.'},
+    typ:{en:'Shorter than the recording length — the pause after you press RECORD is not counted.',kr:'녹음 시간보다 짧게 나옵니다. 녹음을 누르고 뜸을 들인 시간은 빠져요.'},
+    bad:{en:'Noise at either end gets counted as speech and stretches it.',kr:'시작이나 끝에 소음이 있으면 그만큼 늘어납니다.'}
+  },
+  f0:{
+    name:{en:'MEDIAN f0',kr:'중앙 f0'},
+    sh:{en:'Your centre pitch here — the zero line for every semitone above',kr:'이 녹음에서 목소리의 기준 높이 — 위의 모든 semitone이 이걸 0으로 잽니다'},
+    how:{en:'Median fundamental frequency across voiced frames. Every semitone value on this page is measured against it, which is what makes the numbers comparable between different voices.',kr:'유성 프레임 기본주파수의 중앙값. 이 페이지의 semitone 값은 전부 이 값을 0으로 놓고 잽니다. 그래서 목소리 높이가 다른 사람끼리도 비교가 돼요.'},
+    typ:{en:'85–155 Hz adult male, 165–255 Hz adult female.',kr:'성인 남성 85~155 Hz, 성인 여성 165~255 Hz.'},
+    bad:{en:'If it comes out near half or double your real pitch, the octave detection failed and every semitone on this page is wrong with it.',kr:'본인 목소리의 절반이나 두 배쯤으로 나오면 옥타브 검출이 실패한 거고, 이 페이지의 semitone 값이 전부 같이 틀어집니다.'}
+  },
+
+  riseRatio:{
+    name:{en:'RISING ENDINGS',kr:'상승 종결'},
+    sh:{en:'Share of all phrases that ended on a rise',kr:'전체 억양구 중 끝을 올린 비율'},
+    how:{en:'Proportion of phrases whose final move was a rise. Unlike the passage tab this counts the last phrase too, because free speech has no fixed ending.',kr:'문말 이동이 상승인 억양구의 비율입니다. 정독 탭과 달리 마지막 억양구도 포함해요 — 자유 발화에는 정해진 끝이 없으니까요.'},
+    typ:{en:'Highly variable in spontaneous speech. Thinking aloud and listing both push it up.',kr:'자유 발화에서는 편차가 큽니다. 생각하면서 말하거나 나열할 때 올라가요.'},
+    bad:{en:'With very few phrases it is a percentage of a handful of samples — treat 2 out of 3 as noise, not as 67%.',kr:'억양구가 몇 개 안 되면 손에 꼽는 표본의 백분율일 뿐이에요. 3개 중 2개를 67%로 읽지 마세요.'}
+  },
+  meanFinal:{
+    name:{en:'MEAN FINAL MOVE',kr:'평균 문말 이동'},
+    sh:{en:'Average of every phrase-final pitch move',kr:'모든 억양구 문말 이동의 평균'},
+    how:{en:'The mean of the per-phrase final moves listed in the table below.',kr:'아래 표에 나온 억양구별 문말 이동의 산술 평균입니다.'},
+    typ:{en:'Close to zero when rises and falls balance out. The sign matters more than the size.',kr:'상승과 하강이 균형을 이루면 0 근처예요. 크기보다 부호를 보세요.'},
+    bad:{en:'One octave-error phrase drags the mean badly. Scan the table for struck-through values before reading this.',kr:'옥타브 오류가 낀 억양구 하나가 평균을 크게 끌어당깁니다. 아래 표에 취소선 값이 있는지 먼저 보세요.'}
+  },
+  variability:{
+    name:{en:'VARIABILITY',kr:'변동성'},
+    sh:{en:'Standard deviation of pitch, in semitones',kr:'음높이의 표준편차'},
+    how:{en:'Standard deviation of the voiced semitones. Pitch range says how wide the band was; this says how much of it you actually used.',kr:'유성 프레임 semitone의 표준편차입니다. 음역 폭이 "밴드가 얼마나 넓었나"라면 이건 "그 안을 얼마나 실제로 썼나"예요.'},
+    typ:{en:'2–4 st in conversation. A flat delivery sits below 2.',kr:'대화체에서 2~4 st. 밋밋하게 말하면 2 아래로 내려갑니다.'},
+    bad:{en:'Unlike pitch range this is not trimmed, so a single octave error inflates it directly.',kr:'음역 폭과 달리 양 끝을 잘라내지 않아서, 옥타브 오류 하나가 그대로 값을 부풀립니다.'}
+  },
+  meanPhrase:{
+    name:{en:'MEAN PHRASE',kr:'평균 억양구'},
+    sh:{en:'Average length of one breath group',kr:'숨 단위 하나의 평균 길이'},
+    how:{en:'Total speaking time divided by the number of phrases.',kr:'전체 발화 시간을 억양구 개수로 나눈 값.'},
+    typ:{en:'1.5–3 s. Longer means you are running clauses together without pausing.',kr:'1.5~3초. 길수록 쉬지 않고 절을 이어 붙였다는 뜻이에요.'},
+    bad:{en:'It inherits whatever the phrase splitter got wrong — check the phrase count first.',kr:'억양구 분할이 틀리면 그대로 틀립니다. 억양구 개수를 먼저 확인하세요.'}
+  },
+  speechRatio:{
+    name:{en:'SPEAKING TIME',kr:'발화 비율'},
+    sh:{en:'How much of the recording was actual speech',kr:'녹음 시간 중 실제로 말한 비율'},
+    how:{en:'Total phrase duration divided by the length of the recording.',kr:'억양구 길이의 합을 녹음 전체 길이로 나눕니다.'},
+    typ:{en:'50–80% in free speech. The rest is pauses and thinking time.',kr:'자유 발화에서 50~80%. 나머지는 쉼과 생각하는 시간이에요.'},
+    bad:{en:'Steady background noise reads as speech and pushes this toward 100%.',kr:'지속적인 배경 소음은 발화로 잡혀서 이 값을 100%쪽으로 밀어 올립니다.'}
+  },
+
+  graph:{
+    name:{en:'READING THE GRAPH',kr:'그래프 읽는 법'},
+    p1:{en:'The vertical axis is semitones, not hertz. Zero is your own median f0 for this recording, +12 is double that frequency, −12 is half. Absolute hertz would make two different voices incomparable; this way they are not.',kr:'세로축은 Hz가 아니라 semitone이에요. 0은 이 녹음의 중앙 f0이고 +12는 그 두 배, −12는 절반입니다. 절대 Hz로 두면 목소리가 다른 두 사람을 비교할 수 없는데, 이렇게 하면 비교가 됩니다.'},
+    p2:{en:'Gaps in the curve are voiceless sounds (ㅅ, ㅎ, stops) or pauses. There is no pitch to draw there — that is normal, not a dropout.',kr:'곡선이 끊긴 곳은 무성음(ㅅ, ㅎ, 파열음)이거나 쉼입니다. 그릴 음높이가 없는 거라 정상이에요. 신호가 끊긴 게 아닙니다.'},
+    p3:{en:'Short sentences: filled circles are syllable nuclei, dashed lines are detected boundaries. Long passages: shaded blocks are intonation phrases and the arrow on each shows its phrase-final movement.',kr:'짧은 문장에서는 채운 원이 음절 핵, 점선이 검출된 경계입니다. 긴 지문에서는 음영 블록이 억양구고, 블록마다 붙은 화살표가 그 억양구의 문말 이동 방향이에요.'},
+    p4:{en:'A section that drops by roughly an octave and comes straight back is an octave detection error, not something you did.',kr:'한 구간이 한 옥타브쯤 뚝 떨어졌다가 그대로 되돌아오면, 그건 발화가 아니라 옥타브 검출 오류입니다.'}
+  },
+  privacy:{en:'All of this is computed in your browser. The audio is never uploaded and never stored.',kr:'이 계산은 전부 브라우저 안에서 일어납니다. 음성은 어디에도 올라가지 않고 저장되지도 않아요.'}
 };
 
 /* ---------- 리샘플러 (16 kHz 고정) ---------- */
@@ -1231,9 +1429,46 @@ A.rmsDb = function(chunk){
 A.levelPct = function(db){ return Math.max(0, Math.min(100, (db + 55) / 45 * 100)); };
 
 /* ---------- 결과 HTML 조각 ---------- */
-A.stat = function(label, value, unit){
+/* key = BS_HELP의 항목 이름. 있으면 라벨과 한 줄 요약을 거기서 가져온다. */
+A.stat = function(key, value, unit, bad){
+  var H = window.BS_HELP[key];
+  return '<div class="stat' + (bad ? ' bad' : '') + '"><b>' + L(H.name) + '</b><span>' + value +
+         (unit ? ' <em>' + unit + '</em>' : '') + '</span>' +
+         '<i>' + L(H.sh) + '</i></div>';
+};
+
+/* BS_HELP에 항목이 없는 임시 타일(A/B 차이값)용 */
+A.statRaw = function(label, value, unit, hint){
   return '<div class="stat"><b>' + label + '</b><span>' + value +
-         (unit ? ' <em>' + unit + '</em>' : '') + '</span></div>';
+         (unit ? ' <em>' + unit + '</em>' : '') + '</span>' +
+         (hint ? '<i>' + hint + '</i>' : '') + '</div>';
+};
+
+/* 문말 이동이 한 옥타브를 넘으면 측정이 아니라 실패다. */
+A.OCT_MAX = 12;
+A.octBad = function(d){ return d != null && isFinite(d) && Math.abs(d) > A.OCT_MAX; };
+A.deltaCell = function(d, digits){
+  if (d == null || !isFinite(d)) return '—';
+  var s = (d >= 0 ? '+' : '') + d.toFixed(digits == null ? 1 : digits);
+  return A.octBad(d) ? '<s>' + s + '</s>' : s;
+};
+
+/* 접이식 "이 숫자 읽는 법". keys = 이 화면에 실제로 뜬 타일만. */
+A.howBlock = function(keys){
+  var H = window.BS_HELP;
+  var h = '<details class="how"><summary>' + L(H.title) + '</summary><div class="hbody">';
+  keys.forEach(function(k){
+    var e = H[k];
+    h += '<h3>' + L(e.name) + '</h3>' +
+         '<p><b>' + L(H.hHow) + '</b>' + L(e.how) + '</p>' +
+         '<p><b>' + L(H.hTyp) + '</b>' + L(e.typ) + '</p>' +
+         '<p class="risk"><b>' + L(H.hBad) + '</b>' + L(e.bad) + '</p>';
+  });
+  h += '<h3>' + L(H.graph.name) + '</h3>' +
+       '<p>' + L(H.graph.p1) + '</p><p>' + L(H.graph.p2) + '</p>' +
+       '<p>' + L(H.graph.p3) + '</p><p>' + L(H.graph.p4) + '</p>' +
+       '<p style="margin-top:14px">' + L(H.privacy) + '</p>';
+  return h + '</div></details>';
 };
 A.typeTag = function(t){
   var k = { rise:{en:'RISE',kr:'상승'}, fall:{en:'FALL',kr:'하강'}, level:{en:'LEVEL',kr:'평탄'} }[t];
@@ -1331,14 +1566,18 @@ A.renderRead = function(){
     html += '<div class="warn">' + L(U.mismatch) + '<br />' +
             L(U.expected) + ' ' + expect.syl + ' / ' + L(U.detected) + ' ' + nuclei.length + '</div>';
   }
+  var finBad = fin && A.octBad(fin.delta);
   html += '<div class="stat-grid">' +
-    A.stat(L({en:'SYLLABLES',kr:'음절'}), nuclei.length, '/ ' + expect.syl) +
-    A.stat(L({en:'FINAL MOVE',kr:'문말 이동'}), fin ? (fin.delta>=0?'+':'') + fin.delta.toFixed(1) : '—', 'st') +
-    A.stat(L({en:'CONTOUR',kr:'문말 유형'}), fin ? A.typeTag(fin.type) : '—', '') +
-    A.stat(L({en:'PITCH RANGE',kr:'음역 폭'}), range.toFixed(1), 'st') +
-    A.stat(L({en:'DURATION',kr:'길이'}), durSec.toFixed(2), 's') +
-    A.stat(L({en:'MEDIAN f0',kr:'중앙 f0'}), Math.round(r.medianF0), 'Hz') +
+    A.stat('syllables', nuclei.length, '/ ' + expect.syl, nuclei.length !== expect.syl) +
+    A.stat('finalMove', fin ? A.deltaCell(fin.delta) : '—', 'st', finBad) +
+    A.stat('contour', fin ? A.typeTag(fin.type) : '—', '', finBad) +
+    A.stat('range', range.toFixed(1), 'st') +
+    A.stat('dur', durSec.toFixed(2), 's') +
+    A.stat('f0', Math.round(r.medianF0), 'Hz') +
     '</div>';
+  if (finBad){
+    html += '<div class="warn"><b>' + L(U.octFail) + '</b> — ' + L(U.octWhy) + '</div>';
+  }
 
   if (nuclei.length){
     html += '<table class="ph"><tr><th>#</th><th>' + L({en:'SEMITONE',kr:'semitone'}) +
@@ -1357,12 +1596,13 @@ A.renderRead = function(){
     }
     html += '</table>';
   }
+  html += A.howBlock(['syllables','finalMove','contour','range','dur','f0']);
   $('resA').innerHTML = html;
 
   S.last = {
     id: expect.id, label: A.label(expect),
     sentence: expect.kr, nSyl: nuclei.length, expSyl: expect.syl,
-    delta: fin ? fin.delta : null, type: fin ? fin.type : null,
+    delta: (fin && !finBad) ? fin.delta : null, type: (fin && !finBad) ? fin.type : null,
     range: range, f0: r.medianF0, dur: durSec
   };
 };
@@ -1427,17 +1667,24 @@ A.renderPassage = function(r, expect){
   var rate = durSec > 0 ? nuclei.length / durSec : 0;
 
   var html = '<h2 class="sub">' + L({en:'PASSAGE MEASUREMENT',kr:'지문 측정값'}) + '</h2>';
+  var finBad = endFin && A.octBad(endFin.delta);
+  var nBad = 0;
+  r.finals.forEach(function(f){ if (f && A.octBad(f.delta)) nBad++; });
+
   html += '<div class="stat-grid">' +
-    A.stat(L({en:'PHRASES',kr:'억양구'}), nP, '') +
-    A.stat(L({en:'CONTINUING RISES',kr:'연결 상승'}), contRise==null?'—':Math.round(contRise*100), '%') +
-    A.stat(L({en:'DECLINATION',kr:'하강 추세'}), decl==null?'—':(decl>=0?'+':'')+decl.toFixed(2), 'st/' + L({en:'phrase',kr:'억양구'})) +
-    A.stat(L({en:'FINAL MOVE',kr:'문말 이동'}), endFin ? (endFin.delta>=0?'+':'')+endFin.delta.toFixed(1) : '—', 'st') +
-    A.stat(L({en:'CONTOUR',kr:'문말 유형'}), endFin ? A.typeTag(endFin.type) : '—', '') +
-    A.stat(L({en:'PITCH RANGE',kr:'음역 폭'}), range.toFixed(1), 'st') +
-    A.stat(L({en:'SPEECH RATE',kr:'발화 속도'}), rate.toFixed(2), 'syl/s') +
-    A.stat(L({en:'DURATION',kr:'길이'}), durSec.toFixed(2), 's') +
-    A.stat(L({en:'MEDIAN f0',kr:'중앙 f0'}), Math.round(r.medianF0), 'Hz') +
+    A.stat('phrases', nP, '') +
+    A.stat('contRise', contRise==null?'—':Math.round(contRise*100), '%') +
+    A.stat('decl', decl==null?'—':(decl>=0?'+':'')+decl.toFixed(2), 'st/' + L({en:'phrase',kr:'억양구'})) +
+    A.stat('finalMove', endFin ? A.deltaCell(endFin.delta) : '—', 'st', finBad) +
+    A.stat('contour', endFin ? A.typeTag(endFin.type) : '—', '', finBad) +
+    A.stat('range', range.toFixed(1), 'st') +
+    A.stat('rate', rate.toFixed(2), 'syl/s') +
+    A.stat('dur', durSec.toFixed(2), 's') +
+    A.stat('f0', Math.round(r.medianF0), 'Hz') +
     '</div>';
+  if (nBad){
+    html += '<div class="warn"><b>' + L(U.octFail) + '</b> (' + nBad + ') — ' + L(U.octWhy) + '</div>';
+  }
 
   if (nP){
     html += '<h2 class="sub">' + L({en:'PHRASE ENDINGS',kr:'억양구 문말'}) + '</h2>';
@@ -1445,10 +1692,11 @@ A.renderPassage = function(r, expect){
             L({en:'LENGTH',kr:'길이'}) + '</th><th>Δ semitone</th><th>' + L({en:'TYPE',kr:'유형'}) + '</th></tr>';
     r.phrases.forEach(function(p, i){
       var ff = r.finals[i];
+      var bad = ff && A.octBad(ff.delta);
       html += '<tr><td>' + (i+1) + '</td><td>' + (p.s*0.01).toFixed(1) + 's</td><td>' +
-              ((p.e-p.s+1)*0.01).toFixed(2) + 's</td><td>' +
-              (ff ? (ff.delta>=0?'+':'')+ff.delta.toFixed(2) : '—') + '</td><td>' +
-              (ff ? A.typeTag(ff.type) : '—') + '</td></tr>';
+              ((p.e-p.s+1)*0.01).toFixed(2) + 's</td><td' + (bad?' class="bad"':'') + '>' +
+              (ff ? A.deltaCell(ff.delta, 2) : '—') + '</td><td>' +
+              (bad ? L(U.octFail) : (ff ? A.typeTag(ff.type) : '—')) + '</td></tr>';
     });
     html += '</table>';
   }
@@ -1459,12 +1707,13 @@ A.renderPassage = function(r, expect){
     en:'Both long passages repeat one frame over and over, so the phrase list above is closer to several measurements of the same thing than to several different ones. Declination is the least-squares slope of those phrase medians; a negative value means your pitch drifted down across the passage. That drift cannot be measured from a single short sentence at all.',
     kr:'긴 지문은 둘 다 같은 틀을 계속 반복하기 때문에, 위의 억양구 목록은 서로 다른 여러 개의 측정이라기보다 같은 것을 여러 번 잰 값에 가깝습니다. 하강 추세는 그 억양구 중앙값들의 최소제곱 기울기예요 — 음수면 지문을 읽는 동안 음높이가 아래로 흘렀다는 뜻입니다. 이 흐름은 짧은 문장 하나로는 아예 잴 수 없어요.'}) + '</div>';
 
+  html += A.howBlock(['phrases','contRise','decl','finalMove','contour','range','rate','dur','f0']);
   $('resA').innerHTML = html;
 
   S.last = {
     id: expect.id, label: A.label(expect),
     sentence: expect.kr, nSyl: nuclei.length, expSyl: expect.syl,
-    delta: endFin ? endFin.delta : null, type: endFin ? endFin.type : null,
+    delta: (endFin && !finBad) ? endFin.delta : null, type: (endFin && !finBad) ? endFin.type : null,
     range: range, f0: r.medianF0, dur: durSec
   };
 };
@@ -1491,9 +1740,12 @@ A.paintAB = function(){
              ? S.slotA.id === S.slotB.id
              : S.slotA.sentence === S.slotB.sentence;
   var html = '<div class="stat-grid" style="margin-top:14px">' +
-    A.stat('Δ ' + L({en:'FINAL',kr:'문말'}), dd==null?'—':(dd>=0?'+':'')+dd.toFixed(2), 'st') +
-    A.stat('Δ ' + L({en:'RANGE',kr:'음역'}), (S.slotB.range-S.slotA.range).toFixed(2), 'st') +
-    A.stat('Δ ' + L({en:'MEDIAN f0',kr:'중앙 f0'}), Math.round(S.slotB.f0-S.slotA.f0), 'Hz') +
+    A.statRaw('Δ ' + L({en:'FINAL',kr:'문말'}), dd==null?'—':(dd>=0?'+':'')+dd.toFixed(2), 'st',
+      L({en:'B minus A. Positive means B ended higher.',kr:'B에서 A를 뺀 값. 양수면 B를 더 높게 끝냈다는 뜻.'})) +
+    A.statRaw('Δ ' + L({en:'RANGE',kr:'음역'}), (S.slotB.range-S.slotA.range).toFixed(2), 'st',
+      L({en:'Positive means B used a wider pitch band.',kr:'양수면 B에서 음높이를 더 넓게 썼다는 뜻.'})) +
+    A.statRaw('Δ ' + L({en:'MEDIAN f0',kr:'중앙 f0'}), Math.round(S.slotB.f0-S.slotA.f0), 'Hz',
+      L({en:'Should be small. A large gap means you changed your baseline voice between the two takes, and the other two numbers are then hard to compare.',kr:'작아야 정상. 크게 벌어졌으면 두 녹음 사이에 목소리 자체가 달라진 거라 위의 두 값도 비교하기 어려워요.'})) +
     '</div>';
   if (!same){
     html += '<div class="warn">' + L({en:'The two slots hold different sentences — the difference below is not interpretable.',
@@ -1542,28 +1794,35 @@ function renderFree(){
   $('capB').textContent = L({en:'Shaded blocks = intonation phrases · arrows = final pitch movement',
                              kr:'음영 블록 = 억양구 · 화살표 = 문말 피치 이동'});
 
+  var nBad = 0;
+  r.finals.forEach(function(f){ if (f && A.octBad(f.delta)) nBad++; });
+
   var html = '<h2 class="sub">' + L({en:'YOUR VOICE, MEASURED',kr:'측정된 당신의 목소리'}) + '</h2>';
   html += '<div class="stat-grid">' +
-    A.stat(L({en:'PHRASES',kr:'억양구'}), st.nPhrases, '') +
-    A.stat(L({en:'RISING ENDINGS',kr:'상승 종결'}), Math.round(st.riseRatio*100), '%') +
-    A.stat(L({en:'MEAN FINAL MOVE',kr:'평균 문말 이동'}), (st.meanFinalDelta>=0?'+':'')+st.meanFinalDelta.toFixed(2), 'st') +
-    A.stat(L({en:'PITCH RANGE',kr:'음역 폭'}), st.stRange.toFixed(1), 'st') +
-    A.stat(L({en:'VARIABILITY',kr:'변동성'}), st.stSd.toFixed(2), 'st sd') +
-    A.stat(L({en:'SPEECH RATE',kr:'발화 속도'}), st.syllablesPerSec.toFixed(2), 'syl/s') +
-    A.stat(L({en:'MEAN PHRASE',kr:'평균 억양구'}), st.meanPhraseSec.toFixed(2), 's') +
-    A.stat(L({en:'SPEAKING TIME',kr:'발화 비율'}), Math.round(st.speechRatio*100), '%') +
-    A.stat(L({en:'MEDIAN f0',kr:'중앙 f0'}), Math.round(r.medianF0), 'Hz') +
+    A.stat('phrases', st.nPhrases, '') +
+    A.stat('riseRatio', Math.round(st.riseRatio*100), '%') +
+    A.stat('meanFinal', (st.meanFinalDelta>=0?'+':'')+st.meanFinalDelta.toFixed(2), 'st', nBad>0) +
+    A.stat('range', st.stRange.toFixed(1), 'st') +
+    A.stat('variability', st.stSd.toFixed(2), 'st sd') +
+    A.stat('rate', st.syllablesPerSec.toFixed(2), 'syl/s') +
+    A.stat('meanPhrase', st.meanPhraseSec.toFixed(2), 's') +
+    A.stat('speechRatio', Math.round(st.speechRatio*100), '%') +
+    A.stat('f0', Math.round(r.medianF0), 'Hz') +
     '</div>';
+  if (nBad){
+    html += '<div class="warn"><b>' + L(U.octFail) + '</b> (' + nBad + ') — ' + L(U.octWhy) + '</div>';
+  }
 
   html += '<h2 class="sub">' + L({en:'PHRASE ENDINGS',kr:'억양구 문말'}) + '</h2>';
   html += '<table class="ph"><tr><th>#</th><th>' + L({en:'START',kr:'시작'}) + '</th><th>' +
           L({en:'LENGTH',kr:'길이'}) + '</th><th>Δ semitone</th><th>' + L({en:'TYPE',kr:'유형'}) + '</th></tr>';
   r.phrases.forEach(function(p, i){
     var f = r.finals[i];
+    var bad = f && A.octBad(f.delta);
     html += '<tr><td>' + (i+1) + '</td><td>' + (p.s*0.01).toFixed(1) + 's</td><td>' +
-            ((p.e-p.s+1)*0.01).toFixed(2) + 's</td><td>' +
-            (f ? (f.delta>=0?'+':'')+f.delta.toFixed(2) : '—') + '</td><td>' +
-            (f ? A.typeTag(f.type) : '—') + '</td></tr>';
+            ((p.e-p.s+1)*0.01).toFixed(2) + 's</td><td' + (bad?' class="bad"':'') + '>' +
+            (f ? A.deltaCell(f.delta, 2) : '—') + '</td><td>' +
+            (bad ? L(U.octFail) : (f ? A.typeTag(f.type) : '—')) + '</td></tr>';
   });
   html += '</table>';
 
@@ -1571,6 +1830,7 @@ function renderFree(){
     en:'Nothing above is a dialect judgement. Read speech and spontaneous speech cannot be pooled, and every published baseline is read speech — so there is no literature to compare these numbers against yet. They describe this recording, and nothing more.',
     kr:'위의 어떤 값도 방언 판정이 아닙니다. 낭독 발화와 자유 발화는 같이 묶을 수 없는데 발표된 기준선은 전부 낭독 발화예요 — 그래서 이 숫자들과 비교할 문헌이 아직 없습니다. 이 값들은 이 녹음 하나를 설명할 뿐입니다.'}) + '</div>';
 
+  html += A.howBlock(['phrases','riseRatio','meanFinal','range','variability','rate','meanPhrase','speechRatio','f0']);
   $('resB').innerHTML = html;
 }
 
