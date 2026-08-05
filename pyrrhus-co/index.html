@@ -332,6 +332,72 @@ tr.bump .delta{color:var(--paper)}
 @media (prefers-reduced-motion:reduce){
   .rv-stamp{transform:none}
 }
+/* ── ask earendel ── */
+.ask{margin-top:56px;}
+.ask h2{
+  font-family:var(--arch);font-weight:900;font-size:15px;text-transform:uppercase;
+  border-bottom:3px solid var(--ink);padding-bottom:8px;margin-bottom:16px;
+}
+.ask-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;}
+.ask-name{
+  font-family:var(--arch);font-weight:900;font-size:12px;letter-spacing:2.5px;
+  background:var(--ink);color:var(--paper);padding:4px 10px;
+}
+.ask-role{font-family:var(--mono);font-size:11px;color:#8A8A85;letter-spacing:.5px;text-transform:uppercase;}
+.ask-log{
+  border:3px solid var(--ink);background:#fff;padding:16px 18px;
+  min-height:132px;max-height:340px;overflow-y:auto;
+}
+.ask-log .q{
+  font-family:var(--mono);font-size:12.5px;color:#6A6A64;
+  margin:16px 0 8px;text-align:right;word-break:break-word;
+}
+.ask-log .q:first-child{margin-top:0;}
+.ask-log .a{
+  font-size:15px;line-height:1.75;color:var(--ink);
+  border-left:3px solid var(--green);padding-left:12px;max-width:620px;
+}
+.ask-log .a + .a{margin-top:4px;}
+.ask-hint{
+  width:100%;font-family:var(--mono);font-size:11px;color:#8A8A85;
+  text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;
+}
+.ask-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+.ask-chip{
+  font-family:var(--sans);font-size:12.5px;line-height:1.4;color:var(--ink);
+  border:2px solid var(--ink);background:var(--paper);padding:5px 10px;
+  cursor:pointer;text-align:left;transition:background .12s,color .12s;
+}
+.ask-chip:hover{background:var(--ink);color:var(--paper);}
+.ask-row{display:flex;gap:10px;margin-top:14px;}
+.ask-row input{
+  flex:1;min-width:0;font-family:var(--sans);font-size:15px;padding:11px 12px;
+  border:3px solid var(--ink);background:#fff;color:var(--ink);border-radius:0;
+}
+.ask-row input:focus{outline:3px solid var(--green);outline-offset:2px;}
+.ask-foot{font-family:var(--mono);font-size:11px;color:#8A8A85;margin-top:10px;}
+
+/* ── 셋업 진입점: 규칙 요약과 상대 선택 사이 한 줄 ── */
+.ask-strip{display:flex;align-items:center;flex-wrap:wrap;gap:8px;
+  border-left:4px solid var(--green);background:#F1FAF5;
+  padding:10px 12px;margin:0 0 22px;}
+.ask-strip .lbl{font-family:var(--mono);font-size:11.5px;font-weight:600;
+  color:var(--green-deep);letter-spacing:.4px;text-transform:uppercase;}
+.ask-strip .chips{display:contents;}
+.ask-strip .more{font-family:var(--mono);font-size:11px;color:#6B6B67;
+  margin-left:auto;white-space:nowrap;text-decoration:none;}
+.ask-strip .more:hover{color:var(--green-deep);}
+.tier-desc-row{display:flex;align-items:flex-start;gap:10px;flex-wrap:wrap;margin-bottom:18px;}
+.tier-desc-row .tier-note{margin:0;min-height:0;flex:1;min-width:200px;}
+.ask-chip.ctx{border-color:var(--green-deep);color:var(--green-deep);}
+.ask-chip.ctx:hover{background:var(--green-deep);color:var(--paper);}
+.ask-chip[hidden]{display:none;}
+@media(max-width:560px){.ask-strip .more{margin-left:0;}}
+@media (max-width:600px){
+  .ask-row{flex-wrap:wrap}
+  .ask-row input{flex:1 1 100%}
+  .ask-log{padding:14px}
+}
 </style>
 </head>
 <body>
@@ -364,9 +430,17 @@ tr.bump .delta{color:var(--paper)}
     <div class="panel" style="max-width:660px">
       <div class="say" id="open-say"><span class="hat" id="open-hat"></span><span class="v" id="open-line"></span></div>
       <div class="rules" id="open-rules"></div>
+      <div class="ask-strip" id="setupAsk">
+        <span class="lbl tx" data-en="Something unclear?" data-kr="막히는 게 있어요?">Something unclear?</span>
+        <span class="chips" id="setupAskChips"></span>
+        <a class="more tx" href="#ask" data-en="Ask Earendel &#8595;" data-kr="에어렌들에게 묻기 &#8595;">Ask Earendel &#8595;</a>
+      </div>
       <span class="label" id="tier-label"></span>
       <div class="tier-row" id="tier-row"></div>
-      <p class="tier-note" id="tier-note"></p>
+      <div class="tier-desc-row">
+        <p class="tier-note" id="tier-note"></p>
+        <button type="button" class="ask-chip ctx" id="tierAskChip" hidden></button>
+      </div>
       <button class="btn btn-green" id="btn-start"></button>
     </div>
   </section>
@@ -501,6 +575,22 @@ tr.bump .delta{color:var(--paper)}
   <div class="record">
     <h2 id="rec-title"></h2>
     <div id="rec-body"></div>
+  </div>
+
+  <!-- ASK EARENDEL -->
+  <div class="ask" id="ask">
+    <h2 class="tx" data-en="Ask Earendel" data-kr="에어렌들에게 묻기">Ask Earendel</h2>
+    <div class="ask-head">
+      <span class="ask-name">EARENDEL</span>
+      <span class="ask-role tx" data-en="Guide &#183; Rules desk" data-kr="길잡이 &#183; 규칙 안내">Guide &#183; Rules desk</span>
+    </div>
+    <div class="ask-log" id="askLog" aria-live="polite"></div>
+    <div class="ask-chips" id="askChips"></div>
+    <div class="ask-row">
+      <input id="askInput" type="text" autocomplete="off" aria-label="Ask Earendel" />
+      <button class="btn btn-green" id="askBtn"><span class="tx" data-en="Ask" data-kr="묻기">Ask</span></button>
+    </div>
+    <p class="ask-foot" id="askFoot"></p>
   </div>
 
 </div></main>
@@ -1970,6 +2060,401 @@ renderRecord();
 if (window.KYG_AUTH && window.KYG_AUTH.user) loadRecord();
 })();
 </script>
+<!-- ASK EARENDEL: 규칙 카드 라우터 (모델 없음) -->
+<script>
+/* ── ASK EARENDEL ── 규칙 안내 패널
+   답변은 고정 카드에서 코드가 원문 그대로 출력한다. 모델을 거치지 않는다.
+   말씨 축: L0 = 비로그인/닉네임 미설정(해요체) · L1 = 로그인+닉네임(해체)
+   명세: claude/ai-guide-persona-spec.md */
+(function(){
+"use strict";
+if(!document.getElementById('ask')) return;
+var $ = function(id){ return document.getElementById(id); };
+var LANG = window.APP_LANG || 'en';
+
+const CARDS=[{"i":"pc-basic-01","t":"기본","q":"이 게임 어떻게 하는 거예요?","Q":"How do I play this?","k":["게임","어떻게","하는","방법","규칙","진행","뭐하는","설명","규칙좀","처음","초보","뭐부터","어떤게임","무슨게임","진행순서","흐름","한판이","해보고싶"],"e":["play","game","rules","work","works","explain","started","begin","basics","about"],"a":"스무 번의 경매예요. 매 라운드 물건이 하나씩 올라오고, 네 사람이 각자 얼마를 낼지 종이에 적어서 냅니다. 제일 높은 값을 적은 사람이 가져가고, 적은 값을 그대로 내요. 물건의 진짜 값은 폐회 때 한꺼번에 밝혀집니다.","b":"스무 번의 경매야. 매 라운드 물건이 하나 올라오고, 넷이 각자 얼마 낼지 적어서 낸다. 제일 높은 값 적은 사람이 가져가고, 적은 값 그대로 낸다. 진짜 값은 폐회 때 한꺼번에 밝혀져.","n":"Twenty auctions. One lot per round, four bidders, each writing down a number in secret. The highest number takes the lot and pays exactly what they wrote. True values are revealed all at once at the close."},{"i":"pc-basic-02","t":"기본","q":"몇 라운드예요?","Q":"How many rounds are there?","k":["몇라운드","라운드","몇번","횟수","스무","20","길이","얼마나","총몇판","몇판","판수","언제끝","끝나는","몇번하","한게임","분량"],"e":["rounds","length","twenty","round","lots","last","total","duration","lasts"],"a":"스무 라운드예요. 라운드마다 물건이 하나씩 올라오니까, 볼 수 있는 물건도 스무 점입니다.","b":"스무 라운드. 라운드마다 물건 하나니까 볼 수 있는 것도 스무 점이야.","n":"Twenty rounds, one lot each, so twenty lots in all."},{"i":"pc-basic-03","t":"기본","q":"예산이 얼마예요?","Q":"How much money do I start with?","k":["예산","자금","시작돈","가진돈","보충","추가","얼마로시작","얼마갖고","초기자금","밑천","수중에","종잣돈","1000M","소지금","가진것","현금얼마"],"e":["budget","money","cash","start","starting","much","bankroll","funds","begin","purse"],"a":"네 사람 모두 £1,000M으로 시작해요. 중간에 더 들어오는 돈은 없습니다. 쓰면 쓴 만큼 줄어들 뿐이에요.","b":"넷 다 £1,000M으로 시작해. 중간에 더 들어오는 돈은 없어. 쓰면 쓴 만큼 줄어.","n":"Everyone starts with £1,000M. No top-ups. What you spend is gone."},{"i":"pc-basic-04","t":"기본","q":"최종 점수는 어떻게 계산해요?","Q":"How is the final score worked out?","k":["최종점수","점수","계산","합산","환산","등수결정","점수계산","점수어떻게","집계","남은돈도","현금도점수","컬렉션합","더해","성적계산"],"e":["score","final","scoring","calculated","total","counted","leftover","points","collection","worked","add"],"a":"{이름} 님이 사들인 물건의 진짜 값을 전부 더하고, 거기에 남은 현금의 85%를 얹습니다. 현금 15%는 자리세로 하우스가 가져가요. 그 합이 제일 큰 사람이 1등입니다.","b":"{이름} 몫이 된 물건들의 진짜 값을 다 더하고, 남은 현금의 85%를 얹어. 현금 15%는 자리세로 하우스가 먹고. 그 합이 제일 큰 사람이 1등이야.","n":"Add up the true values of everything {name} bought, then add 85% of the cash left over — the house keeps 15% as a seat fee. Biggest total wins."},{"i":"pc-basic-05","t":"기본","q":"몇 명이 참가해요?","Q":"How many bidders are there?","k":["몇명","인원","참가자","네명","사람수","상대수","나말고","몇이야","응찰자가","경쟁자","자리수","네자리","상대몇","봇몇"],"e":["players","people","four","seats","bidders","opponents","bidder","face","against"],"a":"네 자리예요. 여행자 한 분과 하우스가 부른 응찰자 셋.","b":"네 자리야. 너 하나에 하우스가 부른 응찰자 셋.","n":"Four seats. You, and three bidders the house invited."},{"i":"pc-basic-06","t":"기본","q":"밀봉 1차가격이 무슨 뜻이에요?","Q":"What does sealed first-price mean?","k":["밀봉","1차가격","일차가격","봉투","동시입찰","경매방식","2등값","동시에","한꺼번에","남모르게","가린채","경매형식","호가없","올려부르","방식이"],"e":["sealed","first","price","format","auction","type","simultaneously","blind","once","mean"],"a":"봉투에 값을 적어 한 번에 내는 방식이에요. 남이 얼마를 썼는지 모른 채로 적고, 이긴 사람은 자기가 적은 값을 그대로 냅니다. 2등 값을 내는 경매도 있지만 여기는 아니에요.","b":"봉투에 값 적어서 한 번에 내는 방식이야. 남이 뭘 썼는지 모른 채로 적고, 이긴 사람은 자기가 적은 값 그대로 낸다. 2등 값 내는 경매도 있지만 여긴 아니고.","n":"Everyone writes a number in secret and submits once. The winner pays their own number, not the runner-up's — this is a first-price auction."},{"i":"pc-basic-07","t":"기본","q":"물건 값은 언제 알 수 있어요?","Q":"When do I find out what a lot was worth?","k":["언제알","진짜값","실제값","공개시점","밝혀","폐회","마지막에","언제공개","나중에알","값알려","결과공개","뒤늦게","끝나야","정산때","알수있"],"e":["true","value","revealed","reveal","end","find","learn","afterwards","later","show"],"a":"폐회 때요. 스무 라운드가 다 끝나면 스무 점의 진짜 값이 한 번에 공개돼요. 그전까지는 아무도 모릅니다. 저도 몰라요.","b":"폐회 때. 스무 라운드 다 끝나면 스무 점 진짜 값이 한 번에 나와. 그전엔 아무도 몰라. 나도 몰라.","n":"At the close. All twenty true values come out at once after the last round. Nobody knows before that — I don't either."},{"i":"pc-basic-08","t":"기본","q":"같은 물건이면 값도 같아요?","Q":"Is a lot worth the same to everyone?","k":["같은값","공통가치","모두같","동일","취향","사람마다","나한테만","값다르","값같","가치같","누구에게나","주관적","동일가치"],"e":["same","value","common","everyone","worth","differ","identical","shared","personal","subjective"],"a":"네, 같아요. 이 방의 물건은 누가 가져가든 값이 똑같습니다. 취향 문제가 아니라 하나의 숫자예요. 다른 건 그 숫자를 각자 얼마나 잘 짐작하느냐뿐입니다.","b":"같아. 이 방 물건은 누가 가져가든 값이 똑같다. 취향 문제가 아니라 숫자 하나야. 다른 건 그 숫자를 각자 얼마나 잘 짐작하느냐뿐이고.","n":"Yes. A lot is worth the same to whoever ends up with it — one number, not a matter of taste. All that differs is how well each of you guesses it."},{"i":"pc-basic-09","t":"기본","q":"이길 방법 좀 알려주세요","Q":"Any tips for winning?","k":["이길","이기는법","공략","전략","비법","잘하는","요령","조언","승리","방법","팁좀","어떻게해야","노하우","잘하려면","이기려면","유리한","실수줄"],"e":["win","winning","strategy","tips","advice","beat","better","good","tip","help","improve","well","suggestions"],"a":"규칙은 알려드리지만 수는 알려드리지 않아요. 규칙에서 확실한 건 셋이에요. 현금은 15%가 깎이고, 위작은 셋에 하나쯤 섞여 있고, 감정료는 £10M입니다. 나머지는 {이름} 님의 선택에 달려 있어요.","b":"규칙은 알려주지만 수는 안 알려줘. 규칙에서 확실한 건 셋이야. 현금은 15% 깎이고, 위작은 셋에 하나쯤 섞여 있고, 감정료는 £10M. 나머지는 {이름}의 선택에 달려 있어.","n":"I'll tell you the rules, not the moves. Three things the rules do settle: cash is docked 15%, roughly one lot in three is fake, and an appraisal costs £10M. The rest is {name}'s to decide."},{"i":"pc-basic-10","t":"기본","q":"전체 규칙은 어디서 봐요?","Q":"Where are the full rules?","k":["전체규칙","규칙표","어디서봐","전문","룰북","다시보기","요약","자세한규칙","규칙어디","규칙문서","개회화면","전체보기","모아둔","읽고싶"],"e":["full","rules","where","list","summary","again","read","table","reference","complete","documentation"],"a":"개회 화면에 일곱 줄로 정리돼 있어요. 방을 고르기 전 화면이에요. 지금 페이지를 맨 위로 올리시면 보입니다.","b":"개회 화면에 일곱 줄로 정리돼 있어. 방 고르기 전 화면. 페이지 맨 위로 올리면 보여.","n":"Seven lines on the opening screen, above the room selection. Scroll to the top of the page."},{"i":"pc-basic-11","t":"기본","q":"낙찰받을 때마다 손해가 나요","Q":"Why do I lose money every time I win?","k":["손해","적자","승자의저주","저주","비싸게","과하게","이겼는데","왜손해","이겼는데손해","낙찰만하면","살때마다","적자나","밑지","비싸게샀","자꾸손해"],"e":["curse","winner","losing","overpay","keep","winning","overpaying","loses"],"a":"승자의 저주예요. 넷이 같은 물건을 두고 각자 짐작하면, 그중 제일 높게 짐작한 사람이 낙찰을 받습니다. 그러니까 이겼다는 것 자체가 {이름} 님이 제일 후하게 보셨다는 뜻이에요. 이길 때마다 조금씩 깎아 부르셔야 하는 이유가 그겁니다.","b":"승자의 저주야. 넷이 같은 물건을 두고 각자 짐작하면, 제일 높게 본 사람이 낙찰을 받아. 이겼다는 것 자체가 {이름} 눈이 제일 후했다는 뜻이지. 이길 때마다 깎아 불러야 하는 이유가 그거야.","n":"The winner's curse. Four people guess at one number, and the highest guess takes the lot — so winning already means {name} was the most generous in the room. That is why a bid wants shading."},{"i":"pc-bid-01","t":"입찰","q":"입찰은 어떻게 해요?","Q":"How do I place a bid?","k":["입찰","응찰","입력","금액적","부르는법","제출","고치","어디에적","숫자적","금액입력","내는법","한번만","수정","되돌리","확정"],"e":["bid","bidding","submit","enter","place","type","input","change","edit","amount","offer"],"a":"칸에 숫자를 적고 제출하시면 돼요. 한 라운드에 한 번, 고치기는 제출 전까지만 됩니다. 넷이 다 내면 그 자리에서 열립니다.","b":"칸에 숫자 적고 제출하면 돼. 한 라운드에 한 번, 고치는 건 제출 전까지. 넷이 다 내면 그 자리에서 열려.","n":"Type a number and submit. One bid per round, changeable only before you submit. All four open at once."},{"i":"pc-bid-02","t":"입찰","q":"시작가가 뭐예요?","Q":"What is the opening price?","k":["시작가","최저가","하한선","최소입찰","그보다낮","최소얼마","최저금액","그보다낮게","밑으로","시작금액","최소로","딱그값","하한"],"e":["opening","starting","minimum","floor","least","lowest","below","under","reserve","exactly"],"a":"그 라운드에 부를 수 있는 최저 금액이에요. 그보다 낮게는 못 부르고, 딱 그 값으로 부르는 건 됩니다. 물건의 값과는 상관이 없어요.","b":"그 라운드에 부를 수 있는 최저 금액이야. 그보다 낮겐 못 부르고, 딱 그 값은 돼. 물건 값이랑은 상관없고.","n":"The lowest number you're allowed to bid that round. You may bid exactly it, never under it. It tells you nothing about the lot."},{"i":"pc-bid-03","t":"입찰","q":"기권하면 어떻게 돼요?","Q":"What happens if I pass?","k":["기권","포기","패스","안부르","입찰안","벌점","그냥넘기","넘어가","안살래","쉬고싶","불참","패널티","벌칙","건너뛰"],"e":["pass","fold","skip","nothing","abstain","penalty","passing","skipping","sit","declining"],"a":"돈이 나가지 않고 그 물건도 못 가져가요. 벌점은 없습니다. 스무 라운드 내내 기권하셔도 규칙상 아무 문제 없어요. 다만 현금은 15%가 깎인 채로 계산됩니다.","b":"돈 안 나가고 물건도 못 가져가. 벌점은 없어. 스무 라운드 내내 기권해도 규칙상 문제없고. 다만 현금은 15% 깎인 채로 계산돼.","n":"You spend nothing and get nothing. No penalty. You could pass all twenty rounds — but leftover cash still gets docked 15%."},{"i":"pc-bid-04","t":"입찰","q":"남이 얼마를 썼는지 볼 수 있어요?","Q":"Can I see what the others bid?","k":["남이얼마","상대입찰","금액공개","엿보","낙찰가만","진사람","남들금액","얼마썼","상대금액","보여줘","공개되나","알수있나","나중에보","비공개"],"e":["see","opponents","bids","hidden","secret","reveal","shown","visible","know","their"],"a":"낙찰가만 보여요. 이긴 사람이 얼마를 냈는지는 모두가 알게 되지만, 진 사람이 얼마를 썼는지는 끝까지 공개되지 않아요.","b":"낙찰가만 보여. 이긴 사람이 얼마 냈는지는 다 알게 되지만, 진 사람이 얼마 썼는지는 끝까지 안 나와.","n":"Only the hammer price. Everyone sees what the winner paid; the losing bids stay sealed for good."},{"i":"pc-bid-05","t":"입찰","q":"같은 금액을 쓰면 어떻게 돼요?","Q":"What happens on a tie?","k":["같은금액","동점","동일금액","비기","같으면","타이","겹치면","똑같이쓰","동점처리","누가가져","우선순위","자리순","앞자리","뒷자리"],"e":["tie","same","equal","ties","draw","matches","tied","identical","wins","break"],"a":"뒷자리가 가져가요. 그리고 {이름} 님 자리가 첫 번째 자리라서, 값이 정확히 같으면 {이름} 님이 집니다. 딱 맞추려 하시기보다 £1M을 얹는 쪽이 안전해요.","b":"뒷자리가 가져가. 그리고 {이름} 자리가 첫 번째라서, 값이 정확히 같으면 진다. 딱 맞추려 하지 말고 £1M 얹는 게 안전해.","n":"The later seat takes it. {name} sits in the first seat, so an exact tie goes against you — adding £1M beats matching."},{"i":"pc-bid-06","t":"입찰","q":"아무도 안 부르면 어떻게 돼요?","Q":"What if nobody bids?","k":["아무도","전원기권","유찰","안팔리","모두기권","안부르면","아무도안","전부기권","다안부르","넷다","그물건은","팔리지않","어떻게되"],"e":["nobody","unsold","noone","everyone","passes","none","zero","empty","silent","lot"],"a":"유찰이에요. 물건은 하우스가 거둬 갑니다. 다시 올라오지 않아요.","b":"유찰이야. 물건은 하우스가 거둬 가. 다시 안 올라와.","n":"It goes unsold and the house keeps it. It does not come back."},{"i":"pc-bid-07","t":"입찰","q":"얼마까지 부를 수 있어요?","Q":"Is there a maximum bid?","k":["얼마까지","상한","최대","전재산","한도","최고금액","외상","전재산다","올인","몰빵","다걸","가진돈전부","넘게못","잔액까지","최대치"],"e":["maximum","most","limit","cap","highest","credit","everything","entire","ceiling","borrow"],"a":"가진 현금 전부까지요. 그 이상은 못 부릅니다. 외상은 없어요.","b":"가진 현금 전부까지. 그 이상은 못 불러. 외상은 없고.","n":"Up to every pound you have, and not a pound more. No credit here."},{"i":"pc-bid-08","t":"입찰","q":"얼마를 불러야 적당해요?","Q":"How much should I bid?","k":["얼마불러","적당","적정가","얼마쯤","얼마내야","손익분기","1.18","적정금액","얼마정도","어느정도","얼마넘으면","기준가","얼마나내","가이드","기준선"],"e":["much","right","fair","should","break","even","sensible","reasonable","guide","threshold","over"],"a":"손익이 갈리는 지점은 진짜 값의 1.18배예요. 남겨 둔 현금은 15%가 깎이니까, 값어치 £100M짜리를 £118M에 사도 안 사는 것과 같아요. 그 아래로 사면 이득이고, 위로 사면 손해입니다. 문제는 진짜 값을 모른다는 거고요.","b":"손익이 갈리는 지점은 진짜 값의 1.18배야. 남긴 현금은 15% 깎이니까, £100M짜리를 £118M에 사도 안 산 거랑 같아. 그 아래면 이득, 위면 손해. 문제는 진짜 값을 모른다는 거고.","n":"Break-even sits at 1.18× the true value — leftover cash loses 15%, so paying £118M for a £100M lot is the same as passing. Below that you gain, above it you lose. The catch is you don't know the true value."},{"i":"pc-bid-09","t":"입찰","q":"낙찰받으면 돈이 언제 빠져요?","Q":"When is the money taken?","k":["언제빠져","결제","지불","차감","즉시","나중에낼","언제나가","언제결제","돌려받","환불되","떨어지면","패찰","차감시점","보증금"],"e":["pay","charged","deducted","immediately","later","leave","refund","refunded","lose","account","taken"],"a":"그 자리에서 바로요. 낙찰가만큼 현금이 줄고, 다음 라운드는 줄어든 돈으로 시작합니다.","b":"그 자리에서 바로. 낙찰가만큼 현금이 줄고, 다음 라운드는 줄어든 돈으로 시작해.","n":"Immediately. The hammer price leaves your cash on the spot, and the next round starts from what's left."},{"i":"pc-bid-10","t":"입찰","q":"빠른 입찰 버튼이 뭐예요?","Q":"What do the quick-bid buttons do?","k":["빠른입찰","버튼","단축","자동입력","프리셋","네개버튼","버튼누르","자동으로","단축버튼","미리채","빠르게","눌러서","편하게"],"e":["quick","buttons","preset","shortcut","auto","fill","button","fills","presets","faster"],"a":"자주 쓰는 네 금액을 대신 적어 주는 버튼이에요. 시작가, 공개 감정가의 하한, 공개 감정가의 중심, 그리고 전액입니다. 적어 줄 뿐이지 제출까지 하지는 않아요.","b":"자주 쓰는 네 금액을 대신 적어 주는 버튼이야. 시작가, 공개 감정가 하한, 공개 감정가 중심, 전액. 적어 주기만 하고 제출까진 안 해.","n":"Four shortcuts that fill the box for you: the opening price, the low end of the public estimate, its midpoint, and everything you have. They fill it in — they don't submit."},{"i":"pc-bid-11","t":"입찰","q":"한 라운드에 여러 점 살 수 있어요?","Q":"Can I buy more than one lot a round?","k":["여러점","여러개","두개","동시구매","하나만","몇점살","여러물건","한판에두","중복낙찰","연속으로","한라운드에","하나씩"],"e":["multiple","lot","several","two","once","twice","both","another","single"],"a":"한 라운드에 물건은 하나뿐이에요. 그러니 한 점씩만 가져가실 수 있고, 스무 라운드를 다 이기면 스무 점입니다. 돈이 남아 있다면요.","b":"한 라운드에 물건은 하나야. 한 점씩만 가져갈 수 있고, 스무 라운드 다 이기면 스무 점. 돈이 남아 있다면.","n":"One lot per round, so one at a time. Win all twenty and you hold twenty — if the money lasts."},{"i":"pc-appr-01","t":"감정","q":"정밀 감정이 뭐예요?","Q":"What is a precise appraisal?","k":["정밀감정","감정이뭐","감정신청","전문가","살펴보","감정이란","감정뭐","돈내고보","미리보","조사","검사","감정하면","감정받"],"e":["appraisal","precise","expert","assessment","examine","inspect","report","study","closer"],"a":"돈을 내고 그 물건을 따로 살펴보는 거예요. 위작인지에 대한 소견이 나오고, 진품이면 값이 들어 있을 만한 좁은 폭도 함께 나옵니다. 숫자는 신청한 사람만 봐요.","b":"돈 내고 그 물건을 따로 살펴보는 거야. 위작인지 소견이 나오고, 진품이면 값이 들어 있을 만한 좁은 폭도 같이 나와. 숫자는 신청한 사람만 봐.","n":"You pay to have the lot examined. You get a verdict on whether it's a fake and, if it's genuine, a narrow band the true value probably sits in. Only the buyer sees the numbers."},{"i":"pc-appr-02","t":"감정","q":"감정료가 얼마예요?","Q":"What does an appraisal cost?","k":["감정료","감정비용","비용","10M","고정","얼마내","얼마들어","가격이","수수료얼마","비싼가","한번에","매번내","부담"],"e":["cost","fee","price","charge","flat","pay","costs","each","expensive","appraisal"],"a":"£10M 고정이에요. 물건이 비싸든 싸든 같은 값입니다. £800M짜리를 놓고 고민하실 때 £10M은 거의 공짜에 가까워요.","b":"£10M 고정이야. 물건이 비싸든 싸든 같아. £800M짜리 앞에서 £10M은 거의 공짜지.","n":"A flat £10M, whatever the lot. Next to an £800M decision, that's close to free."},{"i":"pc-appr-03","t":"감정","q":"정확한 값을 알려줘요?","Q":"Does it tell me the exact value?","k":["정확한값","딱집어","정확히","숫자하나","폭으로","구간","정확한숫자","딱얼마","값알려주","범위로만","오차","표준편차","신뢰구간","90퍼"],"e":["exact","precise","number","accurate","exactly","band","range","interval","confidence","error","ninety"],"a":"아니요, 폭으로 나와요. '이 사이 어딘가'라는 구간을 드리고, 열에 아홉은 진짜 값이 그 안에 있습니다. 열에 하나는 밖에 있고요. 그건 감정이 틀린 게 아니라 폭이 그렇게 만들어져 있는 거예요.","b":"아니, 폭으로 나와. '이 사이 어딘가'라는 구간을 주고, 열에 아홉은 진짜 값이 그 안에 있어. 열에 하나는 밖에 있고. 감정이 틀린 게 아니라 폭이 그렇게 만들어진 거야.","n":"No — you get a band. The true value falls inside it nine times in ten, outside it once. That's not the appraiser erring; that's how the band is drawn."},{"i":"pc-appr-04","t":"감정","q":"감정 결과를 다른 사람도 봐요?","Q":"Do the others see my appraisal?","k":["다른사람도","결과공개","비밀","남도보","알려지","좌석표에","남들도알","나만보","결과비밀","들키","드러나","보이나","공유"],"e":["others","see","public","private","secret","shared","hidden","know","visible","mine","anyone"],"a":"감정을 신청하셨다는 사실은 좌석표에 남아 모두가 봅니다. 숫자는 {이름} 님만 봐요. 그러니 남들은 {이름} 님이 무언가를 알아내셨다는 것까지만 알고, 무엇을 알아내셨는지는 모릅니다.","b":"감정을 신청했다는 사실은 좌석표에 남아서 다 봐. 숫자는 {이름} 몫이고. 남들은 {이름} 쪽이 뭔가 알아냈다는 것까지만 알지, 뭘 알아냈는지는 몰라.","n":"That {name} paid for an appraisal shows on the seat card for everyone. The numbers stay with {name} alone — so the room knows you learned something, not what."},{"i":"pc-appr-05","t":"감정","q":"감정은 언제 신청해요?","Q":"When can I buy an appraisal?","k":["언제신청","신청시점","입찰전","타이밍","순서","값내기전","언제까지","신청가능","입찰전에","미리해","나중에도","시간제한","마감"],"e":["order","before","timing","request","window","deadline","stage","still","after","first","buy","purchase","appraisal"],"a":"입찰하기 전이에요. 물건이 올라오고 값을 적기 전까지가 감정을 살 수 있는 시간입니다. 값을 낸 뒤에는 못 사요.","b":"입찰하기 전. 물건 올라오고 값 적기 전까지가 감정 살 수 있는 시간이야. 값 낸 뒤엔 못 사.","n":"Before you bid. The window is between the lot coming up and your number going in — never after."},{"i":"pc-appr-06","t":"감정","q":"감정이 틀릴 수도 있어요?","Q":"Can the appraisal be wrong?","k":["감정틀","틀리","오류","믿을수","실수","빗나가","빗나갈","틀릴수","어긋나","벗어나","열에한번","못믿","오판","정확도"],"e":["wrong","mistake","error","trust","reliable","fail","mistaken","miss","outside","off","ten"],"a":"두 가지로요. 하나는 폭이 빗나가는 경우로, 열에 한 번쯤 진짜 값이 폭 밖에 있어요. 다른 하나는 위작인데 진품 소견이 나오는 경우인데, 아주 잘 만든 위작에 한해 드물게 그럽니다. 반대로 진품을 위작이라고 하는 일은 없어요.","b":"두 가지로. 하나는 폭이 빗나가는 경우로, 열에 한 번쯤 진짜 값이 폭 밖에 있어. 다른 하나는 위작인데 진품 소견이 나오는 경우고, 아주 잘 만든 위작에 한해 드물게 그래. 반대로 진품을 위작이라고 하는 일은 없어.","n":"Two ways. The band misses about one time in ten. And a very good forgery can pass as genuine — rarely. It never runs the other way: a genuine lot is never called a fake."},{"i":"pc-appr-07","t":"감정","q":"감정할 값어치가 있어요?","Q":"Is an appraisal worth buying?","k":["값어치","할만","살까","가치있","해야하나","본전","살만한","값어치있","해볼만","이득인가","본전뽑","매번해야","아깝"],"e":["worth","should","bother","useful","pay","buying","always","value","return","every"],"a":"그건 제가 정할 게 아니에요. 숫자만 놓아 드릴게요. 감정료는 £10M이고, 위작은 셋에 하나쯤이며, 위작을 모르고 사면 £15M 언저리가 남습니다. 그 셋을 어떻게 견주실지는 {이름} 님의 선택에 달려 있어요.","b":"그건 내가 정할 게 아니야. 숫자만 놓아 줄게. 감정료는 £10M, 위작은 셋에 하나쯤, 위작을 모르고 사면 £15M 언저리가 남아. 그 셋을 어떻게 견줄지는 {이름}의 선택에 달려 있어.","n":"Not mine to say. Here are the numbers: the fee is £10M, roughly one lot in three is fake, and a fake leaves about £15M behind. Weighing those three is {name}'s call."},{"i":"pc-appr-08","t":"감정","q":"소견이 무슨 뜻이에요?","Q":"What does the verdict line mean?","k":["소견","판정","의견","진품으로봅","위작으로봅","한줄","소견란","뭐라고적","무슨뜻","문구","진품으로","위작으로","한줄평","믿어도되"],"e":["verdict","opinion","says","means","genuine","reads","line","wording","text","read"],"a":"감정사가 내놓는 한 줄이에요. '진품으로 봅니다'와 '위작으로 봅니다' 둘 중 하나입니다. 위작으로 봤다면 그건 확실해요. 진품으로 봤다면 대체로 맞지만, 아주 잘 만든 위작은 통과하기도 합니다.","b":"감정사가 내놓는 한 줄이야. '진품으로 봅니다'랑 '위작으로 봅니다' 둘 중 하나. 위작으로 봤으면 그건 확실해. 진품으로 봤으면 대체로 맞지만, 아주 잘 만든 위작은 통과하기도 하고.","n":"The appraiser's one line: reads genuine, or reads fake. A fake verdict is certain. A genuine verdict is usually right, but the best forgeries slip through."},{"i":"pc-appr-09","t":"감정","q":"감정 없이도 할 만해요?","Q":"Can I play without appraising?","k":["감정없이","안하고","생략","없이도","한번도","안하고도","없이도할","아예안","무감정","감정빼고","버텨"],"e":["without","skip","never","none","blind","nothing","unappraised","buying","ever"],"a":"됩니다. 감정을 한 번도 안 사고 스무 라운드를 다 치를 수 있어요. 그러면 손에 남는 건 공개 감정가와 시작가뿐이고, 위작이 셋에 하나 섞여 있다는 사실도 그대로 남습니다.","b":"돼. 감정 한 번도 안 사고 스무 라운드를 다 치를 수 있어. 그럼 손에 남는 건 공개 감정가랑 시작가뿐이고, 위작이 셋에 하나 섞여 있다는 것도 그대로 남고.","n":"You can. Twenty rounds without a single appraisal is allowed — you'd be working from the public estimate and the opening price alone, with one lot in three still a fake."},{"i":"pc-appr-10","t":"감정","q":"상대도 감정을 사요?","Q":"Do the other bidders appraise?","k":["상대도","봇도","남도감정","응찰자감정","몇번샀","상대들도","봇들도","남들은","얼마나자주","똑같이","기회는"],"e":["opponents","bots","bidders"],"a":"삽니다. 방마다 얼마나 자주 사는지가 다르고, 누가 몇 번 샀는지는 좌석표에 그대로 보여요. 다만 무엇을 봤는지는 안 보입니다.","b":"사. 방마다 얼마나 자주 사는지가 다르고, 누가 몇 번 샀는지는 좌석표에 그대로 보여. 다만 뭘 봤는지는 안 보이고.","n":"They do. How often depends on the room, and the seat cards show how many each has bought — never what they saw."},{"i":"pc-fake-01","t":"위작","q":"위작이 얼마나 있어요?","Q":"How many lots are fake?","k":["위작얼마나","위작비율","가짜비율","몇퍼센트","35","셋에하나","비율이","얼마나많","가짜많","흔한가","자주나오","확률"],"e":["fakes","rate","percent","chance","share","proportion","common","third","lots"],"a":"물건 셋에 하나쯤이에요. 스무 점 중 일곱 점 안팎이 위작이라고 보시면 됩니다. 어느 것이 위작인지는 물론 표시가 없어요.","b":"셋에 하나쯤이야. 스무 점 중 일곱 점 안팎이 위작이라고 보면 돼. 어느 게 위작인지는 물론 표시가 없고.","n":"About one in three — call it seven of the twenty. Nothing marks which ones."},{"i":"pc-fake-02","t":"위작","q":"위작을 어떻게 가려내요?","Q":"How do I spot a fake?","k":["가려내","구별","알아내","판별","어떻게알","찾아내","구별법","알아보","가려낼","단서","표시나","눈으로","어떻게알아","방법있"],"e":["tell","spot","detect","identify","find","apart","recognise","recognize","clue","sign","catch","know"],"a":"확실한 길은 정밀 감정 하나예요. £10M을 내면 소견이 나옵니다. 감정 없이는 공개 감정가와 시작가밖에 볼 게 없는데, 잘 꾸민 위작은 그 둘을 진품처럼 걸치고 나옵니다.","b":"확실한 길은 정밀 감정 하나야. £10M 내면 소견이 나와. 감정 없인 공개 감정가랑 시작가밖에 볼 게 없는데, 잘 꾸민 위작은 그 둘을 진품처럼 걸치고 나오고.","n":"One reliable route: pay the £10M for an appraisal. Without it you have the public estimate and the opening price — and a well-dressed fake wears both like a genuine lot."},{"i":"pc-fake-03","t":"위작","q":"위작을 사면 어떻게 돼요?","Q":"What happens if I buy a fake?","k":["위작사면","가짜사면","손실","환불","되팔","15M","사면어떻","낙찰받으면","얼마손해","망하","휴지","헛돈","피해"],"e":["buy","happens","refund","stuck","worthless","left","lost","ruin","costs","wasted"],"a":"£15M 언저리가 남아요. 진품 중앙값이 £260M쯤이니 거의 전부를 잃는 셈입니다. 환불은 없고, 폐회 때 그 £15M이 그대로 점수에 들어갑니다.","b":"£15M 언저리가 남아. 진품 중앙값이 £260M쯤이니 거의 전부를 잃는 셈이지. 환불은 없고, 폐회 때 그 £15M이 그대로 점수에 들어가.","n":"You're left holding about £15M of value, against a genuine median near £260M. No refunds — that £15M is what counts at the close."},{"i":"pc-fake-04","t":"위작","q":"위작인데 공개 감정가가 왜 높아요?","Q":"Why does a fake have a high estimate?","k":["왜높","옷을","빌려입","비싸보이","위장","걸치","왜비싸","왜높게","표시가높","흉내","진품행세","헷갈리게"],"e":["disguise","dressed","high","fake","costume","priced","expensive","borrowed","looks","pretend"],"a":"위작 절반 이상이 진품의 공개 감정가를 빌려 입고 나오기 때문이에요. 전체 물건으로 치면 다섯 점에 한 점쯤이 그런 옷을 걸치고 있습니다. 공개 감정가가 높다는 건 진품이라는 뜻이 아니라, 진품처럼 보이도록 값이 붙었다는 뜻일 수 있어요.","b":"위작 절반 이상이 진품 공개 감정가를 빌려 입고 나오거든. 전체로 치면 다섯 점에 한 점쯤이 그런 옷을 걸치고 있어. 공개 감정가가 높다는 게 진품이라는 뜻이 아니라, 진품처럼 보이게 값이 붙었다는 뜻일 수 있고.","n":"More than half of the fakes borrow a genuine lot's public estimate — about one lot in five overall wears that costume. A high estimate means the lot looks genuine, not that it is."},{"i":"pc-fake-05","t":"위작","q":"감정도 속는 위작이 있어요?","Q":"Can a fake fool the appraiser?","k":["감정속","통과","속이는","정교한","완벽한위작","여덟에","감정도속","감정통과","못잡는","뚫는","완벽하게","전문가도","놓치"],"e":["fool","fools","pass","undetected","beat","appraiser","through","undetectable","slip","past","wrong"],"a":"있어요. 위작 여덟에 하나쯤은 감정에서도 진품 소견을 받습니다. 전체 물건으로 보면 마흔 점에 한 점꼴이에요. 그러니 '진품으로 봅니다'는 거의 맞지만 완전하지는 않습니다.","b":"있어. 위작 여덟에 하나쯤은 감정에서도 진품 소견을 받아. 전체로 보면 마흔 점에 한 점꼴이야. '진품으로 봅니다'는 거의 맞지만 완전하진 않고.","n":"Yes. Roughly one fake in eight reads genuine — about one lot in forty overall. So a genuine verdict is nearly right, not quite certain."},{"i":"pc-fake-06","t":"위작","q":"위작도 하우스에 넘길 수 있어요?","Q":"Can I sell a fake back to the house?","k":["하우스넘","위작매입","되팔수","처분","떠넘","넘길수","가짜도팔","위작넘기","떠넘길","처분할","되사주","받아주"],"e":["sell","house","buyback","dump","back","offload","unload","rid","accept","takes"],"a":"넘기시겠다면 창이 열렸을 때 넘길 수는 있어요. 다만 하우스가 쳐주는 값은 그 물건의 진짜 값에서 나옵니다. 위작이면 £15M의 절반 남짓이에요. 하우스는 옷에 속지 않습니다.","b":"넘기겠다면 창 열렸을 때 넘길 순 있어. 다만 하우스가 쳐주는 값은 그 물건 진짜 값에서 나와. 위작이면 £15M의 절반 남짓이야. 하우스는 옷에 안 속아.","n":"You can, when a window is open. But the house prices off the real value, not the costume — for a fake that's a bit over half of £15M."},{"i":"pc-fake-07","t":"위작","q":"진품은 값이 어느 정도예요?","Q":"What is a genuine lot worth?","k":["진품값","진짜값범위","보통얼마","중앙값","260","편차","진품은얼마","진짜물건","평균값","얼마쯤해","값대"],"e":["genuine","typical","median","real","range","worth","authentic","average","typically","usually","true"],"a":"중앙값이 £260M 언저리예요. 다만 편차가 커서 £50M짜리도 £900M짜리도 나옵니다. 위작이 £15M 언저리인 것과 비교하면 두 무리는 아주 멀리 떨어져 있어요.","b":"중앙값이 £260M 언저리야. 편차가 커서 £50M짜리도 £900M짜리도 나오고. 위작이 £15M 언저리인 걸 생각하면 두 무리는 아주 멀리 떨어져 있어.","n":"The median genuine lot runs near £260M, though the spread is wide — anything from £50M to £900M. Fakes sit near £15M, a long way off."},{"i":"pc-est-01","t":"값","q":"공개 감정가가 뭐예요?","Q":"What is the public estimate?","k":["공개감정가","추정가","범위표시","모두에게","표시된값","붙어있","표시된","적힌숫자","카탈로그","가격대","구간이","£표시","숫자두개","위아래"],"e":["public","estimate","printed","catalogue","shown","range","listed","label","numbers","lot"],"a":"물건마다 붙어 있는 '£120M–£340M' 같은 구간이에요. 하우스가 붙이고 넷이 다 같이 봅니다. 진짜 값과 관계가 있긴 하지만 헐겁고, 위작에도 붙습니다.","b":"물건마다 붙어 있는 '£120M–£340M' 같은 구간이야. 하우스가 붙이고 넷이 다 같이 봐. 진짜 값과 관계가 있긴 한데 헐겁고, 위작에도 붙고.","n":"The printed range on each lot — something like £120M–£340M. The house sets it, everyone sees it. It relates to the true value loosely, and fakes get one too."},{"i":"pc-est-02","t":"값","q":"범위 폭이 뭐예요?","Q":"What does the spread mean?","k":["범위폭","스프레드","넓은","좁은","배수","간격","범위넓","폭넓","좁으면","차이가","넓으면","간격이","벌어진"],"e":["spread","width","wide","narrow","ratio","band","wider","narrower","gap","tells","difference"],"a":"공개 감정가의 위 끝을 아래 끝으로 나눈 값이에요. 3배가 넘으면 넓은 편이고, 넓다는 건 하우스도 잘 모르겠다는 뜻입니다. 좁다고 해서 진품이라는 뜻은 아니에요.","b":"공개 감정가 위 끝을 아래 끝으로 나눈 값이야. 3배 넘으면 넓은 편이고, 넓다는 건 하우스도 잘 모르겠다는 뜻이지. 좁다고 진품이라는 뜻은 아니고.","n":"The top of the public estimate divided by the bottom. Over 3× is wide, and wide means the house isn't sure either. Narrow does not mean genuine."},{"i":"pc-est-03","t":"값","q":"공개 감정가를 믿어도 돼요?","Q":"Can I trust the public estimate?","k":["믿어도","신뢰","정확한가","의지","기대도","보고불러","믿을만","그대로믿","보고질러","얼마나맞","참고만","속나"],"e":["trust","reliable","believe","accurate","rely","alone","public","estimate","off","safe","blindly","depend"],"a":"방향은 맞지만 폭이 헐거워요. 게다가 위작 절반 이상이 진품의 구간을 빌려 입고 나옵니다. 공개 감정가만 보고 부르시면 그 옷값까지 내시게 돼요.","b":"방향은 맞는데 폭이 헐거워. 게다가 위작 절반 이상이 진품 구간을 빌려 입고 나오고. 공개 감정가만 보고 부르면 그 옷값까지 내는 거야.","n":"The direction is right, the width isn't tight — and more than half the fakes borrow a genuine lot's range. Bid off the estimate alone and you pay for the costume."},{"i":"pc-est-04","t":"값","q":"공개 중심이 뭐예요?","Q":"What is the midpoint?","k":["공개중심","중심값","기하평균","가운데","중간값","제곱근","가운데값","평균쯤","중앙","한가운데","대표값"],"e":["midpoint","centre","center","geometric","mean","middle","average","root"],"a":"공개 감정가의 아래 끝과 위 끝을 곱해 제곱근을 낸 값이에요. 그냥 평균이 아니라 기하평균입니다. 빠른 입찰 버튼 중 하나가 이 값을 적어 줘요.","b":"공개 감정가 아래 끝이랑 위 끝을 곱해서 제곱근 낸 값이야. 그냥 평균이 아니라 기하평균. 빠른 입찰 버튼 하나가 이 값을 적어 줘.","n":"The square root of the low end times the high end — a geometric mean, not a plain average. One of the quick-bid buttons fills it in."},{"i":"pc-est-05","t":"값","q":"시작가는 어디서 나온 숫자예요?","Q":"Where does the opening price come from?","k":["시작가","어디서나온","산출","하한의","싸구려","뽑아","어디서나와","어떻게뽑","시작금액은","어떻게산출","무작위","난수","낮으면싼"],"e":["opening","set","determined","calculated","drawn","low","random","derived","comes","number"],"a":"공개 감정가 아래 끝의 10%에서 30% 사이에서 뽑아요. 진짜 값은 계산에 들어가지 않습니다. 그러니 시작가가 낮다고 해서 싸구려라는 뜻은 아니에요.","b":"공개 감정가 아래 끝의 10%에서 30% 사이에서 뽑아. 진짜 값은 계산에 안 들어가고. 시작가 낮다고 싸구려라는 뜻은 아니야.","n":"Drawn between 10% and 30% of the low end of the public estimate. The true value never enters that calculation — a low opening price says nothing about worth."},{"i":"pc-est-06","t":"값","q":"왜 값을 미리 안 알려줘요?","Q":"Why isn't the value shown upfront?","k":["왜안알려","미리","숨기","안알려주","공개안","이유","왜숨기","미리알려","처음부터","왜안보여","가려놓","알려주면"],"e":["hide","hidden","tell","upfront","secret","shown","reason","unknown"],"a":"값을 알면 경매가 성립하지 않아서예요. 넷이 같은 숫자를 알고 있으면 아무도 그 위로 부르지 않겠죠. 이 방이 파는 건 물건이 아니라 짐작입니다.","b":"값을 알면 경매가 성립을 안 해서야. 넷이 같은 숫자를 알면 아무도 그 위로 안 부르겠지. 이 방이 파는 건 물건이 아니라 짐작이야.","n":"Because knowing it would end the auction. If all four knew the number, none would bid above it. What this room sells is the guess."},{"i":"pc-est-07","t":"값","q":"진짜 값은 어떻게 정해져요?","Q":"How are the true values generated?","k":["값정해","값어떻게","어떻게정해","분포","총합","전체합","1.3","물건값","진짜값어떻게","진짜값은","실제가치는","스무점","다합치면","전체총합","방안돈","넘치게","어떻게뽑히"],"e":["values","drawn","distribution","total","pool","generated","twenty","sum","chosen","together","ratio"],"a":"물건 하나하나는 따로 뽑히지만, 스무 점의 진짜 값을 다 더하면 방 안 돈의 1.3배쯤이 되도록 맞춰 둡니다. 방에 있는 돈보다 물건이 조금 더 많아요. 그러니 다 사겠다고 나서면 반드시 비싸게 사게 됩니다.","b":"물건 하나하나는 따로 뽑히지만, 스무 점 진짜 값을 다 더하면 방 안 돈의 1.3배쯤 되게 맞춰 둬. 방에 있는 돈보다 물건이 조금 더 많은 거야. 다 사겠다고 나서면 반드시 비싸게 사게 되고.","n":"Each lot is drawn on its own, but the twenty true values are tuned to sum to about 1.3× the money in the room. There are more goods than cash — try to take everything and you will overpay."},{"i":"pc-house-01","t":"하우스","q":"자리세가 뭐예요?","Q":"What is the seat fee?","k":["자리세","수수료","현금깎","떼가","공제","15퍼","15퍼센트","왜깎여","남은돈깎","현금손실","보관료","떼는","자리값","15"],"e":["seat","fee","cut","cash","fifteen","charge","percent","deducted","penalty","leftover","lose"],"a":"폐회 때 남은 현금에서 하우스가 15%를 떼는 몫이에요. 그래서 £100M을 안 쓰고 남기면 £85M으로 계산됩니다. 물건에는 붙지 않고 현금에만 붙어요.","b":"폐회 때 남은 현금에서 하우스가 15% 떼는 몫이야. £100M을 안 쓰고 남기면 £85M으로 계산돼. 물건엔 안 붙고 현금에만 붙고.","n":"The house takes 15% of whatever cash you still hold at the close. Keep £100M and it scores as £85M. It touches cash only, never the lots."},{"i":"pc-house-02","t":"하우스","q":"돈을 안 쓰면 손해예요?","Q":"Is holding cash a mistake?","k":["안쓰면","아끼면","현금보유","보수적","기다리면","손해나","안쓰고","아껴두","현금들고","가만히","버티면","나쁜가","쟁여"],"e":["saving","hold","spend","conservative","hoard","penalty","sitting","keeping","unspent","idle","safe","money","bad","cash","holding","mistake"],"a":"현금으로 들고 계신 £100M은 폐회 때 £85M이 돼요. 그래서 아끼기만 하시면 자리세만큼 확실히 깎입니다. 다만 위작을 사면 £15M이 남으니, 아끼는 쪽이 나은 라운드도 있어요. {이름} 님이 보시기에 그 물건이 어느 쪽인지에 달렸습니다.","b":"현금으로 든 £100M은 폐회 때 £85M이 돼. 아끼기만 하면 자리세만큼 확실히 깎이는 거지. 다만 위작을 사면 £15M이 남으니까 아끼는 쪽이 나은 라운드도 있어. {이름} 눈에 그 물건이 어느 쪽으로 보이냐에 달렸어.","n":"£100M held as cash scores £85M, so sitting still costs you the seat fee for certain. But a fake leaves £15M, so some rounds sitting still is right. It depends what {name} makes of the lot."},{"i":"pc-house-03","t":"하우스","q":"하우스 매입 창이 뭐예요?","Q":"What is the house buyback?","k":["매입창","환매","되사","하우스매입","팔기","넘기기","되사간","되팔수","팔수있","넘길수","매입해","중간정산","창이열"],"e":["buyback","window","sell","house","buys","resale","resell","return","offer","redeem","lot","back"],"a":"하우스가 물건을 되사 주는 시간이에요. 감정을 받아 둔 물건만 넘길 수 있고, 창 한 번에 한 사람이 한 점씩만 넘길 수 있어요.","b":"하우스가 물건을 되사 주는 시간이야. 감정 받아 둔 물건만 넘길 수 있고, 창 한 번에 한 사람이 한 점만 넘길 수 있어.","n":"A window where the house buys lots back. Only appraised lots qualify, and one lot per person per window."},{"i":"pc-house-04","t":"하우스","q":"매입가는 어떻게 정해져요?","Q":"How much does the house pay?","k":["매입가","얼마쳐","58","되사는값","값매기","흥정","얼마에사","얼마쳐줘","매입금액","받는돈","얼마받","헐값"],"e":["price","offer","much","negotiate","pays","haggle","rate","amount","gives"],"a":"그 물건의 진짜 값에서 뽑은 중심값의 58%예요. 흥정은 없고, 싫으시면 안 넘기시면 됩니다. 하우스가 손해 보는 값은 절대 부르지 않아요.","b":"그 물건 진짜 값에서 뽑은 중심값의 58%야. 흥정은 없고, 싫으면 안 넘기면 돼. 하우스가 손해 보는 값은 절대 안 불러.","n":"58% of a midpoint drawn from the lot's real value. No haggling — decline if you like. The house never names a price that loses it money."},{"i":"pc-house-05","t":"하우스","q":"매입 창은 몇 번 열려요?","Q":"How often does the buyback open?","k":["몇번열","언제열","세번","5라운드","10라운드","15라운드","16라운드","언제열려","몇라운드","몇번","기회몇","막판","되팔수있는라운드"],"e":["windows","times","rounds","open","allowed","chances","which","twice","sell"],"a":"세 번이에요. 5라운드, 10라운드, 15라운드가 끝난 뒤에 각각 한 번씩 열립니다. 16라운드부터는 열리지 않아요.","b":"세 번이야. 5라운드, 10라운드, 15라운드 끝난 뒤에 한 번씩. 16라운드부터는 안 열려.","n":"Three times — after rounds 5, 10 and 15. Nothing opens from round 16 on."},{"i":"pc-house-06","t":"하우스","q":"하우스의 몫이 뭐예요?","Q":"How does the house make money?","k":["하우스몫","하우스수익","어디서벌","네갈래","하우스가져","뭘먹고","어떻게벌","수익원","남기는","챙기","벌이"],"e":["house","earns","profit","take","revenue","makes","profits","income","earn","money","gains"],"a":"네 갈래예요. 낙찰가 전부, 감정료 £10M씩, 남은 현금의 15%, 그리고 유찰된 물건. 하우스는 물건을 사지 않으니 손해 볼 자리도 없습니다.","b":"네 갈래야. 낙찰가 전부, 감정료 £10M씩, 남은 현금 15%, 그리고 유찰된 물건. 하우스는 물건을 안 사니까 손해 볼 자리도 없고.","n":"Four streams: every hammer price, every £10M appraisal fee, 15% of leftover cash, and whatever goes unsold. The house never buys, so it never loses."},{"i":"pc-house-07","t":"하우스","q":"하우스를 이길 수 있어요?","Q":"Can the house be beaten?","k":["하우스이길","이길수","꺾을","넘어서","가능한가","이겨본","이길수있","앞설수","넘어설","가능해","해본사람","이겨본적"],"e":["beat","possible","against","ever","outscore","ahead","better","anyone","finish"],"a":"하우스보다 많이 가져가신 판이 없지는 않아요. 다만 하우스는 짐작을 하지 않기 때문에 위작을 사지도, 비싸게 사지도 않습니다. 하우스를 넘어서려면 스무 라운드 내내 값을 {이름} 님 쪽이 더 잘 보셔야 해요.","b":"하우스보다 많이 가져간 판이 없진 않아. 다만 하우스는 짐작을 안 하니까 위작을 사지도, 비싸게 사지도 않지. 하우스를 넘어서려면 스무 라운드 내내 {이름} 눈이 더 정확해야 해.","n":"It has been done. But the house never guesses, so it never buys a fake and never overpays — beating it means {name} reading the values better for all twenty rounds."},{"i":"pc-house-08","t":"하우스","q":"유찰된 물건은 어디로 가요?","Q":"Where do unsold lots go?","k":["유찰된","안팔린","어디로","거둬","사라지","다시나오","유찰되면","어디가","사라지나","다시나와","남은물건"],"e":["unsold","where","goes","kept","again","returns","nobody","buys","happens","withdrawn","gone"],"a":"하우스가 거둬 갑니다. 폐회 때 그 값은 하우스의 몫으로 잡히고, 같은 물건이 다시 올라오는 일은 없어요.","b":"하우스가 거둬 가. 폐회 때 그 값은 하우스 몫으로 잡히고, 같은 물건이 다시 올라오는 일은 없어.","n":"The house keeps them. Their value counts to the house at the close, and the same lot never comes up twice."},{"i":"pc-room-01","t":"방","q":"방이 몇 개예요?","Q":"How many rooms are there?","k":["방이몇","방종류","난이도종류","네개방","고를수","목록","방몇개","난이도몇","종류가","어떤방","고르는","선택지"],"e":["rooms","difficulty","levels","choose","options","tables","settings","modes","pick"],"a":"네 개예요. EASY, NORMAL, HARD, BRUTAL. 규칙은 넷 다 똑같고, 다른 건 같이 앉는 응찰자 셋의 성격뿐입니다.","b":"네 개야. EASY, NORMAL, HARD, BRUTAL. 규칙은 넷 다 똑같고, 다른 건 같이 앉는 응찰자 셋의 성격뿐이야.","n":"Four: EASY, NORMAL, HARD, BRUTAL. The rules are identical in all of them — only the three bidders beside you change."},{"i":"pc-room-02","t":"방","q":"EASY 방은 뭐가 달라요?","Q":"What is different about EASY?","k":["쉬운방","초보","제일쉬운","무른","순한","험하게","초보방","무슨차이","더쉬운","만만한","연습"],"e":["easy","easiest","beginner","softest","weak","easier","gentle","newcomer","safer"],"a":"값을 험하게 부르는 응찰자들이 앉아요. 감정을 거의 사지 않고, 마음 가는 대로 높게 부르다가 스스로 손해를 봅니다. 규칙을 익히시기에는 이 방이 편해요.","b":"값을 험하게 부르는 응찰자들이 앉아. 감정을 거의 안 사고, 마음 가는 대로 높게 부르다가 스스로 손해를 보지. 규칙 익히기엔 이 방이 편해.","n":"The bidders here are reckless. They rarely appraise and bid high on impulse, which costs them. A good room for learning the rules."},{"i":"pc-room-03","t":"방","q":"BRUTAL 방은 뭐가 달라요?","Q":"What is different about BRUTAL?","k":["제일어려운","어려운방","최고난도","독한","무서운","깎아부","제일어려","가장힘든","지독한","빡센","어렵나"],"e":["brutal","hardest","toughest","difficult","hard","harshest","meanest","worst","nastiest"],"a":"감정을 자주 사고 깎아 부르는 응찰자들이 앉아요. 위작에 잘 걸리지 않고, 진품이 확실할 때는 값을 세게 붙입니다. 열 판을 하시면 두 판쯤 1등을 하시게 될 거예요.","b":"감정을 자주 사고 깎아 부르는 응찰자들이 앉아. 위작에 잘 안 걸리고, 진품이 확실할 땐 값을 세게 붙이지. 열 판 하면 두 판쯤 1등 할 거야.","n":"These bidders appraise often and shade their bids. They rarely eat a fake, and they push hard when a lot is certainly genuine. Expect to place first about twice in ten."},{"i":"pc-room-04","t":"방","q":"상대가 제 입찰을 읽어요?","Q":"Do the opponents read my play?","k":["읽어","읽나","패턴","눈치","심리전","낚을","낚이","속일수","패턴읽","기억하나","분석하나","적응","내버릇","학습","눈치채"],"e":["read","reads","adapt","bluff","pattern","learn","track","remember","adjust","model","watching"],"a":"읽지 않아요. 응찰자 셋은 {이름} 님이 앞 라운드에 무엇을 하셨는지 보지 않습니다. 그러니 낚을 수도 없고, 낚일 걱정도 없어요. 이 방의 상대는 사람이 아니라 값입니다.","b":"안 읽어. 응찰자 셋은 {이름} 앞 라운드가 어땠는지 안 봐. 낚을 수도 없고 낚일 걱정도 없지. 이 방의 상대는 사람이 아니라 값이야.","n":"They don't. The three bidders never look at what {name} did in earlier rounds, so there is nothing to bluff and nothing to fear. Your opponent here is the number, not the people."},{"i":"pc-room-05","t":"방","q":"상대가 제 잔액을 봐요?","Q":"Can the others see my balance?","k":["잔액보","잔액공개","좌석표","내정보","보이나","감정횟수","잔액보이","내돈보","남들이봐","정보노출","가려지","드러나나"],"e":["balance","cash","see","visible","seat","card","money","hidden","private","panel","know","others"],"a":"좌석표에 잔액과 감정 횟수가 모두에게 보여요. 넷 다 마찬가지입니다. 끝까지 감춰지는 건 감정에서 본 폭과 각자 적은 입찰가뿐이에요.","b":"좌석표에 잔액이랑 감정 횟수가 다 보여. 넷 다 마찬가지야. 끝까지 감춰지는 건 감정에서 본 폭이랑 각자 적은 입찰가뿐이고.","n":"Balances and appraisal counts sit on the seat cards for everyone, yours included. Only the bands you paid for and the numbers you wrote stay hidden."},{"i":"pc-room-06","t":"방","q":"방을 바꾸면 뭐가 달라져요?","Q":"What changes if I switch rooms?","k":["방바꾸","바꾸면","달라지","변화","물건도바뀌","확률달라","뭐가달라","차이점","물건도","값도달라","봇만"],"e":["change","switch","different","affect","lots","harder","between","differs","affects","apart","else"],"a":"응찰자 셋만 바뀝니다. 물건도, 위작 비율도, 자리세도, 감정료도 넷 다 같아요. 어려운 방이란 물건이 더 험한 방이 아니라 옆자리가 더 잘 보는 방이에요.","b":"응찰자 셋만 바뀌어. 물건도, 위작 비율도, 자리세도, 감정료도 넷 다 같아. 어려운 방이란 물건이 험한 방이 아니라 옆자리가 더 잘 보는 방이야.","n":"Only the three bidders. Same lots, same fake rate, same seat fee, same appraisal fee. A hard room isn't harsher goods — it's sharper neighbours."},{"i":"pc-rec-01","t":"기록","q":"제 전적은 어디서 봐요?","Q":"Where can I see my record?","k":["전적","기록어디","내기록","성적","이력","쌓이","어디서봐","확인하는","내성적","통계","누적","보관"],"e":["record","stats","history","where","results","past","profile","find","kept"],"a":"이 페이지 아래쪽 기록 칸에 있어요. 로그인하시면 {이름} 님의 전적이 방별로 쌓입니다.","b":"이 페이지 아래쪽 기록 칸에 있어. 로그인하면 {이름} 전적이 방별로 쌓여.","n":"In the record panel further down this page. Sign in and {name}'s games stack up room by room."},{"i":"pc-rec-02","t":"기록","q":"로그인 안 하면 기록이 안 남아요?","Q":"Is my game saved if I'm not signed in?","k":["로그인안","기록안남","저장","비회원","계정없","사라지","로그인안하","저장되나","남나요","계정","기록남","없어지"],"e":["signed","login","saved","account","without","lost","stored","anonymous","guest","keep","kept","log","results"],"a":"안 남아요. 판은 그대로 치르실 수 있지만 끝나면 사라집니다. 로그인하시면 그때부터 쌓여요.","b":"안 남아. 판은 그대로 칠 수 있는데 끝나면 사라져. 로그인하면 그때부터 쌓이고.","n":"No. You can play the full game, but it vanishes at the close. Sign in and it starts keeping."},{"i":"pc-rec-03","t":"기록","q":"1등률이 뭐예요?","Q":"What does the first-place rate mean?","k":["1등률","등수","순위","일등률","비율","25","1등률뭐","어떻게세","무슨뜻이","계산법","몇판중","표시숫자"],"e":["first","rate","place","percent","ranking","means","counted","measures","topped"],"a":"치른 판 중에 1등으로 마친 비율이에요. 네 자리니까 아무렇게나 앉아도 25%가 기준이 됩니다. 그보다 높으면 값을 잘 보고 계신 거예요.","b":"치른 판 중에 1등으로 마친 비율이야. 네 자리니까 아무렇게나 앉아도 25%가 기준이야. 그보다 높으면 값을 잘 보고 있는 거고.","n":"The share of your games that ended in first place. Four seats means 25% is the coin-flip line — above it, you're reading values well."},{"i":"pc-rec-04","t":"기록","q":"하우스보다 많이 가져간 판이 뭐예요?","Q":"What does outscoring the house mean?","k":["하우스보다","많이가져","하우스초과","이긴판","넘은판","많이가져간","하우스보다많","무슨판","기준이","어떤경우","초과"],"e":["outscored","house","beat","games","than","outscoring","counts","ahead","means","better"],"a":"폐회 때 {이름} 님의 점수가 하우스의 몫보다 컸던 판이에요. 흔하지 않습니다. 하우스는 낙찰가와 감정료와 자리세를 모두 챙기니까요.","b":"폐회 때 {이름} 점수가 하우스 몫보다 컸던 판이야. 흔하지 않아. 하우스는 낙찰가랑 감정료랑 자리세를 다 챙기니까.","n":"Games where {name}'s final score came out above the house's take. They're rare — the house collects every hammer price, every fee, and the seat cut."},{"i":"pc-meta-01","t":"메타","q":"이 게임 누가 만들었어요?","Q":"Who made this game?","k":["누가만들","제작자","만든사람","개발자","여행자0001","누가만든","개발한","어디서만든","만든이","제작","팀이"],"e":["made","built","created","author","developer","whose","wrote","behind","designer"],"a":"여행자 #0001이에요. 이 집의 게임을 다 그분이 지었어요. 저도 그분이 세워 둔 안내입니다.","b":"여행자 #0001이야. 이 집 게임을 다 그분이 지었어. 나도 그분이 세워 둔 안내고.","n":"Traveller #0001. Every game in this house is theirs — I'm one of the fixtures they left behind."},{"i":"pc-meta-02","t":"메타","q":"피로스가 무슨 뜻이에요?","Q":"What does Pyrrhus mean?","k":["피로스","이름뜻","무슨뜻","유래","작명","상호","왜피로스","이름이","뜻이뭐","어원","붙였","왜그이름"],"e":["pyrrhus","name","means","called","origin","pyrrhic","title","refers","victory"],"a":"피로스의 승리에서 온 이름이에요. 이겼는데 남는 게 없는 승리를 그렇게 부릅니다. 경매장이 제 이름으로 그걸 미리 말해 두고 있는 셈이에요.","b":"피로스의 승리에서 온 이름이야. 이겼는데 남는 게 없는 승리를 그렇게 부르지. 경매장이 제 이름으로 그걸 미리 말해 두고 있는 셈이고.","n":"From a Pyrrhic victory — a win that leaves you with nothing. The house says so in its own name before you sit down."},{"i":"pc-meta-03","t":"메타","q":"실제 경매랑 같아요?","Q":"Is this like a real auction?","k":["실제경매","현실","진짜경매","비슷한가","유전","주파수","진짜경매도","현실에서","실제로도","고증","똑같아","비슷해"],"e":["real","actual","auctions","life","world","spectrum","realistic","accurate","houses","sothebys","like"],"a":"밀봉 1차가격 방식은 유전 광구나 주파수를 나눌 때 실제로 씁니다. 승자의 저주도 그 자리에서 나온 진짜 용어예요. 다만 위작 비율이나 자리세 같은 숫자는 이 방에서 정한 것입니다.","b":"밀봉 1차가격 방식은 유전 광구나 주파수 나눌 때 실제로 써. 승자의 저주도 거기서 나온 진짜 용어고. 다만 위작 비율이나 자리세 같은 숫자는 이 방에서 정한 거야.","n":"Sealed first-price auctions really are used for oil tracts and spectrum, and the winner's curse is a real term from exactly those sales. The fake rate and seat fee, though, are this room's own."},{"i":"pc-meta-04","t":"메타","q":"다른 게임도 있어요?","Q":"Are there other games?","k":["다른게임","또있","놀이터","playhouse","다른것","목록","다른것도","또뭐있","게임목록","뭐가더","다른놀이"],"e":["other","games","else","playhouse","others","available","site","list"],"a":"있어요. 이 집의 PLAYHOUSE에 다른 방들이 있습니다. 저는 그 방들에도 서 있어요.","b":"있어. 이 집 PLAYHOUSE에 다른 방들이 있어. 나는 그 방들에도 서 있고.","n":"There are. The PLAYHOUSE holds the other rooms of this house — I keep a desk in those too."}];
+const PANEL_TRIG=[[["어떻게하는","몇라운드","라운드","예산","최종점수","참가","승자의저주","저주","공통가치","전체규칙","규칙표","밀봉","play","rounds","budget","score","players","curse","sealed","손해","bidders","cash"],"기본"],[["감정","정밀감정","감정료","소견","appraisal","appraise","appraised","appraising","verdict","band"],"감정"],[["위작","가짜","위조","옷을","counterfeit","fake","fakes","forgery","forged","disguise"],"위작"],[["감정가","공개중심","공개하한","범위폭","스프레드","추정가","실가치","시작가","기하평균","estimate","estimates","spread","opening","midpoint","truevalue"],"값"],[["입찰","응찰","기권","동점","밀봉","낙찰","전액","올인","빠른입찰","시작가","bid","bids","bidding","tie","pass","sealed","hammer","opening","starting"],"입찰"],[["하우스","자리세","매입","유찰","수수료","환매","house","seat","fee","buyback","window","unsold","cut","손해","되팔","되사","라운드","sell","resell","rounds","cash"],"하우스"],[["방이","난이도","easy","normal","hard","brutal","상대가","같이앉","room","rooms","difficulty","opponent","opponents"],"방"],[["전적","기록","승률","1등률","등수","순위","record","records","stats","rate","percentile","하우스보다","outscor"],"기록"],[["만든","제작","개발","피로스","유래","작명","실제경매","made","built","created","author","real"],"메타"]];
+const PANEL_STARTERS=["pc-basic-01","pc-bid-01","pc-appr-01","pc-fake-01","pc-est-01","pc-house-01","pc-room-01","pc-rec-01"];
+// ── EARENDEL 룰 라우터 v1 : 키워드 + 표제질문 유사도 매처 (모델 없음) ──
+// 페이지와 테스트가 같은 소스를 쓴다.
+function buildMatcher(CARDS, P){
+  P = P || {};
+  var W_KW    = P.W_KW    !== undefined ? P.W_KW    : 1.0;   // 키워드 가중
+  var W_SIM   = P.W_SIM   !== undefined ? P.W_SIM   : 5.0;   // 표제질문 유사도 가중
+  var OFFTOP  = P.OFFTOP  !== undefined ? P.OFFTOP  : 0.5;   // 주제 밖 카드 감쇠
+  var THRESH  = P.THRESH  !== undefined ? P.THRESH  : 2.4;   // 미매칭 컷
+  var H1      = P.H1      !== undefined ? P.H1      : 0.8;   // 한 글자 한글 키워드 감쇠
+  var W_ANS   = P.W_ANS   !== undefined ? P.W_ANS   : 0.7;   // 답변문 유사도 할인
+  var LMIN    = P.LMIN    !== undefined ? P.LMIN    : 0.45;  // 짧은 질의 컷 완화 하한
+  var W_OVL   = P.W_OVL   !== undefined ? P.W_OVL   : 0.55;  // 포함계수(overlap) 성분 비중
+
+  var N = CARDS.length;
+  var HAN = /[가-힣]/;
+
+  // 주제 트리거: 질의에 이 말이 있으면 해당 topic 카드만 정상 가중
+  var TRIG = P.TRIG || [
+    [['레버리지','배수','2배','3배','2x','3x','leverage','leveraged'], '레버리지'],
+    [['인버스','inverse','inverted','반전','뒤집'], '인버스'],
+    [['팟','pot'], '팟'],
+    [['원장','ledger','추론'], '원장'],
+    [['난이도','미스터','마켓','mrmarket','전무','인턴','애널리스트','difficulty','difficulties','intern','analyst','director'], '난이도'],
+    [['전적','승률','순위','상위','퍼센','기록','record','records','percentile','rank','ranking','winrate','saved'], '기록'],
+    [['만든','제작','개발','따라','made','built','created','author','based','inspired'], '메타']
+  ];
+
+  function norm(s){ return String(s||'').toLowerCase().replace(/[^0-9a-z가-힣]+/g,''); }
+  function toks(s){ return String(s||'').toLowerCase().replace(/[^0-9a-z가-힣]+/g,' ').split(' ').filter(Boolean); }
+  function bigrams(s){
+    var o = {}, n = 0;
+    if(s.length === 1){ o[s] = 1; return {g:o, n:1}; }
+    for(var i=0;i<s.length-1;i++){ var g=s.slice(i,i+2); if(!o[g]){ o[g]=1; n++; } }
+    return {g:o, n:n};
+  }
+  function sim2(a, b){
+    if(!a.n || !b.n) return {d:0, o:0};
+    var hit = 0;
+    for(var g in a.g) if(b.g[g]) hit++;
+    // 분모 하한 2: 바이그램이 하나뿐인 질의가 overlap 1.0을 공짜로 받는 걸 막는다
+    return { d: 2*hit/(a.n + b.n), o: hit/Math.max(3, Math.min(a.n, b.n)) };
+  }
+  function blend(a, b){ var r = sim2(a,b); return (1-W_OVL)*r.d + W_OVL*r.o; }
+
+  // 한국어 요청 접미사: 의미는 없는데 문자열만 길게 만들어 컷을 올리고 유사도를 희석한다.
+  // 질의와 표제질문 양쪽에 똑같이 적용해야 '이길 방법 좀 알려주세요.' 같은 표제가 손해를 안 본다.
+  var TAIL = /(알려주세요|알려주실래요|알려줄래요|알려줘요|알려줘|알려줄래|알려주라|알려다오|설명해주세요|설명해줘요|설명해줘|설명좀|가르쳐주세요|가르쳐줘요|가르쳐줘|말해주세요|말해줘요|말해줘|궁금해요|궁금해|궁금합니다|부탁드려요|부탁드립니다|부탁해요|부탁해|해주세요|해주실래요|해줄래요|해줘요|해줘|해주라|해야돼요|해야돼|해야해요|해야해|해야하나요|해야되나요|해야될까요|해야하죠|해야되죠|해야좋아요|해야좋나요|어떻게)$/;
+  function strip(s){
+    for(var i=0;i<3;i++){
+      var t = s.replace(TAIL,'').replace(/좀$/,'');
+      if(t === s || t.length < 1) return s;
+      s = t;
+    }
+    return s;
+  }
+
+  // df
+  var df = {};
+  CARDS.forEach(function(c){
+    var seen = {};
+    c.k.concat(c.e).forEach(function(w){ if(!seen[w]){ seen[w]=1; df[w]=(df[w]||0)+1; } });
+  });
+  var LOGN = Math.log(1+N);
+  function wgt(w){
+    var lf = w.length >= 3 ? 1 : (w.length === 2 ? 0.8 : (HAN.test(w) ? H1 : 0.55));
+    var id = 0.45 + 0.75 * Math.log(1 + N/(df[w]||1)) / LOGN;   // idf를 완만하게
+    return lf * id;
+  }
+
+  // 카드 전처리
+  var IDX = CARDS.map(function(c){
+    var qk = strip(norm(c.q)), qe = norm(c.Q);
+    return {
+      c: c,
+      bK: bigrams(qk),
+      bA: bigrams(norm(String(c.a).replace(/\{이름\}|\{name\}/g,' '))),
+      bE: bigrams(qe),
+      tE: toks(c.Q + ' ' + c.e.join(' '))
+    };
+  });
+
+  function hit(qn, qt, w){
+    if(!w) return 0;
+    var base = wgt(w);
+    if(HAN.test(w) || /^[0-9]+$/.test(w)){
+      if(w.length === 1){
+        for(var i=0;i<qt.length;i++){ if(qt[i].indexOf(w)===0) return base; }
+        return 0;
+      }
+      return qn.indexOf(w) >= 0 ? base : 0;
+    }
+    for(var j=0;j<qt.length;j++){
+      var t = qt[j];
+      if(t === w) return base;
+      // 'ai가', 'monty홀' 처럼 라틴 낱말에 조사가 붙은 토큰
+      if(t.length > w.length && t.indexOf(w) === 0 && HAN.test(t.charAt(w.length))) return base;
+      if(w.length >= 4 && t.length >= 4 && (t.indexOf(w)===0 || w.indexOf(t)===0) && Math.abs(t.length-w.length) <= 3) return base*0.8;
+    }
+    return 0;
+  }
+
+  return function match(q){
+    var raw = norm(q), qt = toks(q);
+    if(raw.length < 2) return null;          // 한 글자 질의는 원문 기준으로 버린다
+    var qn = strip(raw) || raw;
+    var qb = bigrams(qn);
+
+    // 주제 판정
+    var topics = {}, any = false;
+    for(var t=0;t<TRIG.length;t++){
+      for(var w=0;w<TRIG[t][0].length;w++){
+        if(qn.indexOf(norm(TRIG[t][0][w])) >= 0){ topics[TRIG[t][1]] = 1; any = true; break; }
+      }
+    }
+
+    var all = [];
+    for(var i=0;i<IDX.length;i++){
+      var x = IDX[i], c = x.c, s = 0;
+      for(var a=0;a<c.k.length;a++) s += hit(qn, qt, c.k[a]);
+      for(var b=0;b<c.e.length;b++) s += hit(qn, qt, c.e[b]);
+      s *= W_KW;
+
+      // 표제질문 유사도 (KR 바이그램 / EN 토큰 자카드 중 큰 쪽)
+      var simK = Math.max(blend(qb, x.bK), W_ANS * blend(qb, x.bA));
+      var jac = 0;
+      if(qt.length){
+        var hitn = 0, seen = {};
+        for(var u=0;u<qt.length;u++){
+          if(seen[qt[u]]) continue; seen[qt[u]] = 1;
+          if(x.tE.indexOf(qt[u]) >= 0) hitn++;
+        }
+        jac = hitn / Math.max(qt.length, 3);
+      }
+      s += W_SIM * Math.max(simK, jac * 0.55);
+
+      if(any && !topics[c.t]) s *= OFFTOP;
+      all.push({card:c, score:s});
+    }
+    all.sort(function(a,b){ return b.score - a.score; });
+    var cut = THRESH * Math.min(1, Math.max(LMIN, LMIN + (1-LMIN)*(qb.n-2)/5));
+    var near = all.slice(0,3).filter(function(r){ return r.score > cut*0.45; }).map(function(r){ return r.card; });
+    if(!all.length || all[0].score < cut) return { card:null, score: all.length?all[0].score:0, near: near };
+    return { card: all[0].card, score: all[0].score, margin: all[0].score - (all[1]?all[1].score:0),
+             conf: all[0].score >= cut*1.45 ? 'hi' : 'mid', near: near };
+  };
+}
+
+var CFG = {W_SIM:3, OFFTOP:0.5, H1:0.8, LMIN:0.45, W_ANS:0.6, W_OVL:0.3, THRESH:2.0};
+if(typeof PANEL_TRIG !== 'undefined') CFG.TRIG = PANEL_TRIG;   // 카드 파일이 주제표를 주면 그걸 쓴다
+var match = buildMatcher(CARDS, CFG);
+
+var T = {
+  ph:      {en:"Ask about the rules", kr:"규칙에 대해 물어보세요"},
+  btn:     {en:"Ask", kr:"묻기"},
+  foot:    {en:"Rule answers are read from a fixed card set, word for word. Nothing is generated.",
+            kr:"규칙 답변은 고정된 카드에서 그대로 읽어옵니다. 지어내지 않아요."},
+  hintMore:{en:"You could also ask", kr:"이런 것도 물어볼 수 있어요", kr1:"이런 것도 있어"},
+  hintNear:{en:"Did you mean one of these?", kr:"이거였을까요?", kr1:"이거였어?"},
+  missKr0: "그건 제가 모르는 거예요. 개회 화면의 규칙표에 있을지도 몰라요.",
+  missKr1: "그건 나도 몰라. 개회 화면 규칙표 봐.",
+  missEn:  "I don't have that one. Try the rules table on the opening screen."
+};
+function t(k){ var o=T[k]; return (LANG==='kr') ? o.kr : o.en; }
+function t1(k){ var o=T[k]; return (LANG==='kr') ? (lv()===1 && o.kr1 ? o.kr1 : o.kr) : o.en; }
+
+// ── 여행자 번호: 게임 로직과 같은 guest id 를 쓴다 ──
+function guestId(){
+  try{
+    var g = localStorage.getItem('kyg_guest_id');
+    if(!g){
+      g = (window.crypto && crypto.randomUUID) ? crypto.randomUUID()
+        : 'g'+Date.now()+'-'+Math.random().toString(16).slice(2);
+      localStorage.setItem('kyg_guest_id', g);
+    }
+    return g;
+  }catch(e){ return 'anon'; }
+}
+function travNum(){
+  var g = guestId(), h = 0;
+  for(var i=0;i<g.length;i++){ h = (h*31 + g.charCodeAt(i)) >>> 0; }
+  return 1000 + (h % 9000);              // #0001 은 여행자 #0001 의 것이라 나오지 않는다
+}
+function lv(){
+  var A = window.KYG_AUTH;
+  return (A && A.user && A.nickname) ? 1 : 0;
+}
+function named(){ try{ return localStorage.getItem('kyg_ear_named') === '1'; }catch(e){ return false; } }
+function markNamed(){ try{ localStorage.setItem('kyg_ear_named','1'); }catch(e){} }
+
+// ── 대사 ──
+var NAMED_NOW = false;                          // 이번 방문에서 작명 이벤트가 일어났는가
+function greetLines(){
+  // 이미 이름을 아는 상대에게 번호를 다시 붙이지 않는다
+  if(lv() === 1 && named() && !NAMED_NOW){
+    var A = window.KYG_AUTH, n = (A && A.nickname) ? A.nickname : '';
+    if(LANG === 'kr'){ return [n + '.', '또 왔네. 규칙은 물어보면 알려줄게.']; }
+    return [n + '.', "Back again. Ask and I'll tell you."];
+  }
+  if(LANG === 'kr'){
+    return ['여행자 #' + travNum() + '.',
+            '에어렌들이에요. 여기 안내를 맡고 있어요.',
+            '규칙은 물어보면 알려드릴게요. 나머지는 직접 하셔야 하고요.'];
+  }
+  return ['Traveller #' + travNum() + '.',
+          'Earendel. I keep the rules desk here.',
+          "Ask and I'll tell you. The rest is yours to do."];
+}
+function nameLines(){
+  var A = window.KYG_AUTH, n = (A && A.nickname) ? A.nickname : '';
+  if(LANG === 'kr'){
+    return [n + '.', '이제 번호로 안 불러도 되네.', '렌이라고 불러도 돼. 다들 그렇게는 안 부르지만.'];
+  }
+  return [n + '.', 'No more numbers, then.', "You can call me Ren. Most people don't."];
+}
+// ── {이름}/{name} 치환: 카드 원문에 호명 자리를 남겨두고 출력 직전에 채운다 ──
+function whoName(){
+  var A = window.KYG_AUTH;
+  if(lv() === 1 && A && A.nickname) return A.nickname;
+  return (LANG === 'kr' ? '여행자 #' : 'Traveller #') + travNum();
+}
+function fillName(s){ return String(s).replace(/\{이름\}|\{name\}/g, whoName()); }
+function answerOf(c){
+  if(LANG !== 'kr') return fillName(c.n);
+  return fillName(lv() === 1 ? c.b : c.a);
+}
+function missLine(){
+  if(LANG !== 'kr') return T.missEn;
+  return lv() === 1 ? T.missKr1 : T.missKr0;
+}
+function qOf(c){ return LANG === 'kr' ? c.q : c.Q; }
+
+// ── 로그 (언어 전환 시 다시 그릴 수 있게 구조로 보관) ──
+var LOG = [];                                   // {k:'greet'|'name'|'q'|'a'|'miss', v}
+var CHIPS = { mode:'more', ids:[] };
+
+var STARTERS = (typeof PANEL_STARTERS !== 'undefined') ? PANEL_STARTERS
+  : ['pc-basic-01','pc-bid-01','pc-appr-01','pc-fake-01','pc-est-01','pc-house-01','pc-room-01','pc-rec-01'];
+var byId = {}; CARDS.forEach(function(c){ byId[c.i] = c; });
+
+function esc(s){ return String(s).replace(/[&<>"]/g, function(ch){
+  return ch==='&'?'&amp;':ch==='<'?'&lt;':ch==='>'?'&gt;':'&quot;'; }); }
+
+function renderLog(){
+  var el = $('askLog'), h = '';
+  LOG.forEach(function(e){
+    if(e.k === 'q'){ h += '<div class="q">' + esc(e.v) + '</div>'; }
+    else if(e.k === 'a'){ h += '<div class="a">' + esc(answerOf(byId[e.v])) + '</div>'; }
+    else if(e.k === 'miss'){ h += '<div class="a">' + esc(missLine()) + '</div>'; }
+    else if(e.k === 'greet'){ greetLines().forEach(function(l){ h += '<div class="a">' + esc(l) + '</div>'; }); }
+    else if(e.k === 'name'){ nameLines().forEach(function(l){ h += '<div class="a">' + esc(l) + '</div>'; }); }
+  });
+  el.innerHTML = h;
+  el.scrollTop = el.scrollHeight;
+}
+function renderChips(){
+  var el = $('askChips'), ids = CHIPS.ids.filter(function(i){ return byId[i]; });
+  if(!ids.length){ el.innerHTML = ''; return; }
+  var hint = CHIPS.mode === 'near' ? t1('hintNear') : t1('hintMore');
+  el.innerHTML = '<div class="ask-hint">' + esc(hint) + '</div>'
+    + ids.map(function(i){ return '<button type="button" class="ask-chip" data-cid="' + i + '">'
+        + esc(qOf(byId[i])) + '</button>'; }).join('');
+}
+function renderChrome(){
+  $('askInput').placeholder = t('ph');
+  $('askFoot').textContent = t('foot');
+}
+function renderAll(){ renderChrome(); renderLog(); renderChips(); renderSetupChips(); renderTierChip(); }
+
+// ── 후속 칩: 같은 주제의 다른 질문 ──
+function followUps(card){
+  var out = [];
+  for(var i=0;i<CARDS.length && out.length<3;i++){
+    if(CARDS[i].t === card.t && CARDS[i].i !== card.i) out.push(CARDS[i].i);
+  }
+  if(out.length < 3){
+    for(var j=0;j<STARTERS.length && out.length<3;j++){
+      if(STARTERS[j] !== card.i && out.indexOf(STARTERS[j]) < 0) out.push(STARTERS[j]);
+    }
+  }
+  return out;
+}
+
+function ask(q){
+  q = String(q||'').trim();
+  if(!q) return;
+  LOG.push({k:'q', v:q});
+  var r = match(q);
+  if(r && r.card){
+    LOG.push({k:'a', v:r.card.i});
+    if(r.conf === 'hi'){ CHIPS = {mode:'more', ids: followUps(r.card)}; }
+    else {
+      CHIPS = {mode:'near', ids: r.near.filter(function(c){ return c.i !== r.card.i; })
+                                       .slice(0,3).map(function(c){ return c.i; })};
+      if(!CHIPS.ids.length) CHIPS = {mode:'more', ids: followUps(r.card)};
+    }
+  } else {
+    LOG.push({k:'miss'});
+    var near = (r && r.near) ? r.near.slice(0,3).map(function(c){ return c.i; }) : [];
+    CHIPS = near.length ? {mode:'near', ids:near} : {mode:'more', ids:STARTERS.slice(0,4)};
+  }
+  if(LOG.length > 40) LOG = LOG.slice(-40);
+  renderLog(); renderChips();
+}
+
+// ── 배선 ──
+$('askBtn').addEventListener('click', function(){
+  var v = $('askInput').value; $('askInput').value = ''; ask(v);
+});
+$('askInput').addEventListener('keydown', function(e){
+  if(e.key === 'Enter'){ e.preventDefault(); $('askBtn').click(); }
+});
+$('askChips').addEventListener('click', function(e){
+  var b = e.target.closest ? e.target.closest('.ask-chip') : null;
+  if(!b) return;
+  var c = byId[b.getAttribute('data-cid')];
+  if(c) ask(qOf(c));
+});
+
+window.APP_LANG_LISTENERS = window.APP_LANG_LISTENERS || [];
+window.APP_LANG_LISTENERS.push(function(lang){ LANG = lang; renderAll(); });
+
+window.KYG_AUTH_LISTENERS = window.KYG_AUTH_LISTENERS || [];
+window.KYG_AUTH_LISTENERS.push(function(user, nickname){
+  if(user && nickname && !named()){
+    markNamed();
+    NAMED_NOW = true;                          // 인사는 L0 그대로 두고, 그 뒤에 작명이 온다
+    LOG.push({k:'name'});
+    CHIPS = {mode:'more', ids: STARTERS.slice(0,4)};
+    renderLog(); renderChips();
+  } else { renderLog(); renderChips(); }   // 말씨 축이 바뀌면 기존 답변도 다시 읽는다
+});
+
+// ── 셋업 화면 진입점: 규칙 요약 아래 한 줄 + 난이도별 맥락 칩 ──
+// 칩 문구는 카드 표제질문을 그대로 읽어 쓴다 — 복사본을 두면 카드를 고쳐도 여기가 안 따라온다.
+var SETUP_CHIPS = ['pc-bid-08','pc-appr-01','pc-fake-02'];
+var TIER_CARD   = {EASY:'pc-room-02',NORMAL:'pc-room-06',HARD:'pc-room-06',BRUTAL:'pc-room-03'};
+var curTier = (function(){ var b = document.querySelector('#tier-row .tier.on'); return b ? b.getAttribute('data-tier') : null; })();
+
+function goAsk(card){
+  var box = document.getElementById('ask');
+  if(box && box.scrollIntoView) box.scrollIntoView({block:'start'});
+  ask(qOf(card));
+}
+function renderSetupChips(){
+  var el = $('setupAskChips'); if(!el) return;
+  el.innerHTML = SETUP_CHIPS.filter(function(i){ return byId[i]; }).map(function(i){
+    return '<button type="button" class="ask-chip" data-cid="' + i + '">' + esc(qOf(byId[i])) + '</button>';
+  }).join('');
+}
+function renderTierChip(){
+  var el = $('tierAskChip'); if(!el) return;
+  var id = TIER_CARD[curTier];
+  if(id && byId[id]){ el.textContent = qOf(byId[id]); el.setAttribute('data-cid', id); el.hidden = false; }
+  else { el.removeAttribute('data-cid'); el.hidden = true; }
+}
+(function(){
+  var row = document.getElementById('tier-row');
+  if(row) row.addEventListener('click', function(e){
+    var b = e.target && e.target.closest ? e.target.closest('.tier') : null;
+    if(!b) return;
+    curTier = b.getAttribute('data-tier'); renderTierChip();
+  });
+  var strip = document.getElementById('setupAsk');
+  if(strip) strip.addEventListener('click', function(e){
+    var b = e.target && e.target.closest ? e.target.closest('.ask-chip') : null;
+    if(!b) return;
+    var c = byId[b.getAttribute('data-cid')]; if(c) goAsk(c);
+  });
+  var ctx = document.getElementById('tierAskChip');
+  if(ctx) ctx.addEventListener('click', function(){
+    var c = byId[ctx.getAttribute('data-cid')]; if(c) goAsk(c);
+  });
+})();
+
+LOG.push({k:'greet'});
+CHIPS = {mode:'more', ids: STARTERS.slice(0,4)};
+renderAll();
+})();
+</script>
+
 <script src="/auth-widget.js" defer></script>
 </body>
 </html>
