@@ -667,26 +667,26 @@ BS.smoothDb = function (frames, winFrames) {
   return out;
 };
 
-BS.syllables = function (frames, opts) {
-  opts = opts || {};
-  var hopSec = opts.hopSec || 0.010;
-  var dipDb = opts.dipDb != null ? opts.dipDb : 3;      // 양옆 낙차 최소
-  var floorDb = opts.floorDb != null ? opts.floorDb : 25; // 최댓값 대비 하한
-  var minSepSec = opts.minSepSec != null ? opts.minSepSec : 0.075;
-  var n = frames.length;
-  if (n < 3) return { nuclei: [], boundaries: [] };
-
-  var sm = BS.smoothDb(frames, Math.max(3, Math.round(0.045 / hopSec))); // ~45ms
+/* 매끄럽게 민 강도 포락선. 제약 검출은 같은 포락선 위에서 문턱만 바꿔가며
+   여러 번 훑으므로, 비싼 이동평균은 한 번만 계산해 재사용한다. */
+BS.envelope = function (frames, hopSec) {
+  var sm = BS.smoothDb(frames, Math.max(3, Math.round(0.045 / (hopSec || 0.010)))); // ~45ms
   var maxDb = -Infinity;
-  for (var i = 0; i < n; i++) if (sm[i] > maxDb) maxDb = sm[i];
-  var thr = maxDb - floorDb;
+  for (var i = 0; i < sm.length; i++) if (sm[i] > maxDb) maxDb = sm[i];
+  return { sm: sm, maxDb: maxDb };
+};
+
+/* 주어진 (dipDb, floorDb)에서 음절 핵을 고른다. 포락선은 밖에서 준다. */
+BS.pickNuclei = function (frames, env, dipDb, floorDb, minSepSec, hopSec) {
+  var sm = env.sm, n = sm.length, i;
+  var thr = env.maxDb - floorDb;
 
   // 후보 봉우리
   var peaks = [];
   for (i = 1; i < n - 1; i++) {
     if (sm[i] >= sm[i - 1] && sm[i] > sm[i + 1] && sm[i] > thr) peaks.push(i);
   }
-  if (!peaks.length) return { nuclei: [], boundaries: [] };
+  if (!peaks.length) return [];
 
   // 양옆 낙차 검사: 인접 봉우리 사이 최저점이 dipDb 이상 낮아야 별개 음절
   var kept = [peaks[0]];
@@ -701,21 +701,79 @@ BS.syllables = function (frames, opts) {
   }
 
   // 유성 조건: 핵 주변 ±3프레임에 유성 프레임이 있어야 함
-  var nuclei = kept.filter(function (idx) {
+  return kept.filter(function (idx) {
     for (var j = Math.max(0, idx - 3); j <= Math.min(n - 1, idx + 3); j++) {
       if (frames[j].f0 > 0) return true;
     }
     return false;
   });
+};
+
+/* 제약 검출 탐색표. 기본값에서 **느슨해지는 쪽으로만** 넓힌다.
+
+   낙차(dip)를 낮추면 비음·유음처럼 막힘 없이 이어지는 소리에서 생기는 얕은
+   골짜기가 잡힌다. 「공장장」처럼 ㅇ 받침이 다음 음절로 이어지는 구간이
+   통째로 한 봉우리로 뭉치는 게 자유 검출이 놓치는 주된 경우다.
+
+   바닥(floor)을 올리면 최댓값 대비 조용한 음절이 살아난다. 한국어는 뒤로
+   갈수록 내려가므로(declination) 마지막 음절이 기본값 25 dB 밖으로 나가는
+   일이 있고, 하필 그게 문말 이동을 재는 바로 그 음절이다.
+
+   조이는 쪽(dip를 3보다 올리는 쪽)은 넣지 않았다. 검출이 예상보다 많다는 건
+   대개 숨소리나 말 고쳐하기 같은 실제로 난 소리이고, 그건 감추면 안 된다. */
+BS.SYL_DIPS = [3, 2.5, 2, 1.6, 1.3, 1.0, 0.8, 0.6, 0.45];
+BS.SYL_FLOORS = [25, 30, 35, 40];
+
+BS.syllables = function (frames, opts) {
+  opts = opts || {};
+  var hopSec = opts.hopSec || 0.010;
+  var dipDb = opts.dipDb != null ? opts.dipDb : 3;      // 양옆 낙차 최소
+  var floorDb = opts.floorDb != null ? opts.floorDb : 25; // 최댓값 대비 하한
+  var minSepSec = opts.minSepSec != null ? opts.minSepSec : 0.075;
+  var n = frames.length, i;
+  if (n < 3) return { nuclei: [], boundaries: [] };
+
+  var env = BS.envelope(frames, hopSec);
+  var nuclei = BS.pickNuclei(frames, env, dipDb, floorDb, minSepSec, hopSec);
+  var free = nuclei.length;
+  var usedDip = dipDb, usedFloor = floorDb;
+
+  /* 제약 검출: 문장을 알고 있으면 음절 수도 알고 있다. 그 수에 가장 가까운
+     설정을 고른다. 문턱을 직접 지정한 호출은 건드리지 않는다 — 시험용이니까.
+     초과는 두 배로 벌점을 준다. 없는 음절을 만들어내는 쪽이 놓치는 쪽보다 나쁘다. */
+  var target = opts.target;
+  var wantSearch = target != null && isFinite(target) && target > 0 &&
+                   opts.dipDb == null && opts.floorDb == null && free < target;
+  if (wantSearch) {
+    var cost = function (c) { return c > target ? (c - target) * 2 : (target - c); };
+    var best = cost(free), fi, di;
+    for (fi = 0; fi < BS.SYL_FLOORS.length && best > 0; fi++) {
+      for (di = 0; di < BS.SYL_DIPS.length && best > 0; di++) {
+        if (fi === 0 && di === 0) continue; // 기본값은 이미 쟀다
+        var cand = BS.pickNuclei(frames, env, BS.SYL_DIPS[di], BS.SYL_FLOORS[fi], minSepSec, hopSec);
+        var c = cost(cand.length);
+        if (c < best) { // 동점이면 먼저 온 쪽 = 기본값에 더 가까운 쪽이 이긴다
+          best = c; nuclei = cand;
+          usedDip = BS.SYL_DIPS[di]; usedFloor = BS.SYL_FLOORS[fi];
+        }
+      }
+    }
+  }
 
   // 경계 = 인접 핵 사이의 최저 에너지 지점
-  var boundaries = [];
+  var sm = env.sm, boundaries = [];
   for (var q = 1; q < nuclei.length; q++) {
     var a = nuclei[q - 1], b = nuclei[q], vi = a, vv = Infinity;
     for (i = a; i <= b; i++) if (sm[i] < vv) { vv = sm[i]; vi = i; }
     boundaries.push(vi);
   }
-  return { nuclei: nuclei, boundaries: boundaries, smooth: sm, thr: thr };
+  return {
+    nuclei: nuclei, boundaries: boundaries, smooth: sm, thr: env.maxDb - usedFloor,
+    dipDb: usedDip, floorDb: usedFloor,
+    free: free,                                        // 제약 없이 셌을 때의 개수
+    target: wantSearch ? target : null,
+    constrained: wantSearch && nuclei.length > free    // 제약이 실제로 더 찾아냈는가
+  };
 };
 
 /* ---------- 6. VAD · 억양구 분할 ----------
@@ -910,9 +968,15 @@ BS.analyze = function (pcm, sampleRate, opts) {
   var frames = BS.track(pcm, sampleRate, { hop: Math.round(sampleRate * hopSec), win: opts.win });
   BS.fixOctaves(frames, opts);
   var st = BS.toSemitones(frames);
-  var syl = BS.syllables(frames, { hopSec: hopSec });
+  var syl = BS.syllables(frames, { hopSec: hopSec, target: opts.target });
   var phs = BS.phrases(frames, { hopSec: hopSec });
-  var finals = phs.map(function (p) { return BS.finalSlope(frames, p, { hopSec: hopSec }); });
+  /* 문말 이동의 anchor는 끝에서 두 번째 음절 핵이다. 여기서 핵을 넘겨주지 않으면
+     finalSlope가 기본 문턱으로 혼자 다시 검출해서, 화면에 그려진 핵과 실제로
+     잰 구간이 어긋난다. 제약 검출을 해놓고 여기서 안 넘기면 아무 효과도 없다. */
+  var finals = phs.map(function (p) {
+    var sub = syl.nuclei.filter(function (x) { return x >= p.s && x <= p.e; });
+    return BS.finalSlope(frames, p, { hopSec: hopSec, nuclei: sub.length >= 2 ? sub : null });
+  });
   var stats = BS.speakerStats(frames, phs, { hopSec: hopSec });
   return {
     frames: frames, medianF0: st.median, syllables: syl,
@@ -991,6 +1055,14 @@ window.BS_UI = {
   noVoice:{en:'No voiced speech was found. Check that the right microphone is selected and try speaking closer to it.',kr:'유성음이 검출되지 않았어요. 마이크가 올바르게 선택됐는지 확인하고 조금 더 가까이서 말해보세요.'},
   micFail:{en:'Microphone access was refused or unavailable. Nothing was recorded.',kr:'마이크 접근이 거부되었거나 사용할 수 없어요. 아무것도 녹음되지 않았습니다.'},
   mismatch:{en:'Detected syllable count does not match the sentence — the boundaries below are unreliable, and so is anything measured per-syllable.',kr:'검출된 음절 수가 문장과 맞지 않아요 — 아래 경계는 신뢰할 수 없고, 음절 단위 측정값도 마찬가지입니다.'},
+  /* ----- 제약 음절 검출 -----
+     숫자가 먼저 오고 이유는 접어둔다. 여기는 측정값 화면이고, 다섯 문장짜리
+     설명이 타일 위에 얹히면 정작 되찾은 개수가 문단 끝에 파묻힌다. */
+  sylFree:{en:'free detection',kr:'자유 검출'},
+  sylFixed:{en:'Syllable boundaries were recovered:',kr:'음절 경계를 되찾았습니다:'},
+  sylArrow:{en:'free → constrained',kr:'자유 검출 → 제약 검출'},
+  sylWhyT:{en:'why the threshold was lowered',kr:'왜 문턱을 낮췄나'},
+  sylWhy:{en:'Because the sentence is known, so is the number of syllables in it. The detector splits sound apart at dips in energy, but a nasal coda — the ㅇ in 공장장 — carries the sound straight into the next syllable and leaves no dip to split at, so whole runs of syllables collapse into one. The threshold was therefore lowered until the expected count appeared. This is not cosmetic: the last boundary decides which stretch of sound the final movement is measured over, so recovering it changes where the measurement was taken, not just how precise it was. The threshold is only ever loosened, never tightened, and overshooting the expected count is penalised twice as heavily as falling short — the search will not invent syllables that are not there.',kr:'문장을 알고 있으니 그 안의 음절 수도 알고 있습니다. 검출기는 에너지가 꺼지는 자리에서 소리를 가르는데, ㅇ 받침 같은 비음은 — 「공장장」이 그렇습니다 — 소리를 끊지 않고 다음 음절로 그대로 이어서 가를 자리를 남기지 않아요. 그래서 여러 음절이 한 덩어리로 뭉칩니다. 예상 개수가 나올 때까지 문턱을 낮춰 다시 찾았습니다. 이건 겉모습 문제가 아닙니다. 마지막 경계가 문말 이동을 어느 구간에서 잴지를 정하기 때문에, 경계를 되찾는 건 얼마나 정밀하게 쟀는지가 아니라 어디를 쟀는지를 바꿉니다. 문턱은 낮추기만 하고 올리지는 않으며, 예상보다 많이 잡히는 쪽에는 두 배로 벌점을 줍니다 — 없는 음절을 만들어내지는 않아요.'},
   tooShort:{en:'Recording too short to analyse.',kr:'분석하기에 녹음이 너무 짧아요.'},
   octFail:{en:'MEASUREMENT SUSPECT',kr:'측정 실패 의심'},
   octWhy:{en:'A final move larger than one octave (12 st) is not something a speaking voice does. Either the anchor syllable or the endpoint was detected an octave off. The value is shown struck through and should not be used.',kr:'문말 이동이 한 옥타브(12반음)를 넘는 건 말하는 목소리가 낼 수 있는 값이 아니에요. 기준 음절이나 끝점 중 하나가 옥타브를 잘못 잡은 겁니다. 값은 취소선으로만 표시하고 쓰지 마세요.'},
@@ -1678,7 +1750,11 @@ A.fillPicker = function(){
 A.analyzeRead = function(pcm, sr){
   var s16 = window.BS_resample16k(pcm, sr);
   if (s16.length < 16000 * 0.4){ A.readError(L(U.tooShort)); return; }
-  var r = window.BS.analyze(s16, 16000, { hopSec:0.010 });
+  /* 우리는 사용자가 어떤 문장을 읽었는지 알고 있다. 그러면 음절 수도 알고 있다.
+     그 수를 넘겨주면 검출기가 문턱을 그 수에 맞춰 찾는다 — 자유 검출이
+     비음 구간에서 음절을 뭉개는 문제(「공장장」)가 여기서 걸린다. */
+  var expSent = window.BS_SENTENCES[S.idx];
+  var r = window.BS.analyze(s16, 16000, { hopSec:0.010, target: expSent ? expSent.syl : null });
   var voiced = r.frames.filter(function(f){ return f.st != null; });
   if (voiced.length < 15){ A.readError(L(U.noVoice)); return; }
   S.raw = { r:r, idx:S.idx };
@@ -1695,7 +1771,11 @@ A.renderRead = function(){
   var expect = expect0;
   var nuclei = r.syllables.nuclei;
   var lastPh = r.phrases.length ? r.phrases[r.phrases.length - 1] : { s:0, e:r.frames.length - 1 };
-  var fin = window.BS.finalSlope(r.frames, lastPh, { hopSec:0.010, nuclei:nuclei });
+  /* anchor는 마지막 억양구 안의 끝에서 두 번째 핵이어야 한다. 전체 핵을 그냥
+     넘기면 앞 억양구의 핵이 anchor로 뽑힐 수 있다. */
+  var nucIn = nuclei.filter(function(x){ return x >= lastPh.s && x <= lastPh.e; });
+  var fin = window.BS.finalSlope(r.frames, lastPh,
+    { hopSec:0.010, nuclei: nucIn.length >= 2 ? nucIn : null });
 
   // 앞뒤 무음을 뺀 실제 발화 구간 (여백 120 ms)
   var spanS = Math.max(0, (r.phrases.length ? r.phrases[0].s : 0) - 12);
@@ -1714,9 +1794,19 @@ A.renderRead = function(){
                 (r.phrases.length ? r.phrases[0].s : 0) + 1) * 0.010;
 
   var html = '<h2 class="sub">' + L({en:'MEASUREMENT',kr:'측정값'}) + '</h2>';
+  /* 제약 검출이 몇 개를 되찾았는지 숨기지 않는다 — 문턱을 낮춰서 찾아낸 핵과
+     기본 설정에서 바로 보인 핵은 신뢰도가 다르고, 그 차이는 사용자 몫이다. */
+  var sylInfo = r.syllables || {};
+  var freeShown = sylInfo.free != null && sylInfo.free !== nuclei.length;
   if (nuclei.length !== expect.syl){
     html += '<div class="warn">' + L(U.mismatch) + '<br />' +
-            L(U.expected) + ' ' + expect.syl + ' / ' + L(U.detected) + ' ' + nuclei.length + '</div>';
+            L(U.expected) + ' ' + expect.syl + ' / ' + L(U.detected) + ' ' + nuclei.length +
+            (freeShown ? ' (' + L(U.sylFree) + ' ' + sylInfo.free + ')' : '') + '</div>';
+  } else if (freeShown){
+    html += '<div class="note"><b>' + L(U.sylFixed) + ' ' +
+            sylInfo.free + ' → ' + nuclei.length + '</b> (' + L(U.sylArrow) + ')' +
+            '<details class="how"><summary>' + L(U.sylWhyT) + '</summary>' +
+            '<div class="hbody"><p>' + L(U.sylWhy) + '</p></div></details></div>';
   }
   var finBad = fin && A.octBad(fin.delta);
   html += '<div class="stat-grid">' +
