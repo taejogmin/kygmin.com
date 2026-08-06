@@ -167,6 +167,7 @@ h2.sub:first-child{margin-top:0;padding-top:0;border-top:none;}
 .slot .btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px;}
 .slot .n{color:var(--green);}
 .slot .hd{color:#8A8A85;}
+.slot .bad{color:var(--red);font-weight:600;}
 label.hd{font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--ink);}
 
 footer{border-top:3px solid var(--ink);padding:26px 0;}
@@ -1032,7 +1033,10 @@ window.BS_UI = {
   repRateWarn:{en:'Speech rate is detected syllables ÷ duration, so a rate difference can be a detection difference wearing its clothes: speak faster and syllables merge, the detector finds fewer of them, and the rate falls for a reason that has nothing to do with how fast you actually spoke. Run the same takes on SYLLABLE DETECTION before you believe this one.',kr:'발화 속도는 검출된 음절 ÷ 길이입니다. 그래서 속도 차이는 검출 차이가 옷만 갈아입은 것일 수 있어요 — 빠르게 말하면 음절이 붙고, 검출기가 덜 찾고, 실제 속도와 무관한 이유로 값이 내려갑니다. 이 결과를 믿기 전에 같은 회차를 음절 검출률로 한 번 돌려 보세요.'},
   repBadTakeM:{en:'That take has no value for the metric you are comparing right now. Record it again, or switch the metric.',kr:'그 녹음에는 지금 비교 중인 지표의 값이 없어요. 다시 녹음하거나 지표를 바꿔 주세요.'},
   repDropped:{en:'take(s) had no value for this metric and were left out of the test.',kr:'회차는 이 지표 값이 없어서 검정에서 제외했습니다.'},
-  repNoneUsable:{en:'One of the conditions has no take with a value for this metric, so there is nothing to compare. Pick another metric, or record again.',kr:'한쪽 조건에 이 지표 값을 가진 회차가 하나도 없어서 비교할 게 없어요. 다른 지표를 고르거나 다시 녹음해 주세요.'}
+  repNoneUsable:{en:'One of the conditions has no take with a value for this metric, so there is nothing to compare. Pick another metric, or record again.',kr:'한쪽 조건에 이 지표 값을 가진 회차가 하나도 없어서 비교할 게 없어요. 다른 지표를 고르거나 다시 녹음해 주세요.'},
+
+  /* ----- 혼자 f0가 튄 회차 ----- */
+  repF0Out:{en:'The takes marked in red sit more than 4 semitones away from the middle of their own condition. That is far enough that they may not be the same voice: on a short utterance the pitch tracker can grab a harmonic or jump an octave, and one such take is enough to inflate the within-condition spread by itself — which pushes every number above away from a real difference and towards no answer at all. Nothing has been excluded and nothing is wrong with the take if you really did speak that high or low. Look at it, and if you did not, clear that condition and record it again.',kr:'빨갛게 표시된 회차는 같은 조건의 한가운데에서 4 semitone 넘게 떨어져 있어요. 같은 목소리가 아닐 수도 있을 만큼의 거리입니다: 짧은 발화에서는 피치 추적기가 배음을 잡거나 옥타브를 건너뛰는 일이 있고, 그런 회차 하나만으로도 조건 내 흔들림이 통째로 부풀어요 — 그러면 위의 모든 숫자가 실제 차이에서 멀어져 「결론 없음」 쪽으로 밀립니다. 아무것도 제외하지 않았고, 정말 그렇게 높거나 낮게 말했다면 그 회차는 잘못된 게 아니에요. 확인해 보고 아니라면 그 조건을 비우고 다시 녹음하세요.'}
 };
 
 /* ---------- 숫자 해설 ----------
@@ -1930,10 +1934,36 @@ A.repClear = function(which){
   A.paintAB();
 };
 
+/* 같은 조건 안에서 혼자 중앙 f0가 튄 회차를 찾는다. 조건의 중앙값 대비 4 semitone 이상.
+   거부하지도 제외하지도 않는다 — 표시만 하고 판단은 사용자 몫이다.
+   회차가 3개 미만이면 「나머지」라는 게 없으므로 아무것도 잡지 않는다. */
+A.F0_OUT = 4;
+A.f0Out = function(list){
+  var out = [], f = [], i;
+  if (!list) return out;
+  for (i = 0; i < list.length; i++) out.push(null);
+  if (list.length < 3) return out;
+  for (i = 0; i < list.length; i++){
+    var x = list[i].f0;
+    if (x != null && isFinite(x) && x > 0) f.push(x);
+  }
+  if (f.length < 3) return out;
+  f.sort(function(a, b){ return a - b; });
+  var med = f.length % 2 ? f[(f.length - 1) / 2] : (f[f.length / 2 - 1] + f[f.length / 2]) / 2;
+  if (!(med > 0)) return out;
+  for (i = 0; i < list.length; i++){
+    var v = list[i].f0;
+    if (v == null || !isFinite(v) || v <= 0) continue;
+    var st = 12 * Math.log(v / med) / Math.LN2;
+    if (Math.abs(st) >= A.F0_OUT) out[i] = st;
+  }
+  return out;
+};
+
 /* 슬롯 본문: 문장 이름 + 회차별 선택 지표값 */
 A.slotText = function(list){
   if (!list || !list.length) return '<span class="hd">' + L(U.repEmpty) + '</span>';
-  var m = A.metric(), names = [], i, k;
+  var m = A.metric(), names = [], i, k, out = A.f0Out(list);
   for (i = 0; i < list.length; i++){
     /* 라벨은 회차에 굳혀 두지 않고 매번 다시 찾는다 — 언어를 바꾸면 같이 바뀌어야 하니까 */
     var src = null;
@@ -1949,6 +1979,9 @@ A.slotText = function(list){
     h += '<br /><span class="hd">' + L(U.repTake) + ' ' + (i+1) + '</span> ' +
          '<span class="n">' + A.mVal(m, v) + (ok ? (m.tight ? '' : ' ') + L(m.unit) : '') + '</span>' +
          ' · ' + Math.round(list[i].f0) + 'Hz';
+    if (out[i] != null){
+      h += ' <span class="bad">f0 ' + (out[i] >= 0 ? '+' : '') + out[i].toFixed(1) + 'st</span>';
+    }
   }
   return h;
 };
@@ -2015,6 +2048,14 @@ A.paintAB = function(){
           '<b>' + L(U.repTake) + ' ' + st.nA + ' / ' + st.nB + '</b> — ' +
           L(vd === 'need' ? U.repNeed : (vd === 'clear' ? U.repClear2 :
             (vd === 'sepShort' ? U.repSep : U.repUnclear))) + '</div>';
+
+  /* 혼자 f0가 튄 회차는 지표와 무관하게 언제나 알린다 — 조건 내 흔들림을 통째로 부풀리니까 */
+  var oa = A.f0Out(S.repA), ob = A.f0Out(S.repB), nOut = 0, oi;
+  for (oi = 0; oi < oa.length; oi++) if (oa[oi] != null) nOut++;
+  for (oi = 0; oi < ob.length; oi++) if (ob[oi] != null) nOut++;
+  if (nOut){
+    html += '<div class="warn">' + L(U.repF0Out) + '</div>';
+  }
 
   if (m.key === 'rate'){
     html += '<div class="warn">' + L(U.repRateWarn) + '</div>';
