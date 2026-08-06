@@ -639,6 +639,134 @@ BS.fixOctaves = function (frames, opts) {
   return frames;
 };
 
+/* ---------- 3-2. 스파이크 제거 ----------
+   fixOctaves가 놓치는 두 가지가 있다. 진단으로 확인한 내용(probe-spike.js):
+
+   1) 정확한 배값/반값 오류는 길이와 무관하게 전부 복구된다. 곡선 한가운데 튀는
+      자국은 옥타브 오류가 아니다. YIN이 파열음 파열이나 성문 파열에서 내는
+      주기와 무관한 쓰레기값이다. 110Hz 자리에 315Hz가 들어오면 비터비가
+      고를 수 있는 후보는 {157.5, 315, 630} 뿐이라 어느 것도 110이 아니다.
+      가장 싼 157.5를 골라 +6.2반음짜리 스파이크가 그대로 남는다.
+   2) 마무리 5점 중앙값 필터는 연속 2프레임까지만 지운다. 3프레임(30ms)부터
+      살아남는다. 그리고 앞뒤가 무성인 짧은 유성 섬은 win.length >= 3 조건에
+      걸려 **아예 필터를 통과하지 않는다** — 1프레임짜리도 그대로 남는다.
+
+   그래서 비율로 못 고치는 값을 따로 잡는다. 판별 기준은 생리다. 후두는
+   10ms 만에 몇 반음을 오르내리지 못한다. 프레임 간 도약이 JUMP반음을 넘으면
+   그건 발성이 아니라 추정 오류다. 도약을 경계로 유성 구간을 토막 내고,
+   짧은 토막만(<= MAXSPK) 이웃 토막의 중앙값과 견준다.
+
+   고칠 때의 원칙: **아는 답이면 접고, 모르면 지운다. 없는 값을 지어내지 않는다.**
+   ×2 또는 ×0.5로 접어서 이웃 근처(FOLDTOL)로 들어오면 접는다. 그래도 안 맞으면
+   그 프레임은 무성으로 되돌린다. 보간해서 그럴듯한 값을 채워 넣지는 않는다.
+   지운 개수와 접은 개수를 돌려주므로 교정은 조용히 일어나지 않는다.
+   회귀 시험은 spiketest.js. */
+BS.despike = function (frames, opts) {
+  opts = opts || {};
+  var hopSec = opts.hopSec || 0.010;
+  var JUMP = opts.spkJump != null ? opts.spkJump : 2.0;        // 반음/프레임. 생리적 상한
+  var MAXSPK = opts.spkMaxMs != null ? opts.spkMaxMs : 120;    // 이보다 길면 진짜 소리로 본다
+  /* 50ms. 한국어에서 가장 짧은 모음도 이보다는 길다. 이보다 짧은 유성 구간은
+     음절 핵일 수 없으므로, 음높이까지 이상하면 잡음으로 본다.
+     반대로 50ms를 넘는 고립 구간은 짧은 감탄사일 수 있어 건드리지 않는다 —
+     의도한 한계이고, spiketest.js [4]에 그렇게 적어 두었다. */
+  var MINRUN = opts.spkMinRunMs != null ? opts.spkMinRunMs : 50; // 고립 유성 섬 판정
+  var TOL = opts.spkTol != null ? opts.spkTol : 4;             // 이웃 대비 허용 이탈 (반음)
+  var FOLDTOL = opts.spkFoldTol != null ? opts.spkFoldTol : 3; // 접어서 여기 들어오면 접는다
+  var NBR = opts.spkNbr != null ? opts.spkNbr : 15;            // 이웃 참조 프레임 수
+  var report = { shortRuns: 0, folded: 0, dropped: 0 };
+
+  var n = frames.length, i;
+  var voicedAll = [];
+  for (i = 0; i < n; i++) if (frames[i].f0 > 0) voicedAll.push(frames[i].f0);
+  if (voicedAll.length < 5) return report;
+  var gref = BS.octaveReference(voicedAll);
+  var maxSpk = Math.max(1, Math.round((MAXSPK / 1000) / hopSec));
+  var minRun = Math.max(1, Math.round((MINRUN / 1000) / hopSec));
+
+  function stDiff(a, b) { return 12 * Math.log2(a / b); }
+
+  /* [a,b] 바깥 양옆에서 원본 유성값을 span프레임까지 긁어 중앙값을 낸다.
+     이웃이 너무 적으면 전역 기준으로 물러난다. */
+  function neighborRef(orig, a, b, span, lo, hi) {
+    var nb = [], q;
+    for (q = Math.max(lo, a - span); q < a; q++) if (orig[q] > 0) nb.push(orig[q]);
+    for (q = b + 1; q <= Math.min(hi, b + span); q++) if (orig[q] > 0) nb.push(orig[q]);
+    return nb.length >= 3 ? BS.medianOf(nb) : gref;
+  }
+
+  /* 한 프레임을 이웃 기준값에 맞춰 고친다. 접거나, 지우거나, 둘 뿐이다. */
+  function repair(f, ref) {
+    var RAT = [1, 0.5, 2], best = null, bestDev = Infinity;
+    for (var k = 0; k < RAT.length; k++) {
+      var c = f.f0 * RAT[k];
+      if (c < BS.FMIN || c > BS.FMAX) continue;
+      var d = Math.abs(stDiff(c, ref));
+      if (d < bestDev) { bestDev = d; best = c; }
+    }
+    if (best != null && bestDev <= FOLDTOL) {
+      if (best !== f.f0) { f.f0 = best; report.folded++; }
+      return;
+    }
+    f.f0 = 0; f.st = null; report.dropped++;
+  }
+
+  var origAll = frames.map(function (f) { return f.f0; });
+
+  // 연속 유성 구간(run) 나누기
+  var runs = [], s = -1;
+  for (i = 0; i <= n; i++) {
+    var v = i < n && frames[i].f0 > 0;
+    if (v && s < 0) s = i;
+    else if (!v && s >= 0) { runs.push([s, i - 1]); s = -1; }
+  }
+
+  runs.forEach(function (r) {
+    var a = r[0], b = r[1], len = b - a + 1, j;
+
+    /* 1) 고립 유성 섬. 안에 견줄 게 없으니 전역 기준과 견준다.
+          짧다는 것만으로는 지우지 않는다 — 짧고 **동시에** 크게 벗어나야 한다.
+          짧은 진짜 모음(폐쇄음 사이 등)을 지워 음절 핵을 잃으면 안 되니까. */
+    if (len < minRun) {
+      var iref = neighborRef(origAll, a, b, 25, 0, n - 1);
+      var med = BS.medianOf(origAll.slice(a, b + 1));
+      if (Math.abs(stDiff(med, iref)) > TOL) {
+        report.shortRuns++;
+        for (j = a; j <= b; j++) repair(frames[j], iref);
+      }
+      return;
+    }
+
+    // 2) 도약 지점에서 토막 내기
+    var cuts = [a];
+    for (j = a + 1; j <= b; j++) {
+      if (Math.abs(stDiff(frames[j].f0, frames[j - 1].f0)) > JUMP) cuts.push(j);
+    }
+    if (cuts.length < 2) return;   // 도약 없음 = 손댈 것 없음
+    cuts.push(b + 1);
+
+    var segs = [];
+    for (j = 0; j < cuts.length - 1; j++) segs.push([cuts[j], cuts[j + 1] - 1]);
+
+    // 원본을 보존해 둔다. 앞 토막을 고친 값이 뒤 토막의 기준이 되면 오류가 번진다.
+    var orig = frames.map(function (f) { return f.f0; });
+
+    segs.forEach(function (sg, si) {
+      var sa = sg[0], sb = sg[1], sl = sb - sa + 1, q;
+      if (sl > maxSpk) return;              // 충분히 길면 진짜 소리다
+
+      // 이웃 토막에서 기준 모으기 (같은 run 안, 원본 기준)
+      var ref = neighborRef(orig, sa, sb, NBR, a, b);
+      var segMed = BS.medianOf(orig.slice(sa, sb + 1));
+      if (Math.abs(stDiff(segMed, ref)) <= TOL) return;   // 이탈이 작으면 둔다
+
+      for (q = sa; q <= sb; q++) repair(frames[q], ref);
+    });
+  });
+
+  return report;
+};
+
 /* ---------- 4. semitone 변환 ----------
    절대 Hz를 절대 쓰지 않는다. 화자 자신의 중앙값 대비 상대값.
 */
@@ -967,6 +1095,9 @@ BS.analyze = function (pcm, sampleRate, opts) {
   var hopSec = opts.hopSec || 0.010;
   var frames = BS.track(pcm, sampleRate, { hop: Math.round(sampleRate * hopSec), win: opts.win });
   BS.fixOctaves(frames, opts);
+  /* despike는 fixOctaves 다음, toSemitones 앞이다. 앞이면 진짜 옥타브 오류를
+     스파이크로 오해해 지워버리고, 뒤면 이미 오염된 중앙값으로 반음을 잰다. */
+  var spikes = BS.despike(frames, { hopSec: hopSec });
   var st = BS.toSemitones(frames);
   var syl = BS.syllables(frames, { hopSec: hopSec, target: opts.target });
   var phs = BS.phrases(frames, { hopSec: hopSec });
@@ -980,7 +1111,8 @@ BS.analyze = function (pcm, sampleRate, opts) {
   var stats = BS.speakerStats(frames, phs, { hopSec: hopSec });
   return {
     frames: frames, medianF0: st.median, syllables: syl,
-    phrases: phs, finals: finals, stats: stats, hopSec: hopSec
+    phrases: phs, finals: finals, stats: stats, hopSec: hopSec,
+    spikes: spikes
   };
 };
 
@@ -1063,6 +1195,15 @@ window.BS_UI = {
   sylArrow:{en:'free → constrained',kr:'자유 검출 → 제약 검출'},
   sylWhyT:{en:'why the threshold was lowered',kr:'왜 문턱을 낮췄나'},
   sylWhy:{en:'Because the sentence is known, so is the number of syllables in it. The detector splits sound apart at dips in energy, but a nasal coda — the ㅇ in 공장장 — carries the sound straight into the next syllable and leaves no dip to split at, so whole runs of syllables collapse into one. The threshold was therefore lowered until the expected count appeared. This is not cosmetic: the last boundary decides which stretch of sound the final movement is measured over, so recovering it changes where the measurement was taken, not just how precise it was. The threshold is only ever loosened, never tightened, and overshooting the expected count is penalised twice as heavily as falling short — the search will not invent syllables that are not there.',kr:'문장을 알고 있으니 그 안의 음절 수도 알고 있습니다. 검출기는 에너지가 꺼지는 자리에서 소리를 가르는데, ㅇ 받침 같은 비음은 — 「공장장」이 그렇습니다 — 소리를 끊지 않고 다음 음절로 그대로 이어서 가를 자리를 남기지 않아요. 그래서 여러 음절이 한 덩어리로 뭉칩니다. 예상 개수가 나올 때까지 문턱을 낮춰 다시 찾았습니다. 이건 겉모습 문제가 아닙니다. 마지막 경계가 문말 이동을 어느 구간에서 잴지를 정하기 때문에, 경계를 되찾는 건 얼마나 정밀하게 쟀는지가 아니라 어디를 쟀는지를 바꿉니다. 문턱은 낮추기만 하고 올리지는 않으며, 예상보다 많이 잡히는 쪽에는 두 배로 벌점을 줍니다 — 없는 음절을 만들어내지는 않아요.'},
+  /* ----- 스파이크 제거 -----
+     지운 프레임은 화면에서 사라진다. 사라진 걸 말하지 않으면 곡선이 원래
+     그랬던 것처럼 보인다. 개수를 먼저 보이고 이유는 접어둔다. */
+  spkFixed:{en:'Pitch spikes were removed:',kr:'음높이 스파이크를 제거했습니다:'},
+  spkFrames:{en:'frames',kr:'프레임'},
+  spkDropped:{en:'unvoiced',kr:'무성 처리'},
+  spkFolded:{en:'folded by an octave',kr:'옥타브 접음'},
+  spkWhyT:{en:'why frames were removed',kr:'왜 프레임을 지웠나'},
+  spkWhy:{en:'The larynx cannot move several semitones in ten milliseconds. Where the pitch track jumped further than that between adjacent frames, the jump was not speech but a bad estimate — a plosive burst or a glottal click that the pitch tracker read as a period. Such a frame was folded by an octave when folding brought it back in line with its neighbours, and returned to unvoiced when it did not. No value was interpolated in: a removed frame leaves a gap in the curve rather than a plausible-looking invention. Exact octave errors are repaired earlier and separately, so what is removed here is the residue no ratio could fix.',kr:'후두는 10밀리초 만에 몇 반음을 오르내리지 못해요. 이웃 프레임 사이에서 그보다 크게 뛴 자리는 발성이 아니라 추정 오류입니다 — 파열음의 파열이나 성문 파열을 음높이 추적기가 주기로 잘못 읽은 겁니다. 그런 프레임은 옥타브로 접어서 이웃과 맞으면 접고, 그래도 안 맞으면 무성으로 되돌렸습니다. 값을 지어내 채우지는 않았어요 — 지운 자리는 그럴듯한 값 대신 곡선의 빈칸으로 남습니다. 정확한 옥타브 오류는 그 앞 단계에서 따로 고치므로, 여기서 지운 건 어떤 비율로도 고칠 수 없던 나머지입니다.'},
   tooShort:{en:'Recording too short to analyse.',kr:'분석하기에 녹음이 너무 짧아요.'},
   octFail:{en:'MEASUREMENT SUSPECT',kr:'측정 실패 의심'},
   octWhy:{en:'A final move larger than one octave (12 st) is not something a speaking voice does. Either the anchor syllable or the endpoint was detected an octave off. The value is shown struck through and should not be used.',kr:'문말 이동이 한 옥타브(12반음)를 넘는 건 말하는 목소리가 낼 수 있는 값이 아니에요. 기준 음절이나 끝점 중 하나가 옥타브를 잘못 잡은 겁니다. 값은 취소선으로만 표시하고 쓰지 마세요.'},
@@ -1586,6 +1727,20 @@ A.statRaw = function(label, value, unit, hint){
 /* 문말 이동이 한 옥타브를 넘으면 측정이 아니라 실패다. */
 A.OCT_MAX = 12;
 A.octBad = function(d){ return d != null && isFinite(d) && Math.abs(d) > A.OCT_MAX; };
+
+/* 스파이크 제거 알림. 지운 프레임은 곡선에서 그냥 사라지므로, 말하지 않으면
+   원래 그렇게 생긴 곡선처럼 보인다. 하나도 안 지웠으면 아무것도 그리지 않는다. */
+A.spikeNote = function(sp){
+  if (!sp) return '';
+  var n = (sp.dropped || 0) + (sp.folded || 0);
+  if (!n) return '';
+  var parts = [];
+  if (sp.dropped) parts.push(sp.dropped + ' ' + L(U.spkFrames) + ' ' + L(U.spkDropped));
+  if (sp.folded)  parts.push(sp.folded  + ' ' + L(U.spkFrames) + ' ' + L(U.spkFolded));
+  return '<div class="note"><b>' + L(U.spkFixed) + ' ' + parts.join(', ') + '</b>' +
+         '<details class="how"><summary>' + L(U.spkWhyT) + '</summary>' +
+         '<div class="hbody"><p>' + L(U.spkWhy) + '</p></div></details></div>';
+};
 A.deltaCell = function(d, digits){
   if (d == null || !isFinite(d)) return '—';
   var s = (d >= 0 ? '+' : '') + d.toFixed(digits == null ? 1 : digits);
@@ -1808,6 +1963,7 @@ A.renderRead = function(){
             '<details class="how"><summary>' + L(U.sylWhyT) + '</summary>' +
             '<div class="hbody"><p>' + L(U.sylWhy) + '</p></div></details></div>';
   }
+  html += A.spikeNote(r.spikes);
   var finBad = fin && A.octBad(fin.delta);
   html += '<div class="stat-grid">' +
     A.stat('syllables', nuclei.length, '/ ' + expect.syl, nuclei.length !== expect.syl) +
@@ -1911,6 +2067,7 @@ A.renderPassage = function(r, expect){
   var rate = durSec > 0 ? nuclei.length / durSec : 0;
 
   var html = '<h2 class="sub">' + L({en:'PASSAGE MEASUREMENT',kr:'지문 측정값'}) + '</h2>';
+  html += A.spikeNote(r.spikes);
   var finBad = endFin && A.octBad(endFin.delta);
   var nBad = 0;
   r.finals.forEach(function(f){ if (f && A.octBad(f.delta)) nBad++; });
@@ -2269,6 +2426,7 @@ function renderFree(){
   r.finals.forEach(function(f){ if (f && A.octBad(f.delta)) nBad++; });
 
   var html = '<h2 class="sub">' + L({en:'YOUR VOICE, MEASURED',kr:'측정된 당신의 목소리'}) + '</h2>';
+  html += A.spikeNote(r.spikes);
   html += '<div class="stat-grid">' +
     A.stat('phrases', st.nPhrases, '') +
     A.stat('riseRatio', Math.round(st.riseRatio*100), '%') +
