@@ -1036,7 +1036,14 @@ window.BS_UI = {
   repNoneUsable:{en:'One of the conditions has no take with a value for this metric, so there is nothing to compare. Pick another metric, or record again.',kr:'한쪽 조건에 이 지표 값을 가진 회차가 하나도 없어서 비교할 게 없어요. 다른 지표를 고르거나 다시 녹음해 주세요.'},
 
   /* ----- 혼자 f0가 튄 회차 ----- */
-  repF0Out:{en:'The takes marked in red sit more than 4 semitones away from the middle of their own condition. That is far enough that they may not be the same voice: on a short utterance the pitch tracker can grab a harmonic or jump an octave, and one such take is enough to inflate the within-condition spread by itself — which pushes every number above away from a real difference and towards no answer at all. Nothing has been excluded and nothing is wrong with the take if you really did speak that high or low. Look at it, and if you did not, clear that condition and record it again.',kr:'빨갛게 표시된 회차는 같은 조건의 한가운데에서 4 semitone 넘게 떨어져 있어요. 같은 목소리가 아닐 수도 있을 만큼의 거리입니다: 짧은 발화에서는 피치 추적기가 배음을 잡거나 옥타브를 건너뛰는 일이 있고, 그런 회차 하나만으로도 조건 내 흔들림이 통째로 부풀어요 — 그러면 위의 모든 숫자가 실제 차이에서 멀어져 「결론 없음」 쪽으로 밀립니다. 아무것도 제외하지 않았고, 정말 그렇게 높거나 낮게 말했다면 그 회차는 잘못된 게 아니에요. 확인해 보고 아니라면 그 조건을 비우고 다시 녹음하세요.'}
+  repF0Out:{en:'The takes marked in red sit more than 4 semitones away from the middle of their own condition. That is far enough that they may not be the same voice: on a short utterance the pitch tracker can grab a harmonic or jump an octave, and one such take is enough to inflate the within-condition spread by itself — which pushes every number above away from a real difference and towards no answer at all. Nothing has been excluded and nothing is wrong with the take if you really did speak that high or low. Look at it, and if you did not, clear that condition and record it again.',kr:'빨갛게 표시된 회차는 같은 조건의 한가운데에서 4 semitone 넘게 떨어져 있어요. 같은 목소리가 아닐 수도 있을 만큼의 거리입니다: 짧은 발화에서는 피치 추적기가 배음을 잡거나 옥타브를 건너뛰는 일이 있고, 그런 회차 하나만으로도 조건 내 흔들림이 통째로 부풀어요 — 그러면 위의 모든 숫자가 실제 차이에서 멀어져 「결론 없음」 쪽으로 밀립니다. 아무것도 제외하지 않았고, 정말 그렇게 높거나 낮게 말했다면 그 회차는 잘못된 게 아니에요. 확인해 보고 아니라면 그 조건을 비우고 다시 녹음하세요.'},
+
+  /* ----- 회차별 진단 (길이·검출 음절) ----- */
+  repSec:{en:'s',kr:'초'},
+  repSyl:{en:' syl',kr:'음절'},
+  repLenMark:{en:'len',kr:'길이'},
+  repSylMark:{en:'syl',kr:'음절'},
+  repTakeOut:{en:'The takes marked in red were spoken at a noticeably different length from the rest of their own condition, or had fewer syllables segmented in them. This matters more than it looks. The final movement is measured across the last syllable, so when a take is hurried that syllable shortens and merges with the one before it, and the boundary detector can miss it altogether. The number is then measured over the wrong stretch of sound rather than merely measured imprecisely — which is why one hurried take lands far outside the others instead of a little outside. Nothing has been excluded. Look at these takes, and if they were hurried, clear that condition and record it again at the same pace as the rest. An even pace across every take buys you more than extra takes do.',kr:'빨갛게 표시된 회차는 같은 조건의 나머지 회차들과 길이가 뚜렷하게 다르거나, 음절이 더 적게 잡힌 회차예요. 보기보다 중요합니다. 문말 이동은 마지막 음절 구간 위에서 재기 때문에, 급하게 말한 회차는 그 음절이 짧아지면서 앞 음절과 붙고 경계 검출이 아예 놓칠 수 있어요. 그러면 값이 부정확하게 재진 게 아니라 애초에 다른 구간을 잰 게 됩니다 — 급한 회차 하나가 조금이 아니라 아주 멀리 떨어져 앉는 이유가 이거예요. 아무것도 제외하지 않았습니다. 확인해 보고 급했다면 그 조건을 비우고 나머지와 같은 속도로 다시 녹음하세요. 회차를 더 늘리는 것보다 모든 회차의 속도를 고르게 하는 쪽이 더 많이 벌어줍니다.'}
 };
 
 /* ---------- 숫자 해설 ----------
@@ -1960,10 +1967,50 @@ A.f0Out = function(list){
   return out;
 };
 
+/* 중앙값. 빈 배열이면 null. */
+A.med = function(a){
+  if (!a || !a.length) return null;
+  var b = a.slice().sort(function(x, y){ return x - y; });
+  return b.length % 2 ? b[(b.length - 1) / 2] : (b[b.length / 2 - 1] + b[b.length / 2]) / 2;
+};
+
+/* 회차별 진단: 같은 조건 안에서 혼자 길이가 다르거나 음절이 덜 잡힌 회차를 찾는다.
+   문말 이동은 마지막 음절 구간 위에서 재는 값이라, 급한 회차는 그 음절이 앞 음절과 붙어
+   경계 검출에서 통째로 빠질 수 있다. 그러면 값이 부정확해지는 게 아니라 다른 구간을 잰다.
+   f0Out과 같은 원칙 — 거부도 제외도 하지 않고 표시만 한다. 회차 3개 미만이면 기준이 없다. */
+A.DUR_OUT = 0.25;  /* 조건 중앙 길이 대비 ±25% */
+A.SYL_OUT = 1;     /* 조건 중앙 검출 음절 수보다 1개 이상 적으면 */
+A.takeOut = function(list){
+  var out = [], ds = [], ss = [], i;
+  if (!list) return out;
+  for (i = 0; i < list.length; i++) out.push(null);
+  if (list.length < 3) return out;
+  for (i = 0; i < list.length; i++){
+    var d = list[i].dur, s = list[i].nSyl;
+    if (d != null && isFinite(d) && d > 0) ds.push(d);
+    if (s != null && isFinite(s) && s >= 0) ss.push(s);
+  }
+  var md = ds.length >= 3 ? A.med(ds) : null;
+  var ms = ss.length >= 3 ? A.med(ss) : null;
+  for (i = 0; i < list.length; i++){
+    var o = null, dv = list[i].dur, sv = list[i].nSyl;
+    if (md > 0 && dv != null && isFinite(dv) && dv > 0){
+      var r = dv / md - 1;
+      if (Math.abs(r) >= A.DUR_OUT) o = { dur: r };
+    }
+    if (ms != null && sv != null && isFinite(sv) && ms - sv >= A.SYL_OUT){
+      if (!o) o = {};
+      o.syl = ms - sv;
+    }
+    out[i] = o;
+  }
+  return out;
+};
+
 /* 슬롯 본문: 문장 이름 + 회차별 선택 지표값 */
 A.slotText = function(list){
   if (!list || !list.length) return '<span class="hd">' + L(U.repEmpty) + '</span>';
-  var m = A.metric(), names = [], i, k, out = A.f0Out(list);
+  var m = A.metric(), names = [], i, k, out = A.f0Out(list), tk = A.takeOut(list);
   for (i = 0; i < list.length; i++){
     /* 라벨은 회차에 굳혀 두지 않고 매번 다시 찾는다 — 언어를 바꾸면 같이 바뀌어야 하니까 */
     var src = null;
@@ -1979,8 +2026,26 @@ A.slotText = function(list){
     h += '<br /><span class="hd">' + L(U.repTake) + ' ' + (i+1) + '</span> ' +
          '<span class="n">' + A.mVal(m, v) + (ok ? (m.tight ? '' : ' ') + L(m.unit) : '') + '</span>' +
          ' · ' + Math.round(list[i].f0) + 'Hz';
+    /* 길이와 검출 음절 수 — 회차가 어떤 조건에서 녹음됐는지 보여주는 값이다.
+       이게 안 보이면 급하게 뱉은 회차와 또박또박 읽은 회차가 화면상 똑같이 생긴다. */
+    var dv = list[i].dur, sv = list[i].nSyl, ev = list[i].expSyl;
+    if (dv != null && isFinite(dv) && dv > 0){
+      h += ' · ' + dv.toFixed(2) + L(U.repSec);
+    }
+    if (sv != null && isFinite(sv) && ev != null && isFinite(ev) && ev > 0){
+      h += ' · ' + sv + '/' + ev + L(U.repSyl);
+    }
     if (out[i] != null){
       h += ' <span class="bad">f0 ' + (out[i] >= 0 ? '+' : '') + out[i].toFixed(1) + 'st</span>';
+    }
+    if (tk[i]){
+      if (tk[i].dur != null){
+        h += ' <span class="bad">' + L(U.repLenMark) + ' ' +
+             (tk[i].dur >= 0 ? '+' : '−') + Math.round(Math.abs(tk[i].dur) * 100) + '%</span>';
+      }
+      if (tk[i].syl != null){
+        h += ' <span class="bad">' + L(U.repSylMark) + ' −' + tk[i].syl + '</span>';
+      }
     }
   }
   return h;
@@ -2055,6 +2120,14 @@ A.paintAB = function(){
   for (oi = 0; oi < ob.length; oi++) if (ob[oi] != null) nOut++;
   if (nOut){
     html += '<div class="warn">' + L(U.repF0Out) + '</div>';
+  }
+
+  /* 길이·검출이 튄 회차도 지표와 무관하게 언제나 알린다 — 문말값 자체가 다른 구간에서 나왔을 수 있으니까 */
+  var ta = A.takeOut(S.repA), tb = A.takeOut(S.repB), nTk = 0, ti;
+  for (ti = 0; ti < ta.length; ti++) if (ta[ti]) nTk++;
+  for (ti = 0; ti < tb.length; ti++) if (tb[ti]) nTk++;
+  if (nTk){
+    html += '<div class="warn">' + L(U.repTakeOut) + '</div>';
   }
 
   if (m.key === 'rate'){
