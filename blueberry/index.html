@@ -167,6 +167,7 @@ h2.sub:first-child{margin-top:0;padding-top:0;border-top:none;}
 .slot .btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px;}
 .slot .n{color:var(--green);}
 .slot .hd{color:#8A8A85;}
+label.hd{font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--ink);}
 
 footer{border-top:3px solid var(--ink);padding:26px 0;}
 .foot-inner{max-width:960px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:12px;color:#4A4A46;}
@@ -248,6 +249,11 @@ footer{border-top:3px solid var(--ink);padding:26px 0;}
 
       <h2 class="sub tx" data-en="REPEATED MEASURES" data-kr="반복 측정">REPEATED MEASURES</h2>
       <p class="note tx" data-en="Record each condition several times, alternating between them — A, B, A, B. One take each tells you nothing: the instrument moves a little every time, and a single pair of numbers cannot say whether a gap is your voice or that movement. Repeating separates the two. Pair “밥 먹었어.” with “밥 먹었어?” and the only thing left that can differ is intonation. Nothing is stored — closing the tab clears both conditions." data-kr="각 조건을 여러 번, 번갈아 녹음하세요 — A, B, A, B. 한 번씩만 해서는 아무것도 알 수 없어요: 측정기는 매번 조금씩 흔들리고, 숫자 한 쌍만으로는 그 간격이 당신의 목소리인지 그 흔들림인지 말할 수 없습니다. 반복하면 둘이 갈라집니다. 「밥 먹었어.」와 「밥 먹었어?」를 짝지으면 달라질 수 있는 건 억양뿐이에요. 저장은 되지 않고, 탭을 닫으면 두 조건 다 사라집니다.">Record each condition several times, alternating between them — A, B, A, B. One take each tells you nothing: the instrument moves a little every time, and a single pair of numbers cannot say whether a gap is your voice or that movement. Repeating separates the two. Pair “밥 먹었어.” with “밥 먹었어?” and the only thing left that can differ is intonation. Nothing is stored — closing the tab clears both conditions.</p>
+      <div class="row">
+        <label class="hd tx" for="metricPick" data-en="COMPARE" data-kr="비교할 지표">COMPARE</label>
+        <select id="metricPick"></select>
+        <span class="hint tx" data-en="Which number the test is run on. Takes you already added are kept — switching only re-runs the test." data-kr="검정을 어느 숫자로 돌릴지 정합니다. 이미 넣은 회차는 그대로 남고, 바꾸면 검정만 다시 돌아요.">Which number the test is run on. Takes you already added are kept — switching only re-runs the test.</span>
+      </div>
       <div class="ab">
         <div class="slot">
           <h3 class="tx" data-en="CONDITION A" data-kr="조건 A">CONDITION A</h3>
@@ -933,12 +939,16 @@ window.BS_SENTENCES = [
     why:{en:'DECLARATIVE BASELINE — normalises your register', kr:'평서 기준선 — 당신의 음역을 정규화'} },
   { id:3, kind:'short', maxSec:12, kr:'밥 먹었어?', syl:4, pair:'meal',
     why:{en:'YES/NO QUESTION — segmentally identical to the line above, so the final rise is the only difference', kr:'판정의문 — 위 문장과 분절음이 같아서 차이는 문말 상승뿐'} },
-  { id:4, kind:'long', maxSec:25, syl:81,
+  { id:4, kind:'short', maxSec:12, kr:'간장 공장 공장장은 강 공장장이고 된장 공장 공장장은 공 공장장이다', syl:28,
+    src:{en:'Traditional Korean tongue twister · anonymous', kr:'한국 전래 잰말놀이 · 작자 미상'},
+    pick:{en:'Ganjang factory tongue twister', kr:'간장 공장 공장장'},
+    why:{en:'TONGUE TWISTER — 공장장 four times in one breath, which is a stress test for the syllable detector rather than an intonation item', kr:'잰말놀이 — 한 호흡에 「공장장」이 네 번, 억양 항목이라기보다 음절 검출기의 스트레스 시험'} },
+  { id:5, kind:'long', maxSec:25, syl:81,
     kr:'무엇에든지 참되며 무엇에든지 경건하며 무엇에든지 옳으며 무엇에든지 정결하며 무엇에든지 사랑 받을 만하며 무엇에든지 칭찬 받을 만하며 무슨 덕이 있든지 무슨 기림이 있든지 이것들을 생각하라.',
     src:{en:'Philippians 4:8 · Korean Revised Version, quoted', kr:'빌립보서 4:8 · 개역개정, 인용'},
     pick:{en:'Philippians 4:8', kr:'빌립보서 4:8'},
     why:{en:'PARALLEL LIST — the same frame seven times, in one recording', kr:'병렬 나열 — 동일한 틀이 한 녹음 안에서 일곱 번'} },
-  { id:5, kind:'long', maxSec:25, syl:45,
+  { id:6, kind:'long', maxSec:25, syl:45,
     kr:'별 하나에 추억과\n별 하나에 사랑과\n별 하나에 쓸쓸함과\n별 하나에 동경과\n별 하나에 시와\n별 하나에 어머니, 어머니',
     src:{en:'Yun Dong-ju, “Counting the Stars at Night” (1941) · public domain', kr:'윤동주 「별 헤는 밤」 (1941) · 퍼블릭 도메인'},
     pick:{en:'Yun Dong-ju, Counting the Stars at Night', kr:'윤동주 「별 헤는 밤」'},
@@ -1003,12 +1013,26 @@ window.BS_UI = {
   repClear2:{en:'The two conditions separate: a split this clean would happen by chance about this often if they were really the same. That is a statement about your own two conditions and nothing else — it says nothing about any dialect or any other speaker.',kr:'두 조건이 갈렸어요: 사실 같은 조건이었다면 이만큼 깨끗한 분리가 이 정도 확률로만 우연히 나옵니다. 이건 당신 자신의 두 조건에 대한 진술일 뿐이고 — 어떤 방언에 대해서도, 다른 화자에 대해서도 아무 말도 하지 않습니다.'},
   repSep:{en:'Every take in one condition sits above every take in the other — the separation is perfect. It still is not conclusive, because at this sample size the test cannot return a p below 0.05 no matter how clean the split is. Add one more take on each side and the same clean split would be.',kr:'한 조건의 모든 회차가 다른 조건의 모든 회차보다 위에 있어요 — 분리가 완벽합니다. 그런데도 결론은 못 됩니다. 이 표본 크기에서는 아무리 깨끗하게 갈려도 검정이 0.05 미만의 p를 낼 수 없거든요. 양쪽에 한 번씩만 더 넣으면 같은 패턴이 결론이 됩니다.'},
   repUnclear:{en:'The takes overlap: the gap between conditions is not bigger than the wobble inside them. Either you really produced the two the same way, or the instrument cannot separate them — this page cannot tell those two apart, and more takes are the only thing that would.',kr:'회차들이 서로 겹칩니다: 조건 사이의 간격이 조건 안의 흔들림보다 크지 않아요. 두 조건을 실제로 비슷하게 발화했거나, 측정기가 둘을 구분하지 못하거나 — 이 페이지는 그 둘을 구별하지 못하고, 구별해 줄 수 있는 건 회차를 늘리는 것뿐입니다.'},
-  relSame:{en:'Both conditions hold the same sentence. What you are measuring then is the instrument itself — how far the same utterance drifts between takes. A gap here is not something you did differently; it is the noise floor everything else has to clear.',kr:'두 조건이 같은 문장이에요. 그러면 여기서 재는 건 측정기 자신입니다 — 같은 발화가 회차마다 얼마나 흘러가는가. 여기 나오는 간격은 당신이 다르게 말해서 생긴 게 아니라, 다른 모든 값이 넘어야 하는 잡음 바닥이에요.'},
+  relSame:{en:'Both conditions hold the same sentence. If you did nothing differently between them, what you are measuring is the instrument itself — how far the same utterance drifts between takes, which is the noise floor everything else has to clear. If you did change something the text cannot show — reading it slowly in one condition and fast in the other — then that change is the only thing left that can separate them.',kr:'두 조건이 같은 문장이에요. 둘 사이에 아무것도 다르게 하지 않았다면 여기서 재는 건 측정기 자신입니다 — 같은 발화가 회차마다 얼마나 흘러가는가, 곧 다른 모든 값이 넘어야 하는 잡음 바닥이에요. 반대로 글로는 보이지 않는 무언가를 바꿨다면 — 한쪽은 천천히, 다른 쪽은 빠르게 — 둘을 갈라놓을 수 있는 건 그 변화뿐입니다.'},
   relPair:{en:'Minimal pair — the two sentences are segmentally identical and differ only in sentence type. This is the one comparison this page can actually support: whatever separates them has to come from intonation, because nothing else is left to differ.',kr:'최소대립쌍 — 두 문장은 분절음이 같고 문장 유형만 다릅니다. 이 페이지가 실제로 지지할 수 있는 비교는 이것 하나예요: 둘을 갈라놓는 게 있다면 억양에서 올 수밖에 없습니다. 달라질 수 있는 게 그것 말고 남아 있지 않으니까요.'},
   relFree:{en:'The two conditions hold unrelated sentences. Any difference below mixes the intonation you are looking for with the plain fact that the words are not the same, and the two cannot be pulled apart afterwards.',kr:'두 조건의 문장이 서로 무관해요. 아래 차이에는 보려는 억양과 애초에 단어가 다르다는 사실이 섞여 있고, 이 둘은 나중에 갈라낼 수 없습니다.'},
   repBlocked:{en:'One condition was recorded straight through before the other began. A voice drifts across a session — warming up, tiring, settling into a different pitch — and recorded in blocks that drift lands entirely on top of the condition difference. Alternate them instead: A, B, A, B.',kr:'한 조건을 끝까지 녹음한 다음에 다른 조건을 시작했어요. 목소리는 한 세션 안에서도 흘러갑니다 — 풀리고, 지치고, 다른 음높이에 자리를 잡고 — 이렇게 몰아서 녹음하면 그 흐름이 조건 차이 위에 통째로 얹혀요. 번갈아 가세요: A, B, A, B.'},
   repMedian:{en:'MEDIAN f0 GAP',kr:'중앙 f0 간격'},
-  repMedianHint:{en:'Difference between the two condition means. Should be small — a large gap means your baseline voice moved between conditions, and the numbers above are then comparing two different voices.',kr:'두 조건 평균의 차이. 작아야 정상이에요 — 크게 벌어졌으면 조건 사이에 목소리 자체가 옮겨간 거고, 그러면 위의 값들은 서로 다른 두 목소리를 비교하는 셈이 됩니다.'}
+  repMedianHint:{en:'Difference between the two condition means. Should be small — a large gap means your baseline voice moved between conditions, and the numbers above are then comparing two different voices.',kr:'두 조건 평균의 차이. 작아야 정상이에요 — 크게 벌어졌으면 조건 사이에 목소리 자체가 옮겨간 거고, 그러면 위의 값들은 서로 다른 두 목소리를 비교하는 셈이 됩니다.'},
+
+  /* ----- 비교 지표 선택 ----- */
+  mDelta:{en:'FINAL MOVEMENT',kr:'문말 이동'},
+  mRange:{en:'PITCH RANGE',kr:'음역 폭'},
+  mRate:{en:'SPEECH RATE',kr:'발화 속도'},
+  mDet:{en:'SYLLABLE DETECTION',kr:'음절 검출률'},
+  mDeltaHint:{en:'Difference between the two condition means. Positive means condition B ended higher.',kr:'두 조건 평균의 차이. 양수면 B 쪽을 더 높게 끝냈다는 뜻.'},
+  mRangeHint:{en:'Difference between the two condition means. Positive means condition B used a wider pitch range from top to bottom.',kr:'두 조건 평균의 차이. 양수면 B 쪽에서 위아래 음역을 더 넓게 썼다는 뜻.'},
+  mRateHint:{en:'Difference between the two condition means. Positive means condition B was faster. This counts detected syllables, not the syllables in the text, so it is pulled down by whatever the detector missed.',kr:'두 조건 평균의 차이. 양수면 B 쪽이 더 빨랐다는 뜻. 글자 수가 아니라 검출된 음절을 세기 때문에, 검출기가 놓친 만큼 값이 내려갑니다.'},
+  mDetHint:{en:'Difference between the two condition means. Positive means the detector found a larger share of the expected syllables in condition B. This is the number speech rate is confounded with — compare it before believing a rate difference.',kr:'두 조건 평균의 차이. 양수면 B 조건에서 기대 음절 중 더 많은 비율을 검출기가 찾았다는 뜻. 발화 속도가 뒤섞여 있는 게 바로 이 값이에요 — 속도 차이를 믿기 전에 이것부터 비교해 보세요.'},
+  repRateWarn:{en:'Speech rate is detected syllables ÷ duration, so a rate difference can be a detection difference wearing its clothes: speak faster and syllables merge, the detector finds fewer of them, and the rate falls for a reason that has nothing to do with how fast you actually spoke. Run the same takes on SYLLABLE DETECTION before you believe this one.',kr:'발화 속도는 검출된 음절 ÷ 길이입니다. 그래서 속도 차이는 검출 차이가 옷만 갈아입은 것일 수 있어요 — 빠르게 말하면 음절이 붙고, 검출기가 덜 찾고, 실제 속도와 무관한 이유로 값이 내려갑니다. 이 결과를 믿기 전에 같은 회차를 음절 검출률로 한 번 돌려 보세요.'},
+  repBadTakeM:{en:'That take has no value for the metric you are comparing right now. Record it again, or switch the metric.',kr:'그 녹음에는 지금 비교 중인 지표의 값이 없어요. 다시 녹음하거나 지표를 바꿔 주세요.'},
+  repDropped:{en:'take(s) had no value for this metric and were left out of the test.',kr:'회차는 이 지표 값이 없어서 검정에서 제외했습니다.'},
+  repNoneUsable:{en:'One of the conditions has no take with a value for this metric, so there is nothing to compare. Pick another metric, or record again.',kr:'한쪽 조건에 이 지표 값을 가진 회차가 하나도 없어서 비교할 게 없어요. 다른 지표를 고르거나 다시 녹음해 주세요.'}
 };
 
 /* ---------- 숫자 해설 ----------
@@ -1593,7 +1617,7 @@ A.repSwitches = function(takes){
 /*__REPSTATS_END__*/
 
 /* =================== 정독 탭 =================== */
-var S = { idx:0, live:new Live(), last:null, running:false, repA:[], repB:[], ord:0 };
+var S = { idx:0, live:new Live(), last:null, running:false, repA:[], repB:[], ord:0, metric:'delta' };
 A.S = S;
 
 A.cur = function(){ return window.BS_SENTENCES[S.idx]; };
@@ -1720,7 +1744,9 @@ A.renderRead = function(){
     id: expect.id, label: A.label(expect), pair: expect.pair || null,
     sentence: expect.kr, nSyl: nuclei.length, expSyl: expect.syl,
     delta: (fin && !finBad) ? fin.delta : null, type: (fin && !finBad) ? fin.type : null,
-    range: range, f0: r.medianF0, dur: durSec
+    range: range, f0: r.medianF0, dur: durSec,
+    rate: durSec > 0 ? nuclei.length / durSec : null,
+    det: expect.syl > 0 ? 100 * nuclei.length / expect.syl : null
   };
 };
 
@@ -1831,7 +1857,9 @@ A.renderPassage = function(r, expect){
     id: expect.id, label: A.label(expect), pair: expect.pair || null,
     sentence: expect.kr, nSyl: nuclei.length, expSyl: expect.syl,
     delta: (endFin && !finBad) ? endFin.delta : null, type: (endFin && !finBad) ? endFin.type : null,
-    range: range, f0: r.medianF0, dur: durSec
+    range: range, f0: r.medianF0, dur: durSec,
+    rate: durSec > 0 ? nuclei.length / durSec : null,
+    det: expect.syl > 0 ? 100 * nuclei.length / expect.syl : null
   };
 };
 
@@ -1846,10 +1874,46 @@ A.repMsg = function(kind, s){
   $('repMsg').innerHTML = s ? '<div class="' + kind + '" style="margin-top:12px">' + s + '</div>' : '';
 };
 
+/* 반복 측정이 비교할 수 있는 지표. key 는 회차 객체의 필드명이다. */
+A.METRICS = [
+  { key:'delta', name:U.mDelta, hint:U.mDeltaHint, unit:{en:'st',kr:'st'},             dec:2, sign:true  },
+  { key:'range', name:U.mRange, hint:U.mRangeHint, unit:{en:'st',kr:'st'},             dec:2, sign:false },
+  { key:'rate',  name:U.mRate,  hint:U.mRateHint,  unit:{en:'syl/s',kr:'음절/초'},      dec:2, sign:false },
+  { key:'det',   name:U.mDet,   hint:U.mDetHint,   unit:{en:'%',kr:'%'},               dec:0, sign:false, tight:true }
+];
+A.metric = function(){
+  for (var i = 0; i < A.METRICS.length; i++) if (A.METRICS[i].key === S.metric) return A.METRICS[i];
+  return A.METRICS[0];
+};
+A.mVal = function(m, v){
+  if (v == null || !isFinite(v)) return '—';
+  return (m.sign && v >= 0 ? '+' : '') + v.toFixed(m.dec);
+};
+A.fillMetricPick = function(){
+  var sel = $('metricPick');
+  if (!sel) return;
+  var cur = S.metric;
+  sel.innerHTML = '';
+  A.METRICS.forEach(function(m){
+    var o = document.createElement('option');
+    o.value = m.key; o.textContent = L(m.name);
+    sel.appendChild(o);
+  });
+  sel.value = cur;
+};
+A.setMetric = function(k){
+  for (var i = 0; i < A.METRICS.length; i++) if (A.METRICS[i].key === k) S.metric = k;
+  A.repMsg('', '');
+  A.paintAB();
+};
+
 A.repAdd = function(which){
   var t = S.last;
   if (!t){ A.repMsg('warn', L(U.repNoLast)); return; }
-  if (t.delta == null){ A.repMsg('warn', L(U.repBadTake)); return; }
+  var m = A.metric();
+  if (t[m.key] == null || !isFinite(t[m.key])){
+    A.repMsg('warn', L(m.key === 'delta' ? U.repBadTake : U.repBadTakeM)); return;
+  }
   var list = which === 'A' ? S.repA : S.repB;
   if (list.length >= A.REP_MAX){ A.repMsg('note', L(U.repFull)); return; }
   var c = {}; for (var k in t) if (Object.prototype.hasOwnProperty.call(t, k)) c[k] = t[k];
@@ -1866,18 +1930,24 @@ A.repClear = function(which){
   A.paintAB();
 };
 
-/* 슬롯 본문: 문장 이름 + 회차별 문말값 */
+/* 슬롯 본문: 문장 이름 + 회차별 선택 지표값 */
 A.slotText = function(list){
   if (!list || !list.length) return '<span class="hd">' + L(U.repEmpty) + '</span>';
-  var names = [], i;
+  var m = A.metric(), names = [], i, k;
   for (i = 0; i < list.length; i++){
-    var nm = list[i].label || list[i].sentence;
+    /* 라벨은 회차에 굳혀 두지 않고 매번 다시 찾는다 — 언어를 바꾸면 같이 바뀌어야 하니까 */
+    var src = null;
+    for (k = 0; k < window.BS_SENTENCES.length; k++){
+      if (window.BS_SENTENCES[k].id === list[i].id) src = window.BS_SENTENCES[k];
+    }
+    var nm = src ? A.label(src) : (list[i].label || list[i].sentence);
     if (names.indexOf(nm) < 0) names.push(nm);
   }
   var h = names.join(' + ');
   for (i = 0; i < list.length; i++){
+    var v = list[i][m.key], ok = v != null && isFinite(v);
     h += '<br /><span class="hd">' + L(U.repTake) + ' ' + (i+1) + '</span> ' +
-         '<span class="n">' + (list[i].delta >= 0 ? '+' : '') + list[i].delta.toFixed(2) + 'st</span>' +
+         '<span class="n">' + A.mVal(m, v) + (ok ? (m.tight ? '' : ' ') + L(m.unit) : '') + '</span>' +
          ' · ' + Math.round(list[i].f0) + 'Hz';
   }
   return h;
@@ -1897,24 +1967,44 @@ A.repRel = function(as, bs){
 };
 
 A.paintAB = function(){
+  A.fillMetricPick();
+  var m = A.metric();
   $('slotAtxt').innerHTML = A.slotText(S.repA);
   $('slotBtxt').innerHTML = A.slotText(S.repB);
   var d = $('abDiff');
   if (!S.repA.length || !S.repB.length){ d.innerHTML = ''; return; }
 
-  function col(list, key){ return list.map(function(t){ return t[key]; }); }
-  var st = A.repStats(col(S.repA, 'delta'), col(S.repB, 'delta'));
-  var vd = A.repVerdict(st);
+  /* 선택한 지표 값이 없는 회차는 검정에서 빠진다 (예: 옥타브 오류로 문말값이 없는 회차) */
+  function col(list, key){
+    var v = [], i;
+    for (i = 0; i < list.length; i++){
+      var x = list[i][key];
+      if (x != null && isFinite(x)) v.push(x);
+    }
+    return v;
+  }
+  var va = col(S.repA, m.key), vb = col(S.repB, m.key);
   var rel = A.repRel(S.repA, S.repB);
-  var f0 = A.repStats(col(S.repA, 'f0'), col(S.repB, 'f0'));
-  var mw = st.mw;
+  var drop = (S.repA.length - va.length) + (S.repB.length - vb.length);
 
   var html = '<div class="note" style="margin-top:14px">' +
              L(rel === 'same' ? U.relSame : (rel === 'pair' ? U.relPair : U.relFree)) + '</div>';
+  if (drop) html += '<div class="warn">' + drop + ' ' + L(U.repDropped) + '</div>';
+
+  if (!va.length || !vb.length){
+    d.innerHTML = html + '<div class="warn">' + L(U.repNoneUsable) + '</div>';
+    return;
+  }
+
+  var st = A.repStats(va, vb);
+  var vd = A.repVerdict(st);
+  var f0 = A.repStats(col(S.repA, 'f0'), col(S.repB, 'f0'));
+  var mw = st.mw;
 
   html += '<div class="stat-grid" style="margin-top:14px">' +
-    A.statRaw(L(U.repDiff), (st.diff >= 0 ? '+' : '') + st.diff.toFixed(2), 'st', L(U.repDiffHint)) +
-    A.statRaw(L(U.repWithin), st.pooled == null ? '—' : '±' + st.pooled.toFixed(2), 'st', L(U.repWithinHint)) +
+    A.statRaw('Δ ' + L(m.name) + ' (B − A)',
+      (st.diff >= 0 ? '+' : '') + st.diff.toFixed(m.dec), L(m.unit), L(m.hint)) +
+    A.statRaw(L(U.repWithin), st.pooled == null ? '—' : '±' + st.pooled.toFixed(m.dec), L(m.unit), L(U.repWithinHint)) +
     A.statRaw(L(U.repRatio), st.d == null ? '—' : Math.abs(st.d).toFixed(2), '', L(U.repRatioHint)) +
     A.statRaw(L(U.repP), mw ? mw.p.toFixed(3) : '—', '',
       (mw ? L(U.repFloor) + ' ' + mw.pMin.toFixed(3) + '. ' : '') + L(U.repPHint)) +
@@ -1926,6 +2016,9 @@ A.paintAB = function(){
           L(vd === 'need' ? U.repNeed : (vd === 'clear' ? U.repClear2 :
             (vd === 'sepShort' ? U.repSep : U.repUnclear))) + '</div>';
 
+  if (m.key === 'rate'){
+    html += '<div class="warn">' + L(U.repRateWarn) + '</div>';
+  }
   if (st.nA >= 2 && st.nB >= 2 && A.repSwitches(S.repA.concat(S.repB)) <= 1){
     html += '<div class="warn">' + L(U.repBlocked) + '</div>';
   }
@@ -2097,6 +2190,7 @@ $('newTopic').addEventListener('click', function(){
   F.topic = (F.topic + 1) % window.BS_TOPICS.length;
   $('topicKr').textContent = L(window.BS_TOPICS[F.topic]);
 });
+$('metricPick').addEventListener('change', function(e){ A.setMetric(e.target.value); });
 $('saveA').addEventListener('click', function(){ A.repAdd('A'); });
 $('saveB').addEventListener('click', function(){ A.repAdd('B'); });
 $('clrA').addEventListener('click', function(){ A.repClear('A'); });
