@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Vocal Range — kygmin.com</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#F6F6F4;
+  --ink:#141414;
+  --gray:#DDDDD8;
+  --green:#2BB673;
+  --green-deep:#0F6E56;
+  --red:#A32D2D;
+  --blue:#3A5BD9;
+  --arch:'Archivo','Pretendard',sans-serif;
+  --sans:'Pretendard',-apple-system,'Apple SD Gothic Neo','Malgun Gothic','Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono','SF Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{transition:none!important;animation:none!important;}
+}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:16px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  word-break:keep-all;overflow-wrap:break-word;
+}
+a{color:inherit;text-decoration:none;}
+a:focus-visible,button:focus-visible,select:focus-visible{outline:3px solid var(--green);outline-offset:3px;}
+.wrap{max-width:960px;margin:0 auto;padding:0 24px;}
+
+nav{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:3px solid var(--ink);}
+.nav-inner{max-width:960px;margin:0 auto;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;}
+.logo{font-family:var(--arch);font-weight:900;font-size:19px;letter-spacing:-0.5px;}
+.logo em{font-style:normal;background:var(--green);color:var(--paper);padding:0 6px;display:inline-block;transform:rotate(-1.5deg);}
+.nav-links{display:flex;gap:8px;flex-wrap:wrap;}
+.nav-links a{font-family:var(--arch);font-size:12px;font-weight:700;text-transform:uppercase;border:2px solid var(--ink);padding:6px 13px;background:#fff;box-shadow:3px 3px 0 var(--ink);transition:transform .1s, box-shadow .1s;}
+.nav-links a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+.nav-links a.on{background:var(--green);color:var(--paper);}
+
+#langtoggle{position:fixed;right:20px;bottom:20px;z-index:50;display:inline-flex;border:2px solid var(--ink);box-shadow:3px 3px 0 var(--ink);background:#fff;font-family:var(--arch);font-weight:700;font-size:12px;overflow:hidden;}
+#langtoggle button{font:inherit;border:none;background:none;cursor:pointer;padding:9px 14px;color:var(--ink);letter-spacing:.5px;transition:background .1s,color .1s;}
+#langtoggle button.on{background:var(--green);color:var(--paper);}
+#langtoggle button+button{border-left:2px solid var(--ink);}
+.scr{color:var(--green);}
+.box .scr{color:var(--paper);}
+
+header{padding:48px 0 34px;border-bottom:3px solid var(--ink);}
+.sec-tag{font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--green-deep);letter-spacing:1px;display:block;margin-bottom:14px;}
+h1{font-family:var(--arch);font-weight:900;text-transform:uppercase;font-size:clamp(30px, 5.6vw, 50px);line-height:1.02;letter-spacing:-2px;}
+h1 .box{background:var(--ink);color:var(--paper);padding:0 12px;display:inline-block;transform:rotate(-1deg);}
+.hero-sub{margin-top:18px;font-size:15.5px;max-width:660px;font-weight:500;}
+main{padding:34px 0 70px;}
+h2.sub{font-family:var(--arch);font-weight:900;text-transform:uppercase;font-size:15px;letter-spacing:.5px;margin:34px 0 14px;padding-bottom:8px;border-bottom:3px solid var(--ink);}
+
+/* 마이크 상태 표시줄 — 블루베리와 같은 계약 */
+.privacy{border:3px solid var(--ink);background:#fff;padding:12px 16px;margin-bottom:20px;font-size:14px;}
+.privacy-top{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12.5px;font-weight:600;}
+.privacy-dot{width:11px;height:11px;border-radius:50%;background:#bbb;flex:none;}
+.privacy-dot.rec{background:var(--red);animation:blink 1s steps(2,start) infinite;}
+@keyframes blink{50%{opacity:.25}}
+.privacy p{margin-top:8px;font-size:13.5px;color:#444;}
+.privacy details{margin-top:8px;}
+.privacy summary{cursor:pointer;font-family:var(--mono);font-size:12px;font-weight:600;color:var(--green-deep);}
+.privacy ul{margin:8px 0 0 18px;font-size:13.5px;color:#444;}
+
+.btn{font-family:var(--arch);font-weight:900;text-transform:uppercase;font-size:14px;letter-spacing:.5px;border:3px solid var(--ink);background:#fff;color:var(--ink);padding:11px 22px;cursor:pointer;box-shadow:4px 4px 0 var(--ink);transition:transform .1s,box-shadow .1s;}
+.btn:hover:not(:disabled){transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink);}
+.btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:4px 4px 0 #999;}
+.btn.go{background:var(--green);color:var(--paper);}
+.btn.stop{background:var(--red);color:var(--paper);}
+.btn.sm{font-size:12px;padding:8px 15px;box-shadow:3px 3px 0 var(--ink);}
+.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:16px;}
+.hint{font-size:13px;color:#555;}
+
+/* 측정 무대 */
+.stage{border:3px solid var(--ink);background:#fff;padding:26px 22px;text-align:center;}
+.stage-step{font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--green-deep);letter-spacing:1px;text-transform:uppercase;}
+.stage-say{font-family:var(--arch);font-weight:900;font-size:clamp(19px,3.4vw,27px);text-transform:uppercase;letter-spacing:-.5px;margin-top:6px;line-height:1.15;}
+.now{margin:20px 0 6px;font-family:var(--arch);font-weight:900;font-size:clamp(38px,9vw,74px);line-height:1;letter-spacing:-2px;min-height:1.05em;}
+.now.quiet{color:#c4c4c0;}
+.now-sub{font-family:var(--mono);font-size:13px;color:#555;min-height:1.4em;}
+.bar{height:14px;border:3px solid var(--ink);background:var(--gray);margin:18px 0 8px;overflow:hidden;}
+.bar i{display:block;height:100%;width:0;background:var(--green);}
+.bar.hot i{background:var(--red);}
+.level{height:8px;border:2px solid var(--ink);background:var(--gray);margin-top:12px;overflow:hidden;}
+.level i{display:block;height:100%;width:0;background:var(--ink);}
+.steps{display:flex;gap:5px;justify-content:center;flex-wrap:wrap;margin-top:14px;min-height:26px;}
+.chip{font-family:var(--mono);font-size:12px;font-weight:600;border:2px solid var(--ink);background:#fff;padding:2px 8px;}
+.chip.miss{border-style:dashed;color:#999;}
+.chip.strict{background:var(--green);color:var(--paper);}
+
+/* 결과 */
+.big{border:3px solid var(--ink);background:#fff;padding:22px;margin-top:18px;}
+.big-lab{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--green-deep);letter-spacing:1px;text-transform:uppercase;}
+.big-val{font-family:var(--arch);font-weight:900;font-size:clamp(26px,5.5vw,44px);line-height:1.1;letter-spacing:-1.5px;margin-top:4px;}
+.big-sub{font-family:var(--mono);font-size:13px;color:#555;margin-top:4px;}
+.big-why{font-size:14px;color:#444;margin-top:10px;}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;}
+@media (max-width:640px){.duo{grid-template-columns:1fr;}}
+.cell{border:3px solid var(--ink);background:#fff;padding:16px;}
+.cell b{display:block;font-family:var(--mono);font-size:11.5px;font-weight:600;color:var(--green-deep);letter-spacing:1px;text-transform:uppercase;}
+.cell span{display:block;font-family:var(--arch);font-weight:900;font-size:20px;margin-top:4px;letter-spacing:-.5px;}
+.cell em{display:block;font-style:normal;font-family:var(--mono);font-size:12px;color:#555;margin-top:2px;}
+.cell i{display:block;font-style:normal;font-size:13px;color:#444;margin-top:8px;line-height:1.5;}
+
+table.kt{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:13.5px;margin-top:14px;background:#fff;}
+table.kt th,table.kt td{border:2px solid var(--ink);padding:7px 10px;text-align:left;}
+table.kt th{background:var(--ink);color:var(--paper);font-family:var(--arch);font-size:11.5px;text-transform:uppercase;letter-spacing:.5px;}
+table.kt tr.zero td{background:#EAF7F0;font-weight:600;}
+table.kt tr.ceil td{background:var(--green);color:var(--paper);font-weight:600;}
+table.kt td.k{width:64px;font-weight:600;}
+
+.note{border-left:4px solid var(--green);background:#fff;padding:12px 16px;font-size:14.5px;margin-top:16px;}
+.warn{border-left:4px solid var(--red);background:#fff;padding:12px 16px;font-size:14.5px;margin-top:16px;}
+details.how{margin-top:16px;border:3px solid var(--ink);background:#fff;}
+details.how summary{cursor:pointer;padding:11px 16px;font-family:var(--arch);font-weight:900;font-size:12.5px;text-transform:uppercase;letter-spacing:.5px;}
+details.how .hbody{padding:0 16px 16px;font-size:14px;color:#333;}
+details.how table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:12.5px;margin-top:10px;}
+details.how td,details.how th{border:1px solid var(--gray);padding:4px 8px;text-align:left;}
+details.how th{background:var(--gray);}
+
+/* 공유 카드 */
+.card{border:3px solid var(--ink);background:var(--ink);color:var(--paper);padding:28px 24px;margin-top:18px;text-align:center;}
+.card-lab{font-family:var(--mono);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--green);}
+.card-note{font-family:var(--arch);font-weight:900;font-size:clamp(30px,7vw,54px);line-height:1.05;letter-spacing:-2px;margin:10px 0;}
+.card-site{font-family:var(--mono);font-size:13px;letter-spacing:1px;color:#bbb;margin-top:12px;}
+.foot{margin-top:34px;font-family:var(--mono);font-size:12.5px;color:#666;}
+</style>
+<script>
+window.KYG_LANG=(function(){try{var v=localStorage.getItem('kyg_lang');if(v==='kr'||v==='en')return v;}catch(e){}return 'en';})();
+window.APP_LANG=window.KYG_LANG;
+if(window.KYG_LANG!=='en'){
+  document.documentElement.setAttribute('lang','ko');
+  document.documentElement.className+=' lang-pending';
+  setTimeout(function(){document.documentElement.classList.remove('lang-pending');},2000);
+}
+</script>
+<style>html.lang-pending .tx{visibility:hidden}</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="/">KYG<em>MIN</em></a>
+    <div class="nav-links">
+      <a href="/" class="tx" data-en="HOME" data-kr="홈">HOME</a>
+      <a href="/playhouse.html" class="tx" data-en="PLAYHOUSE" data-kr="놀이터">PLAYHOUSE</a>
+      <a href="/blueberry/" class="tx" data-en="BLUEBERRY" data-kr="블루베리">BLUEBERRY</a>
+      <a href="/me/" class="tx" data-en="ME" data-kr="나">ME</a>
+    </div>
+  </div>
+</nav>
+
+<div id="langtoggle"><button data-lang="en" class="on">EN</button><button data-lang="kr">KR</button></div>
+
+<header>
+  <div class="wrap">
+    <span class="sec-tag tx" data-en="A BLUEBERRY SMOOTHIE SPIN-OFF" data-kr="블루베리 스무디 파생 프로젝트">A BLUEBERRY SMOOTHIE SPIN-OFF</span>
+    <h1><span class="box tx" data-en="VOCAL" data-kr="음역대">VOCAL</span> <span class="tx" data-en="RANGE" data-kr="측정기">RANGE</span></h1>
+    <p class="hero-sub tx" data-en="Measures how high and how low you can actually hold a note, then turns it into the one number a karaoke machine understands: how many times to press the key button. No song database, no taste, no guessing — just your voice and arithmetic." data-kr="당신이 실제로 붙잡을 수 있는 가장 높은 음과 낮은 음을 재서, 노래방 기계가 알아듣는 숫자 하나로 바꿔줍니다 — 키 버튼을 몇 번 누를지. 곡 데이터베이스도, 취향도, 추측도 없어요. 목소리와 산수뿐입니다.">Measures how high and how low you can actually hold a note, then turns it into the one number a karaoke machine understands: how many times to press the key button. No song database, no taste, no guessing — just your voice and arithmetic.</p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <div class="privacy">
+      <div class="privacy-top">
+        <span class="privacy-dot" id="micDot"></span>
+        <span class="tx" data-en="MICROPHONE" data-kr="마이크">MICROPHONE</span>
+        <span id="micState"></span>
+      </div>
+      <p class="tx" data-en="Your voice is analysed inside this page. Nothing is uploaded, nothing is written to disk, and this version does not even store the result — close the tab and it is all gone. The microphone is only open while the red dot is lit." data-kr="목소리는 전부 이 페이지 안에서 분석됩니다. 어디로도 업로드되지 않고, 디스크에 저장되지도 않고, 이 버전은 결과조차 저장하지 않습니다 — 탭을 닫으면 전부 사라져요. 마이크는 위의 빨간 점이 켜진 동안에만 열려 있습니다.">Your voice is analysed inside this page. Nothing is uploaded, nothing is written to disk, and this version does not even store the result — close the tab and it is all gone. The microphone is only open while the red dot is lit.</p>
+      <details>
+        <summary class="tx" data-en="What this page never does" data-kr="이 페이지가 절대 하지 않는 것">What this page never does</summary>
+        <ul>
+          <li class="tx" data-en="No audio leaves the device. There is no upload of any kind." data-kr="오디오는 기기 밖으로 나가지 않습니다. 어떤 종류의 업로드도 없어요.">No audio leaves the device. There is no upload of any kind.</li>
+          <li class="tx" data-en="No sound is played back. This tool has no audio output at all — a reference tone would be picked up by your microphone and mistaken for your voice." data-kr="어떤 소리도 재생하지 않습니다. 이 도구에는 오디오 출력이 아예 없어요 — 기준 톤을 들려주면 그 소리가 마이크에 되잡혀 당신 목소리로 오인됩니다.">No sound is played back. This tool has no audio output at all — a reference tone would be picked up by your microphone and mistaken for your voice.</li>
+          <li class="tx" data-en="No speech recognition runs anywhere. Only the pitch of the sound is measured." data-kr="음성 인식은 어디에서도 돌지 않습니다. 소리의 높이만 측정해요.">No speech recognition runs anywhere. Only the pitch of the sound is measured.</li>
+        </ul>
+      </details>
+    </div>
+
+    <!-- ============ 측정 무대 ============ -->
+    <section>
+      <div class="row">
+        <button class="btn go" id="goBtn"><span id="goTxt"></span></button>
+        <button class="btn sm" id="againBtn" hidden><span id="againTxt"></span></button>
+        <span class="hint" id="hint"></span>
+      </div>
+
+      <div class="stage">
+        <div class="stage-step" id="stStep"></div>
+        <div class="stage-say" id="stSay"></div>
+        <div class="now" id="nowNote"></div>
+        <div class="now-sub" id="nowSub"></div>
+        <div class="bar" id="paceBar"><i id="paceFill"></i></div>
+        <div class="stage-step" id="paceTxt"></div>
+        <div class="steps" id="chips"></div>
+        <div class="level"><i id="lvl"></i></div>
+      </div>
+
+      <div id="msg"></div>
+    </section>
+
+    <!-- ============ 결과 ============ -->
+    <div id="res"></div>
+
+    <h2 class="sub tx" data-en="HOW THIS WORKS" data-kr="어떻게 재는가">HOW THIS WORKS</h2>
+
+    <details class="how">
+      <summary class="tx" data-en="Why you are not asked to sing anything in particular" data-kr="왜 특정한 음을 내라고 하지 않는가">Why you are not asked to sing anything in particular</summary>
+      <div class="hbody">
+        <p class="tx" data-en="Telling you to move down by exactly a semitone would only work for people who already have training, which defeats the point. So the instruction is just &quot;a little lower than before&quot; — how far you actually moved is our problem to measure, not yours to control. Uneven steps are fine. Skipping three at once is fine." data-kr="「반음씩 내려가세요」는 이미 훈련받은 사람만 할 수 있는 지시이고, 그러면 이 도구의 의미가 없어집니다. 그래서 지시는 「아까보다 조금 더 낮게」뿐이에요 — 실제로 얼마나 움직였는지는 우리가 잴 문제지 당신이 맞출 문제가 아닙니다. 계단이 고르지 않아도 되고, 세 계단을 한 번에 뛰어도 됩니다.">Telling you to move down by exactly a semitone would only work for people who already have training, which defeats the point. So the instruction is just &quot;a little lower than before&quot; — how far you actually moved is our problem to measure, not yours to control. Uneven steps are fine. Skipping three at once is fine.</p>
+        <p class="tx" data-en="You are also never asked whether you have hit your limit. Instead the measurement is allowed to break first: near the edge a voice does not stop cleanly, it wobbles, goes breathy and gets quiet — and that is exactly what the hold test is looking at. Two steps in a row that fail it ends the pass." data-kr="「이게 내 한계인가?」도 묻지 않습니다. 대신 기준이 먼저 끊기게 둡니다 — 한계에 가까워지면 목소리는 깔끔하게 멈추지 않고 흔들리고 숨이 섞이고 작아지는데, 그게 정확히 유지 판정이 보고 있는 것이에요. 연속 두 계단이 판정에 실패하면 그 회차가 끝납니다.">You are also never asked whether you have hit your limit. Instead the measurement is allowed to break first: near the edge a voice does not stop cleanly, it wobbles, goes breathy and gets quiet — and that is exactly what the hold test is looking at. Two steps in a row that fail it ends the pass.</p>
+        <p class="tx" data-en="Down first, up second. Singing high notes tires the voice enough to spoil the low measurement afterwards; the reverse order does no such damage." data-kr="하강이 먼저, 상승이 나중입니다. 고음을 먼저 내면 목이 피로해져서 그 뒤의 저음 측정까지 나빠지지만, 반대 방향으로는 그런 영향이 없어요.">Down first, up second. Singing high notes tires the voice enough to spoil the low measurement afterwards; the reverse order does no such damage.</p>
+      </div>
+    </details>
+
+    <details class="how">
+      <summary class="tx" data-en="What counts as a note you can hold" data-kr="무엇을 「붙잡은 음」으로 세는가">What counts as a note you can hold</summary>
+      <div class="hbody">
+        <p class="tx" data-en="A note only enters your range if the pitch stayed inside a half-semitone band for long enough, loudly enough, and with a clean enough periodic waveform. Singing is not brushing past a note, it is catching one — a pitch you slide through is not part of your range." data-kr="음높이가 반음 폭 안에서 충분히 오래, 충분한 크기로, 파형이 충분히 규칙적인 채로 머물러야 음역에 들어갑니다. 노래는 음을 스치는 게 아니라 붙잡는 행위예요 — 지나가며 흘린 음은 당신의 음역이 아닙니다.">A note only enters your range if the pitch stayed inside a half-semitone band for long enough, loudly enough, and with a clean enough periodic waveform. Singing is not brushing past a note, it is catching one — a pitch you slide through is not part of your range.</p>
+        <p class="tx" data-en="This is measured twice with two different strictnesses, which is where the two ranges below come from. The strict one asks the note to be held twice as long and to drift half as much. Note that it penalises drift, not wobble: vibrato circles around a centre and drifts almost nothing, while a note at your limit sags downward. Punishing wobble would hand the smallest range to the best singers." data-kr="이 판정을 서로 다른 엄격도로 두 번 돌립니다. 아래 두 음역이 거기서 나와요. 엄격한 쪽은 두 배 오래 버티고 표류는 절반만 허용합니다. 벌점이 흔들림이 아니라 **표류**에 붙는다는 점이 중요해요 — 비브라토는 중심 주위를 돌기 때문에 표류가 거의 없고, 한계에 걸린 음은 아래로 처집니다. 흔들림으로 벌하면 노래를 제일 잘하는 사람이 제일 좁은 음역을 받게 됩니다.">This is measured twice with two different strictnesses, which is where the two ranges below come from. The strict one asks the note to be held twice as long and to drift half as much. Note that it penalises drift, not wobble: vibrato circles around a centre and drifts almost nothing, while a note at your limit sags downward. Punishing wobble would hand the smallest range to the best singers.</p>
+        <p class="tx" data-en="No attempt is made to exclude falsetto or any other way of producing sound. The only question asked is whether you can hold it, because plenty of songs are sung in falsetto. Vocal fry fails the test on its own — it is unstable and quiet, which is what the criteria already catch." data-kr="가성이든 다른 발성이든 이름으로 배제하지 않습니다. 묻는 것은 「붙잡을 수 있는가」 하나뿐이에요 — 가성으로 부르는 곡은 많으니까요. 보컬 프라이는 알아서 걸립니다. 불안정하고 작으니 기준이 이미 잡아내요.">No attempt is made to exclude falsetto or any other way of producing sound. The only question asked is whether you can hold it, because plenty of songs are sung in falsetto. Vocal fry fails the test on its own — it is unstable and quiet, which is what the criteria already catch.</p>
+      </div>
+    </details>
+
+    <details class="how" id="notationBox">
+      <summary class="tx" data-en="Note names, side by side" data-kr="음 이름 대조표">Note names, side by side</summary>
+      <div class="hbody">
+        <p id="notationWhy"></p>
+        <div id="notationTable"></div>
+      </div>
+    </details>
+
+    <details class="how">
+      <summary class="tx" data-en="What this tool refuses to tell you" data-kr="이 도구가 말하지 않는 것">What this tool refuses to tell you</summary>
+      <div class="hbody">
+        <p class="tx" data-en="It does not recommend songs. Building that needs a melody-range database, and karaoke MIDI is copyrighted — the same wall we already hit once. Taste is the bigger reason though: two people with identical ranges want to sing completely different things, and range data cannot support a claim about what you enjoy." data-kr="곡을 추천하지 않습니다. 만들려면 곡별 선율 음역 데이터베이스가 필요한데 노래방 MIDI는 저작권 대상이에요 — 이미 한 번 부딪힌 것과 같은 벽입니다. 다만 더 큰 이유는 취향이에요. 음역이 똑같은 두 사람이 부르고 싶은 곡은 완전히 다르고, 음역 데이터는 당신이 뭘 좋아하는지에 대한 주장을 뒷받침하지 못합니다.">It does not recommend songs. Building that needs a melody-range database, and karaoke MIDI is copyrighted — the same wall we already hit once. Taste is the bigger reason though: two people with identical ranges want to sing completely different things, and range data cannot support a claim about what you enjoy.</p>
+        <p class="tx" data-en="It does not name a key either. A key says which note is home, not where the melody sits — an E minor song written low and an E minor song written high are different songs to sing. And the key button changes it anyway: press +2 and an E minor song becomes F sharp minor. Reporting a value that one button press invalidates would be self-defeating." data-kr="조성도 알려주지 않습니다. 조성은 으뜸음이 무엇인지를 말할 뿐 선율이 어느 높이에 놓이는지를 말하지 않아요 — 낮게 쓰인 Em곡과 높게 쓰인 Em곡은 부르는 입장에서 다른 곡입니다. 게다가 키 버튼으로 바뀌어요. +2를 누르면 Em곡이 F#m곡이 됩니다. 버튼 한 번으로 무효가 되는 값을 결과로 내보내는 건 자기모순이에요.">It does not name a key either. A key says which note is home, not where the melody sits — an E minor song written low and an E minor song written high are different songs to sing. And the key button changes it anyway: press +2 and an E minor song becomes F sharp minor. Reporting a value that one button press invalidates would be self-defeating.</p>
+        <p class="tx" data-en="The whole tool rests on one piece of arithmetic instead. A key button shifts the entire melody by semitones, so the width of a melody never changes — that is the only hard constraint — while where it sits is free, and the machine can move it by six semitones in either direction. Six down is the floor, which is what makes the ceiling below a real limit rather than a suggestion." data-kr="대신 도구 전체가 산수 하나에 얹혀 있습니다. 키 버튼은 선율 전체를 반음 단위로 평행이동시키므로 **선율의 폭은 절대 안 바뀝니다** — 그게 유일한 절대 제약이고 — 반면 어느 높이에 놓이는지는 자유 변수이며 기계가 양쪽으로 6반음씩 밀어줍니다. −6이 바닥이라는 사실이 아래의 절대 상한을 권고가 아니라 진짜 한계로 만들어요.">The whole tool rests on one piece of arithmetic instead. A key button shifts the entire melody by semitones, so the width of a melody never changes — that is the only hard constraint — while where it sits is free, and the machine can move it by six semitones in either direction. Six down is the floor, which is what makes the ceiling below a real limit rather than a suggestion.</p>
+      </div>
+    </details>
+
+    <p class="foot tx" data-en="Both TJ and Kumyoung machines adjust by ±6 keys, one key per semitone — so the table above works at any karaoke room in the country, and this page never has to ask which machine you are standing in front of." data-kr="TJ와 금영 모두 ±6키까지, 1키가 반음입니다 — 그래서 위의 표는 전국 어느 노래방에서든 그대로 통하고, 이 페이지는 당신 앞의 기계가 무엇인지 물어볼 필요가 없어요.">Both TJ and Kumyoung machines adjust by ±6 keys, one key per semitone — so the table above works at any karaoke room in the country, and this page never has to ask which machine you are standing in front of.</p>
+
+  </div>
+</main>
+
+<!-- 언어 토글 + kyg_lang 유지 (사이트 공통 패턴) -->
+<script>
+window.APP_LANG_LISTENERS = [];
+(function(){
+  var POOL = ("ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎㅏㅑㅓㅕㅗㅛㅜㅠㅡㅣ"
+    + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-·").split("");
+  function esc(c){return c==="&"?"&amp;":c==="<"?"&lt;":c===">"?"&gt;":c;}
+  function Scramble(el){ this.el=el; this.raf=null; this.frame=this.frame.bind(this); }
+  Scramble.prototype.set=function(txt){
+    var old = this.el.dataset.plain!==undefined ? this.el.dataset.plain : this.el.textContent;
+    var len=Math.max(old.length, txt.length);
+    this.q=[];
+    for(var i=0;i<len;i++){
+      var from=old[i]||"", to=txt[i]||"";
+      var start=Math.floor(Math.random()*20);
+      var end=start+Math.floor(Math.random()*25)+12;
+      this.q.push({from:from,to:to,start:start,end:end,ch:null});
+    }
+    if(this.raf) cancelAnimationFrame(this.raf);
+    this.f=0; this.txt=txt; this.frame();
+  };
+  Scramble.prototype.frame=function(){
+    var out="", done=0;
+    for(var i=0;i<this.q.length;i++){
+      var it=this.q[i];
+      if(this.f>=it.end){ done++; out+=esc(it.to); }
+      else if(this.f>=it.start){
+        if(!it.ch || Math.random()<0.3){ it.ch=POOL[Math.floor(Math.random()*POOL.length)]; }
+        out+='<span class="scr">'+esc(it.ch)+'</span>';
+      } else out+=esc(it.from);
+    }
+    this.el.innerHTML=out;
+    if(done===this.q.length){ this.el.dataset.plain=this.txt; }
+    else { this.f++; this.raf=requestAnimationFrame(this.frame); }
+  };
+  var els=[].slice.call(document.querySelectorAll('.tx'));
+  els.forEach(function(el){ el.dataset.plain=el.textContent; el._s=new Scramble(el); });
+  /* 저장된 언어를 애니메이션 없이 즉시 적용한다. i18n 스크립트는 초기 로드에서
+     data-en 을 안 칠하므로, .tx 의 인라인 텍스트가 data-en 과 정확히 같아야 한다. */
+  (function(){
+    var L = window.KYG_LANG || 'en';
+    var btns=document.querySelectorAll('#langtoggle button');
+    for(var i=0;i<btns.length;i++){ btns[i].classList.toggle('on', btns[i].dataset.lang===L); }
+    if(L!=='en') els.forEach(function(el){ var t=el.dataset[L]; if(t!==undefined){ el.textContent=t; el.dataset.plain=t; } });
+    document.documentElement.classList.remove('lang-pending');
+  })();
+  function setLang(lang){
+    if(lang===window.APP_LANG) return;
+    window.APP_LANG = lang;
+    try{ localStorage.setItem('kyg_lang', lang); }catch(e){}
+    document.documentElement.lang = (lang==='kr'?'ko':'en');
+    var btns=document.querySelectorAll('#langtoggle button');
+    for(var i=0;i<btns.length;i++){ btns[i].classList.toggle('on', btns[i].dataset.lang===lang); }
+    els.forEach(function(el){ var t=el.dataset[lang]; if(t!==undefined) el._s.set(t); });
+    window.APP_LANG_LISTENERS.forEach(function(fn){ try{ fn(lang); }catch(e){ console.error(e); } });
+  }
+  document.getElementById('langtoggle').addEventListener('click', function(e){
+    var b=e.target.closest('button'); if(b) setLang(b.dataset.lang);
+  });
+})();
+</script>
+
+<!-- ===== DSP 엔진 사본 (yin · track · medianOf 만) ===== -->
+<script>
+/* ============================================================
+   vocalrange — DSP 엔진 (블루베리 engine.js에서 발췌한 사본)
+   포함: BS.yin · BS.track · BS.medianOf 셋뿐이다.
+
+   왜 통째로 복사하지 않았나: engine.js의 보정 계층(fixOctaves·despike·
+   toSemitones·syllables·phrases·finalSlope)은 전부 「이것은 말소리다」를
+   전제로 깔고 있다. 노래에는 억양구도 문말도 없고, 무엇보다 fixOctaves는
+   사용자가 일부러 두 옥타브를 훑는 이 도구에서 최고음을 아래로 접어버린다.
+   쓰지 않을 코드를 옆에 두면 언젠가 누가 부른다. 그래서 아예 안 가져온다.
+   (스펙 §6-2)
+
+   왜 별도 사본인가: 블루베리는 engine.js를 index.html에 인라인하는 빌드라,
+   공유 라이브러리로 뽑으면 빌드와 배포 절차를 동시에 바꾸게 된다.
+   v1은 사본 중복을 택한다 (스펙 §6-4).
+
+   세 함수의 본문은 원본과 한 글자도 다르지 않다 — `enginecheck.js`가 대조한다.
+   달라지는 순간 어느 쪽이 진짜인지 모르게 된다.
+
+   FMIN/FMAX 전역값도 원본 그대로 60/500이다. vocalrange는 이걸 고치지 않고
+   호출할 때마다 {fmin, fmax}를 넘긴다 (스펙 §6-3).
+   ============================================================ */
+(function (root) {
+'use strict';
+
+var BS = {};
+
+/* ---------- 상수 (원본 그대로. 호출부에서 opts로 덮어쓴다) ---------- */
+BS.FMIN = 60;
+BS.FMAX = 500;
+BS.YIN_THRESHOLD = 0.15;
+
+/* ---------- YIN ---------- */
+BS.yin = function (buf, sampleRate, opts) {
+  opts = opts || {};
+  var fmin = opts.fmin || BS.FMIN;
+  var fmax = opts.fmax || BS.FMAX;
+  var thresh = opts.threshold != null ? opts.threshold : BS.YIN_THRESHOLD;
+
+  var W = buf.length;
+  var tauMin = Math.max(2, Math.floor(sampleRate / fmax));
+  var tauMax = Math.min(W >> 1, Math.ceil(sampleRate / fmin));
+  if (tauMax <= tauMin) return { f0: 0, conf: 0, rms: 0 };
+
+  // RMS 먼저 (무음 조기 반환)
+  var s = 0, i, j;
+  for (i = 0; i < W; i++) s += buf[i] * buf[i];
+  var rms = Math.sqrt(s / W);
+  if (rms < 1e-5) return { f0: 0, conf: 0, rms: rms };
+
+  // 적분 구간: 모든 tau에서 동일하게 유지해야 편향이 없다
+  var N = W - tauMax;
+
+  // 단계 1-2: 차이 함수 d(tau)
+  var d = new Float64Array(tauMax + 1);
+  for (var tau = 1; tau <= tauMax; tau++) {
+    var sum = 0;
+    for (i = 0; i < N; i++) {
+      var diff = buf[i] - buf[i + tau];
+      sum += diff * diff;
+    }
+    d[tau] = sum;
+  }
+
+  // 단계 3: 누적 평균 정규화 차이 d'(tau)
+  var dp = new Float64Array(tauMax + 1);
+  dp[0] = 1;
+  var running = 0;
+  for (tau = 1; tau <= tauMax; tau++) {
+    running += d[tau];
+    dp[tau] = running === 0 ? 1 : (d[tau] * tau) / running;
+  }
+
+  // 단계 4: 절대 임계값 + 국소 최소
+  var bestTau = -1;
+  for (tau = tauMin; tau <= tauMax; tau++) {
+    if (dp[tau] < thresh) {
+      // 임계값 아래에서 첫 국소 최소까지 내려간다
+      while (tau + 1 <= tauMax && dp[tau + 1] < dp[tau]) tau++;
+      bestTau = tau;
+      break;
+    }
+  }
+  if (bestTau < 0) {
+    // 임계값을 못 넘으면 전역 최소를 쓰되 신뢰도를 낮게 준다
+    var mn = Infinity;
+    for (tau = tauMin; tau <= tauMax; tau++) {
+      if (dp[tau] < mn) { mn = dp[tau]; bestTau = tau; }
+    }
+    if (bestTau < 0 || mn > 0.6) return { f0: 0, conf: 0, rms: rms };
+  }
+
+  // 포물선 보간 (주기 해상도 개선)
+  var t = bestTau, better = t;
+  if (t > tauMin && t < tauMax) {
+    var a = dp[t - 1], b = dp[t], c = dp[t + 1];
+    var denom = 2 * (2 * b - a - c);
+    if (denom !== 0) {
+      var shift = (c - a) / denom;
+      if (shift > -1 && shift < 1) better = t + shift;
+    }
+  }
+
+  var f0 = sampleRate / better;
+  if (f0 < fmin || f0 > fmax) return { f0: 0, conf: 0, rms: rms };
+  return { f0: f0, conf: Math.max(0, 1 - dp[bestTau]), rms: rms };
+};
+
+/* ---------- 프레임 추적 ---------- */
+BS.track = function (pcm, sampleRate, opts) {
+  opts = opts || {};
+  var win = opts.win || Math.round(sampleRate * 0.096);   // 96 ms
+  var hop = opts.hop || Math.round(sampleRate * 0.010);   // 10 ms
+  var frames = [];
+  for (var off = 0; off + win <= pcm.length; off += hop) {
+    var seg = pcm.subarray ? pcm.subarray(off, off + win) : pcm.slice(off, off + win);
+    var r = BS.yin(seg, sampleRate, opts);
+    frames.push({
+      t: (off + win / 2) / sampleRate,
+      f0: r.f0,
+      conf: r.conf,
+      rms: r.rms,
+      db: r.rms > 0 ? 20 * Math.log10(r.rms) : -120
+    });
+  }
+  return frames;
+};
+
+/* ---------- 중앙값 ---------- */
+BS.medianOf = function (arr) {
+  if (!arr.length) return 0;
+  var a = arr.slice().sort(function (x, y) { return x - y; });
+  var m = a.length >> 1;
+  return a.length % 2 ? a[m] : (a[m - 1] + a[m]) / 2;
+};
+
+root.BS = BS;
+if (typeof module !== 'undefined' && module.exports) module.exports = BS;
+
+})(typeof globalThis !== 'undefined' ? globalThis : this);
+
+</script>
+
+<!-- ===== 측정 로직 (rangetest.js 85/85 통과) ===== -->
+<script>
+/* ============================================================
+   vocalrange — 측정 로직
+   음고 표기 · 지속음 판정(두 겹) · ±키 환산표
+
+   블루베리와의 결정적인 차이: 이 도구는 **절대 음고**를 잰다.
+   블루베리의 semitone 은 화자 자신의 중앙 f0 를 0으로 잡은 상대값이라
+   여기서는 쓸 수 없다. 그래서 MIDI 번호를 기준 단위로 삼는다.
+   ============================================================ */
+(function (root) {
+'use strict';
+
+var BS = root.BS || (typeof require !== 'undefined' ? require('./vr-engine.js') : null);
+var VR = {};
+
+/* ---------- 1. 추적 설정 ----------
+   전역 BS.FMAX = 500 은 말소리 상한이다. 테너 C5 가 523 Hz 라 이미 천장을 넘고,
+   가성/소프라노는 C6 ≈ 1047 Hz 까지 간다. 그래서 호출할 때마다 fmax 를 넘긴다 —
+   전역 상수는 건드리지 않는다 (스펙 §6-3).
+
+   창 64 ms: 원본의 96 ms 는 고음에서 과하고, 46 ms 는 E2(82 Hz, 주기 194 샘플)에서
+   주기가 3.8개밖에 안 들어와 YIN 이 불안해진다. 64 ms 면 E2 에서 5.3주기이면서
+   400 ms 계단의 가장자리 번짐도 감당된다. hop 10 ms 는 그대로 — 300 ms 문턱을
+   30프레임으로 재게 되므로 경계 분해능이 충분하다. */
+VR.TRACK = { fmin: 60, fmax: 1100, win: 1024, hop: 160 };   /* 16 kHz 기준 64 / 10 ms */
+
+/* ---------- 2. 음고 표기 ----------
+   한국식 N옥타브 = 과학적 표기 N+2옥타브. 번호는 도(C)에서 바뀐다 —
+   2옥타브 시(B4) 다음이 3옥타브 도(C5). 근거는 스펙 §9.
+   Hz 를 항상 함께 싣는 이유도 거기 있다: 검산의 근거를 독자에게 넘겨둔다. */
+VR.SCI = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+VR.KR  = ['도','도#','레','레#','미','파','파#','솔','솔#','라','라#','시'];
+
+VR.midiOf = function(hz){ return 69 + 12 * Math.log(hz / 440) / Math.LN2; };
+VR.hzOf   = function(midi){ return 440 * Math.pow(2, (midi - 69) / 12); };
+
+VR.noteOf = function(hz){
+  var exact = VR.midiOf(hz), midi = Math.round(exact), pc = ((midi % 12) + 12) % 12;
+  var oct = Math.floor(midi / 12) - 1;            /* 과학적: C4 = midi 60 */
+  var krOct = oct - 2;                            /* 한국식: 2옥타브 도 = C4 */
+  return {
+    midi: midi, exact: exact, hz: hz, cents: (exact - midi) * 100,
+    pc: VR.SCI[pc], oct: oct, sci: VR.SCI[pc] + oct,
+    krOct: krOct, krName: VR.KR[pc], kr: krOct + '옥타브 ' + VR.KR[pc]
+  };
+};
+VR.noteOfMidi = function(midi){ return VR.noteOf(VR.hzOf(midi)); };
+
+/* ---------- 3. 폭 표기 ---------- */
+VR.spanText = function(st){
+  var n = Math.round(st), o = Math.floor(n / 12), s = n - o * 12;
+  var kr = o ? (s ? o + '옥타브 ' + s + '반음' : o + '옥타브')
+             : s + '반음';
+  var en = o ? (o + (o === 1 ? ' octave' : ' octaves') +
+                (s ? ' ' + s + (s === 1 ? ' semitone' : ' semitones') : ''))
+             : s + (s === 1 ? ' semitone' : ' semitones');
+  return { kr: kr, en: en, semitones: n };
+};
+
+/* ---------- 4. 지속음 판정 (스펙 §5-2 · §5-4) ----------
+
+   두 문턱을 같은 녹음에 적용한다. 추가 녹음도, 절차 변경도 없다.
+
+   **표류에 벌점, 잔차에는 안 준다.** 훈련된 사람일수록 비브라토가 크다.
+   잔차로 벌하면 잘 부르는 사람이 낮은 음역을 받는다. 비브라토는 평균 주위를
+   왕복하므로 표류가 작고, 한계에서 나오는 떨림은 대개 아래로 흐른다.
+   그래서 엄격 문턱에 잔차 조건은 아예 넣지 않는다 — 대역폭이 이미 상한 역할을 한다.
+
+   dbFloor 는 절대 dB 가 아니라 **그 녹음 최대치 대비 낙차**다. 절대값으로 잡으면
+   마이크마다 결과가 달라진다 (스펙 §5-3).
+
+   여기 숫자들은 전부 제안값이고 실측으로 닫아야 한다 (스펙 §9). 지금 값은
+   합성 신호에서만 검증됐다. */
+/* 창 번짐 보정. YIN 은 창의 상당 부분이 그 음일 때부터 그 음을 보고하므로,
+   프레임 개수를 그대로 곱하면 **실제보다 길게 나온다.** 창 64 ms 에서 재보면
+   참값 270/290/300/400 ms 가 각각 310/330/340/440 ms 로 측정됐다 — 일정하게 +40.
+   보정하지 않으면 스펙이 「300 ms」라고 적어놓고 실제로는 260 ms 짜리 음을
+   받아들이게 된다. 문턱을 조용히 13% 푸는 셈이다.
+
+   ((n−1)·hop − 0.030) 이 네 지점 전부에서 참값과 정확히 일치한다.
+   **이 상수는 창 길이에 딸린 값이다** — VR.TRACK.win 을 바꾸면 다시 재야 한다.
+   rangetest.js §6 이 경계 네 개로 이 가정을 붙잡고 있다. */
+VR.SMEAR_SEC = 0.030;
+
+/* maxDrift 는 튜닝값이다. 근거는 이렇다 — 비브라토의 표류는 0.06 st/s 로 측정됐고
+   한계에서 처지는 음은 0.8~0.95 st/s 였다. 엄격 문턱 0.60 은 그 사이를 가른다.
+
+   **알려진 한계, 정직하게:** 느슨 문턱 1.2 st/s 는 「처지는 한계음」과
+   「느린 포르타멘토」를 구분하지 못한다. 두 신호는 표류만 봐서는 같게 생겼다
+   (0.82 st/s 짜리 글리산도가 실제로 통과했다). 구분하려면 에너지·conf 의 동반
+   하강까지 봐야 하는데 v1 에서는 하지 않는다. 새는 곳이 최대 음역(부차 표시)에
+   한정되고 — 카드·절대 상한·환산표는 전부 안정 음역에서 나오므로 — 주장은 안 샌다. */
+VR.LOOSE  = { minMs:300, bandSt:0.5, minConf:0.45, dbFloor:22, maxDrift:1.20, maxDbSd:null };
+VR.STRICT = { minMs:600, bandSt:0.5, minConf:0.60, dbFloor:14, maxDrift:0.60, maxDbSd:4.5 };
+
+function lsq(xs, ys){          /* 최소제곱 기울기 */
+  var n = xs.length, i, mx = 0, my = 0;
+  if (n < 2) return 0;
+  for (i = 0; i < n; i++){ mx += xs[i]; my += ys[i]; }
+  mx /= n; my /= n;
+  var num = 0, den = 0;
+  for (i = 0; i < n; i++){ num += (xs[i]-mx)*(ys[i]-my); den += (xs[i]-mx)*(xs[i]-mx); }
+  return den > 0 ? num / den : 0;
+}
+function sd(v){
+  var n = v.length, i, m = 0;
+  if (n < 2) return 0;
+  for (i = 0; i < n; i++) m += v[i];
+  m /= n;
+  var s = 0;
+  for (i = 0; i < n; i++) s += (v[i]-m)*(v[i]-m);
+  return Math.sqrt(s / (n - 1));
+}
+
+/* 프레임 배열에서 「대역 안에 머문 최장 구간들」을 겹치지 않게 뽑는다.
+   대역 판정은 구간 전체의 max−min ≤ 2·bandSt — 「±0.5반음 안에서 유지」의
+   문자 그대로의 뜻이다. 유성/신뢰도 조건을 먼저 걸어 후보를 좁힌 뒤 확장한다. */
+VR.holds = function(frames, T, maxDb, hopSec){
+  hopSec = hopSec || 0.010;
+  var out = [], n = frames.length, i = 0;
+  var band = 2 * T.bandSt;
+  var mid = frames.map(function(f){ return f.f0 > 0 ? VR.midiOf(f.f0) : null; });
+  while (i < n){
+    if (mid[i] == null || frames[i].conf < T.minConf){ i++; continue; }
+    var lo = mid[i], hi = mid[i], j = i + 1;
+    while (j < n && mid[j] != null && frames[j].conf >= T.minConf){
+      var nlo = Math.min(lo, mid[j]), nhi = Math.max(hi, mid[j]);
+      if (nhi - nlo > band) break;
+      lo = nlo; hi = nhi; j++;
+    }
+    var len = j - i, ms = ((len - 1) * hopSec - VR.SMEAR_SEC) * 1000;
+    if (ms >= T.minMs){
+      var seg = frames.slice(i, j), ms_ = mid.slice(i, j);
+      var xs = [], k;
+      for (k = 0; k < len; k++) xs.push(k * hopSec);
+      var dbs = seg.map(function(f){ return f.db; });
+      var confs = seg.map(function(f){ return f.conf; });
+      var dbMed = BS.medianOf(dbs);
+      var h = {
+        i0:i, i1:j-1, ms:ms,
+        midiExact: BS.medianOf(ms_),
+        drift: lsq(xs, ms_),                    /* st/s. 음수 = 흘러내림 */
+        band: hi - lo,
+        dbMed: dbMed, dbSd: sd(dbs), conf: BS.medianOf(confs)
+      };
+      h.midi = Math.round(h.midiExact);
+      h.hz = VR.hzOf(h.midiExact);
+      h.cents = (h.midiExact - h.midi) * 100;
+      h.note = VR.noteOfMidi(h.midi);
+      var okDb    = maxDb == null || dbMed >= maxDb - T.dbFloor;
+      var okDrift = T.maxDrift == null || Math.abs(h.drift) <= T.maxDrift;
+      var okDbSd  = T.maxDbSd  == null || h.dbSd <= T.maxDbSd;
+      if (okDb && okDrift && okDbSd) out.push(h);
+      i = j;
+    } else {
+      i = i + 1;
+    }
+  }
+  return out;
+};
+
+/* ---------- 5. 측정 한 번 ---------- */
+function rangeOf(hs){
+  if (!hs.length) return null;
+  var los = hs.slice().sort(function(a,b){ return a.midiExact - b.midiExact; });
+  var lo = los[0], hi = los[los.length-1];
+  return {
+    loMidi: lo.midi, hiMidi: hi.midi,
+    lo: lo.note, hi: hi.note,
+    loHz: lo.hz, hiHz: hi.hz,
+    spanSt: hi.midiExact - lo.midiExact,
+    span: VR.spanText(hi.midi - lo.midi)
+  };
+}
+
+VR.measure = function(pcm, sr, opts){
+  opts = opts || {};
+  var t = VR.TRACK;
+  var frames = BS.track(pcm, sr, {
+    fmin: opts.fmin || t.fmin, fmax: opts.fmax || t.fmax,
+    win: Math.round(sr * (t.win / 16000)), hop: Math.round(sr * (t.hop / 16000))
+  });
+  var hopSec = (t.hop / 16000);
+  var voiced = frames.filter(function(f){ return f.f0 > 0; });
+  var maxDb = frames.length ? Math.max.apply(null, frames.map(function(f){ return f.db; })) : null;
+
+  /* skipEnergy: 회차 도중의 라이브 판정용. 그 시점에는 녹음 전체의 최댓값을
+     아직 모르므로, 모르는 기준으로 판정하는 대신 에너지 조건을 아예 뺀다.
+     최종 분석보다 관대해질 뿐이라 「화면은 실패라는데 결과는 통과」가 안 생긴다. */
+  var ref = opts.skipEnergy ? null : maxDb;
+  var loose  = VR.holds(frames, VR.LOOSE,  ref, hopSec);
+  var strict = VR.holds(frames, VR.STRICT, ref, hopSec);
+  var max = rangeOf(loose), stable = rangeOf(strict);
+
+  /* 사유를 남긴다. 「결과 없음」과 「아무 말도 안 함」은 다르다. */
+  var reason = null;
+  if (!frames.length) reason = 'tooShort';
+  else if (!voiced.length) reason = 'silence';
+  else if (!loose.length) reason = voiced.length * hopSec < 0.3 ? 'tooShort' : 'noHold';
+
+  return {
+    frames: frames, hopSec: hopSec, maxDb: maxDb,
+    loose: loose, strict: strict,
+    max: max, stable: stable,
+    /* 여유 구간 — 낼 수는 있는데 붙잡지 못하는 폭. 넓으면 연습 여지가 크다는 뜻이다. */
+    headroomSt: (max && stable) ? (max.hiMidi - stable.hiMidi) : null,
+    reason: reason
+  };
+};
+
+/* ---------- 6. ±키 환산표 (스펙 §3 · §4) ----------
+
+   노래방 키 버튼은 곡 전체를 반음씩 평행이동시킨다. +k 를 누르면 원곡이 k반음
+   올라가므로, 원곡 최고음 T 를 부르려면 T+k 를 내야 한다. 즉 T ≤ myTop − k.
+   → **키 k 에서 커버되는 원곡 최고음 = myTop − k.**
+
+   부호가 뒤집히면 측정이 아무리 정확해도 도구 전체가 거꾸로 된다.
+   그래서 회귀 시험(§11)이 방향을 따로 지킨다.
+
+   ±6 이 상한이고 TJ·금영이 동일하므로 표는 13행으로 고정이고 기종 분기가 없다.
+   myTop 은 **안정 최고음**이다 — 최대 최고음으로 계산하면 한 번 지를 수는 있어도
+   곡 하나를 못 버티는 음을 기준으로 「부를 수 있다」고 말하게 된다 (스펙 §3). */
+VR.KEY_MIN = -6;
+VR.KEY_MAX = 6;
+VR.ceilingMidi = function(topMidi){ return topMidi - VR.KEY_MIN; };   /* = topMidi + 6 */
+
+VR.keyTable = function(topMidi){
+  var t = Math.round(topMidi), rows = [], k;
+  for (k = VR.KEY_MIN; k <= VR.KEY_MAX; k++){
+    rows.push({ key:k, coversMidi: t - k, note: VR.noteOfMidi(t - k) });
+  }
+  return rows;
+};
+
+root.VR = VR;
+if (typeof module !== 'undefined' && module.exports) module.exports = VR;
+
+})(typeof globalThis !== 'undefined' ? globalThis : this);
+
+</script>
+
+<!-- ===== UI 문자열 · 오디오 캡처 ===== -->
+<script>
+(function(){
+'use strict';
+
+window.VR_UI = {
+  micOff:{en:'OFF',kr:'꺼짐'},
+  micRec:{en:'RECORDING',kr:'녹음 중'},
+  micBusy:{en:'ANALYSING',kr:'분석 중'},
+
+  start:{en:'START',kr:'시작'},
+  stop:{en:'STOP',kr:'정지'},
+  restart:{en:'MEASURE AGAIN',kr:'다시 재기'},
+  retry:{en:'ONE MORE TRY',kr:'한 번만 더'},
+
+  hintIdle:{en:'Two short recordings. Down first, then up. About a minute in total.',kr:'짧은 녹음 두 번. 내려가기 먼저, 그다음 올라가기. 전부 합쳐 1분쯤 걸려요.'},
+  hintRec:{en:'Hold each note until the bar fills, then move.',kr:'바가 다 찰 때까지 소리를 붙잡고 있다가 움직이세요.'},
+  hintDone:{en:'Measured. Nothing was stored.',kr:'측정 끝. 아무것도 저장되지 않았습니다.'},
+
+  passDown:{en:'PASS 1 OF 2 · GOING DOWN',kr:'1/2회차 · 내려가기'},
+  passUp:{en:'PASS 2 OF 2 · GOING UP',kr:'2/2회차 · 올라가기'},
+  sayFirst:{en:'Make any comfortable sound and hold it',kr:'편한 소리를 아무거나 내고 붙잡으세요'},
+  sayDown:{en:'A little lower than before',kr:'아까보다 조금 더 낮게'},
+  sayUp:{en:'A little higher than before',kr:'아까보다 조금 더 높게'},
+  sayIdle:{en:'Press START when you are ready',kr:'준비되면 시작을 누르세요'},
+  paceHold:{en:'hold',kr:'붙잡기'},
+  paceMove:{en:'move',kr:'움직이기'},
+  quiet:{en:'—',kr:'—'},
+  nothing:{en:'no pitch',kr:'음 없음'},
+
+  betweenT:{en:'Low side done.',kr:'낮은 쪽 끝.'},
+  between:{en:'Now the other direction. Start from a comfortable note again and go up. Take a breath first — this half is the one that matters, since the top note is what the whole tool is built on.',kr:'이제 반대 방향입니다. 다시 편한 음에서 시작해서 올라가세요. 숨 한번 고르고 하세요 — 도구 전체가 최고음 위에 얹혀 있어서 이쪽이 결정적입니다.'},
+  goUp:{en:'START GOING UP',kr:'올라가기 시작'},
+
+  retryT:{en:'That stopped early.',kr:'조금 일찍 끊겼습니다.'},
+  retryWhy:{en:'Two steps in a row failed the hold test, which usually means the last jump was bigger than intended rather than that you ran out of voice. Move in smaller steps and try this direction once more. This offer is made once — whatever comes back is kept either way, because a value is never thrown away here just for looking wrong.',kr:'연속 두 계단이 유지 판정에 실패했습니다. 대개는 목소리가 다한 게 아니라 마지막에 너무 크게 뛴 경우예요. 조금만 더 작게 움직여서 이 방향을 한 번만 더 해보세요. 이 제안은 한 번만 합니다 — 어느 쪽 결과든 그대로 씁니다. 여기서는 이상해 보인다는 이유로 값을 버리지 않아요.'},
+
+  noneT:{en:'Nothing was held long enough to measure.',kr:'잴 만큼 붙잡힌 음이 하나도 없습니다.'},
+  none:{en:'Every sound either slid instead of staying put, or was too quiet against the loudest part of the recording. Try singing a single steady vowel — "ah" works — and keep it going until the bar fills.',kr:'모든 소리가 머무르지 않고 미끄러졌거나, 녹음에서 가장 큰 부분에 비해 너무 작았습니다. 모음 하나를 고르게 내보세요 — 「아」가 좋아요 — 그리고 바가 다 찰 때까지 유지하세요.'},
+  silentT:{en:'No voice was detected.',kr:'목소리가 검출되지 않았습니다.'},
+  silent:{en:'Check that the right microphone is selected and that it is not muted, then try again a little closer to it.',kr:'마이크가 올바르게 선택됐는지, 음소거는 아닌지 확인하고 조금 더 가까이서 다시 해보세요.'},
+  micFail:{en:'Microphone access was refused or unavailable. Nothing was recorded.',kr:'마이크 접근이 거부되었거나 사용할 수 없어요. 아무것도 녹음되지 않았습니다.'},
+  noStable:{en:'Nothing cleared the strict threshold.',kr:'엄격 기준을 통과한 음이 없습니다.'},
+  noStableWhy:{en:'Notes were found, but none was held for the full six-tenths of a second without drifting. That is not a verdict about your voice — it usually means the pass moved too quickly. The maximum range below is still real; the stable range, the ceiling and the key table all need the strict threshold, so they are withheld rather than guessed.',kr:'음은 찾았지만 표류 없이 0.6초를 온전히 버틴 것이 없습니다. 당신의 목소리에 대한 판정이 아니에요 — 대개는 회차가 너무 빨리 지나간 경우입니다. 아래의 최대 음역은 그대로 유효하고, 안정 음역과 절대 상한과 키 표는 전부 엄격 기준이 필요하므로 추측하는 대신 내지 않습니다.'},
+
+  resStable:{en:'STABLE RANGE',kr:'안정 음역'},
+  resMax:{en:'MAXIMUM RANGE',kr:'최대 음역'},
+  resSpan:{en:'RANGE WIDTH',kr:'음역 폭'},
+  resHead:{en:'HEADROOM',kr:'여유 구간'},
+  resCeil:{en:'ABSOLUTE CEILING',kr:'절대 상한'},
+  resTop:{en:'YOUR TOP NOTE',kr:'내 최고음'},
+
+  stableWhy:{en:'The range you can hold through a whole song. Everything below is calculated from this, not from the maximum.',kr:'곡 하나를 버틸 수 있는 범위. 아래의 모든 계산이 최대 음역이 아니라 이 값에서 나옵니다.'},
+  maxWhy:{en:'What you can reach once. Useful to know, but a note you cannot hold cannot carry a song.',kr:'한 번 낼 수 있는 범위. 알아둘 값이지만, 붙잡지 못하는 음으로는 곡을 끌고 갈 수 없어요.'},
+  spanWhy:{en:'A key button moves a melody up and down but never stretches it, so this width is the one thing no key setting can help with. A melody wider than this is out of reach at every key.',kr:'키 버튼은 선율을 위아래로 밀 뿐 늘리지는 못하므로, 이 폭만은 어떤 키로도 해결되지 않습니다. 이보다 넓은 선율은 모든 키에서 불가능해요.'},
+  headWhyWide:{en:'You can reach notably higher than you can hold. That gap is room to practise into — the notes are already there, the control is not yet.',kr:'붙잡을 수 있는 것보다 눈에 띄게 높이 낼 수 있습니다. 그 간격이 연습으로 메울 여지예요 — 음은 이미 나오고 있고 조절이 아직 안 따라온 겁니다.'},
+  headWhyTight:{en:'What you can reach and what you can hold are almost the same. You are already using everything you have.',kr:'낼 수 있는 것과 붙잡을 수 있는 것이 거의 같습니다. 이미 가진 것을 다 쓰고 있다는 뜻이에요.'},
+  ceilWhy:{en:'The highest note any original song may have for you to sing it. Six keys down is as far as a karaoke machine goes, so a song written above this line has no setting that brings it within reach. This is the whole tool in one number.',kr:'원곡 최고음이 여기보다 높으면 어떤 키로도 부를 수 없습니다. 노래방 기계가 내려주는 한계가 −6키이기 때문이에요. 이 숫자 하나가 사실상 이 도구 전체입니다.'},
+
+  ktT:{en:'KEY TABLE',kr:'키 환산표'},
+  ktKey:{en:'KEY',kr:'키'},
+  ktCovers:{en:'ORIGINAL TOP NOTE YOU COVER',kr:'커버되는 원곡 최고음'},
+  ktWhy:{en:'Read it as: at this key setting, you can sing an original song whose highest note is up to here. Lowering the key covers higher originals, which is why the bottom of the list is the useful end. The highlighted row is the ceiling.',kr:'읽는 법 — 이 키에서는 원곡 최고음이 여기까지인 곡을 부를 수 있습니다. 키를 내릴수록 더 높은 원곡이 커버되니 표의 위쪽이 실전 주력이에요. 강조된 행이 절대 상한입니다.'},
+  ktZero:{en:'no adjustment',kr:'조절 없음'},
+
+  notationWhyKr:{en:'',kr:'화면의 큰 글씨는 노래방에서 쓰는 말투이고, 작은 글씨는 국제 표기와 실제 주파수입니다. 한국식 N옥타브는 국제 표기의 N+2옥타브예요 — 2옥타브 라가 A4, 440 Hz입니다. 번호는 두 표기 모두 도(C)에서 바뀝니다: 2옥타브 시 다음이 3옥타브 도예요. Hz를 늘 같이 싣는 이유는 이 대응이 틀렸다면 누군가 바로 잡아낼 수 있게 하려는 것입니다.'},
+  notationWhyEn:{en:'This page uses scientific pitch notation in English. The Korean version shows the octave wording used in karaoke rooms instead, where the number runs two lower than the scientific one — what is called 2옥타브 라 there is A4 here. The frequency is always printed alongside so the claim can be checked rather than trusted.',kr:''},
+  nCol1:{en:'Korean',kr:'노래방 말투'},
+  nCol2:{en:'Scientific',kr:'국제 표기'},
+  nCol3:{en:'Frequency',kr:'주파수'},
+
+  cardLab:{en:'MY TOP NOTE',kr:'내 최고음'},
+
+  fine:{en:'Measured in this browser and nowhere else. This version does not store the result — reload and it is gone.',kr:'이 브라우저 안에서만 측정됐습니다. 이 버전은 결과를 저장하지 않아요 — 새로고침하면 사라집니다.'},
+  holdsT:{en:'EVERY NOTE THAT WAS HELD',kr:'붙잡힌 음 전부'},
+  holdsWhy:{en:'Filled marks cleared the strict threshold, outlined ones only the loose one. This is the raw list the two ranges above were taken from.',kr:'채워진 것이 엄격 기준을 통과한 음, 테두리만 있는 것이 느슨 기준만 통과한 음입니다. 위의 두 음역은 이 목록에서 최저·최고만 뽑은 것이에요.'}
+};
+
+/* ---------- 리샘플 (블루베리와 같은 코드) ---------- */
+window.VR_resample16k = function(pcm, sr){
+  if (Math.abs(sr - 16000) < 1) return pcm;
+  var ratio = sr / 16000;
+  var box = Math.max(1, Math.floor(ratio));
+  var out = new Float32Array(Math.floor(pcm.length / ratio));
+  for (var i = 0; i < out.length; i++){
+    var pos = i * ratio, a = Math.floor(pos);
+    var s = 0, c = 0;
+    for (var k = 0; k < box; k++){ var j = a + k; if (j < pcm.length){ s += pcm[j]; c++; } }
+    out[i] = c ? s / c : 0;
+  }
+  return out;
+};
+
+/* ---------- 캡처 (블루베리 BS_Rec 와 같은 계약) ---------- */
+var WORKLET = "class C extends AudioWorkletProcessor{process(i){const c=i[0]&&i[0][0];" +
+  "if(c)this.port.postMessage(new Float32Array(c));return true}}registerProcessor('vrcap',C)";
+
+window.VR_Rec = {
+  ctx:null, stream:null, node:null, src:null, sink:null,
+  chunks:[], n:0, sr:16000, running:false, maxSec:45,
+  onChunk:null, onStop:null, _timer:null,
+
+  supported:function(){
+    return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia &&
+             (window.AudioContext || window.webkitAudioContext));
+  },
+
+  start:function(maxSec, onChunk, onStop, onError){
+    var R = this;
+    if (R.running) return;
+    R.maxSec = maxSec; R.onChunk = onChunk; R.onStop = onStop;
+    R.chunks = []; R.n = 0;
+
+    var AC = window.AudioContext || window.webkitAudioContext;
+    try { R.ctx = new AC({ sampleRate: 16000 }); }
+    catch(e){ try { R.ctx = new AC(); } catch(e2){ onError && onError(e2); return; } }
+    R.sr = R.ctx.sampleRate;
+
+    navigator.mediaDevices.getUserMedia({ audio:{
+      echoCancellation:false, noiseSuppression:false, autoGainControl:false,
+      channelCount:1
+    }}).then(function(stream){
+      R.stream = stream;
+      R.src = R.ctx.createMediaStreamSource(stream);
+      R.sink = R.ctx.createGain(); R.sink.gain.value = 0;
+      R.sink.connect(R.ctx.destination);
+
+      function push(buf){
+        if (!R.running) return;
+        R.chunks.push(buf); R.n += buf.length;
+        if (R.onChunk) R.onChunk(buf);
+        if (R.n / R.sr >= R.maxSec) R.stop();
+      }
+      function useScriptProcessor(){
+        var sp = R.ctx.createScriptProcessor(1024, 1, 1);
+        sp.onaudioprocess = function(ev){
+          push(new Float32Array(ev.inputBuffer.getChannelData(0)));
+        };
+        R.node = sp; R.src.connect(sp); sp.connect(R.sink);
+        R.running = true; R._arm();
+      }
+      if (R.ctx.audioWorklet){
+        var url = URL.createObjectURL(new Blob([WORKLET], { type:'application/javascript' }));
+        R.ctx.audioWorklet.addModule(url).then(function(){
+          URL.revokeObjectURL(url);
+          var wn = new AudioWorkletNode(R.ctx, 'vrcap');
+          wn.port.onmessage = function(ev){ push(ev.data); };
+          R.node = wn; R.src.connect(wn); wn.connect(R.sink);
+          R.running = true; R._arm();
+        }).catch(function(){ URL.revokeObjectURL(url); useScriptProcessor(); });
+      } else {
+        useScriptProcessor();
+      }
+      if (R.ctx.state === 'suspended') R.ctx.resume();
+    }).catch(function(err){ R._teardown(); onError && onError(err); });
+  },
+
+  _arm:function(){
+    var R = this;
+    clearTimeout(R._timer);
+    R._timer = setTimeout(function(){ if (R.running) R.stop(); }, (R.maxSec + 2) * 1000);
+  },
+
+  stop:function(){
+    var R = this;
+    if (!R.running) return;
+    R.running = false;
+    clearTimeout(R._timer);
+    var pcm = new Float32Array(R.n), off = 0;
+    for (var i = 0; i < R.chunks.length; i++){ pcm.set(R.chunks[i], off); off += R.chunks[i].length; }
+    var sr = R.sr;
+    R.chunks = [];
+    R._teardown();
+    if (R.onStop) R.onStop(pcm, sr);
+  },
+
+  _teardown:function(){
+    var R = this;
+    try { if (R.node){ R.node.disconnect(); R.node.onaudioprocess = null; } } catch(e){}
+    try { if (R.src) R.src.disconnect(); } catch(e){}
+    try { if (R.sink) R.sink.disconnect(); } catch(e){}
+    try { if (R.stream) R.stream.getTracks().forEach(function(t){ t.stop(); }); } catch(e){}
+    try { if (R.ctx && R.ctx.state !== 'closed') R.ctx.close(); } catch(e){}
+    R.node = R.src = R.sink = R.stream = R.ctx = null;
+  }
+};
+
+/* ---------- 실시간 누적 ----------
+   블루베리의 A.Live 와 달리 절대 음고를 다룬다. 화자 중앙값으로 정규화하지 않는다 —
+   이 도구는 「당신 기준으로 얼마나 높은가」가 아니라 「몇 Hz인가」를 재기 때문이다. */
+function Live(){ this.pcm = new Float32Array(0); }
+Live.prototype.reset = function(){ this.pcm = new Float32Array(0); };
+Live.prototype.push = function(chunk, sr){
+  var c = window.VR_resample16k(chunk, sr);
+  var m = new Float32Array(this.pcm.length + c.length);
+  m.set(this.pcm, 0); m.set(c, this.pcm.length);
+  this.pcm = m;
+};
+Live.prototype.sec = function(){ return this.pcm.length / 16000; };
+/* 마지막 sec 초. 창 하나도 안 되면 null. */
+Live.prototype.tail = function(sec){
+  var n = Math.round(16000 * sec);
+  if (this.pcm.length < n) return this.pcm.length ? this.pcm : null;
+  return this.pcm.subarray(this.pcm.length - n);
+};
+/* 지금 나고 있는 음 하나. 창 세 개의 중앙값을 쓴다 — 한 창만 보면 화면이 튄다. */
+Live.prototype.now = function(){
+  var W = 1024, need = W + 320 * 2;
+  if (this.pcm.length < need) return null;
+  var base = this.pcm.length - need, hz = [];
+  for (var k = 0; k < 3; k++){
+    var r = window.BS.yin(this.pcm.subarray(base + k*320, base + k*320 + W), 16000,
+                          { fmin:window.VR.TRACK.fmin, fmax:window.VR.TRACK.fmax });
+    if (r.f0 > 0 && r.conf >= 0.4) hz.push(r.f0);
+  }
+  return hz.length >= 2 ? window.BS.medianOf(hz) : null;
+};
+window.VR_Live = Live;
+
+window.VR_rmsDb = function(chunk){
+  var s = 0;
+  for (var i = 0; i < chunk.length; i++) s += chunk[i] * chunk[i];
+  var r = Math.sqrt(s / Math.max(1, chunk.length));
+  return r > 0 ? 20 * Math.log10(r) : -120;
+};
+window.VR_levelPct = function(db){ return Math.max(0, Math.min(100, (db + 55) / 45 * 100)); };
+})();
+</script>
+
+<!-- ===== 앱 ===== -->
+<script>
+(function(){
+'use strict';
+var VR = window.VR, U = window.VR_UI;
+function L(o){ return (window.APP_LANG === 'kr' ? o.kr : o.en); }
+function $(id){ return document.getElementById(id); }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+/* ---------- 닫아야 할 값들 (스펙 §9) ----------
+   전부 제안값이다. 실제 목소리로 재보고 조정해야 한다. */
+var PACE_MS   = 1200;   /* 진행 바 한 칸 */
+var MAX_STEPS = 20;     /* 회차당 계단 상한 — 안전장치 */
+var MAX_SEC   = 45;     /* 회차당 녹음 상한 — 안전장치 */
+var MISS_STOP = 2;      /* 연속 실패 몇 개에서 자동 종료. 한 계단은 실수일 수 있어 둘로 잡는다 */
+
+var S = {
+  phase:'idle',          /* idle | rec | between | done */
+  dir:null,              /* 'down' | 'up' */
+  live:new window.VR_Live(),
+  pcms:[],               /* 완료된 회차들의 PCM. 재시도분도 버리지 않고 더한다 */
+  chips:[], miss:0, steps:0,
+  retried:{down:false, up:false},
+  endedEarly:false,
+  raf:null, t0:0, lastPace:0,
+  result:null
+};
+
+/* ---------- 표기 ----------
+   §4-1: 한국어에서는 노래방 말투가 주(主)이고 국제 표기와 Hz가 부(副).
+   영어에서는 노래방 말투가 번역되지 않으므로 국제 표기가 그 자리를 차지한다. */
+function big(n){ return window.APP_LANG === 'kr' ? n.kr : n.sci; }
+function sub(n){
+  return window.APP_LANG === 'kr'
+    ? n.sci + ' · ' + Math.round(n.hz) + ' Hz'
+    : Math.round(n.hz) + ' Hz';
+}
+function stCount(n){ return window.APP_LANG === 'kr' ? n + '반음' : n + (n === 1 ? ' semitone' : ' semitones'); }
+function pair(n){ return esc(big(n)) + ' <em style="font-style:normal;font-family:var(--mono);font-size:.5em;color:#555"> ' + esc(sub(n)) + '</em>'; }
+
+function setMic(state){
+  var d = $('micDot'), t = $('micState');
+  d.className = 'privacy-dot' + (state === 'rec' ? ' rec' : '');
+  t.textContent = L(state === 'rec' ? U.micRec : (state === 'busy' ? U.micBusy : U.micOff));
+}
+
+/* ---------- 무대 ---------- */
+function paintStage(){
+  var idle = S.phase === 'idle', rec = S.phase === 'rec';
+  $('stStep').textContent = rec ? L(S.dir === 'down' ? U.passDown : U.passUp)
+                : (S.phase === 'between' ? L(U.passUp) : (S.phase === 'done' ? '' : ''));
+  $('stSay').textContent = !rec ? (idle ? L(U.sayIdle) : '')
+                : (S.steps === 0 ? L(U.sayFirst) : L(S.dir === 'down' ? U.sayDown : U.sayUp));
+  $('goTxt').textContent = rec ? L(U.stop) : (S.phase === 'between' ? L(U.goUp) : L(U.start));
+  $('goBtn').className = 'btn ' + (rec ? 'stop' : 'go');
+  $('againTxt').textContent = L(U.restart);
+  $('againBtn').hidden = S.phase !== 'done';
+  $('hint').textContent = rec ? L(U.hintRec) : (S.phase === 'done' ? L(U.hintDone) : L(U.hintIdle));
+  if (!rec){
+    $('paceFill').style.width = '0%';
+    $('paceTxt').textContent = '';
+    $('lvl').style.width = '0%';
+    if (idle){ $('nowNote').textContent = ''; $('nowSub').textContent = ''; $('chips').innerHTML = ''; }
+  }
+}
+function paintChips(){
+  $('chips').innerHTML = S.chips.map(function(c){
+    return c.miss ? '<span class="chip miss">·</span>'
+                  : '<span class="chip">' + esc(big(c.note)) + '</span>';
+  }).join('');
+}
+function say(kind, title, body){
+  $('msg').innerHTML = title
+    ? '<div class="' + kind + '"><b>' + esc(title) + '</b> ' + esc(body) + '</div>'
+    : '';
+}
+
+/* ---------- 회차 ---------- */
+function startPass(dir){
+  if (!window.VR_Rec.supported()){ say('warn', '', L(U.micFail)); return; }
+  S.dir = dir; S.phase = 'rec';
+  S.live.reset(); S.chips = []; S.miss = 0; S.steps = 0; S.endedEarly = false;
+  $('msg').innerHTML = '';
+  paintStage(); paintChips();
+  setMic('rec');
+  S.t0 = performance.now(); S.lastPace = S.t0;
+
+  window.VR_Rec.start(MAX_SEC, function(chunk){
+    S.live.push(chunk, window.VR_Rec.sr);
+    $('lvl').style.width = window.VR_levelPct(window.VR_rmsDb(chunk)) + '%';
+  }, function(pcm, sr){
+    stopLoop();
+    setMic('busy');
+    var p = window.VR_resample16k(pcm, sr);
+    if (p.length > 16000 * 0.5) S.pcms.push(p);
+    setTimeout(function(){ setMic('off'); endPass(); }, 20);
+  }, function(){
+    stopLoop(); setMic('off');
+    S.phase = 'idle'; paintStage();
+    say('warn', '', L(U.micFail));
+  });
+  loop();
+}
+
+function stopLoop(){ if (S.raf){ cancelAnimationFrame(S.raf); S.raf = null; } }
+
+function loop(){
+  S.raf = requestAnimationFrame(loop);
+  if (S.phase !== 'rec') return;
+  var now = performance.now(), el = now - S.lastPace;
+
+  /* 지금 나고 있는 음 */
+  var hz = S.live.now();
+  if (hz){
+    var n = VR.noteOf(hz);
+    $('nowNote').className = 'now';
+    $('nowNote').textContent = big(n);
+    $('nowSub').textContent = sub(n);
+  } else {
+    $('nowNote').className = 'now quiet';
+    $('nowNote').textContent = '—';
+    $('nowSub').textContent = L(U.nothing);
+  }
+
+  var pct = Math.min(100, el / PACE_MS * 100);
+  $('paceFill').style.width = pct + '%';
+  $('paceBar').className = 'bar' + (pct >= 100 ? ' hot' : '');
+  $('paceTxt').textContent = pct >= 100 ? L(U.paceMove) : L(U.paceHold);
+
+  if (el >= PACE_MS){
+    S.lastPace = now;
+    judgeStep();
+  }
+}
+
+/* 한 칸이 끝날 때마다 그 칸의 소리만 떼어 유지 판정을 돌린다.
+
+   **여기서는 에너지 문턱을 걸지 않는다.** 최종 분석은 녹음 전체의 최댓값을
+   기준으로 삼는데, 회차 도중에는 그 최댓값을 아직 모른다. 모르는 기준으로
+   판정하면 화면이 「실패」라고 말한 음을 최종 분석은 받아들이는 일이 생긴다.
+   그래서 라이브 판정은 일부러 최종 분석보다 관대하게 둔다 — 자동 종료가
+   늦게 걸릴 뿐이고, 그건 안전장치(계단·시간 상한)가 받아준다. */
+function judgeStep(){
+  var seg = S.live.tail(PACE_MS / 1000 + 0.15);
+  var hit = null;
+  if (seg && seg.length > 16000 * 0.35){
+    var m = VR.measure(seg, 16000, { skipEnergy:true });
+    if (m.loose.length) hit = m.loose[m.loose.length - 1];
+  }
+  if (hit){ S.chips.push({ note:hit.note }); S.miss = 0; }
+  else { S.chips.push({ miss:true }); S.miss++; }
+  S.steps++;
+  paintChips();
+  paintStage();
+
+  if (S.miss >= MISS_STOP){ S.endedEarly = true; window.VR_Rec.stop(); return; }
+  if (S.steps >= MAX_STEPS) window.VR_Rec.stop();
+}
+
+function endPass(){
+  var dir = S.dir;
+  stopLoop();
+  /* 일찍 끊긴 회차는 한 번만 되묻는다. 실패를 결과로 확정하기 전에.
+     되물어 얻은 회차도 버리지 않고 더한다 — 이상해 보인다고 값을 버리지 않는다. */
+  if (S.endedEarly && !S.retried[dir]){
+    S.retried[dir] = true;
+    S.phase = 'between'; S.dir = dir;
+    paintStage();
+    $('goTxt').textContent = L(U.retry);
+    $('stStep').textContent = L(dir === 'down' ? U.passDown : U.passUp);
+    $('stSay').textContent = '';
+    say('note', L(U.retryT), L(U.retryWhy));
+    S.next = function(){ startPass(dir); };
+    return;
+  }
+  if (dir === 'down'){
+    S.phase = 'between';
+    paintStage();
+    say('note', L(U.betweenT), L(U.between));
+    S.next = function(){ startPass('up'); };
+    return;
+  }
+  finish();
+}
+
+/* ---------- 최종 ----------
+   회차들을 무음 0.5초로 이어 붙여 **한 번에** 잰다. 회차마다 따로 재면
+   에너지 기준이 회차마다 달라져서, 한쪽에서 크게 부른 사람이 다른 쪽에서
+   불리해진다. 무음을 끼우면 회차 경계를 넘는 유지 구간은 생기지 않는다. */
+function finish(){
+  var gap = Math.round(16000 * 0.5);
+  var total = S.pcms.reduce(function(a, p){ return a + p.length; }, 0) + gap * Math.max(0, S.pcms.length - 1);
+  var all = new Float32Array(total), off = 0;
+  S.pcms.forEach(function(p, i){
+    if (i) off += gap;
+    all.set(p, off); off += p.length;
+  });
+  S.result = all.length ? VR.measure(all, 16000) : null;
+  S.phase = 'done';
+  paintStage();
+  $('msg').innerHTML = '';
+  render();
+}
+
+/* ---------- 결과 ---------- */
+function render(){
+  var box = $('res');
+  if (S.phase !== 'done' || !S.result){ box.innerHTML = ''; return; }
+  var r = S.result;
+
+  if (!r.loose.length){
+    var silent = r.reason === 'silence';
+    box.innerHTML = '<div class="warn"><b>' + esc(L(silent ? U.silentT : U.noneT)) + '</b> ' +
+                    esc(L(silent ? U.silent : U.none)) + '</div>';
+    return;
+  }
+
+  var h = '<h2 class="sub">' + esc(L(U.resStable)) + '</h2>';
+
+  if (!r.stable){
+    h += '<div class="warn"><b>' + esc(L(U.noStable)) + '</b> ' + esc(L(U.noStableWhy)) + '</div>';
+  } else {
+    h += '<div class="big">' +
+         '<div class="big-val">' + pair(r.stable.lo) + ' — ' + pair(r.stable.hi) + '</div>' +
+         '<div class="big-why">' + esc(L(U.stableWhy)) + '</div></div>';
+  }
+
+  h += '<div class="duo">' +
+       '<div class="cell"><b>' + esc(L(U.resMax)) + '</b><span>' +
+         esc(big(r.max.lo)) + ' — ' + esc(big(r.max.hi)) + '</span><em>' +
+         esc(sub(r.max.lo)) + ' / ' + esc(sub(r.max.hi)) + '</em><i>' + esc(L(U.maxWhy)) + '</i></div>' +
+       '<div class="cell"><b>' + esc(L(U.resSpan)) + '</b><span>' +
+         esc(r.stable ? L(r.stable.span) : L(r.max.span)) + '</span><em>' +
+         esc(stCount(r.stable ? r.stable.span.semitones : r.max.span.semitones)) + '</em>' +
+         '<i>' + esc(L(U.spanWhy)) + '</i></div>' +
+       '</div>';
+
+  if (r.stable && r.headroomSt != null){
+    var wide = r.headroomSt >= 2;
+    h += '<div class="cell" style="margin-top:14px"><b>' + esc(L(U.resHead)) + '</b><span>' +
+         esc(VR.spanText(r.headroomSt)[window.APP_LANG === 'kr' ? 'kr' : 'en']) + '</span>' +
+         '<i>' + esc(L(wide ? U.headWhyWide : U.headWhyTight)) + '</i></div>';
+  }
+
+  if (r.stable){
+    var top = r.stable.hiMidi, ceil = VR.noteOfMidi(VR.ceilingMidi(top));
+    h += '<h2 class="sub">' + esc(L(U.resCeil)) + '</h2>' +
+         '<div class="big">' +
+         '<div class="big-val">' + pair(ceil) + '</div>' +
+         '<div class="big-why">' + esc(L(U.ceilWhy)) + '</div></div>';
+
+    /* 13행 환산표 — 옥타브 말투만. 13행 × 3표기는 표를 읽을 수 없게 만든다 (§4-1). */
+    h += '<h2 class="sub">' + esc(L(U.ktT)) + '</h2>';
+    h += '<table class="kt"><tr><th>' + esc(L(U.ktKey)) + '</th><th>' + esc(L(U.ktCovers)) + '</th></tr>';
+    VR.keyTable(top).forEach(function(row){
+      var cls = row.key === VR.KEY_MIN ? ' class="ceil"' : (row.key === 0 ? ' class="zero"' : '');
+      h += '<tr' + cls + '><td class="k">' + (row.key > 0 ? '+' : '') + row.key + '</td><td>' +
+           esc(big(row.note)) + (row.key === 0 ? ' <span style="color:#666">(' + esc(L(U.ktZero)) + ')</span>' : '') +
+           '</td></tr>';
+    });
+    h += '</table><div class="note">' + esc(L(U.ktWhy)) + '</div>';
+
+    /* 공유 카드 — 안정 최고음 하나만. 카드는 곧 주장이고, 주장은 방어 가능해야 한다. */
+    h += '<div class="card"><div class="card-lab">' + esc(L(U.cardLab)) + '</div>' +
+         '<div class="card-note">' + esc(big(r.stable.hi)) + '</div>' +
+         '<div class="card-site">kygmin.com</div></div>';
+  }
+
+  /* 붙잡힌 음 전부 — 위의 두 음역이 어디서 나왔는지 보여준다 */
+  var strictKeys = {};
+  r.strict.forEach(function(x){ strictKeys[x.midi] = 1; });
+  var seen = {}, marks = [];
+  r.loose.slice().sort(function(a,b){ return a.midiExact - b.midiExact; }).forEach(function(x){
+    if (seen[x.midi]) return;
+    seen[x.midi] = 1;
+    marks.push('<span class="chip' + (strictKeys[x.midi] ? ' strict' : '') + '">' + esc(big(x.note)) + '</span>');
+  });
+  h += '<h2 class="sub">' + esc(L(U.holdsT)) + '</h2>' +
+       '<div class="steps" style="justify-content:flex-start">' + marks.join('') + '</div>' +
+       '<div class="note">' + esc(L(U.holdsWhy)) + '</div>' +
+       '<p class="foot">' + esc(L(U.fine)) + '</p>';
+
+  box.innerHTML = h;
+}
+
+/* ---------- 대조표 (페이지에 한 번만) ---------- */
+function renderNotation(){
+  var kr = window.APP_LANG === 'kr';
+  $('notationWhy').textContent = L(kr ? U.notationWhyKr : U.notationWhyEn);
+  var h = '<table><tr>' + (kr ? '<th>' + esc(L(U.nCol1)) + '</th>' : '') +
+          '<th>' + esc(L(U.nCol2)) + '</th><th>' + esc(L(U.nCol3)) + '</th></tr>';
+  for (var midi = 48; midi <= 84; midi++){
+    var n = VR.noteOfMidi(midi);
+    h += '<tr>' + (kr ? '<td>' + esc(n.kr) + '</td>' : '') +
+         '<td>' + esc(n.sci) + '</td><td>' + n.hz.toFixed(1) + ' Hz</td></tr>';
+  }
+  $('notationTable').innerHTML = h + '</table>';
+}
+
+/* ---------- 배선 ---------- */
+$('goBtn').addEventListener('click', function(){
+  if (S.phase === 'rec'){ window.VR_Rec.stop(); return; }
+  if (S.phase === 'between'){ var f = S.next; S.next = null; $('msg').innerHTML = ''; f && f(); return; }
+  S.pcms = []; S.retried = {down:false, up:false}; S.result = null;
+  $('res').innerHTML = '';
+  startPass('down');
+});
+$('againBtn').addEventListener('click', function(){
+  S.phase = 'idle'; S.pcms = []; S.retried = {down:false, up:false};
+  S.result = null; S.chips = [];
+  $('res').innerHTML = ''; $('msg').innerHTML = '';
+  paintStage(); paintChips();
+});
+
+function relabel(){
+  setMic(S.phase === 'rec' ? 'rec' : 'off');
+  paintStage(); paintChips(); renderNotation(); render();
+}
+window.APP_LANG_LISTENERS.push(relabel);
+relabel();
+window.VR_APP = S;
+})();
+</script>
+<script src="/auth-widget.js" defer></script>
+</body>
+</html>
