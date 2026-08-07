@@ -172,7 +172,23 @@ label.hd{font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing
 
 footer{border-top:3px solid var(--ink);padding:26px 0;}
 .foot-inner{max-width:960px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:12px;color:#4A4A46;}
+.spin{display:block;border:3px solid var(--ink);background:#fff;padding:18px 20px;box-shadow:5px 5px 0 var(--ink);transition:transform .1s,box-shadow .1s;}
+.spin:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--ink);}
+.spin-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px;}
+.spin-name{font-family:var(--mono);font-size:14px;font-weight:600;}
+.spin-go{font-family:var(--arch);font-size:11.5px;font-weight:900;letter-spacing:.5px;background:var(--green);color:var(--paper);padding:3px 9px;}
+.spin p{font-size:13.5px;color:#3A3A38;line-height:1.65;}
 </style>
+<script>
+window.KYG_LANG=(function(){try{var v=localStorage.getItem('kyg_lang');if(v==='kr'||v==='en')return v;}catch(e){}return 'en';})();
+window.APP_LANG=window.KYG_LANG;
+if(window.KYG_LANG!=='en'){
+  document.documentElement.setAttribute('lang','ko');
+  document.documentElement.className+=' lang-pending';
+  setTimeout(function(){document.documentElement.classList.remove('lang-pending');},2000);
+}
+</script>
+<style>html.lang-pending .tx{visibility:hidden}</style>
 </head>
 <body>
 
@@ -306,6 +322,12 @@ footer{border-top:3px solid var(--ink);padding:26px 0;}
     <p class="note tx" data-en="Record one long passage on the READ ALOUD tab and one freestyle take, and the two get compared here. This is the one contrast on this page that needs no literature at all: same person, same session, same microphone — so whatever separates the two columns is not a baseline you have to trust someone else about. Nothing is stored; closing the tab clears both." data-kr="정독 탭에서 긴 지문을 하나 읽고 프리스타일을 하나 녹음하면 둘이 여기서 대비됩니다. 이 페이지에서 문헌이 아예 필요 없는 유일한 대비예요: 같은 사람, 같은 세션, 같은 마이크 — 그래서 두 칸을 가르는 게 무엇이든 남의 기준선을 믿어야 하는 값이 아닙니다. 저장은 되지 않고, 탭을 닫으면 둘 다 사라집니다.">Record one long passage on the READ ALOUD tab and one freestyle take, and the two get compared here. This is the one contrast on this page that needs no literature at all: same person, same session, same microphone — so whatever separates the two columns is not a baseline you have to trust someone else about. Nothing is stored; closing the tab clears both.</p>
     <div id="resC"></div>
 
+    <h2 class="sub tx" data-en="SPIN-OFF" data-kr="파생 프로젝트">SPIN-OFF</h2>
+    <a class="spin" href="/blueberry/vocalrange/">
+      <div class="spin-head"><span class="spin-name tx" data-en="vocal-range" data-kr="음역대 측정기">vocal-range</span><span class="spin-go tx" data-en="OPEN &#9658;" data-kr="열기 &#9658;">OPEN &#9658;</span></div>
+      <p class="tx" data-en="The pitch tracker on this page, pointed at singing instead of speech. It measures how high and how low you can hold a note — hold, not touch — and turns your top note into the one number a karaoke machine understands: how many times to press the key button. It is a separate page, not a third tab here: the octave correction and phrase splitting that make this page work would wreck that one, since it needs you to sweep two octaves on purpose." data-kr="이 페이지의 음높이 추출기를 말소리가 아니라 노래에 겨눈 것입니다. 붙잡을 수 있는 — 스치는 게 아니라 붙잡는 — 가장 높은 음과 낮은 음을 재서, 최고음을 노래방 기계가 알아듣는 숫자 하나로 바꿔줍니다. 키 버튼을 몇 번 누를지요. 여기 세 번째 탭이 아니라 별도 페이지예요: 이 페이지를 돌아가게 하는 옥타브 보정과 억양구 분할이 저쪽에서는 오히려 방해가 됩니다 — 저긴 두 옥타브를 일부러 훑어야 하거든요.">The pitch tracker on this page, pointed at singing instead of speech. It measures how high and how low you can hold a note — hold, not touch — and turns your top note into the one number a karaoke machine understands: how many times to press the key button. It is a separate page, not a third tab here: the octave correction and phrase splitting that make this page work would wreck that one, since it needs you to sweep two octaves on purpose.</p>
+    </a>
+
     <p class="note tx" data-en="v0 deliberately gives no dialect verdict. The literature can support one claim — whether a speaker rises sharply at the end of a yes/no question — and even that needs a validated baseline this page does not yet have. Until then it only shows you the measurement." data-kr="v0은 의도적으로 방언 판정을 내리지 않습니다. 문헌이 지지할 수 있는 주장은 하나뿐이고 — 판정의문문 끝에서 급격히 올라가는가 — 그마저도 이 페이지에 아직 없는 검증된 기준선이 필요해요. 그때까지는 측정값만 보여줍니다.">v0 deliberately gives no dialect verdict. The literature can support one claim — whether a speaker rises sharply at the end of a yes/no question — and even that needs a validated baseline this page does not yet have. Until then it only shows you the measurement.</p>
 
   </div>
@@ -325,7 +347,6 @@ footer{border-top:3px solid var(--ink);padding:26px 0;}
 
 <!-- 언어 토글 (사이트 공통 패턴, 독립 스크립트) -->
 <script>
-window.APP_LANG = 'en';
 window.APP_LANG_LISTENERS = [];
 (function(){
   var POOL = ("ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎㅏㅑㅓㅕㅗㅛㅜㅠㅡㅣ"
@@ -361,9 +382,19 @@ window.APP_LANG_LISTENERS = [];
   };
   var els=[].slice.call(document.querySelectorAll('.tx'));
   els.forEach(function(el){ el.dataset.plain=el.textContent; el._s=new Scramble(el); });
+  /* 저장된 언어를 애니메이션 없이 즉시 적용한다. i18n 스크립트는 초기 로드에서
+     data-en 을 안 칠하므로 .tx 의 인라인 텍스트가 data-en 과 정확히 같아야 한다. */
+  (function(){
+    var L = window.KYG_LANG || 'en';
+    var btns=document.querySelectorAll('#langtoggle button');
+    for(var i=0;i<btns.length;i++){ btns[i].classList.toggle('on', btns[i].dataset.lang===L); }
+    if(L!=='en') els.forEach(function(el){ var t=el.dataset[L]; if(t!==undefined){ el.textContent=t; el.dataset.plain=t; } });
+    document.documentElement.classList.remove('lang-pending');
+  })();
   function setLang(lang){
     if(lang===window.APP_LANG) return;
     window.APP_LANG = lang;
+    try{ localStorage.setItem('kyg_lang', lang); }catch(e){}
     document.documentElement.lang = (lang==='kr'?'ko':'en');
     var btns=document.querySelectorAll('#langtoggle button');
     for(var i=0;i<btns.length;i++){ btns[i].classList.toggle('on', btns[i].dataset.lang===lang); }

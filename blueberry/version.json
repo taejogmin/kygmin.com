@@ -1,8 +1,8 @@
 {
   "app": "blueberry-smoothie",
-  "version": "0.18",
-  "note": "정독 vs 프리스타일 대비 — 양쪽을 억양구 단위 표본으로 바꿔 정확 Mann–Whitney, Bonferroni 0.017, 중앙 음높이는 대조군",
-  "index_sha256": "da92e1a2b1f0fde5f463982e0446f8bf2a77421fb6f856e018cce02c0f4fdf1f",
-  "index_bytes": 172516,
+  "version": "0.19",
+  "note": "파생 프로젝트 카드(vocalrange) + kyg_lang 언어 유지 패치",
+  "index_sha256": "b55e407031575bfb035fe5d34e7b92e58300616cdd262a5c3a9456fd12da0d67",
+  "index_bytes": 176130,
   "hash_note": "0.16의 index_sha256 값은 32자였다 — sha256이 아니다. 0.17부터 64자 전체 sha256을 적는다."
 }
