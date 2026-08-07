@@ -1,8 +1,8 @@
 {
   "app": "blueberry-smoothie",
-  "version": "0.19",
-  "note": "파생 프로젝트 카드(vocalrange) + kyg_lang 언어 유지 패치",
-  "index_sha256": "b55e407031575bfb035fe5d34e7b92e58300616cdd262a5c3a9456fd12da0d67",
-  "index_bytes": 176130,
+  "version": "0.20",
+  "note": "저장 opt-in (세 모드) + 약속 문구 네 군데 개정 + /me/ 잡음 바닥 카드",
+  "index_sha256": "466f1b5286bce1ec681927709bc9fc0561f8f44c715f0f54d0b576fc81d7ce81",
+  "index_bytes": 187898,
   "hash_note": "0.16의 index_sha256 값은 32자였다 — sha256이 아니다. 0.17부터 64자 전체 sha256을 적는다."
 }

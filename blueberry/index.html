@@ -188,7 +188,23 @@ if(window.KYG_LANG!=='en'){
   setTimeout(function(){document.documentElement.classList.remove('lang-pending');},2000);
 }
 </script>
-<style>html.lang-pending .tx{visibility:hidden}</style>
+<style>html.lang-pending .tx{visibility:hidden}
+/* 저장 한 줄 + 스위치 (vocalrange 와 같은 모양) */
+.saveline{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:9px;font-size:13.5px;color:#444;}
+.sw{display:inline-flex;align-items:center;gap:7px;font:inherit;font-family:var(--mono);font-size:11.5px;font-weight:600;
+    border:2px solid var(--ink);background:#fff;color:var(--ink);padding:3px 9px;cursor:pointer;
+    box-shadow:2px 2px 0 var(--ink);transition:transform .1s,box-shadow .1s;}
+.sw:hover{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink);}
+.sw i{width:9px;height:9px;border-radius:50%;background:#bbb;border:1px solid var(--ink);flex:none;}
+.sw[aria-pressed="true"]{background:var(--green);color:var(--paper);}
+.sw[aria-pressed="true"] i{background:var(--paper);}
+#saveMoreBody{font-size:13.5px;color:#444;padding-top:8px;}
+#saveMoreBody h4{font-family:var(--mono);font-size:11.5px;letter-spacing:.5px;text-transform:uppercase;margin:10px 0 4px;color:var(--ink);}
+#saveMoreBody ul{margin:0 0 0 18px;}
+#saveMoreBody li{margin:2px 0;}
+#saveMoreBody p{margin-top:8px;}
+.saveflash{border-left:4px solid var(--green);background:#fff;padding:9px 13px;font-size:13.5px;margin-top:10px;}
+</style>
 </head>
 <body>
 
@@ -208,7 +224,7 @@ if(window.KYG_LANG!=='en'){
     <span class="sec-tag tx" data-en="PROSODY LAB · v0" data-kr="억양 실험실 · v0">PROSODY LAB · v0</span>
     <h1>BLUEBERRY<br /><span class="box">SMOOTHIE</span></h1>
     <p class="hero-sub tx" data-en="Say a sentence and watch your own pitch drawn as a curve. This is a measuring instrument, not a dialect quiz — v0 shows you what your voice actually did and never tells you where you are from." data-kr="문장을 말하면 당신의 음높이가 곡선으로 그려집니다. 이건 방언 맞히기 퀴즈가 아니라 측정기예요 — v0은 당신의 목소리가 실제로 무엇을 했는지만 보여주고, 어디 출신인지는 말하지 않습니다.">Say a sentence and watch your own pitch drawn as a curve. This is a measuring instrument, not a dialect quiz — v0 shows you what your voice actually did and never tells you where you are from.</p>
-    <p class="hero-note tx" data-en="AUDIO NEVER LEAVES YOUR DEVICE · NOTHING IS STORED · NO ACCOUNT" data-kr="음성은 기기를 떠나지 않음 · 저장 없음 · 계정 불필요">AUDIO NEVER LEAVES YOUR DEVICE · NOTHING IS STORED · NO ACCOUNT</p>
+    <p class="hero-note tx" data-en="AUDIO NEVER LEAVES YOUR DEVICE · NO ACCOUNT NEEDED · RESULTS SAVED ONLY IF YOU TURN IT ON" data-kr="음성은 기기를 떠나지 않음 · 계정 불필요 · 결과는 켤 때만 저장">AUDIO NEVER LEAVES YOUR DEVICE · NO ACCOUNT NEEDED · RESULTS SAVED ONLY IF YOU TURN IT ON</p>
   </div>
 </header>
 
@@ -221,17 +237,14 @@ if(window.KYG_LANG!=='en'){
         <span class="privacy-title tx" data-en="MICROPHONE" data-kr="마이크">MICROPHONE</span>
         <span class="privacy-state" id="privState">OFF</span>
       </div>
-      <p class="privacy-body tx" data-en="Your voice is analysed entirely inside this page. No audio is uploaded, no recording is saved to disk, and this version stores no results at all — closing the tab erases everything. The microphone is only open while the indicator above is red." data-kr="목소리는 전부 이 페이지 안에서 분석됩니다. 오디오는 업로드되지 않고, 녹음이 디스크에 저장되지도 않으며, 이 버전은 결과조차 저장하지 않습니다 — 탭을 닫으면 전부 사라져요. 마이크는 위 표시가 빨간 동안에만 열려 있습니다.">Your voice is analysed entirely inside this page. No audio is uploaded, no recording is saved to disk, and this version stores no results at all — closing the tab erases everything. The microphone is only open while the indicator above is red.</p>
-      <details>
-        <summary class="tx" data-en="What is measured (full list)" data-kr="무엇을 재는지 (전체 목록)">What is measured (full list)</summary>
-        <ul>
-          <li class="tx" data-en="f0 per 10 ms frame → semitones relative to your own median" data-kr="10 ms 프레임마다의 f0 → 본인 중앙값 대비 semitone">f0 per 10 ms frame → semitones relative to your own median</li>
-          <li class="tx" data-en="Syllable nuclei and boundaries from the energy envelope" data-kr="에너지 포락선에서 뽑은 음절 핵과 경계">Syllable nuclei and boundaries from the energy envelope</li>
-          <li class="tx" data-en="Phrase boundaries from pauses (≥200 ms)" data-kr="휴지(200 ms 이상)로 잡은 억양구 경계">Phrase boundaries from pauses (≥200 ms)</li>
-          <li class="tx" data-en="Pitch movement over the last two targets of each phrase" data-kr="억양구마다 마지막 두 피치 타깃의 이동량">Pitch movement over the last two targets of each phrase</li>
-          <li class="tx" data-en="Pitch range, variability, speech rate, pause structure" data-kr="음역 폭, 변동성, 발화 속도, 휴지 구조">Pitch range, variability, speech rate, pause structure</li>
-          <li class="tx" data-en="No words are transcribed. No speech recognition runs anywhere." data-kr="단어는 전사되지 않습니다. 음성 인식은 어디에서도 돌지 않습니다.">No words are transcribed. No speech recognition runs anywhere.</li>
-        </ul>
+      <!-- 항상 보이는 것은 이 한 줄뿐. JS 가 칠하므로 .tx 를 붙이지 않는다. -->
+      <div class="saveline">
+        <span id="saveTxt"></span>
+        <button class="sw" id="saveSw" hidden aria-pressed="false"><i></i><span id="saveSwTxt"></span></button>
+      </div>
+      <details id="saveMore">
+        <summary id="saveMoreT"></summary>
+        <div id="saveMoreBody"></div>
       </details>
     </div>
 
@@ -265,7 +278,7 @@ if(window.KYG_LANG!=='en'){
       <div class="res" id="resA"></div>
 
       <h2 class="sub tx" data-en="REPEATED MEASURES" data-kr="반복 측정">REPEATED MEASURES</h2>
-      <p class="note tx" data-en="Record each condition several times, alternating between them — A, B, A, B. One take each tells you nothing: the instrument moves a little every time, and a single pair of numbers cannot say whether a gap is your voice or that movement. Repeating separates the two. Pair “밥 먹었어.” with “밥 먹었어?” and the only thing left that can differ is intonation. Nothing is stored — closing the tab clears both conditions." data-kr="각 조건을 여러 번, 번갈아 녹음하세요 — A, B, A, B. 한 번씩만 해서는 아무것도 알 수 없어요: 측정기는 매번 조금씩 흔들리고, 숫자 한 쌍만으로는 그 간격이 당신의 목소리인지 그 흔들림인지 말할 수 없습니다. 반복하면 둘이 갈라집니다. 「밥 먹었어.」와 「밥 먹었어?」를 짝지으면 달라질 수 있는 건 억양뿐이에요. 저장은 되지 않고, 탭을 닫으면 두 조건 다 사라집니다.">Record each condition several times, alternating between them — A, B, A, B. One take each tells you nothing: the instrument moves a little every time, and a single pair of numbers cannot say whether a gap is your voice or that movement. Repeating separates the two. Pair “밥 먹었어.” with “밥 먹었어?” and the only thing left that can differ is intonation. Nothing is stored — closing the tab clears both conditions.</p>
+      <p class="note tx" data-en="Record each condition several times, alternating between them — A, B, A, B. One take each tells you nothing: the instrument moves a little every time, and a single pair of numbers cannot say whether a gap is your voice or that movement. Repeating separates the two. Pair “밥 먹었어.” with “밥 먹었어?” and the only thing left that can differ is intonation. The A/B lists you build here are never stored anywhere — closing the tab clears both conditions. Whether individual readings are recorded is a separate choice, on the line at the top of the page." data-kr="각 조건을 여러 번, 번갈아 녹음하세요 — A, B, A, B. 한 번씩만 해서는 아무것도 알 수 없어요: 측정기는 매번 조금씩 흔들리고, 숫자 한 쌍만으로는 그 간격이 당신의 목소리인지 그 흔들림인지 말할 수 없습니다. 반복하면 둘이 갈라집니다. 「밥 먹었어.」와 「밥 먹었어?」를 짝지으면 달라질 수 있는 건 억양뿐이에요. 여기 쌓은 A/B 목록 자체는 어디에도 저장되지 않아요 — 탭을 닫으면 두 조건 다 사라집니다. 개별 회차를 기록할지는 맨 위 한 줄에서 따로 정합니다.">Record each condition several times, alternating between them — A, B, A, B. One take each tells you nothing: the instrument moves a little every time, and a single pair of numbers cannot say whether a gap is your voice or that movement. Repeating separates the two. Pair “밥 먹었어.” with “밥 먹었어?” and the only thing left that can differ is intonation. The A/B lists you build here are never stored anywhere — closing the tab clears both conditions. Whether individual readings are recorded is a separate choice, on the line at the top of the page.</p>
       <div class="row">
         <label class="hd tx" for="metricPick" data-en="COMPARE" data-kr="비교할 지표">COMPARE</label>
         <select id="metricPick"></select>
@@ -319,7 +332,7 @@ if(window.KYG_LANG!=='en'){
 
     <!-- ============ 두 모드 대비 (탭 밖 — 양쪽이 다 있어야 뜬다) ============ -->
     <h2 class="sub tx" data-en="READ ALOUD vs FREESTYLE" data-kr="정독 vs 프리스타일">READ ALOUD vs FREESTYLE</h2>
-    <p class="note tx" data-en="Record one long passage on the READ ALOUD tab and one freestyle take, and the two get compared here. This is the one contrast on this page that needs no literature at all: same person, same session, same microphone — so whatever separates the two columns is not a baseline you have to trust someone else about. Nothing is stored; closing the tab clears both." data-kr="정독 탭에서 긴 지문을 하나 읽고 프리스타일을 하나 녹음하면 둘이 여기서 대비됩니다. 이 페이지에서 문헌이 아예 필요 없는 유일한 대비예요: 같은 사람, 같은 세션, 같은 마이크 — 그래서 두 칸을 가르는 게 무엇이든 남의 기준선을 믿어야 하는 값이 아닙니다. 저장은 되지 않고, 탭을 닫으면 둘 다 사라집니다.">Record one long passage on the READ ALOUD tab and one freestyle take, and the two get compared here. This is the one contrast on this page that needs no literature at all: same person, same session, same microphone — so whatever separates the two columns is not a baseline you have to trust someone else about. Nothing is stored; closing the tab clears both.</p>
+    <p class="note tx" data-en="Record one long passage on the READ ALOUD tab and one freestyle take, and the two get compared here. This is the one contrast on this page that needs no literature at all: same person, same session, same microphone — so whatever separates the two columns is not a baseline you have to trust someone else about. The comparison itself is not stored; closing the tab clears both. Individual readings are a separate choice, on the line at the top." data-kr="정독 탭에서 긴 지문을 하나 읽고 프리스타일을 하나 녹음하면 둘이 여기서 대비됩니다. 이 페이지에서 문헌이 아예 필요 없는 유일한 대비예요: 같은 사람, 같은 세션, 같은 마이크 — 그래서 두 칸을 가르는 게 무엇이든 남의 기준선을 믿어야 하는 값이 아닙니다. 이 대비 자체는 저장되지 않고, 탭을 닫으면 둘 다 사라집니다. 개별 회차는 맨 위 한 줄에서 따로 정합니다.">Record one long passage on the READ ALOUD tab and one freestyle take, and the two get compared here. This is the one contrast on this page that needs no literature at all: same person, same session, same microphone — so whatever separates the two columns is not a baseline you have to trust someone else about. The comparison itself is not stored; closing the tab clears both. Individual readings are a separate choice, on the line at the top.</p>
     <div id="resC"></div>
 
     <h2 class="sub tx" data-en="SPIN-OFF" data-kr="파생 프로젝트">SPIN-OFF</h2>
@@ -1326,6 +1339,33 @@ window.BS_UI = {
   cmpCtlBad:{en:'Your median pitch differs by more than two semitones between the two recordings. That is not a finding about read versus spontaneous speech — it says something changed between takes: microphone distance, posture, time of day, or simply warming up. Read everything above as provisional and record the two again closer together.',kr:'두 녹음의 중앙 음높이가 2 semitone 넘게 차이납니다. 이건 낭독과 자유 발화의 차이가 아니라, 두 녹음 사이에 뭔가 바뀌었다는 뜻이에요 — 마이크 거리, 자세, 시간대, 아니면 그냥 목이 풀린 것. 위의 값들은 잠정으로 읽고 두 녹음을 가까운 시간에 다시 하세요.'},
   cmpWhatT:{en:'What this contrast can and cannot say.',kr:'이 대비가 할 수 있는 말과 못 하는 말.'},
   cmpWhat:{en:'The read side is one of two passages — Yun Dong-ju and Philippians. Both are literary or liturgical, and neither is read the way you would read a manual or a message. So this is not "reading versus speaking"; it is "reading this particular text versus talking about a topic". The test also treats each phrase as an independent draw, and phrases inside one recording are not — the passage decides where you breathe. Both errors run the same way: the real p is larger than the one shown. A result that clears the line is worth something; one that misses it may only mean the recordings were short.',kr:'낭독 쪽은 두 지문 중 하나 — 윤동주와 빌립보서입니다. 둘 다 문학이거나 전례문이고, 설명서나 메시지를 읽는 방식과는 달라요. 그래서 이건 「낭독 대 발화」가 아니라 「이 텍스트를 읽을 때 대 어떤 주제를 말할 때」입니다. 그리고 검정은 억양구 하나하나를 독립 추출로 취급하는데 한 녹음 안의 억양구는 그렇지 않아요 — 어디서 숨을 쉴지를 지문이 정해줍니다. 두 오차 다 같은 방향이에요: 실제 p는 화면의 값보다 큽니다. 기준선을 넘긴 결과는 값어치가 있고, 못 넘긴 결과는 녹음이 짧았다는 뜻일 수도 있어요.'},
+
+  /* ---- 저장 (로드맵 4단계) ----
+     이 페이지는 「결과조차 저장하지 않는다」를 전면에 내걸고 시작했다.
+     그 약속을 고치는 커밋이므로 문구가 가장 조심스러운 자리다. */
+  svOff:{en:'Nothing is stored.', kr:'아무것도 저장되지 않습니다.'},
+  svOn:{en:'The numbers from each reading are recorded.', kr:'회차마다 나온 숫자가 기록됩니다.'},
+  swOff:{en:'OFF', kr:'꺼짐'},
+  swOn:{en:'ON', kr:'켜짐'},
+  svMore:{en:'what is and is not stored', kr:'무엇이 저장되고 무엇이 안 되는지'},
+  svKept:{en:'Stored when the switch is on', kr:'스위치가 켜져 있을 때 저장되는 것'},
+  svK1:{en:'The numbers on the results screen — final move, contour, pitch range, duration, speech rate, median f0, syllable counts', kr:'결과 화면의 숫자들 — 문말 이동, 문말 유형, 음역 폭, 길이, 발화 속도, 중앙 f0, 음절 수'},
+  svK2:{en:'Passage numbers — phrase count, declination, continuing rises, variability, speaking ratio, mean phrase length', kr:'지문 값들 — 억양구 수, 하강 추세, 연결 상승 비율, 변동성, 발화 비율, 평균 억양구 길이'},
+  svK3:{en:'One pitch-move number per phrase, capped at 32 — enough to recompute declination, and nothing like a curve', kr:'억양구마다 문말 이동값 하나, 최대 32개까지 — 하강 추세를 다시 계산할 만큼이고 곡선과는 거리가 멉니다'},
+  svK4:{en:'Which sentence or topic it was, the mode, corrections applied, app version and time', kr:'어느 문장·주제였는지, 모드, 적용된 보정, 앱 버전과 시각'},
+  svNot:{en:'Never stored', kr:'저장되지 않는 것'},
+  svN1:{en:'Your voice. No audio leaves this device with the switch on or off, and none is written to disk.', kr:'목소리. 오디오는 스위치가 켜져 있든 꺼져 있든 이 기기를 떠나지 않고, 디스크에도 쓰이지 않습니다.'},
+  svN2:{en:'What you said. Nothing is transcribed and no speech recognition runs anywhere — with storage on, that is still true.', kr:'무슨 말을 했는지. 전사되지 않고 음성 인식은 어디에서도 돌지 않습니다 — 저장을 켜도 그대로예요.'},
+  svN3:{en:'The pitch curve itself. Per-frame and per-syllable arrays are not stored, and the schema refuses arrays longer than 32 so that this stays true by structure rather than by promise.', kr:'음높이 곡선 자체. 프레임별·음절별 배열은 저장하지 않고, 스키마가 길이 32를 넘는 배열을 거부합니다 — 약속이 아니라 구조로 지킵니다.'},
+  svWhy:{en:'Why store anything: repeated measurement is the whole point of this page, and it cannot work inside one tab. The version notes above kept ending at the same wall — with five to seven phrases the interval is wider than the answer. Readings that accumulate are the only way past it, and they also give you something a single reading cannot: your own noise floor, so a change can be told apart from a wobble.', kr:'왜 저장하느냐 — 이 페이지의 존재 이유가 반복 측정인데 그게 탭 하나 안에서는 안 되기 때문입니다. 위의 버전 기록이 계속 같은 벽에서 끝났어요: 억양구 5~7개로는 신뢰구간이 답보다 넓습니다. 회차가 쌓이는 것 말고는 그걸 넘는 길이 없고, 덤으로 한 회차가 절대 줄 수 없는 걸 줍니다 — 본인의 잡음 바닥. 변화와 흔들림을 갈라주는 값이에요.'},
+  svFloor:{en:'That noise floor is also why the personal page says nothing until you have five readings of the same sentence. Fewer than that and any trend it drew would be a story about noise.', kr:'그 잡음 바닥 때문에 개인 페이지는 같은 문장을 다섯 번 재기 전까지 아무 말도 하지 않습니다. 그보다 적으면 거기 그린 추세가 잡음에 대한 이야기가 되니까요.'},
+  svWhere:{en:'Everything stored here is shown on your personal page, and there is a button there that deletes all of it.', kr:'여기서 저장한 것은 전부 개인 페이지에 그대로 보이고, 거기에 전부 지우는 버튼이 있습니다.'},
+  svGuest:{en:'Storing needs an account — there is no such thing as a guest record here, so for you the line above is simply true. The switch appears once you sign in, with the chip at the bottom left.', kr:'저장은 계정이 있어야 합니다 — 여기에 게스트 기록이라는 것은 존재하지 않으므로, 지금 당신에게는 위의 한 줄이 그냥 참이에요. 로그인하면 스위치가 나타납니다. 칩은 왼쪽 아래에 있어요.'},
+  svSaved:{en:'Recorded to your personal page.', kr:'개인 페이지에 기록했습니다.'},
+  svFail:{en:'Could not record that reading. The measurement is still on screen.', kr:'이 회차를 기록하지 못했습니다. 측정값은 화면에 그대로 있어요.'},
+  svPending:{en:'Recording is on. Readings from now on are kept.', kr:'기록이 켜져 있습니다. 지금부터의 회차가 남습니다.'},
+  svMe:{en:'personal page →', kr:'개인 페이지 →'},
+
   contWide:{en:'The rise share rests on very few phrases.',kr:'연결 상승 비율이 너무 적은 억양구에 얹혀 있습니다.'},
   contWideWhy:{en:'is the whole sample. Its 95% interval is wider than the entire 40–70% band that normal read speech falls in, so this passage cannot say where in that band you sit — let alone place you outside it. The percentage above is what was counted; it just cannot carry a claim. And the interval is a floor, not a measurement of the true uncertainty: a binomial interval assumes each phrase is an independent flip with the same chance of rising, and phrases inside one passage are neither — the passage decides much of it for you. The real uncertainty is at least this wide.',kr:'이게 표본 전부입니다. 95% 구간이 정상 낭독의 범위인 40~70% 전체보다 넓어요 — 이 지문 하나로는 그 범위 안 어디에 있는지도, 범위 밖에 있는지도 말할 수 없습니다. 위의 퍼센트는 실제로 센 값이 맞지만 주장을 실을 수는 없어요. 그리고 이 구간은 참값의 불확실성이 아니라 그 하한입니다: 이항 구간은 억양구 하나하나가 같은 확률로 올라가는 독립 시행이라고 가정하는데, 한 지문 안의 억양구는 둘 다 아니에요 — 지문 구조가 어디서 올릴지를 상당 부분 정해버립니다. 실제 불확실성은 최소한 이만큼 넓습니다.'},
   repTakeOut:{en:'The takes marked in red were spoken at a noticeably different length from the rest of their own condition, or had fewer syllables segmented in them. This matters more than it looks. The final movement is measured across the last syllable, so when a take is hurried that syllable shortens and merges with the one before it, and the boundary detector can miss it altogether. The number is then measured over the wrong stretch of sound rather than merely measured imprecisely — which is why one hurried take lands far outside the others instead of a little outside. Nothing has been excluded. Look at these takes, and if they were hurried, clear that condition and record it again at the same pace as the rest. An even pace across every take buys you more than extra takes do.',kr:'빨갛게 표시된 회차는 같은 조건의 나머지 회차들과 길이가 뚜렷하게 다르거나, 음절이 더 적게 잡힌 회차예요. 보기보다 중요합니다. 문말 이동은 마지막 음절 구간 위에서 재기 때문에, 급하게 말한 회차는 그 음절이 짧아지면서 앞 음절과 붙고 경계 검출이 아예 놓칠 수 있어요. 그러면 값이 부정확하게 재진 게 아니라 애초에 다른 구간을 잰 게 됩니다 — 급한 회차 하나가 조금이 아니라 아주 멀리 떨어져 앉는 이유가 이거예요. 아무것도 제외하지 않았습니다. 확인해 보고 급했다면 그 조건을 비우고 나머지와 같은 속도로 다시 녹음하세요. 회차를 더 늘리는 것보다 모든 회차의 속도를 고르게 하는 쪽이 더 많이 벌어줍니다.'}
@@ -1925,6 +1965,46 @@ A.repSwitches = function(takes){
   return n;
 };
 /*__REPSTATS_END__*/
+
+/* =================== 저장 (로드맵 4단계) ===================
+   calib = 측정 파이프라인 세대. 문턱이나 파이프라인이 바뀌면 반드시 올린다 —
+   안 올리면 잡음 바닥이 사람의 흔들림이 아니라 우리가 코드를 고친 흔적을 재게 된다.
+   1 = v0.19 파이프라인 (제약 음절 검출 + 스파이크 제거 + 가운데 70% 표류 없음). */
+A.APP_VER = '0.20';
+A.CALIB   = 1;
+A.SV = { client:null, userId:null, on:false, busy:false };
+A.LSKEY = 'bs_save';
+
+/* 배열은 길이 상한으로만 허용한다. 억양구마다 문말 기울기 하나 — 곡선도 단어도
+   복원되지 않는다. 상한을 두는 이유는 프라이버시가 아니라 **경계**다:
+   값 하나는 요약이지만 배열은 녹음에 따라 늘어나고, 한번 허용하면
+   「프레임별 배열도 숫자잖아」로 미끄러진다. 스키마와 여기 양쪽에 박는다. */
+A.SLOPE_CAP = 32;
+A.slopeArr = function(r){
+  if (!r || !r.finals || !r.finals.length) return null;
+  var out = [], i;
+  for (i = 0; i < r.finals.length && out.length < A.SLOPE_CAP; i++){
+    var f = r.finals[i];
+    out.push(f && isFinite(f.delta) ? Math.round(f.delta * 1000) / 1000 : null);
+  }
+  return out.length ? out : null;
+};
+A.num = function(v, d){ return (v == null || !isFinite(v)) ? null : Math.round(v * Math.pow(10, d == null ? 3 : d)) / Math.pow(10, d == null ? 3 : d); };
+
+A.bsSave = function(row){
+  var SV = A.SV;
+  if (!SV.client || !SV.on || SV.busy) return;
+  SV.busy = true;
+  row.reading_id = (window.crypto && crypto.randomUUID) ? crypto.randomUUID()
+                 : String(Date.now()) + Math.random();
+  row.user_id = SV.userId;
+  row.app_ver = A.APP_VER;
+  row.calib = A.CALIB;
+  SV.client.from('bs_readings').insert(row).then(function(res){
+    SV.busy = false;
+    A.saveFlash(res && res.error ? 'fail' : 'ok');
+  }, function(){ SV.busy = false; A.saveFlash('fail'); });
+};
 
 /*__MODECMP_START__*/
 /* =================== 낭독 vs 자유 발화 대비 ===================
@@ -2662,6 +2742,7 @@ function analyzeFree(pcm, sr){
   F.raw = r;
   renderFree();
   renderCompare();
+  saveFree();      /* 분석이 끝난 자리에서만. renderFree 는 언어 전환에도 불린다 */
 }
 
 /* 언어 전환 시 결과 화면 재출력 (재분석 없음) */
@@ -2797,6 +2878,90 @@ function renderCompare(){
 }
 A.renderCompare = renderCompare;
 
+/* ---------- 저장 ----------
+   이 페이지는 「결과조차 저장하지 않는다」를 전면에 내걸고 시작했다.
+   그래서 비로그인과 저장 꺼짐에서는 그 문장이 **문자 그대로 계속 참이어야 한다** —
+   게스트 행이 존재할 수 없게 스키마를 짠 이유가 그것이다. */
+function paintSave(){
+  var SV = A.SV, on = !!SV.client && SV.on;
+  $('saveTxt').textContent = L(on ? U.svOn : U.svOff);
+  var sw = $('saveSw');
+  sw.hidden = !SV.client;
+  sw.setAttribute('aria-pressed', on ? 'true' : 'false');
+  $('saveSwTxt').textContent = L(on ? U.swOn : U.swOff);
+  $('saveMoreT').textContent = L(U.svMore);
+  var h = '<h4>' + L(U.svKept) + '</h4><ul>' +
+    [U.svK1,U.svK2,U.svK3,U.svK4].map(function(x){ return '<li>' + L(x) + '</li>'; }).join('') +
+    '</ul><h4>' + L(U.svNot) + '</h4><ul>' +
+    [U.svN1,U.svN2,U.svN3].map(function(x){ return '<li>' + L(x) + '</li>'; }).join('') +
+    '</ul><p>' + L(U.svWhy) + '</p><p>' + L(U.svFloor) + '</p>';
+  h += SV.client
+    ? '<p>' + L(U.svWhere) + ' <a href="/me/" style="border-bottom:2px solid var(--green)">' + L(U.svMe) + '</a></p>'
+    : '<p>' + L(U.svGuest) + '</p>';
+  $('saveMoreBody').innerHTML = h;
+}
+
+A.saveFlash = function(kind){
+  var el = $('saveFlash');
+  if (!el){
+    el = document.createElement('div');
+    el.id = 'saveFlash';
+    var line = document.querySelector('.saveline');
+    line.parentNode.insertBefore(el, line.nextSibling);
+  }
+  if (!kind){ el.className = ''; el.textContent = ''; return; }
+  el.className = 'saveflash';
+  el.textContent = L(kind === 'ok' ? U.svSaved : (kind === 'pending' ? U.svPending : U.svFail));
+};
+
+/* 정독·긴 지문 — S.last 가 화면과 같은 값을 이미 담고 있다. 화면에 안 뜬 값은 저장하지 않는다. */
+function saveRead(){
+  var S = A.S, t = S.last, raw = S.raw && S.raw.r;
+  if (!t || !raw) return;
+  var sent = window.BS_SENTENCES[S.raw.idx];
+  var isLong = sent && sent.kind === 'long';
+  var st = raw.stats || {};
+  A.bsSave({
+    mode: isLong ? 'passage' : 'short',
+    sentence_id: t.id, topic_id: null,
+    dur_sec: A.num(t.dur), n_syl: t.nSyl, exp_syl: t.expSyl,
+    rate: A.num(t.rate), det: A.num(t.det, 1),
+    median_f0: A.num(t.f0, 1), st_range: A.num(t.range), st_sd: A.num(st.stSd),
+    final_delta: A.num(t.delta), final_type: t.type || null,
+    n_phrases: raw.phrases ? raw.phrases.length : null,
+    decl_slope: null, rise_ratio: null,
+    speech_ratio: A.num(st.speechRatio), mean_phrase_sec: A.num(st.meanPhraseSec),
+    phrase_final_slopes: isLong ? A.slopeArr(raw) : null,
+    spk_dropped: t.spk ? (t.spk.dropped || 0) : null,
+    spk_folded:  t.spk ? (t.spk.folded  || 0) : null,
+    syl_free: raw.syllables ? (raw.syllables.free != null ? raw.syllables.free : null) : null,
+    syl_constrained: t.nSyl
+  });
+}
+
+/* 프리스타일 — 문장이 없으므로 sentence_id 는 null 이고 주제 번호만 남는다.
+   잡음 바닥은 같은 문장에서만 내므로 이 회차들은 바닥 계산에 안 들어간다 (설계대로). */
+function saveFree(){
+  var r = F.raw;
+  if (!r || !r.stats) return;
+  var st = r.stats;
+  A.bsSave({
+    mode: 'free',
+    sentence_id: null, topic_id: F.topic,
+    dur_sec: A.num(r.frames.length * 0.010), n_syl: null, exp_syl: null,
+    rate: A.num(st.syllablesPerSec), det: null,
+    median_f0: A.num(r.medianF0, 1), st_range: A.num(st.stRange), st_sd: A.num(st.stSd),
+    final_delta: A.num(st.meanFinalDelta), final_type: null,
+    n_phrases: st.nPhrases, decl_slope: null,
+    rise_ratio: A.num(st.riseRatio), speech_ratio: A.num(st.speechRatio),
+    mean_phrase_sec: A.num(st.meanPhraseSec),
+    phrase_final_slopes: A.slopeArr(r),
+    spk_dropped: r.spikes ? (r.spikes.dropped || 0) : null,
+    spk_folded:  r.spikes ? (r.spikes.folded  || 0) : null,
+    syl_free: null, syl_constrained: null
+  });
+}
+
 /* ---------- 녹음 배선 ---------- */
 function wire(o){
   var btn = $(o.btn), lvl = $(o.lvl), cvId = o.cv, capId = o.cap;
@@ -2835,7 +3000,7 @@ function wire(o){
       btn.querySelector('.tx').textContent = L(U.rec);
       A.setMic('busy');
       setTimeout(function(){
-        try { o.analyze(pcm, sr); }
+        try { o.analyze(pcm, sr); if (o.state === A.S) saveRead(); }
         catch(e){ $(o.res).innerHTML = '<div class="warn">' + (e && e.message ? e.message : 'error') + '</div>'; }
         try { renderCompare(); } catch(e){}
         A.setMic('off');
@@ -2874,6 +3039,7 @@ function relabel(){
   A.repMsg('', '');
   A.paintAB();
   renderCompare();
+  paintSave();
 }
 
 A.fillPicker();
@@ -2898,6 +3064,23 @@ wire({ btn:'recA', lvl:'lvlA', cv:'cvA', cap:'capA', res:'resA',
        state:A.S, maxSec:A.maxSec, analyze:A.analyzeRead });
 wire({ btn:'recB', lvl:'lvlB', cv:'cvB', cap:'capB', res:'resB',
        state:F, maxSec:90, analyze:analyzeFree });
+
+$('saveSw').addEventListener('click', function(){
+  A.SV.on = !A.SV.on;
+  try { localStorage.setItem(A.LSKEY, A.SV.on ? 'on' : 'off'); } catch(e){}
+  paintSave();
+  A.saveFlash(A.SV.on ? 'pending' : null);
+});
+try { A.SV.on = localStorage.getItem(A.LSKEY) === 'on'; } catch(e){}
+
+window.KYG_AUTH_LISTENERS = window.KYG_AUTH_LISTENERS || [];
+window.KYG_AUTH_LISTENERS.push(function(user, nickname, client){
+  /* TOKEN_REFRESHED 에서도 이 리스너가 다시 불린다. 저장은 여기서 하지 않는다 —
+     회차 저장은 분석이 끝나는 자리에서만 일어나므로 재발화가 행을 만들지 않는다. */
+  A.SV.client = (user && client) ? client : null;
+  A.SV.userId = user ? user.id : null;
+  paintSave();
+});
 
 F.topic = Math.floor(Math.random() * window.BS_TOPICS.length);
 window.APP_LANG_LISTENERS.push(relabel);
