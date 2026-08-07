@@ -301,6 +301,11 @@ footer{border-top:3px solid var(--ink);padding:26px 0;}
       <div class="res" id="resB"></div>
     </section>
 
+    <!-- ============ 두 모드 대비 (탭 밖 — 양쪽이 다 있어야 뜬다) ============ -->
+    <h2 class="sub tx" data-en="READ ALOUD vs FREESTYLE" data-kr="정독 vs 프리스타일">READ ALOUD vs FREESTYLE</h2>
+    <p class="note tx" data-en="Record one long passage on the READ ALOUD tab and one freestyle take, and the two get compared here. This is the one contrast on this page that needs no literature at all: same person, same session, same microphone — so whatever separates the two columns is not a baseline you have to trust someone else about. Nothing is stored; closing the tab clears both." data-kr="정독 탭에서 긴 지문을 하나 읽고 프리스타일을 하나 녹음하면 둘이 여기서 대비됩니다. 이 페이지에서 문헌이 아예 필요 없는 유일한 대비예요: 같은 사람, 같은 세션, 같은 마이크 — 그래서 두 칸을 가르는 게 무엇이든 남의 기준선을 믿어야 하는 값이 아닙니다. 저장은 되지 않고, 탭을 닫으면 둘 다 사라집니다.">Record one long passage on the READ ALOUD tab and one freestyle take, and the two get compared here. This is the one contrast on this page that needs no literature at all: same person, same session, same microphone — so whatever separates the two columns is not a baseline you have to trust someone else about. Nothing is stored; closing the tab clears both.</p>
+    <div id="resC"></div>
+
     <p class="note tx" data-en="v0 deliberately gives no dialect verdict. The literature can support one claim — whether a speaker rises sharply at the end of a yes/no question — and even that needs a validated baseline this page does not yet have. Until then it only shows you the measurement." data-kr="v0은 의도적으로 방언 판정을 내리지 않습니다. 문헌이 지지할 수 있는 주장은 하나뿐이고 — 판정의문문 끝에서 급격히 올라가는가 — 그마저도 이 페이지에 아직 없는 검증된 기준선이 필요해요. 그때까지는 측정값만 보여줍니다.">v0 deliberately gives no dialect verdict. The literature can support one claim — whether a speaker rises sharply at the end of a yes/no question — and even that needs a validated baseline this page does not yet have. Until then it only shows you the measurement.</p>
 
   </div>
@@ -1261,6 +1266,35 @@ window.BS_UI = {
   declWide:{en:'The 95% interval crosses zero.',kr:'95% 구간이 0을 지나갑니다.'},
   declWideWhy:{en:'With this many phrases and this much scatter between them, the direction of the drift is not established — the passage may have drifted down, up, or not at all. The slope above is still what was measured; it just cannot carry a claim about direction. More phrases or more evenly delivered ones would narrow this.',kr:'이 억양구 수와 이 정도 산포에서는 흐름의 방향이 정해지지 않습니다 — 내려갔을 수도, 올라갔을 수도, 아무 흐름이 없었을 수도 있어요. 위의 기울기는 실제로 잰 값이 맞지만, 방향에 대한 주장을 실을 수는 없습니다. 억양구가 더 많거나 더 고르게 읽으면 구간이 좁아집니다.'},
   declFew:{en:'Fewer than four phrases — the slope is shown but its uncertainty cannot be estimated.',kr:'억양구가 4개 미만이라 기울기는 냈지만 그 불확실성은 잴 수 없습니다.'},
+  /* ---- 낭독 vs 자유 발화 대비 ---- */
+  cmpRead:{en:'READ',kr:'정독'},
+  cmpFree:{en:'FREESTYLE',kr:'프리스타일'},
+  cmpMetric:{en:'PER PHRASE',kr:'억양구당'},
+  cmpDiff:{en:'DIFF',kr:'차이'},
+  cmpVerdict:{en:'VERDICT',kr:'판정'},
+  cmpPhrases:{en:'phrases',kr:'억양구'},
+  cmpDur:{en:'Phrase length',kr:'억양구 길이'},
+  cmpRate:{en:'Speech rate',kr:'발화 속도'},
+  cmpRange:{en:'Pitch range',kr:'음역 폭'},
+  cmpF0:{en:'Median pitch',kr:'중앙 음높이'},
+  cmpNeedRead:{en:'Record a long passage on the READ ALOUD tab. A short sentence is one phrase — there is nothing to compare against.',kr:'정독 탭에서 긴 지문을 하나 읽어 주세요. 짧은 문장은 억양구가 하나뿐이라 대비할 것이 없습니다.'},
+  cmpNeedFree:{en:'Record a freestyle take. 60 seconds or more gives the most phrases.',kr:'프리스타일을 하나 녹음해 주세요. 60초 이상이면 억양구가 가장 많이 나옵니다.'},
+  cmpFew:{en:'Too few usable phrases on one side — four each are needed before any test runs.',kr:'한쪽의 쓸 수 있는 억양구가 너무 적습니다 — 검정을 돌리려면 양쪽 다 4개 이상이 필요해요.'},
+  cmpSkip:{en:'phrases were left out for having under 100 ms of voicing — a percentile computed on a handful of frames is noise, not a value.',kr:'개 억양구는 유성 구간이 100 ms 미만이라 뺐습니다 — 프레임 몇 개로 낸 백분위는 값이 아니라 잡음이에요.'},
+  cmpVClear:{en:'separated',kr:'갈렸음'},
+  cmpVFloor:{en:'cannot reach',kr:'도달 불가'},
+  cmpVSep:{en:'no overlap, p short',kr:'겹침 없음, p 미달'},
+  cmpVUnclear:{en:'not separated',kr:'안 갈림'},
+  cmpVNeed:{en:'too few',kr:'표본 부족'},
+  cmpVControl:{en:'control — not tested',kr:'대조군 — 검정 안 함'},
+  cmpAlphaT:{en:'Three tests at once, so the line is 0.017 — not 0.05.',kr:'검정을 세 개 동시에 보므로 기준선은 0.05가 아니라 0.017입니다.'},
+  cmpAlpha:{en:'Looking at three numbers and calling whichever one clears 0.05 a finding is how you find things that are not there — with three tries the chance of at least one false alarm is about 14%. Dividing the line by three (Bonferroni) holds the whole screen to 5%. Median pitch is not counted: it is the control, and it is supposed to match.',kr:'숫자 세 개를 늘어놓고 그중 0.05를 넘긴 걸 발견이라고 부르면 없는 걸 찾아내게 됩니다 — 세 번 시도하면 최소 한 번 헛걸릴 확률이 14% 가까이 돼요. 기준선을 셋으로 나누면(Bonferroni) 화면 전체가 5%에 묶입니다. 중앙 음높이는 여기서 빠집니다 — 그건 대조군이고, 같게 나와야 정상이에요.'},
+  cmpCtlOkT:{en:'Control holds.',kr:'대조군이 지켜졌습니다.'},
+  cmpCtlOk:{en:'Your median pitch is close on both sides, which is what it should be — same voice, same session. That is the evidence that the microphone and your general state did not change between the two recordings, so the differences above are about how you were speaking.',kr:'양쪽 중앙 음높이가 가깝습니다 — 같은 목소리, 같은 세션이니 그래야 맞아요. 두 녹음 사이에 마이크나 몸 상태가 바뀌지 않았다는 근거이고, 그래서 위의 차이들을 말하는 방식의 차이로 읽을 수 있습니다.'},
+  cmpCtlBadT:{en:'Control moved.',kr:'대조군이 움직였습니다.'},
+  cmpCtlBad:{en:'Your median pitch differs by more than two semitones between the two recordings. That is not a finding about read versus spontaneous speech — it says something changed between takes: microphone distance, posture, time of day, or simply warming up. Read everything above as provisional and record the two again closer together.',kr:'두 녹음의 중앙 음높이가 2 semitone 넘게 차이납니다. 이건 낭독과 자유 발화의 차이가 아니라, 두 녹음 사이에 뭔가 바뀌었다는 뜻이에요 — 마이크 거리, 자세, 시간대, 아니면 그냥 목이 풀린 것. 위의 값들은 잠정으로 읽고 두 녹음을 가까운 시간에 다시 하세요.'},
+  cmpWhatT:{en:'What this contrast can and cannot say.',kr:'이 대비가 할 수 있는 말과 못 하는 말.'},
+  cmpWhat:{en:'The read side is one of two passages — Yun Dong-ju and Philippians. Both are literary or liturgical, and neither is read the way you would read a manual or a message. So this is not "reading versus speaking"; it is "reading this particular text versus talking about a topic". The test also treats each phrase as an independent draw, and phrases inside one recording are not — the passage decides where you breathe. Both errors run the same way: the real p is larger than the one shown. A result that clears the line is worth something; one that misses it may only mean the recordings were short.',kr:'낭독 쪽은 두 지문 중 하나 — 윤동주와 빌립보서입니다. 둘 다 문학이거나 전례문이고, 설명서나 메시지를 읽는 방식과는 달라요. 그래서 이건 「낭독 대 발화」가 아니라 「이 텍스트를 읽을 때 대 어떤 주제를 말할 때」입니다. 그리고 검정은 억양구 하나하나를 독립 추출로 취급하는데 한 녹음 안의 억양구는 그렇지 않아요 — 어디서 숨을 쉴지를 지문이 정해줍니다. 두 오차 다 같은 방향이에요: 실제 p는 화면의 값보다 큽니다. 기준선을 넘긴 결과는 값어치가 있고, 못 넘긴 결과는 녹음이 짧았다는 뜻일 수도 있어요.'},
   contWide:{en:'The rise share rests on very few phrases.',kr:'연결 상승 비율이 너무 적은 억양구에 얹혀 있습니다.'},
   contWideWhy:{en:'is the whole sample. Its 95% interval is wider than the entire 40–70% band that normal read speech falls in, so this passage cannot say where in that band you sit — let alone place you outside it. The percentage above is what was counted; it just cannot carry a claim. And the interval is a floor, not a measurement of the true uncertainty: a binomial interval assumes each phrase is an independent flip with the same chance of rising, and phrases inside one passage are neither — the passage decides much of it for you. The real uncertainty is at least this wide.',kr:'이게 표본 전부입니다. 95% 구간이 정상 낭독의 범위인 40~70% 전체보다 넓어요 — 이 지문 하나로는 그 범위 안 어디에 있는지도, 범위 밖에 있는지도 말할 수 없습니다. 위의 퍼센트는 실제로 센 값이 맞지만 주장을 실을 수는 없어요. 그리고 이 구간은 참값의 불확실성이 아니라 그 하한입니다: 이항 구간은 억양구 하나하나가 같은 확률로 올라가는 독립 시행이라고 가정하는데, 한 지문 안의 억양구는 둘 다 아니에요 — 지문 구조가 어디서 올릴지를 상당 부분 정해버립니다. 실제 불확실성은 최소한 이만큼 넓습니다.'},
   repTakeOut:{en:'The takes marked in red were spoken at a noticeably different length from the rest of their own condition, or had fewer syllables segmented in them. This matters more than it looks. The final movement is measured across the last syllable, so when a take is hurried that syllable shortens and merges with the one before it, and the boundary detector can miss it altogether. The number is then measured over the wrong stretch of sound rather than merely measured imprecisely — which is why one hurried take lands far outside the others instead of a little outside. Nothing has been excluded. Look at these takes, and if they were hurried, clear that condition and record it again at the same pace as the rest. An even pace across every take buys you more than extra takes do.',kr:'빨갛게 표시된 회차는 같은 조건의 나머지 회차들과 길이가 뚜렷하게 다르거나, 음절이 더 적게 잡힌 회차예요. 보기보다 중요합니다. 문말 이동은 마지막 음절 구간 위에서 재기 때문에, 급하게 말한 회차는 그 음절이 짧아지면서 앞 음절과 붙고 경계 검출이 아예 놓칠 수 있어요. 그러면 값이 부정확하게 재진 게 아니라 애초에 다른 구간을 잰 게 됩니다 — 급한 회차 하나가 조금이 아니라 아주 멀리 떨어져 앉는 이유가 이거예요. 아무것도 제외하지 않았습니다. 확인해 보고 급했다면 그 조건을 비우고 나머지와 같은 속도로 다시 녹음하세요. 회차를 더 늘리는 것보다 모든 회차의 속도를 고르게 하는 쪽이 더 많이 벌어줍니다.'}
@@ -1860,6 +1894,94 @@ A.repSwitches = function(takes){
   return n;
 };
 /*__REPSTATS_END__*/
+
+/*__MODECMP_START__*/
+/* =================== 낭독 vs 자유 발화 대비 ===================
+
+   두 녹음의 요약값을 그냥 나란히 놓으면 양쪽에 숫자가 하나씩뿐이라 아무 말도 못 한다.
+   그래서 양쪽을 억양구 단위 표본으로 바꾼다 — 낭독 지문에서 5~8개, 자유 발화
+   60~90초에서 15~25개가 나온다. 그 다음은 반복 측정에서 쓰던 정확 Mann–Whitney 그대로다.
+   새 통계를 만들지 않는다.
+
+   음절을 여기서 다시 검출하는 이유: 낭독 쪽 analyze는 지문의 글자 수를 target으로 받아
+   검출 문턱을 그 수에 맞춰 잡는데, 자유 발화 쪽은 읽을 글이 없으니 그럴 수가 없다.
+   그대로 두고 발화 속도를 비교하면 사람 차이가 아니라 검출기 설정 차이를 재게 된다.
+   그래서 대비용 음절은 양쪽 다 target 없이 자유 검출로 다시 센다.
+
+   이 대비가 못 하는 말: 낭독 쪽 긴 지문은 별 헤는 밤과 빌립보서다. 둘 다 문학·전례
+   텍스트라 운율이 일상 낭독과 다르다. 그러니 이건 「낭독 일반 vs 자유 발화」가 아니라
+   「이 지문을 읽을 때 vs 아무 주제나 말할 때」다. 화면에도 그렇게 적는다. */
+
+function phraseSamples(r, hopSec){
+  hopSec = hopSec || 0.010;
+  var out = { dur:[], rate:[], range:[], f0st:[], n:0, skipped:0 };
+  if (!r || !r.phrases || !r.phrases.length || !r.frames) return out;
+  var nuc = window.BS.syllables(r.frames, { hopSec:hopSec }).nuclei;   /* target 없이 = 양쪽 동일 조건 */
+  r.phrases.forEach(function(p){
+    var v = [], hz = [], i, k = 0;
+    for (i = p.s; i <= p.e && i < r.frames.length; i++){
+      if (r.frames[i].st != null){
+        v.push(r.frames[i].st);
+        if (r.frames[i].f0 > 0) hz.push(r.frames[i].f0);
+      }
+    }
+    if (!hz.length){ out.skipped++; return; }
+    /* 유성 프레임 100 ms 미만인 억양구는 뺀다. 음역 폭의 백분위가 프레임 몇 개에
+       얹히면 값이 아니라 잡음이 된다. 뺀 개수는 화면에 알린다. */
+    if (v.length < 10){ out.skipped++; return; }
+    for (i = 0; i < nuc.length; i++) if (nuc[i] >= p.s && nuc[i] <= p.e) k++;
+    v.sort(function(a, b){ return a - b; });
+    out.dur.push((p.e - p.s + 1) * hopSec);
+    out.rate.push(k / ((p.e - p.s + 1) * hopSec));
+    /* 음역 폭은 한 억양구 안의 차이라 st의 기준점이 어디든 상쇄된다 — 그대로 써도 된다. */
+    out.range.push(v[Math.floor(v.length * 0.95)] - v[Math.floor(v.length * 0.05)]);
+    /* 대조군만은 st를 쓰면 안 된다. frames[i].st는 그 녹음 자신의 중앙 f0를 0으로 잡은
+       상대값이라, 두 녹음의 중앙 st는 정의상 둘 다 0 근처다 — 목소리가 통째로 올라가도
+       0이 나온다. 대조군이 잡아야 하는 게 바로 그 이동이므로 여기서만 Hz로 돌아가
+       고정 기준(100 Hz)에 대한 semitone으로 다시 잰다. 두 값의 차 = 두 녹음 사이의
+       실제 음정 간격. 100 Hz는 값을 읽기 좋은 자리에 놓으려고 고른 것뿐이고,
+       차이값에는 기준점이 무엇이든 영향이 없다. */
+    hz.sort(function(a, b){ return a - b; });
+    out.f0st.push(12 * Math.log(window.BS.medianOf(hz) / 100) / Math.LN2);
+    out.n++;
+  });
+  return out;
+}
+
+/* test:false = 대조군. 같은 사람이 같은 세션에 낸 소리라 중앙 f0는 비슷한 게 정상이고,
+   크게 벌어지면 발견이 아니라 마이크 거리나 시간대가 바뀌었다는 신호다. 그래서
+   검정 대상에서 뺀다 — 빼야 다중비교 보정도 3개 기준으로 잡을 수 있다. */
+A.CMP_KEYS = [
+  { key:'dur',   dec:2, unit:{en:'s',kr:'초'},          test:true  },
+  { key:'rate',  dec:2, unit:{en:'syl/s',kr:'음절/초'}, test:true  },
+  { key:'range', dec:2, unit:{en:'st',kr:'st'},         test:true  },
+  { key:'f0st',  dec:2, unit:{en:'st',kr:'st'},         test:false }
+];
+A.CMP_TESTED = 3;
+A.CMP_ALPHA = 0.05 / 3;   /* 검정 세 개를 한 화면에서 동시에 본다 — Bonferroni */
+A.CMP_MIN_N = 4;
+
+function modeCompare(readR, freeR){
+  var a = phraseSamples(readR), b = phraseSamples(freeR);
+  var out = { read:a, free:b, alpha:A.CMP_ALPHA, rows:[] };
+  A.CMP_KEYS.forEach(function(m){
+    var st = (a.n && b.n) ? A.repStats(a[m.key], b[m.key]) : null;
+    var v;
+    if (!m.test) v = 'control';
+    else if (!st || a.n < A.CMP_MIN_N || b.n < A.CMP_MIN_N) v = 'need';
+    else if (st.mw && st.mw.p <= A.CMP_ALPHA + 1e-12) v = 'clear';
+    /* pMin = 이 표본 크기에서 나올 수 있는 가장 작은 양측 p. 그게 이미 기준을 넘으면
+       데이터를 어떻게 배열해도 못 넘는다 — 미분리가 아니라 검정력 부족이다. */
+    else if (st.mw && st.mw.pMin > A.CMP_ALPHA + 1e-12) v = 'floor';
+    else if (st.sep) v = 'sepShort';
+    else v = 'unclear';
+    out.rows.push({ m:m, st:st, verdict:v });
+  });
+  return out;
+}
+A.phraseSamples = phraseSamples;
+A.modeCompare = modeCompare;
+/*__MODECMP_END__*/
 
 /* =================== 정독 탭 =================== */
 var S = { idx:0, live:new Live(), last:null, running:false, repA:[], repB:[], ord:0, metric:'delta' };
@@ -2502,12 +2624,13 @@ var F = { live:new A.Live(), topic:0, running:false };
 /* ---------- 프리스타일 분석 ---------- */
 function analyzeFree(pcm, sr){
   var s16 = window.BS_resample16k(pcm, sr);
-  if (s16.length < 16000 * 3){ F.raw = null; $('resB').innerHTML = '<div class="warn">' + L(U.tooShort) + '</div>'; return; }
+  if (s16.length < 16000 * 3){ F.raw = null; $('resB').innerHTML = '<div class="warn">' + L(U.tooShort) + '</div>'; renderCompare(); return; }
   var r = window.BS.analyze(s16, 16000, { hopSec:0.010 });
   var voiced = r.frames.filter(function(f){ return f.st != null; });
-  if (voiced.length < 60 || !r.stats){ F.raw = null; $('resB').innerHTML = '<div class="warn">' + L(U.noVoice) + '</div>'; return; }
+  if (voiced.length < 60 || !r.stats){ F.raw = null; $('resB').innerHTML = '<div class="warn">' + L(U.noVoice) + '</div>'; renderCompare(); return; }
   F.raw = r;
   renderFree();
+  renderCompare();
 }
 
 /* 언어 전환 시 결과 화면 재출력 (재분석 없음) */
@@ -2565,6 +2688,84 @@ function renderFree(){
   $('resB').innerHTML = html;
 }
 
+/* ---------- 낭독 vs 자유 발화 대비 ----------
+   탭 밖에 산다. 양쪽이 다 있어야 뜨므로 어느 한 패널에 넣으면 반쪽만 보인다. */
+function renderCompare(){
+  var box = $('resC');
+  if (!box) return;
+  var S = A.S;
+  var readR = (S.raw && window.BS_SENTENCES[S.raw.idx] &&
+               window.BS_SENTENCES[S.raw.idx].kind === 'long') ? S.raw.r : null;
+  var freeR = F.raw || null;
+
+  /* 빠진 쪽을 각각 말한다. 「둘 다 없다」로 뭉뚱그리면 짧은 문장을 이미 읽은 사람에게
+     녹음한 적 없다고 말하게 된다 — 자기가 방금 한 일을 부정당하는 화면이다. */
+  if (!readR || !freeR){
+    var miss = '';
+    if (!readR) miss += '<div class="note">' + L(U.cmpNeedRead) + '</div>';
+    if (!freeR) miss += '<div class="note">' + L(U.cmpNeedFree) + '</div>';
+    box.innerHTML = miss;
+    return;
+  }
+
+  var c = A.modeCompare(readR, freeR);
+  var a = c.read, b = c.free;
+  var few = a.n < A.CMP_MIN_N || b.n < A.CMP_MIN_N;
+
+  var html = '<table class="ph"><tr>' +
+    '<th>' + L(U.cmpMetric) + '</th>' +
+    '<th>' + L(U.cmpRead) + ' <em>(' + a.n + ' ' + L(U.cmpPhrases) + ')</em></th>' +
+    '<th>' + L(U.cmpFree) + ' <em>(' + b.n + ' ' + L(U.cmpPhrases) + ')</em></th>' +
+    '<th>' + L(U.cmpDiff) + '</th><th>d</th><th>p</th><th>' + L(U.cmpVerdict) + '</th></tr>';
+
+  var NAME = { dur:U.cmpDur, rate:U.cmpRate, range:U.cmpRange, f0st:U.cmpF0 };
+  var VERD = { clear:U.cmpVClear, floor:U.cmpVFloor, sepShort:U.cmpVSep,
+               unclear:U.cmpVUnclear, need:U.cmpVNeed, control:U.cmpVControl };
+  var f0diff = null;
+
+  c.rows.forEach(function(row){
+    var m = row.m, st = row.st, d = m.dec;
+    if (m.key === 'f0st' && st) f0diff = st.diff;
+    var cell = function(mean, sd){
+      if (mean == null) return '—';
+      return mean.toFixed(d) + (sd == null ? '' : ' <em>±' + sd.toFixed(d) + '</em>');
+    };
+    /* diff = 자유 발화 − 정독. repStats가 meanB − meanA를 주므로 그대로 쓴다. */
+    html += '<tr><td>' + L(NAME[m.key]) + ' <em>' + L(m.unit) + '</em></td>' +
+      '<td>' + (st ? cell(st.meanA, st.sdA) : '—') + '</td>' +
+      '<td>' + (st ? cell(st.meanB, st.sdB) : '—') + '</td>' +
+      '<td>' + (st ? (st.diff >= 0 ? '+' : '') + st.diff.toFixed(d) : '—') + '</td>' +
+      '<td>' + (st && st.d != null ? Math.abs(st.d).toFixed(2) : '—') + '</td>' +
+      /* 0.0000 은 「p가 0」처럼 읽힌다. 정확검정에 0은 없으므로 하한을 명시한다. */
+      '<td>' + (m.test && st && st.mw
+                 ? (st.mw.p < 0.0001 ? '&lt;0.0001' : st.mw.p.toFixed(4)) : '—') + '</td>' +
+      /* 대조군은 빨갛게 칠하지 않는다 — 검정을 안 한 것이지 나쁜 결과가 아니다. */
+      '<td' + (row.verdict === 'clear' || row.verdict === 'control' ? '' : ' class="bad"') + '>' +
+      L(VERD[row.verdict]) + '</td></tr>';
+  });
+  html += '</table>';
+
+  if (few) html += '<div class="warn">' + L(U.cmpFew) + '</div>';
+  if (a.skipped + b.skipped){
+    html += '<div class="note">' + (a.skipped + b.skipped) + ' ' + L(U.cmpSkip) + '</div>';
+  }
+
+  /* 대조군을 판정이 아니라 별도 문단으로 낸다. 여기가 지켜지면 위의 차이를
+     말하는 방식의 차이로 읽을 수 있고, 무너지면 위 전체가 잠정이 된다. */
+  if (f0diff != null){
+    var ok = Math.abs(f0diff) <= 2;
+    html += '<div class="' + (ok ? 'note' : 'warn') + '"><b>' +
+            L(ok ? U.cmpCtlOkT : U.cmpCtlBadT) + '</b> ' +
+            (f0diff >= 0 ? '+' : '') + f0diff.toFixed(2) + ' st — ' +
+            L(ok ? U.cmpCtlOk : U.cmpCtlBad) + '</div>';
+  }
+
+  html += '<div class="note"><b>' + L(U.cmpAlphaT) + '</b> ' + L(U.cmpAlpha) + '</div>';
+  html += '<div class="note"><b>' + L(U.cmpWhatT) + '</b> ' + L(U.cmpWhat) + '</div>';
+  box.innerHTML = html;
+}
+A.renderCompare = renderCompare;
+
 /* ---------- 녹음 배선 ---------- */
 function wire(o){
   var btn = $(o.btn), lvl = $(o.lvl), cvId = o.cv, capId = o.cap;
@@ -2605,6 +2806,7 @@ function wire(o){
       setTimeout(function(){
         try { o.analyze(pcm, sr); }
         catch(e){ $(o.res).innerHTML = '<div class="warn">' + (e && e.message ? e.message : 'error') + '</div>'; }
+        try { renderCompare(); } catch(e){}
         A.setMic('off');
       }, 30);
     }, function(){
@@ -2640,6 +2842,7 @@ function relabel(){
   if (!F.running) $('capB').textContent = $('capB').textContent || L(U.capIdle);
   A.repMsg('', '');
   A.paintAB();
+  renderCompare();
 }
 
 A.fillPicker();
