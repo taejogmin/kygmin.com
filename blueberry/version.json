@@ -1,7 +1,7 @@
 {
   "app": "blueberry-smoothie",
-  "version": "0.15",
-  "note": "회차 줄에 스파이크 교정 표시 (지움/접음)",
-  "index_sha256": "ccc4714b0837c279e7d76b982505bc24",
-  "index_bytes": 147716
+  "version": "0.16",
+  "note": "하강 추세 95% 신뢰구간 (구간이 0을 지나가면 방향 판정 보류)",
+  "index_sha256": "9a7d1a258ca163cb0017b350e68a85d4",
+  "index_bytes": 151195
 }

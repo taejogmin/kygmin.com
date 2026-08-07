@@ -1258,6 +1258,9 @@ window.BS_UI = {
   repSylMark:{en:'syl',kr:'음절'},
   repSpkDrop:{en:'drop',kr:'지움'},
   repSpkFold:{en:'fold',kr:'접음'},
+  declWide:{en:'The 95% interval crosses zero.',kr:'95% 구간이 0을 지나갑니다.'},
+  declWideWhy:{en:'With this many phrases and this much scatter between them, the direction of the drift is not established — the passage may have drifted down, up, or not at all. The slope above is still what was measured; it just cannot carry a claim about direction. More phrases or more evenly delivered ones would narrow this.',kr:'이 억양구 수와 이 정도 산포에서는 흐름의 방향이 정해지지 않습니다 — 내려갔을 수도, 올라갔을 수도, 아무 흐름이 없었을 수도 있어요. 위의 기울기는 실제로 잰 값이 맞지만, 방향에 대한 주장을 실을 수는 없습니다. 억양구가 더 많거나 더 고르게 읽으면 구간이 좁아집니다.'},
+  declFew:{en:'Fewer than four phrases — the slope is shown but its uncertainty cannot be estimated.',kr:'억양구가 4개 미만이라 기울기는 냈지만 그 불확실성은 잴 수 없습니다.'},
   repTakeOut:{en:'The takes marked in red were spoken at a noticeably different length from the rest of their own condition, or had fewer syllables segmented in them. This matters more than it looks. The final movement is measured across the last syllable, so when a take is hurried that syllable shortens and merges with the one before it, and the boundary detector can miss it altogether. The number is then measured over the wrong stretch of sound rather than merely measured imprecisely — which is why one hurried take lands far outside the others instead of a little outside. Nothing has been excluded. Look at these takes, and if they were hurried, clear that condition and record it again at the same pace as the rest. An even pace across every take buys you more than extra takes do.',kr:'빨갛게 표시된 회차는 같은 조건의 나머지 회차들과 길이가 뚜렷하게 다르거나, 음절이 더 적게 잡힌 회차예요. 보기보다 중요합니다. 문말 이동은 마지막 음절 구간 위에서 재기 때문에, 급하게 말한 회차는 그 음절이 짧아지면서 앞 음절과 붙고 경계 검출이 아예 놓칠 수 있어요. 그러면 값이 부정확하게 재진 게 아니라 애초에 다른 구간을 잰 게 됩니다 — 급한 회차 하나가 조금이 아니라 아주 멀리 떨어져 앉는 이유가 이거예요. 아무것도 제외하지 않았습니다. 확인해 보고 급했다면 그 조건을 비우고 나머지와 같은 속도로 다시 녹음하세요. 회차를 더 늘리는 것보다 모든 회차의 속도를 고르게 하는 쪽이 더 많이 벌어줍니다.'}
 };
 
@@ -2026,6 +2029,24 @@ function phraseMedians(r){
 }
 
 /* 최소제곱 기울기 (st / 억양구) */
+/* 95% 양측 t. 자유도 30 초과는 정규 근사로 충분하다. */
+var TCRIT = {2:4.303,3:3.182,4:2.776,5:2.571,6:2.447,7:2.365,8:2.306,9:2.262,10:2.228,
+             11:2.201,12:2.179,13:2.160,14:2.145,15:2.131,16:2.120,17:2.110,18:2.101,
+             19:2.093,20:2.086,21:2.080,22:2.074,23:2.069,24:2.064,25:2.060,26:2.056,
+             27:2.052,28:2.048,29:2.045,30:2.042};
+function tcrit(df){ return df <= 0 ? null : (df > 30 ? 1.960 : TCRIT[df]); }
+
+/* 하강 추세 = 억양구 중앙값의 최소제곱 기울기. 기울기만 내면 결론인 −0.37과
+   아무것도 아닌 −0.37이 화면에서 똑같이 생긴다. 그래서 잔차에서 표준오차를 내고
+   95% 구간까지 돌려준다. 구간이 0을 지나가면 방향을 주장할 수 없다는 뜻이다.
+
+   구간은 억양구가 4개 이상일 때만 낸다(df ≥ 2). 3개면 잔차 자유도가 1뿐이라
+   s 추정이 불안정하고, 세 점이 우연히 거의 일직선이면 구간이 0에 수렴해
+   근거 없는 확신을 만든다. 그럴 바에는 구간을 안 내는 게 맞다.
+
+   알려진 한계: 최소제곱 구간은 잔차 독립을 가정하는데 연속된 억양구는 호흡 그룹이나
+   문장 구조 때문에 상관돼 있을 수 있다. 그러면 SE가 과소평가되어 구간이 실제보다
+   좁아진다. n이 7 안팎이라 자기상관을 추정할 방법이 없으므로 보정하지 않고 문서화한다. */
 function slopeOf(ys){
   var xs = [], vs = [];
   ys.forEach(function(y, i){ if (y != null){ xs.push(i); vs.push(y); } });
@@ -2036,7 +2057,18 @@ function slopeOf(ys){
   mx /= n; my /= n;
   var num = 0, den = 0;
   for (i = 0; i < n; i++){ num += (xs[i]-mx)*(vs[i]-my); den += (xs[i]-mx)*(xs[i]-mx); }
-  return den > 0 ? num/den : null;
+  if (!(den > 0)) return null;
+  var b = num / den, a = my - b * mx, df = n - 2, sse = 0, e;
+  for (i = 0; i < n; i++){ e = vs[i] - (a + b * xs[i]); sse += e * e; }
+  var out = { b: b, n: n, df: df, se: null, lo: null, hi: null, sure: false };
+  var t = df >= 2 ? tcrit(df) : null;
+  if (t != null){
+    out.se = Math.sqrt(sse / df) / Math.sqrt(den);
+    out.lo = b - t * out.se;
+    out.hi = b + t * out.se;
+    out.sure = (out.hi < 0) || (out.lo > 0);
+  }
+  return out;
 }
 
 A.renderPassage = function(r, expect){
@@ -2068,7 +2100,8 @@ A.renderPassage = function(r, expect){
     }
     if (nC) contRise = nR / nC;
   }
-  var decl = slopeOf(phraseMedians(r));
+  var dec = slopeOf(phraseMedians(r));
+  var decl = dec ? dec.b : null;
   var endFin = r.finals[nP-1] || null;
   var rate = durSec > 0 ? nuclei.length / durSec : 0;
 
@@ -2081,7 +2114,11 @@ A.renderPassage = function(r, expect){
   html += '<div class="stat-grid">' +
     A.stat('phrases', nP, '') +
     A.stat('contRise', contRise==null?'—':Math.round(contRise*100), '%') +
-    A.stat('decl', decl==null?'—':(decl>=0?'+':'')+decl.toFixed(2), 'st/' + L({en:'phrase',kr:'억양구'})) +
+    A.stat('decl', decl==null ? '—' :
+             (decl>=0?'+':'') + decl.toFixed(2) +
+             (dec.lo != null ? ' <em>(' + (dec.lo>=0?'+':'') + dec.lo.toFixed(2) + ' ~ ' +
+                               (dec.hi>=0?'+':'') + dec.hi.toFixed(2) + ')</em>' : ''),
+           'st/' + L({en:'phrase',kr:'억양구'})) +
     A.stat('finalMove', endFin ? A.deltaCell(endFin.delta) : '—', 'st', finBad) +
     A.stat('contour', endFin ? A.typeTag(endFin.type) : '—', '', finBad) +
     A.stat('range', range.toFixed(1), 'st') +
@@ -2114,6 +2151,12 @@ A.renderPassage = function(r, expect){
     en:'Both long passages repeat one frame over and over, so the phrase list above is closer to several measurements of the same thing than to several different ones. Declination is the least-squares slope of those phrase medians; a negative value means your pitch drifted down across the passage. That drift cannot be measured from a single short sentence at all.',
     kr:'긴 지문은 둘 다 같은 틀을 계속 반복하기 때문에, 위의 억양구 목록은 서로 다른 여러 개의 측정이라기보다 같은 것을 여러 번 잰 값에 가깝습니다. 하강 추세는 그 억양구 중앙값들의 최소제곱 기울기예요 — 음수면 지문을 읽는 동안 음높이가 아래로 흘렀다는 뜻입니다. 이 흐름은 짧은 문장 하나로는 아예 잴 수 없어요.'}) + '</div>';
 
+  /* 구간이 0을 지나가면 숫자를 지우지 않고 판정만 막는다. v0.4의 |Δ|>12 처리와 같은 계열. */
+  if (dec && dec.lo == null){
+    html += '<div class="note">' + L(U.declFew) + '</div>';
+  } else if (dec && !dec.sure){
+    html += '<div class="note"><b>' + L(U.declWide) + '</b> ' + L(U.declWideWhy) + '</div>';
+  }
   html += A.howBlock(['phrases','contRise','decl','finalMove','contour','range','rate','dur','f0']);
   $('resA').innerHTML = html;
 
