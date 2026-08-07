@@ -563,8 +563,31 @@ VR.SMEAR_SEC = 0.030;
    ±0.5 대역은 바로 그 비브라토를 잘라내고 있었다. 우리가 안 하겠다고 한 바로 그 짓이다.
 
    대신 대역이 넓어지면서 생기는 구멍은 endReason 으로 막는다 — 아래 참조. */
-VR.LOOSE  = { minMs:300, bandSt:0.75, minConf:0.45, dbFloor:22, maxDrift:1.20, maxDbSd:null, noBandEnd:false };
-VR.STRICT = { minMs:600, bandSt:0.75, minConf:0.60, dbFloor:14, maxDrift:1.00, maxDbSd:6.0, noBandEnd:true };
+/* 실측 2회차(2026-08-07)에서 `noBandEnd` 를 뺐다. 완전히 틀린 장치였다.
+
+   **이 절차는 연속이다.** 붙잡고 → 바로 다음 음으로 미끄러지고 → 다시 붙잡는다.
+   사이에 무음이 없다. 그래서 유지 구간은 거의 전부 「대역을 못 버텨서」 끝난다 —
+   사용자가 다음 계단으로 옮겨갔기 때문이다. 소리가 멎어서 끝나는 건 마지막 음 하나뿐이다.
+   실측에서 여섯 구간 중 다섯이 `band` 로 끝났고, 그래서 안정 음역이 0개가 됐다.
+
+   내가 이걸 못 본 이유가 분명하다: 회귀 시험의 계단 사이에 200 ms 무음을 넣어놨다.
+   실제로는 일어나지 않는 일이다. **시험이 비현실적이면 통과해도 아무것도 보증하지 못한다.** */
+VR.LOOSE  = { minMs:300, bandSt:0.75, minConf:0.45, dbFloor:22, maxDrift:1.20, maxDbSd:null };
+VR.STRICT = { minMs:600, bandSt:0.75, minConf:0.60, dbFloor:14, maxDrift:0.60, maxDbSd:6.0 };
+
+/* 표류를 구간의 **가운데 70%** 에서 잰다. 양 끝 15% 씩을 버린다.
+
+   버리는 이유: 한 유지 구간은 앞 계단에서 미끄러져 들어오는 꼬리에서 시작해서
+   다음 계단으로 미끄러져 나가는 꼬리에서 끝난다. 그 꼬리까지 넣고 기울기를 재면
+   **붙잡고 있던 동안이 아니라 옮겨가는 동안을 재게 된다.**
+
+   실측형 신호(실제 처짐 −0.15 st/s)에서:
+     전체 구간으로 재면  −0.41 ~ −0.74  ← 글리산도 0.82 와 겹친다
+     가운데 70% 로 재면  −0.06 ~ −0.24  ← 참값을 되찾고 3~4배로 갈린다
+   균일한 글리산도는 어디를 잘라도 기울기가 같으므로 0.82 그대로다.
+   그래서 이 하나로 「붙잡음」과 「미끄러짐」이 갈린다 — endReason 이 하려던 일을
+   이쪽이 제대로 한다. */
+VR.TRIM = 0.15;
 
 /* 에너지 기준을 유성 프레임의 90번째 백분위로 잡는다. 전체 최댓값이 아니다.
 
@@ -626,13 +649,18 @@ VR.holds = function(frames, T, maxDb, hopSec){
       var seg = frames.slice(i, j), ms_ = mid.slice(i, j);
       var xs = [], k;
       for (k = 0; k < len; k++) xs.push(k * hopSec);
+      /* 가운데 70% */
+      var cut = Math.floor(len * VR.TRIM), tx = [], ty = [];
+      for (k = cut; k < len - cut; k++){ tx.push(xs[k]); ty.push(ms_[k]); }
       var dbs = seg.map(function(f){ return f.db; });
       var confs = seg.map(function(f){ return f.conf; });
       var dbMed = BS.medianOf(dbs);
       var h = {
         i0:i, i1:j-1, ms:ms,
         midiExact: BS.medianOf(ms_),
-        drift: lsq(xs, ms_),                    /* st/s. 음수 = 흘러내림 */
+        /* 판정에 쓰는 값은 가운데 70% 의 기울기다 */
+        drift: tx.length >= 4 ? lsq(tx, ty) : lsq(xs, ms_),
+        driftRaw: lsq(xs, ms_),                 /* 진단용 — 전환 꼬리까지 포함한 값 */
         band: hi - lo,
         dbMed: dbMed, dbSd: sd(dbs), conf: BS.medianOf(confs),
         endReason: why
