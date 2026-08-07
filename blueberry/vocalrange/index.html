@@ -553,8 +553,36 @@ VR.SMEAR_SEC = 0.030;
    (0.82 st/s 짜리 글리산도가 실제로 통과했다). 구분하려면 에너지·conf 의 동반
    하강까지 봐야 하는데 v1 에서는 하지 않는다. 새는 곳이 최대 음역(부차 표시)에
    한정되고 — 카드·절대 상한·환산표는 전부 안정 음역에서 나오므로 — 주장은 안 샌다. */
-VR.LOOSE  = { minMs:300, bandSt:0.5, minConf:0.45, dbFloor:22, maxDrift:1.20, maxDbSd:null };
-VR.STRICT = { minMs:600, bandSt:0.5, minConf:0.60, dbFloor:14, maxDrift:0.60, maxDbSd:4.5 };
+/* 2026-08-07 실측 1회차 이후 개정. 합성 사인파는 실제 목소리보다 터무니없이 안정적이었다.
+   실측에서 「분명히 붙잡은」 음의 값: 대역 0.78·0.94 st(상한 1.0에 거의 닿음),
+   표류 0.64·−0.95 st/s. 합성 비브라토는 표류가 0.06 이었다. 한 자릿수가 달랐다.
+
+   **대역을 넓힌 이유는 관대해지려는 게 아니라 설계 결함을 고치려는 것이다.**
+   max−min 대역 판정은 사실상 잔차 판정이다. 그런데 §5-4에서 우리는 잔차가 아니라
+   표류에 벌점을 주기로 했다 — 비브라토가 큰 사람, 즉 잘 부르는 사람을 벌하지 않으려고.
+   ±0.5 대역은 바로 그 비브라토를 잘라내고 있었다. 우리가 안 하겠다고 한 바로 그 짓이다.
+
+   대신 대역이 넓어지면서 생기는 구멍은 endReason 으로 막는다 — 아래 참조. */
+VR.LOOSE  = { minMs:300, bandSt:0.75, minConf:0.45, dbFloor:22, maxDrift:1.20, maxDbSd:null, noBandEnd:false };
+VR.STRICT = { minMs:600, bandSt:0.75, minConf:0.60, dbFloor:14, maxDrift:1.00, maxDbSd:6.0, noBandEnd:true };
+
+/* 에너지 기준을 유성 프레임의 90번째 백분위로 잡는다. 전체 최댓값이 아니다.
+
+   실측에서 이게 결정적이었다: 최댓값이 −9.8 dB 였는데 유성 프레임 중앙값이 −36.2 였다.
+   낙차 26.4 dB — 느슨 문턱(22)을 넘는다. 즉 **노래한 프레임의 절반 이상이 에너지 조건에서
+   탈락했다.** 원인은 목소리가 작아서가 아니라, 팝이나 숨소리 같은 한 프레임짜리 순간이
+   기준을 통째로 끌어올렸기 때문이다. 최댓값 하나에 전 구간의 판정을 매다는 구조였다.
+
+   p90 은 「이 사람이 노래할 때의 큰 소리」에 가깝고 순간값에 흔들리지 않는다.
+   §5-3 이 「첫 음에서 마이크 기준 에너지를 얻는다」고 한 것도 첨두값이 아니라
+   보통 발성 크기를 뜻했다. */
+function energyRef(frames){
+  var v = [], i;
+  for (i = 0; i < frames.length; i++) if (frames[i].f0 > 0) v.push(frames[i].db);
+  if (!v.length) return null;
+  v.sort(function(a, b){ return a - b; });
+  return v[Math.min(v.length - 1, Math.floor(v.length * 0.90))];
+}
 
 function lsq(xs, ys){          /* 최소제곱 기울기 */
   var n = xs.length, i, mx = 0, my = 0;
@@ -585,10 +613,12 @@ VR.holds = function(frames, T, maxDb, hopSec){
   var mid = frames.map(function(f){ return f.f0 > 0 ? VR.midiOf(f.f0) : null; });
   while (i < n){
     if (mid[i] == null || frames[i].conf < T.minConf){ i++; continue; }
-    var lo = mid[i], hi = mid[i], j = i + 1;
-    while (j < n && mid[j] != null && frames[j].conf >= T.minConf){
+    var lo = mid[i], hi = mid[i], j = i + 1, why = 'eof';
+    while (j < n){
+      if (mid[j] == null || frames[j].conf < T.minConf){ why = 'gate'; break; }
       var nlo = Math.min(lo, mid[j]), nhi = Math.max(hi, mid[j]);
-      if (nhi - nlo > band) break;
+      /* 대역을 못 버텨서 끝났는가, 소리가 끝나서 끝났는가. 이 구분이 중요하다. */
+      if (nhi - nlo > band){ why = 'band'; break; }
       lo = nlo; hi = nhi; j++;
     }
     var len = j - i, ms = ((len - 1) * hopSec - VR.SMEAR_SEC) * 1000;
@@ -604,7 +634,8 @@ VR.holds = function(frames, T, maxDb, hopSec){
         midiExact: BS.medianOf(ms_),
         drift: lsq(xs, ms_),                    /* st/s. 음수 = 흘러내림 */
         band: hi - lo,
-        dbMed: dbMed, dbSd: sd(dbs), conf: BS.medianOf(confs)
+        dbMed: dbMed, dbSd: sd(dbs), conf: BS.medianOf(confs),
+        endReason: why
       };
       h.midi = Math.round(h.midiExact);
       h.hz = VR.hzOf(h.midiExact);
@@ -613,7 +644,14 @@ VR.holds = function(frames, T, maxDb, hopSec){
       var okDb    = maxDb == null || dbMed >= maxDb - T.dbFloor;
       var okDrift = T.maxDrift == null || Math.abs(h.drift) <= T.maxDrift;
       var okDbSd  = T.maxDbSd  == null || h.dbSd <= T.maxDbSd;
-      if (okDb && okDrift && okDbSd) out.push(h);
+      /* **대역을 saturate 하면서 끝난 구간은 안정 음역에 넣지 않는다.**
+
+         느린 글리산도와 처지는 한계음은 표류 값만 봐서는 같게 생겼다 (§5-5 (3)).
+         그런데 끝나는 방식이 다르다 — 글리산도는 계속 흘러서 **대역 끝에 부딪혀** 끊기고,
+         붙잡은 음은 숨이 다해서, 즉 소리가 멎어서 끝난다. 그 차이를 여기서 쓴다.
+         이게 있어서 대역을 넓히면서도 안정 음역에 미끄러짐이 새지 않는다. */
+      var okEnd   = !T.noBandEnd || h.endReason !== 'band';
+      if (okDb && okDrift && okDbSd && okEnd) out.push(h);
       i = j;
     } else {
       i = i + 1;
@@ -645,7 +683,7 @@ VR.measure = function(pcm, sr, opts){
   });
   var hopSec = (t.hop / 16000);
   var voiced = frames.filter(function(f){ return f.f0 > 0; });
-  var maxDb = frames.length ? Math.max.apply(null, frames.map(function(f){ return f.db; })) : null;
+  var maxDb = energyRef(frames);
 
   /* skipEnergy: 회차 도중의 라이브 판정용. 그 시점에는 녹음 전체의 최댓값을
      아직 모르므로, 모르는 기준으로 판정하는 대신 에너지 조건을 아예 뺀다.
@@ -946,13 +984,14 @@ var PACE_MS   = 1200;   /* 진행 바 한 칸 */
 var MAX_STEPS = 20;     /* 회차당 계단 상한 — 안전장치 */
 var MAX_SEC   = 45;     /* 회차당 녹음 상한 — 안전장치 */
 var MISS_STOP = 2;      /* 연속 실패 몇 개에서 자동 종료. 한 계단은 실수일 수 있어 둘로 잡는다 */
+var WARMUP    = 8;      /* 첫 음이 잡히기 전까지 봐주는 칸 수 — 그 뒤로는 포기한다 */
 
 var S = {
   phase:'idle',          /* idle | rec | between | done */
   dir:null,              /* 'down' | 'up' */
   live:new window.VR_Live(),
   pcms:[],               /* 완료된 회차들의 PCM. 재시도분도 버리지 않고 더한다 */
-  chips:[], miss:0, steps:0,
+  chips:[], miss:0, steps:0, got:false,
   retried:{down:false, up:false},
   endedEarly:false,
   raf:null, t0:0, lastPace:0,
@@ -1012,7 +1051,7 @@ function say(kind, title, body){
 function startPass(dir){
   if (!window.VR_Rec.supported()){ say('warn', '', L(U.micFail)); return; }
   S.dir = dir; S.phase = 'rec';
-  S.live.reset(); S.chips = []; S.miss = 0; S.steps = 0; S.endedEarly = false;
+  S.live.reset(); S.chips = []; S.miss = 0; S.steps = 0; S.endedEarly = false; S.got = false;
   $('msg').innerHTML = '';
   paintStage(); paintChips();
   setMic('rec');
@@ -1080,13 +1119,20 @@ function judgeStep(){
     var m = VR.measure(seg, 16000, { skipEnergy:true });
     if (m.loose.length) hit = m.loose[m.loose.length - 1];
   }
-  if (hit){ S.chips.push({ note:hit.note }); S.miss = 0; }
+  if (hit){ S.chips.push({ note:hit.note }); S.miss = 0; S.got = true; }
   else { S.chips.push({ miss:true }); S.miss++; }
   S.steps++;
   paintChips();
   paintStage();
 
-  if (S.miss >= MISS_STOP){ S.endedEarly = true; window.VR_Rec.stop(); return; }
+  /* **첫 음이 잡히기 전의 실패는 세지 않는다.**
+     녹음 시작과 동시에 페이스 바가 돌기 시작하므로, 사용자가 숨을 고르고 소리를 내기까지의
+     한두 칸은 반드시 실패로 찍힌다. 그걸 「연속 두 계단 실패」로 세면 회차가 3초 만에 끝난다.
+     실제로 그렇게 끝났다 — 실측 1회차의 네 회차가 전부 평균 3.6초였다.
+     「연속 두 계단이 실패하면」(§5-3)은 계단에 올라선 다음의 이야기다. 아직 안 올라섰으면
+     계단을 세는 것 자체가 말이 안 된다. */
+  if (S.got && S.miss >= MISS_STOP){ S.endedEarly = true; window.VR_Rec.stop(); return; }
+  if (!S.got && S.steps >= WARMUP){ S.endedEarly = true; window.VR_Rec.stop(); return; }
   if (S.steps >= MAX_STEPS) window.VR_Rec.stop();
 }
 
