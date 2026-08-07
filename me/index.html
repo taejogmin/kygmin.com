@@ -76,6 +76,16 @@ tr.tot td{border-top:2px solid var(--ink);border-bottom:none;font-weight:600;}
 .glist b{font-family:var(--arch);font-size:14px;text-transform:uppercase;letter-spacing:-.2px;}
 .glist span{font-size:14px;color:#4a4a4a;}
 .glist a{border-bottom:2px solid var(--green);font-weight:600;font-size:13.5px;white-space:nowrap;}
+.vrmain{border:3px solid var(--ink);background:#fff;padding:15px 17px;margin-top:12px;}
+.vrmain>b{display:block;font-family:var(--mono);font-size:11px;font-weight:600;color:var(--green-deep);letter-spacing:1px;}
+.vrmain>span{display:block;font-family:var(--arch);font-weight:900;font-size:clamp(19px,4vw,30px);line-height:1.15;letter-spacing:-1px;margin-top:3px;}
+.vrmain>span em{font-style:normal;font-family:var(--mono);font-size:.45em;color:#666;font-weight:400;}
+.vrmain>i{display:block;font-style:normal;font-size:13.5px;color:#444;margin-top:7px;}
+.vrsub{font-size:13.5px;color:#444;margin-top:10px;}
+.vrspread{border-left:4px solid var(--green);background:#fff;padding:10px 14px;font-size:13.5px;margin-top:12px;}
+.vrspread b{font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--green-deep);}
+.vrspread i{display:block;font-style:normal;color:#555;margin-top:5px;line-height:1.6;}
+.vrstale{font-size:12.5px;color:#777;margin-top:9px;}
 .note{border-left:4px solid var(--green);background:#fff;padding:12px 16px;font-size:14.5px;margin-top:22px;}
 .foot{margin-top:30px;font-family:var(--mono);font-size:12.5px;color:#666;}
 </style>
@@ -251,8 +261,40 @@ var CARDS = [
       {k:'best',       l:{en:'Best',kr:'최고 점수'},  f:F.int},
       {k:'avg_score',  l:{en:'Avg score',kr:'평균 점수'}, f:F.int},
       {k:'beat_house', l:{en:'Beat house',kr:'하우스 격파'}, f:F.int, sum:true}
-    ] }
+    ] },
+  /* 이 카드만 모양이 다르다. 게임은 「난이도 × 열」 표인데 음역은 표가 아니라 값 몇 개다.
+     kind:'range' 로 갈라서 별도 렌더를 태운다. */
+  { key:'vr', kind:'range', rpc:'vr_my_range', del:'vr_delete_mine', href:'/blueberry/vocalrange/',
+    label:{en:'VOCAL RANGE', kr:'음역대'},
+    blurb:{en:'The range you can hold, and how much it moves between sessions.',
+           kr:'붙잡을 수 있는 음역, 그리고 그게 회차마다 얼마나 움직이는지.'} }
 ];
+
+/* ---------- 음 이름 ----------
+   vocalrange 의 VR.noteOf 와 **같은 규칙**이다. 이 페이지는 그 파일을 불러오지 않으므로
+   사본을 둔다. 어긋나면 같은 숫자가 두 페이지에서 다른 이름으로 보인다 —
+   metest.js 가 440 Hz → A4 → 2옥타브 라 를 두 곳에서 같은 값으로 못박는다.
+   한국식 N옥타브 = 국제 표기 N+2. 번호는 도(C)에서 바뀐다. */
+var SCI = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+var KRN = ['도','도#','레','레#','미','파','파#','솔','솔#','라','라#','시'];
+function noteOf(midi){
+  if (midi == null) return null;
+  var m = Math.round(midi), pc = ((m % 12) + 12) % 12, oct = Math.floor(m / 12) - 1;
+  return { midi:m, sci: SCI[pc] + oct, kr: (oct - 2) + '옥타브 ' + KRN[pc],
+           hz: 440 * Math.pow(2, (m - 69) / 12) };
+}
+function noteBig(n){ return n ? (window.APP_LANG === 'kr' ? n.kr : n.sci) : '—'; }
+function noteSub(n){
+  if (!n) return '';
+  return window.APP_LANG === 'kr' ? n.sci + ' · ' + Math.round(n.hz) + ' Hz'
+                                  : Math.round(n.hz) + ' Hz';
+}
+function spanText(st){
+  var n = Math.round(st), o = Math.floor(n / 12), s = n - o * 12;
+  if (window.APP_LANG === 'kr') return o ? (s ? o + '옥타브 ' + s + '반음' : o + '옥타브') : s + '반음';
+  return o ? (o + (o === 1 ? ' octave' : ' octaves') + (s ? ' ' + s + (s === 1 ? ' semitone' : ' semitones') : ''))
+           : s + (s === 1 ? ' semitone' : ' semitones');
+}
 
 var U = {
   guestLead:{en:'Sign in to see your own records here. This is what accumulates:',
@@ -266,6 +308,26 @@ var U = {
   none:{en:'Nothing here yet.', kr:'아직 기록이 없어요.'},
   noneGo:{en:'Go play a round →', kr:'한 판 해보러 가기 →'},
   total:{en:'TOTAL', kr:'합계'},
+  times:{en:'readings', kr:'회'},
+  vrStable:{en:'STABLE RANGE — LATEST', kr:'안정 음역 — 최근'},
+  vrCeil:{en:'Ceiling', kr:'절대 상한'},
+  vrSpan:{en:'width', kr:'폭'},
+  vrMax:{en:'Maximum range', kr:'최대 음역'},
+  vrHead:{en:'headroom', kr:'여유'},
+  vrNoStable:{en:'The latest reading had nothing clear the strict threshold, so there is no stable range to show for it.',
+              kr:'최근 회차에서 엄격 기준을 통과한 음이 없어서 보여줄 안정 음역이 없어요.'},
+  vrSpread:{en:'ACROSS READINGS', kr:'회차 간'},
+  vrTop:{en:'top note', kr:'최고음'},
+  vrMed:{en:'median', kr:'중앙값'},
+  vrOf:{en:' readings', kr:'회'},
+  vrSpreadWhy:{en:'This is the part one reading cannot give you. The gap between the lowest and highest top note you have measured is how much the instrument and your voice move together — read your single readings against that width, not as an exact number.',
+               kr:'한 회차로는 절대 얻을 수 없는 값이에요. 지금까지 잰 최고음의 최저와 최고 사이 간격이, 측정기와 당신의 목소리가 함께 움직이는 폭입니다. 한 번의 값은 정확한 숫자가 아니라 이 폭 안에서 읽으세요.'},
+  vrSpreadTight:{en:'Every reading so far landed on the same top note. That is a stable measurement — rarer than it sounds.',
+                 kr:'지금까지 모든 회차가 같은 최고음에 떨어졌습니다. 안정된 측정이에요 — 들리는 것보다 드문 일입니다.'},
+  vrNeedMore:{en:'Three readings are needed before the spread between them means anything. Two points make a line, not a range.',
+              kr:'회차 간 퍼짐은 세 번은 재야 뜻이 생깁니다. 점 두 개는 선이지 범위가 아니에요.'},
+  vrStale:{en:'earlier readings were taken with different thresholds and are kept out of the numbers above — mixing them would compare values that were never measured the same way.',
+           kr:'개 회차는 다른 문턱으로 재서 위 숫자에서 빼뒀습니다 — 섞으면 애초에 같은 방식으로 재지 않은 값을 비교하게 돼요.'},
   totGames:{en:'games', kr:'판'},
   desk:{en:'Desk', kr:'난이도'},
   failed:{en:'Could not load this one. The rest of the page is unaffected.',
@@ -303,6 +365,51 @@ function deskName(c, d){
   if (d == null || d === '') return '—';
   var m = c.desks && c.desks[d];
   return m ? L(m) : String(d).toUpperCase();
+}
+
+/* ---------- 음역 카드 ----------
+   한 회차만 보여주면 안 된다. 실측에서 같은 사람이 몇 분 간격으로 잰 최고음이
+   A3 / D4 / B4 였다. 그래서 최근 회차와 **회차 간 퍼짐**을 같이 낸다.
+   퍼짐은 회차 3개 이상일 때만 — 2개로 낸 범위는 범위가 아니다. */
+function rangeBody(c, r){
+  var lo = noteOf(r.stable_lo), hi = noteOf(r.stable_hi);
+  var h = '';
+
+  if (hi){
+    var ceil = noteOf(r.stable_hi + 6);
+    h += '<div class="vrmain">' +
+         '<b>' + esc(L(U.vrStable)) + '</b>' +
+         '<span>' + esc(noteBig(lo)) + ' <em>' + esc(noteSub(lo)) + '</em> — ' +
+                    esc(noteBig(hi)) + ' <em>' + esc(noteSub(hi)) + '</em></span>' +
+         '<i>' + esc(L(U.vrCeil)) + ' <b>' + esc(noteBig(ceil)) + '</b> · ' +
+                 esc(L(U.vrSpan)) + ' ' + esc(spanText(r.stable_hi - r.stable_lo)) + '</i>' +
+         '</div>';
+  } else {
+    h += '<p class="empty">' + esc(L(U.vrNoStable)) + '</p>';
+  }
+
+  var mlo = noteOf(r.max_lo), mhi = noteOf(r.max_hi);
+  h += '<p class="vrsub">' + esc(L(U.vrMax)) + ' <b>' + esc(noteBig(mlo)) + ' — ' +
+       esc(noteBig(mhi)) + '</b>' +
+       (r.headroom_st != null ? ' · ' + esc(L(U.vrHead)) + ' ' + esc(spanText(r.headroom_st)) : '') +
+       '</p>';
+
+  if (r.spread_ready && r.n_hi >= 3 && r.hi_min != null){
+    var same = r.hi_min === r.hi_max;
+    h += '<div class="vrspread"><b>' + esc(L(U.vrSpread)) + '</b> ' +
+         esc(L(U.vrTop)) + ' ' + esc(noteBig(noteOf(r.hi_min))) +
+         ' – ' + esc(noteBig(noteOf(r.hi_max))) +
+         ' (' + esc(L(U.vrMed)) + ' ' + esc(noteBig(noteOf(r.hi_med))) + ', ' +
+         r.n_hi + esc(L(U.vrOf)) + ')' +
+         '<i>' + esc(L(same ? U.vrSpreadTight : U.vrSpreadWhy)) + '</i></div>';
+  } else {
+    h += '<div class="vrspread"><i>' + esc(L(U.vrNeedMore)) + '</i></div>';
+  }
+
+  if (r.n_stale > 0){
+    h += '<p class="vrstale">' + r.n_stale + ' ' + esc(L(U.vrStale)) + '</p>';
+  }
+  return h;
 }
 
 /* ---------- 표 ---------- */
@@ -348,8 +455,15 @@ function paintCard(c, state){
   } else if (!state.rows || !state.rows.length){
     body = '<p class="empty">' + esc(L(U.none)) + ' <a href="' + c.href + '">' +
            esc(L(U.noneGo)) + '</a></p>';
+  } else if (c.kind === 'range'){
+    var r = state.rows[0];
+    extra = '<span class="tot">' + Number(r.n_readings || 0).toLocaleString() + ' ' +
+            esc(L(U.times)) + '</span>';
+    body = rangeBody(c, r) +
+      '<div class="actions"><button class="del" data-key="' + c.key + '">' +
+      esc(state.delMsg || L(U.del)) + '</button></div>';
   } else {
-    var n = state.rows.reduce(function(a, r){ return a + (Number(r.games) || 0); }, 0);
+    var n = state.rows.reduce(function(a, r2){ return a + (Number(r2.games) || 0); }, 0);
     extra = '<span class="tot">' + n.toLocaleString() + ' ' + esc(L(U.totGames)) + '</span>';
     body = table(c, state.rows) +
       '<div class="actions"><button class="del" data-key="' + c.key + '">' +
