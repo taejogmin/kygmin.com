@@ -209,6 +209,10 @@ var F = {
 var CARDS = [
   { key:'np', rpc:'np_my_record', del:'np_delete_mine', href:'/nine-positions/',
     label:{en:'NINE POSITIONS', kr:'나인 포지션'},
+    /* DB의 difficulty는 내부 키일 뿐 게임이 화면에 쓰는 이름이 아니다.
+       2026-08-07 라이브에서 직접 읽은 값. 게임이 난이도 이름을 바꾸면 여기도 바꿔야 한다. */
+    desks:{ easy:{en:'Intern',kr:'인턴'}, normal:{en:'Analyst',kr:'애널리스트'},
+            hard:{en:'Managing Director',kr:'전무'}, market:{en:'Mr. Market',kr:'미스터 마켓'} },
     blurb:{en:'Wins, losses and draws against the AI, by desk.',
            kr:'AI와의 대결 승·패·무를 난이도별로.'},
     cols:[
@@ -222,6 +226,8 @@ var CARDS = [
     ] },
   { key:'ip', rpc:'ip_my_record', del:'ip_delete_mine', href:'/indian-poker/',
     label:{en:'INDIAN POKER', kr:'인디안 포커'},
+    desks:{ intern:{en:'Rookie',kr:'초짜'}, analyst:{en:'Player',kr:'선수'},
+            md:{en:'Sharper',kr:'타짜'}, market:{en:"Laplace's Demon",kr:'라플라스의 악마'} },
     blurb:{en:'Results and cumulative chips, by desk.',
            kr:'승·패·무와 누적 칩을 난이도별로.'},
     cols:[
@@ -234,6 +240,8 @@ var CARDS = [
     ] },
   { key:'pyr', rpc:'pyr_my_record', del:'pyr_delete_mine', href:'/pyrrhus-co/',
     label:{en:'PYRRHUS & CO.', kr:'피로스 옥션 하우스'},
+    /* 피로스는 화면에서도 EASY/NORMAL/HARD/BRUTAL 그대로 쓴다 — 옮길 이름이 없다. */
+    desks:null,
     blurb:{en:'Placings and scores across auctions. Beating the house is meant to be rare.',
            kr:'경매별 등수와 점수. 하우스를 이기는 건 원래 드문 일입니다.'},
     cols:[
@@ -288,13 +296,22 @@ function renderGuest(){
   $('cards').innerHTML = '';
 }
 
+/* 난이도 이름. DB 값은 내부 키이고 게임이 화면에 쓰는 이름은 따로다.
+   지도에 없는 값은 원값을 그대로 보여준다 — 게임이 난이도를 새로 추가했을 때
+   빈칸이 되는 대신 눈에 띄게 남아서 지도를 고치라는 신호가 된다. */
+function deskName(c, d){
+  if (d == null || d === '') return '—';
+  var m = c.desks && c.desks[d];
+  return m ? L(m) : String(d).toUpperCase();
+}
+
 /* ---------- 표 ---------- */
 function table(c, rows){
   var h = '<div class="tblwrap"><table><thead><tr><th>' + esc(L(U.desk)) + '</th>';
   c.cols.forEach(function(col){ h += '<th>' + esc(L(col.l)) + '</th>'; });
   h += '</tr></thead><tbody>';
   rows.forEach(function(r){
-    h += '<tr><td>' + esc(String(r.difficulty || '—').toUpperCase()) + '</td>';
+    h += '<tr><td>' + esc(deskName(c, r.difficulty)) + '</td>';
     c.cols.forEach(function(col){
       h += '<td>' + (col.calc ? esc(col.calc(r)) : col.f(r[col.k])) + '</td>';
     });
