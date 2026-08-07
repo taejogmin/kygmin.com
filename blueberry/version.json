@@ -1,7 +1,7 @@
 {
   "app": "blueberry-smoothie",
-  "version": "0.14",
-  "note": "음높이 스파이크 제거 (BS.despike)",
-  "index_sha256": "6b9c759e5d0ea223e9e430bb2964b0fb",
-  "index_bytes": 146425
+  "version": "0.15",
+  "note": "회차 줄에 스파이크 교정 표시 (지움/접음)",
+  "index_sha256": "ccc4714b0837c279e7d76b982505bc24",
+  "index_bytes": 147716
 }

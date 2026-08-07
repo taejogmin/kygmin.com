@@ -1256,6 +1256,8 @@ window.BS_UI = {
   repSyl:{en:' syl',kr:'음절'},
   repLenMark:{en:'len',kr:'길이'},
   repSylMark:{en:'syl',kr:'음절'},
+  repSpkDrop:{en:'drop',kr:'지움'},
+  repSpkFold:{en:'fold',kr:'접음'},
   repTakeOut:{en:'The takes marked in red were spoken at a noticeably different length from the rest of their own condition, or had fewer syllables segmented in them. This matters more than it looks. The final movement is measured across the last syllable, so when a take is hurried that syllable shortens and merges with the one before it, and the boundary detector can miss it altogether. The number is then measured over the wrong stretch of sound rather than merely measured imprecisely — which is why one hurried take lands far outside the others instead of a little outside. Nothing has been excluded. Look at these takes, and if they were hurried, clear that condition and record it again at the same pace as the rest. An even pace across every take buys you more than extra takes do.',kr:'빨갛게 표시된 회차는 같은 조건의 나머지 회차들과 길이가 뚜렷하게 다르거나, 음절이 더 적게 잡힌 회차예요. 보기보다 중요합니다. 문말 이동은 마지막 음절 구간 위에서 재기 때문에, 급하게 말한 회차는 그 음절이 짧아지면서 앞 음절과 붙고 경계 검출이 아예 놓칠 수 있어요. 그러면 값이 부정확하게 재진 게 아니라 애초에 다른 구간을 잰 게 됩니다 — 급한 회차 하나가 조금이 아니라 아주 멀리 떨어져 앉는 이유가 이거예요. 아무것도 제외하지 않았습니다. 확인해 보고 급했다면 그 조건을 비우고 나머지와 같은 속도로 다시 녹음하세요. 회차를 더 늘리는 것보다 모든 회차의 속도를 고르게 하는 쪽이 더 많이 벌어줍니다.'}
 };
 
@@ -2003,7 +2005,11 @@ A.renderRead = function(){
     delta: (fin && !finBad) ? fin.delta : null, type: (fin && !finBad) ? fin.type : null,
     range: range, f0: r.medianF0, dur: durSec,
     rate: durSec > 0 ? nuclei.length / durSec : null,
-    det: expect.syl > 0 ? 100 * nuclei.length / expect.syl : null
+    det: expect.syl > 0 ? 100 * nuclei.length / expect.syl : null,
+    /* v0.15 — 이 회차에서 despike가 손댄 양. 회차 줄에 그대로 보인다.
+       왜 필요한가: 문말 이동이 혼자 멀리 떨어진 회차가 나왔을 때, 길이·음절·f0
+       세 진단이 전부 정상이면 남는 후보가 이것뿐인데 화면에서 볼 수가 없었다. */
+    spk: r.spikes || null
   };
 };
 
@@ -2117,7 +2123,11 @@ A.renderPassage = function(r, expect){
     delta: (endFin && !finBad) ? endFin.delta : null, type: (endFin && !finBad) ? endFin.type : null,
     range: range, f0: r.medianF0, dur: durSec,
     rate: durSec > 0 ? nuclei.length / durSec : null,
-    det: expect.syl > 0 ? 100 * nuclei.length / expect.syl : null
+    det: expect.syl > 0 ? 100 * nuclei.length / expect.syl : null,
+    /* v0.15 — 이 회차에서 despike가 손댄 양. 회차 줄에 그대로 보인다.
+       왜 필요한가: 문말 이동이 혼자 멀리 떨어진 회차가 나왔을 때, 길이·음절·f0
+       세 진단이 전부 정상이면 남는 후보가 이것뿐인데 화면에서 볼 수가 없었다. */
+    spk: r.spikes || null
   };
 };
 
@@ -2281,6 +2291,14 @@ A.slotText = function(list){
     }
     if (sv != null && isFinite(sv) && ev != null && isFinite(ev) && ev > 0){
       h += ' · ' + sv + '/' + ev + L(U.repSyl);
+    }
+    /* 스파이크 교정량. 0이면 아무것도 그리지 않는다 — 실제 음성에서는 대개 0이라
+       (v0.14 검증: 거짓 양성 0) 줄이 길어지는 건 할 말이 있을 때뿐이다.
+       색은 중립이다. 어느 정도가 '많은' 것인지 아직 실측이 없으므로 문턱을 만들지 않는다. */
+    var sp = list[i].spk;
+    if (sp){
+      if (sp.dropped > 0) h += ' · ' + L(U.repSpkDrop) + ' ' + sp.dropped;
+      if (sp.folded  > 0) h += ' · ' + L(U.repSpkFold) + ' ' + sp.folded;
     }
     if (out[i] != null){
       h += ' <span class="bad">f0 ' + (out[i] >= 0 ? '+' : '') + out[i].toFixed(1) + 'st</span>';
