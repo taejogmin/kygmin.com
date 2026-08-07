@@ -1,7 +1,8 @@
 {
   "app": "blueberry-smoothie",
-  "version": "0.16",
-  "note": "하강 추세 95% 신뢰구간 (구간이 0을 지나가면 방향 판정 보류)",
-  "index_sha256": "9a7d1a258ca163cb0017b350e68a85d4",
-  "index_bytes": 151195
+  "version": "0.17",
+  "note": "연결 상승 비율 95% Wilson 신뢰구간 (구간이 30포인트보다 넓으면 판정 보류)",
+  "index_sha256": "0e7b38b52a44cdbc2048fb9e6bef95c6543bf3573a2e68b5661272efc0ec791a",
+  "index_bytes": 156418,
+  "hash_note": "0.16의 index_sha256 값은 32자였다 — sha256이 아니다. 0.17부터 64자 전체 sha256을 적는다."
 }

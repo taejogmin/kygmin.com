@@ -1261,6 +1261,8 @@ window.BS_UI = {
   declWide:{en:'The 95% interval crosses zero.',kr:'95% 구간이 0을 지나갑니다.'},
   declWideWhy:{en:'With this many phrases and this much scatter between them, the direction of the drift is not established — the passage may have drifted down, up, or not at all. The slope above is still what was measured; it just cannot carry a claim about direction. More phrases or more evenly delivered ones would narrow this.',kr:'이 억양구 수와 이 정도 산포에서는 흐름의 방향이 정해지지 않습니다 — 내려갔을 수도, 올라갔을 수도, 아무 흐름이 없었을 수도 있어요. 위의 기울기는 실제로 잰 값이 맞지만, 방향에 대한 주장을 실을 수는 없습니다. 억양구가 더 많거나 더 고르게 읽으면 구간이 좁아집니다.'},
   declFew:{en:'Fewer than four phrases — the slope is shown but its uncertainty cannot be estimated.',kr:'억양구가 4개 미만이라 기울기는 냈지만 그 불확실성은 잴 수 없습니다.'},
+  contWide:{en:'The rise share rests on very few phrases.',kr:'연결 상승 비율이 너무 적은 억양구에 얹혀 있습니다.'},
+  contWideWhy:{en:'is the whole sample. Its 95% interval is wider than the entire 40–70% band that normal read speech falls in, so this passage cannot say where in that band you sit — let alone place you outside it. The percentage above is what was counted; it just cannot carry a claim. And the interval is a floor, not a measurement of the true uncertainty: a binomial interval assumes each phrase is an independent flip with the same chance of rising, and phrases inside one passage are neither — the passage decides much of it for you. The real uncertainty is at least this wide.',kr:'이게 표본 전부입니다. 95% 구간이 정상 낭독의 범위인 40~70% 전체보다 넓어요 — 이 지문 하나로는 그 범위 안 어디에 있는지도, 범위 밖에 있는지도 말할 수 없습니다. 위의 퍼센트는 실제로 센 값이 맞지만 주장을 실을 수는 없어요. 그리고 이 구간은 참값의 불확실성이 아니라 그 하한입니다: 이항 구간은 억양구 하나하나가 같은 확률로 올라가는 독립 시행이라고 가정하는데, 한 지문 안의 억양구는 둘 다 아니에요 — 지문 구조가 어디서 올릴지를 상당 부분 정해버립니다. 실제 불확실성은 최소한 이만큼 넓습니다.'},
   repTakeOut:{en:'The takes marked in red were spoken at a noticeably different length from the rest of their own condition, or had fewer syllables segmented in them. This matters more than it looks. The final movement is measured across the last syllable, so when a take is hurried that syllable shortens and merges with the one before it, and the boundary detector can miss it altogether. The number is then measured over the wrong stretch of sound rather than merely measured imprecisely — which is why one hurried take lands far outside the others instead of a little outside. Nothing has been excluded. Look at these takes, and if they were hurried, clear that condition and record it again at the same pace as the rest. An even pace across every take buys you more than extra takes do.',kr:'빨갛게 표시된 회차는 같은 조건의 나머지 회차들과 길이가 뚜렷하게 다르거나, 음절이 더 적게 잡힌 회차예요. 보기보다 중요합니다. 문말 이동은 마지막 음절 구간 위에서 재기 때문에, 급하게 말한 회차는 그 음절이 짧아지면서 앞 음절과 붙고 경계 검출이 아예 놓칠 수 있어요. 그러면 값이 부정확하게 재진 게 아니라 애초에 다른 구간을 잰 게 됩니다 — 급한 회차 하나가 조금이 아니라 아주 멀리 떨어져 앉는 이유가 이거예요. 아무것도 제외하지 않았습니다. 확인해 보고 급했다면 그 조건을 비우고 나머지와 같은 속도로 다시 녹음하세요. 회차를 더 늘리는 것보다 모든 회차의 속도를 고르게 하는 쪽이 더 많이 벌어줍니다.'}
 };
 
@@ -1289,9 +1291,9 @@ window.BS_HELP = {
   contRise:{
     name:{en:'CONTINUING RISES',kr:'연결 상승'},
     sh:{en:'Share of non-final phrases that ended on a rise',kr:'마지막을 뺀 억양구 중 끝을 올린 비율'},
-    how:{en:'Every phrase except the last is checked for a rising final move; this is the proportion that rose.',kr:'마지막 억양구를 뺀 나머지의 문말 이동을 보고 상승인 것의 비율을 냅니다.'},
-    typ:{en:'40–70% in Korean read speech. A rise says "not finished yet", so list-like passages sit high.',kr:'한국어 낭독에서 40~70%. "아직 안 끝났다"는 신호라 나열문에서 높게 나옵니다.'},
-    bad:{en:'With two phrases or fewer there is only one sample, so it shows —.',kr:'억양구가 2개 이하면 표본이 하나뿐이라 —로 나옵니다.'}
+    how:{en:'Every phrase except the last is checked for a rising final move; this is the proportion that rose. The bracket is a 95% Wilson interval on that proportion — the plain formula collapses to zero width whenever every phrase rises, which six phrases do not earn.',kr:'마지막 억양구를 뺀 나머지의 문말 이동을 보고 상승인 것의 비율을 냅니다. 괄호는 그 비율의 95% Wilson 구간이에요 — 흔히 쓰는 식은 전부 상승일 때 폭이 0으로 무너지는데, 억양구 여섯 개로 얻을 수 있는 확신이 아닙니다.'},
+    typ:{en:'40–70% in Korean read speech. A rise says "not finished yet", so list-like passages sit high. But one passage gives five to seven phrases, and at that size the interval is usually wider than the whole 40–70% band — expect the number to be unable to place you.',kr:'한국어 낭독에서 40~70%. "아직 안 끝났다"는 신호라 나열문에서 높게 나옵니다. 다만 지문 하나는 억양구가 5~7개뿐이라, 그 크기에서는 구간이 보통 40~70% 범위 전체보다 넓어요 — 숫자가 당신을 어디에도 놓지 못하는 게 정상입니다.'},
+    bad:{en:'With two phrases or fewer there is only one sample, so it shows —. The interval is also a floor rather than the true uncertainty: phrases within one passage are not independent trials, and that error runs one way — the real interval is wider, never narrower.',kr:'억양구가 2개 이하면 표본이 하나뿐이라 —로 나옵니다. 구간 자체도 참값이 아니라 하한이에요: 한 지문 안의 억양구는 독립 시행이 아니고, 그 오차는 한쪽으로만 갑니다 — 실제 구간은 더 넓지 절대 더 좁지 않아요.'}
   },
   decl:{
     name:{en:'DECLINATION',kr:'하강 추세'},
@@ -2071,6 +2073,36 @@ function slopeOf(ys){
   return out;
 }
 
+/* 비율의 95% 구간 — Wilson score. k/n을 그냥 띄우면 4/6과 40/60이 화면에서
+   똑같이 66%로 보인다. 하강 추세와 같은 이유로 구간을 같이 낸다.
+
+   Wald(p ± z√(p(1−p)/n))를 안 쓴다. n이 5~7이고 p가 0이나 1에 붙는 일이 흔한데
+   Wald는 그럴 때 폭 0짜리 구간을 뱉는다 — 표본 6개로 확신을 만들어내는 셈이다.
+   Wilson은 p=1에서도 아래쪽 꼬리를 남기고 [0,1] 밖으로 안 나간다.
+
+   판정 기준을 방향이 아니라 폭으로 잡은 이유: 연결 상승에는 하강 추세의 0 같은
+   자연스러운 기준선이 없다. 대신 문헌 범위가 40~70%로 30포인트다. 구간이 그
+   범위 전체보다 넓으면 이 사람이 범위 안 어디에 있는지조차 못 말한다는 뜻이므로,
+   폭 0.30을 경계로 삼는다.
+
+   알려진 한계 — 이쪽이 더 심하다: 이항 구간은 시행이 독립이고 p가 같다고 가정하는데,
+   한 지문 안의 억양구는 둘 다 아니다. 지문 구조가 어디서 올릴지를 상당 부분 정해버린다.
+   그래서 이 구간은 실제 불확실성의 하한이다 — 독립을 가정해도 이만큼 넓다는 뜻이지
+   딱 이만큼이라는 뜻이 아니다. 이 방향의 오차는 결론을 약하게만 만들므로,
+   "구간이 넓다"는 판정은 그대로 유효하고 "좁다"는 판정만 못 믿는다. */
+function wilson(k, n){
+  if (!(n > 0) || k < 0 || k > n) return null;
+  var z = 1.959964, z2 = z * z, p = k / n;
+  var den = 1 + z2 / n;
+  var mid = (p + z2 / (2 * n)) / den;
+  var half = (z / den) * Math.sqrt(p * (1 - p) / n + z2 / (4 * n * n));
+  /* k가 0이나 n이면 해당 끝은 해석적으로 정확히 0·1이다. 부동소수점 잔차(≈3e-17)가
+     남으면 0.0%가 아니라 0.0000000000000003%짜리 값이 되므로 끊어서 맞춘다. */
+  var lo = k === 0 ? 0 : Math.max(0, mid - half);
+  var hi = k === n ? 1 : Math.min(1, mid + half);
+  return { p: p, k: k, n: n, lo: lo, hi: hi, w: hi - lo, sure: (hi - lo) <= 0.30 };
+}
+
 A.renderPassage = function(r, expect){
   var voiced = r.frames.filter(function(f){ return f.st != null; });
   var nuclei = r.syllables.nuclei;
@@ -2090,7 +2122,7 @@ A.renderPassage = function(r, expect){
   var durSec = ((nP ? lastPh.e : r.frames.length-1) - (nP ? r.phrases[0].s : 0) + 1) * 0.010;
 
   /* 연결 상승 = 마지막 억양구를 뺀 나머지 중 상승 비율 */
-  var contRise = null;
+  var contRise = null, cri = null;
   if (nP >= 2){
     var nR = 0, nC = 0;
     for (var i = 0; i < nP-1; i++){
@@ -2098,7 +2130,7 @@ A.renderPassage = function(r, expect){
       if (!f) continue;
       nC++; if (f.type === 'rise') nR++;
     }
-    if (nC) contRise = nR / nC;
+    if (nC){ contRise = nR / nC; cri = wilson(nR, nC); }
   }
   var dec = slopeOf(phraseMedians(r));
   var decl = dec ? dec.b : null;
@@ -2113,7 +2145,10 @@ A.renderPassage = function(r, expect){
 
   html += '<div class="stat-grid">' +
     A.stat('phrases', nP, '') +
-    A.stat('contRise', contRise==null?'—':Math.round(contRise*100), '%') +
+    A.stat('contRise', contRise==null ? '—' :
+             Math.round(contRise*100) +
+             (cri ? ' <em>(' + Math.round(cri.lo*100) + ' ~ ' + Math.round(cri.hi*100) + ')</em>' : ''),
+           '%') +
     A.stat('decl', decl==null ? '—' :
              (decl>=0?'+':'') + decl.toFixed(2) +
              (dec.lo != null ? ' <em>(' + (dec.lo>=0?'+':'') + dec.lo.toFixed(2) + ' ~ ' +
@@ -2156,6 +2191,12 @@ A.renderPassage = function(r, expect){
     html += '<div class="note">' + L(U.declFew) + '</div>';
   } else if (dec && !dec.sure){
     html += '<div class="note"><b>' + L(U.declWide) + '</b> ' + L(U.declWideWhy) + '</div>';
+  }
+  /* 하강 추세와 같은 처리 — 숫자는 남기고 판정만 막는다. 지금 표본(억양구 5~7개)에서는
+     거의 항상 걸린다. 그게 결론이다: 지문 하나로 잰 연결 상승 비율은 아직 아무 말도 못 한다. */
+  if (cri && !cri.sure){
+    html += '<div class="note"><b>' + L(U.contWide) + '</b> ' +
+            cri.k + '/' + cri.n + ' — ' + L(U.contWideWhy) + '</div>';
   }
   html += A.howBlock(['phrases','contRise','decl','finalMove','contour','range','rate','dur','f0']);
   $('resA').innerHTML = html;
