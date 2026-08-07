@@ -266,6 +266,8 @@ var CARDS = [
      kind:'range' 로 갈라서 별도 렌더를 태운다. */
   { key:'vr', kind:'range', rpc:'vr_my_range', del:'vr_delete_mine', href:'/blueberry/vocalrange/',
     label:{en:'VOCAL RANGE', kr:'음역대'},
+    /* 「한 판 해보러 가기」는 게임 문구다. 측정기한테는 판이 없다. */
+    goTxt:{en:'Go measure once →', kr:'한 번 재보러 가기 →'},
     blurb:{en:'The range you can hold, and how much it moves between sessions.',
            kr:'붙잡을 수 있는 음역, 그리고 그게 회차마다 얼마나 움직이는지.'} }
 ];
@@ -454,7 +456,7 @@ function paintCard(c, state){
     body = '<p class="empty">' + esc(L(U.loading)) + '</p>';
   } else if (!state.rows || !state.rows.length){
     body = '<p class="empty">' + esc(L(U.none)) + ' <a href="' + c.href + '">' +
-           esc(L(U.noneGo)) + '</a></p>';
+           esc(L(c.goTxt || U.noneGo)) + '</a></p>';
   } else if (c.kind === 'range'){
     var r = state.rows[0];
     extra = '<span class="tot">' + Number(r.n_readings || 0).toLocaleString() + ' ' +
