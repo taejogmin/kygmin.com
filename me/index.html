@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Me — KYGMIN</title>
+<meta name="robots" content="noindex" />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#F6F6F4; --ink:#141414; --gray:#DDDDD8;
+  --green:#2BB673; --green-deep:#0F6E56; --red:#A32D2D;
+  --arch:'Archivo','Pretendard',sans-serif;
+  --sans:'Pretendard',-apple-system,'Apple SD Gothic Neo','Malgun Gothic','Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono','SF Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} *,*::before,*::after{transition:none!important;} }
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:break-word;}
+a{color:inherit;text-decoration:none;}
+a:focus-visible,button:focus-visible{outline:3px solid var(--green);outline-offset:3px;}
+.wrap{max-width:960px;margin:0 auto;padding:0 24px;}
+
+nav{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:3px solid var(--ink);}
+.nav-inner{max-width:960px;margin:0 auto;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;}
+.logo{font-family:var(--arch);font-weight:900;font-size:19px;letter-spacing:-0.5px;}
+.logo em{font-style:normal;background:var(--green);color:var(--paper);padding:0 6px;display:inline-block;transform:rotate(-1.5deg);}
+.nav-links{display:flex;gap:8px;flex-wrap:wrap;}
+.nav-links a{font-family:var(--arch);font-size:12px;font-weight:700;text-transform:uppercase;
+  border:2px solid var(--ink);padding:6px 13px;background:#fff;box-shadow:3px 3px 0 var(--ink);transition:transform .1s, box-shadow .1s;}
+.nav-links a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+.nav-links a.on{background:var(--green);color:var(--paper);}
+
+#langtoggle{position:fixed;right:20px;bottom:20px;z-index:50;display:inline-flex;
+  border:2px solid var(--ink);box-shadow:3px 3px 0 var(--ink);background:#fff;
+  font-family:var(--arch);font-weight:700;font-size:12px;overflow:hidden;}
+#langtoggle button{font:inherit;border:none;background:none;cursor:pointer;padding:9px 14px;color:var(--ink);letter-spacing:.5px;transition:background .1s,color .1s;}
+#langtoggle button.on{background:var(--green);color:var(--paper);}
+#langtoggle button+button{border-left:2px solid var(--ink);}
+.scr{color:var(--green);}
+.box .scr{color:var(--paper);}
+
+header{padding:56px 0 40px;border-bottom:3px solid var(--ink);}
+.sec-tag{font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--green-deep);letter-spacing:1px;display:block;margin-bottom:14px;}
+h1{font-family:var(--arch);font-weight:900;font-size:clamp(38px,9vw,72px);line-height:.98;letter-spacing:-2px;text-transform:uppercase;}
+#who{white-space:nowrap;}
+h1 .box{background:var(--ink);color:var(--paper);padding:0 10px;display:inline-block;transform:rotate(-1deg);}
+.hero-sub{margin-top:18px;max-width:640px;font-size:17px;}
+.hero-note{margin-top:12px;font-family:var(--mono);font-size:12.5px;color:var(--green-deep);letter-spacing:.5px;}
+
+main{padding:36px 0 96px;}
+.card{border:3px solid var(--ink);background:#fff;box-shadow:6px 6px 0 var(--ink);padding:20px;margin-bottom:26px;}
+.card-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:10px;margin-bottom:14px;}
+.card-head h2{font-family:var(--arch);font-weight:900;font-size:18px;letter-spacing:-.4px;text-transform:uppercase;}
+.card-head .tot{font-family:var(--mono);font-size:13px;color:var(--green-deep);font-weight:600;}
+.card .blurb{font-size:14px;color:#4a4a4a;margin-bottom:12px;}
+.tblwrap{overflow-x:auto;}
+table{border-collapse:collapse;width:100%;font-family:var(--mono);font-size:13.5px;white-space:nowrap;}
+th,td{border-bottom:1px solid var(--gray);padding:7px 10px;text-align:right;}
+th:first-child,td:first-child{text-align:left;}
+thead th{border-bottom:2px solid var(--ink);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.4px;}
+tr.tot td{border-top:2px solid var(--ink);border-bottom:none;font-weight:600;}
+.pos{color:var(--green-deep);} .neg{color:var(--red);}
+.empty{font-size:14.5px;color:#4a4a4a;}
+.empty a{border-bottom:2px solid var(--green);font-weight:600;}
+.err{font-size:13.5px;color:var(--red);font-family:var(--mono);}
+.actions{margin-top:14px;padding-top:10px;border-top:1px dashed var(--gray);}
+.del{font:inherit;font-size:12.5px;font-family:var(--mono);border:2px solid var(--gray);background:#fff;
+  padding:5px 11px;cursor:pointer;color:#666;transition:border-color .1s,color .1s;}
+.del:hover{border-color:var(--red);color:var(--red);}
+.del[disabled]{opacity:.45;cursor:default;}
+.glist{list-style:none;margin:6px 0 0;}
+.glist li{border-bottom:1px solid var(--gray);padding:11px 0;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+.glist b{font-family:var(--arch);font-size:14px;text-transform:uppercase;letter-spacing:-.2px;}
+.glist span{font-size:14px;color:#4a4a4a;}
+.glist a{border-bottom:2px solid var(--green);font-weight:600;font-size:13.5px;white-space:nowrap;}
+.note{border-left:4px solid var(--green);background:#fff;padding:12px 16px;font-size:14.5px;margin-top:22px;}
+.foot{margin-top:30px;font-family:var(--mono);font-size:12.5px;color:#666;}
+</style>
+<script>
+window.KYG_LANG=(function(){try{var v=localStorage.getItem('kyg_lang');if(v==='kr'||v==='en')return v;}catch(e){}return 'en';})();
+window.APP_LANG=window.KYG_LANG;
+if(window.KYG_LANG!=='en'){
+  document.documentElement.setAttribute('lang','ko');
+  document.documentElement.className+=' lang-pending';
+  setTimeout(function(){document.documentElement.classList.remove('lang-pending');},2000);
+}
+</script>
+<style>html.lang-pending .tx{visibility:hidden}</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="/index.html">KYG<em>MIN</em></a>
+    <div class="nav-links">
+      <a href="/index.html"><span class="tx" data-en="Home" data-kr="홈">Home</span></a>
+      <a href="/playhouse/">PLAYHOUSE</a>
+      <a class="on" href="./">ME</a>
+    </div>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <span class="sec-tag tx" data-en="YOUR OWN NUMBERS" data-kr="당신 자신의 숫자">YOUR OWN NUMBERS</span>
+    <h1 id="who"><span id="wpre">M</span><span class="box" id="wbox">E</span></h1>
+    <p class="hero-sub tx" data-en="What you have played, and what it added up to. Only your own records — nothing here is compared against anyone else." data-kr="지금까지 무엇을 했고, 그게 얼마로 쌓였는지. 본인 기록만 보여줍니다 — 여기 있는 어떤 값도 남과 비교하지 않아요.">What you have played, and what it added up to. Only your own records — nothing here is compared against anyone else.</p>
+    <p class="hero-note tx" data-en="SIGNED-IN ONLY · NOT PUBLIC · NEVER SHARED" data-kr="로그인 전용 · 공개되지 않음 · 공유되지 않음">SIGNED-IN ONLY · NOT PUBLIC · NEVER SHARED</p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div id="guest"></div>
+    <div id="cards"></div>
+  </div>
+</main>
+
+<div id="langtoggle">
+  <button data-lang="en" class="on">EN</button>
+  <button data-lang="kr">한</button>
+</div>
+
+<script>
+window.APP_LANG_LISTENERS = [];
+(function(){
+  var POOL = ("ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎㅏㅑㅓㅕㅗㅛㅜㅠㅡㅣ"
+    + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-·").split("");
+  function esc(c){return c==="&"?"&amp;":c==="<"?"&lt;":c===">"?"&gt;":c;}
+  function Scramble(el){ this.el=el; this.raf=null; this.frame=this.frame.bind(this); }
+  Scramble.prototype.set=function(txt){
+    var old = this.el.dataset.plain!==undefined ? this.el.dataset.plain : this.el.textContent;
+    var len=Math.max(old.length, txt.length);
+    this.q=[];
+    for(var i=0;i<len;i++){
+      var from=old[i]||"", to=txt[i]||"";
+      var start=Math.floor(Math.random()*20);
+      var end=start+Math.floor(Math.random()*25)+12;
+      this.q.push({from:from,to:to,start:start,end:end,ch:null});
+    }
+    if(this.raf) cancelAnimationFrame(this.raf);
+    this.f=0; this.txt=txt; this.frame();
+  };
+  Scramble.prototype.frame=function(){
+    var out="", done=0;
+    for(var i=0;i<this.q.length;i++){
+      var it=this.q[i];
+      if(this.f>=it.end){ done++; out+=esc(it.to); }
+      else if(this.f>=it.start){
+        if(!it.ch || Math.random()<0.3){ it.ch=POOL[Math.floor(Math.random()*POOL.length)]; }
+        out+='<span class="scr">'+esc(it.ch)+'</span>';
+      } else out+=esc(it.from);
+    }
+    this.el.innerHTML=out;
+    if(done===this.q.length){ this.el.dataset.plain=this.txt; }
+    else { this.f++; this.raf=requestAnimationFrame(this.frame); }
+  };
+  var els=[].slice.call(document.querySelectorAll('.tx'));
+  els.forEach(function(el){ el.dataset.plain=el.textContent; el._s=new Scramble(el); });
+  (function(){
+    var L = window.KYG_LANG || 'en';
+    var btns=document.querySelectorAll('#langtoggle button');
+    for(var i=0;i<btns.length;i++){ btns[i].classList.toggle('on', btns[i].dataset.lang===L); }
+    if(L!=='en') els.forEach(function(el){ var t=el.dataset[L]; if(t!==undefined){ el.textContent=t; el.dataset.plain=t; } });
+    document.documentElement.classList.remove('lang-pending');
+  })();
+  function setLang(lang){
+    if(lang===window.APP_LANG) return;
+    window.APP_LANG = lang;
+    try{ localStorage.setItem('kyg_lang', lang); }catch(e){}
+    document.documentElement.lang = (lang==='kr'?'ko':'en');
+    var btns=document.querySelectorAll('#langtoggle button');
+    for(var i=0;i<btns.length;i++){ btns[i].classList.toggle('on', btns[i].dataset.lang===lang); }
+    els.forEach(function(el){ var t=el.dataset[lang]; if(t!==undefined) el._s.set(t); });
+    window.APP_LANG_LISTENERS.forEach(function(fn){ try{ fn(lang); }catch(e){ console.error(e); } });
+  }
+  document.getElementById('langtoggle').addEventListener('click', function(e){
+    var b=e.target.closest('button'); if(b) setLang(b.dataset.lang);
+  });
+  /* .tx가 아닌 요소도 같은 효과를 쓸 수 있게 열어둔다 (로그인 시 닉네임 전환) */
+  window.KYG_SCRAMBLE=function(el,txt){ if(!el) return; if(!el._s) el._s=new Scramble(el); el._s.set(txt); };
+})();
+</script>
+<!-- ===== /me/ — 카드 레지스트리 + 독립 실패 ===== -->
+<script>
+(function(){
+'use strict';
+function L(o){ return (window.APP_LANG === 'kr' ? o.kr : o.en); }
+function $(id){ return document.getElementById(id); }
+function esc(s){ return String(s).replace(/[&<>"]/g, function(c){
+  return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+
+/* ---------- 서식 ---------- */
+var F = {
+  int:  function(v){ return v == null ? '—' : Math.round(v).toLocaleString(); },
+  sign: function(v){ if (v == null) return '—';
+          var n = Math.round(v);
+          return '<span class="' + (n>0?'pos':(n<0?'neg':'')) + '">' +
+                 (n>0?'+':'') + n.toLocaleString() + '</span>'; },
+  dec2: function(v){ return v == null ? '—' : Number(v).toFixed(2); }
+};
+
+/* ---------- 카드 레지스트리 ----------
+   프로젝트를 추가하려면 이 배열에 한 줄이면 된다.
+   rpc / del 이름만 맞으면 나머지는 전부 여기서 나온다. */
+var CARDS = [
+  { key:'np', rpc:'np_my_record', del:'np_delete_mine', href:'/nine-positions/',
+    label:{en:'NINE POSITIONS', kr:'나인 포지션'},
+    blurb:{en:'Wins, losses and draws against the AI, by desk.',
+           kr:'AI와의 대결 승·패·무를 난이도별로.'},
+    cols:[
+      {k:'games',  l:{en:'Games',kr:'판'},   f:F.int, sum:true},
+      {k:'wins',   l:{en:'W',kr:'승'},       f:F.int, sum:true},
+      {k:'losses', l:{en:'L',kr:'패'},       f:F.int, sum:true},
+      {k:'draws',  l:{en:'D',kr:'무'},       f:F.int, sum:true},
+      {k:'rate',   l:{en:'Win rate',kr:'승률'},
+       calc:function(r){ var d = (r.wins||0)+(r.losses||0);
+         return d ? Math.round(100*(r.wins||0)/d) + '%' : '—'; }}
+    ] },
+  { key:'ip', rpc:'ip_my_record', del:'ip_delete_mine', href:'/indian-poker/',
+    label:{en:'INDIAN POKER', kr:'인디안 포커'},
+    blurb:{en:'Results and cumulative chips, by desk.',
+           kr:'승·패·무와 누적 칩을 난이도별로.'},
+    cols:[
+      {k:'games',  l:{en:'Games',kr:'판'}, f:F.int, sum:true},
+      {k:'wins',   l:{en:'W',kr:'승'},     f:F.int, sum:true},
+      {k:'losses', l:{en:'L',kr:'패'},     f:F.int, sum:true},
+      {k:'draws',  l:{en:'D',kr:'무'},     f:F.int, sum:true},
+      {k:'net_chips',  l:{en:'Net chips',kr:'순손익'},  f:F.sign, sum:true},
+      {k:'net_margin', l:{en:'Net margin',kr:'누적 차'}, f:F.sign, sum:true}
+    ] },
+  { key:'pyr', rpc:'pyr_my_record', del:'pyr_delete_mine', href:'/pyrrhus-co/',
+    label:{en:'PYRRHUS & CO.', kr:'피로스 옥션 하우스'},
+    blurb:{en:'Placings and scores across auctions. Beating the house is meant to be rare.',
+           kr:'경매별 등수와 점수. 하우스를 이기는 건 원래 드문 일입니다.'},
+    cols:[
+      {k:'games',      l:{en:'Games',kr:'판'},      f:F.int,  sum:true},
+      {k:'firsts',     l:{en:'1st',kr:'1등'},       f:F.int,  sum:true},
+      {k:'avg_rank',   l:{en:'Avg rank',kr:'평균 등수'}, f:F.dec2},
+      {k:'best',       l:{en:'Best',kr:'최고 점수'},  f:F.int},
+      {k:'avg_score',  l:{en:'Avg score',kr:'평균 점수'}, f:F.int},
+      {k:'beat_house', l:{en:'Beat house',kr:'하우스 격파'}, f:F.int, sum:true}
+    ] }
+];
+
+var U = {
+  guestLead:{en:'Sign in to see your own records here. This is what accumulates:',
+             kr:'로그인하면 여기에 본인 기록이 모입니다. 쌓이는 건 이런 것들이에요:'},
+  guestGo:{en:'try it →', kr:'해보러 가기 →'},
+  guestSignIn:{en:'The sign-in chip is at the bottom left of every page.',
+               kr:'로그인 칩은 모든 페이지 왼쪽 아래에 있어요.'},
+  guestFromNow:{en:'Records start accumulating from the point you sign in — anything played as a guest is not counted.',
+                kr:'기록은 로그인한 뒤부터 쌓입니다 — 비로그인 상태로 논 것은 집계되지 않아요.'},
+  loading:{en:'loading…', kr:'불러오는 중…'},
+  none:{en:'Nothing here yet.', kr:'아직 기록이 없어요.'},
+  noneGo:{en:'Go play a round →', kr:'한 판 해보러 가기 →'},
+  total:{en:'TOTAL', kr:'합계'},
+  totGames:{en:'games', kr:'판'},
+  desk:{en:'Desk', kr:'난이도'},
+  failed:{en:'Could not load this one. The rest of the page is unaffected.',
+          kr:'이 항목을 불러오지 못했어요. 페이지의 나머지는 영향을 받지 않습니다.'},
+  del:{en:'Delete my records', kr:'내 기록 지우기'},
+  delSure:{en:'Really delete? This cannot be undone — click again.',
+           kr:'정말 지울까요? 되돌릴 수 없어요 — 한 번 더 누르세요.'},
+  delDone:{en:'Deleted.', kr:'지웠습니다.'},
+  delMissing:{en:'Deletion is not set up on the server yet.',
+              kr:'삭제 기능이 서버에 아직 설정되지 않았어요.'},
+  delFail:{en:'Could not delete.', kr:'지우지 못했어요.'},
+  privacy:{en:'These numbers are visible only to you. This page has no public version and no comparison against other people.',
+           kr:'이 숫자들은 본인에게만 보입니다. 이 페이지에는 공개 버전이 없고, 다른 사람과의 비교도 없어요.'}
+};
+
+/* ---------- 비로그인 화면: RPC를 한 개도 부르지 않는다 ---------- */
+function renderGuest(){
+  var h = '<div class="card"><div class="card-head"><h2>' + esc(L({en:'SIGN IN',kr:'로그인'})) + '</h2></div>';
+  h += '<p class="blurb">' + esc(L(U.guestLead)) + '</p><ul class="glist">';
+  CARDS.forEach(function(c){
+    h += '<li><b>' + esc(L(c.label)) + '</b><span>' + esc(L(c.blurb)) + '</span>' +
+         '<a href="' + c.href + '">' + esc(L(U.guestGo)) + '</a></li>';
+  });
+  h += '</ul>';
+  h += '<p class="foot">' + esc(L(U.guestSignIn)) + '</p></div>';
+  h += '<div class="note">' + esc(L(U.guestFromNow)) + '</div>';
+  $('guest').innerHTML = h;
+  $('cards').innerHTML = '';
+}
+
+/* ---------- 표 ---------- */
+function table(c, rows){
+  var h = '<div class="tblwrap"><table><thead><tr><th>' + esc(L(U.desk)) + '</th>';
+  c.cols.forEach(function(col){ h += '<th>' + esc(L(col.l)) + '</th>'; });
+  h += '</tr></thead><tbody>';
+  rows.forEach(function(r){
+    h += '<tr><td>' + esc(String(r.difficulty || '—').toUpperCase()) + '</td>';
+    c.cols.forEach(function(col){
+      h += '<td>' + (col.calc ? esc(col.calc(r)) : col.f(r[col.k])) + '</td>';
+    });
+    h += '</tr>';
+  });
+  if (rows.length > 1){
+    var t = {};
+    c.cols.forEach(function(col){
+      if (col.sum) t[col.k] = rows.reduce(function(a, r){ return a + (Number(r[col.k]) || 0); }, 0);
+    });
+    h += '<tr class="tot"><td>' + esc(L(U.total)) + '</td>';
+    c.cols.forEach(function(col){
+      h += '<td>' + (col.calc ? esc(col.calc(t)) : (col.sum ? col.f(t[col.k]) : '—')) + '</td>';
+    });
+    h += '</tr>';
+  }
+  return h + '</tbody></table></div>';
+}
+
+/* ---------- 카드 하나. 실패는 이 안에서 끝난다 ---------- */
+function shell(c, body, extra){
+  return '<div class="card" id="card-' + c.key + '"><div class="card-head"><h2>' +
+         esc(L(c.label)) + '</h2>' + (extra || '') + '</div>' +
+         '<p class="blurb">' + esc(L(c.blurb)) + '</p>' + body + '</div>';
+}
+
+function paintCard(c, state){
+  var el = $('card-' + c.key);
+  var body, extra = '';
+  if (state.err){
+    body = '<p class="err">' + esc(L(U.failed)) + '</p>';
+  } else if (state.loading){
+    body = '<p class="empty">' + esc(L(U.loading)) + '</p>';
+  } else if (!state.rows || !state.rows.length){
+    body = '<p class="empty">' + esc(L(U.none)) + ' <a href="' + c.href + '">' +
+           esc(L(U.noneGo)) + '</a></p>';
+  } else {
+    var n = state.rows.reduce(function(a, r){ return a + (Number(r.games) || 0); }, 0);
+    extra = '<span class="tot">' + n.toLocaleString() + ' ' + esc(L(U.totGames)) + '</span>';
+    body = table(c, state.rows) +
+      '<div class="actions"><button class="del" data-key="' + c.key + '">' +
+      esc(state.delMsg || L(U.del)) + '</button></div>';
+  }
+  var html = shell(c, body, extra);
+  if (el) el.outerHTML = html; else $('cards').insertAdjacentHTML('beforeend', html);
+}
+
+/* ---------- 로그인 화면 ---------- */
+var STATE = {};       /* key → {loading, rows, err, delMsg, armed} */
+var CLIENT = null;
+
+function renderCards(){
+  $('guest').innerHTML = '';
+  $('cards').innerHTML = '';
+  CARDS.forEach(function(c){ paintCard(c, STATE[c.key] || { loading:true }); });
+  $('cards').insertAdjacentHTML('beforeend', '<div class="note">' + esc(L(U.privacy)) + '</div>');
+}
+
+function load(){
+  CARDS.forEach(function(c){
+    STATE[c.key] = { loading:true };
+    /* 카드마다 따로 부르고 따로 실패한다. 하나가 죽어도 나머지는 그대로 뜬다. */
+    CLIENT.rpc(c.rpc).then(function(res){
+      if (res.error) throw res.error;
+      STATE[c.key] = { rows: res.data || [] };
+    }).catch(function(e){
+      console.warn('/me/: ' + c.rpc + ' failed', e);
+      STATE[c.key] = { err:true };
+    }).then(function(){ paintCard(c, STATE[c.key]); });
+  });
+}
+
+/* ---------- 삭제 — 브라우저 대화상자 없이 두 번 눌러 확인 ---------- */
+function missingFn(e){
+  var m = ((e && (e.message || e.hint || '')) + ' ' + (e && e.code || '')).toLowerCase();
+  return m.indexOf('pgrst202') >= 0 || m.indexOf('could not find the function') >= 0 ||
+         m.indexOf('does not exist') >= 0;
+}
+document.addEventListener('click', function(ev){
+  var b = ev.target.closest && ev.target.closest('button.del');
+  if (!b || !CLIENT) return;
+  var key = b.dataset.key, c = null, i;
+  for (i = 0; i < CARDS.length; i++) if (CARDS[i].key === key) c = CARDS[i];
+  if (!c) return;
+  var st = STATE[key] || {};
+  if (!st.armed){
+    st.armed = true; st.delMsg = L(U.delSure); STATE[key] = st; paintCard(c, st);
+    setTimeout(function(){
+      var s = STATE[key];
+      if (s && s.armed){ s.armed = false; s.delMsg = null; paintCard(c, s); }
+    }, 6000);
+    return;
+  }
+  st.armed = false; st.delMsg = null;
+  CLIENT.rpc(c.del).then(function(res){
+    if (res.error) throw res.error;
+    STATE[key] = { rows: [] };
+  }).catch(function(e){
+    console.warn('/me/: ' + c.del + ' failed', e);
+    STATE[key] = Object.assign({}, st, { delMsg: missingFn(e) ? L(U.delMissing) : L(U.delFail) });
+  }).then(function(){ paintCard(c, STATE[key]); });
+});
+
+/* ---------- 제목: 로그인하면 닉네임이 된다 ----------
+   닉네임은 이미 모든 페이지 좌하단 칩에 떠 있고 profiles가 공개 읽기라
+   여기 띄운다고 새로 새는 정보는 없다. 문서 제목(<title>)은 일부러 안 바꾼다 —
+   브라우저 기록과 탭 목록에 남는 자리라 중립으로 두는 게 낫다. */
+function setName(nick){
+  var pre = $('wpre'), box = $('wbox');
+  if (!pre || !box) return;
+  var name = (nick && String(nick).trim()) ? String(nick).trim() : null;
+  var txt  = name || 'E';
+  pre.style.display = name ? 'none' : '';
+
+  /* 닉네임은 2~16자이고 한글은 한 글자가 라틴 두 배 폭이라, 글자 수로 크기를 추정하면
+     빗나간다. 실제로 그려서 재고 들어갈 때까지 줄인다 — 한 번만 도는 루프다. */
+  var h1 = $('who'), prev = box.textContent;
+  if (h1){
+    box.textContent = txt;
+    h1.style.fontSize = '';
+    var size = parseFloat(getComputedStyle(h1).fontSize) || 72;
+    var guard = 0;
+    while (h1.scrollWidth > h1.clientWidth && size > 22 && guard++ < 40){
+      size -= 2; h1.style.fontSize = size + 'px';
+    }
+    box.textContent = prev;
+  }
+  if (box.textContent === txt) return;
+  if (window.KYG_SCRAMBLE) window.KYG_SCRAMBLE(box, txt);
+  else { box.textContent = txt; }
+}
+
+/* ---------- 배선 ---------- */
+renderGuest();   /* 위젯이 뜨기 전에도 빈 화면을 보이지 않는다 */
+
+window.KYG_AUTH_LISTENERS = window.KYG_AUTH_LISTENERS || [];
+window.KYG_AUTH_LISTENERS.push(function(user, nickname, client){
+  setName(user ? nickname : null);
+  if (user && client){
+    CLIENT = client;
+    renderCards();
+    load();
+  } else {
+    CLIENT = null; STATE = {};
+    renderGuest();
+  }
+});
+
+window.APP_LANG_LISTENERS.push(function(){
+  if (CLIENT) renderCards(); else renderGuest();
+  if (CLIENT) CARDS.forEach(function(c){ paintCard(c, STATE[c.key] || { loading:true }); });
+});
+})();
+</script>
+<script src="/auth-widget.js" defer></script>
+</body>
+</html>
