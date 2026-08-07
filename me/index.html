@@ -269,7 +269,23 @@ var CARDS = [
     /* 「한 판 해보러 가기」는 게임 문구다. 측정기한테는 판이 없다. */
     goTxt:{en:'Go measure once →', kr:'한 번 재보러 가기 →'},
     blurb:{en:'The range you can hold, and how much it moves between sessions.',
-           kr:'붙잡을 수 있는 음역, 그리고 그게 회차마다 얼마나 움직이는지.'} }
+           kr:'붙잡을 수 있는 음역, 그리고 그게 회차마다 얼마나 움직이는지.'} },
+  /* rpc 를 둘 쓰는 첫 카드. 회차 수는 언제나 알 수 있어야 하지만(bs_my_summary),
+     잡음 바닥은 같은 문장 5회 이상에서만 나온다(bs_my_baseline). 둘을 합쳐야
+     「4 / 5회」 같은 진행 표시가 가능해진다 — 하나만 쓰면 4회일 때 「기록 없음」이 된다. */
+  { key:'bs', kind:'floor', rpc:'bs_my_summary', rpc2:'bs_my_baseline',
+    del:'bs_delete_mine', href:'/blueberry/',
+    label:{en:'BLUEBERRY SMOOTHIE', kr:'블루베리 스무디'},
+    goTxt:{en:'Go read a sentence →', kr:'한 문장 읽으러 가기 →'},
+    /* 문장 이름은 블루베리가 화면에 쓰는 것과 같아야 한다. 문장이 바뀌면 여기도 바꿔야 한다. */
+    sents:{ 1:{en:'blueberry smoothie',kr:'블루베리 스무디'},
+            2:{en:'"Did you eat." (statement)',kr:'「밥 먹었어.」 평서'},
+            3:{en:'"Did you eat?" (question)',kr:'「밥 먹었어?」 의문'},
+            4:{en:'the tongue twister',kr:'잰말놀이'},
+            5:{en:'Philippians 4:8',kr:'빌립보서 4:8'},
+            6:{en:'Counting the Stars at Night',kr:'별 헤는 밤'} },
+    blurb:{en:'How steady your own measurements are — the floor below which a change cannot be told from a wobble.',
+           kr:'본인의 측정이 얼마나 안정적인지 — 변화와 흔들림을 가를 수 없는 바닥.'} }
 ];
 
 /* ---------- 음 이름 ----------
@@ -328,6 +344,26 @@ var U = {
                  kr:'지금까지 모든 회차가 같은 최고음에 떨어졌습니다. 안정된 측정이에요 — 들리는 것보다 드문 일입니다.'},
   vrNeedMore:{en:'Three readings are needed before the spread between them means anything. Two points make a line, not a range.',
               kr:'회차 간 퍼짐은 세 번은 재야 뜻이 생깁니다. 점 두 개는 선이지 범위가 아니에요.'},
+  sentN:{en:'sentence', kr:'문장'},
+  bsFloorT:{en:'NOISE FLOOR', kr:'잡음 바닥'},
+  bsMetric:{en:'Metric', kr:'지표'},
+  bsMean:{en:'Your average', kr:'내 평균'},
+  bsFloor:{en:'Floor', kr:'바닥'},
+  bsDelta:{en:'Final move', kr:'문말 이동'},
+  bsRange:{en:'Pitch range', kr:'음역 폭'},
+  bsRate:{en:'Speech rate', kr:'발화 속도'},
+  bsF0:{en:'Median f0', kr:'중앙 f0'},
+  bsFloorWhy:{en:'The floor column is how much your own readings of this one sentence disagree with each other. A change smaller than that is not a change — it is the instrument, and your voice, doing what they always do. Read any single number against this column before reading it as news about yourself.',
+              kr:'바닥 칸은 같은 문장을 잰 본인의 회차들이 서로 얼마나 어긋나는지입니다. 그보다 작은 변화는 변화가 아니에요 — 측정기와 목소리가 늘 하던 일입니다. 어떤 숫자든 본인에 대한 소식으로 읽기 전에 이 칸과 견줘 보세요.'},
+  bsNeed1:{en:'Readings of the same sentence so far:', kr:'같은 문장을 잰 회차:'},
+  bsNeedWhy:{en:'Nothing is drawn until five. With fewer, any trend shown here would be a story about noise — and this page would be making you know yourself worse, not better. Read the same sentence a few more times and the floor appears on its own.',
+             kr:'다섯 번 전까지는 아무것도 그리지 않습니다. 그보다 적으면 여기 그린 추세가 잡음에 대한 이야기가 되고, 이 페이지가 본인을 더 잘이 아니라 더 잘못 알게 만들어요. 같은 문장을 몇 번 더 읽으면 바닥이 알아서 나타납니다.'},
+  bsAlso:{en:'Also measured:', kr:'같이 잰 것:'},
+  bsShort:{en:'short', kr:'짧은 문장'},
+  bsPassage:{en:'passage', kr:'긴 지문'},
+  bsFree:{en:'freestyle', kr:'프리스타일'},
+  bsStale:{en:'readings were taken with an earlier version of the measurement and are kept out — comparing across pipeline changes would measure our code edits, not your voice.',
+           kr:'개 회차는 이전 버전의 측정으로 재서 빼뒀습니다 — 파이프라인이 바뀐 걸 넘어 비교하면 당신의 목소리가 아니라 우리가 코드를 고친 흔적을 재게 돼요.'},
   vrStale:{en:'earlier readings were taken with different thresholds and are kept out of the numbers above — mixing them would compare values that were never measured the same way.',
            kr:'개 회차는 다른 문턱으로 재서 위 숫자에서 빼뒀습니다 — 섞으면 애초에 같은 방식으로 재지 않은 값을 비교하게 돼요.'},
   totGames:{en:'games', kr:'판'},
@@ -367,6 +403,71 @@ function deskName(c, d){
   if (d == null || d === '') return '—';
   var m = c.desks && c.desks[d];
   return m ? L(m) : String(d).toUpperCase();
+}
+
+/* ---------- 잡음 바닥 카드 ----------
+
+   **이 카드는 숫자를 보여주려고 있는 게 아니라 숫자를 어떻게 읽을지 정하려고 있다.**
+
+   축적을 보여주면서 잡음 바닥을 같이 안 보여주면 사용자가 잡음을 추세로 읽는다.
+   「지난달보다 0.3 st 낮아졌네」라고 읽는데 실측 잡음 바닥이 ±0.46 이면 그 변화는
+   아무 의미도 없다. 그런데 숫자만 늘어놓으면 사람은 반드시 이야기를 만든다.
+   그러면 「본인을 더 잘 알게」 하는 게 아니라 잘못 알게 하는 것이다.
+
+   그래서 같은 문장 5회 미만이면 바닥을 계산하지 않고 **아무 추세도 그리지 않는다.**
+   대신 몇 회 남았는지만 말한다. 표본이 없으면 침묵한다. */
+function sentName(c, id){
+  var m = c.sents && c.sents[id];
+  return m ? L(m) : (L(U.sentN) + ' ' + id);
+}
+function pm(mean, sd, dec, unit){
+  if (mean == null) return '—';
+  var s = Number(mean).toFixed(dec);
+  if (sd == null) return s + (unit || '');
+  return s + (unit || '') + ' <em>±' + Number(sd).toFixed(dec) + '</em>';
+}
+function floorBody(c, sm, rows){
+  var n = Number(sm.n_readings || 0);
+  var h = '';
+
+  if (!rows.length){
+    /* 아직 못 재는 상태. 진행만 알리고 어떤 추세도 그리지 않는다. */
+    h += '<div class="vrspread"><b>' + esc(L(U.bsFloorT)) + '</b> ' +
+         esc(L(U.bsNeed1)) + ' <b>' + Math.min(n, 5) + ' / 5</b>' +
+         '<i>' + esc(L(U.bsNeedWhy)) + '</i></div>';
+  } else {
+    var top = rows[0];
+    h += '<div class="vrmain"><b>' + esc(L(U.bsFloorT)) + ' · ' + esc(sentName(c, top.sentence_id)) +
+         ' <span style="color:#666">(' + top.n + esc(L(U.vrOf)) + ')</span></b>' +
+         '<div class="tblwrap"><table><thead><tr><th>' + esc(L(U.bsMetric)) + '</th><th>' +
+         esc(L(U.bsMean)) + '</th><th>' + esc(L(U.bsFloor)) + '</th></tr></thead><tbody>' +
+         floorRow(L(U.bsDelta), top.delta_mean, top.delta_sd, 2, ' st') +
+         floorRow(L(U.bsRange), top.range_mean, top.range_sd, 2, ' st') +
+         floorRow(L(U.bsRate),  top.rate_mean,  top.rate_sd,  2, '') +
+         floorRow(L(U.bsF0),    top.f0_mean,    top.f0_sd,    1, ' Hz') +
+         '</tbody></table></div>' +
+         '<i>' + esc(L(U.bsFloorWhy)) + '</i></div>';
+
+    if (rows.length > 1){
+      h += '<p class="vrsub">' + esc(L(U.bsAlso)) + ' ' +
+           rows.slice(1).map(function(r){
+             return esc(sentName(c, r.sentence_id)) + ' (' + r.n + ')';
+           }).join(' · ') + '</p>';
+    }
+  }
+
+  var parts = [];
+  if (sm.n_short)   parts.push(sm.n_short + ' ' + L(U.bsShort));
+  if (sm.n_passage) parts.push(sm.n_passage + ' ' + L(U.bsPassage));
+  if (sm.n_free)    parts.push(sm.n_free + ' ' + L(U.bsFree));
+  if (parts.length) h += '<p class="vrsub">' + esc(parts.join(' · ')) + '</p>';
+  if (sm.n_stale > 0) h += '<p class="vrstale">' + sm.n_stale + ' ' + esc(L(U.bsStale)) + '</p>';
+  return h;
+}
+function floorRow(name, mean, sd, dec, unit){
+  return '<tr><td>' + esc(name) + '</td><td>' +
+         (mean == null ? '—' : Number(mean).toFixed(dec) + esc(unit)) + '</td><td>' +
+         (sd == null ? '—' : '±' + Number(sd).toFixed(dec) + esc(unit)) + '</td></tr>';
 }
 
 /* ---------- 음역 카드 ----------
@@ -457,6 +558,13 @@ function paintCard(c, state){
   } else if (!state.rows || !state.rows.length){
     body = '<p class="empty">' + esc(L(U.none)) + ' <a href="' + c.href + '">' +
            esc(L(c.goTxt || U.noneGo)) + '</a></p>';
+  } else if (c.kind === 'floor'){
+    var sm = state.rows[0] || {};
+    extra = '<span class="tot">' + Number(sm.n_readings || 0).toLocaleString() + ' ' +
+            esc(L(U.times)) + '</span>';
+    body = floorBody(c, sm, state.rows2 || []) +
+      '<div class="actions"><button class="del" data-key="' + c.key + '">' +
+      esc(state.delMsg || L(U.del)) + '</button></div>';
   } else if (c.kind === 'range'){
     var r = state.rows[0];
     extra = '<span class="tot">' + Number(r.n_readings || 0).toLocaleString() + ' ' +
@@ -490,9 +598,20 @@ function load(){
   CARDS.forEach(function(c){
     STATE[c.key] = { loading:true };
     /* 카드마다 따로 부르고 따로 실패한다. 하나가 죽어도 나머지는 그대로 뜬다. */
-    CLIENT.rpc(c.rpc).then(function(res){
-      if (res.error) throw res.error;
-      STATE[c.key] = { rows: res.data || [] };
+    /* rpc2 가 있는 카드는 둘 다 받아야 한다. 하나만 실패하면 카드만 실패하고
+       나머지 카드는 그대로 뜬다 — 카드별 독립 실패는 그대로다. */
+    (c.rpc2
+      ? Promise.all([CLIENT.rpc(c.rpc), CLIENT.rpc(c.rpc2)]).then(function(rs){
+          if (rs[0].error) throw rs[0].error;
+          if (rs[1].error) throw rs[1].error;
+          return { data: rs[0].data || [], data2: rs[1].data || [] };
+        })
+      : CLIENT.rpc(c.rpc).then(function(res){
+          if (res.error) throw res.error;
+          return { data: res.data || [], data2: [] };
+        })
+    ).then(function(res){
+      STATE[c.key] = { rows: res.data, rows2: res.data2 };
     }).catch(function(e){
       console.warn('/me/: ' + c.rpc + ' failed', e);
       STATE[c.key] = { err:true };
