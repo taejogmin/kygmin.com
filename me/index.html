@@ -422,9 +422,27 @@ function setName(nick){
     }
     box.textContent = prev;
   }
-  if (box.textContent === txt) return;
-  if (window.KYG_SCRAMBLE) window.KYG_SCRAMBLE(box, txt);
-  else { box.textContent = txt; }
+  if (box.dataset.plain === txt && box.textContent === txt) return;
+
+  /* 애니메이션을 못 믿는 두 경우에는 아예 돌리지 않는다.
+     · 탭이 배경이면 requestAnimationFrame이 멈춘다 — 라이브에서 실제로 겪었다.
+       프레임 8에서 얼어붙어 제목이 'EyP' 상태로 남았다.
+     · 동작 줄이기를 켠 사용자에게는 글자가 튀는 효과를 보일 이유가 없다.
+     제목은 이 페이지의 신원이라 반쯤 뒤섞인 채로 남으면 본문 라벨보다 나쁘다. */
+  var still = (typeof document.visibilityState === 'string' && document.visibilityState !== 'visible') ||
+              (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  function settle(){
+    if (box.dataset.plain === txt && box.textContent === txt) return;
+    if (box._s && box._s.raf) cancelAnimationFrame(box._s.raf);
+    box.textContent = txt;
+    box.dataset.plain = txt;
+  }
+  if (still || !window.KYG_SCRAMBLE){ settle(); return; }
+  window.KYG_SCRAMBLE(box, txt);
+  /* 그물망. 언어 유지 패치의 lang-pending 2초 타이머와 같은 계열 —
+     효과가 죽어도 영원히 이상한 상태에 갇히지 않는다. */
+  clearTimeout(setName._t);
+  setName._t = setTimeout(settle, 3500);
 }
 
 /* ---------- 배선 ---------- */
