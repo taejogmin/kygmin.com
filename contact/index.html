@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Contact — KYGMIN</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#F6F6F4;
+  --ink:#141414;
+  --gray:#DDDDD8;
+  --green:#2BB673;
+  --green-deep:#0F6E56;
+  --red:#A32D2D;
+  --arch:'Archivo','Pretendard',sans-serif;
+  --sans:'Pretendard',-apple-system,'Apple SD Gothic Neo','Malgun Gothic','Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono','SF Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{transition:none!important;}
+}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:16px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  word-break:keep-all;overflow-wrap:break-word;
+}
+a{color:inherit;text-decoration:none;}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--green);outline-offset:3px;}
+.wrap{max-width:960px;margin:0 auto;padding:0 24px;}
+
+/* ── Nav ── */
+nav{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:3px solid var(--ink);}
+.nav-inner{
+  max-width:960px;margin:0 auto;padding:14px 24px;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;
+}
+.logo{font-family:var(--arch);font-weight:900;font-size:19px;letter-spacing:-0.5px;}
+.logo em{font-style:normal;background:var(--green);color:var(--paper);padding:0 6px;display:inline-block;transform:rotate(-1.5deg);}
+.nav-links{display:flex;gap:8px;flex-wrap:wrap;}
+.nav-links a{
+  font-family:var(--arch);font-size:12px;font-weight:700;text-transform:uppercase;
+  border:2px solid var(--ink);padding:6px 13px;background:#fff;
+  box-shadow:3px 3px 0 var(--ink);transition:transform .1s, box-shadow .1s;
+}
+.nav-links a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+.nav-links a.on{background:var(--green);color:var(--paper);}
+
+/* ── Language toggle ── */
+#langtoggle{
+  position:fixed;right:20px;bottom:20px;z-index:50;display:inline-flex;
+  border:2px solid var(--ink);box-shadow:3px 3px 0 var(--ink);background:#fff;
+  font-family:var(--arch);font-weight:700;font-size:12px;overflow:hidden;
+}
+#langtoggle button{font:inherit;border:none;background:none;cursor:pointer;padding:9px 14px;color:var(--ink);letter-spacing:.5px;transition:background .1s,color .1s;}
+#langtoggle button.on{background:var(--green);color:var(--paper);}
+#langtoggle button+button{border-left:2px solid var(--ink);}
+.scr{color:var(--green);}
+.box .scr{color:var(--paper);}
+
+/* ── Hero ── */
+header{padding:56px 0 40px;border-bottom:3px solid var(--ink);}
+.sec-tag{
+  font-family:var(--mono);font-size:12.5px;font-weight:600;
+  color:var(--green-deep);letter-spacing:1px;display:block;margin-bottom:14px;
+}
+h1{
+  font-family:var(--arch);font-weight:900;text-transform:uppercase;
+  font-size:clamp(34px, 6.5vw, 56px);line-height:1.02;letter-spacing:-2px;
+}
+h1 .box{background:var(--ink);color:var(--paper);padding:0 12px;display:inline-block;transform:rotate(-1deg);}
+.hero-sub{margin-top:18px;font-size:15.5px;max-width:600px;font-weight:500;}
+.hero-note{margin-top:12px;font-family:var(--mono);font-size:12px;color:#4A4A46;}
+
+/* ── Main ── */
+main{padding:40px 0 88px;}
+
+/* ── Contact form ── */
+form{max-width:640px;}
+.field{margin-bottom:22px;}
+label{display:block;font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.5px;margin-bottom:7px;}
+label .req{color:var(--red);}
+label .opt{color:#6B6B67;font-weight:400;}
+input[type=text],input[type=email],textarea{
+  width:100%;font-family:var(--sans);font-size:15px;line-height:1.6;
+  border:3px solid var(--ink);background:#fff;padding:12px 14px;
+  box-shadow:4px 4px 0 var(--ink);
+}
+textarea{min-height:190px;resize:vertical;}
+input::placeholder,textarea::placeholder{color:#8A8A85;}
+.hint{font-family:var(--mono);font-size:11.5px;color:#6B6B67;margin-top:7px;line-height:1.6;}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
+button.send{
+  font-family:var(--arch);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;
+  border:3px solid var(--ink);background:var(--green);color:var(--paper);
+  padding:13px 26px;cursor:pointer;box-shadow:5px 5px 0 var(--ink);
+  transition:transform .1s, box-shadow .1s;
+}
+button.send:hover:not(:disabled){transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink);}
+button.send:disabled{background:var(--gray);color:#6B6B67;cursor:not-allowed;box-shadow:3px 3px 0 var(--ink);}
+.status{margin-top:18px;font-family:var(--mono);font-size:13px;border:3px solid var(--ink);padding:14px 16px;display:none;}
+.status.ok{display:block;background:#E9F7F0;}
+.status.bad{display:block;background:#FBEAE4;color:var(--red);}
+.who{font-family:var(--mono);font-size:11.5px;color:#6B6B67;margin-top:-8px;margin-bottom:22px;}
+.notice{border:3px solid var(--ink);background:#fff;box-shadow:5px 5px 0 var(--ink);padding:18px 20px;margin-bottom:34px;}
+.notice b{display:block;font-family:var(--mono);font-size:12px;letter-spacing:.5px;margin-bottom:8px;}
+.notice p{font-size:13.5px;color:#3A3A38;line-height:1.65;}
+.notice p+p{margin-top:8px;}
+
+/* footer */
+footer{border-top:3px solid var(--ink);padding:26px 0;}
+.foot-inner{max-width:960px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:12px;color:#4A4A46;}
+</style>
+<script>
+window.KYG_LANG=(function(){try{var v=localStorage.getItem('kyg_lang');if(v==='kr'||v==='en')return v;}catch(e){}return 'en';})();
+window.APP_LANG=window.KYG_LANG;
+if(window.KYG_LANG!=='en'){
+  document.documentElement.setAttribute('lang','ko');
+  document.documentElement.className+=' lang-pending';
+  setTimeout(function(){document.documentElement.classList.remove('lang-pending');},2000);
+}
+</script>
+<style>html.lang-pending .tx{visibility:hidden}</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="/index.html">KYG<em>MIN</em></a>
+    <div class="nav-links">
+      <a href="/index.html"><span class="tx" data-en="Home" data-kr="홈">Home</span></a>
+      <a href="/playhouse/">PLAYHOUSE</a>
+      <a href="/privacy.html"><span class="tx" data-en="Privacy" data-kr="개인정보">Privacy</span></a>
+      <a class="on" href="./"><span class="tx" data-en="Contact" data-kr="문의">Contact</span></a>
+    </div>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <span class="sec-tag tx" data-en="CONTACT · FEEDBACK · DATA REQUESTS" data-kr="문의 · 피드백 · 데이터 요청">CONTACT · FEEDBACK · DATA REQUESTS</span>
+    <h1>SAY <span class="box">HELLO</span></h1>
+    <p class="hero-sub tx" data-en="Anything about this site — a bug, an idea, a question, or a request to delete your account and its data. The message goes straight to the person who built it." data-kr="이 사이트에 대한 무엇이든 — 버그, 아이디어, 질문, 또는 계정과 데이터의 삭제 요청. 만든 사람에게 바로 전달됩니다.">Anything about this site — a bug, an idea, a question, or a request to delete your account and its data. The message goes straight to the person who built it.</p>
+    <p class="hero-note tx" data-en="NO EMAIL ADDRESS IS PUBLISHED HERE · A REPLY ADDRESS IS OPTIONAL" data-kr="이 페이지에 이메일 주소는 공개하지 않습니다 · 답장 주소는 선택 사항">NO EMAIL ADDRESS IS PUBLISHED HERE · A REPLY ADDRESS IS OPTIONAL</p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="notice">
+      <b class="tx" data-en="Before you send" data-kr="보내기 전에">Before you send</b>
+      <p class="tx" data-en="The message and anything you type into it are delivered by a form service, then emailed to the site owner. Do not put passwords, card numbers or anything you would not put in an email." data-kr="메시지와 거기 적은 내용은 폼 서비스를 거쳐 운영자 메일로 전달됩니다. 비밀번호나 카드번호처럼 메일에 적지 않을 것은 적지 마세요.">The message and anything you type into it are delivered by a form service, then emailed to the site owner. Do not put passwords, card numbers or anything you would not put in an email.</p>
+      <p class="tx" data-en="A reply address is optional. Leave it blank and the message still arrives — there just is no way to answer it." data-kr="답장 주소는 선택입니다. 비워 두어도 메시지는 도착합니다 — 다만 답을 드릴 방법이 없습니다.">A reply address is optional. Leave it blank and the message still arrives — there just is no way to answer it.</p>
+      <p class="tx" data-en="Asking for an account to be deleted? Sign in first and the request will carry your account automatically, so it can be verified. Otherwise write the email address you signed up with." data-kr="계정 삭제를 요청하시나요? 먼저 로그인하면 요청에 계정이 자동으로 붙어 본인 확인이 됩니다. 로그인하지 않는다면 가입에 쓴 이메일 주소를 본문에 적어주세요.">Asking for an account to be deleted? Sign in first and the request will carry your account automatically, so it can be verified. Otherwise write the email address you signed up with.</p>
+    </div>
+
+    <form id="cform" novalidate>
+      <p class="who" id="who"></p>
+      <div class="field">
+        <label for="subject"><span class="tx" data-en="Subject" data-kr="제목">Subject</span> <span class="req">*</span></label>
+        <input type="text" id="subject" name="subject" maxlength="120" required>
+      </div>
+      <div class="field">
+        <label for="message"><span class="tx" data-en="Message" data-kr="본문">Message</span> <span class="req">*</span></label>
+        <textarea id="message" name="message" maxlength="5000" required></textarea>
+      </div>
+      <div class="field">
+        <label for="email"><span class="tx" data-en="Your email" data-kr="답장 받을 이메일">Your email</span> <span class="opt tx" data-en="(optional)" data-kr="(선택)">(optional)</span></label>
+        <input type="email" id="email" name="email" maxlength="200" autocomplete="email">
+        <p class="hint tx" data-en="Only used to reply. Leave it blank if you do not want a reply." data-kr="답장에만 씁니다. 답을 원하지 않으면 비워 두세요.">Only used to reply. Leave it blank if you do not want a reply.</p>
+      </div>
+      <!-- 허니팟: 사람에게는 보이지 않는다. 채워져 있으면 봇이다. -->
+      <div class="hp" aria-hidden="true"><label for="botcheck">Leave this empty</label><input type="text" id="botcheck" name="botcheck" tabindex="-1" autocomplete="off"></div>
+      <button class="send" type="submit" id="send"><span class="tx" data-en="Send" data-kr="보내기">Send</span></button>
+      <div class="status" id="status" role="status" aria-live="polite"></div>
+    </form>
+  </div>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <span>© KYGMIN.COM</span>
+    <span class="tx" data-en="CONTACT · NO PUBLISHED ADDRESS" data-kr="문의 · 공개 주소 없음">CONTACT · NO PUBLISHED ADDRESS</span>
+    <a class="tx" href="/privacy.html" data-en="PRIVACY POLICY" data-kr="개인정보처리방침">PRIVACY POLICY</a>
+  </div>
+</footer>
+
+<div id="langtoggle" aria-label="Language">
+  <button data-lang="en" class="on">EN</button>
+  <button data-lang="kr">한</button>
+</div>
+
+<script>
+window.APP_LANG = window.KYG_LANG || 'en';
+window.APP_LANG_LISTENERS = [];
+(function(){
+  var POOL = ("ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎㅏㅑㅓㅕㅗㅛㅜㅠㅡㅣ"
+    + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-·").split("");
+  function esc(c){return c==="&"?"&amp;":c==="<"?"&lt;":c===">"?"&gt;":c;}
+  function Scramble(el){ this.el=el; this.raf=null; this.frame=this.frame.bind(this); }
+  Scramble.prototype.set=function(txt){
+    var old = this.el.dataset.plain!==undefined ? this.el.dataset.plain : this.el.textContent;
+    var len=Math.max(old.length, txt.length);
+    this.q=[];
+    for(var i=0;i<len;i++){
+      var from=old[i]||"", to=txt[i]||"";
+      var start=Math.floor(Math.random()*20);
+      var end=start+Math.floor(Math.random()*25)+12;
+      this.q.push({from:from,to:to,start:start,end:end,ch:null});
+    }
+    if(this.raf) cancelAnimationFrame(this.raf);
+    this.f=0; this.txt=txt; this.frame();
+  };
+  Scramble.prototype.frame=function(){
+    var out="", done=0;
+    for(var i=0;i<this.q.length;i++){
+      var it=this.q[i];
+      if(this.f>=it.end){ done++; out+=esc(it.to); }
+      else if(this.f>=it.start){
+        if(!it.ch || Math.random()<0.3){ it.ch=POOL[Math.floor(Math.random()*POOL.length)]; }
+        out+='<span class="scr">'+esc(it.ch)+'</span>';
+      } else out+=esc(it.from);
+    }
+    this.el.innerHTML=out;
+    if(done===this.q.length){ this.el.dataset.plain=this.txt; }
+    else { this.f++; this.raf=requestAnimationFrame(this.frame); }
+  };
+  var els=[].slice.call(document.querySelectorAll('.tx'));
+  els.forEach(function(el){ el.dataset.plain=el.textContent; el._s=new Scramble(el); });
+  (function(){
+    var L = window.KYG_LANG || 'en';
+    var btns=document.querySelectorAll('#langtoggle button');
+    for(var i=0;i<btns.length;i++){ btns[i].classList.toggle('on', btns[i].dataset.lang===L); }
+    if(L!=='en') els.forEach(function(el){ var t=el.dataset[L]; if(t!==undefined){ el.textContent=t; el.dataset.plain=t; } });
+    document.documentElement.classList.remove('lang-pending');
+  })();
+  function setLang(lang){
+    if(lang===window.APP_LANG) return;
+    window.APP_LANG = lang;
+    try{ localStorage.setItem('kyg_lang', lang); }catch(e){}
+    document.documentElement.lang = (lang==='kr'?'ko':'en');
+    var btns=document.querySelectorAll('#langtoggle button');
+    for(var i=0;i<btns.length;i++){ btns[i].classList.toggle('on', btns[i].dataset.lang===lang); }
+    els.forEach(function(el){ var t=el.dataset[lang]; if(t!==undefined) el._s.set(t); });
+    window.APP_LANG_LISTENERS.forEach(function(fn){ try{ fn(lang); }catch(e){ console.error(e); } });
+  }
+  document.getElementById('langtoggle').addEventListener('click', function(e){
+    var b=e.target.closest('button'); if(b) setLang(b.dataset.lang);
+  });
+})();
+</script>
+
+<!-- 서치바 (언어별 플레이스홀더 + 카드 필터) -->
+<script>
+/* ── 문의 폼 ────────────────────────────────────────────────────────────
+   이 사이트는 정적(GitHub Pages)이라 서버가 없다. 폼은 Web3Forms 로 POST 하고
+   거기서 운영자 메일로 전달된다. access key 는 공개해도 되는 값이며(공식 FAQ:
+   "You do not need to hide the access key") **수신 이메일 주소를 드러내지 않는다.**
+   그것이 이 페이지에 이메일을 적지 않는 방법이다.
+
+   설계 메모:
+   - 필수는 제목·본문 둘뿐. 답장 주소는 선택이며, 비우면 답을 못 할 뿐 메시지는 도착한다.
+   - 로그인 상태면 계정 id 를 자동으로 붙인다. 계정 삭제 요청의 본인 확인을 위해서다 —
+     이메일이 선택 입력이면 누구든 남의 계정 삭제를 요청할 수 있기 때문이다.
+   - 스팸은 허니팟(botcheck)으로 막는다. 캡차는 넣지 않았다 — 사람에게 일을 시키는 대신
+     봇만 채우는 숨은 칸으로 대부분 걸러진다.
+   - 전송 중에는 버튼을 잠근다(중복 발송 방지). */
+(function(){
+  var ACCESS_KEY = 'dd64a9c9-ea3c-4c76-9f11-00e8f6a5ffc4';
+  /* 공개해도 되는 값이다 (Web3Forms 공식 FAQ: "You do not need to hide the access key").
+     수신 이메일 주소를 드러내지 않기 때문에 이 페이지에 주소를 적지 않을 수 있다.
+     단, 키만으로 아무 사이트에서나 전송할 수 있으므로 Web3Forms 설정에서
+     **허용 도메인을 kygmin.com 으로 잠가야 한다.** 안 잠그면 남이 이 키로 스팸을 보낼 수 있다. */
+  var T = {
+    en:{ need:'Subject and message are both required.',
+         bad:'That does not look like an email address. Clear it or fix it.',
+         sending:'Sending…', send:'Send',
+         ok:'Sent. Thank you — if you left an address, a reply will come to it.',
+         fail:'Could not send. Try again in a moment.',
+         nokey:'This form is not connected yet. Nothing was sent.',
+         signed:function(n){return 'Signed in as '+n+' — this account will be attached, so an account request can be verified.';} },
+    kr:{ need:'제목과 본문은 둘 다 필요합니다.',
+         bad:'이메일 주소 형식이 아닙니다. 지우거나 고쳐주세요.',
+         sending:'보내는 중…', send:'보내기',
+         ok:'보냈습니다. 고맙습니다 — 주소를 남기셨다면 그리로 답을 드릴게요.',
+         fail:'보내지 못했습니다. 잠시 후 다시 시도해 주세요.',
+         nokey:'폼이 아직 연결되지 않았습니다. 아무것도 전송되지 않았습니다.',
+         signed:function(n){return n+' 으로 로그인됨 — 이 계정이 함께 전달되어 계정 관련 요청의 본인 확인이 됩니다.';} }
+  };
+  function L(){ return T[window.APP_LANG==='kr'?'kr':'en']; }
+  var f=document.getElementById('cform'), st=document.getElementById('status'),
+      btn=document.getElementById('send'), who=document.getElementById('who');
+  function say(kind, msg){ st.className='status '+kind; st.textContent=msg; }
+
+  /* 로그인 정보는 위젯이 늦게 붙을 수 있으므로 리스너로 받는다 */
+  window.KYG_AUTH_LISTENERS = window.KYG_AUTH_LISTENERS || [];
+  function paintWho(){
+    var A=window.KYG_AUTH;
+    who.textContent = (A && A.user) ? L().signed(A.nickname || A.user.email || A.user.id) : '';
+  }
+  window.KYG_AUTH_LISTENERS.push(paintWho);
+  window.APP_LANG_LISTENERS.push(function(){
+    paintWho();
+    btn.querySelector('.tx').textContent = L().send;
+  });
+  paintWho();
+
+  f.addEventListener('submit', async function(e){
+    e.preventDefault();
+    if(document.getElementById('botcheck').value) return;      /* 봇 */
+    var subject=f.subject.value.trim(), message=f.message.value.trim(), email=f.email.value.trim();
+    if(!subject || !message){ say('bad', L().need); return; }
+    if(email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ say('bad', L().bad); return; }
+    if(ACCESS_KEY.indexOf('PASTE_') === 0){ say('bad', L().nokey); return; }
+
+    var A=window.KYG_AUTH;
+    var payload = {
+      access_key: ACCESS_KEY,
+      subject: '[kygmin.com] ' + subject,
+      message: message,
+      from_name: 'kygmin.com contact form',
+      page_lang: window.APP_LANG || 'en',
+      account: (A && A.user) ? (A.user.id + (A.nickname ? ' / '+A.nickname : '')) : '(not signed in)',
+      botcheck: ''
+    };
+    if(email) payload.email = email;      /* 답장 주소. 없으면 아예 보내지 않는다 */
+
+    btn.disabled=true; btn.querySelector('.tx').textContent = L().sending; say('', '');
+    try{
+      var r = await fetch('https://api.web3forms.com/submit', {
+        method:'POST', headers:{'Content-Type':'application/json', Accept:'application/json'},
+        body: JSON.stringify(payload)
+      });
+      var j = await r.json().catch(function(){ return {}; });
+      if(r.ok && j.success){ say('ok', L().ok); f.reset(); }
+      else { say('bad', L().fail); }
+    }catch(err){ say('bad', L().fail); }
+    btn.disabled=false; btn.querySelector('.tx').textContent = L().send;
+  });
+})();
+</script>
+<script src="/auth-widget.js" defer></script>
+</body>
+</html>
