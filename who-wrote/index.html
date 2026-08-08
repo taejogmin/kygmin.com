@@ -108,6 +108,11 @@ textarea:focus-visible{outline:3px solid var(--green); outline-offset:2px}
 .readout .pc{text-align:right}
 .readout .cap{color:#8a8a86; font-size:11px; margin-bottom:8px; text-transform:uppercase; letter-spacing:.06em}
 .readout .cap+.cap{margin-top:-6px; color:#b0b0ab; text-transform:none; letter-spacing:0}
+.readout .agree{margin-top:14px; padding-top:12px; border-top:1px solid #3a3a38;
+  font-size:12px; line-height:1.55; color:#b0b0ab}
+.readout .agree b{color:var(--bg)}
+.readout .agree.t2 b{color:var(--green)}
+.readout .agree.t0 b{color:#E0836B}
 .verify{display:flex; gap:10px; align-items:center; margin-top:12px; flex-wrap:wrap}
 .verify .q{font-weight:700}
 select{font:inherit; border:3px solid var(--line); padding:6px 8px; background:var(--card)}
@@ -515,7 +520,12 @@ function extractQuery(raw){
     const h=lines.filter(ln=>r.test(ln)).length;
     if(h>hits){hits=h;rx=r;}
   }
-  if(!rx||hits===0) return {text:raw.trim(), msgs:0, stripped:false};
+  /* 이름·시각 형식이 아니면 줄 단위를 메시지 단위로 본다.
+     누적 판별의 「몇 개 중 몇 개」를 세려면 조각 목록이 필요하다. */
+  if(!rx||hits===0){
+    const parts=raw.replace(/\r\n?/g,'\n').split('\n').map(s=>s.trim()).filter(Boolean);
+    return {text:raw.trim(), msgs:0, stripped:false, parts};
+  }
   const out=[];
   for(const ln of lines){
     if(!ln.trim()) continue;
@@ -529,7 +539,41 @@ function extractQuery(raw){
       if(out.length) out[out.length-1]+='\n'+ln; else out.push(ln);
     }
   }
-  return {text:out.join('\n').trim(), msgs:out.length, stripped:true};
+  return {text:out.join('\n').trim(), msgs:out.length, stripped:true, parts:out.slice()};
+}
+
+/* ---- 누적 판별 ----
+   실측(5인 방·코퍼스 20만 자·120판): 메시지를 따로 채점했을 때 최종 지목과 일치한 개수가
+   실제 적중률을 강하게 가른다. 3개 중 1개 47% / 2개 80% / 3개 100%.
+   8개 중 과반 초과 95% 대 그 이하 74%. **지금 화면 %는 증거가 늘어도 꿈쩍하지 않으므로
+   (z 정규화가 크기 정보를 없앤다) 이 일치 개수가 화면에서 유일하게 증거량을 나르는 값이다.**
+
+   최종 지목은 바꾸지 않는다 — 로그우도 합산은 이어붙여 한 번 채점한 것과 같고(600판 중 94.8% 동일),
+   메시지별 표결로 지목하면 오히려 낮아진다(8개 기준 합산 81% 대 표 72%). 표시만 더한다.
+
+   8자 미만 조각은 표결에서 뺀다. 「ㅇㅇ」 같은 조각은 거의 정보가 없는데 표는 한 장을 갖는다. */
+const AGREE_MIN_CHARS = 8;
+function agreeParts(parts){ return (parts||[]).filter(p=>p && p.length>=AGREE_MIN_CHARS); }
+/* 0 = 갈림(60% 이하) · 1 = 대체로 일치 · 2 = 전원 일치 */
+function agreeTier(agree, n){
+  if(!(n>=2)) return null;
+  if(agree===n) return 2;
+  return agree/n > 0.6 ? 1 : 0;
+}
+async function agreeStats(models, parts, include, top){
+  const use=agreeParts(parts);
+  if(use.length<2) return null;
+  const users=include||Object.keys(models);
+  const V=new Set();
+  for(const u of users) for(const g of models[u].ng.keys()) V.add(g);
+  let agree=0;
+  for(const p of use){
+    const qng=charNgrams(p);
+    let best=null, bv=Infinity;
+    for(const u of users){ const v=nbScore(models[u], V.size, qng); if(v<bv){bv=v;best=u;} }
+    if(best===top) agree++;
+  }
+  return {n:use.length, agree, dropped:(parts||[]).length-use.length, tier:agreeTier(agree,use.length)};
 }
 /*__ENDCORE__*/
 
@@ -543,6 +587,11 @@ const T={
     exp:(p,k,n)=>`in a room like this (${k} suspects, ${n} chars each) the measured hit rate is about ${p}%`,
     expOut:'outside the measured grid — no expectation shown',
     expWeak:(p,b)=>`about ${p}% — barely above the ${b}% you'd get by guessing. Not worth doing under these conditions.`,
+    agree:(a,n,who)=>`${a} of ${n} messages point to ${who} when scored on their own`,
+    agreeT:['the messages disagree with each other. Treat this verdict as weak',
+            'mostly consistent',
+            'the strongest shape this tool can show'],
+    agreeDrop:d=>`${d} message${d>1?'s':''} too short to count`,
     qph:'Paste as-is — [Name] [2:04 PM] lines are fine, names and times are stripped automatically.',
     room:k=>`${k} suspects in the room — random guessing would hit ${(100/k).toFixed(0)}%.`,
     parsed:(f,n,u)=>`Parsed ${f} · ${n.toLocaleString()} messages · ${u} people`,
@@ -558,6 +607,11 @@ const T={
     exp:(p,k,n)=>`이런 방(용의자 ${k}명, 1인당 ${n}자)에서 실측 적중률은 약 ${p}%`,
     expOut:'실측 격자 밖이라 기대치를 말하지 않습니다',
     expWeak:(p,b)=>`실측 적중률 약 ${p}% — 그냥 찍어도 ${b}%라 사실상 차이가 없습니다. 이 조건에선 안 하는 게 낫습니다`,
+    agree:(a,n,who)=>`메시지 ${n}개 중 ${a}개가 따로 채점해도 ${who} 쪽을 가리킵니다`,
+    agreeT:['메시지마다 답이 갈립니다. 이 판별은 약하게 보세요',
+            '대체로 일관됩니다',
+            '이 도구가 보여줄 수 있는 가장 강한 모양입니다'],
+    agreeDrop:d=>`짧아서 세지 않은 메시지 ${d}개`,
     qph:'[이름] [오후 2:04] 형식째 붙여넣어도 됩니다 — 이름·시각은 자동으로 지워집니다.',
     room:k=>`용의자 ${k}명 — 무작위로 찍어도 ${(100/k).toFixed(0)}%는 맞습니다.`,
     parsed:(f,n,u)=>`${f} 인식 · 메시지 ${n.toLocaleString()}개 · ${u}명`,
@@ -728,9 +782,11 @@ $('#query').addEventListener('input',()=>{qmeter();updateRunnable();});
 // 판별 실행
 $('#run').addEventListener('click',async ()=>{
   const raw=$('#query').value.trim(); if(!raw) return;
-  const q=extractQuery(raw).text; if(!q) return;
+  const ex=extractQuery(raw); const q=ex.text; if(!q) return;
   $('#run').disabled=true;
   const res=await scoreQuery(state.models,q,[...state.include]);
+  /* 최종 지목이 정해진 뒤에 메시지별 일치를 센다 — 지목 자체는 합산으로 그대로 둔다. */
+  const ag=await agreeStats(state.models, ex.parts, [...state.include], res.ranked[0]);
   $('#run').disabled=false;
   state.pending={top:res.ranked[0]};
   const render=()=>{
@@ -757,6 +813,20 @@ $('#run').addEventListener('click',async ()=>{
       const pc=document.createElement('span'); pc.className='pc';
       pc.textContent=(100*res.conf[u]).toFixed(0)+'%';
       row.append(nm,bar,pc); ro.appendChild(row);
+    }
+    /* 누적 판별 — 막대 아래. 화면 %는 손대지 않는다(상대값 그대로).
+       이 줄만이 증거가 몇 개나 되는지를 나른다. */
+    if(ag){
+      const el=document.createElement('div');
+      el.className='agree t'+ag.tier;
+      const strong=document.createElement('b');
+      strong.textContent=L().agree(ag.agree, ag.n, res.ranked[0]);
+      el.appendChild(strong);
+      const note=document.createElement('span');
+      note.textContent=' — '+L().agreeT[ag.tier]
+        + (ag.dropped>0 ? ' · '+L().agreeDrop(ag.dropped) : '');
+      el.appendChild(note);
+      ro.appendChild(el);
     }
   };
   render(); state.lastRender=render;
@@ -788,6 +858,7 @@ $('#vno').addEventListener('click',()=>{
 
 // ===================== 자가시험 =====================
 window.WW={parseAny,groupByUser,buildModels,scoreQuery,extractQuery,queryTier,gaugeTier,confBand,charNgrams,nbScore,NB_ALPHA,expectOf,EXPECT,
+  agreeTier,agreeParts,agreeStats,AGREE_MIN_CHARS,
   async selftest(){
     // 1) 파서 — 카톡 PC 본문 첫 줄이 '[' 로 시작해도 JSON 으로 오인하지 않는지
     const pc='[홍길동] [오후 1:23] ㅋㅋ 뭐함\n[김철수] [오후 1:24] 밥\n먹는중\n[홍길동] [오후 1:25] 사진\n';
