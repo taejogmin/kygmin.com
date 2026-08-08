@@ -116,6 +116,19 @@ footer{border-top:3px solid var(--ink);padding:26px 0;}
   header{padding:48px 0 36px;}
 }
 </style>
+<script>
+/* 사이트 공통 언어 유지 (claude/site-language-persistence.md).
+   이 페이지만 빠져 있어서 한국어로 사이트를 보던 사람이 여기서만 영어를 만났다.
+   프라이버시 문서라 특히 곤란한 누락이었다. */
+window.KYG_LANG=(function(){try{var v=localStorage.getItem('kyg_lang');if(v==='kr'||v==='en')return v;}catch(e){}return 'en';})();
+window.APP_LANG=window.KYG_LANG;
+if(window.KYG_LANG!=='en'){
+  document.documentElement.setAttribute('lang','ko');
+  document.documentElement.className+=' lang-pending';
+  setTimeout(function(){document.documentElement.classList.remove('lang-pending');},2000);
+}
+</script>
+<style>html.lang-pending .tx{visibility:hidden}</style>
 </head>
 <body>
 
@@ -250,9 +263,21 @@ footer{border-top:3px solid var(--ink);padding:26px 0;}
 
   var els=[].slice.call(document.querySelectorAll('.tx'));
   els.forEach(function(el){ el.dataset.plain=el.textContent; el._s=new Scramble(el); });
-  var cur='en';
+  /* 복원은 스크램블을 타지 않는다 — 애니메이션은 「방금 누른 전환」의 피드백이지
+     페이지를 열 때마다 볼 것이 아니다. dataset.plain 도 같이 갱신해야
+     다음 전환의 시작 문자열이 어긋나지 않는다. */
+  (function(){
+    var L = window.KYG_LANG || 'en';
+    var b0=document.querySelectorAll('#langtoggle button');
+    for(var i=0;i<b0.length;i++){ b0[i].classList.toggle('on', b0[i].dataset.lang===L); }
+    if(L!=='en') els.forEach(function(el){ var t=el.dataset[L]; if(t!==undefined){ el.textContent=t; el.dataset.plain=t; } });
+    document.documentElement.classList.remove('lang-pending');
+  })();
+  var cur=(window.KYG_LANG==='kr'?'kr':'en');
   function setLang(lang){
     if(lang===cur) return; cur=lang;
+    window.APP_LANG=lang;
+    try{ localStorage.setItem('kyg_lang', lang); }catch(e){}
     document.documentElement.lang = (lang==='kr'?'ko':'en');
     var btns=document.querySelectorAll('#langtoggle button');
     for(var i=0;i<btns.length;i++){ btns[i].classList.toggle('on', btns[i].dataset.lang===lang); }
