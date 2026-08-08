@@ -92,6 +92,7 @@ textarea{width:100%; min-height:110px; font:inherit; border:3px solid var(--line
 textarea:focus-visible{outline:3px solid var(--green); outline-offset:2px}
 .qmeter{font-size:13px; margin-top:8px; color:var(--dim)}
 .qmeter b{color:var(--ink)}
+.qmeter b.weak{color:var(--warn)}
 .controls{display:flex; gap:10px; margin-top:12px; flex-wrap:wrap; align-items:center}
 
 .verdict{margin-top:18px}
@@ -462,9 +463,18 @@ async function scoreQuery(models, query, include){
    실측 (AI Hub 012, NB 단독 α=0.1, k당 160판, 열 = 질의 20/50/100/300자):
    **코퍼스는 20만 자까지 계속 좋아진다. 상한을 암시하는 말을 쓰면 안 된다.** */
 const EXPECT = {
+  2: { 2000:[50,55,55,70], 10000:[56,68,71,75], 50000:[62,72,75,89], 200000:[76,82,87,94] },
+  3: { 2000:[36,39,41,46], 10000:[38,39,50,60], 50000:[45,52,57,75], 200000:[46,61,75,91] },
   4: { 2000:[36,31,44,53], 10000:[36,36,47,65], 50000:[43,46,64,79], 200000:[51,59,71,87] },
   7: { 2000:[19,33,32,37], 10000:[27,39,46,49], 50000:[21,48,61,68], 200000:[37,57,63,75] }
 };
+/* 2·3인 격자는 시드를 바꿔 두 번(150판+200판) 돌린 뒤 판수로 가중 평균한 값이다.
+   한 번만 돌렸을 때 2인·2,000자·20자 칸이 39%(무작위 50% 미만)로 나왔는데 재현되지 않았다.
+   k 가 작을수록 방-대-방 분산이 커서 단일 시드로는 칸 하나가 쉽게 뒤집힌다. */
+
+/* 무작위로 찍는 것 대비 이득이 이 값(%p) 미만이면 숫자만 보여주면 오해를 부른다.
+   2인 방은 기저가 50%라 "55%"가 커 보이지만 실제로는 동전 던지기와 다를 게 없다. */
+const WEAK_EDGE = 10;
 const EXPECT_N = [2000,10000,50000,200000];
 
 /* 부족 <10,000 ≤ 쓸만함 <50,000 ≤ 넉넉함.
@@ -478,12 +488,18 @@ function gaugeTier(chars){ return chars>=50000?2 : chars>=10000?1 : 0; }
    방 전체를 요약하는 값 중 이것이 가장 덜 치우친다. */
 function expectOf(k, medianChars, qlen){
   if(!(k>=2) || k>9 || !(medianChars>=2000) || !(qlen>=20)) return null;
-  const kk = k<=5 ? 4 : 7;
+  const kk = k===2 ? 2 : k===3 ? 3 : k<=5 ? 4 : 7;
   let n = EXPECT_N[0];
   for(const v of EXPECT_N) if(medianChars>=v) n=v;
   const row = EXPECT[kk][n];
   const m = qlen>=300?3 : qlen>=100?2 : qlen>=50?1 : 0;
-  return { pct: row[m], k: kk, n, approx: (kk!==k) || (medianChars>=EXPECT_N[EXPECT_N.length-1]&&medianChars>2*EXPECT_N[EXPECT_N.length-1]) };
+  const pct = row[m];
+  /* 기저는 화면에 실제로 뜬 용의자 수로 계산한다 — 격자를 4·7 로 붙였다고 해서
+     사용자가 보는 방의 무작위 확률이 달라지지는 않는다. */
+  return { pct, k: kk, n,
+    base: 100/k,
+    weak: (pct - 100/k) < WEAK_EDGE,
+    approx: (kk!==k) || (medianChars>=EXPECT_N[EXPECT_N.length-1]&&medianChars>2*EXPECT_N[EXPECT_N.length-1]) };
 }
 /* findings v1 확정안: 20자 미만 "참고만" / 100자 이상 권장 / 300자 이상 "신뢰 구간".
    20자 문턱이 빠져 있어서 25자와 99자가 같은 문구를 받고 있었다 (실측 .53 대 .72). */
@@ -526,6 +542,7 @@ const T={
     q:['under 20 characters — treat as a hint','short','decent','strong'],
     exp:(p,k,n)=>`in a room like this (${k} suspects, ${n} chars each) the measured hit rate is about ${p}%`,
     expOut:'outside the measured grid — no expectation shown',
+    expWeak:(p,b)=>`about ${p}% — barely above the ${b}% you'd get by guessing. Not worth doing under these conditions.`,
     qph:'Paste as-is — [Name] [2:04 PM] lines are fine, names and times are stripped automatically.',
     room:k=>`${k} suspects in the room — random guessing would hit ${(100/k).toFixed(0)}%.`,
     parsed:(f,n,u)=>`Parsed ${f} · ${n.toLocaleString()} messages · ${u} people`,
@@ -540,6 +557,7 @@ const T={
     q:['20자 미만 — 참고만 하세요','짧음','괜찮음','충분히 김'],
     exp:(p,k,n)=>`이런 방(용의자 ${k}명, 1인당 ${n}자)에서 실측 적중률은 약 ${p}%`,
     expOut:'실측 격자 밖이라 기대치를 말하지 않습니다',
+    expWeak:(p,b)=>`실측 적중률 약 ${p}% — 그냥 찍어도 ${b}%라 사실상 차이가 없습니다. 이 조건에선 안 하는 게 낫습니다`,
     qph:'[이름] [오후 2:04] 형식째 붙여넣어도 됩니다 — 이름·시각은 자동으로 지워집니다.',
     room:k=>`용의자 ${k}명 — 무작위로 찍어도 ${(100/k).toFixed(0)}%는 맞습니다.`,
     parsed:(f,n,u)=>`${f} 인식 · 메시지 ${n.toLocaleString()}개 · ${u}명`,
@@ -651,6 +669,9 @@ function renderUsers(){
     cb.addEventListener('change',()=>{
       cb.checked?state.include.add(u):state.include.delete(u);
       tr.classList.toggle('off',!cb.checked); roomNote(); updateRunnable();
+      /* 용의자를 넣고 빼면 기대치의 조건(용의자 수·코퍼스 중앙값)이 통째로 바뀐다.
+         질의를 다시 건드릴 때까지 옛 숫자가 남아 있으면 그냥 틀린 값을 보여주는 것이다. */
+      qmeter();
     });
     const td0=document.createElement('td'); td0.appendChild(cb);
     const td1=document.createElement('td'); td1.textContent=u; td1.style.fontWeight='700';
@@ -696,7 +717,9 @@ function qmeter(){
   const med=roomMedianChars();
   if(med!==null){
     const e=expectOf(state.include.size, med, len);
-    s += ' · ' + (e ? L().exp(e.pct, state.include.size, med.toLocaleString()) : L().expOut);
+    s += ' · ' + (!e ? L().expOut
+      : e.weak ? '<b class="weak">'+L().expWeak(e.pct, e.base.toFixed(0))+'</b>'
+      : L().exp(e.pct, state.include.size, med.toLocaleString()));
   }
   el.innerHTML=s;
 }
