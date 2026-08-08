@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Who Wrote This — KYGMIN</title>
+<meta name="description" content="Attach a KakaoTalk/Telegram export, paste a message, and the page names who wrote it. Everything runs in your browser.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script>
+window.KYG_LANG=(function(){try{var v=localStorage.getItem('kyg_lang');if(v==='kr'||v==='en')return v;}catch(e){}return 'en';})();
+window.APP_LANG=window.KYG_LANG;
+if(window.KYG_LANG!=='en'){
+  document.documentElement.setAttribute('lang','ko');
+  document.documentElement.className+=' lang-pending';
+  setTimeout(function(){document.documentElement.classList.remove('lang-pending');},2000);
+}
+</script>
+<style>
+html.lang-pending .tx{visibility:hidden}
+:root{
+  --bg:#F6F6F4; --ink:#141414; --green:#2BB673; --line:#141414;
+  --dim:#6b6b68; --card:#ffffff; --warn:#c8451f;
+}
+*{box-sizing:border-box; margin:0; padding:0}
+body{background:var(--bg); color:var(--ink);
+  font-family:'IBM Plex Sans KR',sans-serif; font-size:16px; line-height:1.55;
+  padding:24px 16px 120px}
+.mono{font-family:'IBM Plex Mono',monospace}
+.wrap{max-width:860px; margin:0 auto}
+a{color:var(--ink)}
+h1{font-size:clamp(28px,6vw,44px); letter-spacing:-.02em; line-height:1.05;
+  border:3px solid var(--line); padding:14px 18px; background:var(--card);
+  box-shadow:6px 6px 0 var(--line); text-transform:uppercase}
+h1 .accent{color:var(--green)}
+.sub{margin:14px 2px 0; color:var(--dim); font-size:14px}
+.privacy{display:inline-block; margin-top:10px; border:2px solid var(--line);
+  background:var(--green); color:var(--bg); font-weight:700; font-size:12px;
+  padding:3px 10px; text-transform:uppercase; letter-spacing:.04em}
+
+.step{margin-top:34px; border:3px solid var(--line); background:var(--card);
+  box-shadow:6px 6px 0 var(--line)}
+.step>header{display:flex; align-items:baseline; gap:12px; padding:12px 16px;
+  border-bottom:3px solid var(--line)}
+.step>header .no{font-family:'IBM Plex Mono',monospace; font-weight:700;
+  font-size:22px; color:var(--green)}
+.step>header .name{font-weight:700; text-transform:uppercase; letter-spacing:.03em}
+.step .body{padding:16px}
+.step.locked{opacity:.45; pointer-events:none}
+
+.drop{border:3px dashed var(--line); padding:34px 16px; text-align:center; cursor:pointer;
+  transition:background .12s}
+.drop.over{background:#e9f7f0}
+.drop .big{font-weight:700; font-size:18px}
+.drop .hint{color:var(--dim); font-size:13px; margin-top:6px}
+input[type=file]{display:none}
+
+button{font:inherit; font-weight:700; border:3px solid var(--line); background:var(--card);
+  color:var(--ink); padding:8px 16px; cursor:pointer; box-shadow:3px 3px 0 var(--line)}
+button:active{transform:translate(2px,2px); box-shadow:1px 1px 0 var(--line)}
+button:focus-visible,.drop:focus-visible{outline:3px solid var(--green); outline-offset:2px}
+button.fill{background:var(--green); color:var(--bg)}
+button.small{padding:4px 10px; font-size:13px; box-shadow:2px 2px 0 var(--line)}
+button[disabled]{opacity:.4; cursor:not-allowed}
+
+.filemeta{font-size:13px; color:var(--dim); margin-top:10px}
+.err{color:var(--warn); font-weight:700; margin-top:10px; font-size:14px}
+
+table.users{width:100%; border-collapse:collapse; font-size:14px}
+table.users th{text-align:left; border-bottom:3px solid var(--line); padding:6px 8px;
+  text-transform:uppercase; font-size:11px; letter-spacing:.05em}
+table.users td{border-bottom:1px solid #d8d8d4; padding:8px}
+table.users tr.off td{opacity:.35}
+.gauge{display:inline-block; border:2px solid var(--line); font-size:11px; font-weight:700;
+  padding:1px 8px; text-transform:uppercase; letter-spacing:.03em; white-space:nowrap}
+.gauge.g0{background:#f3d3c8}
+.gauge.g1{background:#f4ecc9}
+.gauge.g2{background:var(--green); color:var(--bg)}
+.roomnote{font-size:13px; color:var(--dim); margin-top:10px}
+
+textarea{width:100%; min-height:110px; font:inherit; border:3px solid var(--line);
+  padding:10px 12px; background:var(--card); resize:vertical}
+textarea:focus-visible{outline:3px solid var(--green); outline-offset:2px}
+.qmeter{font-size:13px; margin-top:8px; color:var(--dim)}
+.qmeter b{color:var(--ink)}
+.controls{display:flex; gap:10px; margin-top:12px; flex-wrap:wrap; align-items:center}
+
+.verdict{margin-top:18px}
+.readout{border:3px solid var(--line); background:var(--ink); color:var(--bg);
+  padding:14px; font-family:'IBM Plex Mono',monospace; font-size:14px}
+.readout .row{display:grid; grid-template-columns:minmax(90px,160px) 1fr 64px;
+  gap:10px; align-items:center; padding:4px 0}
+.readout .nm{overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.readout .bar{height:16px; background:#3a3a38; position:relative}
+.readout .bar>i{position:absolute; inset:0 auto 0 0; background:#8a8a86}
+.readout .row.top .bar>i{background:var(--green)}
+.readout .row.top .nm{color:var(--green); font-weight:700}
+.readout .pc{text-align:right}
+.readout .cap{color:#8a8a86; font-size:11px; margin-bottom:8px; text-transform:uppercase; letter-spacing:.06em}
+.readout .cap+.cap{margin-top:-6px; color:#b0b0ab; text-transform:none; letter-spacing:0}
+.verify{display:flex; gap:10px; align-items:center; margin-top:12px; flex-wrap:wrap}
+.verify .q{font-weight:700}
+select{font:inherit; border:3px solid var(--line); padding:6px 8px; background:var(--card)}
+.tally{margin-top:10px; font-size:14px}
+.tally .chip{display:inline-block; border:2px solid var(--line); background:var(--green);
+  color:var(--bg); font-weight:700; padding:1px 10px; font-size:13px}
+
+nav{position:sticky; top:0; z-index:40; background:var(--bg); border-bottom:3px solid var(--line);
+  margin:-24px -16px 0; padding:0}
+.nav-inner{max-width:860px; margin:0 auto; padding:12px 16px; display:flex;
+  justify-content:space-between; align-items:center; gap:16px}
+.logo{font-weight:900; font-size:19px; letter-spacing:-.5px; text-decoration:none}
+.logo em{font-style:normal; background:var(--green); color:var(--bg); padding:0 6px;
+  display:inline-block; transform:rotate(-1.5deg)}
+.nav-links{display:flex; gap:8px; flex-wrap:wrap}
+.nav-links a{font-size:12px; font-weight:700; text-transform:uppercase; text-decoration:none;
+  border:2px solid var(--line); padding:6px 13px; background:var(--card);
+  box-shadow:3px 3px 0 var(--line); transition:transform .1s, box-shadow .1s}
+.nav-links a:hover{transform:translate(1px,1px); box-shadow:2px 2px 0 var(--line)}
+.nav-links a.on{background:var(--green); color:var(--bg)}
+.sec-tag{display:inline-block; font-weight:700; font-size:12px; text-transform:uppercase;
+  letter-spacing:.06em; border:2px solid var(--line); padding:2px 9px; margin-bottom:12px;
+  background:var(--card)}
+#langtoggle{position:fixed; top:14px; right:14px; display:flex; border:3px solid var(--line);
+  background:var(--card); box-shadow:3px 3px 0 var(--line); z-index:50}
+#langtoggle button{border:0; box-shadow:none; padding:5px 12px; font-size:13px}
+#langtoggle button.on{background:var(--ink); color:var(--bg)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (max-width:560px){
+  body{padding:16px 10px 120px}
+  .readout .row{grid-template-columns:minmax(70px,110px) 1fr 52px; font-size:12px}
+}
+</style>
+</head>
+<body>
+<div id="langtoggle" role="group" aria-label="language">
+  <button type="button" data-lang="en" class="on">EN</button><button type="button" data-lang="kr">한</button>
+</div>
+
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="/index.html">KYG<em>MIN</em></a>
+    <div class="nav-links">
+      <a href="/index.html"><span class="tx" data-en="Home" data-kr="홈">Home</span></a>
+      <a href="/playhouse/">PLAYHOUSE</a>
+      <a class="on" href="./"><span class="tx" data-en="Who Wrote This" data-kr="누가 썼게">Who Wrote This</span></a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <span class="sec-tag tx" data-en="CHAT FORENSICS · v0" data-kr="대화 감식 · v0">CHAT FORENSICS · v0</span>
+  <h1><span class="accent tx" data-en="WHO" data-kr="누가">WHO</span> <span class="tx" data-en="WROTE THIS" data-kr="썼게">WROTE THIS</span></h1>
+  <p class="sub tx"
+     data-en="Attach a chat export. Paste a new message. The page reads each person's writing habits — compression residue, character n-grams, ㅋ density, sentence endings — and names its suspect."
+     data-kr="대화 내보내기 파일을 첨부하고 새 메시지를 붙여넣으면, 압축 잔차·문자 n-gram·ㅋ 밀도·종결어미 같은 글쓰기 습관으로 누가 쓴 글인지 지목합니다.">Attach a chat export. Paste a new message. The page reads each person's writing habits — compression residue, character n-grams, ㅋ density, sentence endings — and names its suspect.</p>
+  <span class="privacy tx" data-en="runs 100% in your browser · nothing uploaded"
+        data-kr="100% 브라우저 안에서 · 아무것도 전송되지 않음">runs 100% in your browser · nothing uploaded</span>
+
+  <!-- ① FILE -->
+  <section class="step" id="step1">
+    <header><span class="no">01</span><span class="name tx" data-en="Evidence" data-kr="증거 제출">Evidence</span></header>
+    <div class="body">
+      <div class="drop" id="drop" tabindex="0" role="button"
+           aria-label="attach chat export file">
+        <div class="big tx" data-en="Drop a chat export here, or click"
+             data-kr="대화 내보내기 파일을 끌어다 놓거나 클릭">Drop a chat export here, or click</div>
+        <div class="hint tx"
+             data-en="KakaoTalk .txt / .csv (PC · Android · iOS) — Telegram result.json"
+             data-kr="카카오톡 .txt / .csv (PC · 안드로이드 · iOS) — 텔레그램 result.json">KakaoTalk .txt / .csv (PC · Android · iOS) — Telegram result.json</div>
+      </div>
+      <input type="file" id="file" accept=".txt,.csv,.json">
+      <div class="filemeta" id="filemeta"></div>
+      <div class="err" id="fileerr" role="alert"></div>
+    </div>
+  </section>
+
+  <!-- ② SUSPECTS -->
+  <section class="step locked" id="step2">
+    <header><span class="no">02</span><span class="name tx" data-en="Suspects" data-kr="용의자 명단">Suspects</span></header>
+    <div class="body">
+      <table class="users" id="usertable">
+        <thead><tr>
+          <th></th>
+          <th class="tx" data-en="Name" data-kr="이름">Name</th>
+          <th class="tx" data-en="Messages" data-kr="메시지">Messages</th>
+          <th class="tx" data-en="Corpus" data-kr="코퍼스">Corpus</th>
+          <th class="tx" data-en="Data" data-kr="데이터">Data</th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+      <p class="roomnote" id="roomnote"></p>
+    </div>
+  </section>
+
+  <!-- ③ VERDICT -->
+  <section class="step locked" id="step3">
+    <header><span class="no">03</span><span class="name tx" data-en="Verdict" data-kr="판별">Verdict</span></header>
+    <div class="body">
+      <label for="query" class="tx" data-en="Paste the message in question — several messages from the same person work best."
+             data-kr="판별할 메시지를 붙여넣으세요 — 같은 사람의 메시지 여러 개를 묶으면 훨씬 정확합니다.">Paste the message in question — several messages from the same person work best.</label>
+      <textarea id="query" style="margin-top:10px"></textarea>
+      <div class="qmeter" id="qmeter"></div>
+      <div class="controls">
+        <button class="fill" id="run" disabled><span class="tx" data-en="Name the suspect" data-kr="용의자 지목">Name the suspect</span></button>
+      </div>
+      <div class="verdict" id="verdict" hidden>
+        <div class="readout" id="readout" aria-live="polite"></div>
+        <div class="verify" id="verify" hidden>
+          <span class="q tx" data-en="Did I get it right?" data-kr="제가 맞췄나요?">Did I get it right?</span>
+          <button class="small fill" id="vyes"><span class="tx" data-en="Yes" data-kr="예">Yes</span></button>
+          <button class="small" id="vno"><span class="tx" data-en="No" data-kr="아니요">No</span></button>
+          <select id="actual" hidden aria-label="who actually said it"></select>
+        </div>
+        <div class="tally" id="tally"></div>
+      </div>
+    </div>
+  </section>
+
+  <p class="sub" style="margin-top:28px">
+    <span class="tx" data-en="Accuracy expectations come from a 72M-character Korean SNS corpus, measured for the scorer this page actually uses. Two things dominate: how many people are in the room, and how much you paste. More corpus keeps helping — there is no point where it stops mattering. Your group may differ, and the Yes/No button is how this page learns its real hit rate."
+          data-kr="정확도 기대치는 7,200만 자 한국어 SNS 코퍼스에서, 이 페이지가 실제로 쓰는 채점기로 직접 잰 값입니다. 두 가지가 지배합니다 — 방에 몇 명이 있는가, 그리고 얼마나 붙여넣는가. 코퍼스는 많을수록 계속 좋아지고, 더 이상 소용없어지는 지점은 없습니다. 여러분의 방은 다를 수 있고, 예/아니요 버튼이 이 페이지의 실제 적중률을 알려줍니다.">Accuracy expectations come from a 72M-character Korean SNS corpus, measured for the scorer this page actually uses. Two things dominate: how many people are in the room, and how much you paste. More corpus keeps helping — there is no point where it stops mattering. Your group may differ, and the Yes/No button is how this page learns its real hit rate.</span>
+  </p>
+</div>
+
+<script>
+/*__CORE__*/
+// ===================== 파서 =====================
+const SYSTEM_RE = new RegExp([
+  '님이 (?:들어왔습니다|나갔습니다)','님을 초대(?:했습니다|하였습니다)',
+  '님이 .*님을 (?:내보냈습니다|초대했습니다)','^삭제된 메시지입니다\\.?$',
+  '채팅방 관리자가 ','저장한 날짜\\s*:','님과 카카오톡 대화$','운영정책을 위반한 메시지로 신고'
+].join('|'));
+const MEDIA_SET = new Set(['사진','동영상','이모티콘','음성메시지','보이스톡 해요','페이스톡 해요',
+  '삭제된 메시지입니다.','Photo','Video','Sticker','Voice message']);
+function isMedia(t){ t=t.trim();
+  return MEDIA_SET.has(t) || t.startsWith('파일:') || (/^사진 \d+장$/.test(t)); }
+function isSystem(t){ return SYSTEM_RE.test(t); }
+
+const RX_DIVIDER = /^-*\s*\d{4}년\s*\d{1,2}월\s*\d{1,2}일\s*[월화수목금토일]?요?일?\s*-*\s*$/;
+const RX_PC = /^\[(.+?)\]\s*\[(?:오전|오후)?\s*\d{1,2}:\d{2}\]\s?(.*)$/;
+const RX_ANDROID = /^\d{4}년\s*\d{1,2}월\s*\d{1,2}일\s*(?:오전|오후)\s*\d{1,2}:\d{2},\s*(.+?)\s*:\s?(.*)$/;
+const RX_IOS = /^\d{4}\.\s*\d{1,2}\.\s*\d{1,2}\.\s*(?:오전|오후)\s*\d{1,2}:\d{2},\s*(.+?)\s*:\s?(.*)$/;
+// 텔레그램 데스크톱 복사: [2025-12-05 오전 5:19] 이름: 내용  (영문 로케일 [05.12.2025 05:19] 대응 포함)
+const RX_TG_COPY = /^\[(?:\d{4}-\d{2}-\d{2}|\d{2}\.\d{2}\.\d{4})[ ,]+(?:오전|오후|AM|PM)?\s*\d{1,2}:\d{2}(?::\d{2})?(?:\s*(?:AM|PM))?\]\s*(.+?):\s?(.*)$/;
+
+function parseKakaoTxt(raw){
+  const lines = raw.replace(/\r\n?/g,'\n').split('\n');
+  const rxs = {pc:RX_PC, android:RX_ANDROID, ios:RX_IOS};
+  const votes = {pc:0, android:0, ios:0};
+  for(const ln of lines.slice(0,400))
+    for(const k in rxs) if(rxs[k].test(ln)) votes[k]++;
+  const fmt = Object.keys(votes).sort((a,b)=>votes[b]-votes[a])[0];
+  if(votes[fmt]===0) throw new Error('kakao-format-unknown');
+  const rx = rxs[fmt], msgs=[];
+  for(const ln of lines){
+    if(!ln.trim()) continue;
+    if(RX_DIVIDER.test(ln.trim())) continue;
+    const m = rx.exec(ln);
+    if(m){
+      const user=m[1].trim(), text=m[2];
+      if(isSystem(ln)||isMedia(text)) continue;
+      msgs.push({user,text});
+    }else{
+      if(isSystem(ln)) continue;
+      if(msgs.length) msgs[msgs.length-1].text += '\n'+ln;
+    }
+  }
+  return {format:'kakao-'+fmt, messages:msgs};
+}
+
+function parseCsv(raw){
+  const rows=[]; let cur=[''], q=false, ci=0;
+  for(let i=0;i<raw.length;i++){
+    const c=raw[i];
+    if(q){
+      if(c==='"'){ if(raw[i+1]==='"'){cur[ci]+='"';i++;} else q=false; }
+      else cur[ci]+=c;
+    }else{
+      if(c==='"') q=true;
+      else if(c===','){ cur.push(''); ci++; }
+      else if(c==='\n'||c==='\r'){ if(c==='\r'&&raw[i+1]==='\n')i++;
+        rows.push(cur); cur=['']; ci=0; }
+      else cur[ci]+=c;
+    }
+  }
+  if(cur.length>1||cur[0]) rows.push(cur);
+  if(!rows.length) throw new Error('csv-empty');
+  const start = rows[0] && /^(date|날짜)$/i.test(rows[0][0]) ? 1 : 0;
+  const msgs=[];
+  for(const row of rows.slice(start)){
+    if(row.length<3) continue;
+    const user=row[1].trim(), text=row[2];
+    if(isSystem(text)||isMedia(text)) continue;
+    msgs.push({user,text});
+  }
+  if(!msgs.length) throw new Error('csv-nomsg');
+  return {format:'kakao-csv', messages:msgs};
+}
+
+function tgText(t){
+  if(typeof t==='string') return t;
+  if(Array.isArray(t)) return t.map(p=>typeof p==='string'?p:(p&&p.text)||'').join('');
+  return '';
+}
+function tgExtract(src){
+  const msgs=[];
+  for(const m of src||[]){
+    if(m.type!=='message') continue;
+    const user = m.from || m.from_id; if(!user) continue;
+    const text = tgText(m.text); if(!text.trim()) continue;
+    msgs.push({user:String(user).trim(), text});
+  }
+  return msgs;
+}
+function parseTelegram(raw){
+  const data = JSON.parse(raw);
+  // 계정 전체 내보내기: {chats:{list:[{name, messages:[...]}]}}
+  if(data && data.chats && Array.isArray(data.chats.list)){
+    const chats = data.chats.list
+      .map(c=>({name:c.name||c.type||'chat', msgs:tgExtract(c.messages)}))
+      .filter(c=>c.msgs.length>0)
+      .sort((a,b)=>b.msgs.length-a.msgs.length);
+    if(!chats.length) throw new Error('tg-nomsg');
+    return {format:'telegram-export', chats};
+  }
+  const msgs = tgExtract(Array.isArray(data) ? data : (data.messages||[]));
+  if(!msgs.length) throw new Error('tg-nomsg');
+  return {format:'telegram-json', messages:msgs};
+}
+
+/* 확장자가 있으면 확장자가 이긴다.
+   예전에는 첫 글자가 '[' 이면 무조건 텔레그램 JSON 으로 보냈는데, 카톡 PC 내보내기의
+   본문 첫 줄이 「[이름] [오후 1:23] …」이라 헤더 줄이 없는 파일은 통째로 JSON.parse 에서
+   죽고 사용자에게는 「파일을 읽지 못했습니다」만 떴다. 페이지 내 selftest 가 바로 이 경로에서
+   깨져 있었는데, 브라우저에서 한 번도 실행해 본 적이 없어서 아무도 몰랐다. */
+function looksJson(raw){
+  const h=raw.replace(/^\uFEFF/,'').trimStart();
+  return /^[{[]\s*["{[]/.test(h) || /^\[\s*\]/.test(h) || /^\{\s*\}/.test(h);
+}
+function parseAny(raw, filename){
+  const fn=(filename||'').toLowerCase();
+  if(fn.endsWith('.json')) return parseTelegram(raw);
+  if(fn.endsWith('.csv'))  return parseCsv(raw);
+  if(fn.endsWith('.txt')){ try{ return parseKakaoTxt(raw); }catch(e){ return parseCsv(raw); } }
+  if(looksJson(raw)){ try{ return parseTelegram(raw); }catch(e){} }
+  try{ return parseKakaoTxt(raw); }catch(e){ return parseCsv(raw); }
+}
+function groupByUser(parsed){
+  const u={};
+  for(const m of parsed.messages) (u[m.user]=u[m.user]||[]).push(m.text);
+  return u;
+}
+
+// ===================== 스코어러 =====================
+/* v2 (2026-08-08) — NCD·습관 피처 하이브리드에서 **문자 n-gram 다항 나이브 베이즈**로 교체.
+   근거: `claude/who-wrote-findings-v2.md`. 요약만 적으면 —
+     · 실사용 60판에서 NB 53/60(88%) 대 옛 하이브리드 42/60(70%),
+       뒤 30판만 떼어낸 독립 검증에서 9승 1패 p=0.021
+     · 옛 하이브리드는 평균이 낮은 게 아니라 **특정 화자에게 43%로 무너졌다**(7인 방 기저 14.3%).
+       NB 는 같은 화자들에서 85 / 86 / 100% 로 고르다
+     · AI Hub 벤치 7인 방·코퍼스 90만 자: 옛 하이브리드 27.5% / NB 62.5% (15승 1패 p=0.001)
+   같이 사라진 것: deflate 32K 창에서 오던 코퍼스 30,000자 상한, 질의 시점 압축 호출.
+   이제 코퍼스 전체가 쓰이고, 채점은 질의 조각 수에만 비례한다. */
+
+function charNgrams(text,lo=2,hi=3){
+  const m=new Map();
+  for(let k=lo;k<=hi;k++)
+    for(let i=0;i+k<=text.length;i++){
+      const g=text.substr(i,k); m.set(g,(m.get(g)||0)+1);
+    }
+  return m;
+}
+function zNorm(obj){
+  const vals=Object.values(obj), mu=vals.reduce((a,b)=>a+b,0)/vals.length;
+  const sd=Math.sqrt(vals.reduce((a,b)=>a+(b-mu)**2,0)/vals.length)||1e-9;
+  const out={}; for(const k in obj) out[k]=(obj[k]-mu)/sd; return out;
+}
+
+/* 가산 평활. α 가 크면 「이 사람이 한 번도 안 쓴 조각」의 벌점이 물러져 구별력이 준다.
+   실측: α=1 이면 70.2%, α=0.1 이면 75.1% (AI Hub 4인 방, 코퍼스 15,000자). */
+const NB_ALPHA = 0.1;
+
+/* 화면 %는 z-점수의 softmax 라서 상·하한이 "용의자 수"만으로 정해진다.
+   z-정규화가 집합 안에서 평균 0·표준편차 1을 강제하므로, k개 중 한 명이 튈 수 있는
+   최대치가 -√(k-1) 로 막혀 있다 (나머지 k-1명은 +1/√(k-1)).
+   즉 증거가 아무리 완벽해도 그 위는 없고, 바닥은 전원 동점일 때의 1/k 다.
+   4인 방이면 25~87%, 2인 방이면 50~93%. 읽는 사람이 0~100% 눈금으로 착각하지 않도록
+   이 범위를 리드아웃에 같이 낸다.
+   CONF_T 는 scoreQuery 와 반드시 같은 값이어야 한다 — 그래서 상수를 공유한다.
+   (시험이 실제 출력이 이 밴드 안에 들어오는지 대조한다.) */
+const CONF_T = 1.3;
+function confBand(k){
+  if(!(k >= 2)) return null;
+  const zTop = -Math.sqrt(k-1), zOth = 1/Math.sqrt(k-1);
+  const a = Math.exp(-CONF_T*zTop), b = Math.exp(-CONF_T*zOth);
+  return { lo: 1/k, hi: a/(a + (k-1)*b) };
+}
+
+/* `joined` 를 들고 있는 이유: 배포물은 쓰지 않지만 비교 실험실(lab.html)이
+   옛 축(NCD·습관 피처)을 같은 코퍼스에서 다시 계산할 수 있어야 한다. */
+async function buildModels(userTexts){
+  const models={};
+  for(const u in userTexts){
+    const joined=userTexts[u].join('\n');
+    const ng=charNgrams(joined);
+    let tot=0; for(const v of ng.values()) tot+=v;
+    models[u]={ chars:joined.length, msgs:userTexts[u].length, joined, ng, tot };
+  }
+  return models;
+}
+
+/* P(조각|사람) = (그 사람 코퍼스의 등장 횟수 + α) / (총 조각 수 + α·V), V = 방 안의 어휘 크기.
+   점수 = −Σ 질의등장횟수 · log P. 낮을수록 근접(옛 축들과 부호를 맞춘다).
+   질의 조각 수로 나누는 것은 길이 영향을 빼기 위함이고, 순위에는 영향이 없다.
+   나이브 가정(조각끼리 독립)은 겹치는 n-gram 에서 명백히 거짓이라 **점수의 절댓값은
+   확률로 읽으면 안 된다.** 순위만 쓴다. */
+function nbScore(model, V, qng){
+  let ll=0; const den=model.tot + NB_ALPHA*V;
+  for(const [g,c] of qng) ll += c*Math.log(((model.ng.get(g)||0) + NB_ALPHA)/den);
+  return -ll/Math.max(qng.size,1);
+}
+async function scoreQuery(models, query, include){
+  const users=include||Object.keys(models);
+  const qng=charNgrams(query);
+  const V=new Set();
+  for(const u of users) for(const g of models[u].ng.keys()) V.add(g);
+  const raw={};
+  for(const u of users) raw[u]=nbScore(models[u], V.size, qng);
+  const mixed=zNorm(raw);
+  const ranked=users.slice().sort((a,b)=>mixed[a]-mixed[b]);
+  // softmax(-z) 표시용 상대 확신
+  const ex=users.map(u=>Math.exp(-CONF_T*mixed[u])), sum=ex.reduce((a,b)=>a+b,0);
+  const conf={}; users.forEach((u,i)=>conf[u]=ex[i]/sum);
+  return {ranked, mixed, conf};
+}
+
+/* ── 게이지·기대치 (2026-08-08 재측정) ────────────────────────────────────
+   옛 문턱(부족<2,000 / 쓸만함<10,000 / 충분≥10,000)은 NCD 하이브리드로 잰 값이었고,
+   NB 로 다시 재니 **틀렸다**. 4인 방·질의 100자에서 10,000자는 47%다 — 기저가 25%인데
+   그걸 「충분」이라고 부르고 있었다.
+
+   재측정 설계에서 두 가지를 고쳤다.
+   (1) N 마다 풀을 다시 뽑으면 큰 N 에서는 다작 화자만 남아 「코퍼스 효과」가 아니라
+       「화자 집단 차이」를 재게 된다 → 화자 집단을 전 구간 고정.
+   (2) N 마다 방을 새로 뽑으면 방-대-방 분산이 N 의 효과를 덮는다 → 같은 방·같은 질의로
+       네 가지 N 을 전부 재는 짝지은 설계.
+   둘 다 고치기 전에는 20만 자가 5만 자보다 나쁘게 나왔다. 고친 뒤에는 단조롭게 오른다.
+
+   실측 (AI Hub 012, NB 단독 α=0.1, k당 160판, 열 = 질의 20/50/100/300자):
+   **코퍼스는 20만 자까지 계속 좋아진다. 상한을 암시하는 말을 쓰면 안 된다.** */
+const EXPECT = {
+  4: { 2000:[36,31,44,53], 10000:[36,36,47,65], 50000:[43,46,64,79], 200000:[51,59,71,87] },
+  7: { 2000:[19,33,32,37], 10000:[27,39,46,49], 50000:[21,48,61,68], 200000:[37,57,63,75] }
+};
+const EXPECT_N = [2000,10000,50000,200000];
+
+/* 부족 <10,000 ≤ 쓸만함 <50,000 ≤ 넉넉함.
+   「충분」이라는 말은 쓰지 않는다 — 그 위가 없다는 뜻이 되는데 사실이 아니다. */
+function gaugeTier(chars){ return chars>=50000?2 : chars>=10000?1 : 0; }
+
+/* 잰 조건 안에서만 숫자를 말한다.
+   k 는 4·7 두 점만 쟀으므로 가까운 쪽으로 붙이고, 2명 미만·9명 초과와 코퍼스 2,000자 미만은
+   외삽이 되므로 **아무 숫자도 내놓지 않는다.** 없는 근거로 기대치를 말하지 않는 것이 요점이다.
+   조건 변수로 코퍼스 **중앙값**을 쓴다 — 실제 화자가 누구인지는 미리 알 수 없고,
+   방 전체를 요약하는 값 중 이것이 가장 덜 치우친다. */
+function expectOf(k, medianChars, qlen){
+  if(!(k>=2) || k>9 || !(medianChars>=2000) || !(qlen>=20)) return null;
+  const kk = k<=5 ? 4 : 7;
+  let n = EXPECT_N[0];
+  for(const v of EXPECT_N) if(medianChars>=v) n=v;
+  const row = EXPECT[kk][n];
+  const m = qlen>=300?3 : qlen>=100?2 : qlen>=50?1 : 0;
+  return { pct: row[m], k: kk, n, approx: (kk!==k) || (medianChars>=EXPECT_N[EXPECT_N.length-1]&&medianChars>2*EXPECT_N[EXPECT_N.length-1]) };
+}
+/* findings v1 확정안: 20자 미만 "참고만" / 100자 이상 권장 / 300자 이상 "신뢰 구간".
+   20자 문턱이 빠져 있어서 25자와 99자가 같은 문구를 받고 있었다 (실측 .53 대 .72). */
+function queryTier(len){ return len>=300?3 : len>=100?2 : len>=20?1 : 0; }
+
+// 질의 전처리: 카톡에서 복사한 덩어리(`[이름] [시각] 내용` 등)를 자동 인식해
+// 이름·시각을 제거하고 내용만 이어붙인다. 이름을 남기면 답을 미리 아는 셈이 된다.
+function extractQuery(raw){
+  const lines = raw.replace(/\r\n?/g,'\n').split('\n');
+  const rxs=[RX_PC,RX_ANDROID,RX_IOS,RX_TG_COPY];
+  let rx=null, hits=0;
+  for(const r of rxs){
+    const h=lines.filter(ln=>r.test(ln)).length;
+    if(h>hits){hits=h;rx=r;}
+  }
+  if(!rx||hits===0) return {text:raw.trim(), msgs:0, stripped:false};
+  const out=[];
+  for(const ln of lines){
+    if(!ln.trim()) continue;
+    if(RX_DIVIDER.test(ln.trim())) continue;
+    const m=rx.exec(ln);
+    if(m){
+      if(isSystem(ln)||isMedia(m[2])) continue;
+      out.push(m[2]);
+    }else{
+      if(isSystem(ln)) continue;
+      if(out.length) out[out.length-1]+='\n'+ln; else out.push(ln);
+    }
+  }
+  return {text:out.join('\n').trim(), msgs:out.length, stripped:true};
+}
+/*__ENDCORE__*/
+
+// ===================== UI =====================
+const $=s=>document.querySelector(s);
+const state={models:null, users:null, include:new Set(), pending:null, hits:0, tries:0};
+
+const T={
+  en:{msgs:'msgs', chars:'chars', g:['scarce','usable','solid'],
+    q:['under 20 characters — treat as a hint','short','decent','strong'],
+    exp:(p,k,n)=>`in a room like this (${k} suspects, ${n} chars each) the measured hit rate is about ${p}%`,
+    expOut:'outside the measured grid — no expectation shown',
+    qph:'Paste as-is — [Name] [2:04 PM] lines are fine, names and times are stripped automatically.',
+    room:k=>`${k} suspects in the room — random guessing would hit ${(100/k).toFixed(0)}%.`,
+    parsed:(f,n,u)=>`Parsed ${f} · ${n.toLocaleString()} messages · ${u} people`,
+    fail:'Could not read this file. Supported: KakaoTalk txt/csv export, Telegram result.json.',
+    stripped:n=>`${n} messages — names & times removed automatically`,
+    pickchat:n=>`Full account export — ${n} chats found. Pick one:`,
+    need2:'Need at least 2 suspects with data — include more people.',
+    tally:(h,t)=>`session record: ${h}/${t} correct`,
+    whowas:'— who was it?', cap:'longer bar = stronger match · % = relative confidence among suspects',
+    band:(k,lo,hi)=>`With ${k} suspects this scale runs ${lo}–${hi}%, not 0–100% — ${hi}% is as far as it can go, and ${lo}% is a dead tie.`},
+  kr:{msgs:'개', chars:'자', g:['부족','쓸만함','충분'],
+    q:['20자 미만 — 참고만 하세요','짧음','괜찮음','충분히 김'],
+    exp:(p,k,n)=>`이런 방(용의자 ${k}명, 1인당 ${n}자)에서 실측 적중률은 약 ${p}%`,
+    expOut:'실측 격자 밖이라 기대치를 말하지 않습니다',
+    qph:'[이름] [오후 2:04] 형식째 붙여넣어도 됩니다 — 이름·시각은 자동으로 지워집니다.',
+    room:k=>`용의자 ${k}명 — 무작위로 찍어도 ${(100/k).toFixed(0)}%는 맞습니다.`,
+    parsed:(f,n,u)=>`${f} 인식 · 메시지 ${n.toLocaleString()}개 · ${u}명`,
+    fail:'파일을 읽지 못했습니다. 지원: 카카오톡 txt/csv 내보내기, 텔레그램 result.json.',
+    stripped:n=>`메시지 ${n}개 — 이름·시각 자동 제거됨`,
+    pickchat:n=>`계정 전체 내보내기 — 대화방 ${n}개 발견. 하나를 고르세요:`,
+    need2:'데이터가 있는 용의자가 2명 이상 필요합니다.',
+    tally:(h,t)=>`이번 세션 전적: ${t}판 중 ${h}판 적중`,
+    whowas:'— 실제로는 누구였나요?', cap:'막대가 길수록 근접 · %는 용의자들 사이의 상대 확신',
+    band:(k,lo,hi)=>`용의자 ${k}명일 때 이 눈금은 0~100%가 아니라 ${lo}~${hi}% 범위예요 — ${hi}%가 최대치이고, ${lo}%는 완전 동점입니다.`}
+};
+const L=()=>T[window.APP_LANG==='kr'?'kr':'en'];
+/* auth-widget.js 는 이 배열이 있으면 자기 재도색 함수를 push 한다.
+   없으면 위젯 글자가 로드 시점 언어에 고정된다. 위젯보다 먼저 만들어야 한다. */
+window.APP_LANG_LISTENERS = window.APP_LANG_LISTENERS || [];
+
+// 언어 토글
+(function(){
+  const btns=document.querySelectorAll('#langtoggle button');
+  const els=document.querySelectorAll('.tx');
+  function setLang(lang){
+    window.APP_LANG=lang;
+    try{localStorage.setItem('kyg_lang',lang);}catch(e){}
+    document.documentElement.setAttribute('lang', lang==='kr'?'ko':'en');
+    btns.forEach(b=>b.classList.toggle('on',b.dataset.lang===lang));
+    els.forEach(el=>{const t=el.dataset[lang]; if(t!==undefined) el.textContent=t;});
+    $('#query').placeholder = T[lang==='kr'?'kr':'en'].qph;
+    if(state.users) renderUsers();
+    if(state.lastRender) state.lastRender();
+    renderTally(); qmeter();
+    window.APP_LANG_LISTENERS.forEach(function(fn){ try{ fn(lang); }catch(e){ console.error(e); } });
+  }
+  btns.forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.lang)));
+  const cur=window.KYG_LANG||'en';
+  btns.forEach(b=>b.classList.toggle('on',b.dataset.lang===cur));
+  if(cur!=='en') els.forEach(el=>{const t=el.dataset[cur]; if(t!==undefined) el.textContent=t;});
+  $('#query').placeholder = T[cur==='kr'?'kr':'en'].qph;
+  document.documentElement.classList.remove('lang-pending');
+})();
+
+// 파일 입력
+const drop=$('#drop'), fileInput=$('#file');
+drop.addEventListener('click',()=>fileInput.click());
+drop.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')fileInput.click();});
+['dragover','dragenter'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add('over');}));
+['dragleave','drop'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove('over');}));
+drop.addEventListener('drop',e=>{const f=e.dataTransfer.files[0]; if(f)loadFile(f);});
+fileInput.addEventListener('change',()=>{const f=fileInput.files[0]; if(f)loadFile(f);});
+
+async function decodeSmart(buf){
+  try{ return new TextDecoder('utf-8',{fatal:true}).decode(buf); }
+  catch(e){ return new TextDecoder('euc-kr').decode(buf); } // 구버전 PC 내보내기 대비
+}
+async function applyMessages(format, messages){
+  const grouped=groupByUser({messages});
+  state.models=await buildModels(grouped);
+  state.users=Object.keys(grouped).sort((a,b)=>state.models[b].chars-state.models[a].chars);
+  state.include=new Set(state.users.filter(u=>state.models[u].chars>=200));
+  state.hits=0; state.tries=0; state.lastRender=null;
+  $('#filemeta').textContent=L().parsed(format,messages.length,state.users.length);
+  $('#step2').classList.remove('locked');
+  $('#step3').classList.remove('locked');
+  $('#verdict').hidden=true; renderTally();
+  renderUsers(); updateRunnable();
+}
+async function loadFile(f){
+  $('#fileerr').textContent=''; $('#filemeta').textContent='';
+  const old=document.getElementById('chatpick'); if(old) old.remove();
+  try{
+    const raw=await decodeSmart(await f.arrayBuffer());
+    const parsed=parseAny(raw,f.name);
+    if(parsed.chats){
+      // 전체 내보내기: 대화방을 골라야 방(용의자 집합)이 정의된다
+      $('#filemeta').textContent=L().pickchat(parsed.chats.length);
+      const sel=document.createElement('select');
+      sel.id='chatpick'; sel.style.marginTop='8px'; sel.style.display='block';
+      sel.setAttribute('aria-label','choose a chat');
+      const o0=document.createElement('option'); o0.value='';
+      o0.textContent='—'; sel.appendChild(o0);
+      parsed.chats.forEach((c,i)=>{
+        const o=document.createElement('option'); o.value=i;
+        o.textContent=`${c.name} (${c.msgs.length.toLocaleString()})`;
+        sel.appendChild(o);
+      });
+      sel.onchange=async ()=>{
+        if(sel.value==='') return;
+        await applyMessages('telegram-export', parsed.chats[+sel.value].msgs);
+        sel.remove();
+      };
+      $('#filemeta').after(sel);
+      return;
+    }
+    await applyMessages(parsed.format, parsed.messages);
+  }catch(e){
+    console.error(e);
+    $('#fileerr').textContent=L().fail;
+  }
+}
+
+function renderUsers(){
+  const tb=$('#usertable tbody'); tb.innerHTML='';
+  for(const u of state.users){
+    const m=state.models[u], tier=gaugeTier(m.chars);
+    const tr=document.createElement('tr');
+    if(!state.include.has(u)) tr.classList.add('off');
+    const cb=document.createElement('input');
+    cb.type='checkbox'; cb.checked=state.include.has(u);
+    cb.setAttribute('aria-label','include '+u);
+    cb.addEventListener('change',()=>{
+      cb.checked?state.include.add(u):state.include.delete(u);
+      tr.classList.toggle('off',!cb.checked); roomNote(); updateRunnable();
+    });
+    const td0=document.createElement('td'); td0.appendChild(cb);
+    const td1=document.createElement('td'); td1.textContent=u; td1.style.fontWeight='700';
+    const td2=document.createElement('td'); td2.className='mono';
+    td2.textContent=m.msgs.toLocaleString();
+    const td3=document.createElement('td'); td3.className='mono';
+    td3.textContent=m.chars.toLocaleString()+' '+L().chars;
+    const td4=document.createElement('td');
+    const g=document.createElement('span'); g.className='gauge g'+tier;
+    g.textContent=L().g[tier]; td4.appendChild(g);
+    tr.append(td0,td1,td2,td3,td4); tb.appendChild(tr);
+  }
+  roomNote();
+}
+function roomNote(){
+  const k=state.include.size;
+  $('#roomnote').textContent = k>=2? L().room(k) : L().need2;
+}
+function updateRunnable(){
+  $('#run').disabled = !(state.models && state.include.size>=2 && $('#query').value.trim().length>0);
+}
+
+// 질의 미터
+/* 이 방의 코퍼스 중앙값 — 기대치 조회의 조건 변수.
+   실제 화자가 누구인지는 미리 알 수 없으므로 방 전체를 요약하는 값을 쓴다. */
+function roomMedianChars(){
+  const us=[...state.include];
+  if(!us.length || !state.models) return null;
+  const v=us.map(u=>state.models[u].chars).sort((a,b)=>a-b);
+  return v[Math.floor(v.length/2)];
+}
+function qmeter(){
+  const raw=$('#query').value.trim();
+  const el=$('#qmeter');
+  if(!raw){ el.textContent=''; return; }
+  const ex=extractQuery(raw);
+  const len=ex.text.length;
+  const t=queryTier(len);
+  let s='<b class="mono">'+len+'</b> '+L().chars+' · '+L().q[t];
+  if(ex.stripped) s+=' · '+L().stripped(ex.msgs);
+  /* 정확도 숫자는 방 조건이 정해진 뒤에만, 그리고 잰 격자 안에서만 말한다.
+     방 크기와 코퍼스 크기가 기대치를 크게 바꾸므로 단일 숫자를 띄우면 거짓말이 된다. */
+  const med=roomMedianChars();
+  if(med!==null){
+    const e=expectOf(state.include.size, med, len);
+    s += ' · ' + (e ? L().exp(e.pct, state.include.size, med.toLocaleString()) : L().expOut);
+  }
+  el.innerHTML=s;
+}
+$('#query').addEventListener('input',()=>{qmeter();updateRunnable();});
+
+// 판별 실행
+$('#run').addEventListener('click',async ()=>{
+  const raw=$('#query').value.trim(); if(!raw) return;
+  const q=extractQuery(raw).text; if(!q) return;
+  $('#run').disabled=true;
+  const res=await scoreQuery(state.models,q,[...state.include]);
+  $('#run').disabled=false;
+  state.pending={top:res.ranked[0]};
+  const render=()=>{
+    const ro=$('#readout'); ro.innerHTML='';
+    const cap=document.createElement('div'); cap.className='cap';
+    cap.textContent=L().cap; ro.appendChild(cap);
+    /* 이 방에서 가능한 범위. 숫자 자체는 건드리지 않고 눈금만 밝힌다. */
+    const bd=confBand(res.ranked.length);
+    if(bd){
+      const cb=document.createElement('div'); cb.className='cap';
+      cb.textContent=L().band(res.ranked.length, Math.round(100*bd.lo), Math.round(100*bd.hi));
+      ro.appendChild(cb);
+    }
+    const zmin=res.mixed[res.ranked[0]], zmax=res.mixed[res.ranked[res.ranked.length-1]];
+    for(const u of res.ranked){
+      const row=document.createElement('div');
+      row.className='row'+(u===res.ranked[0]?' top':'');
+      const nm=document.createElement('span'); nm.className='nm'; nm.textContent=u;
+      const bar=document.createElement('span'); bar.className='bar';
+      const fillEl=document.createElement('i');
+      const w=zmax>zmin? 8+92*(res.mixed[u]-zmin)/(zmax-zmin) : 50;
+      fillEl.style.width=(100-w+8)+'%';
+      bar.appendChild(fillEl);
+      const pc=document.createElement('span'); pc.className='pc';
+      pc.textContent=(100*res.conf[u]).toFixed(0)+'%';
+      row.append(nm,bar,pc); ro.appendChild(row);
+    }
+  };
+  render(); state.lastRender=render;
+  $('#verdict').hidden=false; $('#verify').hidden=false;
+  $('#actual').hidden=true;
+});
+
+// 검증
+function renderTally(){
+  $('#tally').innerHTML = state.tries?
+    '<span class="chip">'+L().tally(state.hits,state.tries)+'</span>':'';
+}
+$('#vyes').addEventListener('click',()=>{
+  if(!state.pending)return;
+  state.hits++; state.tries++; state.pending=null;
+  $('#verify').hidden=true; renderTally();
+});
+$('#vno').addEventListener('click',()=>{
+  if(!state.pending)return;
+  const sel=$('#actual'); sel.innerHTML='';
+  const o0=document.createElement('option'); o0.value=''; o0.textContent=L().whowas;
+  sel.appendChild(o0);
+  for(const u of state.include){ if(u===state.pending.top)continue;
+    const o=document.createElement('option'); o.value=u; o.textContent=u; sel.appendChild(o); }
+  sel.hidden=false;
+  sel.onchange=()=>{ state.tries++; state.pending=null;
+    $('#verify').hidden=true; sel.hidden=true; renderTally(); };
+});
+
+// ===================== 자가시험 =====================
+window.WW={parseAny,groupByUser,buildModels,scoreQuery,extractQuery,queryTier,gaugeTier,confBand,charNgrams,nbScore,NB_ALPHA,expectOf,EXPECT,
+  async selftest(){
+    // 1) 파서 — 카톡 PC 본문 첫 줄이 '[' 로 시작해도 JSON 으로 오인하지 않는지
+    const pc='[홍길동] [오후 1:23] ㅋㅋ 뭐함\n[김철수] [오후 1:24] 밥\n먹는중\n[홍길동] [오후 1:25] 사진\n';
+    const p=parseAny(pc,'a.txt');
+    console.assert(p.format==='kakao-pc'&&p.messages.length===2,'parser pc');
+    console.assert(p.messages[1].text==='밥\n먹는중','parser multiline');
+    // 2) 스코어러 방향성
+    const ut={A:Array(60).fill('점심 뭐 먹지 ㅋㅋㅋ 배고픔'),B:Array(60).fill('오늘 회의 자료 정리했습니다.')};
+    const m=await buildModels(ut);
+    const r=await scoreQuery(m,'저녁 뭐 먹지 ㅋㅋ 배고파');
+    console.assert(r.ranked[0]==='A','scorer direction');
+    // 3) 화면 %가 이 방의 산술 밴드 안에 있는지 (온도 상수가 갈라지면 여기서 걸린다)
+    const bd=confBand(2), top=r.conf[r.ranked[0]];
+    console.assert(top<=bd.hi+1e-9&&top>=bd.lo-1e-9,'conf band');
+    console.log(`selftest done · top=${(100*top).toFixed(1)}% (밴드 ${(100*bd.lo).toFixed(0)}~${(100*bd.hi).toFixed(0)}%)`);
+    return true;
+  }};
+</script>
+<script src="/auth-widget.js" defer></script>
+</body>
+</html>
