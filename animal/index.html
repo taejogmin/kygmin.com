@@ -168,6 +168,18 @@ main{padding:44px 0 88px;}
 footer{border-top:3px solid var(--ink);padding:26px 0;}
 .foot-inner{max-width:960px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:12px;color:#4A4A46;}
 </style>
+<script>
+/* 사이트 공통 언어 유지 (claude/site-language-persistence.md).
+   사이트에서 이 페이지만 남아 있었다 — 토글은 있는데 값을 저장하지도 복원하지도 않았다. */
+window.KYG_LANG=(function(){try{var v=localStorage.getItem('kyg_lang');if(v==='kr'||v==='en')return v;}catch(e){}return 'en';})();
+window.APP_LANG=window.KYG_LANG;
+if(window.KYG_LANG!=='en'){
+  document.documentElement.setAttribute('lang','ko');
+  document.documentElement.className+=' lang-pending';
+  setTimeout(function(){document.documentElement.classList.remove('lang-pending');},2000);
+}
+</script>
+<style>html.lang-pending .tx{visibility:hidden}</style>
 </head>
 <body>
 
@@ -247,7 +259,7 @@ footer{border-top:3px solid var(--ink);padding:26px 0;}
 <!-- 언어 토글은 독립된 일반 스크립트로 둔다. MediaPipe import가 실패하거나 느려도
      (모듈 스크립트 전체가 멈추더라도) 정적 텍스트 번역만은 항상 동작해야 하기 때문. -->
 <script>
-window.APP_LANG = 'en';
+window.APP_LANG = window.KYG_LANG || 'en';
 window.APP_LANG_LISTENERS = [];
 (function(){
   var POOL = ("ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎㅏㅑㅓㅕㅗㅛㅜㅠㅡㅣ"
@@ -285,10 +297,19 @@ window.APP_LANG_LISTENERS = [];
 
   var els=[].slice.call(document.querySelectorAll('.tx'));
   els.forEach(function(el){ el.dataset.plain=el.textContent; el._s=new Scramble(el); });
+  /* 복원은 애니메이션 없이. dataset.plain 도 갱신해야 다음 전환의 시작 문자열이 맞는다. */
+  (function(){
+    var L = window.KYG_LANG || 'en';
+    var b0=document.querySelectorAll('#langtoggle button');
+    for(var i=0;i<b0.length;i++){ b0[i].classList.toggle('on', b0[i].dataset.lang===L); }
+    if(L!=='en') els.forEach(function(el){ var t=el.dataset[L]; if(t!==undefined){ el.textContent=t; el.dataset.plain=t; } });
+    document.documentElement.classList.remove('lang-pending');
+  })();
 
   function setLang(lang){
     if(lang===window.APP_LANG) return;
     window.APP_LANG = lang;
+    try{ localStorage.setItem('kyg_lang', lang); }catch(e){}
     document.documentElement.lang = (lang==='kr'?'ko':'en');
     var btns=document.querySelectorAll('#langtoggle button');
     for(var i=0;i<btns.length;i++){ btns[i].classList.toggle('on', btns[i].dataset.lang===lang); }
