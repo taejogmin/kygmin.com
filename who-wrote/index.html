@@ -627,6 +627,18 @@ function ownersOf(grouped, text){
   for(const u in grouped) if(grouped[u].some(x=>x.trim()===t)) out.push(u);
   return out;   /* 두 사람이 똑같은 문장을 썼으면 둘 다 — 양쪽 모델이 다 봤다 */
 }
+/* joined 는 메시지를 '\n' 으로 이은 원문이다. NCD·습관 축(lab)이 이걸 쓰므로
+   n-gram 만 빼고 joined 를 그대로 두면 축마다 다른 코퍼스를 보게 된다 —
+   그러면 「같은 조건에서 채점기만 바꿔 비교한다」는 lab 의 전제가 깨진다. */
+function dropFromJoined(j, t){
+  if(!t) return j;
+  const i=j.indexOf('\n'+t+'\n');
+  if(i>=0) return j.slice(0,i)+j.slice(i+1+t.length);
+  if(j.startsWith(t+'\n')) return j.slice(t.length+1);
+  if(j.endsWith('\n'+t))   return j.slice(0, j.length-t.length-1);
+  if(j===t) return '';
+  return j;
+}
 function minusNgrams(model, texts){
   const ng=new Map(model.ng); let tot=model.tot;
   for(const t of texts) for(const [g,c] of charNgrams(t)){
@@ -635,7 +647,10 @@ function minusNgrams(model, texts){
     if(cur-d<=0) ng.delete(g); else ng.set(g,cur-d);
     tot-=d;
   }
-  return {...model, ng, tot};
+  let joined=model.joined, msgs=model.msgs;
+  for(const t of texts){ const j2=dropFromJoined(joined,t);
+    if(j2!==joined){ joined=j2; msgs=Math.max(0,msgs-1); } }
+  return {...model, ng, tot, joined, chars:joined.length, msgs};
 }
 /* 원본 모델은 건드리지 않는다 — 이번 채점에만 쓰는 사본을 만든다. */
 function heldOut(models, grouped, parts){
@@ -986,7 +1001,7 @@ $('#vno').addEventListener('click',()=>{
 
 // ===================== 자가시험 =====================
 window.WW={parseAny,groupByUser,buildModels,scoreQuery,extractQuery,queryTier,gaugeTier,confBand,charNgrams,nbScore,NB_ALPHA,expectOf,EXPECT,
-  agreeTier,agreeParts,agreeStats,AGREE_MIN_CHARS,ownersOf,minusNgrams,heldOut,
+  agreeTier,agreeParts,agreeStats,AGREE_MIN_CHARS,ownersOf,minusNgrams,heldOut,dropFromJoined,
   dateOf,ymd,spanOf,daysAgo,staleBy,STALE_DAYS,
   async selftest(){
     // 1) 파서 — 카톡 PC 본문 첫 줄이 '[' 로 시작해도 JSON 으로 오인하지 않는지
