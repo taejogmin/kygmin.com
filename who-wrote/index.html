@@ -310,8 +310,20 @@ function staleBy(span){
 const RX_PC = /^\[(.+?)\]\s*\[(?:오전|오후)?\s*\d{1,2}:\d{2}\]\s?(.*)$/;
 const RX_ANDROID = /^\d{4}년\s*\d{1,2}월\s*\d{1,2}일\s*(?:오전|오후)\s*\d{1,2}:\d{2},\s*(.+?)\s*:\s?(.*)$/;
 const RX_IOS = /^\d{4}\.\s*\d{1,2}\.\s*\d{1,2}\.\s*(?:오전|오후)\s*\d{1,2}:\d{2},\s*(.+?)\s*:\s?(.*)$/;
-// 텔레그램 데스크톱 복사: [2025-12-05 오전 5:19] 이름: 내용  (영문 로케일 [05.12.2025 05:19] 대응 포함)
-const RX_TG_COPY = /^\[(?:\d{4}-\d{2}-\d{2}|\d{2}\.\d{2}\.\d{4})[ ,]+(?:오전|오후|AM|PM)?\s*\d{1,2}:\d{2}(?::\d{2})?(?:\s*(?:AM|PM))?\]\s*(.+?):\s?(.*)$/;
+/* 텔레그램 데스크톱 복사: [2025-12-05 오전 5:19] 이름: 내용
+   로케일마다 날짜 모양이 다르다 — 한국어 2025-12-05, 유럽 05.12.2025, **미국 8/4/26**.
+   미국식이 빠져 있어서 실사용 30판이 통째로 형식 미인식으로 채점됐다(2026-08-09).
+   미인식이면 이름·시각이 질의에 그대로 들어가는데, 사람은 자기 이름을 거의 안 쓰고
+   **남들이 쓴다** — 즉 실화자에게서 멀어지는 방향으로 증거가 작동한다. 조용히 틀리는 최악의 모양이다. */
+/* 로케일마다 구분자와 자릿수가 다르다. 하나씩 추가하다 또 놓치느니 넓게 잡는다 —
+   앞이 4자리(연도 먼저)든 1~2자리(월/일 먼저)든, 구분자가 - / . 든 다 받는다.
+   첫 대괄호 **안에** 날짜가 있어야만 매칭되므로 카톡 PC 형식과는 여전히 겹치지 않는다. */
+const RX_TG_DATE = '(?:\\d{4}[-/.]\\d{1,2}[-/.]\\d{1,2}|\\d{1,2}[-/.]\\d{1,2}[-/.]\\d{2,4})';
+const RX_TG_COPY = new RegExp('^\\[' + RX_TG_DATE +
+  '[ ,]+(?:오전|오후|AM|PM)?\\s*\\d{1,2}:\\d{2}(?::\\d{2})?(?:\\s*(?:AM|PM))?\\]\\s*(.+?):\\s?(.*)$');
+/* 「머리말이 있어 보이는데 어떤 형식으로도 못 읽었다」를 잡는 그물.
+   모르는 로케일이 또 나올 것이므로, 다음번에는 **조용히 틀리지 말고 화면에 말해야 한다.** */
+const RX_HEADERISH = /^\[[^\]]{4,40}\]\s*[^:]{1,30}:\s/;
 
 function parseKakaoTxt(raw){
   const lines = raw.replace(/\r\n?/g,'\n').split('\n');
@@ -579,7 +591,9 @@ function extractQuery(raw){
      누적 판별의 「몇 개 중 몇 개」를 세려면 조각 목록이 필요하다. */
   if(!rx||hits===0){
     const parts=raw.replace(/\r\n?/g,'\n').split('\n').map(s=>s.trim()).filter(Boolean);
-    return {text:raw.trim(), msgs:0, stripped:false, parts};
+    const headed=parts.filter(l=>RX_HEADERISH.test(l)).length;
+    return {text:raw.trim(), msgs:0, stripped:false, parts,
+            looksHeaded: headed>=2 && headed>=parts.length*0.5};
   }
   const out=[];
   for(const ln of lines){
@@ -706,6 +720,7 @@ const T={
             'mostly consistent',
             'the strongest shape this tool can show'],
     agreeDrop:d=>`${d} message${d>1?'s':''} too short to count`,
+    headed:'This looks like it has name/time headers, but no known export format matched — so the names went into the query. That pushes the answer AWAY from the real author (people rarely type their own name). Strip the headers and paste only the message text.',
     held:n=>`${n} of the pasted message${n>1?'s were':' was'} already in the uploaded log — scored with ${n>1?'them':'it'} removed from that person's model, otherwise the answer would just be recall.`,
     qph:'Paste as-is — [Name] [2:04 PM] lines are fine, names and times are stripped automatically.',
     room:k=>`${k} suspects in the room — random guessing would hit ${(100/k).toFixed(0)}%.`,
@@ -729,6 +744,7 @@ const T={
             '대체로 일관됩니다',
             '이 도구가 보여줄 수 있는 가장 강한 모양입니다'],
     agreeDrop:d=>`짧아서 세지 않은 메시지 ${d}개`,
+    headed:'이름·시각 머리말이 있는 것 같은데 아는 형식이 아니라 그대로 채점됩니다 — 이름이 질의에 들어가면 결과가 실화자에게서 멀어집니다(자기 이름은 잘 안 쓰고 남들이 씁니다). 머리말을 지우고 본문만 붙여넣으세요.',
     held:n=>`붙여넣은 메시지 ${n}개가 업로드한 기록 안에 이미 있어서, 그 사람 모델에서 빼고 채점했습니다. 안 빼면 외운 문장을 맞히는 셈이 됩니다.`,
     qph:'[이름] [오후 2:04] 형식째 붙여넣어도 됩니다 — 이름·시각은 자동으로 지워집니다.',
     room:k=>`용의자 ${k}명 — 무작위로 찍어도 ${(100/k).toFixed(0)}%는 맞습니다.`,
@@ -900,6 +916,10 @@ function qmeter(){
   const t=queryTier(len);
   let s='<b class="mono">'+len+'</b> '+L().chars+' · '+L().q[t];
   if(ex.stripped) s+=' · '+L().stripped(ex.msgs);
+  /* 형식 미인식 경고 — 조용히 틀리는 경로를 화면으로 끌어올린다.
+     2026-08-09: 미국식 날짜(8/4/26)가 빠져 있어 실사용 30판이 통째로 이 경로로 갔고,
+     NB 적중률이 27% 까지 떨어졌다(정상 조건에서는 80%대). 그때 화면은 아무 말도 하지 않았다. */
+  if(ex.looksHeaded) s+=' · <b class="weak">'+L().headed+'</b>';
   /* 정확도 숫자는 방 조건이 정해진 뒤에만, 그리고 잰 격자 안에서만 말한다.
      방 크기와 코퍼스 크기가 기대치를 크게 바꾸므로 단일 숫자를 띄우면 거짓말이 된다. */
   const med=roomMedianChars();
@@ -1002,7 +1022,7 @@ $('#vno').addEventListener('click',()=>{
 // ===================== 자가시험 =====================
 window.WW={parseAny,groupByUser,buildModels,scoreQuery,extractQuery,queryTier,gaugeTier,confBand,charNgrams,nbScore,NB_ALPHA,expectOf,EXPECT,
   agreeTier,agreeParts,agreeStats,AGREE_MIN_CHARS,ownersOf,minusNgrams,heldOut,dropFromJoined,
-  dateOf,ymd,spanOf,daysAgo,staleBy,STALE_DAYS,
+  dateOf,ymd,spanOf,daysAgo,staleBy,STALE_DAYS,RX_HEADERISH,
   async selftest(){
     // 1) 파서 — 카톡 PC 본문 첫 줄이 '[' 로 시작해도 JSON 으로 오인하지 않는지
     const pc='[홍길동] [오후 1:23] ㅋㅋ 뭐함\n[김철수] [오후 1:24] 밥\n먹는중\n[홍길동] [오후 1:25] 사진\n';
