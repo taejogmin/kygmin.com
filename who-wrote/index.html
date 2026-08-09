@@ -321,6 +321,22 @@ const RX_IOS = /^\d{4}\.\s*\d{1,2}\.\s*\d{1,2}\.\s*(?:오전|오후)\s*\d{1,2}:\
 const RX_TG_DATE = '(?:\\d{4}[-/.]\\d{1,2}[-/.]\\d{1,2}|\\d{1,2}[-/.]\\d{1,2}[-/.]\\d{2,4})';
 const RX_TG_COPY = new RegExp('^\\[' + RX_TG_DATE +
   '[ ,]+(?:오전|오후|AM|PM)?\\s*\\d{1,2}:\\d{2}(?::\\d{2})?(?:\\s*(?:AM|PM))?\\]\\s*(.+?):\\s?(.*)$');
+/* 카톡 영문판 복사: `4:57 PM Jb 앤젤리너스 커피로 와라`
+   **구분자가 없다.** 이름이 어디서 끝나고 본문이 어디서 시작하는지 문자열만 봐서는 모른다
+   (`Jb` 도 이름이고 `Kyung Min 경민` 처럼 공백이 든 이름도 있다).
+   → 파일에서 읽은 **실제 참가자 이름 목록**을 넘겨받아 가장 긴 것부터 맞춰 떼어낸다.
+   이름을 못 떼면 `nameLeft` 로 알린다 — 이름이 질의에 남으면 실화자에게서 멀어진다. */
+const RX_TIME_HEAD = /^(?:(?:오전|오후)\s+)?\d{1,2}:\d{2}(?::\d{2})?(?:\s*(?:AM|PM))?\s+/i;
+function stripName(rest, names){
+  let best=null;
+  for(const n of (names||[])){
+    const t=String(n).trim(); if(!t) continue;
+    if(rest===t) return {text:'', hit:true};
+    if(rest.startsWith(t+' ') && (!best || t.length>best.length)) best=t;
+  }
+  return best ? {text:rest.slice(best.length+1).trim(), hit:true} : {text:rest, hit:false};
+}
+
 /* 「머리말이 있어 보이는데 어떤 형식으로도 못 읽었다」를 잡는 그물.
    모르는 로케일이 또 나올 것이므로, 다음번에는 **조용히 틀리지 말고 화면에 말해야 한다.** */
 const RX_HEADERISH = /^\[[^\]]{4,40}\]\s*[^:]{1,30}:\s/;
@@ -579,7 +595,7 @@ function queryTier(len){ return len>=300?3 : len>=100?2 : len>=20?1 : 0; }
 
 // 질의 전처리: 카톡에서 복사한 덩어리(`[이름] [시각] 내용` 등)를 자동 인식해
 // 이름·시각을 제거하고 내용만 이어붙인다. 이름을 남기면 답을 미리 아는 셈이 된다.
-function extractQuery(raw){
+function extractQuery(raw, names){
   const lines = raw.replace(/\r\n?/g,'\n').split('\n');
   const rxs=[RX_PC,RX_ANDROID,RX_IOS,RX_TG_COPY];
   let rx=null, hits=0;
@@ -590,10 +606,26 @@ function extractQuery(raw){
   /* 이름·시각 형식이 아니면 줄 단위를 메시지 단위로 본다.
      누적 판별의 「몇 개 중 몇 개」를 세려면 조각 목록이 필요하다. */
   if(!rx||hits===0){
-    const parts=raw.replace(/\r\n?/g,'\n').split('\n').map(s=>s.trim()).filter(Boolean);
-    const headed=parts.filter(l=>RX_HEADERISH.test(l)).length;
-    return {text:raw.trim(), msgs:0, stripped:false, parts,
-            looksHeaded: headed>=2 && headed>=parts.length*0.5};
+    const parts0=raw.replace(/\r\n?/g,'\n').split('\n').map(s=>s.trim()).filter(Boolean);
+    /* 시각으로 시작하는 줄이 대부분이면 카톡 영문판 복사로 본다 */
+    const timed=parts0.filter(l=>RX_TIME_HEAD.test(l)).length;
+    if(timed>=2 && timed>=parts0.length*0.5){
+      const out=[]; let miss=0, seen=0;
+      for(const ln of parts0){
+        if(!RX_TIME_HEAD.test(ln)){ if(out.length) out[out.length-1]+='\n'+ln; continue; }
+        const rest=ln.replace(RX_TIME_HEAD,'').trim();
+        const r=stripName(rest, names); seen++;
+        if(!r.hit) miss++;
+        if(!r.text) continue;
+        if(isSystem(r.text)||isMedia(r.text)) continue;
+        out.push(r.text);
+      }
+      return {text:out.join('\n').trim(), msgs:out.length, stripped:true, parts:out.slice(),
+              nameLeft: seen>0 && miss>=seen*0.5};
+    }
+    const headed=parts0.filter(l=>RX_HEADERISH.test(l)).length;
+    return {text:raw.trim(), msgs:0, stripped:false, parts:parts0,
+            looksHeaded: headed>=2 && headed>=parts0.length*0.5};
   }
   const out=[];
   for(const ln of lines){
@@ -721,6 +753,7 @@ const T={
             'the strongest shape this tool can show'],
     agreeDrop:d=>`${d} message${d>1?'s':''} too short to count`,
     headed:'This looks like it has name/time headers, but no known export format matched — so the names went into the query. That pushes the answer AWAY from the real author (people rarely type their own name). Strip the headers and paste only the message text.',
+    nameLeft:'Times were stripped, but the sender names could not be matched against this room — they are still in the query and will push the answer away from the real author. Delete the names and paste only the message text.',
     held:n=>`${n} of the pasted message${n>1?'s were':' was'} already in the uploaded log — scored with ${n>1?'them':'it'} removed from that person's model, otherwise the answer would just be recall.`,
     qph:'Paste as-is — [Name] [2:04 PM] lines are fine, names and times are stripped automatically.',
     room:k=>`${k} suspects in the room — random guessing would hit ${(100/k).toFixed(0)}%.`,
@@ -745,6 +778,7 @@ const T={
             '이 도구가 보여줄 수 있는 가장 강한 모양입니다'],
     agreeDrop:d=>`짧아서 세지 않은 메시지 ${d}개`,
     headed:'이름·시각 머리말이 있는 것 같은데 아는 형식이 아니라 그대로 채점됩니다 — 이름이 질의에 들어가면 결과가 실화자에게서 멀어집니다(자기 이름은 잘 안 쓰고 남들이 씁니다). 머리말을 지우고 본문만 붙여넣으세요.',
+    nameLeft:'시각은 지웠는데 보낸 사람 이름을 이 방의 이름과 맞추지 못했습니다 — 이름이 질의에 남아 있어 결과가 실화자에게서 멀어집니다. 이름을 지우고 본문만 붙여넣으세요.',
     held:n=>`붙여넣은 메시지 ${n}개가 업로드한 기록 안에 이미 있어서, 그 사람 모델에서 빼고 채점했습니다. 안 빼면 외운 문장을 맞히는 셈이 됩니다.`,
     qph:'[이름] [오후 2:04] 형식째 붙여넣어도 됩니다 — 이름·시각은 자동으로 지워집니다.',
     room:k=>`용의자 ${k}명 — 무작위로 찍어도 ${(100/k).toFixed(0)}%는 맞습니다.`,
@@ -911,7 +945,7 @@ function qmeter(){
   const raw=$('#query').value.trim();
   const el=$('#qmeter');
   if(!raw){ el.textContent=''; return; }
-  const ex=extractQuery(raw);
+  const ex=extractQuery(raw, state.users);
   const len=ex.text.length;
   const t=queryTier(len);
   let s='<b class="mono">'+len+'</b> '+L().chars+' · '+L().q[t];
@@ -920,6 +954,7 @@ function qmeter(){
      2026-08-09: 미국식 날짜(8/4/26)가 빠져 있어 실사용 30판이 통째로 이 경로로 갔고,
      NB 적중률이 27% 까지 떨어졌다(정상 조건에서는 80%대). 그때 화면은 아무 말도 하지 않았다. */
   if(ex.looksHeaded) s+=' · <b class="weak">'+L().headed+'</b>';
+  if(ex.nameLeft)    s+=' · <b class="weak">'+L().nameLeft+'</b>';
   /* 정확도 숫자는 방 조건이 정해진 뒤에만, 그리고 잰 격자 안에서만 말한다.
      방 크기와 코퍼스 크기가 기대치를 크게 바꾸므로 단일 숫자를 띄우면 거짓말이 된다. */
   const med=roomMedianChars();
@@ -936,7 +971,7 @@ $('#query').addEventListener('input',()=>{qmeter();updateRunnable();});
 // 판별 실행
 $('#run').addEventListener('click',async ()=>{
   const raw=$('#query').value.trim(); if(!raw) return;
-  const ex=extractQuery(raw); const q=ex.text; if(!q) return;
+  const ex=extractQuery(raw, state.users); const q=ex.text; if(!q) return;
   $('#run').disabled=true;
   /* 붙여넣은 문장이 업로드한 기록 안에 있으면 빼고 채점한다.
      안 빼면 모델이 이미 외운 문장을 맞히는 셈이라 결과가 크게 부풀려진다. */
@@ -1022,6 +1057,7 @@ $('#vno').addEventListener('click',()=>{
 // ===================== 자가시험 =====================
 window.WW={parseAny,groupByUser,buildModels,scoreQuery,extractQuery,queryTier,gaugeTier,confBand,charNgrams,nbScore,NB_ALPHA,expectOf,EXPECT,
   agreeTier,agreeParts,agreeStats,AGREE_MIN_CHARS,ownersOf,minusNgrams,heldOut,dropFromJoined,
+  RX_TIME_HEAD,stripName,
   dateOf,ymd,spanOf,daysAgo,staleBy,STALE_DAYS,RX_HEADERISH,
   async selftest(){
     // 1) 파서 — 카톡 PC 본문 첫 줄이 '[' 로 시작해도 JSON 으로 오인하지 않는지
