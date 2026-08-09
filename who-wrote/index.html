@@ -73,6 +73,8 @@ button.small{padding:4px 10px; font-size:13px; box-shadow:2px 2px 0 var(--line)}
 button[disabled]{opacity:.4; cursor:not-allowed}
 
 .filemeta{font-size:13px; color:var(--dim); margin-top:10px}
+.filespan{font-size:13px; color:var(--dim); margin-top:4px}
+.filespan.stale{color:var(--red); font-weight:500}
 .err{color:var(--warn); font-weight:700; margin-top:10px; font-size:14px}
 
 table.users{width:100%; border-collapse:collapse; font-size:14px}
@@ -113,6 +115,7 @@ textarea:focus-visible{outline:3px solid var(--green); outline-offset:2px}
 .readout .agree b{color:var(--bg)}
 .readout .agree.t2 b{color:var(--green)}
 .readout .agree.t0 b{color:#E0836B}
+.readout .agree.held{color:#8a8a86; margin-top:10px; padding-top:0; border-top:0}
 .verify{display:flex; gap:10px; align-items:center; margin-top:12px; flex-wrap:wrap}
 .verify .q{font-weight:700}
 select{font:inherit; border:3px solid var(--line); padding:6px 8px; background:var(--card)}
@@ -189,6 +192,7 @@ nav{position:sticky; top:0; z-index:40; background:var(--bg); border-bottom:3px 
       </div>
       <input type="file" id="file" accept=".txt,.csv,.json">
       <div class="filemeta" id="filemeta"></div>
+      <div class="filespan" id="filespan"></div>
       <div class="err" id="fileerr" role="alert"></div>
     </div>
   </section>
@@ -256,6 +260,53 @@ function isMedia(t){ t=t.trim();
 function isSystem(t){ return SYSTEM_RE.test(t); }
 
 const RX_DIVIDER = /^-*\s*\d{4}년\s*\d{1,2}월\s*\d{1,2}일\s*[월화수목금토일]?요?일?\s*-*\s*$/;
+
+/* ---- 기록 기간 ----
+   날짜는 **본문과 함께 저장하지 않는다.** 방 전체의 처음·마지막 날짜 두 개만 센다.
+   실측(cum3): 코퍼스 시기와 질의 시기가 벌어지면 적중률이 약 15%p 떨어지고,
+   그 상황에서는 메시지를 더 모아도 오르지 않는다(3개 26% → 8개 29%).
+   **다만 그 실험은 달력 시간이 아니라 대화 안에서의 순서상 거리를 잰 것이다.**
+   그래서 화면에서 「몇 %p 떨어진다」고 말하지 않는다 — 재지 않은 주장이다. */
+const RX_DIVIDER_D = /^-*\s*(\d{4})년\s*(\d{1,2})월\s*(\d{1,2})일/;
+const RX_D_ANDROID = /^(\d{4})년\s*(\d{1,2})월\s*(\d{1,2})일\s*(?:오전|오후)/;
+const RX_D_IOS     = /^(\d{4})\.\s*(\d{1,2})\.\s*(\d{1,2})\.\s*(?:오전|오후)/;
+const RX_D_ISO     = /(\d{4})[-./](\d{1,2})[-./](\d{1,2})/;
+function ymd(y,m,d){
+  y=+y; m=+m; d=+d;
+  if(!(y>=1990 && y<=2100) || !(m>=1&&m<=12) || !(d>=1&&d<=31)) return null;
+  return `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+}
+function dateOf(line, fmt){
+  let m;
+  if(fmt==='android' && (m=RX_D_ANDROID.exec(line))) return ymd(m[1],m[2],m[3]);
+  if(fmt==='ios'     && (m=RX_D_IOS.exec(line)))     return ymd(m[1],m[2],m[3]);
+  if(fmt==='pc'      && (m=RX_DIVIDER_D.exec(line.trim()))) return ymd(m[1],m[2],m[3]);
+  if(fmt==='iso'     && (m=RX_D_ISO.exec(line)))     return ymd(m[1],m[2],m[3]);
+  return null;
+}
+/* 문자열 비교로 최소·최대를 잡는다 — YYYY-MM-DD 는 사전순이 곧 시간순이다.
+   기록이 시간순이 아닐 수도 있으므로 첫 줄·마지막 줄을 믿지 않고 전부 훑는다. */
+function spanOf(dates){
+  let from=null, to=null;
+  for(const d of dates){ if(!d) continue;
+    if(from===null||d<from) from=d;
+    if(to===null||d>to) to=d; }
+  return (from&&to)? {from,to} : null;
+}
+const DAY = 86400000;
+function daysAgo(dstr){
+  const t=Date.parse(dstr+'T00:00:00');
+  if(!Number.isFinite(t)) return null;
+  return Math.floor((Date.now()-t)/DAY);
+}
+/* 「오래된 기록」의 선. 실측에서 나온 값이 아니라 고른 값이다 —
+   달력 간격으로는 아직 재지 않았으므로 숫자를 주장할 근거가 없다. */
+const STALE_DAYS = 90;
+function staleBy(span){
+  if(!span) return null;
+  const d=daysAgo(span.to);
+  return (d!==null && d>=STALE_DAYS) ? d : null;
+}
 const RX_PC = /^\[(.+?)\]\s*\[(?:오전|오후)?\s*\d{1,2}:\d{2}\]\s?(.*)$/;
 const RX_ANDROID = /^\d{4}년\s*\d{1,2}월\s*\d{1,2}일\s*(?:오전|오후)\s*\d{1,2}:\d{2},\s*(.+?)\s*:\s?(.*)$/;
 const RX_IOS = /^\d{4}\.\s*\d{1,2}\.\s*\d{1,2}\.\s*(?:오전|오후)\s*\d{1,2}:\d{2},\s*(.+?)\s*:\s?(.*)$/;
@@ -270,21 +321,23 @@ function parseKakaoTxt(raw){
     for(const k in rxs) if(rxs[k].test(ln)) votes[k]++;
   const fmt = Object.keys(votes).sort((a,b)=>votes[b]-votes[a])[0];
   if(votes[fmt]===0) throw new Error('kakao-format-unknown');
-  const rx = rxs[fmt], msgs=[];
+  const rx = rxs[fmt], msgs=[], dates=[];
   for(const ln of lines){
     if(!ln.trim()) continue;
-    if(RX_DIVIDER.test(ln.trim())) continue;
+    /* PC 형식은 날짜가 구분선에만 있다. 구분선은 건너뛰되 날짜는 주워 간다. */
+    if(RX_DIVIDER.test(ln.trim())){ dates.push(dateOf(ln,'pc')); continue; }
     const m = rx.exec(ln);
     if(m){
       const user=m[1].trim(), text=m[2];
       if(isSystem(ln)||isMedia(text)) continue;
+      if(fmt!=='pc') dates.push(dateOf(ln,fmt));   /* 안드로이드·iOS 는 줄마다 날짜가 있다 */
       msgs.push({user,text});
     }else{
       if(isSystem(ln)) continue;
       if(msgs.length) msgs[msgs.length-1].text += '\n'+ln;
     }
   }
-  return {format:'kakao-'+fmt, messages:msgs};
+  return {format:'kakao-'+fmt, messages:msgs, span:spanOf(dates)};
 }
 
 function parseCsv(raw){
@@ -305,15 +358,16 @@ function parseCsv(raw){
   if(cur.length>1||cur[0]) rows.push(cur);
   if(!rows.length) throw new Error('csv-empty');
   const start = rows[0] && /^(date|날짜)$/i.test(rows[0][0]) ? 1 : 0;
-  const msgs=[];
+  const msgs=[], dates=[];
   for(const row of rows.slice(start)){
     if(row.length<3) continue;
     const user=row[1].trim(), text=row[2];
     if(isSystem(text)||isMedia(text)) continue;
+    dates.push(dateOf(row[0]||'','iso'));
     msgs.push({user,text});
   }
   if(!msgs.length) throw new Error('csv-nomsg');
-  return {format:'kakao-csv', messages:msgs};
+  return {format:'kakao-csv', messages:msgs, span:spanOf(dates)};
 }
 
 function tgText(t){
@@ -327,7 +381,7 @@ function tgExtract(src){
     if(m.type!=='message') continue;
     const user = m.from || m.from_id; if(!user) continue;
     const text = tgText(m.text); if(!text.trim()) continue;
-    msgs.push({user:String(user).trim(), text});
+    msgs.push({user:String(user).trim(), text, date:dateOf(String(m.date||''),'iso')});
   }
   return msgs;
 }
@@ -336,7 +390,8 @@ function parseTelegram(raw){
   // 계정 전체 내보내기: {chats:{list:[{name, messages:[...]}]}}
   if(data && data.chats && Array.isArray(data.chats.list)){
     const chats = data.chats.list
-      .map(c=>({name:c.name||c.type||'chat', msgs:tgExtract(c.messages)}))
+      .map(c=>{ const ms=tgExtract(c.messages);
+        return {name:c.name||c.type||'chat', msgs:ms, span:spanOf(ms.map(m=>m.date))}; })
       .filter(c=>c.msgs.length>0)
       .sort((a,b)=>b.msgs.length-a.msgs.length);
     if(!chats.length) throw new Error('tg-nomsg');
@@ -344,7 +399,7 @@ function parseTelegram(raw){
   }
   const msgs = tgExtract(Array.isArray(data) ? data : (data.messages||[]));
   if(!msgs.length) throw new Error('tg-nomsg');
-  return {format:'telegram-json', messages:msgs};
+  return {format:'telegram-json', messages:msgs, span:spanOf(msgs.map(m=>m.date))};
 }
 
 /* 확장자가 있으면 확장자가 이긴다.
@@ -554,6 +609,50 @@ function extractQuery(raw){
    8자 미만 조각은 표결에서 뺀다. 「ㅇㅇ」 같은 조각은 거의 정보가 없는데 표는 한 장을 갖는다. */
 const AGREE_MIN_CHARS = 8;
 function agreeParts(parts){ return (parts||[]).filter(p=>p && p.length>=AGREE_MIN_CHARS); }
+/* ---- 누출 제거 ----
+   실사용 모양: 대화방을 통째로 내보내고 **그 안의 메시지**를 붙여넣는다.
+   그러면 질의 문장이 그 사람 코퍼스 안에 들어 있어서, 모델이 이미 외운 문장을 맞히는 셈이 된다.
+   실측(leak.mjs, 5인 방·짝지은 비교) — 부풀림이 작지 않다:
+     코퍼스 2,000자 100% 대 30% · 10,000자 100% 대 39% · 50,000자 97% 43% · 200,000자 92% 대 52%
+   n-gram 「덮임」이 원인이라 코퍼스가 커져도 천천히만 준다. 무시할 수 있는 크기가 아니다.
+
+   고치는 법: 그 문장을 **실제로 가지고 있는 사람에게서만** n-gram 카운트를 뺀다.
+   파일이 주인을 알려주므로 추측할 필요가 없다.
+   실측(leak3.mjs): 「빼고 채점」이 「그 문장 없이 다시 만든 모델」과 160×3판 전부 같은 답을 냈다(100%).
+   전원에게서 빼면 안 된다 — 남의 정당한 카운트까지 깎여서 실화자가 오히려 유리해진다
+   (leak2.mjs 에서 2,000자 84% 대 31%, 거의 안 고쳐졌다). */
+function ownersOf(grouped, text){
+  const t=(text||'').trim(); if(!t) return [];
+  const out=[];
+  for(const u in grouped) if(grouped[u].some(x=>x.trim()===t)) out.push(u);
+  return out;   /* 두 사람이 똑같은 문장을 썼으면 둘 다 — 양쪽 모델이 다 봤다 */
+}
+function minusNgrams(model, texts){
+  const ng=new Map(model.ng); let tot=model.tot;
+  for(const t of texts) for(const [g,c] of charNgrams(t)){
+    const cur=ng.get(g)||0, d=Math.min(cur,c);
+    if(d<=0) continue;
+    if(cur-d<=0) ng.delete(g); else ng.set(g,cur-d);
+    tot-=d;
+  }
+  return {...model, ng, tot};
+}
+/* 원본 모델은 건드리지 않는다 — 이번 채점에만 쓰는 사본을 만든다. */
+function heldOut(models, grouped, parts){
+  const own={};                       /* user -> [겹친 문장들] */
+  let found=0;
+  for(const p of (parts||[])){
+    const us=ownersOf(grouped,p);
+    if(!us.length) continue;
+    found++;
+    for(const u of us){ (own[u]=own[u]||[]).push(p); }
+  }
+  if(!found) return {models, found:0};
+  const copy={...models};
+  for(const u in own) if(copy[u]) copy[u]=minusNgrams(copy[u], own[u]);
+  return {models:copy, found};
+}
+
 /* 0 = 갈림(60% 이하) · 1 = 대체로 일치 · 2 = 전원 일치 */
 function agreeTier(agree, n){
   if(!(n>=2)) return null;
@@ -592,12 +691,15 @@ const T={
             'mostly consistent',
             'the strongest shape this tool can show'],
     agreeDrop:d=>`${d} message${d>1?'s':''} too short to count`,
+    held:n=>`${n} of the pasted message${n>1?'s were':' was'} already in the uploaded log — scored with ${n>1?'them':'it'} removed from that person's model, otherwise the answer would just be recall.`,
     qph:'Paste as-is — [Name] [2:04 PM] lines are fine, names and times are stripped automatically.',
     room:k=>`${k} suspects in the room — random guessing would hit ${(100/k).toFixed(0)}%.`,
     parsed:(f,n,u)=>`Parsed ${f} · ${n.toLocaleString()} messages · ${u} people`,
     fail:'Could not read this file. Supported: KakaoTalk txt/csv export, Telegram result.json.',
     stripped:n=>`${n} messages — names & times removed automatically`,
     pickchat:n=>`Full account export — ${n} chats found. Pick one:`,
+    span:(a,b)=>`Record spans ${a} → ${b}`,
+    spanStale:mo=>`this log ends about ${mo} month${mo===1?'':'s'} ago — accuracy can drop for messages sent after it`,
     need2:'Need at least 2 suspects with data — include more people.',
     tally:(h,t)=>`session record: ${h}/${t} correct`,
     whowas:'— who was it?', cap:'longer bar = stronger match · % = relative confidence among suspects',
@@ -612,12 +714,15 @@ const T={
             '대체로 일관됩니다',
             '이 도구가 보여줄 수 있는 가장 강한 모양입니다'],
     agreeDrop:d=>`짧아서 세지 않은 메시지 ${d}개`,
+    held:n=>`붙여넣은 메시지 ${n}개가 업로드한 기록 안에 이미 있어서, 그 사람 모델에서 빼고 채점했습니다. 안 빼면 외운 문장을 맞히는 셈이 됩니다.`,
     qph:'[이름] [오후 2:04] 형식째 붙여넣어도 됩니다 — 이름·시각은 자동으로 지워집니다.',
     room:k=>`용의자 ${k}명 — 무작위로 찍어도 ${(100/k).toFixed(0)}%는 맞습니다.`,
     parsed:(f,n,u)=>`${f} 인식 · 메시지 ${n.toLocaleString()}개 · ${u}명`,
     fail:'파일을 읽지 못했습니다. 지원: 카카오톡 txt/csv 내보내기, 텔레그램 result.json.',
     stripped:n=>`메시지 ${n}개 — 이름·시각 자동 제거됨`,
     pickchat:n=>`계정 전체 내보내기 — 대화방 ${n}개 발견. 하나를 고르세요:`,
+    span:(a,b)=>`기록 기간 ${a} → ${b}`,
+    spanStale:mo=>`이 기록은 약 ${mo}개월 전에 끝납니다 — 그 이후에 오간 메시지라면 정확도가 떨어질 수 있습니다`,
     need2:'데이터가 있는 용의자가 2명 이상 필요합니다.',
     tally:(h,t)=>`이번 세션 전적: ${t}판 중 ${h}판 적중`,
     whowas:'— 실제로는 누구였나요?', cap:'막대가 길수록 근접 · %는 용의자들 사이의 상대 확신',
@@ -665,20 +770,33 @@ async function decodeSmart(buf){
   try{ return new TextDecoder('utf-8',{fatal:true}).decode(buf); }
   catch(e){ return new TextDecoder('euc-kr').decode(buf); } // 구버전 PC 내보내기 대비
 }
-async function applyMessages(format, messages){
+async function applyMessages(format, messages, span){
   const grouped=groupByUser({messages});
+  state.grouped=grouped;          /* 누출 검사에 원문 목록이 필요하다 */
   state.models=await buildModels(grouped);
   state.users=Object.keys(grouped).sort((a,b)=>state.models[b].chars-state.models[a].chars);
   state.include=new Set(state.users.filter(u=>state.models[u].chars>=200));
   state.hits=0; state.tries=0; state.lastRender=null;
+  state.span=span||null;
   $('#filemeta').textContent=L().parsed(format,messages.length,state.users.length);
+  renderSpan();
   $('#step2').classList.remove('locked');
   $('#step3').classList.remove('locked');
   $('#verdict').hidden=true; renderTally();
   renderUsers(); updateRunnable();
 }
+/* 기록 기간 줄. 날짜를 못 읽은 파일이면 아무 말도 하지 않는다 —
+   기간을 모르면서 「오래됐다/최신이다」를 말할 수는 없다. */
+function renderSpan(){
+  const el=$('#filespan'); if(!el) return;
+  el.textContent=''; el.className='filespan';
+  const sp=state.span; if(!sp) return;
+  const stale=staleBy(sp);
+  el.textContent = L().span(sp.from, sp.to) + (stale!==null ? ' · '+L().spanStale(Math.floor(stale/30)) : '');
+  if(stale!==null) el.className='filespan stale';
+}
 async function loadFile(f){
-  $('#fileerr').textContent=''; $('#filemeta').textContent='';
+  $('#fileerr').textContent=''; $('#filemeta').textContent=''; $('#filespan').textContent='';
   const old=document.getElementById('chatpick'); if(old) old.remove();
   try{
     const raw=await decodeSmart(await f.arrayBuffer());
@@ -698,13 +816,14 @@ async function loadFile(f){
       });
       sel.onchange=async ()=>{
         if(sel.value==='') return;
-        await applyMessages('telegram-export', parsed.chats[+sel.value].msgs);
+        const c=parsed.chats[+sel.value];
+        await applyMessages('telegram-export', c.msgs, c.span);
         sel.remove();
       };
       $('#filemeta').after(sel);
       return;
     }
-    await applyMessages(parsed.format, parsed.messages);
+    await applyMessages(parsed.format, parsed.messages, parsed.span);
   }catch(e){
     console.error(e);
     $('#fileerr').textContent=L().fail;
@@ -784,9 +903,12 @@ $('#run').addEventListener('click',async ()=>{
   const raw=$('#query').value.trim(); if(!raw) return;
   const ex=extractQuery(raw); const q=ex.text; if(!q) return;
   $('#run').disabled=true;
-  const res=await scoreQuery(state.models,q,[...state.include]);
+  /* 붙여넣은 문장이 업로드한 기록 안에 있으면 빼고 채점한다.
+     안 빼면 모델이 이미 외운 문장을 맞히는 셈이라 결과가 크게 부풀려진다. */
+  const ho=heldOut(state.models, state.grouped, ex.parts);
+  const res=await scoreQuery(ho.models,q,[...state.include]);
   /* 최종 지목이 정해진 뒤에 메시지별 일치를 센다 — 지목 자체는 합산으로 그대로 둔다. */
-  const ag=await agreeStats(state.models, ex.parts, [...state.include], res.ranked[0]);
+  const ag=await agreeStats(ho.models, ex.parts, [...state.include], res.ranked[0]);
   $('#run').disabled=false;
   state.pending={top:res.ranked[0]};
   const render=()=>{
@@ -828,6 +950,12 @@ $('#run').addEventListener('click',async ()=>{
       el.appendChild(note);
       ro.appendChild(el);
     }
+    if(ho.found){
+      const hl=document.createElement('div');
+      hl.className='agree held';
+      hl.textContent=L().held(ho.found);
+      ro.appendChild(hl);
+    }
   };
   render(); state.lastRender=render;
   $('#verdict').hidden=false; $('#verify').hidden=false;
@@ -858,7 +986,8 @@ $('#vno').addEventListener('click',()=>{
 
 // ===================== 자가시험 =====================
 window.WW={parseAny,groupByUser,buildModels,scoreQuery,extractQuery,queryTier,gaugeTier,confBand,charNgrams,nbScore,NB_ALPHA,expectOf,EXPECT,
-  agreeTier,agreeParts,agreeStats,AGREE_MIN_CHARS,
+  agreeTier,agreeParts,agreeStats,AGREE_MIN_CHARS,ownersOf,minusNgrams,heldOut,
+  dateOf,ymd,spanOf,daysAgo,staleBy,STALE_DAYS,
   async selftest(){
     // 1) 파서 — 카톡 PC 본문 첫 줄이 '[' 로 시작해도 JSON 으로 오인하지 않는지
     const pc='[홍길동] [오후 1:23] ㅋㅋ 뭐함\n[김철수] [오후 1:24] 밥\n먹는중\n[홍길동] [오후 1:25] 사진\n';
