@@ -107,7 +107,8 @@ a.proj:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--ink);}
 .badge.soon{background:var(--gray);}
 /* 한국어 콘텐츠만 있는 프로젝트 표시. PLAY 와 나란히 두되 초록과 경쟁하지 않게 회색. */
 .badge.kronly{background:var(--paper);color:#6B6B67;}
-.proj-badges{display:flex;align-items:center;gap:6px;}
+.proj-badges{display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.badge{white-space:nowrap;}
 .proj p{font-size:13.5px;color:#3A3A38;line-height:1.65;}
 .proj .stack{
   margin-top:auto;padding-top:10px;border-top:2px solid var(--gray);
@@ -205,7 +206,7 @@ if(window.KYG_LANG!=='en'){
       <a class="proj" href="/animal/" data-tags="face camera photo fun ai mediapipe 얼굴 사진 동물 닮은꼴 랜드마크 기하 landmark geometry face mesh 얼굴메시 비율 가중거리 weighted distance 눈 코 입 얼굴비율">
         <div class="proj-head"><span class="proj-name tx" data-en="animal-lookalike" data-kr="동물 닮은꼴 찾기">animal-lookalike</span><span class="badge live">PLAY &#9658;</span></div>
         <p class="tx" data-en="Face landmarks matched against 12 species to find the animal closest to you." data-kr="얼굴 랜드마크로 12종 동물과 비교해 가장 닮은 동물을 찾습니다.">Face landmarks matched against 12 species to find the animal closest to you.</p>
-        <p class="stack">MediaPipe Face Landmarks · Geometric Ratios · Weighted Distance</p>
+        <p class="stack">MediaPipe Face Landmarks · 6 Geometric Features · Weighted Distance</p>
       </a>
 
     </div>
