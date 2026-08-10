@@ -128,6 +128,10 @@ h2 .u{box-shadow:inset 0 -12px 0 var(--green);}
 }
 .badge.live{background:var(--green);color:var(--paper);}
 .badge.wip{background:var(--gray);}
+/* 한국어 콘텐츠만 있는 프로젝트 표시. PLAY 와 나란히 두되 초록과 경쟁하지 않게 회색. */
+.badge.kronly{background:var(--paper);color:#6B6B67;}
+.proj-badges{display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.badge{white-space:nowrap;}
 .proj p{font-size:13.5px;color:#3A3A38;line-height:1.65;}
 .proj .stack{
   margin-top:auto;padding-top:10px;border-top:2px solid var(--gray);
@@ -300,22 +304,22 @@ if(window.KYG_LANG!=='en'){
   <div class="wrap">
     <span class="sec-tag">02 — PLAYHOUSE</span>
     <h2>PLAY<span class="u">HOUSE</span></h2>
-    <p style="font-size:15px;color:#3A3A38;max-width:620px;margin:-16px 0 28px;" class="tx" data-en="Games and experiments I build for fun — everything runs right in your browser. Here are the three latest; the full collection lives in the PLAYHOUSE." data-kr="재미로 만드는 게임과 실험들 — 전부 브라우저에서 바로 실행돼요. 최신 세 개만 소개하고, 전체 컬렉션은 플레이하우스에 있습니다.">Games and experiments I build for fun — everything runs right in your browser. Here are the three latest; the full collection lives in the PLAYHOUSE.</p>
+    <p style="font-size:15px;color:#3A3A38;max-width:620px;margin:-16px 0 28px;" class="tx" data-en="Games and experiments I build for fun — everything runs right in your browser. Three picks below; the full collection lives in the PLAYHOUSE." data-kr="재미로 만드는 게임과 실험들 — 전부 브라우저에서 바로 실행돼요. 세 개만 골라 소개하고, 전체 컬렉션은 플레이하우스에 있습니다.">Games and experiments I build for fun — everything runs right in your browser. Three picks below; the full collection lives in the PLAYHOUSE.</p>
     <div class="proj-grid">
+      <a class="proj" href="who-wrote/">
+        <div class="proj-head"><span class="proj-name tx" data-en="who-wrote-this" data-kr="누가 썼게">who-wrote-this</span><span class="badge live">PLAY &#9658;</span></div>
+        <p class="tx" data-en="Upload a group chat export, paste a message, and it names who wrote it — from writing habits alone." data-kr="단톡방 내보내기를 올리고 메시지를 붙여넣으면, 말투만 보고 누가 썼는지 지목합니다.">Upload a group chat export, paste a message, and it names who wrote it — from writing habits alone.</p>
+        <p class="stack">Naive Bayes · Char 2–3gram · Additive Smoothing</p>
+      </a>
       <a class="proj" href="blueberry/">
-        <div class="proj-head"><span class="proj-name tx" data-en="blueberry-smoothie" data-kr="블루베리 스무디">blueberry-smoothie</span><span class="badge live">PLAY &#9658;</span></div>
-        <p class="tx" data-en="Say a Korean sentence and watch your own pitch drawn as a curve, in semitones relative to your own median. YIN pitch tracking, syllable-nucleus detection and a Viterbi octave correction run entirely inside the page — read five sentences chosen so that only the sentence type differs, or just talk freely for ninety seconds. It is a measuring instrument, not a dialect quiz: it never tells you where you are from. Your voice never leaves your device and nothing is stored." data-kr="한국어 문장을 말하면 본인 중앙값 대비 반음 단위로 음높이 곡선이 그려집니다. YIN 피치 추출, 음절 핵 검출, 비터비 옥타브 보정이 전부 이 페이지 안에서 돌아가요 — 문장 유형만 다르도록 고른 다섯 문장을 읽거나, 90초 동안 그냥 편하게 이야기해도 됩니다. 이건 방언 맞히기 퀴즈가 아니라 측정기라서 어디 출신인지는 말하지 않습니다. 목소리는 기기를 떠나지 않고 아무것도 저장되지 않습니다.">Say a Korean sentence and watch your own pitch drawn as a curve, in semitones relative to your own median. YIN pitch tracking, syllable-nucleus detection and a Viterbi octave correction run entirely inside the page — read five sentences chosen so that only the sentence type differs, or just talk freely for ninety seconds. It is a measuring instrument, not a dialect quiz: it never tells you where you are from. Your voice never leaves your device and nothing is stored.</p>
-        <p class="stack">YIN Pitch Tracking · Viterbi · Web Audio</p>
+        <div class="proj-head"><span class="proj-name tx" data-en="blueberry-smoothie" data-kr="블루베리 스무디">blueberry-smoothie</span><span class="proj-badges"><span class="badge kronly tx" data-en="KR ONLY" data-kr="한국어 전용">KR ONLY</span><span class="badge live">PLAY &#9658;</span></span></div>
+        <p class="tx" data-en="Speak a Korean sentence and see your intonation drawn in semitones." data-kr="한국어 문장을 말하면 억양 곡선을 반음 단위로 그려 줍니다.">Speak a Korean sentence and see your intonation drawn in semitones.</p>
+        <p class="stack">YIN F0 Estimation · Viterbi Octave Correction · Final-Slope</p>
       </a>
       <a class="proj" href="pyrrhus-co/">
         <div class="proj-head"><span class="proj-name tx" data-en="pyrrhus-co" data-kr="피로스 옥션 하우스">pyrrhus-co</span><span class="badge live">PLAY &#9658;</span></div>
-        <p class="tx" data-en="Twenty rounds of sealed first-price bidding, three rivals, and the same lots on the block. Nobody knows what anything is really worth — you get an estimate, and you can pay to look closer. Bid too little and you go home empty-handed; bid what it feels worth and you have already paid too much. The house is always happy to buy a lot back, at a price of its own choosing." data-kr="세 명의 경쟁자와 스무 번의 밀봉 입찰. 같은 물건을 두고 각자 값을 적어 냅니다. 아무도 진짜 가치는 모릅니다 — 주어지는 건 추정가뿐이고, 돈을 내면 더 자세히 볼 수 있어요. 너무 낮게 쓰면 빈손으로 돌아가고, 값어치만큼 쓰면 이미 너무 많이 낸 겁니다. 경매장은 언제든 물건을 되사 드립니다 — 물론 경매장이 정한 값으로.">Twenty rounds of sealed first-price bidding, three rivals, and the same lots on the block. Nobody knows what anything is really worth — you get an estimate, and you can pay to look closer. Bid too little and you go home empty-handed; bid what it feels worth and you have already paid too much. The house is always happy to buy a lot back, at a price of its own choosing.</p>
-        <p class="stack">Sealed-Bid Auction · Winner's Curse · Supabase</p>
-      </a>
-      <a class="proj" href="indian-poker/">
-        <div class="proj-head"><span class="proj-name tx" data-en="indian-poker" data-kr="인디안 포커">indian-poker</span><span class="badge live">PLAY &#9658;</span></div>
-        <p class="tx" data-en="The one card you cannot see is your own. Their card is face up in front of you and yours is face up in front of them, so every bet they make is a statement about your hand — read them, and try not to be readable. Twenty-seven rounds off one split deck, three sources of unequal honesty for sale, and four desks to sit across from. The last one keeps learning you." data-kr="볼 수 없는 카드는 내 카드 하나뿐입니다. 상대의 카드는 내 앞에, 내 카드는 상대 앞에 펼쳐져 있으니 상대의 모든 베팅은 내 패에 대한 진술입니다 — 상대를 읽고, 나는 읽히지 않아야 합니다. 반으로 나눈 한 벌의 덱으로 27라운드, 정직함이 각기 다른 세 명의 소식통, 그리고 마주 앉을 네 명의 상대. 마지막 한 명은 당신을 계속 학습합니다.">The one card you cannot see is your own. Their card is face up in front of you and yours is face up in front of them, so every bet they make is a statement about your hand — read them, and try not to be readable. Twenty-seven rounds off one split deck, three sources of unequal honesty for sale, and four desks to sit across from. The last one keeps learning you.</p>
-        <p class="stack">Bayesian Inference · Card Counting · Supabase</p>
+        <p class="tx" data-en="Twenty sealed bids. Nobody knows what the lot is really worth — and if you win, you already paid too much." data-kr="밀봉 입찰 스무 번. 진짜 가치는 아무도 모르고, 이기면 이미 너무 많이 낸 겁니다.">Twenty sealed bids. Nobody knows what the lot is really worth — and if you win, you already paid too much.</p>
+        <p class="stack">Common-Value Auction · First-Price Sealed Bid · Winner's Curse</p>
       </a>
     </div>
     <div style="margin-top:28px;">
