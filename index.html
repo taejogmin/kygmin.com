@@ -37,7 +37,7 @@ nav{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:3px s
   max-width:960px;margin:0 auto;padding:14px 24px;
   display:flex;justify-content:space-between;align-items:center;gap:16px;
 }
-.logo{font-family:var(--arch);font-weight:900;font-size:19px;letter-spacing:-0.5px;}
+.logo{font-family:var(--arch);font-weight:900;font-size:19px;letter-spacing:-0.5px;white-space:nowrap;}
 .logo em{font-style:normal;background:var(--green);color:var(--paper);padding:0 6px;display:inline-block;transform:rotate(-1.5deg);}
 .nav-links{display:flex;gap:8px;flex-wrap:wrap;}
 .nav-links a{
@@ -89,6 +89,8 @@ section{padding:72px 0;border-bottom:3px solid var(--ink);}
   background:var(--ink);color:var(--paper);padding:4px 12px;margin-bottom:14px;
 }
 h2{font-family:var(--arch);font-weight:900;font-size:32px;text-transform:uppercase;letter-spacing:-1px;margin-bottom:36px;}
+/* 320px 에서 "Extracurricular" 한 단어가 뷰포트를 11px 넘겨 가로 스크롤을 만들었다. */
+@media (max-width:360px){ h2{font-size:27px;} }
 h2 .u{box-shadow:inset 0 -12px 0 var(--green);}
 
 /* ── Career ledger ── */
@@ -130,6 +132,13 @@ h2 .u{box-shadow:inset 0 -12px 0 var(--green);}
 .badge.wip{background:var(--gray);}
 /* 한국어 콘텐츠만 있는 프로젝트 표시. PLAY 와 나란히 두되 초록과 경쟁하지 않게 회색. */
 .badge.kronly{background:var(--paper);color:#6B6B67;}
+/* 03 — NOTES. 해설 카드는 .proj 를 그대로 쓰되 제목이 본문 역할을 한다. */
+.badge.read{background:var(--ink);color:var(--paper);}
+.note-title{
+  font-family:var(--arch);font-weight:900;font-size:17px;line-height:1.2;
+  letter-spacing:-0.5px;text-transform:uppercase;color:var(--ink)!important;
+}
+.notes-meta{font-family:var(--mono);font-size:11.5px;color:#6B6B67;letter-spacing:.5px;margin:-8px 0 26px;}
 .proj-badges{display:flex;align-items:center;gap:6px;flex-shrink:0;}
 .badge{white-space:nowrap;}
 .proj p{font-size:13.5px;color:#3A3A38;line-height:1.65;}
@@ -324,6 +333,35 @@ if(window.KYG_LANG!=='en'){
     </div>
     <div style="margin-top:28px;">
       <a class="btn btn-green" href="playhouse/"><span class="tx" data-en="Enter the PLAYHOUSE" data-kr="플레이하우스 입장">Enter the PLAYHOUSE</span> &#8594;</a>
+    </div>
+  </div>
+</section>
+
+<section id="notes">
+  <div class="wrap">
+    <span class="sec-tag">03 &mdash; NOTES</span>
+    <h2><span class="u">NOTES</span></h2>
+    <p style="font-size:15px;color:#3A3A38;max-width:620px;margin:-16px 0 10px;" class="tx" data-en="How the things in the Playhouse actually work &mdash; and what I got wrong building them. Three below; all seven in the NOTES." data-kr="플레이하우스의 것들이 실제로 어떻게 작동하는지, 그리고 만들면서 무엇을 틀렸는지. 세 편만 골라 소개하고, 나머지는 NOTES에 있습니다.">How the things in the Playhouse actually work &mdash; and what I got wrong building them. Three below; all seven in the NOTES.</p>
+    <p class="notes-meta tx" data-en="7 WRITE-UPS &middot; 20,000 WORDS &middot; ENGLISH ONLY" data-kr="해설 7편 &middot; 20,000단어 &middot; 영어로만 작성">7 WRITE-UPS &middot; 20,000 WORDS &middot; ENGLISH ONLY</p>
+    <div class="proj-grid">
+      <a class="proj" href="notes/who-wrote/">
+        <div class="proj-head"><span class="proj-name">NOTES &mdash; 05</span><span class="badge read">READ &#8594;</span></div>
+        <p class="note-title">The tool worked. The number didn't.</p>
+        <p class="stack">Who Wrote This &middot; Naive Bayes &middot; 137 real rounds discarded</p>
+      </a>
+      <a class="proj" href="notes/indian-poker/">
+        <div class="proj-head"><span class="proj-name">NOTES &mdash; 03</span><span class="badge read">READ &#8594;</span></div>
+        <p class="note-title">A rule that measured well and died in play</p>
+        <p class="stack">Indian Poker &middot; Exact CFR+ &middot; Exploitability 0.0519 chips/hand</p>
+      </a>
+      <a class="proj" href="notes/vocalrange/">
+        <div class="proj-head"><span class="proj-name">NOTES &mdash; 07</span><span class="badge read">READ &#8594;</span></div>
+        <p class="note-title">Every test passed. None of them was real.</p>
+        <p class="stack">Vocal Range &middot; YIN F0 Estimation &middot; 85 assertions, 2 notes captured</p>
+      </a>
+    </div>
+    <div style="margin-top:28px;">
+      <a class="btn btn-green" href="notes/"><span class="tx" data-en="Read all seven" data-kr="일곱 편 모두 읽기">Read all seven</span> &#8594;</a>
     </div>
   </div>
 </section>
