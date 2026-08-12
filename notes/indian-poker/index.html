@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Solving Indian Poker — KYGMIN Notes</title>
+<meta name="description" content="A write-up of Indian Poker: a comeback mechanic that measured well and died in real play, an exact CFR solution of the betting round, a U-shaped equilibrium, and an information system worth exactly zero." />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#F6F6F4;
+  --ink:#141414;
+  --gray:#DDDDD8;
+  --green:#2BB673;
+  --green-deep:#0F6E56;
+  --red:#A32D2D;
+  --arch:'Archivo','Pretendard',sans-serif;
+  --sans:'Pretendard',-apple-system,'Apple SD Gothic Neo','Malgun Gothic','Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono','SF Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{transition:none!important;}
+}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:16px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  word-break:keep-all;overflow-wrap:break-word;
+}
+a{color:inherit;}
+a:focus-visible,button:focus-visible{outline:3px solid var(--green);outline-offset:3px;}
+.wrap{max-width:960px;margin:0 auto;padding:0 24px;}
+.narrow{max-width:720px;}
+
+/* ── Nav ── */
+nav{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:3px solid var(--ink);}
+.nav-inner{
+  max-width:960px;margin:0 auto;padding:14px 24px;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;
+}
+.logo{font-family:var(--arch);font-weight:900;font-size:19px;letter-spacing:-0.5px;text-decoration:none;}
+.logo em{font-style:normal;background:var(--green);color:var(--paper);padding:0 6px;display:inline-block;transform:rotate(-1.5deg);}
+.nav-links{display:flex;gap:8px;flex-wrap:wrap;}
+.nav-links a{
+  font-family:var(--arch);font-size:12px;font-weight:700;text-transform:uppercase;
+  border:2px solid var(--ink);padding:6px 13px;background:#fff;text-decoration:none;
+  box-shadow:3px 3px 0 var(--ink);transition:transform .1s, box-shadow .1s;
+}
+.nav-links a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+.nav-links a.on{background:var(--green);color:var(--paper);}
+
+/* ── Hero ── */
+header{padding:64px 0 44px;border-bottom:3px solid var(--ink);}
+.sec-tag{
+  font-family:var(--mono);font-size:12.5px;font-weight:600;
+  color:var(--green-deep);letter-spacing:1px;display:block;margin-bottom:16px;
+}
+h1{
+  font-family:var(--arch);font-weight:900;text-transform:uppercase;
+  font-size:clamp(30px, 5.4vw, 50px);line-height:1.05;letter-spacing:-2px;max-width:840px;
+}
+h1 .box{background:var(--ink);color:var(--paper);padding:0 12px;display:inline-block;transform:rotate(-1deg);}
+.hero-sub{margin-top:22px;font-size:16.5px;max-width:640px;font-weight:500;}
+.hero-note{margin-top:14px;font-family:var(--mono);font-size:12px;color:#4A4A46;}
+
+/* ── Article ── */
+main{padding:52px 0 96px;}
+article h2{
+  font-family:var(--arch);font-weight:900;text-transform:uppercase;
+  font-size:clamp(21px,3vw,27px);letter-spacing:-1px;line-height:1.2;
+  margin:56px 0 6px;padding-top:22px;border-top:3px solid var(--ink);
+}
+article h2:first-child{margin-top:0;padding-top:0;border-top:none;}
+article h2 .n{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--green-deep);
+  display:block;letter-spacing:1px;margin-bottom:8px;text-transform:none;}
+article h3{font-family:var(--arch);font-weight:700;font-size:17px;margin:32px 0 6px;letter-spacing:-0.3px;}
+article p{margin:14px 0;max-width:720px;}
+article ul{margin:14px 0 14px 22px;max-width:720px;}
+article li{margin:7px 0;}
+article strong{font-weight:700;}
+code{font-family:var(--mono);font-size:.9em;background:#EDEDE8;padding:1px 5px;border:1px solid var(--gray);}
+.eq{
+  font-family:var(--mono);font-size:13.5px;line-height:1.9;
+  background:#fff;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);
+  padding:18px 20px;margin:22px 0;max-width:720px;overflow-x:auto;white-space:pre;
+}
+.eq b{color:var(--green-deep);font-weight:600;}
+
+/* callouts */
+.note{
+  border-left:6px solid var(--green);background:#fff;border:3px solid var(--ink);
+  border-left-width:9px;padding:16px 20px;margin:24px 0;max-width:720px;
+}
+.note .k{font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:1px;
+  color:var(--green-deep);display:block;margin-bottom:6px;}
+.note.warn{border-left-color:var(--red);}
+.note.warn .k{color:var(--red);}
+.note p{margin:8px 0;}
+.note p:first-of-type{margin-top:0;}
+.note p:last-child{margin-bottom:0;}
+
+/* tables */
+.tw{overflow-x:auto;margin:24px 0;max-width:720px;}
+table{border-collapse:collapse;font-size:13.5px;width:100%;background:#fff;
+  border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);}
+caption{caption-side:bottom;text-align:left;font-family:var(--mono);font-size:11.5px;
+  color:#4A4A46;padding-top:10px;line-height:1.6;}
+th,td{border-bottom:1px solid var(--gray);padding:8px 12px;text-align:right;white-space:nowrap;}
+th:first-child,td:first-child{text-align:left;}
+/* 숫자 칸(.num)만 오른쪽. 산문이 든 칸은 왼쪽 정렬하고 줄바꿈을 허용한다. */
+th:not(.num),td:not(.num){text-align:left;white-space:normal;}
+th.num,td.num{text-align:right;white-space:nowrap;}
+thead th{background:var(--ink);color:var(--paper);font-family:var(--mono);
+  font-size:11.5px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;border-bottom:none;}
+tbody tr:last-child td{border-bottom:none;}
+td.num,th.num{font-family:var(--mono);}
+tr.hi td{background:#EAF7F0;font-weight:700;}
+tr.bad td{background:#FBEDED;}
+
+/* inline bars (reuse of the result-page component) */
+.bars{margin:22px 0;max-width:640px;}
+.bar-row{margin-bottom:9px;}
+.bar-row .top{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;margin-bottom:3px;}
+.bar-row .track{height:14px;background:var(--gray);border:2px solid var(--ink);}
+.bar-row .fill{height:100%;background:var(--green);}
+.bar-row .fill.b{background:var(--ink);}
+
+.foot-cta{
+  margin-top:64px;border:3px solid var(--ink);background:#fff;box-shadow:6px 6px 0 var(--ink);
+  padding:24px;max-width:720px;
+}
+.foot-cta a{
+  display:inline-block;font-family:var(--arch);font-weight:700;font-size:13px;text-transform:uppercase;
+  border:2px solid var(--ink);background:var(--green);color:var(--paper);
+  padding:9px 16px;box-shadow:3px 3px 0 var(--ink);text-decoration:none;margin-top:12px;
+  transition:transform .1s, box-shadow .1s;
+}
+.foot-cta a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+
+footer{border-top:3px solid var(--ink);padding:22px 0;}
+.foot-inner{max-width:960px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;
+  gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:11.5px;color:#4A4A46;}
+
+/* 첫 수 카드 분포 — 아홉 칸 히스토그램 */
+.dist{margin:22px 0;max-width:720px;}
+.dist .lbl{font-family:var(--mono);font-size:11.5px;color:#4A4A46;margin-bottom:6px;}
+.dist .cols{display:flex;align-items:flex-end;gap:4px;height:120px;
+  border-bottom:3px solid var(--ink);padding-bottom:0;}
+.dist .col{flex:1;background:var(--green);border:2px solid var(--ink);border-bottom:none;min-height:2px;}
+.dist .col.hot{background:var(--ink);}
+.dist .axis{display:flex;gap:4px;margin-top:5px;}
+.dist .axis span{flex:1;text-align:center;font-family:var(--mono);font-size:10px;color:#4A4A46;}
+.dist.wide .cols{gap:3px;}
+.dist.wide .col{border-width:1px;}
+.dist .cap{font-family:var(--mono);font-size:11.5px;color:#4A4A46;margin-top:8px;line-height:1.6;}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:26px;max-width:720px;margin:22px 0;}
+@media (max-width:640px){ .two{grid-template-columns:1fr;} }
+.two .dist{margin:0;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="/index.html">KYG<em>MIN</em></a>
+    <div class="nav-links">
+      <a href="/index.html">Home</a>
+      <a href="/playhouse/">PLAYHOUSE</a>
+      <a href="/indian-poker/">Indian Poker</a>
+      <a href="/cv.html">CV &#128274;</a>
+    </div>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <span class="sec-tag">NOTES &mdash; 03 &middot; INDIAN POKER</span>
+    <h1>A rule that measured well and <span class="box">died in play</span></h1>
+    <p class="hero-sub">The comeback mechanic was simulated, tuned and shipped. Then someone played it and said the obvious thing I had not modelled: the player in front simply declines. Fixing that meant giving up on consent entirely &mdash; and then solving the round exactly, which turned out to be far easier than the last game I tried it on.</p>
+    <p class="hero-note">ENGLISH ONLY &middot; ~15 MIN &middot; EXACT CFR+ &middot; EXPLOITABILITY 0.0519 CHIPS/HAND</p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+  <article>
+
+    <h2><span class="n">01</span>The only card you cannot see is your own</h2>
+
+    <p>Your card is taped to your forehead. You can see theirs; they can see yours. Every bet the other side makes is therefore a statement about <em>your</em> hand, and every bet you make is a statement about theirs. Twenty-seven rounds off one 54-card deck, three fixed-limit betting streets per round, and a blind phase from round 23 where the antes climb.</p>
+
+    <p>Two systems sit on top of the betting. <strong>Three givers</strong> answer the question "is my card higher?" &mdash; they are truthful 80%, 50% and 20% of the time, and which is which is never revealed. <strong>Two purchases</strong> spend real chips on information: Monty Hall narrows the card on your own forehead to two candidates without telling you which is real, and Lookback reveals your own already-burned cards, which you never saw at the time.</p>
+
+    <p>The record panel tracks net chips and net margin separately, and the gap between them is the point of the whole design: <strong>chips spent on information are burned, not transferred.</strong> You can finish a game having read your opponent perfectly and still be down.</p>
+
+    <h2><span class="n">02</span>What is shipped, and what this page is</h2>
+
+    <div class="note warn">
+      <span class="k">READ THIS FIRST</span>
+      <p>The opponent you play against is <strong>not</strong> the solver described in sections 05 to 08. The four shipped tiers &mdash; ROOKIE, PLAYER, SHARPER, LAPLACE'S DEMON &mdash; are heuristic engines, measured monotone and transitive over 600 games each (&plusmn;2.0 %p). The top tier shrinks a population prior toward a model of you that keeps updating, which makes it a good <em>reader</em>.</p>
+      <p>The exact equilibrium below is <strong>research that has not been deployed.</strong> Compressing it into a web asset and rebalancing the bots against it are open items. Saying "this game runs CFR" would be false, so the card in the Playhouse does not say it.</p>
+    </div>
+
+    <p>The shipped ladder is not a throwaway either, and it is built on one measured idea. Across thousands of simulated games, when your opponent opens the first street your own card averages <strong>17</strong> on a 0&ndash;53 scale; when they check, it averages <strong>40</strong>. A single check carries twenty-two points of information about a card you cannot see. ROOKIE ignores this, PLAYER counts cards and tracks givers by Bayesian inference but discards your betting as noise, and SHARPER reads your bets as evidence about its own card &mdash; which beats PLAYER <strong>84%</strong> of the time on that one idea alone. LAPLACE'S DEMON adds the part that only works over time: every showdown reveals its own card, which retroactively fixes what you were looking at when you bet, so its calibration error against a fixed opponent falls from <strong>0.169 to 0.097</strong> over a thousand games. It does not win by pushing harder; it wins by being right more often.</p>
+
+    <p>What follows is therefore two things: a rule that failed in front of a real player and had to be replaced, and a solution to the betting round that tells me what the game actually is. Only the first of the two is live.</p>
+
+    <h2><span class="n">03</span>A comeback mechanic that measured well and died in play</h2>
+
+    <p>A simulation study found that whoever led on chips at round 23 <strong>won 81% of games, and 98.6% of games where the lead was 1,000 or more.</strong> The last five rounds were decoration. So I added an all-in: in the blind phase only, once per game, the trailing player &mdash; if behind by 500 or more &mdash; could shove the full effective stack, and the opponent could only call or fold.</p>
+
+    <p>It measured well. It shipped. Then it met a player, who said:</p>
+
+    <div class="note">
+      <span class="k">THE REPORT</span>
+      <p>"From the opponent's side there's no risk in just not accepting the all-in at the end. I'm ahead &mdash; why would I take on risk?"</p>
+    </div>
+
+    <p>That sentence invalidated the tuning, because the tuning had a bot on the other side of it, and the bot called on <strong>pot odds</strong>. Chips are not the leader's objective; winning is. For a leader the marginal value of a chip has collapsed &mdash; a measured 3.2 %p of win probability per 100 chips at level, down to 0.9 %p at a 2,000 lead &mdash; and the all-in stakes everything precisely inside that collapsed region.</p>
+
+    <p>Writing the leader's actual indifference point against a win-probability curve rather than a chip count gives a completely different threshold:</p>
+
+    <div class="tw">
+    <table>
+      <thead><tr><th>Leader's lead</th><th class="num">Threshold on pot odds</th><th class="num">Threshold on winning the match</th></tr></thead>
+      <tbody>
+        <tr><td>300</td><td class="num">48.4%</td><td class="num">54.7%</td></tr>
+        <tr><td>500</td><td class="num">48.3%</td><td class="num">60.2%</td></tr>
+        <tr><td>700</td><td class="num">48.2%</td><td class="num">65.3%</td></tr>
+        <tr><td>1,000</td><td class="num">48.1%</td><td class="num">72.0%</td></tr>
+        <tr><td>1,400</td><td class="num">47.8%</td><td class="num">78.2%</td></tr>
+        <tr class="bad"><td>2,000</td><td class="num">47.2%</td><td class="num">81.2%</td></tr>
+      </tbody>
+      <caption>The pot-odds column is flat, as it must be. The match column <b>rises with the lead</b> &mdash; which is exactly backwards for a device meant to rescue the player who is behind.</caption>
+    </table>
+    </div>
+
+    <p>The further ahead the leader gets, the less willing he is to accept the instrument designed to stop him running away with it. Replacing the pot-odds bot with a leader who thinks this way moved the 1,200+ conversion rate from <strong>82.5% to 95.2%</strong>. The number that had justified the rule was resting entirely on the bot's mistake.</p>
+
+    <h3>Everything else I tried failed for the same reason</h3>
+
+    <ul>
+      <li><strong>Open the window wider</strong> &mdash; lower the gate to 250 and allow unlimited shoves. The call rate moved from 31.1% to 32.0%. More chances to shove is more free folds, and bankruptcy endings exploded from 16.3% to 38.2%.</li>
+      <li><strong>Offer a smaller gamble.</strong> In the relevant range the win-probability curve is nearly linear, so a fair partial gamble barely moves anyone: a player 1,000 behind sits at about 25%, and betting half the stack on a coin flip takes that to <strong>26.5%</strong>. The only gamble worth taking when you are behind is all-or-nothing, which is precisely the one the leader always refuses.</li>
+      <li><strong>Penalise refusal.</strong> A 300-chip penalty for folding to a shove does raise the call rate to 49.9% &mdash; but then the rule deciding the game is the penalty, not the all-in.</li>
+    </ul>
+
+    <div class="note warn">
+      <span class="k">THE STRUCTURAL RESULT</span>
+      <p><strong>Any comeback instrument that the leader is allowed to decline is worthless</strong>, because the leader's threshold for accepting it rises exactly as fast as the need for it. The fix cannot be a better-tuned option. It has to be non-consensual.</p>
+    </div>
+
+    <h2><span class="n">04</span>The fix was to delete the feature</h2>
+
+    <p>If the leader cannot be given a choice, the pressure has to come from the structure of the game. The declared all-in is gone. In its place the ante climbs through the last five rounds:</p>
+
+    <div class="eq">round   23    24    25    26    27
+ante    <b>80</b>   <b>130</b>   <b>210</b>   <b>340</b>   <b>550</b>      &larr; round 27: both players pay, dead pot <b>1,100</b></div>
+
+    <p>Nobody consents to an ante. A leader who wants to sit on a lead now pays for the privilege every round, and pays more each time.</p>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th>Leader's conversion rate by round-23 lead</th><th class="num">&lt;300</th><th class="num">300&ndash;699</th><th class="num">700&ndash;1199</th><th class="num">1200+</th><th class="num">Bankrupt endings</th></tr></thead>
+        <tbody>
+          <tr><td>Flat ante of 60 (old)</td><td class="num">61.7%</td><td class="num">71.9%</td><td class="num">93.2%</td><td class="num">99.5%</td><td class="num">0.6%</td></tr>
+          <tr class="hi"><td>Rising ante (shipped)</td><td class="num">54.5%</td><td class="num">58.6%</td><td class="num">68.8%</td><td class="num">81.2%</td><td class="num">9.2%</td></tr>
+        </tbody>
+        <caption>1,000 games on the shipped configuration, seeded. Average game length stays at 27.0 rounds &mdash; the pressure comes from the ante, not from knocking players out early.</caption>
+      </table>
+    </div>
+
+    <p>A 1,200-chip lead used to be worth 99.5%. It is now worth 81.2%, and the improvement reaches every bucket rather than only rescuing the hopeless cases. During tuning I also checked whether the all-in was contributing anything alongside the rising ante: keeping both gave 80.3% against 81.1% for the ante alone, while pushing bankruptcy endings from 7.4% to 25%. It was not carrying weight; it was adding variance.</p>
+
+    <h3>Shipping it required writing almost nothing</h3>
+
+    <p>Deleting the all-in removed a phase block, two functions, six strings, three UI branches and two state fields. Nothing replaced them, because standard poker already had the answer: a call is capped at <code>min(toCall, stack)</code> and the round refunds any uncalled excess, so a short stack goes all-in <em>as a state</em> rather than as a declaration. If a player cannot cover the ante, he posts what he has; if that empties the stack, the game ends there. No side pots, no new machinery.</p>
+
+    <p>An all-in you declare gives the opponent a decision. An all-in you simply arrive at does not. That is the entire difference, and it is why one version worked.</p>
+
+    <h2><span class="n">05</span>Measuring the leaf before writing the solver</h2>
+
+    <p>Solving one betting round in isolation requires knowing what a round is worth when it ends, and what it ends in is a chip difference. If chips are not linear in win probability, the solver optimises the wrong quantity, so I measured before building anything.</p>
+
+    <p>The naive approach is to observe win rate against chip lead across rounds. That curve says the game changes character at round 23: a 500&ndash;699 lead is worth 62&ndash;66% flat through rounds 5 to 22, then <strong>74.1%</strong> at round 23 and <strong>89.0%</strong> at round 26.</p>
+
+    <p>That curve is not trustworthy, because a game where someone is far ahead is also a game where someone has been reading well &mdash; the lead and the information advantage are entangled. So I measured the <em>causal</em> slope instead, pairing games on common random numbers: identical deck, identical bot randomness, chips moved in one copy and not the other.</p>
+
+    <div class="tw">
+    <table>
+      <thead><tr><th>Starting lead</th><th class="num">Round 10, per 100 chips</th><th class="num">Round 23, per 100 chips</th></tr></thead>
+      <tbody>
+        <tr><td>0</td><td class="num">3.17%</td><td class="num">3.94%</td></tr>
+        <tr><td>400</td><td class="num">2.28%</td><td class="num">2.78%</td></tr>
+        <tr><td>1,000</td><td class="num">2.25%</td><td class="num">1.03%</td></tr>
+        <tr><td>2,000</td><td class="num">1.25%</td><td class="num">0.92%</td></tr>
+      </tbody>
+      <caption>1,200 matched pairs per cell. Converting to logits gives a slope of about 1,090 at round 10 and 830 at round 23 &mdash; the same curve, roughly 30% steeper in the blind phase.</caption>
+    </table>
+    </div>
+
+    <p>So the win probability is close to <code>&sigma;(lead / 1000)</code> and has almost no round dependence. <strong>The dramatic steepening in the observed curve was information, not chips.</strong> Since one round moves 60 to 500 chips and that curve is straight across such a span, the leaf can be linear in chips and the round can be solved once instead of on a grid of leads and round numbers.</p>
+
+    <p>One loose end remained: a showdown gives you more than chips, since it confirms your own card. Measured by gifting free information without moving any chips, a showdown is worth <strong>10 to 12 chips</strong> &mdash; real, but it cancels in a zero-sum objective, because both players learn their own card at a showdown and neither learns anything at a fold. The asymmetry that survives is a couple of chips, and I ignored it.</p>
+
+    <h2><span class="n">06</span>The game turned out to be small</h2>
+
+    <p>The previous game I solved needed 148 million iterations of Monte-Carlo CFR and a distillation pipeline to fit in a browser. I expected worse here. The opposite happened, because of a structural accident of Indian Poker:</p>
+
+    <div class="note">
+      <span class="k">WHY IT COLLAPSES</span>
+      <p>Each card is known by <strong>exactly one player</strong> &mdash; you know theirs, they know yours. That makes the reach probability factorise into one term per player, which is the condition for plain two-player vector CFR. There is no card abstraction, no bucketing, and no sampling. The whole peculiarity of the game reduces to a single sign convention at the showdown: <code>p0 wins &hArr; the opponent index is larger</code>.</p>
+    </div>
+
+    <div class="eq">decision nodes (card-independent)   <b>910</b>
+fold leaves                          728
+showdown leaves                      729
+information sets per player          910 &times; 54 = <b>49,140</b>
+regret table (float64)               <b>2.4 MB</b></div>
+
+    <p>Vector CFR+ over the full 54-card deck, exactly. The blind round converges in four minutes on a laptop:</p>
+
+    <div class="tw">
+    <table>
+      <thead><tr><th class="num">Iterations</th><th class="num">Exploitability (chips/hand)</th><th class="num">Game value</th></tr></thead>
+      <tbody>
+        <tr><td class="num">300</td><td class="num">0.4612</td><td class="num">+27.9855</td></tr>
+        <tr><td class="num">1,500</td><td class="num">0.0878</td><td class="num">+27.9895</td></tr>
+        <tr class="hi"><td class="num">3,000</td><td class="num">0.0519</td><td class="num">+27.9918</td></tr>
+      </tbody>
+      <caption>0.0519 chips per hand is 0.09% of the 60-chip ante &mdash; an exact solution for any practical purpose.</caption>
+    </table>
+    </div>
+
+    <p>The game value is a design finding in itself. With an ante of 60 paid by one side only, pure ante-splitting would make the round worth +60 to the other player. It is worth <strong>+27.99</strong>. The missing 32 chips are the value of <strong>acting second</strong>. Re-solving the early rounds, where the ante is 20, gives +9.05 &mdash; a position value of 10.9 chips. Position is worth about 53% of the pot in both, so it is not a constant of the game but <strong>roughly half of whatever is at stake.</strong></p>
+
+    <h2><span class="n">07</span>What the solution says: bet the extremes, check the middle</h2>
+
+    <p>Here is the opening frequency of the first actor, arranged by <strong>the card they can see on your forehead</strong>.</p>
+
+    <div class="dist wide">
+      <div class="lbl">BLIND ROUND &mdash; OPENING BET FREQUENCY BY THE OPPONENT'S VISIBLE CARD</div>
+      <div class="cols"><div class="col hot" style="height:69%" title="2: 48%"></div><div class="col hot" style="height:70%" title="3: 49%"></div><div class="col hot" style="height:87%" title="4: 61%"></div><div class="col" style="height:9%" title="5: 6%"></div><div class="col" style="height:2%" title="6: 1%"></div><div class="col" style="height:3%" title="7: 2%"></div><div class="col" style="height:2%" title="8: 1%"></div><div class="col" style="height:2%" title="9: 0%"></div><div class="col" style="height:2%" title="10: 0%"></div><div class="col" style="height:10%" title="J: 7%"></div><div class="col hot" style="height:41%" title="Q: 29%"></div><div class="col hot" style="height:51%" title="K: 36%"></div><div class="col hot" style="height:57%" title="A: 40%"></div><div class="col hot" style="height:59%" title="JB: 41%"></div><div class="col hot" style="height:59%" title="JC: 41%"></div></div>
+      <div class="axis"><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>J</span><span>Q</span><span>K</span><span>A</span><span>JB</span><span>JC</span></div>
+      <div class="cap">Both wings, nothing in the middle. Total opening frequency 24.1%.</div>
+    </div>
+
+    <p>This shape is the game. Work through why it has to be there:</p>
+
+    <ul>
+      <li><strong>Their card is low</strong> &rarr; you are probably ahead &rarr; you want to bet for value. But that bet <em>tells them their card is low</em>, and they fold. A value bet in this game destroys its own value.</li>
+      <li><strong>Their card is an Ace</strong> &rarr; you are probably behind &rarr; and yet the equilibrium bets 40% of the time. The bet says "your card must be bad," and a hand that is beating you folds. This is the bluff, and it is a strange one: <strong>you are deceiving your opponent about their own card, not about yours.</strong></li>
+      <li><strong>Their card is a 7</strong> &rarr; a bet manipulates nothing. They cannot read anything decisive from it, they call, and you have paid to see a showdown you were already going to see. So the equilibrium checks: 5 through 10 sit between 0% and 2%.</li>
+    </ul>
+
+    <p>The receiving side mirrors it exactly. With a 2 on the bettor's forehead they call 100% of the time; with an Ace they fold 84% of the time.</p>
+
+    <div class="dist wide">
+      <div class="lbl">FOLD FREQUENCY FACING A BET, BY THE BETTOR'S VISIBLE CARD</div>
+      <div class="cols"><div class="col" style="height:2%" title="2: 0%"></div><div class="col" style="height:2%" title="3: 0%"></div><div class="col" style="height:2%" title="4: 0%"></div><div class="col" style="height:4%" title="5: 4%"></div><div class="col" style="height:6%" title="6: 5%"></div><div class="col" style="height:4%" title="7: 4%"></div><div class="col" style="height:3%" title="8: 3%"></div><div class="col" style="height:3%" title="9: 3%"></div><div class="col" style="height:3%" title="10: 3%"></div><div class="col" style="height:39%" title="J: 35%"></div><div class="col hot" style="height:93%" title="Q: 84%"></div><div class="col hot" style="height:93%" title="K: 84%"></div><div class="col hot" style="height:93%" title="A: 84%"></div><div class="col hot" style="height:93%" title="JB: 84%"></div><div class="col hot" style="height:94%" title="JC: 85%"></div></div>
+      <div class="axis"><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>J</span><span>Q</span><span>K</span><span>A</span><span>JB</span><span>JC</span></div>
+      <div class="cap">And raising sits at essentially <b>0%</b> everywhere. In a fixed-limit structure a raise leaks information and buys nothing &mdash; the three-raise cap I implemented is never once reached in equilibrium play.</div>
+    </div>
+
+    <p>Shrinking the pot shrinks the shape with it. In the early rounds, where the ante is 20 instead of 60, the same U survives but the left wing retreats from 2&ndash;4 to 2&ndash;3 and total opening frequency falls from 24.1% to 13.7%. A smaller pot means a smaller prize for making someone fold, so you bluff less. Nobody told the solver that; it is simply what the arithmetic says.</p>
+
+    <div class="dist wide">
+      <div class="lbl">EARLY ROUND, ANTE 20 &mdash; SAME SHAPE, SMALLER</div>
+      <div class="cols"><div class="col hot" style="height:63%" title="2: 44%"></div><div class="col" style="height:29%" title="3: 20%"></div><div class="col" style="height:2%" title="4: 0%"></div><div class="col" style="height:2%" title="5: 0%"></div><div class="col" style="height:2%" title="6: 0%"></div><div class="col" style="height:2%" title="7: 0%"></div><div class="col" style="height:2%" title="8: 0%"></div><div class="col" style="height:2%" title="9: 0%"></div><div class="col" style="height:2%" title="10: 0%"></div><div class="col" style="height:2%" title="J: 1%"></div><div class="col" style="height:21%" title="Q: 15%"></div><div class="col hot" style="height:37%" title="K: 26%"></div><div class="col hot" style="height:47%" title="A: 33%"></div><div class="col hot" style="height:47%" title="JB: 33%"></div><div class="col hot" style="height:49%" title="JC: 34%"></div></div>
+      <div class="axis"><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>J</span><span>Q</span><span>K</span><span>A</span><span>JB</span><span>JC</span></div>
+    </div>
+
+    <h2><span class="n">08</span>The givers are worth exactly zero</h2>
+
+    <p>Three givers, truthful 80%, 50% and 20% of the time, assigned at random and never identified. Buying answers from two of them feels like the core of the information game. Solved, it is worth nothing at all &mdash; the game value with the giver layer switched on is <strong>+9.0537</strong> against <strong>+9.0536</strong> without it.</p>
+
+    <p>I re-derived this while writing this page rather than taking it on trust, because it is the most surprising claim here. The likelihood of every answer pattern, averaged over the six equally likely identity assignments:</p>
+
+    <div class="tw">
+    <table>
+      <thead><tr><th>Answer pattern</th><th class="num">If you are actually ahead</th><th class="num">If you are actually behind</th><th class="num">Difference</th></tr></thead>
+      <tbody>
+        <tr><td>No, No</td><td class="num">0.2200</td><td class="num">0.2200</td><td class="num">0</td></tr>
+        <tr><td>Yes, No</td><td class="num">0.2800</td><td class="num">0.2800</td><td class="num">0</td></tr>
+        <tr><td>No, Yes</td><td class="num">0.2800</td><td class="num">0.2800</td><td class="num">0</td></tr>
+        <tr><td>Yes, Yes</td><td class="num">0.2200</td><td class="num">0.2200</td><td class="num">0</td></tr>
+      </tbody>
+      <caption>Computed independently for this write-up; the largest difference is 8&times;10<sup>&minus;17</sup>, which is floating-point zero.</caption>
+    </table>
+    </div>
+
+    <p>The reason is a symmetry I did not design deliberately. The set {0.8, 0.5, 0.2} is <strong>closed under q &rarr; 1&minus;q</strong>: a liar who is right 20% of the time is a truth-teller who is right 80% of the time wearing a different hat. With a uniform posterior over who is who, every "yes" is exactly as likely whether you are ahead or behind. Choosing {0.9, 0.6, 0.3} instead breaks it immediately &mdash; I get a 0.20 gap between the two columns, and even the barely-asymmetric {0.9, 0.5, 0.2} opens a 0.067 gap.</p>
+
+    <div class="note">
+      <span class="k">WHAT THE MECHANIC ACTUALLY IS</span>
+      <p>The questions are not the information system. <strong>Identity tracking is.</strong> An answer is worthless until you have worked out across rounds which giver you are talking to, and every chip the layer is worth is a chip paid for that deduction rather than for the answer.</p>
+    </div>
+
+    <p>Once identities are known the value appears, and it is lopsided: if <em>both</em> players know who is who the layer is worth only 0.70 chips per round, but if only one does it is worth <strong>3.2 chips</strong> &mdash; 16% of a 20-chip ante, about a third of a showdown. Information here is not valuable; <em>asymmetric</em> information is.</p>
+
+    <p>With identities pinned, the solver's opening splits cleanly by what it heard. When the 80% giver and the 20% giver agree in truth terms the signal is real and it plays the U-shape hard; when they conflict, the two patterns cancel at 0.157 apiece and it reverts to baseline. Told it is losing, it stops bluffing almost entirely &mdash; which is correct, and worth stating plainly: <strong>better information should reduce bluffing, not increase it.</strong></p>
+
+    <p>My favourite line in the whole solve is a consistency check nobody wrote. When the visible card is the coloured joker &mdash; the highest card in the deck &mdash; the opening frequency is 1% under <em>every</em> answer pattern, including the ones screaming that you are ahead. You cannot be ahead of the best card in the deck, so the solver ignores the giver entirely. It worked that out from the payoff matrix.</p>
+
+    <h3>The modelling mistake underneath this section</h3>
+
+    <p>My first plan for the giver layer was to inject the answers as a mixture over the input distribution &mdash; shift the prior according to what you were told. That is wrong, and wrong in a way worth naming: the answer is <strong>private</strong> and correlated with the hidden card, so perturbing a shared prior quietly assumes your opponent knows what you were told. The correct treatment is an extension of the private index, one per player, with the chance distribution refusing to factorise across the two. Splitting the terminal into the two orderings and taking one cumulative sum per side handles it. The rewritten solver reproduces the original game value to four decimal places, which is how I know the generalisation did not change the game.</p>
+
+    <h2><span class="n">09</span>Why the solver is not the opponent you play</h2>
+
+    <p>The betting round is solved. The game is not, and the distance between those two sentences is the honest content of this page.</p>
+
+    <p>A round-subgame solution assumes the rest of the match is captured by a chip count. Section 05 justifies that for ordinary rounds, and explicitly does not justify it where the leaf goes non-linear: <strong>all-in rounds, short stacks, and the large pots of the blind phase</strong> &mdash; which, after section 04, is precisely where the game is now decided. The Monty Hall purchase is not in the tree yet either; it belongs between streets as its own decision node.</p>
+
+    <p>So four things stand between this and a shipped bot: putting the purchase in the tree, handling the non-linear leaf regions, compressing the solution into a web asset, and rebalancing the four tiers against an opponent that no longer makes mistakes. Until those are done, the strongest tier remains a reader &mdash; a Bayesian model of <em>you</em>, shrunk toward a population prior &mdash; and it is beatable in a way an equilibrium would not be.</p>
+
+    <p>That order was deliberate. A bot that plays equilibrium is unexploitable and, against a beginner, dull: it declines to punish the habits that make a card game fun to learn. The reader punishes them. Solving the round tells me what the ceiling looks like; it does not follow that the ceiling is what should be sitting across the table.</p>
+
+    <div class="foot-cta">
+      <p style="margin-top:0"><strong>Play it.</strong> Twenty-seven rounds, four opponents, three givers who will not tell you which of them is lying.</p>
+      <a href="/indian-poker/">Open Indian Poker &rarr;</a>
+    </div>
+
+  </article>
+  </div>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <span>&copy; KYGMIN.COM</span>
+    <span>NOTES 03 &middot; INDIAN POKER &middot; RULES v1.3 &middot; MEASURED 2026-08</span>
+  </div>
+</footer>
+
+</body>
+</html>
