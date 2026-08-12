@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Who Wrote This — KYGMIN Notes</title>
+<meta name="description" content="A write-up of the who-wrote-this authorship tool: a scorer that worked, an accuracy figure that was wrong three times over, query leakage worth up to 71 points, a parser hole that inverted the evidence, and a list of everything I got wrong." />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#F6F6F4;
+  --ink:#141414;
+  --gray:#DDDDD8;
+  --green:#2BB673;
+  --green-deep:#0F6E56;
+  --red:#A32D2D;
+  --arch:'Archivo','Pretendard',sans-serif;
+  --sans:'Pretendard',-apple-system,'Apple SD Gothic Neo','Malgun Gothic','Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono','SF Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{transition:none!important;}
+}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:16px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  word-break:keep-all;overflow-wrap:break-word;
+}
+a{color:inherit;}
+a:focus-visible,button:focus-visible{outline:3px solid var(--green);outline-offset:3px;}
+.wrap{max-width:960px;margin:0 auto;padding:0 24px;}
+.narrow{max-width:720px;}
+
+/* ── Nav ── */
+nav{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:3px solid var(--ink);}
+.nav-inner{
+  max-width:960px;margin:0 auto;padding:14px 24px;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;
+}
+.logo{font-family:var(--arch);font-weight:900;font-size:19px;letter-spacing:-0.5px;text-decoration:none;}
+.logo em{font-style:normal;background:var(--green);color:var(--paper);padding:0 6px;display:inline-block;transform:rotate(-1.5deg);}
+.nav-links{display:flex;gap:8px;flex-wrap:wrap;}
+.nav-links a{
+  font-family:var(--arch);font-size:12px;font-weight:700;text-transform:uppercase;
+  border:2px solid var(--ink);padding:6px 13px;background:#fff;text-decoration:none;
+  box-shadow:3px 3px 0 var(--ink);transition:transform .1s, box-shadow .1s;
+}
+.nav-links a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+.nav-links a.on{background:var(--green);color:var(--paper);}
+
+/* ── Hero ── */
+header{padding:64px 0 44px;border-bottom:3px solid var(--ink);}
+.sec-tag{
+  font-family:var(--mono);font-size:12.5px;font-weight:600;
+  color:var(--green-deep);letter-spacing:1px;display:block;margin-bottom:16px;
+}
+h1{
+  font-family:var(--arch);font-weight:900;text-transform:uppercase;
+  font-size:clamp(30px, 5.4vw, 50px);line-height:1.05;letter-spacing:-2px;max-width:840px;
+}
+h1 .box{background:var(--ink);color:var(--paper);padding:0 12px;display:inline-block;transform:rotate(-1deg);}
+.hero-sub{margin-top:22px;font-size:16.5px;max-width:640px;font-weight:500;}
+.hero-note{margin-top:14px;font-family:var(--mono);font-size:12px;color:#4A4A46;}
+
+/* ── Article ── */
+main{padding:52px 0 96px;}
+article h2{
+  font-family:var(--arch);font-weight:900;text-transform:uppercase;
+  font-size:clamp(21px,3vw,27px);letter-spacing:-1px;line-height:1.2;
+  margin:56px 0 6px;padding-top:22px;border-top:3px solid var(--ink);
+}
+article h2:first-child{margin-top:0;padding-top:0;border-top:none;}
+article h2 .n{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--green-deep);
+  display:block;letter-spacing:1px;margin-bottom:8px;text-transform:none;}
+article h3{font-family:var(--arch);font-weight:700;font-size:17px;margin:32px 0 6px;letter-spacing:-0.3px;}
+article p{margin:14px 0;max-width:720px;}
+article ul{margin:14px 0 14px 22px;max-width:720px;}
+article li{margin:7px 0;}
+article strong{font-weight:700;}
+code{font-family:var(--mono);font-size:.9em;background:#EDEDE8;padding:1px 5px;border:1px solid var(--gray);}
+.eq{
+  font-family:var(--mono);font-size:13.5px;line-height:1.9;
+  background:#fff;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);
+  padding:18px 20px;margin:22px 0;max-width:720px;overflow-x:auto;white-space:pre;
+}
+.eq b{color:var(--green-deep);font-weight:600;}
+
+/* callouts */
+.note{
+  border-left:6px solid var(--green);background:#fff;border:3px solid var(--ink);
+  border-left-width:9px;padding:16px 20px;margin:24px 0;max-width:720px;
+}
+.note .k{font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:1px;
+  color:var(--green-deep);display:block;margin-bottom:6px;}
+.note.warn{border-left-color:var(--red);}
+.note.warn .k{color:var(--red);}
+.note p{margin:8px 0;}
+.note p:first-of-type{margin-top:0;}
+.note p:last-child{margin-bottom:0;}
+
+/* tables */
+.tw{overflow-x:auto;margin:24px 0;max-width:720px;}
+table{border-collapse:collapse;font-size:13.5px;width:100%;background:#fff;
+  border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);}
+caption{caption-side:bottom;text-align:left;font-family:var(--mono);font-size:11.5px;
+  color:#4A4A46;padding-top:10px;line-height:1.6;}
+th,td{border-bottom:1px solid var(--gray);padding:8px 12px;text-align:right;white-space:nowrap;}
+th:first-child,td:first-child{text-align:left;}
+/* 숫자 칸(.num)만 오른쪽. 산문이 든 칸은 왼쪽 정렬하고 줄바꿈을 허용한다. */
+th:not(.num),td:not(.num){text-align:left;white-space:normal;}
+th.num,td.num{text-align:right;white-space:nowrap;}
+thead th{background:var(--ink);color:var(--paper);font-family:var(--mono);
+  font-size:11.5px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;border-bottom:none;}
+tbody tr:last-child td{border-bottom:none;}
+td.num,th.num{font-family:var(--mono);}
+tr.hi td{background:#EAF7F0;font-weight:700;}
+tr.bad td{background:#FBEDED;}
+
+/* inline bars (reuse of the result-page component) */
+.bars{margin:22px 0;max-width:640px;}
+.bar-row{margin-bottom:9px;}
+.bar-row .top{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;margin-bottom:3px;}
+.bar-row .track{height:14px;background:var(--gray);border:2px solid var(--ink);}
+.bar-row .fill{height:100%;background:var(--green);}
+.bar-row .fill.b{background:var(--ink);}
+
+.foot-cta{
+  margin-top:64px;border:3px solid var(--ink);background:#fff;box-shadow:6px 6px 0 var(--ink);
+  padding:24px;max-width:720px;
+}
+.foot-cta a{
+  display:inline-block;font-family:var(--arch);font-weight:700;font-size:13px;text-transform:uppercase;
+  border:2px solid var(--ink);background:var(--green);color:var(--paper);
+  padding:9px 16px;box-shadow:3px 3px 0 var(--ink);text-decoration:none;margin-top:12px;
+  transition:transform .1s, box-shadow .1s;
+}
+.foot-cta a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+
+footer{border-top:3px solid var(--ink);padding:22px 0;}
+.foot-inner{max-width:960px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;
+  gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:11.5px;color:#4A4A46;}
+
+/* 첫 수 카드 분포 — 아홉 칸 히스토그램 */
+.dist{margin:22px 0;max-width:720px;}
+.dist .lbl{font-family:var(--mono);font-size:11.5px;color:#4A4A46;margin-bottom:6px;}
+.dist .cols{display:flex;align-items:flex-end;gap:4px;height:120px;
+  border-bottom:3px solid var(--ink);padding-bottom:0;}
+.dist .col{flex:1;background:var(--green);border:2px solid var(--ink);border-bottom:none;min-height:2px;}
+.dist .col.hot{background:var(--ink);}
+.dist .axis{display:flex;gap:4px;margin-top:5px;}
+.dist .axis span{flex:1;text-align:center;font-family:var(--mono);font-size:11px;color:#4A4A46;}
+.dist .cap{font-family:var(--mono);font-size:11.5px;color:#4A4A46;margin-top:8px;line-height:1.6;}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:26px;max-width:720px;margin:22px 0;}
+@media (max-width:640px){ .two{grid-template-columns:1fr;} }
+.two .dist{margin:0;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="/index.html">KYG<em>MIN</em></a>
+    <div class="nav-links">
+      <a href="/index.html">Home</a>
+      <a href="/playhouse/">PLAYHOUSE</a>
+      <a href="/who-wrote/">Who Wrote This</a>
+      <a href="/cv.html">CV &#128274;</a>
+    </div>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <span class="sec-tag">NOTES &mdash; 05 &middot; WHO WROTE THIS</span>
+    <h1>The tool worked. <span class="box">The number didn't.</span></h1>
+    <p class="hero-sub">Upload a group chat export, paste a message, and the page names who wrote it from writing habits alone. The classifier has been fine for months. What kept being wrong &mdash; three separate times, each caught only by measurement &mdash; was my belief about how well it does that.</p>
+    <p class="hero-note">ENGLISH ONLY &middot; ~16 MIN &middot; 137 REAL ROUNDS DISCARDED &middot; NOTHING IS EVER STORED</p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+  <article>
+
+    <h2><span class="n">01</span>What it does, and what it refuses to keep</h2>
+
+    <p>Attach an export from a group chat, paste something one of those people wrote, and the page tells you who. It reads the whole log, builds a model per person, scores your paste against each, and shows how sure it is.</p>
+
+    <p>Everything happens in the tab. <strong>The file is not uploaded, the pasted message is not sent anywhere, and the verdict is not stored.</strong> That is not a privacy paragraph bolted on afterwards &mdash; it constrains what I am able to learn about my own tool, and section 08 contains a question I cannot answer because of it. I still think the trade is right.</p>
+
+    <h2><span class="n">02</span>The scorer</h2>
+
+    <p>Naive Bayes over character 2- and 3-grams, additively smoothed:</p>
+
+    <div class="eq">P(g | u) = ( count<sub>u</sub>(g) + <b>&alpha;</b> ) / ( total<sub>u</sub> + <b>&alpha;</b>&middot;V )        &alpha; = <b>0.1</b>
+
+score(u) = &minus; &Sigma;<sub>g</sub> count<sub>q</sub>(g) &middot; log P(g | u) / |q<sub>grams</sub>|</div>
+
+    <p>Character n-grams rather than words because the signal in Korean group chat is in the texture &mdash; sentence endings, spacing habits, how many times someone types &#12363;, whether they put a space before a question mark. Word tokenisation throws most of that away.</p>
+
+    <p>It replaced a compression-based hybrid, and the replacement is the one conclusion in this write-up that has never been retracted. Over 100 real rounds in a five-person room:</p>
+
+    <div class="tw">
+    <table>
+      <thead><tr><th>True author (corpus)</th><th class="num">Rounds</th><th class="num">Naive Bayes</th><th class="num">Old hybrid</th><th class="num">NB+IDF</th><th class="num">IDF alone</th></tr></thead>
+      <tbody>
+        <tr><td>Speaker 1 (3.51M chars)</td><td class="num">27</td><td class="num">85%</td><td class="num">89%</td><td class="num">89%</td><td class="num">86%</td></tr>
+        <tr><td>Speaker 2 (1.48M)</td><td class="num">21</td><td class="num">86%</td><td class="num">43%</td><td class="num">76%</td><td class="num">38%</td></tr>
+        <tr><td>Speaker 3 (1.28M)</td><td class="num">12</td><td class="num">100%</td><td class="num">75%</td><td class="num">75%</td><td class="num">&mdash;</td></tr>
+        <tr><td>Speaker 4 (0.43M)</td><td class="num">19</td><td class="num">89%</td><td class="num">26%</td><td class="num">79%</td><td class="num">37%</td></tr>
+        <tr class="bad"><td>Speaker 5 (0.45M)</td><td class="num">21</td><td class="num">67%</td><td class="num">5%</td><td class="num">29%</td><td class="num">24%</td></tr>
+        <tr class="hi"><td><strong>All</strong></td><td class="num">100</td><td class="num"><strong>84%</strong></td><td class="num">48%</td><td class="num">70%</td><td class="num">43%</td></tr>
+      </tbody>
+      <caption>The compression hybrid does not degrade gracefully &mdash; it collapses. One hit in twenty-one rounds against Speaker 5. Paired comparisons on the two speakers who had never been tested before: the hybrid loses 26&ndash;1 (p &lt; 0.001).</caption>
+    </table>
+    </div>
+
+    <p>Hold on to that <strong>84%</strong>. Sections 04 and 07 take it apart.</p>
+
+    <h3>A mitigation that died twice</h3>
+
+    <p>When the hybrid first collapsed, it collapsed on a speaker whose messages were split across three accounts, so there was a comfortable reading available: it was not failing, it was confusing one person with themselves. Then two new speakers with one account each scored 26% and 5%, which killed that reading. Later I discovered I had also swapped two speakers' name labels in my notes, which killed it a second time &mdash; the original collapse was not even the account-split speaker. The numbers were all computed by corpus size and were never wrong. Only the labels were, and they were wrong for weeks.</p>
+
+    <h2><span class="n">03</span>The ceiling is the room, not 100%</h2>
+
+    <p>Accuracy has no meaning here without the number of suspects: in a two-person room, 50% is a coin. So the page carries a measured grid of what to expect, and refuses to show a number when the number would be a lie.</p>
+
+    <div class="tw">
+    <table>
+      <thead><tr><th>Two-person room &mdash; chance is 50%</th><th class="num">20-char query</th><th class="num">50</th><th class="num">100</th><th class="num">300</th></tr></thead>
+      <tbody>
+        <tr class="bad"><td>2,000-char corpus</td><td class="num">50%</td><td class="num">55%</td><td class="num">55%</td><td class="num">70%</td></tr>
+        <tr><td>10,000</td><td class="num">56%</td><td class="num">68%</td><td class="num">71%</td><td class="num">75%</td></tr>
+        <tr><td>50,000</td><td class="num">62%</td><td class="num">72%</td><td class="num">75%</td><td class="num">89%</td></tr>
+        <tr><td>200,000</td><td class="num">76%</td><td class="num">82%</td><td class="num">87%</td><td class="num">94%</td></tr>
+      </tbody>
+      <caption>350 paired rounds per cell. The first row is the whole point: 55% against a 50% baseline is not a result, it is noise wearing a percentage sign.</caption>
+    </table>
+    </div>
+
+    <p>So the tool applies a rule rather than a special case for small rooms: <strong>if the expected edge over chance is under 10 points, it shows a warning instead of a figure.</strong> Twelve of sixty-four measured cells trip it, across every room size &mdash; a seven-person room with a 20-character paste is just as meaningless as a two-person room, and the old version would have printed 19% and let you believe it meant something.</p>
+
+    <p>Two details that cost me time and are worth stating:</p>
+
+    <ul>
+      <li><strong>The baseline is computed from the suspects actually on screen</strong>, not from the grid key. Snapping a five-person room to the "4" row of the grid must not change the chance level the user is being compared against.</li>
+      <li><strong>One cell was a phantom.</strong> A single seed put the two-person / 2,000-char / 20-char cell at 39%, below the 50% coin &mdash; which, if real, would have been a genuinely interesting finding. A second seed gave 58%. Small rooms have enormous room-to-room variance; the published figure is now a weighted average over 350 rounds from two seeds. I nearly shipped a discovery that did not exist.</li>
+    </ul>
+
+    <div class="note warn">
+      <span class="k">AND THE PANEL WAS SHOWING STALE NUMBERS</span>
+      <p>Ticking a suspect on or off did not recompute the expectation &mdash; the handler was bound to the query box only. Reduce a room from four people to two and the four-person figure stayed on screen. <strong>It was simply displaying a wrong number, confidently.</strong></p>
+      <p>I found it by building a two-person room for a screenshot and switching back. A number being on screen does not mean it was computed under the conditions currently on screen; every path that changes the conditions needs checking.</p>
+    </div>
+
+    <h2><span class="n">04</span>The leak</h2>
+
+    <p>Here is how the tool is actually used. Export the whole conversation. Then scroll up, find a message, and paste it. <strong>The query is inside the corpus.</strong> The model is being asked to identify a sentence it has already memorised.</p>
+
+    <p>I dismissed this early on. My reasoning was mass: one 50-character message inside a 3.5-million-character corpus is 0.001% of it, far too small to matter. The arithmetic is right and the reasoning is wrong, and the paired measurement says so:</p>
+
+    <div class="tw">
+    <table>
+      <thead><tr><th>Corpus</th><th>Query</th><th class="num">In the record</th><th class="num">Held out</th><th class="num">Inflation</th></tr></thead>
+      <tbody>
+        <tr class="bad"><td>2,000 chars</td><td>one sentence, 20&ndash;120 chars</td><td class="num">100%</td><td class="num">30%</td><td class="num">+71</td></tr>
+        <tr><td>50,000</td><td>&#8220;</td><td class="num">97%</td><td class="num">43%</td><td class="num">+54</td></tr>
+        <tr><td>200,000</td><td>&#8220;</td><td class="num">92%</td><td class="num">52%</td><td class="num">+40</td></tr>
+        <tr><td>1,000,000</td><td>20&ndash;60 chars</td><td class="num">80%</td><td class="num">47%</td><td class="num">+33</td></tr>
+        <tr class="bad"><td>1,000,000</td><td><strong>five short fragments, 8&ndash;25 chars each</strong></td><td class="num">100%</td><td class="num">79%</td><td class="num">+21</td></tr>
+      </tbody>
+      <caption>Identical room, identical query, identical corpus size; only the true author's corpus swaps between including and excluding the pasted message.</caption>
+    </table>
+    </div>
+
+    <h3>The mechanism is coverage, not mass</h3>
+
+    <p>Look at the scoring formula again. Every n-gram of the query contributes <code>&minus;log P(g|u)</code>, and an n-gram the model has never seen contributes <code>&minus;log(&alpha;/den)</code> &mdash; a large penalty, because &alpha; is 0.1. <strong>If the sentence is in the corpus, the number of unseen n-grams is exactly zero</strong>, and the true author is the only person in the room paying no penalty at all. It is not about how much text you added. It is about whether anything is missing.</p>
+
+    <p>I re-measured this while writing this page, on a completely different Korean corpus &mdash; not the game's data, just to isolate the mechanism:</p>
+
+    <div class="tw">
+    <table>
+      <thead><tr><th>Corpus size</th><th class="num">Unseen n-grams, query in corpus</th><th class="num">Unseen, query held out</th><th class="num">Score gap</th></tr></thead>
+      <tbody>
+        <tr><td>2,000 chars</td><td class="num">0.0%</td><td class="num">47.7%</td><td class="num">1.332</td></tr>
+        <tr><td>5,000</td><td class="num">0.0%</td><td class="num">31.0%</td><td class="num">0.943</td></tr>
+        <tr><td>10,000</td><td class="num">0.0%</td><td class="num">18.1%</td><td class="num">0.638</td></tr>
+        <tr><td>20,000</td><td class="num">0.0%</td><td class="num">7.3%</td><td class="num">0.386</td></tr>
+      </tbody>
+      <caption>300 trials per row, &alpha; = 0.1, vocabulary held fixed. Score gap in nats per n-gram. Zero, every time, in the left column &mdash; that is the whole effect.</caption>
+    </table>
+    </div>
+
+    <p>And this is the answer to my own mass argument. Between the first and last rows the query's <em>share of the corpus</em> falls tenfold, while the advantage it confers falls only 3.4-fold. The effect is not proportional to mass, which is why <strong>making the corpus bigger dilutes it far more slowly than intuition promises.</strong></p>
+
+    <h3>The second thing I predicted wrong, in the opposite direction</h3>
+
+    <p>I then guessed that pasting several short fragments would be harmless, since each is too small to matter. It is the worst case. If all five fragments are in the record, each one collects the full coverage advantage and they <strong>accumulate</strong> &mdash; 100% accuracy even against a million-character corpus, worse than a single long sentence. That bundle of four to seven short messages is exactly the shape of a real paste.</p>
+
+    <h2><span class="n">05</span>Removing it: from the owner, not from everyone</h2>
+
+    <p>My first fix was to subtract the query's n-grams from every model in the room. That is wrong, and measurably so: it takes legitimate counts away from the innocent, which leaves the true author <em>relatively</em> better off. It barely moved &mdash; 84% against a 31% baseline.</p>
+
+    <p>The correct fix is available for free, and the file hands it over: if the pasted text matches a message in the export, <strong>the export says whose message it is.</strong> No inference required. Subtract only from that person.</p>
+
+    <div class="tw">
+    <table>
+      <thead><tr><th>Corpus</th><th class="num">Leaked</th><th class="num">Subtracted</th><th class="num">Model rebuilt without it</th><th class="num">Agreement</th></tr></thead>
+      <tbody>
+        <tr><td>2,000 chars</td><td class="num">100%</td><td class="num">29%</td><td class="num">29%</td><td class="num">100%</td></tr>
+        <tr><td>50,000</td><td class="num">97%</td><td class="num">44%</td><td class="num">44%</td><td class="num">100%</td></tr>
+        <tr><td>200,000</td><td class="num">89%</td><td class="num">43%</td><td class="num">43%</td><td class="num">100%</td></tr>
+      </tbody>
+      <caption>480 rounds. Subtracting the counts and rebuilding the model from scratch chose the same person every single time &mdash; not approximately, identically. Which matters, because subtraction costs time proportional to the query length while rebuilding costs time proportional to the corpus.</caption>
+    </table>
+    </div>
+
+    <p>Two honest residuals. Messages are joined with newlines when the model is built, so a handful of n-grams straddling a line boundary survive subtraction; they never changed a ranking in 480 rounds, but they are there. And I suspected the owner-lookup would over-remove, since short phrases are said by several people &mdash; measured, that is 3 cases in 500 (0.6%), and zero out of 120 for messages in the 20&ndash;60 character band. The suspicion was unfounded.</p>
+
+    <p>What does remain is a gap I do not want to paper over: <strong>held-out scoring lands at 83% where building the corpus without the message from the start gives 79%.</strong> Four to five points of optimism survive the fix, and every number measured with the new version should be read with that discount applied.</p>
+
+    <h2><span class="n">06</span>The bench was not running the fix</h2>
+
+    <p>I built the leak removal, shipped it, and left a note to confirm the local test bench was using it. It was not. The scoring path still read the untouched models, which means <strong>all 107 rounds of real-world testing I had accumulated were scored with the leak in place.</strong> They are discarded.</p>
+
+    <p>Fixing the bench surfaced two traps that would each have produced a quietly wrong comparison:</p>
+
+    <ul>
+      <li><strong>Applying it to Naive Bayes only would have rigged the contest.</strong> The old hybrid has a compression axis, and a compressor benefits from a memorised string <em>more</em> than a Bayesian model does. Removing the leak from NB alone would have handicapped exactly the scorer I was arguing for. It goes on all five axes, and the cached preparation is rebuilt from the held-out models.</li>
+      <li><strong>Subtracting only n-grams breaks the other axes.</strong> Two of the five read the joined raw text, not the gram counts, so removing from one and not the other means the axes are looking at different corpora &mdash; which is the one thing a comparison harness may never do.</li>
+    </ul>
+
+    <p>The log now records how many messages were held out. <strong>A count and nothing else</strong> &mdash; never the text, never a name.</p>
+
+    <p>And then I lost seven more rounds because the browser had an older copy of the bench open and I only noticed when the new field failed to appear. The file is now versioned in its own name with a version stamp printed under the title, and a test asserts the stamp is there. A tool that can silently be the wrong version is a tool that will be.</p>
+
+    <h2><span class="n">07</span>The collapse that was not the scorer</h2>
+
+    <p>With the fixed bench, thirty fresh rounds. Five-person room, chance 20%:</p>
+
+    <div class="tw">
+    <table>
+      <thead><tr><th>Scorer</th><th class="num">Accuracy</th></tr></thead>
+      <tbody>
+        <tr class="bad"><td><strong>Naive Bayes (shipped)</strong></td><td class="num"><strong>8/30 = 27%</strong></td></tr>
+        <tr><td>Old hybrid</td><td class="num">23/30 = 77%</td></tr>
+        <tr><td>NB + IDF</td><td class="num">11/30 = 37%</td></tr>
+        <tr><td>IDF alone</td><td class="num">11/30 = 37%</td></tr>
+      </tbody>
+      <caption>The shipped scorer, barely above chance, losing to the thing it replaced. And of its 22 misses, 21 named the same person &mdash; while reporting 73&ndash;85% confidence.</caption>
+    </table>
+    </div>
+
+    <p>Confidently wrong, in the same direction, every time. That pattern is not incompetence, it is a systematic input error, but I did not think that first. I hypothesised that additive smoothing was biased by corpus size: the unseen-gram penalty depends on the corpus total, so a smaller corpus is penalised less, and this room ranged from 3.5M to 0.43M characters.</p>
+
+    <p>I built a bench with matched corpus imbalance and 100 rounds. <strong>No size bias</strong> &mdash; 80% accuracy with an even spread of choices, and three alternative smoothing schemes all within five points. The hypothesis died. Worse, the log had already contradicted it: the person NB kept choosing was not the smallest corpus in the room. Someone smaller was never chosen once. I could have known before writing the bench by reading my own log more carefully.</p>
+
+    <p>The answer was not in my data at all. I asked what had actually been pasted:</p>
+
+    <div class="eq">[8/4/26 9:37 PM] Sanghyun: ha..
+[8/4/26 9:37 PM] Sanghyun: spending money on films is against my principles</div>
+
+    <p><code>8/4/26</code> is a US-locale short date. The parser knew Korean <code>2025-12-05</code> and European <code>05.12.2025</code> and did not recognise this, so header extraction failed and the raw text went into the scorer &mdash; <strong>with the sender's name in it four to six times.</strong> The user's devices have different language settings, so the copy format changed depending on which phone the message came from.</p>
+
+    <div class="note warn">
+      <span class="k">WHY A LEAKED NAME IS WORSE THAN NOISE</span>
+      <p>People almost never write their own name. Other people write it. So a name inside the query is not noise &mdash; it is <strong>evidence pointing away from the true author</strong>, a reversed signal. That is how a scorer that is normally 84% ends up at 27%, barely above the 20% coin. The person it kept naming is most likely whoever says "Sanghyun" most often in that room.</p>
+    </div>
+
+    <p>The fix widened the date pattern instead of chasing locales one at a time, and handled a second format &mdash; the English KakaoTalk copy, which has <em>no separator at all</em> between the name and the message. There is no string rule that splits <code>4:57 PM Jb come to the coffee shop</code> correctly, because <code>Jb</code> is a name and so is <code>Kyung Min</code>. So the extractor is handed <strong>the actual participant list read from the uploaded file</strong> and strips the longest match. It is a lookup, not a guess.</p>
+
+    <p>Guards, because a net this wide can swallow ordinary text: the format only applies when at least two lines start with a time and they are a majority; the bracket formats always win; and times <em>inside</em> a message are preserved, so a sentence about arriving at 5:36 pm survives intact.</p>
+
+    <p>Most importantly, the page now says something when it cannot read the format. Two red warnings appear in the query meter &mdash; one for text that looks like a header but parsed as nothing, one for a stripped time with a name that matched nobody in the room. <strong>There will be another locale I have not seen. Next time the screen has to speak.</strong> This time it said nothing at all, and thirty rounds of measurement went in the bin.</p>
+
+    <h2><span class="n">08</span>One speaker really is harder, and I said otherwise first</h2>
+
+    <p>One of the five sits at 67% where the others are 85&ndash;100%. At nineteen rounds I reported that the confidence intervals overlapped and there was therefore no evidence of a hole. <strong>That is a bad test</strong>, and overlapping intervals do not mean what I used them to mean. Testing it directly:</p>
+
+    <ul>
+      <li>53/60 for the established speakers against 14/21 &mdash; <strong>Fisher exact p = 0.041</strong></li>
+      <li>Matched on query length, 23/25 against 9/15 &mdash; <strong>p = 0.036</strong></li>
+    </ul>
+
+    <p>And the obvious explanation is not available. This speaker has 450,000 characters; another has 430,000 and scores <strong>89%</strong>. Same corpus size, twenty-two points apart. What is left is that some people's writing simply has less fingerprint &mdash; they speak in the phrasing the whole room shares. That is not a data-volume problem, and more logs will not fix it.</p>
+
+    <p>The fair reading is not that this scorer is weak here. Every other scorer gets 5&ndash;29% on the same speaker while Naive Bayes holds 67%, more than three times chance. <strong>It is a hard speaker for everyone, and this is the only method that survives them.</strong> The prescription is to accumulate evidence across several independent messages rather than to trust one.</p>
+
+    <p>And here is the cost of the privacy decision from section 01: <strong>I cannot investigate why.</strong> The log keeps numbers, never text, so there is no way to go back and look at what those messages had in common. Answering the question needs a fresh measurement designed for it. I knew that when I chose the design, and I would choose it again, but it is a real price and it should be written down rather than glossed.</p>
+
+    <h2><span class="n">09</span>Everything I got wrong</h2>
+
+    <p>Kept as a list, in order, because the pattern in it is more useful than any single entry.</p>
+
+    <div class="tw">
+    <table>
+      <thead><tr><th class="num">#</th><th>The mistake</th><th>How it died</th></tr></thead>
+      <tbody>
+        <tr><td class="num">1</td><td>A parser misread one export as JSON; the page's own self-test had been dead on line one</td><td>measurement</td></tr>
+        <tr><td class="num">2</td><td>Nearly reported a single-seed 39% cell as a real signal</td><td>measurement</td></tr>
+        <tr><td class="num">3</td><td>An experiment shuffled before slicing, so it measured nothing at all</td><td>measurement</td></tr>
+        <tr><td class="num">4</td><td>"The intervals overlap, so there is no hole"</td><td>measurement</td></tr>
+        <tr><td class="num">5</td><td>Blamed that speaker's weakness on corpus size</td><td>measurement</td></tr>
+        <tr class="bad"><td class="num">6</td><td><strong>"The leak is negligible &mdash; the mass is tiny"</strong></td><td><strong>reasoning</strong></td></tr>
+        <tr><td class="num">7</td><td>Fixed the leak by subtracting from everyone</td><td>measurement</td></tr>
+        <tr><td class="num">8</td><td>Assumed the bench was running the fix</td><td>measurement</td></tr>
+        <tr><td class="num">9</td><td>Suspected the owner lookup of over-removing</td><td>measurement</td></tr>
+        <tr class="bad"><td class="num">10</td><td><strong>"Several short fragments will be harmless"</strong></td><td><strong>reasoning</strong></td></tr>
+        <tr><td class="num">11</td><td>Swapped two speakers' labels for weeks</td><td>a screenshot</td></tr>
+        <tr><td class="num">12</td><td>The corpus-size-bias hypothesis</td><td>measurement</td></tr>
+        <tr><td class="num">13</td><td>Shipped a parser with Korean and European dates and no US ones</td><td>asking the user</td></tr>
+      </tbody>
+      <caption>Every one has the same shape: the thing was running, and the thing it was measuring was not the thing I thought.</caption>
+    </table>
+    </div>
+
+    <p>Two patterns worth extracting.</p>
+
+    <p><strong>Not one of these was caught by thinking about it.</strong> Eleven fell to a measurement, one to looking at a screenshot, one to asking a question. And the two I reached by pure reasoning &mdash; numbers 6 and 10, both of the form "this is too small to matter" &mdash; were <em>both</em> wrong, and one of them was wrong in the opposite direction from my prediction. I no longer trust myself to conclude that something is negligible without measuring it.</p>
+
+    <p><strong>The last one is a different species.</strong> The bench could reject my hypothesis but could never produce the answer, because the answer &mdash; what the user had actually pasted &mdash; was not in my possession. I ran an experiment where I should have asked a question. When the missing information is not in your hands, measuring harder just gets you a more confident wrong answer.</p>
+
+    <h2><span class="n">10</span>So what is the accuracy</h2>
+
+    <p>I do not know yet, and that is the honest end of this.</p>
+
+    <p>The 84% figure came from 107 rounds scored with the leak in place; those are discarded. The next 30 were scored through a broken parser; those are discarded too. In the user's own recent sessions, <strong>26 of 41 pasted messages (63%) were present in the uploaded record</strong>, so the leak was partial rather than total, which puts the honest estimate at <strong>70&ndash;75%</strong> &mdash; and even that should be read as four to five points optimistic, per section 05.</p>
+
+    <p>The claim I retracted along with the number was more interesting than the number itself. I had concluded that real friend-group chat is <em>easier</em> to attribute than a crowdsourced dialogue benchmark, based on 83&ndash;88% against 43&ndash;52%. Two errors leaned the same way: the conditions were not matched (different corpus sizes, different query shapes) and the real-world side was leaking. Matched properly, with the leak removed, the benchmark scores 79% and the real room 70&ndash;75%. <strong>The conclusion was not merely unsupported, it pointed the wrong way.</strong></p>
+
+    <p>What survives is the comparison between scorers. All five were run on the same rounds under the same conditions carrying the same leak, so the ranking is untouched even though every absolute figure moved. <strong>Relative claims survived what absolute claims did not</strong>, which is worth remembering next time I am tempted to publish a single headline number.</p>
+
+    <p>Roughly thirty clean rounds are needed before the page can state a figure again. Until then it states none.</p>
+
+    <div class="foot-cta">
+      <p style="margin-top:0"><strong>Try it on your own group chat.</strong> The file never leaves the tab, and neither does the answer.</p>
+      <a href="/who-wrote/">Open Who Wrote This &rarr;</a>
+    </div>
+
+  </article>
+  </div>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <span>&copy; KYGMIN.COM</span>
+    <span>NOTES 05 &middot; WHO WROTE THIS &middot; MEASURED 2026-08</span>
+  </div>
+</footer>
+
+</body>
+</html>
