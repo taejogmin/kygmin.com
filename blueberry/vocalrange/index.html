@@ -51,6 +51,12 @@ nav{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:3px s
 .box .scr{color:var(--paper);}
 
 header{padding:48px 0 34px;border-bottom:3px solid var(--ink);}
+/* 해설 문서로 가는 입구 (NOTES 07). */
+.notes-link{margin-top:34px;border:3px solid var(--ink);background:#fff;box-shadow:6px 6px 0 var(--ink);padding:20px 22px;}
+.notes-link .k{font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:1px;color:var(--green-deep);display:block;margin-bottom:6px;}
+.notes-link p{font-size:14.5px;line-height:1.65;}
+.notes-link a{display:inline-block;margin-top:13px;font-weight:700;font-size:13px;text-transform:uppercase;border:2px solid var(--ink);background:var(--green);color:var(--paper);padding:9px 16px;text-decoration:none;box-shadow:3px 3px 0 var(--ink);transition:transform .1s,box-shadow .1s;}
+.notes-link a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
 .sec-tag{font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--green-deep);letter-spacing:1px;display:block;margin-bottom:14px;}
 h1{font-family:var(--arch);font-weight:900;text-transform:uppercase;font-size:clamp(30px, 5.6vw, 50px);line-height:1.02;letter-spacing:-2px;}
 h1 .box{background:var(--ink);color:var(--paper);padding:0 12px;display:inline-block;transform:rotate(-1deg);}
@@ -268,6 +274,12 @@ if(window.KYG_LANG!=='en'){
     </details>
 
     <p class="foot tx" data-en="Both TJ and Kumyoung machines adjust by ±6 keys, one key per semitone — so the table above works at any karaoke room in the country, and this page never has to ask which machine you are standing in front of." data-kr="TJ와 금영 모두 ±6키까지, 1키가 반음입니다 — 그래서 위의 표는 전국 어느 노래방에서든 그대로 통하고, 이 페이지는 당신 앞의 기계가 무엇인지 물어볼 필요가 없어요.">Both TJ and Kumyoung machines adjust by ±6 keys, one key per semitone — so the table above works at any karaoke room in the country, and this page never has to ask which machine you are standing in front of.</p>
+    <!-- NOTES 07 -->
+    <div class="notes-link">
+      <span class="k">NOTES 07</span>
+      <p class="tx" data-en="A write-up of the measurement: why width is the only absolute constraint, why a note you cannot hold is not in your range, how eighty-five passing tests failed to model the actual procedure, and the gap in the data that looked like an octave error and turned out to be falsetto. English only." data-kr="측정을 어떻게 정했는지 적어 둔 글입니다. 왜 폭만이 절대적 제약인지, 왜 붙잡지 못하는 음은 음역이 아닌지, 85개 시험이 전부 통과하면서도 실제 절차의 모양을 하나도 담지 못했던 일, 그리고 옥타브 오류처럼 보였다가 가성으로 밝혀진 데이터의 빈 구간. 영문으로만 있습니다.">A write-up of the measurement: why width is the only absolute constraint, why a note you cannot hold is not in your range, how eighty-five passing tests failed to model the actual procedure, and the gap in the data that looked like an octave error and turned out to be falsetto. English only.</p>
+      <a class="tx" href="/notes/vocalrange/" data-en="How It Works &#8594;" data-kr="어떻게 작동하나 &#8594;">How It Works &#8594;</a>
+    </div>
 
   </div>
 </main>
