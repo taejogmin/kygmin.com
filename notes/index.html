@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Notes — KYGMIN</title>
+<meta name="description" content="Seven technical write-ups on the projects in the KYGMIN playhouse: what each one measures, what broke, and how it was found. Naive Bayes, MCCFR, CFR+, YIN pitch estimation, common-value auctions, face geometry." />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#F6F6F4;
+  --ink:#141414;
+  --gray:#DDDDD8;
+  --green:#2BB673;
+  --green-deep:#0F6E56;
+  --red:#A32D2D;
+  --arch:'Archivo','Pretendard',sans-serif;
+  --sans:'Pretendard',-apple-system,'Apple SD Gothic Neo','Malgun Gothic','Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono','SF Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{transition:none!important;}
+}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:16px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  word-break:keep-all;overflow-wrap:break-word;
+}
+a{color:inherit;}
+a:focus-visible,button:focus-visible{outline:3px solid var(--green);outline-offset:3px;}
+.wrap{max-width:960px;margin:0 auto;padding:0 24px;}
+
+/* ── Nav ── */
+nav{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:3px solid var(--ink);}
+.nav-inner{
+  max-width:960px;margin:0 auto;padding:14px 24px;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;
+}
+.logo{font-family:var(--arch);font-weight:900;font-size:19px;letter-spacing:-0.5px;text-decoration:none;white-space:nowrap;}
+.logo em{font-style:normal;background:var(--green);color:var(--paper);padding:0 6px;display:inline-block;transform:rotate(-1.5deg);}
+.nav-links{display:flex;gap:8px;flex-wrap:wrap;}
+.nav-links a{
+  font-family:var(--arch);font-size:12px;font-weight:700;text-transform:uppercase;
+  border:2px solid var(--ink);padding:6px 13px;background:#fff;text-decoration:none;
+  box-shadow:3px 3px 0 var(--ink);transition:transform .1s, box-shadow .1s;
+}
+.nav-links a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+.nav-links a.on{background:var(--green);color:var(--paper);}
+
+/* ── Hero ── */
+header{padding:64px 0 44px;border-bottom:3px solid var(--ink);}
+.sec-tag{
+  font-family:var(--mono);font-size:12.5px;font-weight:600;
+  color:var(--green-deep);letter-spacing:1px;display:block;margin-bottom:16px;
+}
+h1{
+  font-family:var(--arch);font-weight:900;text-transform:uppercase;
+  font-size:clamp(30px, 5.4vw, 50px);line-height:1.05;letter-spacing:-2px;max-width:840px;
+}
+h1 .box{background:var(--ink);color:var(--paper);padding:0 12px;display:inline-block;transform:rotate(-1deg);}
+.hero-sub{margin-top:22px;font-size:16.5px;max-width:660px;font-weight:500;}
+.hero-note{margin-top:14px;font-family:var(--mono);font-size:12px;color:#4A4A46;}
+
+/* ── Index ── */
+main{padding:0 0 96px;}
+.idx{border-bottom:3px solid var(--ink);}
+
+.entry{
+  position:relative;
+  display:grid;grid-template-columns:104px 1fr;gap:0 26px;
+  padding:34px 0 30px;border-bottom:1px solid var(--gray);
+  transition:background .12s;
+}
+.entry:last-child{border-bottom:none;}
+.entry:hover,.entry:focus-within{background:#fff;}
+
+/* left rail */
+.e-rail{padding-top:5px;}
+.e-no{
+  font-family:var(--arch);font-weight:900;font-size:38px;line-height:1;
+  letter-spacing:-2px;color:#C2C2BC;transition:color .12s;
+}
+.entry:hover .e-no,.entry:focus-within .e-no{color:var(--green);}
+.e-slug{
+  display:block;margin-top:7px;
+  font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:1px;
+  color:var(--green-deep);text-transform:uppercase;line-height:1.5;
+}
+
+/* right column */
+.e-title{
+  font-family:var(--arch);font-weight:900;text-transform:uppercase;
+  font-size:clamp(20px,2.7vw,27px);line-height:1.12;letter-spacing:-1px;
+  max-width:640px;
+}
+.e-title a{text-decoration:none;}
+/* stretched link: the whole row opens the write-up, no nested anchors */
+.e-title a::after{content:"";position:absolute;inset:0;z-index:0;}
+.entry:hover .e-title a,.e-title a:focus-visible{
+  background:var(--ink);color:var(--paper);
+  box-shadow:6px 0 0 var(--ink),-4px 0 0 var(--ink);
+}
+.e-sub{margin-top:12px;max-width:600px;font-size:15.5px;color:#2A2A26;}
+.e-stack{
+  margin-top:14px;font-family:var(--mono);font-size:11.5px;color:#4A4A46;
+  letter-spacing:.3px;line-height:1.7;max-width:600px;
+}
+.e-links{
+  margin-top:16px;display:flex;align-items:center;gap:9px;flex-wrap:wrap;
+  position:relative;z-index:1;   /* sits above the stretched link */
+  pointer-events:none;           /* ...but only the chips themselves catch clicks, */
+}
+.chip{pointer-events:auto;}      /* so the blank space beside them still opens the write-up */
+.chip{
+  font-family:var(--arch);font-size:11.5px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.3px;border:2px solid var(--ink);padding:5px 11px;background:#fff;
+  text-decoration:none;box-shadow:3px 3px 0 var(--ink);white-space:nowrap;
+  transition:transform .1s, box-shadow .1s;
+}
+.chip:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+.chip.read{background:var(--ink);color:var(--paper);}
+.chip.play{background:var(--green);color:var(--paper);}
+.chip.flag{
+  background:var(--paper);color:#6B6B67;box-shadow:none;border-color:#B9B9B3;
+  cursor:default;font-family:var(--mono);font-size:10.5px;padding:5px 9px;
+}
+
+@media (max-width:640px){
+  .entry{grid-template-columns:1fr;gap:0;padding:28px 0 26px;}
+  .e-rail{padding-top:0;margin-bottom:10px;display:flex;align-items:baseline;gap:12px;}
+  .e-no{font-size:28px;}
+  .e-slug{margin-top:0;}
+  .e-slug{white-space:nowrap;}
+  .entry:hover .e-title a{box-shadow:4px 0 0 var(--ink),-3px 0 0 var(--ink);}
+}
+
+/* ── Foot CTA ── */
+.foot-cta{
+  margin-top:52px;border:3px solid var(--ink);background:#fff;box-shadow:6px 6px 0 var(--ink);
+  padding:24px;max-width:720px;
+}
+.foot-cta p{margin:0;}
+.foot-cta a{
+  display:inline-block;font-family:var(--arch);font-weight:700;font-size:13px;text-transform:uppercase;
+  border:2px solid var(--ink);background:var(--green);color:var(--paper);
+  padding:9px 16px;box-shadow:3px 3px 0 var(--ink);text-decoration:none;margin-top:12px;
+  transition:transform .1s, box-shadow .1s;
+}
+.foot-cta a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+
+footer{border-top:3px solid var(--ink);padding:22px 0;}
+.foot-inner{max-width:960px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;
+  gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:11.5px;color:#4A4A46;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="/index.html">KYG<em>MIN</em></a>
+    <div class="nav-links">
+      <a href="/index.html">Home</a>
+      <a href="/playhouse/">PLAYHOUSE</a>
+      <a class="on" href="/notes/">Notes</a>
+      <a href="/cv.html">CV &#128274;</a>
+    </div>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <span class="sec-tag">KYGMIN &mdash; NOTES</span>
+    <h1>How these things <span class="box">actually work</span></h1>
+    <p class="hero-sub">Seven write-ups on the machinery behind the playhouse &mdash; what each project measures, what it refuses to claim, and what it took to find the difference. Every one of them is also a record of something I got wrong, because in all seven cases that is where the interesting part was.</p>
+    <p class="hero-note">ENGLISH ONLY &middot; 7 WRITE-UPS &middot; 20,000 WORDS &middot; ALL FIGURES MEASURED, NOT ESTIMATED</p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="idx">
+
+      <article class="entry">
+        <div class="e-rail">
+          <div class="e-no">01</div>
+          <span class="e-slug">Animal Lookalike</span>
+        </div>
+        <div class="e-body">
+          <h2 class="e-title"><a href="/notes/animals/">Matching a face to twelve animals</a></h2>
+          <p class="e-sub">A human face and an animal face do not live on the same scale, so the first version was measuring head size instead of resemblance.</p>
+          <p class="e-stack">MediaPipe Face Landmarker &middot; 6 Geometric Features &middot; Weighted Distance</p>
+          <div class="e-links">
+            <a class="chip read" href="/notes/animals/">Read &rarr;</a>
+            <a class="chip play" href="/animal/">Play Animal Lookalike &rarr;</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="entry">
+        <div class="e-rail">
+          <div class="e-no">02</div>
+          <span class="e-slug">Nine Positions</span>
+        </div>
+        <div class="e-body">
+          <h2 class="e-title"><a href="/notes/nine-positions/">Solving a game that was already solved</a></h2>
+          <p class="e-sub">The card layer turned out to have a trivial equilibrium worth nothing at all, which is exactly why the layer above it is worth something.</p>
+          <p class="e-stack">MCCFR &middot; Bayesian Opponent Modelling &middot; 148,060,000 Iterations</p>
+          <div class="e-links">
+            <a class="chip read" href="/notes/nine-positions/">Read &rarr;</a>
+            <a class="chip play" href="/nine-positions/">Play Nine Positions &rarr;</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="entry">
+        <div class="e-rail">
+          <div class="e-no">03</div>
+          <span class="e-slug">Indian Poker</span>
+        </div>
+        <div class="e-body">
+          <h2 class="e-title"><a href="/notes/indian-poker/">A rule that measured well and died in play</a></h2>
+          <p class="e-sub">A comeback mechanic that simulated beautifully and collapsed the moment a human was allowed to decline it &mdash; and the exact solve that came after.</p>
+          <p class="e-stack">Exact CFR+ &middot; Bayesian Inference &middot; Empirical-Bayes Shrinkage &middot; Card Counting</p>
+          <div class="e-links">
+            <a class="chip read" href="/notes/indian-poker/">Read &rarr;</a>
+            <a class="chip play" href="/indian-poker/">Play Indian Poker &rarr;</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="entry">
+        <div class="e-rail">
+          <div class="e-no">04</div>
+          <span class="e-slug">Pyrrhus &amp; Co.</span>
+        </div>
+        <div class="e-body">
+          <h2 class="e-title"><a href="/notes/pyrrhus-co/">When the winning move was to not play</a></h2>
+          <p class="e-sub">An auction game about the winner's curse in which bidding the opening price on everything and thinking about nothing beat playing properly.</p>
+          <p class="e-stack">Common-Value Auction &middot; First-Price Sealed Bid &middot; Winner's Curse</p>
+          <div class="e-links">
+            <a class="chip read" href="/notes/pyrrhus-co/">Read &rarr;</a>
+            <a class="chip play" href="/pyrrhus-co/">Play Pyrrhus &amp; Co. &rarr;</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="entry">
+        <div class="e-rail">
+          <div class="e-no">05</div>
+          <span class="e-slug">Who Wrote This</span>
+        </div>
+        <div class="e-body">
+          <h2 class="e-title"><a href="/notes/who-wrote/">The tool worked. The number didn't.</a></h2>
+          <p class="e-sub">The classifier had been fine for months. The accuracy figure attached to it was wrong three separate times, each caught only by measurement.</p>
+          <p class="e-stack">Naive Bayes &middot; Char 2&ndash;3gram &middot; Additive Smoothing</p>
+          <div class="e-links">
+            <a class="chip read" href="/notes/who-wrote/">Read &rarr;</a>
+            <a class="chip play" href="/who-wrote/">Play Who Wrote This &rarr;</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="entry">
+        <div class="e-rail">
+          <div class="e-no">06</div>
+          <span class="e-slug">Blueberry Smoothie</span>
+        </div>
+        <div class="e-body">
+          <h2 class="e-title"><a href="/notes/blueberry/">Every release made it claim less</a></h2>
+          <p class="e-sub">Twenty versions of a page that draws your speech melody, measuring no more than version four did &mdash; the difference is that it now says so.</p>
+          <p class="e-stack">YIN F0 Estimation &middot; Viterbi Octave Correction &middot; Final-Slope</p>
+          <div class="e-links">
+            <a class="chip read" href="/notes/blueberry/">Read &rarr;</a>
+            <a class="chip play" href="/blueberry/">Play Blueberry Smoothie &rarr;</a>
+            <span class="chip flag">TOOL IS KR ONLY</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="entry">
+        <div class="e-rail">
+          <div class="e-no">07</div>
+          <span class="e-slug">Vocal Range</span>
+        </div>
+        <div class="e-body">
+          <h2 class="e-title"><a href="/notes/vocalrange/">Every test passed. None of them was real.</a></h2>
+          <p class="e-sub">Eighty-five green assertions, and then the first human being sang into it and the tool captured two notes.</p>
+          <p class="e-stack">YIN F0 Estimation &middot; Drift-Gated Sustain &middot; Key Transposition</p>
+          <div class="e-links">
+            <a class="chip read" href="/notes/vocalrange/">Read &rarr;</a>
+            <a class="chip play" href="/blueberry/vocalrange/">Play Vocal Range &rarr;</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="foot-cta">
+      <p><strong>All seven are playable.</strong> The write-ups are the reasoning; the playhouse is where you go to disagree with it.</p>
+      <a href="/playhouse/">Open the Playhouse &rarr;</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <span>&copy; KYGMIN.COM</span>
+    <span>NOTES &middot; 7 WRITE-UPS &middot; UPDATED 2026-08</span>
+  </div>
+</footer>
+
+</body>
+</html>
