@@ -39,7 +39,7 @@ nav{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:3px s
   max-width:960px;margin:0 auto;padding:14px 24px;
   display:flex;justify-content:space-between;align-items:center;gap:16px;
 }
-.logo{font-family:var(--arch);font-weight:900;font-size:19px;letter-spacing:-0.5px;}
+.logo{font-family:var(--arch);font-weight:900;font-size:19px;letter-spacing:-0.5px;white-space:nowrap;}
 .logo em{font-style:normal;background:var(--green);color:var(--paper);padding:0 6px;display:inline-block;transform:rotate(-1.5deg);}
 .nav-links{display:flex;gap:8px;flex-wrap:wrap;}
 .nav-links a{
@@ -91,6 +91,15 @@ main{padding:40px 0 88px;}
 
 /* project cards */
 .proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;}
+.notes-cta{margin-top:46px;border:3px solid var(--ink);background:#fff;box-shadow:6px 6px 0 var(--ink);
+  padding:22px 24px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;}
+.notes-cta .t{font-family:var(--arch);font-weight:900;font-size:17px;text-transform:uppercase;letter-spacing:-0.4px;line-height:1.2;}
+.notes-cta .d{font-size:14px;color:#3A3A38;margin-top:6px;max-width:520px;}
+.notes-cta .m{font-family:var(--mono);font-size:11px;color:#4A4A46;margin-top:9px;letter-spacing:.5px;}
+.notes-cta a.go{font-family:var(--arch);font-weight:700;font-size:13px;text-transform:uppercase;
+  border:2px solid var(--ink);background:var(--green);color:var(--paper);padding:10px 16px;
+  box-shadow:3px 3px 0 var(--ink);text-decoration:none;white-space:nowrap;transition:transform .1s, box-shadow .1s;}
+.notes-cta a.go:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
 .proj{
   border:3px solid var(--ink);background:#fff;padding:20px 22px;
   box-shadow:5px 5px 0 var(--ink);display:flex;flex-direction:column;gap:10px;
@@ -217,6 +226,15 @@ if(window.KYG_LANG!=='en'){
     </div>
 
     <div class="no-result" id="noResult"></div>
+
+    <div class="notes-cta">
+      <div>
+        <div class="t tx" data-en="Every one of these has a write-up." data-kr="여기 있는 것들에는 전부 해설이 있습니다.">Every one of these has a write-up.</div>
+        <p class="d tx" data-en="What each one measures, what it refuses to claim, and what broke on the way there." data-kr="각각이 무엇을 재는지, 무엇까지는 주장하지 않는지, 그리고 거기까지 오면서 무엇이 망가졌는지.">What each one measures, what it refuses to claim, and what broke on the way there.</p>
+        <p class="m tx" data-en="7 WRITE-UPS &middot; ENGLISH ONLY" data-kr="해설 7편 &middot; 영어로만 작성">7 WRITE-UPS &middot; ENGLISH ONLY</p>
+      </div>
+      <a class="go tx" href="/notes/" data-en="Read the NOTES &rarr;" data-kr="NOTES 읽기 &rarr;">Read the NOTES &rarr;</a>
+    </div>
 
   </div>
 </main>
