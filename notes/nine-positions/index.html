@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Solving Nine Positions — KYGMIN Notes</title>
+<meta name="description" content="A write-up of the Nine Positions AI: why the card game was already solved and worthless, the tell that gave the old bot away, three hand-tuned knobs deleted by measurement, and 148 million MCCFR iterations compressed into 350 KB." />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#F6F6F4;
+  --ink:#141414;
+  --gray:#DDDDD8;
+  --green:#2BB673;
+  --green-deep:#0F6E56;
+  --red:#A32D2D;
+  --arch:'Archivo','Pretendard',sans-serif;
+  --sans:'Pretendard',-apple-system,'Apple SD Gothic Neo','Malgun Gothic','Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono','SF Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{transition:none!important;}
+}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:16px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  word-break:keep-all;overflow-wrap:break-word;
+}
+a{color:inherit;}
+a:focus-visible,button:focus-visible{outline:3px solid var(--green);outline-offset:3px;}
+.wrap{max-width:960px;margin:0 auto;padding:0 24px;}
+.narrow{max-width:720px;}
+
+/* ── Nav ── */
+nav{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:3px solid var(--ink);}
+.nav-inner{
+  max-width:960px;margin:0 auto;padding:14px 24px;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;
+}
+.logo{font-family:var(--arch);font-weight:900;font-size:19px;letter-spacing:-0.5px;text-decoration:none;}
+.logo em{font-style:normal;background:var(--green);color:var(--paper);padding:0 6px;display:inline-block;transform:rotate(-1.5deg);}
+.nav-links{display:flex;gap:8px;flex-wrap:wrap;}
+.nav-links a{
+  font-family:var(--arch);font-size:12px;font-weight:700;text-transform:uppercase;
+  border:2px solid var(--ink);padding:6px 13px;background:#fff;text-decoration:none;
+  box-shadow:3px 3px 0 var(--ink);transition:transform .1s, box-shadow .1s;
+}
+.nav-links a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+.nav-links a.on{background:var(--green);color:var(--paper);}
+
+/* ── Hero ── */
+header{padding:64px 0 44px;border-bottom:3px solid var(--ink);}
+.sec-tag{
+  font-family:var(--mono);font-size:12.5px;font-weight:600;
+  color:var(--green-deep);letter-spacing:1px;display:block;margin-bottom:16px;
+}
+h1{
+  font-family:var(--arch);font-weight:900;text-transform:uppercase;
+  font-size:clamp(30px, 5.4vw, 50px);line-height:1.05;letter-spacing:-2px;max-width:840px;
+}
+h1 .box{background:var(--ink);color:var(--paper);padding:0 12px;display:inline-block;transform:rotate(-1deg);}
+.hero-sub{margin-top:22px;font-size:16.5px;max-width:640px;font-weight:500;}
+.hero-note{margin-top:14px;font-family:var(--mono);font-size:12px;color:#4A4A46;}
+
+/* ── Article ── */
+main{padding:52px 0 96px;}
+article h2{
+  font-family:var(--arch);font-weight:900;text-transform:uppercase;
+  font-size:clamp(21px,3vw,27px);letter-spacing:-1px;line-height:1.2;
+  margin:56px 0 6px;padding-top:22px;border-top:3px solid var(--ink);
+}
+article h2:first-child{margin-top:0;padding-top:0;border-top:none;}
+article h2 .n{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--green-deep);
+  display:block;letter-spacing:1px;margin-bottom:8px;text-transform:none;}
+article h3{font-family:var(--arch);font-weight:700;font-size:17px;margin:32px 0 6px;letter-spacing:-0.3px;}
+article p{margin:14px 0;max-width:720px;}
+article ul{margin:14px 0 14px 22px;max-width:720px;}
+article li{margin:7px 0;}
+article strong{font-weight:700;}
+code{font-family:var(--mono);font-size:.9em;background:#EDEDE8;padding:1px 5px;border:1px solid var(--gray);}
+.eq{
+  font-family:var(--mono);font-size:13.5px;line-height:1.9;
+  background:#fff;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);
+  padding:18px 20px;margin:22px 0;max-width:720px;overflow-x:auto;white-space:pre;
+}
+.eq b{color:var(--green-deep);font-weight:600;}
+
+/* callouts */
+.note{
+  border-left:6px solid var(--green);background:#fff;border:3px solid var(--ink);
+  border-left-width:9px;padding:16px 20px;margin:24px 0;max-width:720px;
+}
+.note .k{font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:1px;
+  color:var(--green-deep);display:block;margin-bottom:6px;}
+.note.warn{border-left-color:var(--red);}
+.note.warn .k{color:var(--red);}
+.note p{margin:8px 0;}
+.note p:first-of-type{margin-top:0;}
+.note p:last-child{margin-bottom:0;}
+
+/* tables */
+.tw{overflow-x:auto;margin:24px 0;max-width:720px;}
+table{border-collapse:collapse;font-size:13.5px;width:100%;background:#fff;
+  border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);}
+caption{caption-side:bottom;text-align:left;font-family:var(--mono);font-size:11.5px;
+  color:#4A4A46;padding-top:10px;line-height:1.6;}
+th,td{border-bottom:1px solid var(--gray);padding:8px 12px;text-align:right;white-space:nowrap;}
+th:first-child,td:first-child{text-align:left;}
+/* 숫자 칸(.num)만 오른쪽. 산문이 든 칸은 왼쪽 정렬하고 줄바꿈을 허용한다. */
+th:not(.num),td:not(.num){text-align:left;white-space:normal;}
+th.num,td.num{text-align:right;white-space:nowrap;}
+thead th{background:var(--ink);color:var(--paper);font-family:var(--mono);
+  font-size:11.5px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;border-bottom:none;}
+tbody tr:last-child td{border-bottom:none;}
+td.num,th.num{font-family:var(--mono);}
+tr.hi td{background:#EAF7F0;font-weight:700;}
+tr.bad td{background:#FBEDED;}
+
+/* inline bars (reuse of the result-page component) */
+.bars{margin:22px 0;max-width:640px;}
+.bar-row{margin-bottom:9px;}
+.bar-row .top{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;margin-bottom:3px;}
+.bar-row .track{height:14px;background:var(--gray);border:2px solid var(--ink);}
+.bar-row .fill{height:100%;background:var(--green);}
+.bar-row .fill.b{background:var(--ink);}
+
+.foot-cta{
+  margin-top:64px;border:3px solid var(--ink);background:#fff;box-shadow:6px 6px 0 var(--ink);
+  padding:24px;max-width:720px;
+}
+.foot-cta a{
+  display:inline-block;font-family:var(--arch);font-weight:700;font-size:13px;text-transform:uppercase;
+  border:2px solid var(--ink);background:var(--green);color:var(--paper);
+  padding:9px 16px;box-shadow:3px 3px 0 var(--ink);text-decoration:none;margin-top:12px;
+  transition:transform .1s, box-shadow .1s;
+}
+.foot-cta a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+
+footer{border-top:3px solid var(--ink);padding:22px 0;}
+.foot-inner{max-width:960px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;
+  gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:11.5px;color:#4A4A46;}
+
+/* 첫 수 카드 분포 — 아홉 칸 히스토그램 */
+.dist{margin:22px 0;max-width:720px;}
+.dist .lbl{font-family:var(--mono);font-size:11.5px;color:#4A4A46;margin-bottom:6px;}
+.dist .cols{display:flex;align-items:flex-end;gap:4px;height:120px;
+  border-bottom:3px solid var(--ink);padding-bottom:0;}
+.dist .col{flex:1;background:var(--green);border:2px solid var(--ink);border-bottom:none;min-height:2px;}
+.dist .col.hot{background:var(--ink);}
+.dist .axis{display:flex;gap:4px;margin-top:5px;}
+.dist .axis span{flex:1;text-align:center;font-family:var(--mono);font-size:11px;color:#4A4A46;}
+.dist .cap{font-family:var(--mono);font-size:11.5px;color:#4A4A46;margin-top:8px;line-height:1.6;}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:26px;max-width:720px;margin:22px 0;}
+@media (max-width:640px){ .two{grid-template-columns:1fr;} }
+.two .dist{margin:0;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="/index.html">KYG<em>MIN</em></a>
+    <div class="nav-links">
+      <a href="/index.html">Home</a>
+      <a href="/playhouse/">PLAYHOUSE</a>
+      <a href="/nine-positions/">Nine Positions</a>
+      <a href="/cv.html">CV &#128274;</a>
+    </div>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <span class="sec-tag">NOTES &mdash; 02 &middot; NINE POSITIONS</span>
+    <h1>Solving a game that was <span class="box">already solved</span></h1>
+    <p class="hero-sub">The first thing I measured told me the card game had a trivial equilibrium worth exactly nothing. That result is the reason the bot in this game is any good &mdash; it moved all the work to the layer that actually mattered.</p>
+    <p class="hero-note">ENGLISH ONLY &middot; ~14 MIN &middot; MCCFR &middot; 148,060,000 ITERATIONS &middot; 350 KB SHIPPED</p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+  <article>
+
+    <h2><span class="n">01</span>The game, and why it resists the obvious tools</h2>
+
+    <p>Both players hold the same nine cards, <strong>1. Cash</strong> through <strong>9. Derivatives</strong>, a ladder of rising risk. Each card is spent once, so a game is exactly nine sessions. Higher wins, equal draws, and <strong>1 beats 9</strong> &mdash; in a crash the leveraged position is liquidated and cash is king. That single loop in the ordering is what stops the game from being "play your highest card."</p>
+
+    <p>On top of the cards sit three declarations, each usable once, announced openly with the card:</p>
+
+    <ul>
+      <li><strong>2&times; and 3&times; leverage</strong> &mdash; the session is worth the largest multiplier either side declared.</li>
+      <li><strong>Inverse</strong> &mdash; the session's ranking flips entirely, so the lowest card wins and 9 beats 1. If both players declare inverse in the same session the two cancel by XOR and the session resolves normally, which turns it into a bluff about a bluff.</li>
+      <li><strong>The draw pot</strong> &mdash; a drawn session's point rolls forward onto the next decided one.</li>
+    </ul>
+
+    <p>The critical rule is what stays hidden: <strong>cards are never revealed.</strong> After each session both players learn only win, loss, or draw. That makes this an imperfect-information game, which is why the tooling that beats chess and Go is the wrong shelf to reach for &mdash; a search tree needs to know where it is. The right family is <strong>counterfactual regret minimisation</strong>, the line that produced Libratus and Pluribus for poker.</p>
+
+    <h2><span class="n">02</span>The first measurement: the card game is already solved, and it is worth nothing</h2>
+
+    <p>Before writing a trainer I stripped the game down to cards alone &mdash; no tokens, no pot &mdash; and solved it exactly. The result was blunt.</p>
+
+    <div class="note">
+      <span class="k">RESULT</span>
+      <p><strong>The Nash equilibrium of the pure card game is uniform random, and the value of the game is exactly zero.</strong> An opponent who somehow knew you were playing uniformly at random, and could see your remaining hand, still gains <strong>0.0000</strong> points per game.</p>
+    </div>
+
+    <p>I re-derived this independently while writing this page, with a dynamic program over all 48,619 reachable pairs of remaining hands. The best response to a uniform opponent is worth <code>0.0000000000</code>, and every opening card &mdash; 1 through 9 &mdash; scores identically zero. There is nothing to choose between them.</p>
+
+    <p>That is a strange thing to discover about your own game, and it is the most useful thing in this write-up, because of what it implies: <strong>a card-only CFR trainer would have burned a fortnight to reproduce <code>random()</code>.</strong> Every point of strategy in Nine Positions lives in the declaration layer, or in exploiting an opponent who is not uniform.</p>
+
+    <p>And being non-uniform is expensive. Against an opponent who knows your bias:</p>
+
+    <div class="tw">
+    <table>
+      <thead><tr><th>Card habit</th><th class="num">Points lost per game</th></tr></thead>
+      <tbody>
+        <tr><td>Uniform random</td><td class="num">0.0000</td></tr>
+        <tr><td>Holding 9 back</td><td class="num">0.9874</td></tr>
+        <tr><td>High cards first</td><td class="num">1.8934</td></tr>
+        <tr><td>Low cards first</td><td class="num">2.1880</td></tr>
+        <tr class="bad"><td>Strictly highest first, every time</td><td class="num">9.0000</td></tr>
+      </tbody>
+      <caption>Exact dynamic programming against a fully informed best responder. The last row is the degenerate case and I computed it separately: a deterministic opponent loses all nine sessions, every game.</caption>
+    </table>
+    </div>
+
+    <p>Nine points out of nine. A habit is not a small leak in this game; it is the whole game.</p>
+
+    <h2><span class="n">03</span>The tell</h2>
+
+    <p>The complaint that started the work was that the bot "plays consistently and feels too easy to beat." Consistent is the polite word for readable, so I measured what the bot opened with across thousands of games, in the position where it has read <em>nothing</em> yet and should therefore be indistinguishable from a coin.</p>
+
+    <div class="dist">
+      <div class="lbl">OLD BOT &mdash; FIRST CARD, HIGHEST DIFFICULTY</div>
+      <div class="cols">
+        <div class="col" style="height:2%" title="1: 0.3%"></div>
+        <div class="col" style="height:2%" title="2: 0.3%"></div>
+        <div class="col" style="height:2%" title="3: 0.5%"></div>
+        <div class="col" style="height:3%" title="4: 1.2%"></div>
+        <div class="col" style="height:7%" title="5: 2.9%"></div>
+        <div class="col" style="height:16%" title="6: 6.5%"></div>
+        <div class="col" style="height:38%" title="7: 15.4%"></div>
+        <div class="col hot" style="height:91%" title="8: 36.4%"></div>
+        <div class="col hot" style="height:92%" title="9: 36.6%"></div>
+      </div>
+      <div class="axis"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></div>
+      <div class="cap">&chi;&sup2; = 1.6588 against uniform. It opened with 8 or 9 in <b>73.0%</b> of games.</div>
+    </div>
+
+    <p>Three quarters of its openings came from two of nine cards. Any player who noticed &mdash; and players notice &mdash; could hold 1 back and take the first session almost for free, then keep taking it. The bot was not losing because it evaluated badly. It was losing because it had a habit, and section 02 already priced habits.</p>
+
+    <h2><span class="n">04</span>Fix one: derive the correction instead of tuning it</h2>
+
+    <p>The old bot picked cards by expected value with a hand-tuned penalty bolted on to stop it dumping its best cards early. Hand-tuned constants are exactly how you end up with a 73% habit.</p>
+
+    <p>The equilibrium result from section 02 hands you the correct penalty for free. If the card-only game has value zero under uniform play, then the myopic gain from playing card <em>c</em> right now is <strong>exactly cancelled</strong> by the future cost of no longer holding it, where that future cost is the same expected value evaluated under the baseline belief that the opponent plays uniformly from their remaining hand:</p>
+
+    <div class="eq">score(c) = w &middot; ev(c) &minus; corr &middot; ev&#8320;(c)
+
+with w = corr = <b>1</b> and nothing to read,
+score(c) is <b>identically zero for every c</b> &rarr; exactly uniform</div>
+
+    <p>No constant to pick. The distribution is flat because the mathematics says it must be flat, not because a number was nudged until it looked flat.</p>
+
+    <div class="two">
+      <div class="dist">
+        <div class="lbl">BEFORE &mdash; &chi;&sup2; 1.6588</div>
+        <div class="cols"><div class="col" style="height:2%" title="1: 0.3%"></div>
+        <div class="col" style="height:2%" title="2: 0.3%"></div>
+        <div class="col" style="height:2%" title="3: 0.5%"></div>
+        <div class="col" style="height:3%" title="4: 1.2%"></div>
+        <div class="col" style="height:7%" title="5: 2.9%"></div>
+        <div class="col" style="height:16%" title="6: 6.5%"></div>
+        <div class="col" style="height:38%" title="7: 15.4%"></div>
+        <div class="col hot" style="height:91%" title="8: 36.4%"></div>
+        <div class="col hot" style="height:92%" title="9: 36.6%"></div></div>
+        <div class="axis"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></div>
+      </div>
+      <div class="dist">
+        <div class="lbl">AFTER &mdash; &chi;&sup2; 0.0001</div>
+        <div class="cols"><div class="col" style="height:28%" title="1: 11.2%"></div>
+        <div class="col" style="height:28%" title="2: 11.1%"></div>
+        <div class="col" style="height:28%" title="3: 11.0%"></div>
+        <div class="col" style="height:28%" title="4: 11.0%"></div>
+        <div class="col" style="height:28%" title="5: 11.1%"></div>
+        <div class="col" style="height:28%" title="6: 11.0%"></div>
+        <div class="col" style="height:28%" title="7: 11.1%"></div>
+        <div class="col" style="height:28%" title="8: 11.2%"></div>
+        <div class="col" style="height:28%" title="9: 11.2%"></div></div>
+        <div class="axis"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></div>
+      </div>
+    </div>
+
+    <p>Every card lands between 11.0% and 11.2% against a uniform ideal of 11.1%. Two notes on what was deliberately <em>not</em> flattened:</p>
+
+    <ul>
+      <li>The middle difficulty keeps <code>corr</code> between 0.30 and 0.80 on purpose, leaving a &chi;&sup2; of 0.2046 &mdash; a readable bot is the correct behaviour for a tier called Analyst. Only the top tiers are jitter-free.</li>
+      <li>Flat is only correct when there is nothing to read. Given information, the same code sharpens hard: following an opponent who declared 3&times;, the distribution collapses onto 8 (42.8%) and 9 (38.5%).</li>
+    </ul>
+
+    <div class="dist">
+      <div class="lbl">NEW BOT, FOLLOWING A 3&times; DECLARATION &mdash; INFORMATION PRESENT</div>
+      <div class="cols"><div class="col" style="height:2%" title="1: 0.4%"></div>
+        <div class="col" style="height:2%" title="2: 0.0%"></div>
+        <div class="col" style="height:2%" title="3: 0.2%"></div>
+        <div class="col" style="height:2%" title="4: 0.4%"></div>
+        <div class="col" style="height:3%" title="5: 1.2%"></div>
+        <div class="col" style="height:9%" title="6: 3.9%"></div>
+        <div class="col" style="height:28%" title="7: 12.5%"></div>
+        <div class="col hot" style="height:95%" title="8: 42.8%"></div>
+        <div class="col hot" style="height:86%" title="9: 38.5%"></div></div>
+      <div class="axis"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></div>
+      <div class="cap">Uniformity is not the goal. Being unreadable <em>when there is nothing to read</em> is the goal.</div>
+    </div>
+
+    <h3>Three knobs that measurement deleted</h3>
+
+    <p>While I was there I tested the other hand-tuned ideas in the bot. All three had a plausible story. None survived contact with a number.</p>
+
+    <div class="tw">
+    <table>
+      <thead><tr><th>Knob</th><th>What it was for</th><th>What the measurement said</th></tr></thead>
+      <tbody>
+        <tr class="bad"><td><code>aggro</code></td><td>Commit early to big sessions</td><td>Barely closed the hole, badly damaged uniformity</td></tr>
+        <tr class="bad"><td><code>escP</code></td><td>Correct adverse selection when leading</td><td>Hole 2.31 &rarr; 2.18, but first-move &chi;&sup2; 0.0001 &rarr; 0.31. Once opponent-read was in, the gain was ~0</td></tr>
+        <tr class="bad"><td><code>fw</code></td><td>Unspent leverage makes future sessions worth more</td><td>Closed <em>nothing</em> (2.31 &rarr; 2.28 &rarr; 2.49 &rarr; 2.89) and skewed the bot toward low cards</td></tr>
+      </tbody>
+      <caption>All three were removed. A fourth hypothesis of mine &mdash; that within-game opponent reading would close the worst hole &mdash; was also wrong: 2.31 &rarr; 2.30. It helped substantially everywhere else, so it stayed.</caption>
+    </table>
+    </div>
+
+    <p>Deleting code because you measured it is cheaper than defending it forever. The reading layer that <em>did</em> survive is worth a line: it enumerates every assignment of remaining cards consistent with the win/loss/draw record, carries a likelihood vector for five playing styles through the search, and shrinks the posterior toward the uniform baseline by <code>&lambda; = m/(m+3)</code> where <em>m</em> is the number of observed sessions. At <em>m</em> = 0 that is exactly zero, which is what keeps the first move exactly uniform. Precomputing the static probability tables took a decision from 2.6 ms to <strong>0.14 ms</strong>, byte-identical output.</p>
+
+    <h2><span class="n">05</span>The fix made the worst case worse</h2>
+
+    <p>To score a bot you cannot use its average result, because the average hides the one opponent that dismantles it. I keep six hand-written strategies and score the bot by its <strong>worst</strong> result against any of them &mdash; a minimax number, positive meaning the human wins.</p>
+
+    <div class="tw">
+    <table>
+      <thead><tr><th>Human strategy</th><th class="num">vs old bot</th><th class="num">vs patched bot</th></tr></thead>
+      <tbody>
+        <tr><td>Uniform, never declares</td><td class="num">&minus;3.03</td><td class="num">&minus;3.37</td></tr>
+        <tr><td>Uniform + smart declarations</td><td class="num">&minus;1.33</td><td class="num">&minus;0.97</td></tr>
+        <tr><td>High cards first</td><td class="num">&minus;0.14</td><td class="num">&minus;2.24</td></tr>
+        <tr><td>Snipe leverage with a 1</td><td class="num">&minus;0.88</td><td class="num">&minus;0.83</td></tr>
+        <tr class="bad"><td>Dump low early, harvest late</td><td class="num">+0.21</td><td class="num">+2.32</td></tr>
+        <tr><td>Mirror the bot's declarations</td><td class="num">&minus;0.03</td><td class="num">&minus;0.95</td></tr>
+        <tr class="bad"><td><strong>Worst case (minimax)</strong></td><td class="num"><strong>+0.21</strong></td><td class="num"><strong>+2.32</strong></td></tr>
+      </tbody>
+      <caption>Human point of view; negative means the bot wins. The patched bot is better in five of six &mdash; the two strategies that fed on the old bot's high-card habit collapsed by 2.1 points each &mdash; and worse on the one that counts.</caption>
+    </table>
+    </div>
+
+    <p>Removing the tell made the bot eleven times more exploitable by its worst enemy. That is not a paradox, it is a diagnosis. The surviving strategy dumps its lowest cards through sessions 1&ndash;4 and then plays its best cards with 3&times; and 2&times; in the endgame. It beats the bot through <strong>adverse selection while leading</strong>: the bot commits its declaration first, and a scripted opponent only escalates when already strong. Nothing about that exploit lives in the card layer. Flattening the card distribution could not touch it, and I confirmed that by trying &mdash; the three deleted knobs in section 04 were all attempts to patch this hole from the card side.</p>
+
+    <div class="note">
+      <span class="k">WHAT THIS COST ME</span>
+      <p>Three implementations, three measurements, three deletions, and the hole did not move. The information was in the negative result: <strong>a declaration-layer problem cannot be fixed from the card layer.</strong> That is what made it worth building a real trainer instead of a fourth knob.</p>
+    </div>
+
+    <h2><span class="n">06</span>Fix two: MCCFR over cards <em>and</em> declarations</h2>
+
+    <p>The trainer solves the whole action space &mdash; which card, and whether to declare 2&times;, 3&times;, inverse, or nothing. Leaving declarations out of the abstraction would have reintroduced exactly the hole from section 05.</p>
+
+    <ul>
+      <li><strong>External sampling MCCFR with regret matching</strong>, written in C, two cores, 30 rounds of 600 seconds.</li>
+      <li><strong>148,060,000 iterations.</strong> Final snapshot 93.9 MB.</li>
+      <li>Information sets reached: <strong>441,406 of 917,504</strong> card sets (48.1%) and <strong>163,479 of 580,608</strong> declaration sets (28.2%). The unreached remainder are states with near-zero probability on the equilibrium path.</li>
+    </ul>
+
+    <p>The two information sets are encoded as flat integers, which the JavaScript runtime must reproduce exactly:</p>
+
+    <div class="eq">declFeat(stage, llev, linv):
+  leading  &rarr; 0
+  following &rarr; 1 + (llev==0?0:(llev==2?1:2))*2 + linv        // 0..6
+
+key1 = ((((hand*8 + mytok)*8 + otok)*4 + min(pot,3))*7 + declf
+key2 = (((((((c&minus;1)*9 + nn)*2 + h1)*2 + h9)*8 + mytok)*8 + otok)*4
+         + min(pot,3))*7 + declf</div>
+
+    <div class="note warn">
+      <span class="k">THE BUG THAT WOULD NOT HAVE ANNOUNCED ITSELF</span>
+      <p>Card strategy sums are indexed by <strong>position in the sorted hand</strong>; declaration strategy sums are indexed by <strong>the declaration id itself</strong>. Mixing the two conventions does not crash, does not warn, and does not look wrong in a log. It quietly trains a policy for a different game. This is written down because I nearly did it.</p>
+    </div>
+
+    <h2><span class="n">07</span>93.9 MB into 350 KB</h2>
+
+    <p>An exact policy table of 93.9 MB cannot ship to a browser. The compression is a hybrid rather than a pure model, and the split is by how often a state actually occurs:</p>
+
+    <ul>
+      <li>The <strong>17,082 highest-reach card information sets are shipped verbatim</strong> as an exact table, binary-searched at runtime. Most decisions in a real game land here.</li>
+      <li>Everything else is answered by <strong>two small MLPs</strong> &mdash; one for cards, one for declarations, hidden layers 160&times;160, trained for 40 epochs in plain numpy with no deep-learning framework, then stored as fp16.</li>
+    </ul>
+
+    <p>Total asset: <strong>350,800 bytes</strong>, 241,035 gzipped. Distillation quality on the declaration network came out at a weighted total-variation distance of 0.0628 and a weighted KL of 0.0389 &mdash; but the number that matters is not the distance between the policies, it is whether the compressed policy still wins.</p>
+
+    <div class="tw">
+    <table>
+      <thead><tr><th>Stage</th><th class="num">Worst case (minimax)</th><th class="num">Samples</th></tr></thead>
+      <tbody>
+        <tr><td>Old bot</td><td class="num">+0.21</td><td class="num">&mdash;</td></tr>
+        <tr><td>Patched bot (section 04)</td><td class="num">+2.32</td><td class="num">&mdash;</td></tr>
+        <tr><td>A failed first attempt &mdash; outcome sampling, 50M</td><td class="num">+2.31</td><td class="num">&mdash;</td></tr>
+        <tr><td>MCCFR round 1 (5.31M)</td><td class="num">&minus;0.309</td><td class="num">&mdash;</td></tr>
+        <tr><td>MCCFR round 11</td><td class="num">&minus;0.879</td><td class="num">&mdash;</td></tr>
+        <tr><td>MCCFR round 21</td><td class="num">&minus;1.055</td><td class="num">&mdash;</td></tr>
+        <tr class="hi"><td>Round 30, exact 93.9 MB table</td><td class="num">&minus;1.007</td><td class="num">30,000</td></tr>
+        <tr class="hi"><td>Distilled hybrid, in C</td><td class="num">&minus;0.964</td><td class="num">6,000</td></tr>
+        <tr class="hi"><td>Shipped JavaScript runtime</td><td class="num">&minus;0.947</td><td class="num">4,000</td></tr>
+      </tbody>
+      <caption>Human point of view; negative means the bot wins. The sign flip between row 3 and row 4 is the moment the approach started working.</caption>
+    </table>
+    </div>
+
+    <p>The last three rows are the point of the section. Going from an exact 93.9 MB table to a 350 KB browser asset moved the score by 0.06 points per game, which is inside sampling error. <strong>The compression is free.</strong></p>
+
+    <p>Against the previous top difficulty, head to head over 3,000 games: the old bot loses by <strong>1.305 &plusmn; 0.147</strong> points per game, winning 32.3% and losing 57.9%.</p>
+
+    <h2><span class="n">08</span>What the equilibrium says out loud</h2>
+
+    <p>A solved policy is also a document. Reading session one of the equilibrium is more instructive than any advice I could write from intuition.</p>
+
+    <ul>
+      <li><strong>Leading, session one:</strong> it spreads across 1 (20.4%), 5 (17.4%) and 9 (14.7%), and declares nothing 80.4% of the time. The two ends of the ladder are both favoured, because 1 and 9 are the two cards with a special relationship.</li>
+      <li><strong>Following a 3&times;:</strong> the distribution is bimodal on 2 (37.5%) and 7 (37.3%) &mdash; either concede the session for almost nothing, or contest it properly, never in between &mdash; and it answers with a <strong>counter-inverse 37.0%</strong> of the time.</li>
+      <li><strong>Following an inverse:</strong> it piles onto 3 (59.4%) and cancels the inverse only <strong>1.0%</strong> of the time. It would rather win inside the flipped market than undo the flip.</li>
+    </ul>
+
+    <p>That last line is the one I did not expect. My hand-written bot cancelled inverses whenever the arithmetic was close, because cancelling feels safe. The equilibrium almost never does it.</p>
+
+    <h2><span class="n">09</span>Giving the player the same instrument, then taking it away</h2>
+
+    <p>The bot's belief layer enumerates every assignment of your remaining cards consistent with the public record. After playing against the solved bot I wanted that view myself, so the game grew a <strong>Position Ledger</strong>.</p>
+
+    <p>Because every session publishes your card, the result, and whether the market was inverted, the set of cards the opponent could have played is determined. Enumerate all systems of distinct representatives across completed sessions and three facts come out <em>exactly</em>, not probabilistically: which cards are certainly spent, which are certainly still held, and the narrowed candidate set per session. A bitmask depth-first search finishes instantly &mdash; the worst case is 8! = 40,320 leaves.</p>
+
+    <p>It was verified on 4,000 random games: the opponent's real card was always inside the candidate set, the spent and held verdicts always matched reality, and on the 3,000 games short enough to check by independent brute force the two agreed completely. Zero violations. All 2,997 sessions that narrowed to a single candidate were correct.</p>
+
+    <div class="note">
+      <span class="k">A DESIGN DECISION, NOT A FEATURE FLAG</span>
+      <p>The ledger runs on the two lower difficulties only. On the top two it stays on screen but locked, with one line explaining why. Beginners get to learn what counting cards feels like; from Managing Director upward, counting is the exam. Hiding the panel entirely would have lost that signal.</p>
+      <p>The footnote under the ledger says the part that matters: <strong>the AI is running this identical deduction on you.</strong></p>
+    </div>
+
+    <h2><span class="n">10</span>What it still cannot do</h2>
+
+    <p><strong>It does not read you.</strong> MR. MARKET replays a fixed equilibrium and would play identically against a grandmaster and a cat walking on a keyboard. Equilibrium play is unexploitable, which also means it declines to punish you for being predictable. Anyone who plays a strong habit gives away up to nine points a game to a bot that would take them &mdash; and this one will not.</p>
+
+    <p><strong>Six hand-written strategies are not a population.</strong> The minimax number is the worst result against six opponents I invented, so it bounds nothing. A genuine exploitability figure needs a best responder trained against the frozen policy, which I have not run. Until then &minus;0.947 is a comparison, not a guarantee.</p>
+
+    <p><strong>Half the tree is unvisited.</strong> 51.9% of card information sets and 71.8% of declaration sets were never reached in 148 million iterations. The argument that they are near-zero-probability states is sound and is also exactly the argument that would hide a mistake in the encoding.</p>
+
+    <p><strong>The strategy that beat the patched bot is a script.</strong> "Dump low through session four, harvest with 3&times; after" is a deterministic plan a real person is unlikely to hold for nine sessions without deviating. It was still worth treating as real, because a bot that loses to a simple script loses to the first person who finds the script.</p>
+
+    <h3>Where this goes next</h3>
+
+    <p>The layer that reads you is deliberately separate and deliberately not built yet. The design is a mixture, <code>policy = (1&minus;&lambda;)&middot;GTO + &lambda;&middot;BestResponse(your model)</code>, with &lambda; a function of how many games you have played and a hard ceiling. The ceiling is not a safety margin, it is a design requirement: a bot that adapts without limit turns the mind game into a treadmill, and the ceiling is what keeps it possible for you to plant a false pattern and take the bot's money with it.</p>
+
+    <div class="foot-cta">
+      <p style="margin-top:0"><strong>Play it.</strong> Four difficulties; MR. MARKET is the equilibrium policy described above. The Position Ledger is on for the first two.</p>
+      <a href="/nine-positions/">Open Nine Positions &rarr;</a>
+    </div>
+
+  </article>
+  </div>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <span>&copy; KYGMIN.COM</span>
+    <span>NOTES 02 &middot; NINE POSITIONS &middot; MEASURED 2026-08</span>
+  </div>
+</footer>
+
+</body>
+</html>
