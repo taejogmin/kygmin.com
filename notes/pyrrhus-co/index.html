@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Balancing Pyrrhus &amp; Co. — KYGMIN Notes</title>
+<meta name="description" content="A write-up of the Pyrrhus auction house: the dominant strategy was to not play, why the counterfeits had to be given disguises, the winner's curse that the fix created, and a measuring instrument that lied about its own game." />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#F6F6F4;
+  --ink:#141414;
+  --gray:#DDDDD8;
+  --green:#2BB673;
+  --green-deep:#0F6E56;
+  --red:#A32D2D;
+  --arch:'Archivo','Pretendard',sans-serif;
+  --sans:'Pretendard',-apple-system,'Apple SD Gothic Neo','Malgun Gothic','Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono','SF Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{transition:none!important;}
+}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:16px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  word-break:keep-all;overflow-wrap:break-word;
+}
+a{color:inherit;}
+a:focus-visible,button:focus-visible{outline:3px solid var(--green);outline-offset:3px;}
+.wrap{max-width:960px;margin:0 auto;padding:0 24px;}
+.narrow{max-width:720px;}
+
+/* ── Nav ── */
+nav{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:3px solid var(--ink);}
+.nav-inner{
+  max-width:960px;margin:0 auto;padding:14px 24px;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;
+}
+.logo{font-family:var(--arch);font-weight:900;font-size:19px;letter-spacing:-0.5px;text-decoration:none;}
+.logo em{font-style:normal;background:var(--green);color:var(--paper);padding:0 6px;display:inline-block;transform:rotate(-1.5deg);}
+.nav-links{display:flex;gap:8px;flex-wrap:wrap;}
+.nav-links a{
+  font-family:var(--arch);font-size:12px;font-weight:700;text-transform:uppercase;
+  border:2px solid var(--ink);padding:6px 13px;background:#fff;text-decoration:none;
+  box-shadow:3px 3px 0 var(--ink);transition:transform .1s, box-shadow .1s;
+}
+.nav-links a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+.nav-links a.on{background:var(--green);color:var(--paper);}
+
+/* ── Hero ── */
+header{padding:64px 0 44px;border-bottom:3px solid var(--ink);}
+.sec-tag{
+  font-family:var(--mono);font-size:12.5px;font-weight:600;
+  color:var(--green-deep);letter-spacing:1px;display:block;margin-bottom:16px;
+}
+h1{
+  font-family:var(--arch);font-weight:900;text-transform:uppercase;
+  font-size:clamp(30px, 5.4vw, 50px);line-height:1.05;letter-spacing:-2px;max-width:840px;
+}
+h1 .box{background:var(--ink);color:var(--paper);padding:0 12px;display:inline-block;transform:rotate(-1deg);}
+.hero-sub{margin-top:22px;font-size:16.5px;max-width:640px;font-weight:500;}
+.hero-note{margin-top:14px;font-family:var(--mono);font-size:12px;color:#4A4A46;}
+
+/* ── Article ── */
+main{padding:52px 0 96px;}
+article h2{
+  font-family:var(--arch);font-weight:900;text-transform:uppercase;
+  font-size:clamp(21px,3vw,27px);letter-spacing:-1px;line-height:1.2;
+  margin:56px 0 6px;padding-top:22px;border-top:3px solid var(--ink);
+}
+article h2:first-child{margin-top:0;padding-top:0;border-top:none;}
+article h2 .n{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--green-deep);
+  display:block;letter-spacing:1px;margin-bottom:8px;text-transform:none;}
+article h3{font-family:var(--arch);font-weight:700;font-size:17px;margin:32px 0 6px;letter-spacing:-0.3px;}
+article p{margin:14px 0;max-width:720px;}
+article ul{margin:14px 0 14px 22px;max-width:720px;}
+article li{margin:7px 0;}
+article strong{font-weight:700;}
+code{font-family:var(--mono);font-size:.9em;background:#EDEDE8;padding:1px 5px;border:1px solid var(--gray);}
+.eq{
+  font-family:var(--mono);font-size:13.5px;line-height:1.9;
+  background:#fff;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);
+  padding:18px 20px;margin:22px 0;max-width:720px;overflow-x:auto;white-space:pre;
+}
+.eq b{color:var(--green-deep);font-weight:600;}
+
+/* callouts */
+.note{
+  border-left:6px solid var(--green);background:#fff;border:3px solid var(--ink);
+  border-left-width:9px;padding:16px 20px;margin:24px 0;max-width:720px;
+}
+.note .k{font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:1px;
+  color:var(--green-deep);display:block;margin-bottom:6px;}
+.note.warn{border-left-color:var(--red);}
+.note.warn .k{color:var(--red);}
+.note p{margin:8px 0;}
+.note p:first-of-type{margin-top:0;}
+.note p:last-child{margin-bottom:0;}
+
+/* tables */
+.tw{overflow-x:auto;margin:24px 0;max-width:720px;}
+table{border-collapse:collapse;font-size:13.5px;width:100%;background:#fff;
+  border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);}
+caption{caption-side:bottom;text-align:left;font-family:var(--mono);font-size:11.5px;
+  color:#4A4A46;padding-top:10px;line-height:1.6;}
+th,td{border-bottom:1px solid var(--gray);padding:8px 12px;text-align:right;white-space:nowrap;}
+th:first-child,td:first-child{text-align:left;}
+/* 숫자 칸(.num)만 오른쪽. 산문이 든 칸은 왼쪽 정렬하고 줄바꿈을 허용한다. */
+th:not(.num),td:not(.num){text-align:left;white-space:normal;}
+th.num,td.num{text-align:right;white-space:nowrap;}
+thead th{background:var(--ink);color:var(--paper);font-family:var(--mono);
+  font-size:11.5px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;border-bottom:none;}
+thead th .lc{text-transform:none;}
+tbody tr:last-child td{border-bottom:none;}
+td.num,th.num{font-family:var(--mono);}
+tr.hi td{background:#EAF7F0;font-weight:700;}
+tr.bad td{background:#FBEDED;}
+
+/* inline bars (reuse of the result-page component) */
+.bars{margin:22px 0;max-width:640px;}
+.bar-row{margin-bottom:9px;}
+.bar-row .top{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;margin-bottom:3px;}
+.bar-row .track{height:14px;background:var(--gray);border:2px solid var(--ink);}
+.bar-row .fill{height:100%;background:var(--green);}
+.bar-row .fill.b{background:var(--ink);}
+
+.foot-cta{
+  margin-top:64px;border:3px solid var(--ink);background:#fff;box-shadow:6px 6px 0 var(--ink);
+  padding:24px;max-width:720px;
+}
+.foot-cta a{
+  display:inline-block;font-family:var(--arch);font-weight:700;font-size:13px;text-transform:uppercase;
+  border:2px solid var(--ink);background:var(--green);color:var(--paper);
+  padding:9px 16px;box-shadow:3px 3px 0 var(--ink);text-decoration:none;margin-top:12px;
+  transition:transform .1s, box-shadow .1s;
+}
+.foot-cta a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+
+footer{border-top:3px solid var(--ink);padding:22px 0;}
+.foot-inner{max-width:960px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;
+  gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:11.5px;color:#4A4A46;}
+
+/* 첫 수 카드 분포 — 아홉 칸 히스토그램 */
+.dist{margin:22px 0;max-width:720px;}
+.dist .lbl{font-family:var(--mono);font-size:11.5px;color:#4A4A46;margin-bottom:6px;}
+.dist .cols{display:flex;align-items:flex-end;gap:4px;height:120px;
+  border-bottom:3px solid var(--ink);padding-bottom:0;}
+.dist .col{flex:1;background:var(--green);border:2px solid var(--ink);border-bottom:none;min-height:2px;}
+.dist .col.hot{background:var(--ink);}
+.dist .axis{display:flex;gap:4px;margin-top:5px;}
+.dist .axis span{flex:1;text-align:center;font-family:var(--mono);font-size:11px;color:#4A4A46;}
+.dist .cap{font-family:var(--mono);font-size:11.5px;color:#4A4A46;margin-top:8px;line-height:1.6;}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:26px;max-width:720px;margin:22px 0;}
+@media (max-width:640px){ .two{grid-template-columns:1fr;} }
+.two .dist{margin:0;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="/index.html">KYG<em>MIN</em></a>
+    <div class="nav-links">
+      <a href="/index.html">Home</a>
+      <a href="/playhouse/">PLAYHOUSE</a>
+      <a href="/pyrrhus-co/">Pyrrhus &amp; Co.</a>
+      <a href="/cv.html">CV &#128274;</a>
+    </div>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <span class="sec-tag">NOTES &mdash; 04 &middot; PYRRHUS &amp; CO.</span>
+    <h1>When the winning move was <span class="box">to not play</span></h1>
+    <p class="hero-sub">An auction game about the winner's curse had a dominant strategy: bid the opening price on everything, think about nothing, and finish first more often than a player who actually plays. Closing that hole meant giving the counterfeits a disguise &mdash; and then discovering that the disguise had broken the price signal for everyone.</p>
+    <p class="hero-note">ENGLISH ONLY &middot; ~13 MIN &middot; 6,000 GAMES &times; 2 SEEDS PER FIGURE</p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+  <article>
+
+    <h2><span class="n">01</span>The house always wins, and that has to be true</h2>
+
+    <p>Twenty rounds of sealed first-price bidding against three rivals. Nobody knows what a lot is really worth &mdash; you get a public estimate, and for &pound;10M you can buy a precise appraisal that narrows it. Three times a game the house opens a window and offers to buy a lot back at a price of its own choosing. At the close, the house reveals what it took.</p>
+
+    <p>That last line is the signature of the whole design, and the house's cut is built from four separate sources that are never merged:</p>
+
+    <div class="eq">house cut = &Sigma; final balances &times; <b>0.15</b>        seat fee
+          + &Sigma; appraisal fees paid          &pound;10M per appraisal
+          + &Sigma; (true value &minus; buyback price)  <b>can be negative</b>
+          + &Sigma; unsold lots                  nobody bid</div>
+
+    <p>The negative line is deliberate and it is never netted away. A house that admits losing money on one row while taking the table overall is the Pyrrhic joke the game is named for. The seat fee is also not accumulated during play &mdash; it is computed at the close from the final balances, precisely so that an automated check can multiply the settlement table's balance column by 0.15 and confirm the figure independently.</p>
+
+    <h2><span class="n">02</span>The bug: the best strategy was to not play</h2>
+
+    <p>Balance is measured by pitting scripted strategies against the bots over thousands of games. A four-player auction has a random baseline of <strong>25%</strong>, so a strategy that finishes first more often than that is exploiting something.</p>
+
+    <p>One strategy was <strong>bid the opening price on everything.</strong> No appraisals, no reading, no judgement &mdash; put in the minimum on every lot and see what nobody else wanted. On the second-hardest tier it won <strong>34.1%</strong> of games.</p>
+
+    <div class="note warn">
+      <span class="k">AND I MISREAD MY OWN NUMBER</span>
+      <p>The previous round of notes recorded 34.1% as evidence that the exploit was <em>weaker than normal play</em> and therefore closed. It was not. The baseline is 25%, so 34.1% is <strong>9 points above chance</strong>. I had compared it against the wrong thing, wrote down that the hole was fixed, and moved on.</p>
+      <p>The correction is the reason the next version happened at all. A number is not a result until you know what it should be compared with.</p>
+    </div>
+
+    <p>A game whose entire subject is the discipline of not overpaying was rewarding the player who declined to participate in it. Worse, it made the &pound;10M appraisal &mdash; the central mechanic &mdash; something no rational player would ever buy.</p>
+
+    <h2><span class="n">03</span>Why: the counterfeit wore its own price tag</h2>
+
+    <p>35% of lots are counterfeit, and a counterfeit is worth about &pound;15M no matter what it depicts. The problem was in how its public estimate was generated: from the same true value. So a fake arrived at auction <strong>wearing a &pound;15M window</strong>, and a genuine piece wore a window in the hundreds of millions.</p>
+
+    <p>Telling them apart therefore cost nothing. Read the estimate, ignore anything small, done. And once fakes are free to identify, the information economy has no reason to exist: the appraisal is a fee with no product, the rivals waste money on it, and the player who spends nothing and bids the floor accumulates whatever falls through.</p>
+
+    <p>The exploit was not a tuning error in the bots. It was a leak in the fiction &mdash; the object was announcing what it was.</p>
+
+    <h2><span class="n">04</span>Dressing the counterfeits</h2>
+
+    <p>55% of the fakes now draw their public estimate from a <strong>shadow value</strong>: what the piece would have been worth had it been genuine. The true value stays at &pound;15M. The public window says &pound;400M.</p>
+
+    <div class="eq">fakes among all lots           <b>35%</b>
+disguised among fakes          <b>55%</b>   &rarr; <b>19%</b> of every lot on the block
+                                       is a &pound;15M object in a genuine window
+fooling the appraisal too      <b>12%</b> of the disguised
+                                       &rarr; <b>2.3%</b> of all lots</div>
+
+    <p>Roughly one lot in five now cannot be judged from the estimate at all. The precise appraisal catches almost all of them &mdash; a public window of &pound;216M&ndash;&pound;866M with a precise band of &pound;6M&ndash;&pound;11M underneath it is an answer, and the screen prints a one-line verdict rather than making you infer it.</p>
+
+    <p>And 2.3% of lots defeat the appraisal as well: the precise band forms around the shadow value and the verdict reads <em>genuine</em>. I want to be careful about how that is described, because it is not a bug and it is not noise injected to make the tool unreliable. <strong>The appraisal is not wrong; the object deceived the appraisal.</strong> The instrument reports honestly on a forgery good enough to beat it. Widening the band instead would have been a lie told by the game about its own tool.</p>
+
+    <h2><span class="n">05</span>The fix broke the price signal, which is the point of the game</h2>
+
+    <p>Dressing the fakes had a consequence I did not anticipate. The public estimate had been an unbiased estimator of the true value. It is not any more: a fifth of the lots now carry an estimate drawn from a value they do not have, so the average lot is worth <strong>less</strong> than its window says. A bidder who trusts the window and bids accordingly gets hit &mdash; and the mechanism is exactly the one the game is about.</p>
+
+    <p>This is the winner's curse in its textbook form, so I re-derived it independently while writing this page rather than asserting it. Four bidders, a common value, each seeing a noisy private signal of it. If everyone bids their signal, what is the winner actually holding?</p>
+
+    <div class="tw">
+    <table>
+      <thead><tr><th>Signal noise <span class="lc">&sigma;</span></th><th class="num">2 bidders</th><th class="num">4 bidders</th><th class="num">7 bidders</th></tr></thead>
+      <tbody>
+        <tr><td>0.15</td><td class="num">0.926</td><td class="num">0.862</td><td class="num">0.820</td></tr>
+        <tr><td>0.30</td><td class="num">0.870</td><td class="num">0.750</td><td class="num">0.678</td></tr>
+        <tr><td>0.50</td><td class="num">0.819</td><td class="num">0.634</td><td class="num">0.533</td></tr>
+        <tr><td>0.70</td><td class="num">0.793</td><td class="num">0.546</td><td class="num">0.425</td></tr>
+      </tbody>
+      <caption>Expected true value as a fraction of the winning bidder's own signal, 400,000 simulated auctions per cell. Winning is itself evidence that you were the most optimistic person in the room, and the more rivals there are, the worse that news is.</caption>
+    </table>
+    </div>
+
+    <p>At four bidders and moderate noise a bidder must shade to about three quarters of what they think a lot is worth simply to break even. The bots that have not bought an appraisal now multiply their perceived value by <strong>0.68</strong>.</p>
+
+    <p>That constant was arrived at by tuning, so I checked afterwards where it sits. Sweeping the noise level for four bidders, break-even shading passes through 0.688 at &sigma; = 0.40 and 0.677 at &sigma; = 0.42. <strong>0.68 is the break-even discount for a four-player auction with about 41% signal noise</strong> &mdash; a plausible figure for the spread the disguises introduce. A number reached by trial and error landing on the value theory would have chosen is a decent sign that the model underneath is right.</p>
+
+    <p>Remove the shading and the opening-price strategy immediately wins for free again. The bots need the discipline the game asks of the player, for the same reason.</p>
+
+    <h3>Two smaller repairs in the same pass</h3>
+
+    <ul>
+      <li><strong>The appraisal fee had no sense of scale.</strong> &pound;10M is nearly free against an &pound;800M lot and expensive against a &pound;20M one, and the bots ignored that. Weighting their appraisal probability by <code>clamp((value/250)<sup>0.5</sup>, 0.5, 1.8)</code> dropped the opening-price exploit from 21% to 18% on its own &mdash; without it, nobody checks the big disguised fakes and everyone burns their budget on them.</li>
+      <li><strong>The cash reserve was confiscation, not a floor.</strong> The previous version locked 13% of every bot's budget permanently, including in the final round. Splitting it into a permanent 2% plus a pace-proportional part that releases as the auction runs down leaves &pound;20M locked at round 20 instead of a fifth of the budget, and it hangs off the bot's personality so the tiers stay distinct.</li>
+    </ul>
+
+    <h2><span class="n">06</span>The house does not get fooled</h2>
+
+    <p>The house's buyback offer is a fraction of a geometric mean of the appraisals &mdash; and I made it read from the <strong>true</strong> value, never the disguise. Without that, there is a clean arbitrage:</p>
+
+    <div class="eq">buy an appraisal  &rarr;  learn the lot is a disguised fake
+snipe it at the opening price   (nobody else wants it)
+sell it back to a house that prices off the <b>genuine-looking</b> window
+                                &rarr; free money, every single time</div>
+
+    <p>You can still hand a disguised fake to the house; you simply get &pound;15M for it, not &pound;150M. The alternative &mdash; letting the house be fooled too &mdash; is more fun for about ten minutes and then the game becomes a house-hunting game, and the closing, where the house reveals what it took from everyone, stops landing.</p>
+
+    <div class="note">
+      <span class="k">A DECISION, NOT A DERIVATION</span>
+      <p>This one was not measured into existence and it was not asked about. It is a judgement that the game's signature outranks a mechanic that would have been amusing, and it is recorded as such rather than dressed up as a finding.</p>
+    </div>
+
+    <h2><span class="n">07</span>The instrument was broken, not the game</h2>
+
+    <p>Mid-way through the rebalance the test bench reported a new catastrophe: an oracle strategy &mdash; one that knows every true value and bids the minimum &mdash; was winning <strong>67%</strong> of games. That is a game-ending number, and I nearly rebuilt the economy around it.</p>
+
+    <p>It was false. The real figure is <strong>18.8%</strong>, below normal play's 24.0%. The bench was lying, and it was lying because it held its own copies of three engine rules:</p>
+
+    <div class="tw">
+    <table>
+      <thead><tr><th>What the bench had copied</th><th>What it did</th></tr></thead>
+      <tbody>
+        <tr class="bad"><td>The bot cash floor</td><td>Used its own formula, defaulting to zero, so bench bots never received the new pace-proportional reserve. They burned their budgets early and handed the late lots to the oracle &mdash; <b>3.7 lots per game in the bench, 0.59 through the engine</b></td></tr>
+        <tr class="bad"><td>The appraisal probability, twice</td><td>Omitted the size weighting, so an entire sweep column was byte-identical across every setting including the one that switched the feature off</td></tr>
+        <tr class="bad"><td>The reserve parameter</td><td>Simply never passed through to the engine</td></tr>
+      </tbody>
+      <caption>The same failure had happened once before with lot generation. The recurring bug class in this codebase is duplication: a bench holding a copy of an engine rule diverges silently on the day the engine changes, and reports the difference as a discovery about the game.</caption>
+    </table>
+    </div>
+
+    <p>All three now delegate to the engine. The diagnostic that settled it does not just report the oracle's win rate &mdash; it takes a census of why the bots failed to bid:</p>
+
+    <div class="eq">oracle wins 0.59 lots/game
+  average paid        &pound;153M
+  average true value  &pound;1,077M      &rarr; 7.0&times;
+  bots' average cash at the moment of loss   &pound;85M
+
+why no bot bid   out of cash <b>83.0%</b>  ·  below bargain threshold 9.1%  ·  lost the roll 7.8%</div>
+
+    <p>Eighty-three percent is not a strategic finding, it is a liquidity artefact, and it was visible only because the harness was asked to explain itself rather than to produce a number. A build-parity check now cuts the constants and generation code straight out of the shipped page and replays them against the engine on a shared seed &mdash; 14 constants and 20 lots across 10 fields, all identical. <strong>Balance tuned in an engine that the shipped page does not reproduce is worth nothing.</strong></p>
+
+    <h2><span class="n">08</span>Where it landed, and what stayed open on purpose</h2>
+
+    <div class="tw">
+    <table>
+      <thead><tr><th>Tier</th><th class="num">Normal play</th><th class="num">Opening price only</th><th class="num">Gap</th></tr></thead>
+      <tbody>
+        <tr><td>Easy</td><td class="num">36.3%</td><td class="num">66.4%</td><td class="num">+30.1</td></tr>
+        <tr><td>Normal</td><td class="num">32.7%</td><td class="num">56.8%</td><td class="num">+24.1</td></tr>
+        <tr class="hi"><td>Hard</td><td class="num">24.0%</td><td class="num">18.4%</td><td class="num">&minus;5.7</td></tr>
+        <tr class="hi"><td>Brutal</td><td class="num">19.7%</td><td class="num">8.9%</td><td class="num">&minus;10.8</td></tr>
+      </tbody>
+      <caption>6,000 games &times; 2 seeds. Random baseline 25%. On Hard the exploit went from 34.1% to 18.4% &mdash; below chance, and below normal play. Both oracle strategies also finish under normal play now: 18.8% and 14.2%.</caption>
+    </table>
+    </div>
+
+    <p><strong>Easy and Normal are left wide open, and that is the design.</strong> Closing them means making the reckless and eager personalities play well, at which point the beginner room is not a beginner room. A trick that works while you are learning and quietly stops working as you climb is the correct shape for a difficulty ladder; a trick that works everywhere is a bug.</p>
+
+    <p><strong>Brutal sits at 19.7% against a target of 18.3% and will not go lower.</strong> Six combinations of the two remaining knobs all made the total error worse &mdash; from 5.3 to 10.8 &mdash; while Brutal stayed pinned between 19.7% and 20.4%. That is not a tuning failure, it is the variance floor: in a four-way auction some share of first places simply arrives by luck, and no amount of making the bots stronger takes that share away. I recorded it as a floor and stopped, which is a better outcome than a seventh sweep.</p>
+
+    <p>To stop the closed hole from quietly reopening, the whole strategy table is pinned in a baseline file with three assertions that must hold: tier win rates decreasing monotonically, and the opening-price exploit staying below normal play on both top tiers.</p>
+
+    <h2><span class="n">09</span>Two things only a screenshot could catch</h2>
+
+    <p><strong>The bidding screen was leaking who had bought an appraisal.</strong> While you were still deciding your bid, the seat panel showed each rival's balance and appraisal count &mdash; and a balance &pound;10M lower with the counter at 1 says plainly that this rival paid to look closer at this lot, before you have committed. The rules reveal that only after the hammer falls, and an earlier measurement had already established why: pre-revealing it inverts the value of appraising entirely, with the appraiser's win rate falling from 26.6% to 18.0% and the non-appraiser's rising from 23.3% to 35.0%.</p>
+
+    <p>Every automated assertion passed while this was happening. It was found by looking at a screenshot. The fix snapshots balances and counters immediately before the bots' pre-bid appraisal loop and renders the bidding screen from that snapshot, with your own row always live because your own information is yours. Then I reverse-tested it &mdash; reverting the call site in the built file &mdash; and confirmed the new checker flagged exactly the 13 places it should. That assertion now runs on every playthrough.</p>
+
+    <p><strong>And a smaller one about honesty in the interface.</strong> The appraisal verdict is a filled chip, green for genuine and black for fake. It was first drawn with a strikethrough, which had to be abandoned: a struck-out price reads as <em>cancelled</em>, not as <em>counterfeit</em>. The class also had to be renamed after colliding with the round-result banner, which rendered the verdict as a bordered box &mdash; making a piece of information look like a button you could press.</p>
+
+    <div class="foot-cta">
+      <p style="margin-top:0"><strong>Try it.</strong> Twenty lots, three rivals, and a house that is happy to buy anything back at a price of its own choosing.</p>
+      <a href="/pyrrhus-co/">Enter Pyrrhus &amp; Co. &rarr;</a>
+    </div>
+
+  </article>
+  </div>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <span>&copy; KYGMIN.COM</span>
+    <span>NOTES 04 &middot; PYRRHUS &amp; CO. &middot; BALANCE v9 &middot; MEASURED 2026-08</span>
+  </div>
+</footer>
+
+</body>
+</html>
