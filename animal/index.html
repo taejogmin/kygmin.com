@@ -159,6 +159,23 @@ main{padding:44px 0 88px;}
 }
 .btn:hover{transform:translate(2px,2px);box-shadow:3px 3px 0 var(--ink);}
 #retry{margin-top:30px;}
+/* 해설 문서로 가는 입구. 결과가 나오기 전에도 늘 보인다. */
+.notes-link{
+  margin-top:34px;max-width:520px;border:3px solid var(--ink);background:#fff;
+  box-shadow:6px 6px 0 var(--ink);padding:18px 20px;
+}
+.notes-link .k{
+  font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:1px;
+  color:var(--green-deep);display:block;margin-bottom:6px;
+}
+.notes-link p{font-size:14px;line-height:1.6;}
+.notes-link a{
+  display:inline-block;margin-top:12px;font-family:var(--arch);font-weight:700;
+  font-size:13px;text-transform:uppercase;border:2px solid var(--ink);
+  background:var(--green);color:var(--paper);padding:9px 16px;
+  box-shadow:3px 3px 0 var(--ink);transition:transform .1s, box-shadow .1s;
+}
+.notes-link a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
 .disclaimer{
   margin-top:20px;font-family:var(--mono);font-size:11.5px;color:#4A4A46;
   border-left:3px solid var(--gray);padding-left:12px;line-height:1.6;
@@ -199,8 +216,9 @@ if(window.KYG_LANG!=='en'){
   <div class="wrap">
     <span class="sec-tag tx" data-en="PROJECT — FACE GEOMETRY MATCHING" data-kr="프로젝트 — 얼굴 기하학 매칭">PROJECT — FACE GEOMETRY MATCHING</span>
     <h1><span class="tx" data-en="FIND YOUR " data-kr="동물 ">FIND YOUR </span><span class="box"><span class="tx" data-en="ANIMAL LOOKALIKE" data-kr="닮은꼴">ANIMAL LOOKALIKE</span></span><span class="tx" data-en="" data-kr=" 찾기"></span></h1>
-    <p class="hero-sub tx" data-en="Six geometric features pulled from your face landmarks are compared against the average face of 12 animal species. Instead of a trained classifier, it measures your proportions directly and calculates the distance." data-kr="얼굴 랜드마크에서 뽑은 6개의 기하 특징을 12종 동물의 평균 얼굴과 비교합니다. 학습된 분류기가 아니라, 비율을 직접 재서 거리를 계산하는 방식이에요.">Six geometric features pulled from your face landmarks are compared against the average face of 12 animal species. Instead of a trained classifier, it measures your proportions directly and calculates the distance.</p>
-    <p class="hero-note tx" data-en="MEDIAPIPE FACE LANDMARKER · 100% CLIENT-SIDE · NO UPLOAD" data-kr="MEDIAPIPE FACE LANDMARKER · 100% 클라이언트 처리 · 서버 업로드 없음">MEDIAPIPE FACE LANDMARKER · 100% CLIENT-SIDE · NO UPLOAD</p>
+    <p class="hero-sub tx" data-en="Six geometric features pulled from your face landmarks are compared against the average face of 12 animal species." data-kr="얼굴 랜드마크에서 뽑은 6개의 기하 특징을 12종 동물의 평균 얼굴과 비교합니다.">Six geometric features pulled from your face landmarks are compared against the average face of 12 animal species.</p>
+    <!-- 언어 불변 줄이므로 .tx 를 붙이지 않는다 (playhouse 카드의 스택 줄과 같은 취급). -->
+    <p class="hero-note">MEDIAPIPE FACE LANDMARKER · 6 GEOMETRIC FEATURES · WEIGHTED DISTANCE</p>
   </div>
 </header>
 
@@ -214,6 +232,12 @@ if(window.KYG_LANG!=='en'){
     <input type="file" id="fileInput" accept="image/*" />
 
     <div id="status" class="tx" data-en="MODEL LOADING… first load can take a few seconds" data-kr="MODEL LOADING… 첫 로딩은 몇 초 걸릴 수 있어요">MODEL LOADING… first load can take a few seconds</div>
+
+    <div class="notes-link">
+      <span class="k">NOTES 01</span>
+      <p class="tx" data-en="A write-up of how the matching works — percentile mapping across six ratios, the bias that made one animal win far too often, and what the fix cost. English only." data-kr="이 페이지가 어떻게 매칭하는지 적어 둔 글입니다 — 여섯 비율의 백분위 변환, 한 동물이 지나치게 자주 뽑히던 편향, 그리고 그 보정이 치른 대가. 영문으로만 있습니다.">A write-up of how the matching works — percentile mapping across six ratios, the bias that made one animal win far too often, and what the fix cost. English only.</p>
+      <a class="tx" href="/notes/animals/" data-en="How It Works →" data-kr="어떻게 작동하나 →">How It Works →</a>
+    </div>
 
     <div class="stage" id="previewStage">
       <canvas id="canvas"></canvas>
