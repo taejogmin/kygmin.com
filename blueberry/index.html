@@ -172,6 +172,12 @@ label.hd{font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing
 
 footer{border-top:3px solid var(--ink);padding:26px 0;}
 .foot-inner{max-width:960px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:12px;color:#4A4A46;}
+/* 해설 문서로 가는 입구 (NOTES 06). */
+.notes-link{margin-top:34px;border:3px solid var(--ink);background:#fff;box-shadow:6px 6px 0 var(--ink);padding:20px 22px;}
+.notes-link .k{font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:1px;color:var(--green-deep);display:block;margin-bottom:6px;}
+.notes-link p{font-size:14.5px;line-height:1.65;}
+.notes-link a{display:inline-block;margin-top:13px;font-weight:700;font-size:13px;text-transform:uppercase;border:2px solid var(--ink);background:var(--green);color:var(--paper);padding:9px 16px;text-decoration:none;box-shadow:3px 3px 0 var(--ink);transition:transform .1s,box-shadow .1s;}
+.notes-link a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
 .spin{display:block;border:3px solid var(--ink);background:#fff;padding:18px 20px;box-shadow:5px 5px 0 var(--ink);transition:transform .1s,box-shadow .1s;}
 .spin:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--ink);}
 .spin-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px;}
@@ -342,6 +348,12 @@ if(window.KYG_LANG!=='en'){
     </a>
 
     <p class="note tx" data-en="v0 deliberately gives no dialect verdict. The literature can support one claim — whether a speaker rises sharply at the end of a yes/no question — and even that needs a validated baseline this page does not yet have. Until then it only shows you the measurement." data-kr="v0은 의도적으로 방언 판정을 내리지 않습니다. 문헌이 지지할 수 있는 주장은 하나뿐이고 — 판정의문문 끝에서 급격히 올라가는가 — 그마저도 이 페이지에 아직 없는 검증된 기준선이 필요해요. 그때까지는 측정값만 보여줍니다.">v0 deliberately gives no dialect verdict. The literature can support one claim — whether a speaker rises sharply at the end of a yes/no question — and even that needs a validated baseline this page does not yet have. Until then it only shows you the measurement.</p>
+    <!-- NOTES 06 -->
+    <div class="notes-link">
+      <span class="k">NOTES 06</span>
+      <p class="tx" data-en="A write-up of how this page was built and, more often, of what it learned it could not claim: an octave correction that flattened the exact rise it exists to measure while thirty-four tests passed, a feature built and then deleted, and three releases in a row that added no measurement and only honest uncertainty. English only." data-kr="이 페이지를 어떻게 만들었는지, 그리고 더 자주는 무엇을 주장할 수 없는지 배운 과정을 적어 둔 글입니다. 34개 시험이 전부 통과하는 동안 재려던 문말 상승을 오히려 납작하게 만들던 옥타브 보정, 만들었다가 통째로 지운 기능, 그리고 새 측정은 하나도 안 늘리고 정직한 불확실성만 붙인 세 번의 연속 배포. 영문으로만 있습니다.">A write-up of how this page was built and, more often, of what it learned it could not claim: an octave correction that flattened the exact rise it exists to measure while thirty-four tests passed, a feature built and then deleted, and three releases in a row that added no measurement and only honest uncertainty. English only.</p>
+      <a class="tx" href="/notes/blueberry/" data-en="How It Works &#8594;" data-kr="어떻게 작동하나 &#8594;">How It Works &#8594;</a>
+    </div>
 
   </div>
 </main>
