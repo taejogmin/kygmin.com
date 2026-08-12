@@ -46,6 +46,17 @@ h1 .box{background:var(--ink); color:var(--paper); padding:0 12px;
   background:var(--green); color:var(--bg); font-weight:700; font-size:12px;
   padding:3px 10px; text-transform:uppercase; letter-spacing:.04em}
 
+/* 해설 문서로 가는 입구 (NOTES 05). 본문 맨 아래. */
+.notes-link{margin-top:34px; max-width:680px; border:3px solid var(--line); background:var(--card);
+  box-shadow:6px 6px 0 var(--line); padding:20px 22px}
+.notes-link .k{font-family:var(--mono); font-size:11.5px; font-weight:600; letter-spacing:1px;
+  color:var(--green-deep); display:block; margin-bottom:6px}
+.notes-link p{font-size:14.5px; line-height:1.65}
+.notes-link a{display:inline-block; margin-top:13px; font-weight:700; font-size:13px;
+  text-transform:uppercase; border:2px solid var(--line); background:var(--green); color:var(--bg);
+  padding:9px 16px; text-decoration:none; box-shadow:3px 3px 0 var(--line);
+  transition:transform .1s, box-shadow .1s}
+.notes-link a:hover{transform:translate(1px,1px); box-shadow:2px 2px 0 var(--line)}
 .step{margin-top:34px; border:3px solid var(--line); background:var(--card);
   box-shadow:6px 6px 0 var(--line)}
 .step>header{display:flex; align-items:baseline; gap:12px; padding:12px 16px;
@@ -243,6 +254,14 @@ nav{position:sticky; top:0; z-index:40; background:var(--bg); border-bottom:3px 
     <span class="tx" data-en="Accuracy expectations come from a 72M-character Korean SNS corpus, measured for the scorer this page actually uses. Two things dominate: how many people are in the room, and how much you paste. More corpus keeps helping — there is no point where it stops mattering. Your group may differ, and the Yes/No button is how this page learns its real hit rate."
           data-kr="정확도 기대치는 7,200만 자 한국어 SNS 코퍼스에서, 이 페이지가 실제로 쓰는 채점기로 직접 잰 값입니다. 두 가지가 지배합니다 — 방에 몇 명이 있는가, 그리고 얼마나 붙여넣는가. 코퍼스는 많을수록 계속 좋아지고, 더 이상 소용없어지는 지점은 없습니다. 여러분의 방은 다를 수 있고, 예/아니요 버튼이 이 페이지의 실제 적중률을 알려줍니다.">Accuracy expectations come from a 72M-character Korean SNS corpus, measured for the scorer this page actually uses. Two things dominate: how many people are in the room, and how much you paste. More corpus keeps helping — there is no point where it stops mattering. Your group may differ, and the Yes/No button is how this page learns its real hit rate.</span>
   </p>
+
+  <!-- NOTES 05 -->
+  <div class="notes-link">
+    <span class="k">NOTES 05</span>
+    <p class="tx" data-en="A write-up of how this was built and, mostly, of how its accuracy figure was wrong three separate times: a leak worth up to 71 points when the pasted message is already in the uploaded file, a parser hole that put the sender's name into the query and inverted the evidence, and a list of thirteen things I got wrong. English only." data-kr="이걸 어떻게 만들었는지, 그리고 주로 적중률 수치가 어떻게 세 번이나 틀렸는지 적어 둔 글입니다. 붙여넣은 메시지가 이미 올린 파일 안에 있을 때 최대 71%p까지 부풀던 누출, 보낸 사람 이름이 질의에 섞여 증거를 거꾸로 뒤집던 파서 구멍, 그리고 제가 틀린 열세 가지 목록. 영문으로만 있습니다.">A write-up of how this was built and, mostly, of how its accuracy figure was wrong three separate times: a leak worth up to 71 points when the pasted message is already in the uploaded file, a parser hole that put the sender's name into the query and inverted the evidence, and a list of thirteen things I got wrong. English only.</p>
+    <a class="tx" href="/notes/who-wrote/" data-en="How It Works &#8594;" data-kr="어떻게 작동하나 &#8594;">How It Works &#8594;</a>
+  </div>
+
 </div>
 
 <script>
