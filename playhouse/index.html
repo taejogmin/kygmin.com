@@ -97,7 +97,8 @@ main{padding:40px 0 88px;}
   transition:transform .1s, box-shadow .1s;
 }
 a.proj:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--ink);}
-.proj-head{display:flex;justify-content:space-between;align-items:center;gap:10px;}
+/* 배지가 셋까지 늘어나면 좁은 카드에서 넘친다 — 넘칠 때만 배지 줄이 아래로 내려간다. */
+.proj-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;}
 .proj-name{font-family:var(--mono);font-size:14px;font-weight:600;}
 .badge{
   font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:1px;
@@ -107,6 +108,9 @@ a.proj:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--ink);}
 .badge.soon{background:var(--gray);}
 /* 한국어 콘텐츠만 있는 프로젝트 표시. PLAY 와 나란히 두되 초록과 경쟁하지 않게 회색. */
 .badge.kronly{background:var(--paper);color:#6B6B67;}
+/* 해설 문서로 가는 배지. 카드 전체가 <a> 라 중첩 링크를 만들 수 없어 role=link 로 둔다. */
+.badge.notes{background:#fff;cursor:pointer;}
+.badge.notes:hover,.badge.notes:focus-visible{background:var(--ink);color:var(--paper);}
 .proj-badges{display:flex;align-items:center;gap:6px;flex-shrink:0;}
 .badge{white-space:nowrap;}
 .proj p{font-size:13.5px;color:#3A3A38;line-height:1.65;}
@@ -168,46 +172,46 @@ if(window.KYG_LANG!=='en'){
 
     <div class="proj-grid" id="grid">
 
-      <a class="proj" href="/who-wrote/" data-tags="chat kakaotalk telegram export authorship attribution stylometry naive bayes ngram writing style who wrote forensics privacy 단톡방 카카오톡 텔레그램 내보내기 문체 저자 판별 누가 썼게 감식 나이브베이즈 말투 글버릇 프라이버시 종결어미 띄어쓰기 대화기록 적중률 accuracy sentence endings spacing additive smoothing laplace 스무딩 가산평활 2gram 3gram">
-        <div class="proj-head"><span class="proj-name tx" data-en="who-wrote-this" data-kr="누가 썼게">who-wrote-this</span><span class="badge live">PLAY &#9658;</span></div>
+      <a class="proj" href="/who-wrote/" data-tags="chat kakaotalk telegram export authorship attribution stylometry naive bayes ngram writing style who wrote forensics privacy 단톡방 카카오톡 텔레그램 내보내기 문체 저자 판별 누가 썼게 감식 나이브베이즈 말투 글버릇 프라이버시 종결어미 띄어쓰기 대화기록 적중률 accuracy sentence endings spacing additive smoothing laplace 스무딩 가산평활 2gram 3gram notes writeup 해설 원리 누출 leakage 덮임 coverage 파서 로케일 철회">
+        <div class="proj-head"><span class="proj-name tx" data-en="who-wrote-this" data-kr="누가 썼게">who-wrote-this</span><span class="proj-badges"><span class="badge notes" role="link" tabindex="0" data-href="/notes/who-wrote/" title="How it works">NOTES</span><span class="badge live">PLAY &#9658;</span></span></div>
         <p class="tx" data-en="Give the bot group chat history, and it will guess who said what based on writing habits. It's pretty accurate." data-kr="단톡방 대화 내역을 내보내기 하여 봇에게 전달해주면, 말투만 보고 누가 썼는지 지목합니다. 생각보다 정확합니다.">Give the bot group chat history, and it will guess who said what based on writing habits. It's pretty accurate.</p>
         <p class="stack">Naive Bayes · Char 2–3gram · Additive Smoothing</p>
       </a>
 
-      <a class="proj" href="/blueberry/" data-tags="korean-only 한국어전용 voice pitch intonation prosody dialect korean speech f0 yin semitone microphone privacy 억양 음높이 피치 방언 사투리 경상 충청 발화 음성 프라이버시 블루베리 스무디 억양곡선 옥타브 음절 중앙값 측정기 curve octave syllable viterbi f0 문말이동 final slope 억양구 음절핵">
-        <div class="proj-head"><span class="proj-name tx" data-en="blueberry-smoothie" data-kr="블루베리 스무디">blueberry-smoothie</span><span class="proj-badges"><span class="badge kronly tx" data-en="KR ONLY" data-kr="한국어 전용">KR ONLY</span><span class="badge live">PLAY &#9658;</span></span></div>
+      <a class="proj" href="/blueberry/" data-tags="korean-only 한국어전용 voice pitch intonation prosody dialect korean speech f0 yin semitone microphone privacy 억양 음높이 피치 방언 사투리 경상 충청 발화 음성 프라이버시 블루베리 스무디 억양곡선 옥타브 음절 중앙값 측정기 curve octave syllable viterbi f0 문말이동 final slope 억양구 음절핵 notes writeup 해설 원리 순열검정 검정력 신뢰구간">
+        <div class="proj-head"><span class="proj-name tx" data-en="blueberry-smoothie" data-kr="블루베리 스무디">blueberry-smoothie</span><span class="proj-badges"><span class="badge kronly tx" data-en="KR ONLY" data-kr="한국어 전용">KR ONLY</span><span class="badge notes" role="link" tabindex="0" data-href="/notes/blueberry/" title="How it works">NOTES</span><span class="badge live">PLAY &#9658;</span></span></div>
         <p class="tx" data-en="Speak a Korean sentence and see your intonation drawn in semitones." data-kr="한국어 문장을 말하면 억양 곡선을 반음 단위로 그려 줍니다.">Speak a Korean sentence and see your intonation drawn in semitones.</p>
         <p class="stack">YIN F0 Estimation · Viterbi Octave Correction · Final-Slope</p>
       </a>
 
-      <a class="proj" href="/blueberry/vocalrange/" data-tags="voice singing range karaoke key transpose pitch note octave falsetto highest top note semitone microphone privacy 음역 음역대 노래방 키 조절 최고음 최저음 가성 옥타브 반음 노래 목소리 음정 측정 블루베리 파생 키조절 노래방키 사용가능음역 karaoke key usable range drift 표류 지속음 안정음역 최대음역 여유구간 sustain">
-        <div class="proj-head"><span class="proj-name tx" data-en="vocal-range" data-kr="음역대 측정기">vocal-range</span><span class="badge live">PLAY &#9658;</span></div>
+      <a class="proj" href="/blueberry/vocalrange/" data-tags="voice singing range karaoke key transpose pitch note octave falsetto highest top note semitone microphone privacy 음역 음역대 노래방 키 조절 최고음 최저음 가성 옥타브 반음 노래 목소리 음정 측정 블루베리 파생 키조절 노래방키 사용가능음역 karaoke key usable range drift 표류 지속음 안정음역 최대음역 여유구간 sustain notes writeup 해설 원리 이조 가성 성구전환 절대상한">
+        <div class="proj-head"><span class="proj-name tx" data-en="vocal-range" data-kr="음역대 측정기">vocal-range</span><span class="proj-badges"><span class="badge notes" role="link" tabindex="0" data-href="/notes/vocalrange/" title="How it works">NOTES</span><span class="badge live">PLAY &#9658;</span></span></div>
         <p class="tx" data-en="Two short recordings find your highest and lowest usable notes — and how many key steps to press at karaoke." data-kr="짧은 녹음 두 번으로 최고음·최저음을 재고, 노래방 키를 몇 칸 옮길지 알려줍니다.">Two short recordings find your highest and lowest usable notes — and how many key steps to press at karaoke.</p>
         <p class="stack">YIN F0 Estimation · Drift-Gated Sustain · Key Transposition</p>
       </a>
 
-      <a class="proj" href="/pyrrhus-co/" data-tags="game auction sealed bid first price common value winner curse appraisal economics ai 게임 경매 밀봉 입찰 감정 심리전 하우스 피로스 옥션 추정가 되사기 경매장 estimate buyback common value first price 공통가치 최고가밀봉 위작 소견 감정폭">
-        <div class="proj-head"><span class="proj-name tx" data-en="pyrrhus-co" data-kr="피로스 옥션 하우스">pyrrhus-co</span><span class="badge live">PLAY &#9658;</span></div>
+      <a class="proj" href="/pyrrhus-co/" data-tags="game auction sealed bid first price common value winner curse appraisal economics ai 게임 경매 밀봉 입찰 감정 심리전 하우스 피로스 옥션 추정가 되사기 경매장 estimate buyback common value first price 공통가치 최고가밀봉 위작 소견 감정폭 notes writeup 해설 원리 승자의저주 shade 균형 옷입은위작">
+        <div class="proj-head"><span class="proj-name tx" data-en="pyrrhus-co" data-kr="피로스 옥션 하우스">pyrrhus-co</span><span class="proj-badges"><span class="badge notes" role="link" tabindex="0" data-href="/notes/pyrrhus-co/" title="How it works">NOTES</span><span class="badge live">PLAY &#9658;</span></span></div>
         <p class="tx" data-en="Bidders aren't your only rivals. Make the most value out of twenty sealed bids." data-kr="입찰자들만이 견제 대상이 아닙니다. 20번의 입찰로 가장 많은 가치를 창출하세요.">Bidders aren't your only rivals. Make the most value out of twenty sealed bids.</p>
         <p class="stack">Common-Value Auction · First-Price Sealed Bid · Winner's Curse</p>
       </a>
 
-      <a class="proj" href="/indian-poker/" data-tags="game poker indian bluffing imperfect information bayesian counting ai 게임 인디안 포커 심리전 카드 카운팅 확률 소식통 블러핑 덱 라운드 informant deck rounds bluff empirical bayes shrinkage 축소추정 전달자 앤티 오르는앤티 사전분포">
-        <div class="proj-head"><span class="proj-name tx" data-en="indian-poker" data-kr="인디안 포커">indian-poker</span><span class="badge live">PLAY &#9658;</span></div>
+      <a class="proj" href="/indian-poker/" data-tags="game poker indian bluffing imperfect information bayesian counting ai 게임 인디안 포커 심리전 카드 카운팅 확률 소식통 블러핑 덱 라운드 informant deck rounds bluff empirical bayes shrinkage 축소추정 전달자 앤티 오르는앤티 사전분포 notes writeup 해설 원리 cfr 균형 유자형 전달자 올인">
+        <div class="proj-head"><span class="proj-name tx" data-en="indian-poker" data-kr="인디안 포커">indian-poker</span><span class="proj-badges"><span class="badge notes" role="link" tabindex="0" data-href="/notes/indian-poker/" title="How it works">NOTES</span><span class="badge live">PLAY &#9658;</span></span></div>
         <p class="tx" data-en="The only card you cannot see is your own. Every bet the other side makes is a statement about your hand." data-kr="못 보는 카드는 내 것뿐. 상대의 베팅이 곧 내 패에 대한 진술입니다.">The only card you cannot see is your own. Every bet the other side makes is a statement about your hand.</p>
         <p class="stack">Bayesian Inference · Empirical-Bayes Shrinkage · Card Counting</p>
       </a>
 
-      <a class="proj" href="/nine-positions/" data-tags="mccfr cfr counterfactual regret nash equilibrium 몬테카를로 내쉬 균형 게임이론 상대모델링 game strategy bluffing finance market ai 게임 심리전 금융 카드 레버리지 인버스 현금 선물 옵션 비공개 leverage inverse cash derivatives">
-        <div class="proj-head"><span class="proj-name tx" data-en="nine-positions" data-kr="나인 포지션">nine-positions</span><span class="badge live">PLAY &#9658;</span></div>
+      <a class="proj" href="/nine-positions/" data-tags="mccfr cfr counterfactual regret nash equilibrium 몬테카를로 내쉬 균형 게임이론 상대모델링 notes writeup 해설 원리 148m 균등화 원장 ledger game strategy bluffing finance market ai 게임 심리전 금융 카드 레버리지 인버스 현금 선물 옵션 비공개 leverage inverse cash derivatives">
+        <div class="proj-head"><span class="proj-name tx" data-en="nine-positions" data-kr="나인 포지션">nine-positions</span><span class="proj-badges"><span class="badge notes" role="link" tabindex="0" data-href="/notes/nine-positions/" title="How it works">NOTES</span><span class="badge live">PLAY &#9658;</span></span></div>
         <p class="tx" data-en="Nine hidden cards, cash up to derivatives. Higher risk wins — except cash beats derivatives." data-kr="현금부터 선물·옵션까지 아홉 장. 높은 리스크가 이기지만, 현금은 선물·옵션을 이깁니다.">Nine hidden cards, cash up to derivatives. Higher risk wins — except cash beats derivatives.</p>
         <p class="stack">MCCFR · Bayesian Opponent Modelling</p>
       </a>
 
-      <a class="proj" href="/animal/" data-tags="face camera photo fun ai mediapipe 얼굴 사진 동물 닮은꼴 랜드마크 기하 landmark geometry face mesh 얼굴메시 비율 가중거리 weighted distance 눈 코 입 얼굴비율">
-        <div class="proj-head"><span class="proj-name tx" data-en="animal-lookalike" data-kr="동물 닮은꼴 찾기">animal-lookalike</span><span class="badge live">PLAY &#9658;</span></div>
+      <a class="proj" href="/animal/" data-tags="face camera photo fun ai mediapipe 얼굴 사진 동물 닮은꼴 랜드마크 기하 landmark geometry face mesh 얼굴메시 비율 가중거리 weighted distance 눈 코 입 얼굴비율 notes writeup 해설 원리 percentile 백분위 사슴붕괴 deer collapse">
+        <div class="proj-head"><span class="proj-name tx" data-en="animal-lookalike" data-kr="동물 닮은꼴 찾기">animal-lookalike</span><span class="proj-badges"><span class="badge notes" role="link" tabindex="0" data-href="/notes/animals/" title="How it works">NOTES</span><span class="badge live">PLAY &#9658;</span></span></div>
         <p class="tx" data-en="Face landmarks matched against 12 species to find the animal closest to you." data-kr="얼굴 랜드마크로 12종 동물과 비교해 가장 닮은 동물을 찾습니다.">Face landmarks matched against 12 species to find the animal closest to you.</p>
-        <p class="stack">MediaPipe Face Landmarks · 6 Geometric Features · Weighted Distance</p>
+        <p class="stack">MediaPipe Face Landmarker · 6 Geometric Features · Weighted Distance</p>
       </a>
 
     </div>
@@ -326,6 +330,16 @@ window.APP_LANG_LISTENERS = [];
     input.placeholder=UI.ph[lang()];
     apply();
   }
+  /* NOTES 배지: 카드 링크를 가로채 해설 문서로 보낸다. */
+  grid.addEventListener('click', function(e){
+    var n=e.target.closest('.badge.notes'); if(!n) return;
+    e.preventDefault(); e.stopPropagation(); location.href=n.dataset.href;
+  });
+  grid.addEventListener('keydown', function(e){
+    if(e.key!=='Enter' && e.key!==' ') return;
+    var n=e.target.closest('.badge.notes'); if(!n) return;
+    e.preventDefault(); e.stopPropagation(); location.href=n.dataset.href;
+  });
   input.addEventListener('input', apply);
   window.APP_LANG_LISTENERS.push(relabel);
   relabel();
