@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Blueberry Smoothie — KYGMIN Notes</title>
+<meta name="description" content="A write-up of the Korean intonation analyser: an octave correction that destroyed the signal it existed to measure, a feature built and deleted, and three releases in a row that added no measurement and only doubt." />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#F6F6F4;
+  --ink:#141414;
+  --gray:#DDDDD8;
+  --green:#2BB673;
+  --green-deep:#0F6E56;
+  --red:#A32D2D;
+  --arch:'Archivo','Pretendard',sans-serif;
+  --sans:'Pretendard',-apple-system,'Apple SD Gothic Neo','Malgun Gothic','Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono','SF Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{transition:none!important;}
+}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:16px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  word-break:keep-all;overflow-wrap:break-word;
+}
+a{color:inherit;}
+a:focus-visible,button:focus-visible{outline:3px solid var(--green);outline-offset:3px;}
+.wrap{max-width:960px;margin:0 auto;padding:0 24px;}
+.narrow{max-width:720px;}
+
+/* ── Nav ── */
+nav{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:3px solid var(--ink);}
+.nav-inner{
+  max-width:960px;margin:0 auto;padding:14px 24px;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;
+}
+.logo{font-family:var(--arch);font-weight:900;font-size:19px;letter-spacing:-0.5px;text-decoration:none;}
+.logo em{font-style:normal;background:var(--green);color:var(--paper);padding:0 6px;display:inline-block;transform:rotate(-1.5deg);}
+.nav-links{display:flex;gap:8px;flex-wrap:wrap;}
+.nav-links a{
+  font-family:var(--arch);font-size:12px;font-weight:700;text-transform:uppercase;
+  border:2px solid var(--ink);padding:6px 13px;background:#fff;text-decoration:none;
+  box-shadow:3px 3px 0 var(--ink);transition:transform .1s, box-shadow .1s;
+}
+.nav-links a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+.nav-links a.on{background:var(--green);color:var(--paper);}
+
+/* ── Hero ── */
+header{padding:64px 0 44px;border-bottom:3px solid var(--ink);}
+.sec-tag{
+  font-family:var(--mono);font-size:12.5px;font-weight:600;
+  color:var(--green-deep);letter-spacing:1px;display:block;margin-bottom:16px;
+}
+h1{
+  font-family:var(--arch);font-weight:900;text-transform:uppercase;
+  font-size:clamp(30px, 5.4vw, 50px);line-height:1.05;letter-spacing:-2px;max-width:840px;
+}
+h1 .box{background:var(--ink);color:var(--paper);padding:0 12px;display:inline-block;transform:rotate(-1deg);}
+.hero-sub{margin-top:22px;font-size:16.5px;max-width:640px;font-weight:500;}
+.hero-note{margin-top:14px;font-family:var(--mono);font-size:12px;color:#4A4A46;}
+
+/* ── Article ── */
+main{padding:52px 0 96px;}
+article h2{
+  font-family:var(--arch);font-weight:900;text-transform:uppercase;
+  font-size:clamp(21px,3vw,27px);letter-spacing:-1px;line-height:1.2;
+  margin:56px 0 6px;padding-top:22px;border-top:3px solid var(--ink);
+}
+article h2:first-child{margin-top:0;padding-top:0;border-top:none;}
+article h2 .n{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--green-deep);
+  display:block;letter-spacing:1px;margin-bottom:8px;text-transform:none;}
+article h3{font-family:var(--arch);font-weight:700;font-size:17px;margin:32px 0 6px;letter-spacing:-0.3px;}
+article p{margin:14px 0;max-width:720px;}
+article ul{margin:14px 0 14px 22px;max-width:720px;}
+article li{margin:7px 0;}
+article strong{font-weight:700;}
+code{font-family:var(--mono);font-size:.9em;background:#EDEDE8;padding:1px 5px;border:1px solid var(--gray);}
+.eq{
+  font-family:var(--mono);font-size:13.5px;line-height:1.9;
+  background:#fff;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);
+  padding:18px 20px;margin:22px 0;max-width:720px;overflow-x:auto;white-space:pre;
+}
+.eq b{color:var(--green-deep);font-weight:600;}
+
+/* callouts */
+.note{
+  border-left:6px solid var(--green);background:#fff;border:3px solid var(--ink);
+  border-left-width:9px;padding:16px 20px;margin:24px 0;max-width:720px;
+}
+.note .k{font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:1px;
+  color:var(--green-deep);display:block;margin-bottom:6px;}
+.note.warn{border-left-color:var(--red);}
+.note.warn .k{color:var(--red);}
+.note p{margin:8px 0;}
+.note p:first-of-type{margin-top:0;}
+.note p:last-child{margin-bottom:0;}
+
+/* tables */
+.tw{overflow-x:auto;margin:24px 0;max-width:720px;}
+table{border-collapse:collapse;font-size:13.5px;width:100%;background:#fff;
+  border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);}
+caption{caption-side:bottom;text-align:left;font-family:var(--mono);font-size:11.5px;
+  color:#4A4A46;padding-top:10px;line-height:1.6;}
+th,td{border-bottom:1px solid var(--gray);padding:8px 12px;text-align:right;white-space:nowrap;}
+th:first-child,td:first-child{text-align:left;}
+/* 숫자 칸(.num)만 오른쪽. 산문이 든 칸은 왼쪽 정렬하고 줄바꿈을 허용한다. */
+th:not(.num),td:not(.num){text-align:left;white-space:normal;}
+th.num,td.num{text-align:right;white-space:nowrap;}
+thead th{background:var(--ink);color:var(--paper);font-family:var(--mono);
+  font-size:11.5px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;border-bottom:none;}
+thead th .lc{text-transform:none;}
+tbody tr:last-child td{border-bottom:none;}
+td.num,th.num{font-family:var(--mono);}
+tr.hi td{background:#EAF7F0;font-weight:700;}
+tr.bad td{background:#FBEDED;}
+
+/* inline bars (reuse of the result-page component) */
+.bars{margin:22px 0;max-width:640px;}
+.bar-row{margin-bottom:9px;}
+.bar-row .top{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;margin-bottom:3px;}
+.bar-row .track{height:14px;background:var(--gray);border:2px solid var(--ink);}
+.bar-row .fill{height:100%;background:var(--green);}
+.bar-row .fill.b{background:var(--ink);}
+
+.foot-cta{
+  margin-top:64px;border:3px solid var(--ink);background:#fff;box-shadow:6px 6px 0 var(--ink);
+  padding:24px;max-width:720px;
+}
+.foot-cta a{
+  display:inline-block;font-family:var(--arch);font-weight:700;font-size:13px;text-transform:uppercase;
+  border:2px solid var(--ink);background:var(--green);color:var(--paper);
+  padding:9px 16px;box-shadow:3px 3px 0 var(--ink);text-decoration:none;margin-top:12px;
+  transition:transform .1s, box-shadow .1s;
+}
+.foot-cta a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+
+footer{border-top:3px solid var(--ink);padding:22px 0;}
+.foot-inner{max-width:960px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;
+  gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:11.5px;color:#4A4A46;}
+
+/* 첫 수 카드 분포 — 아홉 칸 히스토그램 */
+.dist{margin:22px 0;max-width:720px;}
+.dist .lbl{font-family:var(--mono);font-size:11.5px;color:#4A4A46;margin-bottom:6px;}
+.dist .cols{display:flex;align-items:flex-end;gap:4px;height:120px;
+  border-bottom:3px solid var(--ink);padding-bottom:0;}
+.dist .col{flex:1;background:var(--green);border:2px solid var(--ink);border-bottom:none;min-height:2px;}
+.dist .col.hot{background:var(--ink);}
+.dist .axis{display:flex;gap:4px;margin-top:5px;}
+.dist .axis span{flex:1;text-align:center;font-family:var(--mono);font-size:11px;color:#4A4A46;}
+.dist .cap{font-family:var(--mono);font-size:11.5px;color:#4A4A46;margin-top:8px;line-height:1.6;}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:26px;max-width:720px;margin:22px 0;}
+@media (max-width:640px){ .two{grid-template-columns:1fr;} }
+.two .dist{margin:0;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="/index.html">KYG<em>MIN</em></a>
+    <div class="nav-links">
+      <a href="/index.html">Home</a>
+      <a href="/playhouse/">PLAYHOUSE</a>
+      <a href="/blueberry/">Blueberry Smoothie</a>
+      <a href="/cv.html">CV &#128274;</a>
+    </div>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <span class="sec-tag">NOTES &mdash; 06 &middot; BLUEBERRY SMOOTHIE</span>
+    <h1>Every release made it <span class="box">claim less</span></h1>
+    <p class="hero-sub">A page that draws your speech melody as a curve. Twenty versions in, it measures no more than it did at version four &mdash; what changed is that it now knows, and says, how little a single recording can prove. One of those versions deleted a whole feature. One of them destroyed the exact signal the page exists to measure, while thirty-four unit tests passed.</p>
+    <p class="hero-note">ENGLISH ONLY &middot; ~15 MIN &middot; AUDIO NEVER LEAVES THE DEVICE</p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+  <article>
+
+    <h2><span class="n">01</span>What it measures, and the verdict it will not give</h2>
+
+    <p>Say a Korean sentence into the page and it draws your pitch as a curve in semitones relative to your own median, marks the syllable nuclei it found, and reports how far your pitch moved at the end of the utterance. YIN pitch tracking, syllable detection, phrase segmentation and octave correction all run in the tab; the audio never leaves the device.</p>
+
+    <p>The obvious product here is a dialect quiz. It does not do that, and the reason is not caution &mdash; it is that the measurement does not exist.</p>
+
+    <div class="note">
+      <span class="k">WHAT THE LITERATURE ACTUALLY SUPPORTS</span>
+      <p>Essentially one discriminator: does this speaker end a yes/no question with a sharp rise? Kyungsang speakers reportedly <strong>do not</strong> &mdash; a measured 0.2 semitones, below the perceptual threshold. Meanwhile the cue for a wh-question in Seoul Korean is not at the end of the utterance at all; it is dephrasing after the question word, which happens early. And every published baseline is read speech, which cannot be pooled with free conversation.</p>
+      <p>So a percentage next to a province name would be an invention. The page reports what it measured and stops.</p>
+    </div>
+
+    <p>That constraint drives everything below. If you cannot say "you are from X", the only defensible claim left is <strong>"within you, A differs from B"</strong> &mdash; and the entire engineering history of this page is about earning the right to say even that.</p>
+
+    <h2><span class="n">02</span>Thirty-four passing tests and a destroyed signal</h2>
+
+    <p>Pitch trackers make octave errors: YIN in particular reports f0/2 more often than f0&times;2, because of period doubling. So there is a correction stage that snaps outliers back. The first version chose, for each frame, the octave candidate closest to the recording's median pitch.</p>
+
+    <p>Consider a speaker whose median is 115 Hz, ending a question by rising to 170 Hz:</p>
+
+    <div class="eq">the real rise      170 Hz   |log2(170 / 115)| = <b>0.564</b> octaves from the median
+the halving error   85 Hz   |log2( 85 / 115)| = <b>0.436</b> octaves from the median</div>
+
+    <p>The wrong answer is closer. <strong>The correction stage takes a genuine question-final rise and flattens it into an octave error</strong> &mdash; it destroys precisely the one thing the page was built to measure, and it destroys it most reliably on the recordings where the effect is strongest.</p>
+
+    <p>Thirty-four unit tests were passing at the time. All of them. What found this was not a test of the code but a test of the <em>claim</em>: a synthetic utterance built to be linguistically plausible &mdash; 120 / 115 / 118 / 170 Hz, a flat sentence with a rise on the last syllable &mdash; run through the pipeline to check that the output said what a linguist would say. It did not.</p>
+
+    <div class="note warn">
+      <span class="k">THE GENERALISABLE PART</span>
+      <p>Unit tests check that a function does what you meant. They cannot check that what you meant was right. For a measuring instrument you also need a test that encodes <strong>a claim from outside the codebase</strong> &mdash; here, "a yes/no question rises" &mdash; and fails when the pipeline contradicts it. This is the second bug in this project caught that way and neither would have been caught otherwise.</p>
+    </div>
+
+    <h2><span class="n">03</span>A reference that justified itself</h2>
+
+    <p>The deeper defect was in the reference value. The median was computed from the <em>uncorrected</em> f0 track, so halved frames dragged the median down toward themselves &mdash; and once the median has moved toward an error, that error looks less like an outlier, so it survives. <strong>The more errors a recording has, the less the corrector fixes them.</strong>
+
+    <p>Concretely: half a second read as 55 Hz on a 110 Hz speaker pulls the median to 105. The 55 Hz frame is then only 0.593 octaves out, barely past the free-of-charge band, leaving a residual cost of 0.186 against a correction cost of 0.40. Leaving the error in place wins.</p>
+
+    <p>The fix reads the median iteratively &mdash; fold only frames more than 0.75 octaves out, re-take the median, repeat &mdash; and makes correction costs asymmetric, cheaper upward than downward, because that is the direction the tracker's errors actually go.</p>
+
+    <p>A fully octave-invariant approach would have been more robust to contamination and was rejected for a specific reason: folding every frame to a single octave class destroys real intonation that approaches an octave. On a test curve of 190 / 230 / <strong>300</strong> / 170 / 150 Hz it folded the genuine 300 Hz peak down to 150, because log2(300/170) = 0.819 rounds to 1. The 0.75-octave threshold is the discriminator: octave errors land near 1.0 and get folded, real intonation peaks stay inside 0.75 and do not.</p>
+
+    <p>The regression suite for this has four groups, and one of them matters more than the rest: <strong>"real intonation must not move a single frame."</strong> A 115 &rarr; 170 Hz question rise, the wide curve above, a flat 88&ndash;95 Hz male voice &mdash; zero frames may change. That group caught my first fix destroying real intonation while happily repairing every error case. Had I only tested the repairs, it would have shipped.</p>
+
+    <h2><span class="n">04</span>Built, shipped, deleted</h2>
+
+    <p>A version added a lexical-tone tab: read the word <em>가지</em> three times with three different meanings displayed, measure the pitch step between its two syllables, and score the contrast. It was implemented, tested with 39 fresh assertions, and shipped.</p>
+
+    <p>Then came the question that ended it: <em>why that word specifically &mdash; can't you tell from ordinary reading, or from free speech?</em></p>
+
+    <p>The honest answer was no, and the reason is structural. Measuring lexical tone requires knowing which syllable is the target, which requires forced alignment to the text; this page has none, and its syllable detector runs around 65% on real speech. Worse, lexical tone only surfaces in minimal triplets &mdash; same segments, different meanings &mdash; and inside a sentence the meaning is already fixed by context, so the contrast does not exist to be measured. There was no path to the measurement that did not go through a laboratory procedure.</p>
+
+    <p>The user's judgement: if it is that artificial, it does not belong on the page. The whole tab came out.</p>
+
+    <h3>How the deletion was verified</h3>
+
+    <p>Removal was done by hand across four source files, which is exactly the situation where something small gets left behind. So instead of trusting the test suite, the rebuilt file was compared <strong>byte for byte against the earlier commit</strong> &mdash; fetching the old file, hashing it in 200-line blocks, and matching against the same computation locally. Two divergences turned up:</p>
+
+    <ul>
+      <li>A leftover blank line where the removed section had been &mdash; twenty bytes.</li>
+      <li>A function I had quietly generalised into a loop when adding the feature, and which the revert had not restored to its original six explicit lines.</li>
+    </ul>
+
+    <p>Neither would have failed a test. Both were found by binary-searching the mismatching block down to a single line. The final file was byte-identical to the version it was meant to return to, which is a stronger statement than "all tests pass."</p>
+
+    <h2><span class="n">05</span>One recording is not a measurement</h2>
+
+    <p>The original comparison feature held one recording per condition. Read a statement, read a question, look at the difference. But the same person reading the same sentence twice does not produce the same number, so with one value per side there is no way &mdash; in principle, not in practice &mdash; to tell a condition difference from the instrument's own wobble.</p>
+
+    <p>It became repeated measures: up to twelve takes per condition, with an <strong>exact Mann&ndash;Whitney permutation test</strong>. Not a t-test, because at three to five takes there is no basis for assuming normality; the null distribution is enumerated exactly by dynamic programming instead.</p>
+
+    <p>The design decision I am proudest of on this page is what gets displayed alongside the p-value:</p>
+
+    <div class="tw">
+    <table>
+      <thead><tr><th>Takes per condition</th><th class="num">Possible arrangements</th><th class="num">Smallest two-sided p attainable</th></tr></thead>
+      <tbody>
+        <tr class="bad"><td>3 vs 3</td><td class="num">20</td><td class="num">0.100</td></tr>
+        <tr><td>4 vs 4</td><td class="num">70</td><td class="num">0.029</td></tr>
+        <tr><td>5 vs 5</td><td class="num">252</td><td class="num">0.008</td></tr>
+        <tr><td>6 vs 6</td><td class="num">924</td><td class="num">0.002</td></tr>
+      </tbody>
+      <caption>Recomputed for this write-up from the exact null distribution; the arrangement counts check out against C(m+n, m).</caption>
+    </table>
+    </div>
+
+    <p><strong>With three takes each, no result can reach 0.05.</strong> Not an unlikely one &mdash; an impossible one. A user who sees "p = 0.10" and concludes "no difference" has been misled by the interface, so the page prints the floor next to the p-value and has a separate verdict for <em>cleanly separated but too few takes</em>. It is a nudge toward four, implemented as arithmetic rather than advice.</p>
+
+    <h2><span class="n">06</span>The session where more data gave a worse answer</h2>
+
+    <p>A session of four takes per condition came out at &Delta; +1.63 st, p 0.029 &mdash; the first real result the page had ever produced. I advised going to six takes each and alternating A, B, A, B to remove drift. The result disappeared: &Delta; &minus;0.25, <strong>p 0.699</strong>.</p>
+
+    <p>The user's question was the right one: <em>I did six each and the p-value got worse?</em></p>
+
+    <p>Because <strong>the sample size sets the floor, not the value.</strong> Six versus six could have reached 0.002; it did not, because the data no longer separated. And the number that actually told the story was not p at all &mdash; it was the spread, which went from &plusmn;0.46 to <strong>&plusmn;1.77</strong>, nearly four times worse.</p>
+
+    <div class="note warn">
+      <span class="k">MY ADVICE HAD A COST I DID NOT MENTION</span>
+      <p>Alternating conditions <em>did</em> work: the between-condition pitch gap came out at 1 Hz, the smallest of any session. But drift does not vanish when you interleave &mdash; it moves from <strong>between</strong> conditions into <strong>within</strong> them, inflating the spread and pushing every statistic toward "no conclusion".</p>
+      <p>Block your recordings and you get bias between conditions. Interleave them and you get noise inside conditions. There is no arrangement that pays neither, and I recommended one without saying which price it charged.</p>
+    </div>
+
+    <p>Digging further showed the failure was not smooth drift but <strong>discrete</strong>: removing the linear trend barely helped, while removing a single take dropped one condition's spread from 2.05 to 0.79. One or two recordings were broken, not all of them. That pointed at a specific mechanism, and finding it took two more releases of pure diagnostics &mdash; per-take pitch outliers measured against the condition's own <em>median</em> (using the mean would let an outlier hide itself, the same self-justification trap as the octave reference), and per-take duration and syllable counts, also relative to the condition's own median because the detector's baseline rate is only ~65% and an absolute threshold would paint every take red.</p>
+
+    <p>All of those diagnostics <strong>flag and never reject</strong>. A take that looks odd might be a take where you really did speak that way.</p>
+
+    <h2><span class="n">07</span>A missed syllable is not a blurred number</h2>
+
+    <p>The mechanism turned out to be syllable detection, and the reason it matters is not accuracy.</p>
+
+    <p>The detector finds intensity peaks and requires a dip of at least 3 dB between them to call two syllables separate. Dips are made by <strong>closures</strong> &mdash; the actual silence in ㅂ, ㄷ, ㄱ. But nasal codas like ㅇ and ㄴ are voiced and carry energy straight into the next syllable. There is nothing to cut on. In the tongue-twister sentence the page offers, roughly 24 of 28 syllables end in a nasal, and the whole phrase collapses into a few peaks.</p>
+
+    <p>Now the crucial part. The final pitch movement is anchored to the <strong>second-to-last</strong> syllable nucleus. Lose one syllable and the anchor does not become imprecise &mdash; it lands on a different syllable, and the page measures a different interval entirely.</p>
+
+    <div class="tw">
+    <table>
+      <thead><tr><th>Same audio, same code</th><th class="num">Nuclei found</th><th class="num">Anchor frame</th><th class="num">Final movement</th><th>Verdict</th></tr></thead>
+      <tbody>
+        <tr class="bad"><td>Free detection</td><td class="num">4 / 7</td><td class="num">100</td><td class="num">+2.10 st</td><td>rising</td></tr>
+        <tr class="hi"><td>Constrained detection</td><td class="num">7 / 7</td><td class="num">127</td><td class="num">+1.36 st</td><td>flat</td></tr>
+      </tbody>
+      <caption>0.74 semitones apart, and on opposite sides of the verdict boundary. This is the discrete failure from section 06.</caption>
+    </table>
+    </div>
+
+    <p>The fix uses information the page already had: <strong>it knows which sentence you were asked to read, so it knows how many syllables to expect.</strong> When free detection finds fewer, it sweeps a grid of progressively looser thresholds and takes the setting closest to the target. Three rules keep that honest:</p>
+
+    <ul>
+      <li><strong>Thresholds only loosen, never tighten.</strong> Tightening would delete real sounds &mdash; a breath, a restart &mdash; to hit an expected count. Erasing what the speaker actually did is not measurement.</li>
+      <li><strong>Overshooting costs double.</strong> Inventing a syllable that is not there is worse than missing one, and if free detection already meets the target the search does not run at all.</li>
+      <li><strong>Ties go to the default</strong>, so equal-cost settings resolve toward the more conservative one.</li>
+    </ul>
+
+    <p>And the recovery is announced on screen &mdash; <code>syllable boundaries recovered: 4 &rarr; 7</code> &mdash; because a nucleus found by lowering a threshold is not as trustworthy as one that was obvious, and that difference belongs to the reader.</p>
+
+    <p>While wiring this I found the bug that would have made the whole exercise pointless: the final-movement function <strong>re-detected syllables by itself</strong> when it wasn't handed any, with default thresholds. Without passing the constrained nuclei through, the improvement would have changed the picture on screen and nothing about the number underneath it.</p>
+
+    <h2><span class="n">08</span>The result, and exactly how narrow it is</h2>
+
+    <p>Seven sessions in, indoors, six takes per condition, alternating:</p>
+
+    <div class="eq">A  "밥 먹었어."   statement    &minus;1.97  +0.34  &minus;2.09  &minus;1.66  &minus;0.19  &minus;0.65
+B  "밥 먹었어?"   question     +6.28  +5.65  +5.80  +7.28  +8.45  +6.70</div>
+
+    <p>I recomputed this from the raw takes while writing this page: mean A &minus;1.037, mean B +6.693, <strong>&Delta; +7.730 st</strong>, pooled SD &plusmn;1.030, Cohen's d <strong>7.50</strong>, U = 36/36 &mdash; complete separation &mdash; and a two-sided <strong>p = 0.00216</strong>, which is <em>exactly</em> the floor for six versus six. The data cannot separate any further than it already has; only sample size is holding the number up.</p>
+
+    <p>And here is the entire claim that result licenses:</p>
+
+    <div class="note">
+      <span class="k">WHAT MAY BE SAID</span>
+      <p>This speaker, on these two sentences, ends the yes/no question <strong>7.73 semitones higher</strong> than the statement.</p>
+      <p>It says nothing about any dialect, nothing about any other speaker, and nothing about Korean. That narrow sentence is the first thing this page has ever been able to state with statistical backing.</p>
+    </div>
+
+    <h3>The most interesting thing in the data is not the result</h3>
+
+    <div class="tw">
+    <table>
+      <thead><tr><th>Session</th><th class="num">Statement mean</th><th class="num">Question mean</th><th class="num">&Delta;</th></tr></thead>
+      <tbody>
+        <tr><td>3rd, before the syllable fix</td><td class="num">&minus;1.010</td><td class="num">+0.618</td><td class="num">+1.63</td></tr>
+        <tr><td>5th, outdoors, after the fix</td><td class="num">&minus;0.883</td><td class="num">+6.248</td><td class="num">+7.13</td></tr>
+        <tr class="hi"><td>7th, indoors, after the fix</td><td class="num">&minus;1.037</td><td class="num">+6.693</td><td class="num">+7.73</td></tr>
+      </tbody>
+      <caption>The statement sits at about &minus;1 in every session. Only the question moved &mdash; and it moved once, across the release that fixed syllable detection.</caption>
+    </table>
+    </div>
+
+    <p>That asymmetry is exactly what the anchor explanation predicts. A question rises sharply on its final syllable, so losing that syllable throws the measurement away entirely; a statement falls gently, so an anchor off by one barely changes the value. The statement should not move and the question should. It did not move, and it did.</p>
+
+    <p>There is one more coincidence worth reporting. Back at version zero, the linguistic plausibility simulation from section 02 &mdash; the synthetic question written to encode what the literature says <em>should</em> happen &mdash; came out at <strong>+6.33 st</strong>. Two years of releases later, the real measurement lands at +6.25 to +6.69. The number that had been put in as theory is where the instrument eventually arrived.</p>
+
+    <p>I am not claiming this as proof. The sample is small, the sessions differ in a dozen ways, and there is one thing that would settle it which I cannot do: <strong>run the same audio through the old code and the new code.</strong> The audio is never kept. That is the real price of the privacy design &mdash; not an inconvenience but a permanent limit on what can be re-examined &mdash; and the only route left is comparing distributions tagged by app version, which is why the storage schema records one.</p>
+
+    <h2><span class="n">09</span>Three releases that added only doubt</h2>
+
+    <p>Three consecutive versions added no new measurement whatsoever. Each took a number the page was already printing and attached an honest interval to it. All three concluded that the number could not carry the claim.</p>
+
+    <div class="tw">
+    <table>
+      <thead><tr><th>Release</th><th>What was attached</th><th>What it revealed</th></tr></thead>
+      <tbody>
+        <tr><td>Declination slope</td><td>t-based 95% interval</td><td>With the usual 5&ndash;7 phrases the direction is frequently unresolved &mdash; a conclusive &minus;0.37 and a meaningless &minus;0.37 had looked identical</td></tr>
+        <tr class="bad"><td>Continuation-rise rate</td><td>Wilson 95% interval</td><td><strong>At seven phrases or fewer, no value of k is ever conclusive</strong> &mdash; verified exhaustively. One passage can never answer this question</td></tr>
+        <tr><td>Read vs free speech</td><td>Phrase-level exact test, Bonferroni</td><td>At four versus four the attainable floor cannot clear the corrected threshold at all</td></tr>
+      </tbody>
+      <caption>Wilson rather than the textbook interval because 6/6 and 0/6 are common at this sample size, and the textbook formula reports a zero-width interval for them &mdash; manufacturing certainty out of six observations.</caption>
+    </table>
+    </div>
+
+    <p>Two of those tables print a limitation the page cannot correct for: these intervals assume independent observations, and successive phrases inside one passage are not independent &mdash; the text itself decides much of where a speaker will rise. The intervals are therefore a <strong>lower bound on the real uncertainty</strong>. Since the error runs in only one direction, "this interval is too wide to conclude" stays valid while "this interval is narrow" does not, and the page says so rather than silently correcting a thing it cannot estimate.</p>
+
+    <p>The common finding is uncomfortable and useful: <strong>a single recording of this page cannot support most of what it would like to say.</strong> Every one of the three ends in "this opens up once measurements accumulate", which turned accumulation from a nice-to-have into the only route past the wall.</p>
+
+    <h2><span class="n">10</span>The one promise I had to change</h2>
+
+    <p>Accumulation meant storage, and storage meant breaking a stated promise: <em>nothing is stored, close the tab and it is all gone.</em></p>
+
+    <p>The plan listed three places that wording appeared. Counting them by hand found <strong>four</strong>. The missing one was the largest type on the page &mdash; the line directly under the title.</p>
+
+    <div class="note warn">
+      <span class="k">WHAT THAT NEAR-MISS LOOKED LIKE</span>
+      <p>Every careful edit made, every privacy string updated, a test suite green &mdash; and the biggest sentence on the page still telling visitors their results were never saved. <strong>The page would have been lying in its headline while being scrupulously accurate everywhere else.</strong></p>
+    </div>
+
+    <p>The replacement had to be true in every state at once, so it names the conditions instead of making a blanket claim: audio never leaves your device, no account is needed, results are saved only if you turn it on. Storage requires a login <em>and</em> an explicit opt-in, and rows cannot exist without a user id &mdash; so for anyone who simply visits and tries it, the original promise remains literally true.</p>
+
+    <p>One more thing came out of this project's own history. Versions along the way genuinely changed the values that come out of the same voice &mdash; that is section 07's whole point. So computing a personal noise floor across pipeline generations would measure <em>my code changes</em> rather than the speaker's variability. Aggregation is confined to one generation, and other generations are reported as a count only.</p>
+
+    <p>Which is the summary of this page in one line: it began as an instrument that reported numbers, and most of the work since has gone into teaching it which of its own numbers not to trust.</p>
+
+    <div class="foot-cta">
+      <p style="margin-top:0"><strong>Try it.</strong> Say a sentence and watch your own melody drawn in semitones. Nothing is uploaded, and nothing is stored unless you switch it on.</p>
+      <a href="/blueberry/">Open Blueberry Smoothie &rarr;</a>
+    </div>
+
+  </article>
+  </div>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <span>&copy; KYGMIN.COM</span>
+    <span>NOTES 06 &middot; BLUEBERRY SMOOTHIE &middot; MEASURED 2026-08</span>
+  </div>
+</footer>
+
+</body>
+</html>
