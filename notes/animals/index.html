@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>How the Animal Lookalike Works — KYGMIN Notes</title>
+<meta name="description" content="A write-up of the Animal Lookalike finder: percentile matching across six facial ratios, the deer collapse that broke the first version, and what the fix cost." />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#F6F6F4;
+  --ink:#141414;
+  --gray:#DDDDD8;
+  --green:#2BB673;
+  --green-deep:#0F6E56;
+  --red:#A32D2D;
+  --arch:'Archivo','Pretendard',sans-serif;
+  --sans:'Pretendard',-apple-system,'Apple SD Gothic Neo','Malgun Gothic','Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono','SF Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{transition:none!important;}
+}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:16px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  word-break:keep-all;overflow-wrap:break-word;
+}
+a{color:inherit;}
+a:focus-visible,button:focus-visible{outline:3px solid var(--green);outline-offset:3px;}
+.wrap{max-width:960px;margin:0 auto;padding:0 24px;}
+.narrow{max-width:720px;}
+
+/* ── Nav ── */
+nav{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:3px solid var(--ink);}
+.nav-inner{
+  max-width:960px;margin:0 auto;padding:14px 24px;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;
+}
+.logo{font-family:var(--arch);font-weight:900;font-size:19px;letter-spacing:-0.5px;text-decoration:none;}
+.logo em{font-style:normal;background:var(--green);color:var(--paper);padding:0 6px;display:inline-block;transform:rotate(-1.5deg);}
+.nav-links{display:flex;gap:8px;flex-wrap:wrap;}
+.nav-links a{
+  font-family:var(--arch);font-size:12px;font-weight:700;text-transform:uppercase;
+  border:2px solid var(--ink);padding:6px 13px;background:#fff;text-decoration:none;
+  box-shadow:3px 3px 0 var(--ink);transition:transform .1s, box-shadow .1s;
+}
+.nav-links a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+.nav-links a.on{background:var(--green);color:var(--paper);}
+
+/* ── Hero ── */
+header{padding:64px 0 44px;border-bottom:3px solid var(--ink);}
+.sec-tag{
+  font-family:var(--mono);font-size:12.5px;font-weight:600;
+  color:var(--green-deep);letter-spacing:1px;display:block;margin-bottom:16px;
+}
+h1{
+  font-family:var(--arch);font-weight:900;text-transform:uppercase;
+  font-size:clamp(30px, 5.4vw, 50px);line-height:1.05;letter-spacing:-2px;max-width:840px;
+}
+h1 .box{background:var(--ink);color:var(--paper);padding:0 12px;display:inline-block;transform:rotate(-1deg);}
+.hero-sub{margin-top:22px;font-size:16.5px;max-width:640px;font-weight:500;}
+.hero-note{margin-top:14px;font-family:var(--mono);font-size:12px;color:#4A4A46;}
+
+/* ── Article ── */
+main{padding:52px 0 96px;}
+article h2{
+  font-family:var(--arch);font-weight:900;text-transform:uppercase;
+  font-size:clamp(21px,3vw,27px);letter-spacing:-1px;line-height:1.2;
+  margin:56px 0 6px;padding-top:22px;border-top:3px solid var(--ink);
+}
+article h2:first-child{margin-top:0;padding-top:0;border-top:none;}
+article h2 .n{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--green-deep);
+  display:block;letter-spacing:1px;margin-bottom:8px;text-transform:none;}
+article h3{font-family:var(--arch);font-weight:700;font-size:17px;margin:32px 0 6px;letter-spacing:-0.3px;}
+article p{margin:14px 0;max-width:720px;}
+article ul{margin:14px 0 14px 22px;max-width:720px;}
+article li{margin:7px 0;}
+article strong{font-weight:700;}
+code{font-family:var(--mono);font-size:.9em;background:#EDEDE8;padding:1px 5px;border:1px solid var(--gray);}
+.eq{
+  font-family:var(--mono);font-size:13.5px;line-height:1.9;
+  background:#fff;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);
+  padding:18px 20px;margin:22px 0;max-width:720px;overflow-x:auto;white-space:pre;
+}
+.eq b{color:var(--green-deep);font-weight:600;}
+
+/* callouts */
+.note{
+  border-left:6px solid var(--green);background:#fff;border:3px solid var(--ink);
+  border-left-width:9px;padding:16px 20px;margin:24px 0;max-width:720px;
+}
+.note .k{font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:1px;
+  color:var(--green-deep);display:block;margin-bottom:6px;}
+.note.warn{border-left-color:var(--red);}
+.note.warn .k{color:var(--red);}
+.note p{margin:8px 0;}
+.note p:first-of-type{margin-top:0;}
+.note p:last-child{margin-bottom:0;}
+
+/* tables */
+.tw{overflow-x:auto;margin:24px 0;max-width:720px;}
+table{border-collapse:collapse;font-size:13.5px;width:100%;background:#fff;
+  border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);}
+caption{caption-side:bottom;text-align:left;font-family:var(--mono);font-size:11.5px;
+  color:#4A4A46;padding-top:10px;line-height:1.6;}
+th,td{border-bottom:1px solid var(--gray);padding:8px 12px;text-align:right;white-space:nowrap;}
+th:first-child,td:first-child{text-align:left;}
+/* 숫자 칸(.num)만 오른쪽. 산문이 든 칸은 왼쪽 정렬하고 줄바꿈을 허용한다. */
+th:not(.num),td:not(.num){text-align:left;white-space:normal;}
+th.num,td.num{text-align:right;white-space:nowrap;}
+thead th{background:var(--ink);color:var(--paper);font-family:var(--mono);
+  font-size:11.5px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;border-bottom:none;}
+thead th .lc{text-transform:none;}
+tbody tr:last-child td{border-bottom:none;}
+td.num,th.num{font-family:var(--mono);}
+tr.hi td{background:#EAF7F0;font-weight:700;}
+tr.bad td{background:#FBEDED;}
+
+/* inline bars (reuse of the result-page component) */
+.bars{margin:22px 0;max-width:640px;}
+.bar-row{margin-bottom:9px;}
+.bar-row .top{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;margin-bottom:3px;}
+.bar-row .track{height:14px;background:var(--gray);border:2px solid var(--ink);}
+.bar-row .fill{height:100%;background:var(--green);}
+.bar-row .fill.b{background:var(--ink);}
+
+.foot-cta{
+  margin-top:64px;border:3px solid var(--ink);background:#fff;box-shadow:6px 6px 0 var(--ink);
+  padding:24px;max-width:720px;
+}
+.foot-cta a{
+  display:inline-block;font-family:var(--arch);font-weight:700;font-size:13px;text-transform:uppercase;
+  border:2px solid var(--ink);background:var(--green);color:var(--paper);
+  padding:9px 16px;box-shadow:3px 3px 0 var(--ink);text-decoration:none;margin-top:12px;
+  transition:transform .1s, box-shadow .1s;
+}
+.foot-cta a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+
+footer{border-top:3px solid var(--ink);padding:22px 0;}
+.foot-inner{max-width:960px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;
+  gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:11.5px;color:#4A4A46;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="/index.html">KYG<em>MIN</em></a>
+    <div class="nav-links">
+      <a href="/index.html">Home</a>
+      <a href="/playhouse/">PLAYHOUSE</a>
+      <a href="/animal/">Animal Lookalike</a>
+      <a href="/cv.html">CV &#128274;</a>
+    </div>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <span class="sec-tag">NOTES — 01 · ANIMAL LOOKALIKE</span>
+    <h1>Matching a face to <span class="box">twelve animals</span></h1>
+    <p class="hero-sub">A human face and an animal face do not live on the same scale, so a distance between them is meaningless until you change what you are measuring. This is how that page works, what broke in the first version, and what the fix cost.</p>
+    <p class="hero-note">ENGLISH ONLY · ~10 MIN · ALL FIGURES MEASURED, NOT ESTIMATED</p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+  <article>
+
+    <h2><span class="n">01</span>The problem is the scale, not the maths</h2>
+
+    <p>The obvious way to build this is to measure some facial proportions, measure the same proportions on animal photos, and pick whichever animal is closest. That approach fails immediately, and it fails for a reason worth stating precisely: <strong>humans occupy a tiny corner of the space that animals spread across.</strong></p>
+
+    <p>Here are the six proportions the page uses, with the range covered by 34 human reference faces next to the range covered by the 12 animal references.</p>
+
+    <div class="tw">
+    <table>
+      <thead><tr><th>Feature</th><th class="num">Humans (n=34)</th><th class="num">Animals (n=12)</th><th class="num">Animals inside the human range</th></tr></thead>
+      <tbody>
+        <tr><td>Face width ÷ length</td><td class="num">0.760 – 0.915</td><td class="num">0.713 – 1.542</td><td class="num">3 / 12</td></tr>
+        <tr><td>Eye spacing</td><td class="num">0.213 – 0.295</td><td class="num">0.269 – 0.838</td><td class="num">3 / 12</td></tr>
+        <tr><td>Eye size</td><td class="num">0.163 – 0.221</td><td class="num">0.055 – 0.251</td><td class="num">4 / 12</td></tr>
+        <tr><td>Nose ratio</td><td class="num">0.221 – 0.304</td><td class="num">0.203 – 0.447</td><td class="num">5 / 12</td></tr>
+        <tr><td>Mouth width</td><td class="num">0.305 – 0.452</td><td class="num">0.228 – 0.726</td><td class="num">6 / 12</td></tr>
+        <tr class="bad"><td>Eye tilt (degrees)</td><td class="num">0.34 – 11.74</td><td class="num">−13.99 – 28.84</td><td class="num">2 / 12</td></tr>
+      </tbody>
+      <caption>Every ratio is normalised by face width or face length, so image size and camera distance drop out. Eye tilt is an angle, which is why it is the one feature that is not a ratio.</caption>
+    </table>
+    </div>
+
+    <p>Look at the last row. Human eyes tilt between 0.3° and 11.7° in this sample; the animal references run from −14° to +29°. A raw distance in that space does not ask "whose eyes are more like yours" — it asks "whose eyes are least far from the middle of a range you were never in." The answer is the same animal for almost everybody, which is exactly what happened.</p>
+
+    <div class="note">
+      <span class="k">THE FIX</span>
+      <p>Rank first, then compare. Convert your measurement into <strong>a percentile within the human sample</strong>, convert each animal into <strong>a percentile within the animal sample</strong>, and compare those two numbers instead. The question stops being "is your face 0.83 wide" and becomes "you are wider-faced than 78% of people — which animal is wider-faced than 78% of animals?"</p>
+    </div>
+
+    <p>That single change is the whole idea of the page. Everything after it is bookkeeping.</p>
+
+    <h2><span class="n">02</span>What is actually measured</h2>
+
+    <p>MediaPipe's <code>FaceLandmarker</code> returns 468 points. The page uses twelve of them:</p>
+
+    <div class="eq">face outline   <b>234</b> left · <b>454</b> right · <b>10</b> top · <b>152</b> chin
+nose           <b>168</b> bridge · <b>1</b> tip
+mouth          <b>61</b> left · <b>291</b> right
+eyes           <b>33</b> / <b>133</b> outer-inner · <b>362</b> / <b>263</b> inner-outer</div>
+
+    <p>Before anything is computed, the photo has to pass a frontality gate. The distance from the nose tip to the left edge of the face is compared with the distance to the right edge:</p>
+
+    <div class="eq">frontal = min(d_left, d_right) / max(d_left, d_right)     reject if &lt; <b>0.80</b></div>
+
+    <p>A face turned to the side compresses one half in the image, and every ratio downstream inherits that compression. Rejecting the photo with a visible score is more honest than silently returning a confident answer computed from a bad measurement.</p>
+
+    <h2><span class="n">03</span>Percentile matching, in full</h2>
+
+    <p>Both sides are converted with the same mid-rank formula, which is just the fraction of the sample lying below the value, with ties split in half:</p>
+
+    <div class="eq">pctRank(v, S) = ( |{x ∈ S : x &lt; v}| + 0.5·|{x ∈ S : x = v}| ) / |S|</div>
+
+    <p>Your six measurements go through the human sample; the twelve animals go through the animal sample. Both sides now live in the unit cube, and the comparison is a weighted root-mean-square distance across the six axes:</p>
+
+    <div class="eq">d(you, animal) = √( Σ w<sub>k</sub>·(p<sub>k</sub> − a<sub>k</sub>)² / Σ w<sub>k</sub> )
+
+weights   face shape <b>1.2</b> · eye spacing <b>1.1</b> · eye tilt <b>1.1</b>
+          eye size <b>1.0</b> · nose <b>0.9</b> · mouth <b>0.5</b></div>
+
+    <p>The weights are a judgement call, not a fitted parameter — face shape and eye placement carry more of what people read as resemblance than mouth width does. I would not defend the exact values; I would defend the ordering.</p>
+
+    <h2><span class="n">04</span>The deer collapse</h2>
+
+    <p>The first working version was tested and it kept returning <strong>deer</strong>. Not always, but far more often than one animal out of twelve should. It was easy to dismiss as a coincidence of the faces being tested, so I measured it instead.</p>
+
+    <p>The test runs 20,000 synthetic people through the matcher. Each synthetic person is built by drawing each of the six percentiles independently from the 34-person sample, which is the most neutral population I can construct from the data I have. With twelve animals, a well-behaved matcher should hand out roughly 8.3% to each.</p>
+
+    <div class="tw">
+    <table>
+      <thead><tr><th>Animal</th><th class="num">Win rate, no correction</th><th class="num">vs 8.3% baseline</th></tr></thead>
+      <tbody>
+        <tr class="bad"><td>Deer</td><td class="num">21.7%</td><td class="num">2.6×</td></tr>
+        <tr><td>Otter</td><td class="num">15.6%</td><td class="num">1.9×</td></tr>
+        <tr><td>Rabbit</td><td class="num">11.3%</td><td class="num">1.4×</td></tr>
+        <tr><td>Dog</td><td class="num">10.4%</td><td class="num">1.2×</td></tr>
+        <tr><td>Capybara</td><td class="num">9.7%</td><td class="num">1.2×</td></tr>
+        <tr><td>Pig</td><td class="num">7.4%</td><td class="num">0.9×</td></tr>
+        <tr><td>Harbor seal</td><td class="num">7.1%</td><td class="num">0.9×</td></tr>
+        <tr><td>Cat</td><td class="num">6.9%</td><td class="num">0.8×</td></tr>
+        <tr><td>Fox</td><td class="num">4.1%</td><td class="num">0.5×</td></tr>
+        <tr><td>Beluga</td><td class="num">2.6%</td><td class="num">0.3×</td></tr>
+        <tr><td>Wolf</td><td class="num">1.8%</td><td class="num">0.2×</td></tr>
+        <tr class="bad"><td>Quokka</td><td class="num">1.6%</td><td class="num">0.2×</td></tr>
+      </tbody>
+      <caption>20,000 simulated people, seeded. Most frequent animal ÷ least frequent = 13.7×.</caption>
+    </table>
+    </div>
+
+    <p>A 13.7× spread between the most and least reachable animal is not a quirk. Two of the twelve are effectively unreachable: a wolf or a quokka result was something almost nobody would ever see.</p>
+
+    <h3>Why deer, specifically</h3>
+
+    <p>Deer is not "more human-like" in any meaningful sense. Deer simply sits <strong>closest to the middle of the animal percentile cube</strong>, and the middle is where most people land once you rank them. I made this explicit by computing, for each animal, its mean distance to the whole human reference set:</p>
+
+    <div class="bars">
+      <div class="bar-row"><div class="top"><span>Deer</span><span>0.277 — nearest</span></div><div class="track"><div class="fill" style="width:57.7%"></div></div></div>
+      <div class="bar-row"><div class="top"><span>Rabbit</span><span>0.326</span></div><div class="track"><div class="fill" style="width:67.9%"></div></div></div>
+      <div class="bar-row"><div class="top"><span>Otter</span><span>0.350</span></div><div class="track"><div class="fill" style="width:72.9%"></div></div></div>
+      <div class="bar-row"><div class="top"><span>Capybara</span><span>0.369</span></div><div class="track"><div class="fill" style="width:76.8%"></div></div></div>
+      <div class="bar-row"><div class="top"><span>Pig</span><span>0.370</span></div><div class="track"><div class="fill" style="width:77.0%"></div></div></div>
+      <div class="bar-row"><div class="top"><span>Dog</span><span>0.391</span></div><div class="track"><div class="fill" style="width:81.5%"></div></div></div>
+      <div class="bar-row"><div class="top"><span>Fox</span><span>0.396</span></div><div class="track"><div class="fill" style="width:82.6%"></div></div></div>
+      <div class="bar-row"><div class="top"><span>Harbor seal</span><span>0.398</span></div><div class="track"><div class="fill" style="width:83.0%"></div></div></div>
+      <div class="bar-row"><div class="top"><span>Cat</span><span>0.431</span></div><div class="track"><div class="fill" style="width:89.8%"></div></div></div>
+      <div class="bar-row"><div class="top"><span>Wolf</span><span>0.436</span></div><div class="track"><div class="fill" style="width:90.9%"></div></div></div>
+      <div class="bar-row"><div class="top"><span>Quokka</span><span>0.437</span></div><div class="track"><div class="fill" style="width:91.1%"></div></div></div>
+      <div class="bar-row"><div class="top"><span>Beluga</span><span>0.480 — farthest</span></div><div class="track"><div class="fill b" style="width:100%"></div></div></div>
+    </div>
+
+    <p>The ordering of that chart is almost exactly the ordering of the win-rate table, upside down. The winner was being decided by the geometry of the reference set rather than by the face in the photo.</p>
+
+    <h3>The correction</h3>
+
+    <p>Ranking divides each raw distance by the animal's own average distance, raised to a power:</p>
+
+    <div class="eq">adjusted = raw / avgDistance<sup>α</sup>          α = <b>0.5</b></div>
+
+    <p>An animal that is close to everybody has a small average distance, so dividing by it inflates its distance and it stops winning by default. α controls the strength: 0 is no correction, 1 is full normalisation. I swept it.</p>
+
+    <div class="tw">
+    <table>
+      <thead><tr><th class="num"><span class="lc">α</span></th><th class="num">Most frequent</th><th class="num">Least frequent</th><th class="num">Spread</th><th class="num">Entropy (max 3.58)</th></tr></thead>
+      <tbody>
+        <tr><td class="num">0</td><td class="num">22.0%</td><td class="num">1.6%</td><td class="num">13.7×</td><td class="num">3.247</td></tr>
+        <tr><td class="num">0.2</td><td class="num">15.3%</td><td class="num">2.2%</td><td class="num">7.0×</td><td class="num">3.378</td></tr>
+        <tr><td class="num">0.35</td><td class="num">14.2%</td><td class="num">2.7%</td><td class="num">5.2×</td><td class="num">3.442</td></tr>
+        <tr class="hi"><td class="num">0.5</td><td class="num">13.0%</td><td class="num">3.3%</td><td class="num">3.9×</td><td class="num">3.478</td></tr>
+        <tr><td class="num">0.65</td><td class="num">13.0%</td><td class="num">4.1%</td><td class="num">3.2×</td><td class="num">3.495</td></tr>
+        <tr><td class="num">0.8</td><td class="num">13.1%</td><td class="num">3.7%</td><td class="num">3.6×</td><td class="num">3.496</td></tr>
+        <tr><td class="num">1.0</td><td class="num">14.0%</td><td class="num">2.3%</td><td class="num">6.1×</td><td class="num">3.480</td></tr>
+      </tbody>
+      <caption>Entropy of the winner distribution in bits; 3.58 would be a perfectly uniform twelve-way split. Note that α=1 is worse than α=0.65 — over-correcting starts handing the game to the outliers instead.</caption>
+    </table>
+    </div>
+
+    <p>The shipped value is <strong>α = 0.5</strong>. It captures most of the available improvement — spread 13.7× → 3.9×, entropy 3.247 → 3.478 out of 3.58 — while changing the top answer for 22.9% of faces rather than the 38.1% that α=1 would rewrite. Past about 0.65 the curve is flat and the only thing still moving is how much the correction overrides the actual measurement.</p>
+
+    <h2><span class="n">05</span>What the fix cost</h2>
+
+    <p>Every correction buys something with something. This one has a visible price, and it is visible on the results page itself.</p>
+
+    <p>The ranking uses the <em>adjusted</em> distance, but the percentage shown next to each animal is computed from the <em>raw</em> distance — deliberately, because the percentage should describe how similar you actually are, not how similar you are after a diversity thumb on the scale. The consequence is unavoidable:</p>
+
+    <div class="note warn">
+      <span class="k">KNOWN ARTEFACT</span>
+      <p>In <strong>16.6%</strong> of simulated faces, the runner-up displays a <em>higher</em> percentage than the winner. The average size of that inversion is <strong>1.9 percentage points</strong>.</p>
+      <p>It is real, it is on screen, and no reasonable reader would guess the cause. The alternatives were to show the adjusted number — which would be a number that means nothing outside this page — or to rank by the raw distance and accept the deer collapse. I chose the visible oddity over the invisible bias.</p>
+    </div>
+
+    <h2><span class="n">06</span>How much should you trust the answer</h2>
+
+    <p>Landmark positions move between photos of the same person — different lighting, expression, angle. To put a number on what that does, I perturbed each percentile with Gaussian noise and measured how often the winner changed.</p>
+
+    <div class="tw">
+    <table>
+      <thead><tr><th>Percentile jitter (σ)</th><th class="num">Top answer changes</th><th class="num">Falls out of the original top 3</th></tr></thead>
+      <tbody>
+        <tr><td>±2 points</td><td class="num">6.9%</td><td class="num">0.1%</td></tr>
+        <tr><td>±5 points</td><td class="num">16.0%</td><td class="num">0.8%</td></tr>
+        <tr><td>±10 points</td><td class="num">29.3%</td><td class="num">4.7%</td></tr>
+      </tbody>
+      <caption>20,000 simulated faces per row, α = 0.5. This is a proxy for photo-to-photo variation, not a measurement of it — I do not have repeat photographs of the same faces.</caption>
+    </table>
+    </div>
+
+    <p>The honest reading: <strong>the top three are stable, the single winner is not.</strong> At a jitter that is easy to imagine between two photos of the same person, the headline answer changes one time in six, while the correct answer stays inside the displayed shortlist better than 99 times in 100. That is why the page shows four runners-up instead of one verdict.</p>
+
+    <h3>And the percentage itself</h3>
+
+    <p>The displayed number is an exponential decay of the distance, clamped:</p>
+
+    <div class="eq">shown % = clamp( 100·e<sup>−d/0.62</sup>, <b>42</b>, <b>97</b> )</div>
+
+    <p>Across 20,000 simulated faces the winner's percentage ran from 46.8% to 94.5%, median 68.4%, with the middle half between 63.9% and 73.2%. Neither clamp ever fired — <strong>0.0% of runs hit either bound</strong>, so those two constants are dead code that survives only as a guard against a pathological input. The number is a monotone restatement of the distance dressed up to read like a score; it is not a probability of anything.</p>
+
+    <h2><span class="n">07</span>What is still wrong with it</h2>
+
+    <p>Four things I know about and have not fixed.</p>
+
+    <p><strong>The human reference set is stored as six sorted lists, not 34 people.</strong> Only the marginal distribution of each feature survives; the pairing between features is gone. The balance correction rebuilds "34 people" out of those lists, which produces 34 profiles that sit on the diagonal of the percentile cube — every feature at the same percentile. Real faces are not like that. Rerunning the collapse measurement against that diagonal population instead of the independent one puts deer at <strong>47.1%</strong> rather than 21.7%, so the diagonal exaggerates the problem it is used to correct. The correction is calibrated against a population that does not exist. It still helps, and the ordering it produces is right, but the constant it produces is not trustworthy to two decimal places.</p>
+
+    <p><strong>34 humans and 12 animals are small.</strong> A percentile computed against 34 values moves in steps of about three points, which is the same order as the jitter that flips one answer in six.</p>
+
+    <p><strong>The animal references are hand-labelled from photographs.</strong> One representative image per species, landmarked by hand. "The average deer face" is doing a lot of work in that sentence, and it is not doing it very well.</p>
+
+    <p><strong>There is no ground truth.</strong> There is no correct answer to "which animal does this face resemble", so nothing here is an accuracy figure. Everything measured in this write-up is a property of the algorithm — how it distributes its answers, how stable they are — not evidence that the answers are right. I think that distinction is the most important sentence on this page.</p>
+
+    <h2><span class="n">08</span>Why write this down</h2>
+
+    <p>The first version of this page worked. It loaded a model, found a face, computed six numbers and printed an animal with a confident percentage next to it. Nobody using it would have known that one answer in five was the same animal, or that two of the twelve were unreachable. The failure was completely invisible from the outside, and it was only found because the output looked boring rather than wrong.</p>
+
+    <p>That is the part worth keeping: the bug was not in the code, it was in the assumption that a distance in a space I had built was a distance that meant something. The fix was not a better algorithm but a measurement of the one I had — and then a second measurement of what the fix itself cost.</p>
+
+    <h3>Reproducing the numbers</h3>
+
+    <p>Every figure above comes from a harness that imports the exact constants shipped on the live page — the twelve animal profiles, the six sorted human lists, the weights — and re-implements the matcher around them, so it cannot drift from what the page actually does. Populations are seeded, N = 20,000 unless stated. If a constant on the page changes, the harness reruns and this write-up is wrong until it is updated.</p>
+
+    <div class="foot-cta">
+      <p style="margin-top:0"><strong>Try it.</strong> The photo is processed entirely in your browser; nothing is uploaded and nothing is stored.</p>
+      <a href="/animal/">Open the Animal Lookalike →</a>
+    </div>
+
+  </article>
+  </div>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <span>© KYGMIN.COM</span>
+    <span>NOTES 01 · ANIMAL LOOKALIKE · MEASURED 2026-08</span>
+  </div>
+</footer>
+
+</body>
+</html>
