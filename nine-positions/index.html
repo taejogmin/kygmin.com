@@ -353,6 +353,21 @@ main{padding:36px 0 88px;}
 .ask-foot{font-family:var(--mono);font-size:11px;color:#8A8A85;margin-top:10px;}
 
 /* how to play */
+/* 해설 문서로 가는 입구 (NOTES 02). 전체 규칙 바로 아래. */
+.notes-link{
+  margin-top:44px;max-width:680px;border:3px solid var(--ink);background:#fff;
+  box-shadow:6px 6px 0 var(--ink);padding:20px 22px;
+}
+.notes-link .k{font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:1px;
+  color:var(--green-deep);display:block;margin-bottom:6px;}
+.notes-link p{font-size:14.5px;color:#3A3A38;line-height:1.65;}
+.notes-link a{
+  display:inline-block;margin-top:13px;font-family:var(--arch);font-weight:700;
+  font-size:13px;text-transform:uppercase;border:2px solid var(--ink);
+  background:var(--green);color:var(--paper);padding:9px 16px;text-decoration:none;
+  box-shadow:3px 3px 0 var(--ink);transition:transform .1s, box-shadow .1s;
+}
+.notes-link a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
 .rules{margin-top:56px;}
 .rules h2{
   font-family:var(--arch);font-weight:900;font-size:15px;text-transform:uppercase;
@@ -577,6 +592,13 @@ if(window.KYG_LANG!=='en'){
       <p class="tx" data-en="Draw Pot (optional, on by default): when a session is drawn, its 1 base point rolls into a pot instead of vanishing. The next decided session is worth its own stake plus the entire pot. Consecutive draws keep stacking it. Leverage and inverse tokens are still returned on a draw — only the base point carries. If the final session is drawn, the pot expires." data-kr="무승부 팟(선택 룰, 기본 ON): 세션이 무승부가 되면 기본 1점이 사라지지 않고 팟에 적립됩니다. 다음에 승부가 난 세션의 가치는 그 세션의 배점 + 쌓인 팟 전부. 무승부가 이어지면 팟은 계속 커집니다. 무승부 시 레버리지·인버스 토큰은 그대로 반환되고, 기본점만 이월돼요. 마지막 세션이 무승부면 팟은 소멸합니다.">Draw Pot (optional, on by default): when a session is drawn, its 1 base point rolls into a pot instead of vanishing. The next decided session is worth its own stake plus the entire pot. Consecutive draws keep stacking it. Leverage and inverse tokens are still returned on a draw — only the base point carries. If the final session is drawn, the pot expires.</p>
       <p class="tx" data-en="Why does 1 beat 9? Because when the most leveraged position in the market meets a crash, it gets liquidated — and cash is king. Everything else follows the risk ladder." data-kr="왜 1이 9를 이길까요? 시장에서 가장 큰 레버리지 포지션이 폭락장을 만나면 청산당하기 때문입니다 — 그리고 그때 현금이 왕이죠. 그 외에는 모두 리스크 사다리를 따릅니다.">Why does 1 beat 9? Because when the most leveraged position in the market meets a crash, it gets liquidated — and cash is king. Everything else follows the risk ladder.</p>
       <p class="tx" data-en="Inspired by classic double-blind number duels; rebuilt with a finance theme, open leverage and inverse systems, and an AI that infers your remaining cards from nothing but the win/loss record." data-kr="고전적인 동시 비공개 숫자 대결에서 영감을 받아, 금융 테마와 공개 레버리지·인버스 시스템, 그리고 승패 기록만으로 남은 카드를 추리하는 AI로 새로 만들었습니다.">Inspired by classic double-blind number duels; rebuilt with a finance theme, open leverage and inverse systems, and an AI that infers your remaining cards from nothing but the win/loss record.</p>
+    </div>
+
+    <!-- NOTES 02 -->
+    <div class="notes-link">
+      <span class="k">NOTES 02</span>
+      <p class="tx" data-en="How the AI was built: the card game turned out to have a trivial equilibrium worth nothing, the old bot opened with an 8 or a 9 in 73% of games, three hand-tuned knobs were deleted by measurement, and 148 million MCCFR iterations were compressed into a 350 KB file. English only." data-kr="이 AI를 어떻게 만들었는지 적어 둔 글입니다. 카드 게임만 놓고 보면 균형이 시시하고 값이 0이었다는 것, 옛 봇이 73%의 게임에서 8이나 9로 시작했다는 것, 손으로 맞춘 노브 셋이 측정 때문에 삭제됐다는 것, 그리고 1억 4806만 번의 MCCFR 반복을 350 KB로 압축한 과정. 영문으로만 있습니다.">How the AI was built: the card game turned out to have a trivial equilibrium worth nothing, the old bot opened with an 8 or a 9 in 73% of games, three hand-tuned knobs were deleted by measurement, and 148 million MCCFR iterations were compressed into a 350 KB file. English only.</p>
+      <a class="tx" href="/notes/nine-positions/" data-en="How It Works &#8594;" data-kr="어떻게 작동하나 &#8594;">How It Works &#8594;</a>
     </div>
 
   </div>
