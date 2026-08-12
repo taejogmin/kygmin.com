@@ -305,6 +305,17 @@ tr.bump .delta{color:var(--paper)}
 .record th:first-child,.record td:first-child{text-align:left}
 .record td:first-child{font-family:var(--arch);font-weight:700;font-size:11.5px;letter-spacing:1px;text-transform:uppercase}
 .record .first{color:var(--green-deep);font-weight:700}
+/* 해설 문서로 가는 입구 (NOTES 04). Ask 패널 아래. */
+.notes-link{margin:44px auto 0;max-width:680px;border:3px solid var(--ink);background:#fff;
+  box-shadow:6px 6px 0 var(--ink);padding:20px 22px}
+.notes-link .k{font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:1px;
+  color:var(--green-deep);display:block;margin-bottom:6px}
+.notes-link p{font-size:14.5px;line-height:1.65}
+.notes-link a{display:inline-block;margin-top:13px;font-family:var(--arch);font-weight:700;
+  font-size:13px;text-transform:uppercase;border:2px solid var(--ink);
+  background:var(--green);color:var(--paper);padding:9px 16px;text-decoration:none;
+  box-shadow:3px 3px 0 var(--ink);transition:transform .1s, box-shadow .1s}
+.notes-link a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink)}
 .record .rate{font-weight:700}
 .record tr.tot td{background:var(--sunken);border-top:3px solid var(--ink);border-bottom:none;font-weight:700}
 /* 하우스를 넘어선 판. 0이 정상이고 1이 사건이라, 0일 때와 아닐 때 무게를 다르게 준다. */
@@ -591,6 +602,13 @@ tr.bump .delta{color:var(--paper)}
       <button class="btn btn-green" id="askBtn"><span class="tx" data-en="Ask" data-kr="묻기">Ask</span></button>
     </div>
     <p class="ask-foot" id="askFoot"></p>
+  </div>
+
+  <!-- NOTES 04 -->
+  <div class="notes-link">
+    <span class="k">NOTES 04</span>
+    <p class="tx" data-en="A write-up of the balancing: for a while the best strategy in this auction was to bid the opening price on everything and think about nothing, which beat playing properly. Closing that hole meant giving the counterfeits a disguise, which broke the price signal and forced the bidders to shade. English only." data-kr="밸런스를 맞춘 과정을 적어 둔 글입니다. 한동안 이 경매의 최적 전략은 모든 물건에 시작가만 적어내고 아무 생각도 하지 않는 것이었고, 그게 제대로 플레이하는 것보다 잘 나왔어요. 그 구멍을 닫으려면 위작에 옷을 입혀야 했는데, 그러자 가격 신호가 망가져서 응찰자들이 값을 깎아 부르게 만들어야 했습니다. 영문으로만 있습니다.">A write-up of the balancing: for a while the best strategy in this auction was to bid the opening price on everything and think about nothing, which beat playing properly. Closing that hole meant giving the counterfeits a disguise, which broke the price signal and forced the bidders to shade. English only.</p>
+    <a class="tx" href="/notes/pyrrhus-co/" data-en="How It Works &#8594;" data-kr="어떻게 작동하나 &#8594;">How It Works &#8594;</a>
   </div>
 
 </div></main>
