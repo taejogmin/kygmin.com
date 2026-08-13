@@ -199,6 +199,12 @@ window.APP_LANG_LISTENERS = [];
 (function(){
 'use strict';
 function L(o){ return (window.APP_LANG === 'kr' ? o.kr : o.en); }
+/* %KEY 치환. 게임 쪽 t() 와 같은 관용구를 쓴다 — 두 화면의 문구를 옮길 때 규칙이 하나여야 한다. */
+function fill(str, vars){
+  var out = String(str), k;
+  for (k in vars) if (Object.prototype.hasOwnProperty.call(vars, k)) out = out.split('%' + k).join(vars[k]);
+  return out;
+}
 function $(id){ return document.getElementById(id); }
 function esc(s){ return String(s).replace(/[&<>"]/g, function(c){
   return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
@@ -210,7 +216,8 @@ var F = {
           var n = Math.round(v);
           return '<span class="' + (n>0?'pos':(n<0?'neg':'')) + '">' +
                  (n>0?'+':'') + n.toLocaleString() + '</span>'; },
-  dec2: function(v){ return v == null ? '—' : Number(v).toFixed(2); }
+  dec2: function(v){ return v == null ? '—' : Number(v).toFixed(2); },
+  pct:  function(v){ return v == null ? '—' : Number(v).toFixed(1) + '%'; }
 };
 
 /* ---------- 카드 레지스트리 ----------
@@ -285,7 +292,28 @@ var CARDS = [
             5:{en:'Philippians 4:8',kr:'빌립보서 4:8'},
             6:{en:'Counting the Stars at Night',kr:'별 헤는 밤'} },
     blurb:{en:'How steady your own measurements are — the floor below which a change cannot be told from a wobble.',
-           kr:'본인의 측정이 얼마나 안정적인지 — 변화와 흔들림을 가를 수 없는 바닥.'} }
+           kr:'본인의 측정이 얼마나 안정적인지 — 변화와 흔들림을 가를 수 없는 바닥.'} },
+  /* 이 카드에는 결과가 둘이다: 내 등수와 바다의 상태. 그리고 둘은 같은 축이 아니다.
+     바다 상태는 성적이 아니라 관측치로 그린다 — 봇 다섯이 계속 잡으므로 혼자 절제해서
+     벌 수 있는 폭이 좁고, 등급처럼 보이면 절제한 사람이 낙제로 읽힌다.
+     rpc2 를 쓰는 두 번째 카드다: 중앙값은 난이도 행을 더해서 얻을 수 없으므로 전체를 따로 센다. */
+  { key:'ery', kind:'sea', rpc:'ery_my_record', rpc2:'ery_my_totals',
+    del:'ery_delete_mine', href:'/playhouse/erysichthon/',
+    label:{en:'ERYSICHTHON', kr:'에리시크톤'},
+    desks:{ easy:{en:'Shallows',kr:'얕은 바다'}, normal:{en:'Open Sea',kr:'먼바다'},
+            hard:{en:'Deep Water',kr:'심해'}, brutal:{en:'The Trench',kr:'해구'} },
+    goTxt:{en:'Go open a season →', kr:'한 시즌 열러 가기 →'},
+    blurb:{en:'How you placed, and what the sea looked like when the season closed.',
+           kr:'내가 몇 등이었는지, 그리고 폐장했을 때 바다가 어땠는지.'},
+    cols:[
+      {k:'games',        l:{en:'Seasons',kr:'시즌'},   f:F.int, sum:true},
+      {k:'firsts',       l:{en:'1st',kr:'1등'},        f:F.int, sum:true},
+      {k:'best',         l:{en:'Best',kr:'최고 점수'},  f:F.int},
+      {k:'collapsed',    l:{en:'Collapsed',kr:'붕괴'},  f:F.int, sum:true},
+      {k:'med_pct',      l:{en:'Sea at close',kr:'폐장 어족'}, f:F.pct},
+      {k:'depleted',     l:{en:'Under half',kr:'절반 미만'}, f:F.int, sum:true},
+      {k:'effort_share', l:{en:'My fleet',kr:'선단 지분'}, f:F.pct}
+    ] }
 ];
 
 /* ---------- 음 이름 ----------
@@ -377,6 +405,25 @@ var U = {
   delMissing:{en:'Deletion is not set up on the server yet.',
               kr:'삭제 기능이 서버에 아직 설정되지 않았어요.'},
   delFail:{en:'Could not delete.', kr:'지우지 못했어요.'},
+  seaFound:{en:'WHAT THE SEAS LOOKED LIKE', kr:'바다는 어땠나'},
+  seaPlayed:{en:'%G seasons played. The sea collapsed in %C of them.',
+             kr:'%G시즌을 놀았고, 그중 %C시즌에서 바다가 무너졌습니다.'},
+  seaHealthy0:{en:'Of the seasons that did not collapse, the number that closed at or above MSY: none.',
+               kr:'붕괴를 면한 시즌 중 MSY 이상으로 폐장한 것: 없습니다.'},
+  seaHealthyN:{en:'Of the seasons that did not collapse, %H closed at or above MSY.',
+               kr:'붕괴를 면한 시즌 중 %H시즌이 MSY 이상으로 폐장했습니다.'},
+  seaBest:{en:'The best sea you have left behind sat at %B of MSY; the middle one at %M.',
+           kr:'가장 나은 바다는 MSY의 %B였고, 가운데 값은 %M였습니다.'},
+  seaWhy:{en:'This is not a grade. Five other fleets keep fishing whatever you do, so the room a single restrained player has is narrow — measured on the open sea, fishing nothing at all leaves about 59% of MSY and ordinary play about 51%. That gap is the point: SDG 14.4 asks for regulation, not personal restraint.',
+          kr:'이건 성적이 아닙니다. 당신이 무엇을 하든 다섯 선단은 계속 잡으므로, 혼자 절제해서 벌 수 있는 폭은 좁습니다 — 먼바다에서 재보면 한 척도 띄우지 않아도 MSY의 약 59%, 보통 플레이가 약 51%입니다. 그 간격이 요점이에요. SDG 14.4가 요구하는 것은 개인의 절제가 아니라 규제입니다.'},
+  seaIuu:{en:'FISHING OUTSIDE THE LICENCE', kr:'면허 밖 조업'},
+  seaIuuLine:{en:'%R rounds with unlicensed boats · caught %F of %A times the books were opened on you · %P paid in fines and penalties.',
+              kr:'무면허 배를 띄운 라운드 %R회 · 장부가 열린 %A회 중 %F회 적발 · 벌금·과태료 %P.'},
+  seaIuuNone:{en:'You have never sent a boat outside the licence.',
+              kr:'면허 밖으로 배를 띄운 적이 없습니다.'},
+  seaAcc:{en:'Reports filed: %A, of which %H stuck.', kr:'신고 %A회 중 %H회 적중.'},
+  seaMsyNote:{en:'MSY — maximum sustainable yield — is the stock level a sea refills fastest from. Here that is 500 tonnes, so 100% means the sea was handed on in the state the treaty asks for.',
+              kr:'MSY(최대지속가능생산량)는 바다가 가장 빨리 채워지는 어족 수준입니다. 이 바다에서는 500톤이므로, 100%는 협약이 요구하는 상태 그대로 넘겨줬다는 뜻이에요.'},
   privacy:{en:'These numbers are visible only to you. This page has no public version and no comparison against other people.',
            kr:'이 숫자들은 본인에게만 보입니다. 이 페이지에는 공개 버전이 없고, 다른 사람과의 비교도 없어요.'}
 };
@@ -541,6 +588,38 @@ function table(c, rows){
   return h + '</tbody></table></div>';
 }
 
+/* ---------- 에리시크톤: 표 + 「발견」 ----------
+   표는 공용 table() 을 그대로 쓰고, 그 밑에 전체 합계로만 말할 수 있는 문장들을 붙인다.
+   중앙값이 여기 사는 이유는 하나다 — 난이도별 중앙값을 더해도 전체 중앙값이 되지 않는다. */
+function seaBody(c, rows, tot){
+  var h = table(c, rows);
+  var g = Number(tot.games || 0);
+  h += '<div class="vrspread"><b>' + esc(L(U.seaFound)) + '</b> ' +
+       esc(fill(L(U.seaPlayed), { G: g, C: Number(tot.collapsed || 0) }));
+  var healthy = Number(tot.healthy || 0);
+  h += ' ' + esc(healthy === 0 ? L(U.seaHealthy0) : fill(L(U.seaHealthyN), { H: healthy }));
+  /* 붕괴만 한 시즌뿐이면 best/med 가 null 이다. 없는 숫자를 0% 로 인쇄하지 않는다. */
+  if (tot.best_pct != null && tot.med_pct != null){
+    h += ' ' + esc(fill(L(U.seaBest), { B: Number(tot.best_pct).toFixed(1) + '%',
+                                        M: Number(tot.med_pct).toFixed(1) + '%' }));
+  }
+  h += '<i>' + esc(L(U.seaWhy)) + '</i></div>';
+
+  h += '<div class="vrspread"><b>' + esc(L(U.seaIuu)) + '</b> ';
+  if (Number(tot.ill_rounds || 0) === 0 && Number(tot.audited || 0) === 0){
+    h += esc(L(U.seaIuuNone));
+  } else {
+    h += esc(fill(L(U.seaIuuLine), {
+      R: Number(tot.ill_rounds || 0), F: Number(tot.fined || 0),
+      A: Number(tot.audited || 0), P: Number(tot.fines_paid || 0).toLocaleString() }));
+  }
+  if (Number(tot.acc_made || 0) > 0){
+    h += ' ' + esc(fill(L(U.seaAcc), { A: Number(tot.acc_made), H: Number(tot.acc_hit || 0) }));
+  }
+  h += '<i>' + esc(L(U.seaMsyNote)) + '</i></div>';
+  return h;
+}
+
 /* ---------- 카드 하나. 실패는 이 안에서 끝난다 ---------- */
 function shell(c, body, extra){
   return '<div class="card" id="card-' + c.key + '"><div class="card-head"><h2>' +
@@ -563,6 +642,12 @@ function paintCard(c, state){
     extra = '<span class="tot">' + Number(sm.n_readings || 0).toLocaleString() + ' ' +
             esc(L(U.times)) + '</span>';
     body = floorBody(c, sm, state.rows2 || []) +
+      '<div class="actions"><button class="del" data-key="' + c.key + '">' +
+      esc(state.delMsg || L(U.del)) + '</button></div>';
+  } else if (c.kind === 'sea'){
+    var gn = state.rows.reduce(function(a, r3){ return a + (Number(r3.games) || 0); }, 0);
+    extra = '<span class="tot">' + gn.toLocaleString() + ' ' + esc(L(U.totGames)) + '</span>';
+    body = seaBody(c, state.rows, (state.rows2 && state.rows2[0]) || {}) +
       '<div class="actions"><button class="del" data-key="' + c.key + '">' +
       esc(state.delMsg || L(U.del)) + '</button></div>';
   } else if (c.kind === 'range'){
