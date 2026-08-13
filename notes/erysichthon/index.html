@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Erysichthon — KYGMIN Notes</title>
+<meta name="description" content="A write-up of the commons-sea game: seven measurement cycles in one day, twelve hand-tuned fixes killed by measurement, a fishery that organises itself just below the regulator's line, and one rejected knob that turned out to be alive after all." />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#F6F6F4;
+  --ink:#141414;
+  --gray:#DDDDD8;
+  --green:#2BB673;
+  --green-deep:#0F6E56;
+  --red:#A32D2D;
+  --arch:'Archivo','Pretendard',sans-serif;
+  --sans:'Pretendard',-apple-system,'Apple SD Gothic Neo','Malgun Gothic','Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono','SF Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{transition:none!important;}
+}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:16px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  word-break:keep-all;overflow-wrap:break-word;
+}
+a{color:inherit;}
+a:focus-visible,button:focus-visible{outline:3px solid var(--green);outline-offset:3px;}
+.wrap{max-width:960px;margin:0 auto;padding:0 24px;}
+.narrow{max-width:720px;}
+
+/* ── Nav ── */
+nav{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:3px solid var(--ink);}
+.nav-inner{
+  max-width:960px;margin:0 auto;padding:14px 24px;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;
+}
+.logo{font-family:var(--arch);font-weight:900;font-size:19px;letter-spacing:-0.5px;text-decoration:none;white-space:nowrap;}
+.logo em{font-style:normal;background:var(--green);color:var(--paper);padding:0 6px;display:inline-block;transform:rotate(-1.5deg);}
+.nav-links{display:flex;gap:8px;flex-wrap:wrap;}
+.nav-links a{
+  font-family:var(--arch);font-size:12px;font-weight:700;text-transform:uppercase;
+  border:2px solid var(--ink);padding:6px 13px;background:#fff;text-decoration:none;
+  box-shadow:3px 3px 0 var(--ink);transition:transform .1s, box-shadow .1s;
+}
+.nav-links a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+.nav-links a.on{background:var(--green);color:var(--paper);}
+
+/* ── Hero ── */
+header{padding:64px 0 44px;border-bottom:3px solid var(--ink);}
+.sec-tag{
+  font-family:var(--mono);font-size:12.5px;font-weight:600;
+  color:var(--green-deep);letter-spacing:1px;display:block;margin-bottom:16px;
+}
+h1{
+  font-family:var(--arch);font-weight:900;text-transform:uppercase;
+  font-size:clamp(30px, 5.4vw, 50px);line-height:1.05;letter-spacing:-2px;max-width:840px;
+}
+h1 .box{background:var(--ink);color:var(--paper);padding:0 12px;display:inline-block;transform:rotate(-1deg);}
+.hero-sub{margin-top:22px;font-size:16.5px;max-width:640px;font-weight:500;}
+.hero-note{margin-top:14px;font-family:var(--mono);font-size:12px;color:#4A4A46;}
+.hero-cta{margin-top:20px;display:flex;align-items:center;gap:9px;flex-wrap:wrap;}
+.hero-cta a,.hero-cta span{
+  font-family:var(--arch);font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;
+  border:2px solid var(--ink);padding:6px 12px;text-decoration:none;white-space:nowrap;
+  box-shadow:3px 3px 0 var(--ink);transition:transform .1s, box-shadow .1s;
+}
+.hero-cta a{background:#fff;color:var(--ink);}
+.hero-cta a:first-child{background:var(--green);color:var(--paper);}
+.hero-cta a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+.hero-cta span{background:var(--paper);color:#6B6B67;border-color:#B9B9B3;box-shadow:none;
+  font-family:var(--mono);font-size:10.5px;padding:6px 10px;}
+
+/* ── Article ── */
+main{padding:52px 0 96px;}
+article h2{
+  font-family:var(--arch);font-weight:900;text-transform:uppercase;
+  font-size:clamp(21px,3vw,27px);letter-spacing:-1px;line-height:1.2;
+  margin:56px 0 6px;padding-top:22px;border-top:3px solid var(--ink);
+}
+article h2:first-child{margin-top:0;padding-top:0;border-top:none;}
+article h2 .n{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--green-deep);
+  display:block;letter-spacing:1px;margin-bottom:8px;text-transform:none;}
+article h3{font-family:var(--arch);font-weight:700;font-size:17px;margin:32px 0 6px;letter-spacing:-0.3px;}
+article p{margin:14px 0;max-width:720px;}
+article ul{margin:14px 0 14px 22px;max-width:720px;}
+article li{margin:7px 0;}
+article strong{font-weight:700;}
+code{font-family:var(--mono);font-size:.9em;background:#EDEDE8;padding:1px 5px;border:1px solid var(--gray);}
+.eq{
+  font-family:var(--mono);font-size:13.5px;line-height:1.9;
+  background:#fff;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);
+  padding:18px 20px;margin:22px 0;max-width:720px;overflow-x:auto;white-space:pre;
+}
+.eq b{color:var(--green-deep);font-weight:600;}
+
+/* callouts */
+.note{
+  border-left:6px solid var(--green);background:#fff;border:3px solid var(--ink);
+  border-left-width:9px;padding:16px 20px;margin:24px 0;max-width:720px;
+}
+.note .k{font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:1px;
+  color:var(--green-deep);display:block;margin-bottom:6px;}
+.note.warn{border-left-color:var(--red);}
+.note.warn .k{color:var(--red);}
+.note p{margin:8px 0;}
+.note p:first-of-type{margin-top:0;}
+.note p:last-child{margin-bottom:0;}
+
+/* tables */
+.tw{overflow-x:auto;margin:24px 0;max-width:720px;}
+table{border-collapse:collapse;font-size:13.5px;width:100%;background:#fff;
+  border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);}
+caption{caption-side:bottom;text-align:left;font-family:var(--mono);font-size:11.5px;
+  color:#4A4A46;padding-top:10px;line-height:1.6;}
+th,td{border-bottom:1px solid var(--gray);padding:8px 12px;text-align:right;white-space:nowrap;}
+th:first-child,td:first-child{text-align:left;}
+/* 숫자 칸(.num)만 오른쪽. 산문이 든 칸은 왼쪽 정렬하고 줄바꿈을 허용한다. */
+th:not(.num),td:not(.num){text-align:left;white-space:normal;}
+th.num,td.num{text-align:right;white-space:nowrap;}
+thead th{background:var(--ink);color:var(--paper);font-family:var(--mono);
+  font-size:11.5px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;border-bottom:none;}
+tbody tr:last-child td{border-bottom:none;}
+td.num,th.num{font-family:var(--mono);}
+tr.hi td{background:#EAF7F0;font-weight:700;}
+tr.bad td{background:#FBEDED;}
+
+/* inline bars (reuse of the result-page component) */
+.bars{margin:22px 0;max-width:640px;}
+.bar-row{margin-bottom:9px;}
+.bar-row .top{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;margin-bottom:3px;}
+.bar-row .track{height:14px;background:var(--gray);border:2px solid var(--ink);}
+.bar-row .fill{height:100%;background:var(--green);}
+.bar-row .fill.b{background:var(--ink);}
+
+.foot-cta{
+  margin-top:64px;border:3px solid var(--ink);background:#fff;box-shadow:6px 6px 0 var(--ink);
+  padding:24px;max-width:720px;
+}
+.foot-cta a{
+  display:inline-block;font-family:var(--arch);font-weight:700;font-size:13px;text-transform:uppercase;
+  border:2px solid var(--ink);background:var(--green);color:var(--paper);
+  padding:9px 16px;box-shadow:3px 3px 0 var(--ink);text-decoration:none;margin-top:12px;
+  transition:transform .1s, box-shadow .1s;
+}
+.foot-cta a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+
+footer{border-top:3px solid var(--ink);padding:22px 0;}
+.foot-inner{max-width:960px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;
+  gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:11.5px;color:#4A4A46;}
+
+/* 첫 수 카드 분포 — 아홉 칸 히스토그램 */
+.dist{margin:22px 0;max-width:720px;}
+.dist .lbl{font-family:var(--mono);font-size:11.5px;color:#4A4A46;margin-bottom:6px;}
+.dist .cols{display:flex;align-items:flex-end;gap:4px;height:120px;
+  border-bottom:3px solid var(--ink);padding-bottom:0;}
+.dist .col{flex:1;background:var(--green);border:2px solid var(--ink);border-bottom:none;min-height:2px;}
+.dist .col.hot{background:var(--ink);}
+.dist .axis{display:flex;gap:4px;margin-top:5px;}
+.dist .axis span{flex:1;text-align:center;font-family:var(--mono);font-size:11px;color:#4A4A46;}
+.dist .cap{font-family:var(--mono);font-size:11.5px;color:#4A4A46;margin-top:8px;line-height:1.6;}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:26px;max-width:720px;margin:22px 0;}
+@media (max-width:640px){ .two{grid-template-columns:1fr;} }
+.two .dist{margin:0;}
+</style></head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="/index.html">KYG<em>MIN</em></a>
+    <div class="nav-links">
+      <a href="/index.html">Home</a>
+      <a href="/playhouse/">PLAYHOUSE</a>
+      <a href="/notes/">Notes</a>
+      <a href="/cv.html">CV &#128274;</a>
+    </div>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <span class="sec-tag">NOTES &mdash; 08 &middot; ERYSICHTHON</span>
+    <h1>Twelve fixes died. <span class="box">One was still breathing.</span></h1>
+    <p class="hero-sub">Six delegations share one sea, and overfishing is the equilibrium. Building the institutions that hold it back took seven measurement cycles in a single day, and twelve of the fixes I was confident about were killed by the measurements. Then I ported the engine to JavaScript and found that one of the twelve had been pronounced dead while it was still doing something.</p>
+    <p class="hero-note">ENGLISH ONLY &middot; ~15 MIN &middot; 7 BALANCE CYCLES &middot; 12 REJECTED FIXES &middot; 6,410 PARITY ASSERTIONS</p>
+    <div class="hero-cta">
+      <a href="/playhouse/erysichthon/">Play Erysichthon &rarr;</a>
+      <a href="/notes/">All the write-ups &rarr;</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap narrow">
+  <article>
+    <h2><span class="n">01</span>What the sea is made of</h2>
+
+    <p>Six delegations fish one stock. Each round you choose how many licensed boats to send, how many unlicensed ones, how much of your warehouse to sell, and what catch figure to declare — and you choose all of it before you learn what anybody else chose. Then the ledger is published, one delegation may report another, and an audit may open somebody's books. After twelve rounds the treaty can conclude at any time. If the stock ever falls below the collapse line, nobody wins.</p>
+
+    <p>Three layers stack on top of each other. The biology and economics are Gordon-Schaefer: logistic recruitment, catch proportional to effort through a saturating function, convex costs on the legal fleet. The market layer separates catching from selling — you land fish into a warehouse and decide later when to sell into a price that falls as everyone sells at once. The institutional layer is Ostrom's: public disclosure, self-reporting that is allowed to be false, forensic audits, fines, and a bounty for the reporter who is right.</p>
+
+    <div class="eq">B' = (B &minus; H)&middot;(1 + r<b>eff</b>&middot;(1 &minus; B/K))     r<b>eff</b> = r&middot;(1 + N(0, 0.15))&middot;event
+
+u = 1 &minus; exp(&minus;q&middot;E<b>tot</b>)     H = u&middot;B     H<b>i</b> = H&middot;(E<b>i</b>/E<b>tot</b>)&middot;(1 + &epsilon;<b>i</b>)
+
+cost<b>i</b> = c&middot;L<b>i</b><b>^1.25</b> + 60&middot;X<b>i</b>       collapse: B &lt; 0.15K</div>
+
+    <div class="tw">
+    <table>
+      <caption>The constants that matter. The break-even stock c/(pq) sits at 120, deliberately below the collapse line at 150 — if fishing stayed profitable past the point of no return, the game would have no brake at all.</caption>
+      <thead><tr><th>Symbol</th><th class="num">Value</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td>K / r / B<span class="lc">₀</span></td><td class="num">1000 / 0.35 / 700</td><td>Carrying capacity, intrinsic growth, opening stock</td></tr>
+        <tr><td>q / p / c</td><td class="num">0.05 / 10 / 60</td><td>Catchability, base price, cost per legal boat</td></tr>
+        <tr><td>COST_GAMMA</td><td class="num">1.25</td><td>Convexity on legal cost — licences and port congestion</td></tr>
+        <tr><td>C_ILL</td><td class="num">60</td><td>Unlicensed cost, <em>linear</em> — the asymmetry that creates temptation</td></tr>
+        <tr><td>PRICE_ETA</td><td class="num">0.6</td><td>Demand elasticity: everyone selling at once crashes the price</td></tr>
+        <tr><td><span class="lc">σ</span> / R_NOISE</td><td class="num">0.12 / 0.15</td><td>Per-boat luck and unpublished recruitment variance</td></tr>
+        <tr><td>ALLEE</td><td class="num">150</td><td>Collapse line. Everybody loses, including the leader</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2><span class="n">02</span>The original sin is legal</h2>
+
+    <p>The first cycle produced a result I did not want. With linear costs the myopically optimal fleet was six to eight boats, past the cap of five. Since the institutions only investigate <em>unlicensed</em> fishing, a delegation that simply maxes out its legal fleet is untouchable. The greediest bot took 85&ndash;100% of games. The commons was being destroyed entirely legally, and every institution I had built was pointed somewhere else.</p>
+
+    <p>Two changes fixed it, and both had to be there. Convex legal cost (<span class="lc">γ</span> = 1.25) pulls the interior optimum down to two or three boats; price elasticity (<span class="lc">η</span> = 0.6) means that when everyone lands a lot at once, the price collapses on all of them. Crucially the <em>unlicensed</em> cost stayed linear — no licence, no port fee, no congestion. That asymmetry is the whole economic engine of temptation: expanding legally is expensive and expanding illegally is cheap.</p>
+
+    <div class="tw">
+    <table>
+      <caption>Cycle 1. Four prescriptions tried, two kept. The <span class="lc">γ</span> = 1.5 result is the useful one: over-correcting removed the decision instead of fixing it.</caption>
+      <thead><tr><th>Prescription</th><th>Measured</th><th class="num">Verdict</th></tr></thead>
+      <tbody>
+        <tr><td>Price elasticity alone (<span class="lc">η</span> 0.6)</td><td>Greediest bot still won 76&ndash;88%</td><td class="num">not enough</td></tr>
+        <tr class="hi"><td>Convex cost <span class="lc">γ</span> = 1.25</td><td>Interior optimum 2&ndash;3 boats</td><td class="num">kept</td></tr>
+        <tr class="bad"><td>Convex cost <span class="lc">γ</span> = 1.5</td><td>Optimum 1&ndash;2 boats, fleet choice disappears</td><td class="num">rejected</td></tr>
+        <tr class="bad"><td>Punishment = retaliate at full fleet</td><td>Extinction in 100% of games</td><td class="num">rejected</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="note">
+      <span class="k">A RULE THAT PAID FOR ITSELF</span>
+      <p>Two of the ten degenerate strategies in the test battery &mdash; always-max-fleet and end-game sniping &mdash; were dead in every difficulty from the first cycle onward, at roughly 0% win rate, without a single institution touching them. The sea executes them. Collective loss on collapse turned out to be a stronger defence against backward-induction unravelling than the random end date was.</p>
+    </div>
+
+    <h2><span class="n">03</span>The detector was looking at the wrong thing</h2>
+
+    <p>The moment warehouses went in, a strategy called <em>hoarder</em> won 42.8% of games on the hardest difficulty. The mechanism was not what I expected. Hoarding is legal. What made it dominant was that the bots' detector watched GDP, so every time the hoarder dumped a full warehouse its GDP spiked, a bot reported it, the audit found nothing, and the reporting bot paid the false-report fine. The hoarder was not evading the regulator. It was <em>farming</em> it &mdash; using the enforcement system as a weapon to bleed the other players.</p>
+
+    <p>The fix was to change what counts as an anomaly. It is not &ldquo;this delegation earned a lot&rdquo;. It is &ldquo;this delegation's tonnage does not reconcile with what its licensed boats could plausibly have caught&rdquo;. The books are public, so implied catch is recoverable:</p>
+
+    <div class="eq">implied   = sold + max(0, bonded inventory increase)
+plausible = u&middot;B&#770;&middot;(L<b>j</b> / E<b>pub</b>)         &times;1.35 on a migration round
+
+z = (implied &minus; plausible) / sd
+sd = max(3, plausible&middot;(<b>σ</b>&middot;1.5 + <b>R_NOISE</b>&middot;1.2) + 4&middot;dull)</div>
+
+    <p>An honest dump now reconciles and is innocent. Laundering does not reconcile, unless the round provides cover. And that last term in <code>sd</code> is the one I got wrong twice: an auditor has to be humble by exactly as much as recruitment might have varied. When I left <code>R_NOISE</code> out of the error budget, false accusations came back at 2.2 per game. Putting it in is not a fudge factor — it is the arithmetic of an observer who genuinely cannot separate a bad spawning year from a thief.</p>
+
+    <h2><span class="n">04</span>Five alibis, pointing in five directions</h2>
+
+    <p>A disturbance in the stock could be recruitment variance, weather, or theft, and you have to decide whether to report someone without being able to tell them apart. What makes that interesting rather than merely noisy is that each event opens a <em>different</em> excuse.</p>
+
+    <div class="tw">
+    <table>
+      <caption>Occurrence is public; magnitude never is. The typhoon is the only one that names its victims, which is why it is also the one that creates the sharpest asymmetry — the harbour closes for licensed boats and unlicensed boats sail anyway.</caption>
+      <thead><tr><th>Event</th><th>Channel</th><th>The excuse it buys</th></tr></thead>
+      <tbody>
+        <tr><td>Red tide</td><td>growth <span class="lc">×</span>U(.2,.6)</td><td>&ldquo;The stock fell on its own&rdquo; — and the quote rises the same round</td></tr>
+        <tr><td>Cold intrusion</td><td>growth <span class="lc">×</span>U(.4,.8)</td><td>The same, weaker</td></tr>
+        <tr><td>Migration</td><td>B <span class="lc">+</span>U(.05,.15)K</td><td>A good year for everyone — the auditor's ceiling widens 35%</td></tr>
+        <tr><td>Typhoon</td><td>two named fleets halved</td><td>&ldquo;We could not sail&rdquo;</td></tr>
+        <tr><td>Demand surge</td><td>reference demand <span class="lc">×</span>U(1.3,1.8)</td><td>&ldquo;The price was good, so we emptied the store&rdquo;</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>The migration multiplier is the cleanest thing in the design. Because the size of the shoal is never published, an honest auditor has no choice but to widen their bound — and that widened bound <em>is</em> the laundering window. The alibi is not narrative flavour bolted onto the rules. It is a coefficient inside the detector.</p>
+
+    <h2><span class="n">05</span>Twice the dial did nothing</h2>
+
+    <p>Two separate sweeps came back byte-for-byte identical. The first was a greed floor: raising the minimum appetite of every bot from 0.55/0.66 to 0.62/0.74 changed nothing at all. The second was the restraint cap, the ceiling on how greedy a bot may be once the stock enters the danger zone: same story, no movement.</p>
+
+    <p>Identical output from a changed input usually means the code is not wired up. Both times it was not a bug. It was the system reporting something about itself.</p>
+
+    <p><strong>The fishery organises itself just below the regulator's line.</strong> Every bot caps its appetite once its estimate falls under half of carrying capacity, and the stock converges to just under that line and stays there. So in the overwhelming majority of rounds every bot is already at the cap, and a floor on greed never gets the chance to fire. This is not a quirk of my parameters — it is what real regulated fisheries do, sitting up against whatever limit they are given. It is the reason the gauge in the finished game shows that line permanently, labelled as a political number rather than a biological one.</p>
+
+    <p><strong>And on top of that line, integers build a staircase.</strong> Boats are whole. Rounding a continuous appetite into a whole fleet flattens wide ranges of the dial into the same integer — near the line, everybody sends two boats, and at one specific threshold everybody sends three and the extinction rate explodes to 56%. The dial was continuous; the game was not.</p>
+
+    <p>The fix is a small one that unlocked everything after it: bots round <em>stochastically</em>, taking the floor plus a Bernoulli draw on the fraction. Average effective fleet becomes continuous again and the cap becomes a real handle. The same four cap values that had produced identical results now spread the win curve across 53.8 / 42.0 / 35.5 / 26.2. The human player still rounds like a human, because a slider that sometimes gives you three boats when you asked for two would be a bug, not a mechanic.</p>
+
+    <h2><span class="n">06</span>Strength is precision, not appetite</h2>
+
+    <p>For three cycles the difficulty curve was inverted: the player won <em>more</em> in the harder rooms. 65 / 71 / 84 / 92. Something about the hard rooms was helping the human.</p>
+
+    <p>I found three culprits by running discriminating experiments rather than guessing, and cleared two suspects the same way.</p>
+
+    <div class="tw">
+      <table>
+        <caption>Cycle 4. The two acquittals were as useful as the convictions — without them I would have spent the next cycle re-tuning the illegal-fishing coefficients, which had nothing to do with it.</caption>
+        <thead><tr><th>Suspect</th><th>Experiment</th><th>Verdict</th></tr></thead>
+        <tbody>
+          <tr class="bad"><td>False accusations between bots</td><td>3.33 per game on the hardest tier vs 0.29 on the easiest; bots lost 240 points each, the human seat lost nothing</td><td>guilty</td></tr>
+          <tr class="bad"><td>Bots over-buying surveys</td><td>Flattening the purchase rate moved the curve from 48/49/64/73 to 45/43/51/47</td><td>guilty</td></tr>
+          <tr class="bad"><td>The greed ladder</td><td>Setting every tier's greed multiplier to 1.0 flattened the curve to 44/44/45/47</td><td>guilty, backwards</td></tr>
+          <tr><td>Bots' illegal-fishing coefficient</td><td>Controlled at 1.0 across tiers: curve unchanged</td><td>cleared</td></tr>
+          <tr><td>Bots' lost illegal income</td><td>Same experiment</td><td>cleared</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>The greed result is the one worth sitting with. I had assumed a harder opponent is a hungrier one. Measurement said the opposite: past a point, more appetite is self-harm, because the myopic best response overshoots and the price crashes on the bot doing the overshooting. Making the hard bots greedier made them <em>worse</em>. I proposed a greed ladder twice, in different clothes, and it was rejected twice.</p>
+
+    <p>What actually separates the rooms is precision. A weak bot has a wide personality jitter, a noisy stock estimate, and a dull customs house; a strong bot has tight jitter, a clean estimate, and a sharp one. Clumsy hands, cloudy eyes, a dull customs house — against precise hands, clear eyes, a keen customs house. The accusation threshold is not part of the ladder either: it is not allowed below the floor that the catch noise itself sets, around 2.8, because a threshold under the noise is not sharpness, it is a bot that shouts at random.</p>
+
+    <h2><span class="n">07</span>Surveillance is a public good, so nobody paid for it</h2>
+
+    <p>By cycle five the science survey was dead weight. I measured it directly by deleting it: the reference player's win rate went from 49.5% to <strong>63.2%</strong> when it could no longer buy surveys. Information was costing about 120 points a game and returning less than that. The CPUE estimator was already good enough that measuring the sea properly told you almost nothing you did not have.</p>
+
+    <p>The same experiment cleared something else. Removing the reference player's illegal channel entirely moved it 49.5% to 48.0% — inside the noise. Laundering was not where the human advantage lived, which killed a planned fix (teaching the hard bots to launder) before I wrote a line of it. The residual advantage was one thing only: the human fished more, 18.5 boats a game against 12&ndash;15 for the restrained bots.</p>
+
+    <p>Rather than delete the survey I changed what it is for. It stopped being a fishing tool and became an <em>investigative</em> one. The survey vessel now also counts the dark tonnage: last round's total catch minus what the publicly declared fleets could account for. It cannot name anyone — the deduction stays yours — but it tells you whether there is something to find. Price dropped from 30 to 12, because the free-survey experiment had measured the information's actual worth at 10&ndash;15 points and I had been charging double.</p>
+
+    <p>That left the deeper problem, which is Ostrom's problem and not mine. Reporting a cheat benefits everybody; paying for the survey that lets you report benefits only you. Monitoring is a public good and public goods are undersupplied, so nobody watched. The real world's answer is to pay informants, so the game pays informants: <strong>a correct report returns 40% of the fine to whoever made it.</strong> A random audit pays the treasury instead.</p>
+
+    <div class="note">
+      <span class="k">A TIMING BUG THAT LOOKED LIKE A BALANCE BUG</span>
+      <p>The intel first shipped computing dark tonnage against the <em>current</em> stock estimate. That estimate is taken after fishing and regrowth, so it is systematically too low, so dark tonnage was almost always positive, so suspicion was inflated every round and false accusations came back. The survey vessel has to reason about the stock as it was <em>before</em> last round's catch. Chronological alignment is not a detail in forensic accounting; it is the whole subject.</p>
+    </div>
+
+    <p>The final measurement on the survey is my favourite number in the project. Buying it blindly a quarter of the time costs 6&ndash;7 percentage points of win rate. Buying it only when you already suspect something breaks exactly even. The survey does not reward spending. It rewards judgement, and it charges you for the absence of it.</p>
+
+    <h2><span class="n">08</span>The margin is a razor</h2>
+
+    <p>Cutting the survey price by 18 points — about 3% of a typical final score — moved the hardest tier's win rate by ten percentage points. I confirmed the size of the effect by splitting it two ways, purchase rate against price, and it held.</p>
+
+    <p>That ratio is now a standing rule on this project: <strong>touch any economic constant and the restraint caps have to be re-tuned in the same session.</strong> It is also why the balance figures cannot be eyeballed. A change that looks like rounding error in the score moves the outcome by more than the difference between two difficulty levels.</p>
+
+    <div class="tw">
+      <table>
+        <caption>The reference player's win rate across seven cycles. The curve had to become monotone before the absolute level could be shaped, and shaping the level then moved the whole curve up again — cycle 7's easy figure of 68% is deliberate but is on the observation list.</caption>
+        <thead><tr><th>Cycle</th><th class="num">EASY</th><th class="num">NORMAL</th><th class="num">HARD</th><th class="num">BRUTAL</th><th>What changed</th></tr></thead>
+        <tbody>
+          <tr class="bad"><td>1</td><td class="num">65</td><td class="num">71</td><td class="num">84</td><td class="num">92</td><td>inverted — harder rooms were easier</td></tr>
+          <tr><td>4</td><td class="num">55.5</td><td class="num">52.0</td><td class="num">55.2</td><td class="num">49.5</td><td>inversion gone, curve flat</td></tr>
+          <tr><td>5</td><td class="num">49</td><td class="num">45</td><td class="num">44</td><td class="num">45</td><td>survey cost identified as dead weight</td></tr>
+          <tr><td>6</td><td class="num">51.0</td><td class="num">43.8</td><td class="num">32.5</td><td class="num">34.3</td><td>stochastic rounding unlocked the caps</td></tr>
+          <tr class="hi"><td>7</td><td class="num">67.8</td><td class="num">53.2</td><td class="num">41.6</td><td class="num">38.8</td><td>survey redesigned, bounty added</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2><span class="n">09</span>Porting it, and what the harness caught</h2>
+
+    <p>The reference engine is Python. The game is a single HTML file. A port like this is only trustworthy if it can be shown to produce identical games from identical seeds, so the first thing built was not the interface but the parity harness — 6,410 assertions across four layers, from the random number generator up to complete games driven by ten different seat strategies.</p>
+
+    <p>Four things broke it, and none of them were the economics.</p>
+
+    <p><strong>Python's <code>round()</code> is banker's rounding.</strong> It rounds halves to even; JavaScript's <code>Math.round</code> rounds halves up. That function decides how many boats a cooperative player sends, so the two engines diverged on any round where the target landed exactly on a half.</p>
+
+    <p><strong>Short-circuit evaluation is part of the specification.</strong> In four places a condition is checked before a random number is drawn, so the draw only happens for some personas or some states. Reordering those checks for readability — putting the cheap numeric test first, as one normally would — changes how many numbers are consumed and every subsequent round diverges.</p>
+
+    <p><strong>One difficulty consumes fewer random numbers than the others.</strong> The hardest bots have zero estimation noise, and the code skips the draw entirely rather than drawing a zero-width Gaussian. Per-round random consumption is therefore tier-dependent.</p>
+
+    <p><strong>An early return skips more than it looks like it skips.</strong> A bot that stops fishing because the stock is critical also skips the one-time initialisation of its selling policy, so a bot that idles early draws that number several rounds later than one that does not.</p>
+
+    <div class="note">
+      <span class="k">ONE RULE LOOP, TWO DRIVERS</span>
+      <p>The original game loop runs to completion, which is fine for simulation and impossible for a human who has to decide inside it. The tempting fix is to write a second, asynchronous copy of the loop for the interface — and a second copy of a rule is how two versions of a rule are born. Instead the loop body became a generator that yields at the points where a human is asked something, and there are now two drivers over the same generator: a synchronous one for the simulations and an asynchronous one for the screen. Yielding consumes no randomness, so the whole parity suite was re-run after the refactor and still passes. The interface contains no rules at all; the stock gauge calls the same estimator the bots do.</p>
+    </div>
+
+    <h2><span class="n">10</span>The fix that was certified dead</h2>
+
+    <p>Back in cycle five, the greed floor produced byte-identical results and was written up as inert, with a note recommending removal. It was in the specification as a dead knob when I started porting.</p>
+
+    <p>It is not dead. It fires at construction time, before any game state exists, and the reason the sweep saw nothing is that the sweep only varied it inside a range where a <em>different</em> mechanism was already binding. Its actual effect is on the roster:</p>
+
+    <div class="tw">
+      <table>
+        <caption>Effective bot appetite by difficulty, measured over 4,000 constructions per cell. The floor is applied as a maximum against each persona's own value, so on the hardest tier four of the five personas are clamped to the same number.</caption>
+        <thead><tr><th>Tier</th><th class="num">floor</th><th class="num">Glutton</th><th class="num">Steward</th><th class="num">Grim</th><th class="num">Tit-for-tat</th><th class="num">Opportunist</th></tr></thead>
+        <tbody>
+          <tr><td>EASY</td><td class="num">0.00</td><td class="num">0.780</td><td class="num">0.450</td><td class="num">0.620</td><td class="num">0.620</td><td class="num">0.650</td></tr>
+          <tr><td>NORMAL</td><td class="num">0.45</td><td class="num">0.780</td><td class="num">0.470</td><td class="num">0.620</td><td class="num">0.620</td><td class="num">0.650</td></tr>
+          <tr><td>HARD</td><td class="num">0.60</td><td class="num">0.780</td><td class="num">0.600</td><td class="num">0.627</td><td class="num">0.627</td><td class="num">0.651</td></tr>
+          <tr class="bad"><td>BRUTAL</td><td class="num">0.70</td><td class="num">0.780</td><td class="num">0.700</td><td class="num">0.700</td><td class="num">0.700</td><td class="num">0.700</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>On the hardest difficulty the Steward — the cast's moral anchor, the delegation that is supposed to fish conservatively no matter what — has exactly the same appetite as the grudge-holder and the opportunist. The cast loses its personalities in the room where personalities should matter most. And the greed ladder that measurement rejected twice, in cycle 4 and again in cycle 5, is present anyway through a side door.</p>
+
+    <p>Both original measurements were correct. The floor really did nothing to the <em>dynamics</em> that were swept, and it really does something to the <em>roster</em>, which was never swept. The error was in the sentence that joined them: <em>inert</em> is a claim about a system, and it was written from an experiment that only touched part of one.</p>
+
+    <p>I ported it exactly as it stands, because the balance baseline and every parity fixture were generated with it live, and changing it means re-running everything downstream. The razor-thin margin rule applies to itself. But the specification now says it is alive, with the table above, instead of saying it is dead.</p>
+
+    <h2><span class="n">11</span>The baseline could not police its own tolerance</h2>
+
+    <p>The handover asked for the JavaScript win rates to match the Python ones within three percentage points. Four cells missed, by up to five points. Since the two engines use different random number generators, seeded games are not comparable and a difference of that size is not obviously wrong — but &ldquo;probably sampling noise&rdquo; is not a result.</p>
+
+    <p>So I made it comparable. Running the Python side with the portable generator instead of its own puts both engines on identical seed streams, and then the comparison stops being statistical: <strong>all 120 numbers across 40 cells matched exactly.</strong></p>
+
+    <p>Which left the question of where the original five-point gap came from. Growing the JavaScript sample shrank it — 5.0, then 4.1, then 3.2 points — but it would not go to zero, so I re-measured the <em>Python</em> side at 8,000 games too.</p>
+
+    <div class="tw">
+      <table>
+        <caption>The two engines agree to within 1.2 points at 8,000 games each, which at that sample is about 1.5 standard errors. The gap was never in the port.</caption>
+        <thead><tr><th>Cell</th><th class="num">Python, 8,000</th><th class="num">JS, 8,000</th><th class="num">&Delta;</th><th class="num">Shipped baseline (500)</th></tr></thead>
+        <tbody>
+          <tr class="bad"><td>easy / hoarder</td><td class="num">24.0%</td><td class="num">23.6%</td><td class="num">&minus;0.4</td><td class="num">19.0%</td></tr>
+          <tr><td>normal / hoarder</td><td class="num">19.7%</td><td class="num">19.7%</td><td class="num">0.0</td><td class="num">22.0%</td></tr>
+          <tr class="bad"><td>hard / hoarder</td><td class="num">17.7%</td><td class="num">17.0%</td><td class="num">&minus;0.7</td><td class="num">20.2%</td></tr>
+          <tr><td>normal / reference</td><td class="num">54.5%</td><td class="num">53.3%</td><td class="num">&minus;1.2</td><td class="num">53.2%</td></tr>
+          <tr><td>brutal / reference</td><td class="num">39.0%</td><td class="num">38.9%</td><td class="num">&minus;0.1</td><td class="num">38.8%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>The gap was in the baseline. At 500 games a win rate near 20% carries a standard error of 1.8 points, so its 95% interval is about &plusmn;3.5 — and near 50% it is &plusmn;4.4. The baseline was being asked to police a three-point tolerance that is <em>narrower than its own uncertainty</em>. Two of its cells sit five and 2.7 points away from where they converge.</p>
+
+    <p>This is the same mistake as the accuracy figure in the authorship write-up and the same mistake as the false-accusation rate earlier in this one: a number that was measured correctly, and then asked to answer a question it did not have the resolution to answer. The new baseline is 4,000 games, where the standard error at 20% is 0.63 points and a three-point tolerance means something.</p>
+
+    <h2><span class="n">12</span>What I still do not know</h2>
+
+    <p>Three figures are shipped as deliberate and flagged for real-use confirmation, because a simulated reference player is not a person.</p>
+
+    <p>The easiest room gives the reference player 67.8% of games. That is generous, and it is meant to be a playground, but &ldquo;generous&rdquo; measured against a bot is not the same as generous felt by somebody who has never seen a Gordon-Schaefer curve. Bots on the harder tiers still falsely accuse each other 1.8 to 1.9 times per game; the accusation threshold cannot go below the noise floor, so some of that is structural, but I do not know how much bleeding is too much until people watch it happen. And the sea dies in 13&ndash;16% of games on the hardest difficulty — roughly one in seven. As drama that seems about right. As an experience it may simply be discouraging.</p>
+
+    <p>The largest thing I do not know is whether any of the theory arrives. The design has a Gordon-Schaefer stock, an Allee threshold, a common-pool dilemma, Ostrom's graduated sanctions and her monitoring problem, and a forensic reconciliation that a real fisheries auditor would recognise. None of that is on screen. What is on screen is a slider, a ledger, and the question of whether to accuse somebody. If the physics of it never surfaces as a feeling — <em>the sea is sitting right under the line and everybody knows it and nobody moves</em> — then the seven cycles bought a balanced game and taught nobody anything, which was not the point.</p>
+
+    <div class="foot-cta">
+      <p style="margin-top:0"><strong>Six delegations, one sea.</strong> Everyone can see the ledger; nobody can see the sea. It runs entirely in the tab and stores nothing.</p>
+      <a href="/playhouse/erysichthon/">Open Erysichthon &rarr;</a>
+    </div>
+
+  </article>
+  </div>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <span>&copy; KYGMIN.COM</span>
+    <span>NOTES 08 &middot; ERYSICHTHON &middot; MEASURED 2026-08</span>
+  </div>
+</footer>
+
+</body>
+</html>
