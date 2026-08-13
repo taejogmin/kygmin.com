@@ -331,7 +331,7 @@ footer{border-top:3px solid var(--ink);padding:20px 0;}
 <footer>
   <div class="foot-inner">
     <span>&copy; KYGMIN.COM</span>
-    <span class="tx" data-en="CLIENT-SIDE ONLY · NOTHING IS STORED" data-kr="클라이언트 전용 · 아무것도 저장하지 않습니다">CLIENT-SIDE ONLY · NOTHING IS STORED</span>
+    <span class="tx" data-en="RULES RUN IN YOUR BROWSER · THE SEASON&#39;S RESULT IS RECORDED" data-kr="규칙은 브라우저에서 돌아갑니다 · 시즌 결과는 기록됩니다">RULES RUN IN YOUR BROWSER · THE SEASON&#39;S RESULT IS RECORDED</span>
     <a class="tx" href="/privacy.html" data-en="PRIVACY POLICY" data-kr="개인정보처리방침">PRIVACY POLICY</a>
   </div>
 </footer>
@@ -1160,10 +1160,10 @@ const T = {
   start:       { en: ['Open the season'], kr: ['조업 개시'] },
   yourName:    { en: ['Your delegation'], kr: ['당신의 대표단'] },
   traveler:    { en: ['Traveler'], kr: ['여행자'] },
-  signedIn:    { en: ['Signed in as %N — your delegation is named for you. Change it here if you like.'],
-                 kr: ['%N 님으로 로그인되어 있어요 — 대표단 이름이 자동으로 들어갔습니다. 바꾸고 싶으면 고쳐도 돼요.'] },
-  guestNote:   { en: ['Sign in (bottom left) and your nickname becomes your delegation. Nothing is stored either way.'],
-                 kr: ['왼쪽 아래에서 로그인하면 닉네임이 대표단 이름이 됩니다. 어느 쪽이든 저장되는 건 없습니다.'] },
+  signedIn:    { en: ['Signed in as %N — your delegation is named for you, and this season lands on your record. Change the name here if you like.'],
+                 kr: ['%N 님으로 로그인되어 있어요 — 대표단 이름이 자동으로 들어갔고, 이번 시즌은 내 기록에 남습니다. 이름은 고쳐도 돼요.'] },
+  guestNote:   { en: ['Sign in (bottom left) and your nickname becomes your delegation — and your seasons start counting on your record.'],
+                 kr: ['왼쪽 아래에서 로그인하면 닉네임이 대표단 이름이 되고, 그때부터 시즌이 내 기록에 쌓입니다.'] },
   round:       { en: ['Round'], kr: ['라운드'] },
   stock:       { en: ['STOCK ESTIMATE'], kr: ['어족 추정'] },
   quote:       { en: ['QUOTE'], kr: ['시세'] },
@@ -1341,7 +1341,7 @@ class Band {
 const S = {
   tier: 'normal', nations: [], me: 0, game: null, it: null, seat: null, band: null,
   cfg: null, resolve: null, last: null, pub: null, log: [], history: [],
-  peakB: CFG.B0, myName: { en: 'Traveler', kr: '여행자' }, endRes: null,
+  peakB: CFG.B0, myName: { en: 'Traveler', kr: '여행자' }, endRes: null, tape: null,
 };
 
 function nation(i) { return S.nations[i]; }
@@ -1628,6 +1628,7 @@ function paintEnd(res) {
 function renderEnd(res) {
   S.endRes = res;
   paintEnd(res);
+  logGame(res);
   $$('.act').forEach(a => a.hidden = true);
   $('#game').hidden = true;
   $('#end').hidden = false;
@@ -1655,6 +1656,8 @@ async function drive() {
       case 'decide': {
         const a = await wait();
         S.myAct = a;
+        if (a.survey) S.tape.surveys++;
+        if (a.X > 0) { S.tape.illRounds++; S.tape.illBoats += a.X; }
         r = S.it.next(a);
         break;
       }
@@ -1664,6 +1667,9 @@ async function drive() {
         else if (S.myAct.L + S.myAct.X > 0) S.band.fished();
         else S.band.idled();
         S.pub = q;
+        // 선단 지분은 공개 정보(장부에 실린 합법 선단)로만 잰다. 남의 불법은 알 수 없다.
+        S.tape.myEffort += q.pub.L[0];
+        S.tape.roomEffort += q.pub.L.reduce((a, b) => a + b, 0);
         renderLedger(q);
         renderGauge();
         renderHud();
@@ -1690,6 +1696,7 @@ async function drive() {
         $('#accSkip').addEventListener('click', () => answer(null));
         $('#accGo').addEventListener('click', () => answer(sel));
         const tgt = await wait();
+        if (tgt !== null && tgt !== undefined) S.tape.accMade++;
         $('#a3ask').innerHTML = '';
         r = S.it.next(tgt);
         break;
@@ -1707,6 +1714,9 @@ async function drive() {
         break;
       }
       case 'audit': {
+        // by === 'rejected' 는 장부가 열리지 않은 것이므로 수사로 세지 않는다.
+        if (q.by !== 'rejected' && q.tgt === 0) { S.tape.audited++; if (q.guilty) S.tape.fined++; }
+        if (q.by === 'accusation' && q.proposer === 0 && q.guilty) S.tape.accHit++;
         if (q.by === 'random') pushLog(t('auditRand', { T: nname(q.tgt) }));
         else if (q.by === 'rejected') { pushLog(t('auditRej', { V: q.votes })); }
         else pushLog(t('auditAcc', { V: q.votes }));
@@ -1723,6 +1733,7 @@ async function drive() {
         break;
       }
       case 'roundEnd': {
+        S.tape.minB = Math.min(S.tape.minB, q.B);
         $('#a3next').hidden = false;
         await wait();
         $('#a3next').hidden = true;
@@ -1753,6 +1764,13 @@ function startGame() {
   S.game = new Game(S.tier, S.seat, null, gameRng);
   S.it = S.game.play();
   S.history = []; S.log = []; S.peakB = cfg.B0;
+  // 한 판 동안 세는 것들. 규칙이 아니라 기록용이므로 엔진은 이걸 모른다.
+  // minB 는 첫 라운드 전 B0 부터 시작한다 — 시즌 최저점이지 폐장값이 아니다.
+  S.tape = {
+    gameId: uuid4(), minB: cfg.B0, myEffort: 0, roomEffort: 0,
+    illRounds: 0, illBoats: 0, audited: 0, fined: 0,
+    accMade: 0, accHit: 0, surveys: 0, logged: false,
+  };
   $('#setup').hidden = true;
   $('#end').hidden = true;
   $('#game').hidden = false;
@@ -1760,9 +1778,70 @@ function startGame() {
   drive();
 }
 
+// ── 기록 전송 ─────────────────────────────────────────────────────────────
+// 폐장 때 딱 한 행. 표는 쓰기 전용이라 고칠 수도 지울 수도 없고, 읽기는 집계 RPC 로만 한다
+// (erysichthon-schema.sql). 다른 게임(np/ip/pyr)과 같은 패턴이다.
+//
+// 이 함수는 절대 게임을 멈추면 안 된다. 로그인 위젯이 없거나 네트워크가 죽어도
+// 성적표는 그대로 떠야 하므로 전부 try 로 감싸고 실패는 콘솔 경고로 끝낸다.
+function uuid4() {
+  if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+    const r = Math.random() * 16 | 0, v = (c === 'x') ? r : ((r & 0x3) | 0x8);
+    return v.toString(16);
+  });
+}
+function guestId() {
+  try {
+    let g = localStorage.getItem('kyg_guest_id');   // 사이트 공통 키 — 게임끼리 같은 값을 쓴다
+    if (!g) {
+      g = (window.crypto && crypto.randomUUID)
+        ? crypto.randomUUID()
+        : 'g' + Date.now() + '-' + Math.random().toString(16).slice(2);
+      localStorage.setItem('kyg_guest_id', g);
+    }
+    return g;
+  } catch (e) { return null; }
+}
+
+function logGame(res) {
+  try {
+    const tape = S.tape;
+    if (!tape || tape.logged) return;
+    const A = window.KYG_AUTH;
+    if (!A || !A.client) return;
+    tape.logged = true;                       // 중복 전송 차단 (game_id 유니크가 2차 방어선)
+
+    const score = res.score.map((v) => Math.round(v));
+    // 등수는 점수 내림차순에서 내 자리. 멸종 판에도 등수는 계산하지만,
+    // "1등" 으로 세는 것은 RPC 가 extinct = false 인 판만 고른다.
+    const rank = score.slice().sort((a, b) => b - a).indexOf(score[0]) + 1;
+    const ty = (S.game.tally && S.game.tally[0]) || {};
+    const fines = Math.round(Math.abs(ty.fine || 0) + Math.abs(ty.misreport || 0));
+    const uid = A.user ? A.user.id : null;
+
+    const row = {
+      game_id: tape.gameId, user_id: uid, guest_id: uid ? null : guestId(),
+      difficulty: S.tier, rules_ver: 'v1.6',
+      rank, score: score[0], top_score: Math.max(...score),
+      rounds: S.game.log.rounds,
+      extinct: res.winner === null,
+      final_b: +S.game.B.toFixed(2),
+      min_b: +Math.min(tape.minB, S.game.B).toFixed(2),
+      b_msy: +(S.cfg.K / 2).toFixed(2),
+      my_effort: tape.myEffort, room_effort: tape.roomEffort,
+      ill_rounds: tape.illRounds, ill_boats: tape.illBoats,
+      audited: tape.audited, fined: tape.fined, fines_paid: fines,
+      acc_made: tape.accMade, acc_hit: tape.accHit, surveys: tape.surveys,
+    };
+    A.client.from('ery_games').insert([row]).then((r) => {
+      if (r && r.error) console.warn('ery log rejected', r.error.message);
+    });
+  } catch (e) { console.warn('ery log failed', e); }
+}
+
 // 사이트 공용 로그인 위젯 연동 (auth-widget.js).
-// 하는 일은 하나뿐이다 — 로그인된 닉네임을 대표단 이름 기본값으로 채운다.
-// 이 게임은 아무것도 저장하지 않으므로 client 는 쓰지 않는다 (리더보드는 v1 비범위).
+// 닉네임을 대표단 이름 기본값으로 채우고, 폐장 기록을 보낼 client 를 얻는다.
 function wireAuth() {
   const apply = (user, nickname) => {
     const el = $('#nick'), note = $('#nickNote');
