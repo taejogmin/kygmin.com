@@ -65,6 +65,11 @@ main{padding:32px 0 90px;}
 h2{font-family:var(--arch);font-weight:900;text-transform:uppercase;font-size:20px;letter-spacing:-0.8px;margin-bottom:14px;}
 .panel{border:3px solid var(--ink);background:#fff;box-shadow:6px 6px 0 var(--ink);padding:20px;margin-bottom:22px;}
 .hint{font-size:13px;color:#4A4A46;margin-top:6px;}
+.prim{border:3px solid var(--ink);border-left-width:9px;background:#fff;padding:13px 16px;margin:14px 0 4px;}
+.prim b{display:block;font-family:var(--arch);font-weight:900;font-size:14px;text-transform:uppercase;
+  letter-spacing:-.2px;margin-bottom:5px;}
+.prim p{font-size:13.5px;line-height:1.7;max-width:640px;}
+.hint.mono{font-family:var(--mono);font-size:11.5px;line-height:1.7;letter-spacing:.2px;}
 .u{font-family:var(--mono);font-size:12px;color:#6B6B67;}
 .btn{font-family:var(--arch);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.3px;
   border:2px solid var(--ink);background:#fff;padding:10px 16px;box-shadow:3px 3px 0 var(--ink);
@@ -212,6 +217,7 @@ footer{border-top:3px solid var(--ink);padding:20px 0;}
       <div class="panel">
         <h2 class="tx" data-en="Pick your water" data-kr="바다를 고르세요">Pick your water</h2>
         <p class="hint tx" data-en="The rooms differ in precision, not appetite: sharper hands, clearer eyes, a keener customs house." data-kr="방마다 다른 것은 탐욕이 아니라 정밀도입니다 — 더 정밀한 손, 더 맑은 눈, 더 예리한 세관.">The rooms differ in precision, not appetite: sharper hands, clearer eyes, a keener customs house.</p>
+        <div class="prim" id="msyPrimer"></div>
         <div id="tiers" style="margin-top:14px;">
           <button data-tier="easy"><span class="tn"></span><span class="td"></span></button>
           <button data-tier="normal" class="on"><span class="tn"></span><span class="td"></span></button>
@@ -252,6 +258,7 @@ footer{border-top:3px solid var(--ink);padding:20px 0;}
         <h2 class="tx" data-en="Stock estimate" data-kr="어족 추정">Stock estimate</h2>
         <div id="gaugeNum">—</div>
         <div id="gauge"></div>
+        <p class="hint mono" id="msyNote"></p>
         <p class="hint tx" data-en="The band is what you know, not what is true. A survey resets it; idling widens it. The bots read the same estimator — nobody here sees the real number." data-kr="이 밴드는 진실이 아니라 당신이 아는 만큼입니다. 조사는 되돌리고, 쉬면 넓어집니다. 봇도 같은 추정기를 봅니다 — 여기서 진짜 숫자를 보는 사람은 없습니다.">The band is what you know, not what is true. A survey resets it; idling widens it. The bots read the same estimator — nobody here sees the real number.</p>
       </div>
 
@@ -292,6 +299,7 @@ footer{border-top:3px solid var(--ink);padding:20px 0;}
         <p id="endLead"></p>
         <div class="tw" id="endBoard" style="margin-top:20px;"></div>
         <p id="endMsy"></p>
+        <p id="endMsyWhat" class="hint"></p>
         <p id="endSdg"></p>
         <div class="btns" style="margin-top:20px;">
           <button class="btn go" id="againBtn"><span class="tx" data-en="Another season" data-kr="다시 한 판">Another season</span></button>
@@ -1209,7 +1217,28 @@ const T = {
   youLost:     { en: ['%W finished first.'], kr: ['%W가 1위입니다.'] },
   you:         { en: ['you'], kr: ['당신'] },
   tonnes:      { en: ['t'], kr: ['톤'] },
+  msyTitle:    { en: ['One number decides this sea'], kr: ['이 바다는 숫자 하나로 정해집니다'] },
+  msyPrimer:   { en: ['Maximum sustainable yield (MSY) is the most a stock can replace on its own. Fish grow slowly when there are few of them and slowly again when the sea is full, so the fastest refill sits in between — here at %B tonnes of stock, where %Y tonnes come back every round. That is the catch of about %F boats shared between all six of you. Below %A tonnes the stock collapses and nobody wins.'],
+                 kr: ['최대지속가능생산량(MSY)은 어족이 스스로 되채울 수 있는 최대치입니다. 물고기는 적을 때도 느리게 늘고 바다가 꽉 차도 느리게 늘어서, 가장 빨리 채워지는 지점은 그 사이에 있습니다 — 이 바다에서는 어족 %B톤이고, 거기서는 라운드마다 %Y톤이 돌아옵니다. 여섯 나라가 합쳐서 %F척쯤 띄우면 잡는 양입니다. %A톤 아래로 떨어지면 어족이 붕괴하고 아무도 이기지 못합니다.'] },
+  msyGauge:    { en: ['MSY %B — where this sea refills fastest: %Y tonnes a round, about %F boats between all six of you. COLLAPSE %A — below that line nobody wins.'],
+                 kr: ['MSY %B — 이 바다가 가장 빨리 채워지는 지점입니다. 라운드마다 %Y톤이 붙고, 여섯 나라 합쳐 %F척이면 그만큼 잡습니다. 붕괴선 %A — 그 아래로 가면 아무도 이기지 못합니다.'] },
+  msyWhat:     { en: ['MSY — maximum sustainable yield — peaks at %B tonnes of stock here, so %P% is %S tonnes. The collapse line at %A tonnes is %C% on this scale.'],
+                 kr: ['MSY(최대지속가능생산량)의 정점은 이 바다에서 어족 %B톤이므로, %P%는 %S톤입니다. 붕괴선 %A톤은 이 눈금에서 %C%입니다.'] },
 };
+
+// MSY 관련 숫자는 전부 CFG 에서 유도한다 — 상수를 건드리면 문구가 따라온다 (하드코딩 금지).
+// 로지스틱 성장 rB(1−B/K) 는 B=K/2 에서 최대이고 그때의 잉여생산이 rK/4 다.
+function msyFacts(cfg) {
+  const Bmsy = cfg.K / 2;
+  const yield_ = cfg.r * cfg.K / 4;
+  const u = yield_ / Bmsy;
+  const boats = -Math.log(1 - u) / cfg.q;      // u = 1 − exp(−q·E) 의 역
+  const allee = cfg.ALLEE_FRAC * cfg.K;
+  return {
+    B: num(Bmsy), Y: yield_.toFixed(1), F: boats.toFixed(1), A: num(allee),
+    Bmsy, allee, collapsePct: Math.round(allee / Bmsy * 100),
+  };
+}
 function t(key, vars) {
   let s = (T[key] && T[key][lang()] ? T[key][lang()][0] : key);
   if (vars) for (const k of Object.keys(vars)) s = s.split('%' + k).join(vars[k]);
@@ -1280,6 +1309,8 @@ function gaugeSVG() {
 }
 
 function renderGauge() {
+  const f = msyFacts(S.cfg);
+  $('#msyNote').textContent = t('msyGauge', f);
   const bhat = S.seat.est.B;
   $('#gauge').innerHTML = gaugeSVG();
   $('#gaugeNum').textContent = `${num(bhat)} ± ${Math.round(S.band.v * 100)}%`;
@@ -1468,6 +1499,11 @@ function renderEnd(res) {
   $('#endLead').innerHTML = extinct ? t('endExtinctD')
     : (res.winner === 0 ? t('youWon') : t('youLost', { W: nname(res.winner) }));
   $('#endMsy').textContent = t('msyLine', { P: pct });
+  {
+    const f = msyFacts(c);
+    $('#endMsyWhat').textContent = t('msyWhat',
+      Object.assign({}, f, { P: pct, S: num(S.game.B, 0), C: f.collapsePct }));
+  }
   $('#endSdg').textContent = t('sdg');
   $$('.act').forEach(a => a.hidden = true);
   $('#game').hidden = true;
@@ -1622,7 +1658,13 @@ function wireAuth() {
   return apply;
 }
 
+function renderPrimer() {
+  const f = msyFacts(CFG);
+  $('#msyPrimer').innerHTML = `<b>${t('msyTitle')}</b><p>${t('msyPrimer', f)}</p>`;
+}
+
 function boot() {
+  renderPrimer();
   $$('#tiers button').forEach(b => b.addEventListener('click', () => {
     S.tier = b.dataset.tier;
     $$('#tiers button').forEach(x => x.classList.toggle('on', x === b));
@@ -1649,6 +1691,14 @@ function boot() {
     });
     const n = $('#nickNote');
     if (n && !n.hidden) n.textContent = S.authNick ? t('signedIn', { N: S.authNick }) : t('guestNote');
+    renderPrimer();
+    if (!$('#end').hidden && S.cfg) {
+      const f = msyFacts(S.cfg);
+      const pct = Math.round((S.game.B / (S.cfg.K / 2)) * 100);
+      $('#endMsy').textContent = t('msyLine', { P: pct });
+      $('#endMsyWhat').textContent = t('msyWhat', Object.assign({}, f, { P: pct, S: num(S.game.B, 0), C: f.collapsePct }));
+      $('#endSdg').textContent = t('sdg');
+    }
   });
   $$('#tiers button').forEach(b => {
     b.querySelector('.tn').textContent = t(b.dataset.tier);
