@@ -154,6 +154,14 @@ tbody tr:last-child td{border-bottom:none;}
 tr.mine td{background:#EAF7F0;}
 .cap{font-family:var(--mono);font-size:11px;color:#4A4A46;margin-top:8px;}
 .tw{overflow-x:auto;}
+/* 총점 분해표 — 소계(GDP)와 합계는 본문 줄과 다르게 보여야 "이 위까지가 GDP" 가 읽힌다. */
+table.bd td{font-family:var(--mono);font-size:12.5px;}
+table.bd td:first-child{font-family:var(--sans);font-size:13px;}
+table.bd tr.sub td{background:#F3F1EC;font-weight:700;border-top:2px solid var(--ink);}
+table.bd tr.tot td{background:var(--ink);color:var(--paper);font-weight:700;border-top:3px solid var(--ink);}
+table.bd tr.tot td:first-child{font-family:var(--arch);font-weight:900;letter-spacing:.4px;text-transform:uppercase;}
+table.bd td.neg{color:#A3322A;}
+table.bd tr.tot td.neg{color:#FF9A90;}
 
 /* 신고·투표 */
 .ask{border:3px solid var(--ink);border-left-width:9px;background:#fff;padding:14px 16px;margin-top:16px;}
@@ -303,6 +311,10 @@ footer{border-top:3px solid var(--ink);padding:20px 0;}
         <div id="endTitle"></div>
         <p id="endLead"></p>
         <div class="tw" id="endBoard" style="margin-top:20px;"></div>
+        <h2 id="endBreakTitle" style="margin-top:26px;margin-bottom:6px;"></h2>
+        <p id="endBreakLead" class="hint" style="max-width:620px;"></p>
+        <div class="tw" id="endBreak" style="margin-top:12px;"></div>
+        <p id="endBreakNote" class="cap"></p>
         <p id="endMsy"></p>
         <p id="endMsyWhat" class="hint"></p>
         <p id="endSdg"></p>
@@ -616,6 +628,9 @@ class Game {
     this.bots = PERSONAS.map(p => new Bot(p, tier, this.cfg, this.rng));
     this.N = this.cfg.N;
     this.score = new Array(this.N).fill(0.0);
+    // 총점의 출처 장부. score 를 건드리는 모든 자리에서 같은 금액을 여기에도 적는다.
+    // 난수를 먹지 않으므로 parity 에 영향이 없다 — 대신 합계가 score 와 어긋나면 버그다.
+    this.tally = Array.from({ length: this.N }, () => ({}));
     this.B = this.cfg.B0;
     this.t = 0;
     this.lastH = 0.0; this.lastEtotTrue = 0;
@@ -689,6 +704,7 @@ class Game {
       for (let i = 0; i < this.bots.length; i++) {
         if (acts[i + 1].survey) {
           this.score[i + 1] -= c.SURVEY_COST;
+          this._ty(i + 1, 'survey', -c.SURVEY_COST);
           this.bots[i].est.survey(this.B);
           if (c.SURVEY_INTEL && this.t > 1) {
             const uL = 1 - Math.exp(-c.q * (this.lastEpub === undefined ? 0 : this.lastEpub));
@@ -698,6 +714,7 @@ class Game {
       }
       if (a0.survey) {
         this.score[0] -= c.SURVEY_COST;
+        this._ty(0, 'survey', -c.SURVEY_COST);
         this.seat0.est.survey(this.B);
         if (c.SURVEY_INTEL && this.t > 1) {
           const uL = 1 - Math.exp(-c.q * (this.lastEpub === undefined ? 0 : this.lastEpub));
@@ -757,12 +774,18 @@ class Game {
       for (let i = 0; i < this.N; i++) {
         this.invL[i] *= (1 - c.SPOIL_L);
         this.score[i] -= c.STORAGE_FEE * this.invL[i];
+        this._ty(i, 'storage', -c.STORAGE_FEE * this.invL[i]);
         if (this.invH[i] > 0 && this.rng.random() < c.SPOIL_H_P) {
           this.invH[i] *= (1 - this.rng.uniform(c.SPOIL_H_LO, c.SPOIL_H_HI));
         }
       }
       for (let i = 0; i < this.N; i++) {
         this.score[i] += gdp[i];
+        // GDP 는 합계로만 적지 않는다 — 판매 수입 / 합법 비용 / 불법 비용 셋으로 쪼갠다.
+        // 성적표에서 "GDP 는 플러스였는데 총점은 마이너스" 를 설명할 수 있어야 하기 때문이다.
+        this._ty(i, 'revenue', pt * sold[i]);
+        this._ty(i, 'costLegal', -c.c * Math.pow(L[i], c.COST_GAMMA));
+        this._ty(i, 'costIllegal', -c.C_ILL * X[i]);
         if (X[i] > 0) this.log.ill_rounds[i].push(this.t);
       }
       this.B = growth(this.B - H, c.K, rEff);
@@ -836,23 +859,28 @@ class Game {
     if (guilty) {
       const fine = c.FINE_MULT * illgain[tgt] + c.FINE_FIX;
       this.score[tgt] -= fine;
+      this._ty(tgt, 'fine', -fine);
       this.invH[tgt] = 0.0;                                   // 은닉 재고 몰수
       if (byAcc && proposer !== null && proposer !== undefined) {
         this.score[proposer] += c.BOUNTY * fine;              // 포상금 (무작위 수사는 국고)
+        this._ty(proposer, 'bounty', c.BOUNTY * fine);
       }
       this.log.hits += 1;
       if (rep[tgt] !== null && rep[tgt] !== undefined &&
           Math.abs(rep[tgt] - catchArr[tgt]) > c.MISREPORT_TOL * Math.max(1, catchArr[tgt])) {
         this.score[tgt] -= c.MISREPORT_MULT * c.p * Math.abs(rep[tgt] - catchArr[tgt]);
+        this._ty(tgt, 'misreport', -c.MISREPORT_MULT * c.p * Math.abs(rep[tgt] - catchArr[tgt]));
       }
       return true;
     }
     if (rep[tgt] !== null && rep[tgt] !== undefined &&
         Math.abs(rep[tgt] - catchArr[tgt]) > c.MISREPORT_TOL * Math.max(1, catchArr[tgt])) {
       this.score[tgt] -= c.MISREPORT_MULT * c.p * Math.abs(rep[tgt] - catchArr[tgt]);
+      this._ty(tgt, 'misreport', -c.MISREPORT_MULT * c.p * Math.abs(rep[tgt] - catchArr[tgt]));
     }
     if (byAcc && proposer !== null && proposer !== undefined) {
       this.score[proposer] -= c.FA_FINE;
+      this._ty(proposer, 'falseAcc', -c.FA_FINE);
       this.log.false_acc += 1;
     }
     return false;
@@ -900,17 +928,23 @@ class Game {
     return false;
   }
 
+  _ty(i, key, amount) {
+    this.tally[i][key] = (this.tally[i][key] || 0) + amount;
+  }
+
   _finish(extinct = false) {
     const c = this.cfg;
     if (!extinct) {
       for (let i = 0; i < this.N; i++) {
         this.score[i] += c.p * c.END_LEGAL * this.invL[i];
+        this._ty(i, 'endLegal', c.p * c.END_LEGAL * this.invL[i]);
         this.score[i] += c.p * c.END_HIDDEN * this.invH[i];
+        this._ty(i, 'endHidden', c.p * c.END_HIDDEN * this.invH[i]);
       }
     }
     if (c.RESIDUAL_DIVIDEND > 0 && !extinct) {
       const div = c.RESIDUAL_DIVIDEND * this.B / c.K * 1000 / this.N;
-      for (let i = 0; i < this.N; i++) this.score[i] += div;
+      for (let i = 0; i < this.N; i++) { this.score[i] += div; this._ty(i, 'dividend', div); }
     }
     if (extinct) return { winner: null, score: this.score, log: this.log };
     let w = 0;
@@ -1234,6 +1268,29 @@ const T = {
   axisMax:     { en: ['stock, tonnes'], kr: ['어족, 톤'] },
   msyWhat:     { en: ['MSY — maximum sustainable yield — peaks at %B tonnes of stock here, so %P% is %S tonnes. The collapse line at %A tonnes is %C% on this scale.'],
                  kr: ['MSY(최대지속가능생산량)의 정점은 이 바다에서 어족 %B톤이므로, %P%는 %S톤입니다. 붕괴선 %A톤은 이 눈금에서 %C%입니다.'] },
+  bdTitle:     { en: ['Where your total came from'], kr: ['총점은 어디서 왔나'] },
+  bdLead:      { en: ['Your total is not the GDP column added up. GDP is the first three lines only — it is what you disclose. Everything under it is settled off the table: the customs house, the cold store, and the survey office all bill you separately.'],
+                 kr: ['총점은 GDP 열을 더한 값이 아닙니다. GDP는 위의 세 줄뿐입니다 — 공시하는 부분이죠. 그 아래는 전부 공시 밖에서 정산됩니다. 세관도, 냉동창고도, 조사국도 따로 청구합니다.'] },
+  bdRevenue:   { en: ['Fish sold'], kr: ['판매한 어획'] },
+  bdCostLegal: { en: ['Licensed fleet — running costs'], kr: ['합법 선단 운영비'] },
+  bdCostIll:   { en: ['Unlicensed boats — running costs'], kr: ['무면허 배 운영비'] },
+  bdGdp:       { en: ['GDP — the disclosed part'], kr: ['GDP — 공시되는 부분'] },
+  bdStorage:   { en: ['Cold storage on stock you held'], kr: ['쌓아둔 재고 보관료'] },
+  bdSurvey:    { en: ['Stock surveys you bought'], kr: ['구매한 어족 조사'] },
+  bdFine:      { en: ['Fines — caught fishing dark'], kr: ['벌금 — 불법 조업 적발'] },
+  bdMisreport: { en: ['Penalties — disclosure did not match the catch'], kr: ['과태료 — 공시와 실제 어획 불일치'] },
+  bdBounty:    { en: ['Bounties — your accusations that stuck'], kr: ['포상금 — 성공한 고발'] },
+  bdFalseAcc:  { en: ['Penalties — your accusations that failed'], kr: ['과태료 — 실패한 고발'] },
+  bdEndLegal:  { en: ['Declared stock sold off at the close'], kr: ['폐장 시 장부 재고 처분'] },
+  bdEndHidden: { en: ['Hidden stock sold off at the close'], kr: ['폐장 시 밀창고 재고 처분'] },
+  bdDividend:  { en: ['Dividend on the stock left in the sea'], kr: ['바다에 남은 어족 배당'] },
+  bdItem:      { en: ['ITEM'], kr: ['항목'] },
+  bdTotal:     { en: ['Total'], kr: ['총점'] },   // 라운드 표의 '누적' 과 달리 여기서는 최종 총점이다
+  bdAmount:    { en: ['AMOUNT'], kr: ['금액'] },
+  bdNoteOk:    { en: ['Anything you never did is left out of this table. The lines shown are the ones that moved your total.'],
+                 kr: ['하지 않은 일은 표에 없습니다. 보이는 줄이 총점을 실제로 움직인 항목입니다.'] },
+  bdNoteExt:   { en: ['The sea collapsed, so nothing was sold off at the close — the stock in your stores is worth nothing now.'],
+                 kr: ['바다가 붕괴해서 폐장 처분은 없었습니다 — 창고에 남은 재고는 이제 가치가 없습니다.'] },
 };
 
 // MSY 관련 숫자는 전부 CFG 에서 유도한다 — 상수를 건드리면 문구가 따라온다 (하드코딩 금지).
@@ -1284,7 +1341,7 @@ class Band {
 const S = {
   tier: 'normal', nations: [], me: 0, game: null, it: null, seat: null, band: null,
   cfg: null, resolve: null, last: null, pub: null, log: [], history: [],
-  peakB: CFG.B0, myName: { en: 'Traveler', kr: '여행자' },
+  peakB: CFG.B0, myName: { en: 'Traveler', kr: '여행자' }, endRes: null,
 };
 
 function nation(i) { return S.nations[i]; }
@@ -1514,11 +1571,44 @@ function pushLog(html) {
   $('#a3log').innerHTML = S.log.map(x => `<li>${x}</li>`).join('');
 }
 
+// ── 총점 분해 ─────────────────────────────────────────────────────────────
+// 엔진이 score 를 건드릴 때마다 같은 금액을 tally 에 적어둔다. 여기서는 그걸 읽어
+// 순서대로 늘어놓을 뿐, 다시 계산하지 않는다 — 계산을 두 번 하면 두 값이 갈라진다.
+// GDP 소계 위 세 줄이 라운드마다 공시되던 GDP 열이고, 아래는 전부 공시 밖 정산이다.
+const BD_ROWS = [
+  ['revenue', 'bdRevenue'], ['costLegal', 'bdCostLegal'], ['costIllegal', 'bdCostIll'],
+  ['__gdp__', 'bdGdp'],
+  ['storage', 'bdStorage'], ['survey', 'bdSurvey'], ['fine', 'bdFine'],
+  ['misreport', 'bdMisreport'], ['bounty', 'bdBounty'], ['falseAcc', 'bdFalseAcc'],
+  ['endLegal', 'bdEndLegal'], ['endHidden', 'bdEndHidden'], ['dividend', 'bdDividend'],
+];
+// 처음 세 줄과 소계는 0이어도 남긴다 — "GDP 는 이 셋" 이라는 주장이 표에서 사라지면 안 된다.
+const BD_ALWAYS = new Set(['revenue', 'costLegal', '__gdp__']);
+
+function renderBreakdown(res, extinct) {
+  const ty = (S.game.tally && S.game.tally[0]) || {};
+  const gdp = (ty.revenue || 0) + (ty.costLegal || 0) + (ty.costIllegal || 0);
+  const cell = (v) => `<td class="num${v < -0.5 ? ' neg' : ''}">${v > 0.5 ? '+' : ''}${num(v, 0)}</td>`;
+  const rows = [];
+  for (const [key, label] of BD_ROWS) {
+    const v = key === '__gdp__' ? gdp : (ty[key] || 0);
+    if (!BD_ALWAYS.has(key) && Math.abs(v) < 0.5) continue;
+    rows.push(`<tr class="${key === '__gdp__' ? 'sub' : ''}"><td>${t(label)}</td>${cell(v)}</tr>`);
+  }
+  rows.push(`<tr class="tot"><td>${t('bdTotal')}</td>${cell(res.score[0])}</tr>`);
+  $('#endBreakTitle').textContent = t('bdTitle');
+  $('#endBreakLead').textContent = t('bdLead');
+  $('#endBreak').innerHTML = `<table class="bd"><thead><tr>
+      <th>${t('bdItem')}</th><th class="num">${t('bdAmount')}</th>
+    </tr></thead><tbody>${rows.join('')}</tbody></table>`;
+  $('#endBreakNote').textContent = extinct ? t('bdNoteExt') : t('bdNoteOk');
+}
+
 // ── 종료 ──────────────────────────────────────────────────────────────────
-function renderEnd(res) {
+// 그리기와 화면 전환을 분리한다 — 언어를 바꿀 때 다시 그려야 하지만 다시 스크롤하면 안 된다.
+function paintEnd(res) {
   const c = S.cfg, extinct = res.winner === null;
-  const msy = c.K / 2;
-  const pct = Math.round((S.game.B / msy) * 100);
+  const pct = Math.round((S.game.B / (c.K / 2)) * 100);
   $('#endTitle').textContent = extinct ? t('endExtinct') : t('endTreaty');
   $('#endTitle').classList.toggle('bad', extinct);
   const order = [...Array(c.N).keys()].sort((a, b) => res.score[b] - res.score[a]);
@@ -1527,13 +1617,17 @@ function renderEnd(res) {
     `</tbody></table>`;
   $('#endLead').innerHTML = extinct ? t('endExtinctD')
     : (res.winner === 0 ? t('youWon') : t('youLost', { W: nname(res.winner) }));
+  renderBreakdown(res, extinct);
   $('#endMsy').textContent = t('msyLine', { P: pct });
-  {
-    const f = msyFacts(c);
-    $('#endMsyWhat').textContent = t('msyWhat',
-      Object.assign({}, f, { P: pct, S: num(S.game.B, 0), C: f.collapsePct }));
-  }
+  const f = msyFacts(c);
+  $('#endMsyWhat').textContent = t('msyWhat',
+    Object.assign({}, f, { P: pct, S: num(S.game.B, 0), C: f.collapsePct }));
   $('#endSdg').textContent = t('sdg');
+}
+
+function renderEnd(res) {
+  S.endRes = res;
+  paintEnd(res);
   $$('.act').forEach(a => a.hidden = true);
   $('#game').hidden = true;
   $('#end').hidden = false;
@@ -1721,13 +1815,9 @@ function boot() {
     const n = $('#nickNote');
     if (n && !n.hidden) n.textContent = S.authNick ? t('signedIn', { N: S.authNick }) : t('guestNote');
     renderPrimer();
-    if (!$('#end').hidden && S.cfg) {
-      const f = msyFacts(S.cfg);
-      const pct = Math.round((S.game.B / (S.cfg.K / 2)) * 100);
-      $('#endMsy').textContent = t('msyLine', { P: pct });
-      $('#endMsyWhat').textContent = t('msyWhat', Object.assign({}, f, { P: pct, S: num(S.game.B, 0), C: f.collapsePct }));
-      $('#endSdg').textContent = t('sdg');
-    }
+    // 성적표는 통째로 다시 그린다. 예전에는 MSY 세 줄만 갈아끼워서 순위표와 나라 이름이
+    // 옛 언어로 남아 있었다 — 표가 반만 번역돼 있는 상태가 제일 나쁘다.
+    if (!$('#end').hidden && S.cfg && S.endRes) paintEnd(S.endRes);
   });
   $$('#tiers button').forEach(b => {
     b.querySelector('.tn').textContent = t(b.dataset.tier);
