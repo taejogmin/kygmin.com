@@ -201,8 +201,12 @@ window.APP_LANG_LISTENERS = [];
 function L(o){ return (window.APP_LANG === 'kr' ? o.kr : o.en); }
 /* %KEY 치환. 게임 쪽 t() 와 같은 관용구를 쓴다 — 두 화면의 문구를 옮길 때 규칙이 하나여야 한다. */
 function fill(str, vars){
-  var out = String(str), k;
-  for (k in vars) if (Object.prototype.hasOwnProperty.call(vars, k)) out = out.split('%' + k).join(vars[k]);
+  /* 긴 키부터 치환한다. 한 키가 다른 키의 접두사면(%S 와 %SL) 짧은 쪽이 먼저 걸려
+     긴 토큰을 뭉갠다. 게임 쪽 t() 와 같은 규칙 — 두 화면의 문구를 옮길 때 안전하도록. */
+  var out = String(str);
+  Object.keys(vars).sort(function(a,b){ return b.length - a.length; }).forEach(function(k){
+    out = out.split('%' + k).join(vars[k]);
+  });
   return out;
 }
 function $(id){ return document.getElementById(id); }
