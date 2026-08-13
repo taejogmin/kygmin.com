@@ -222,6 +222,7 @@ footer{border-top:3px solid var(--ink);padding:20px 0;}
           <div>
             <label class="tx" data-en="YOUR DELEGATION" data-kr="당신의 대표단">YOUR DELEGATION</label>
             <input type="text" id="nick" maxlength="18" autocomplete="off" />
+            <p class="hint" id="nickNote" hidden></p>
           </div>
           <button class="btn go big" id="startBtn"><span class="tx" data-en="Open the season" data-kr="조업 개시">Open the season</span> &rarr;</button>
         </div>
@@ -314,6 +315,8 @@ footer{border-top:3px solid var(--ink);padding:20px 0;}
   <button data-lang="en" class="on">EN</button>
   <button data-lang="kr">한</button>
 </div>
+
+<script src="/auth-widget.js" defer></script>
 
 <script>
 // ─── rng.mjs ───
@@ -1110,6 +1113,10 @@ const T = {
   start:       { en: ['Open the season'], kr: ['조업 개시'] },
   yourName:    { en: ['Your delegation'], kr: ['당신의 대표단'] },
   traveler:    { en: ['Traveler'], kr: ['여행자'] },
+  signedIn:    { en: ['Signed in as %N — your delegation is named for you. Change it here if you like.'],
+                 kr: ['%N 님으로 로그인되어 있어요 — 대표단 이름이 자동으로 들어갔습니다. 바꾸고 싶으면 고쳐도 돼요.'] },
+  guestNote:   { en: ['Sign in (bottom left) and your nickname becomes your delegation. Nothing is stored either way.'],
+                 kr: ['왼쪽 아래에서 로그인하면 닉네임이 대표단 이름이 됩니다. 어느 쪽이든 저장되는 건 없습니다.'] },
   round:       { en: ['Round'], kr: ['라운드'] },
   stock:       { en: ['STOCK ESTIMATE'], kr: ['어족 추정'] },
   quote:       { en: ['QUOTE'], kr: ['시세'] },
@@ -1594,12 +1601,34 @@ function startGame() {
   drive();
 }
 
+// 사이트 공용 로그인 위젯 연동 (auth-widget.js).
+// 하는 일은 하나뿐이다 — 로그인된 닉네임을 대표단 이름 기본값으로 채운다.
+// 이 게임은 아무것도 저장하지 않으므로 client 는 쓰지 않는다 (리더보드는 v1 비범위).
+function wireAuth() {
+  const apply = (user, nickname) => {
+    const el = $('#nick'), note = $('#nickNote');
+    if (!el) return;
+    S.authNick = (user && nickname) ? nickname : null;
+    if (S.authNick && !el.dataset.touched) el.value = S.authNick;
+    note.hidden = false;
+    note.textContent = S.authNick ? t('signedIn', { N: S.authNick }) : t('guestNote');
+  };
+  $('#nick').addEventListener('input', e => { e.target.dataset.touched = '1'; });
+  window.KYG_AUTH_LISTENERS = window.KYG_AUTH_LISTENERS || [];
+  window.KYG_AUTH_LISTENERS.push((user, nickname) => apply(user, nickname));
+  // 위젯이 이미 로드된 뒤일 수도 있다
+  if (window.KYG_AUTH) apply(window.KYG_AUTH.user, window.KYG_AUTH.nickname);
+  else apply(null, null);
+  return apply;
+}
+
 function boot() {
   $$('#tiers button').forEach(b => b.addEventListener('click', () => {
     S.tier = b.dataset.tier;
     $$('#tiers button').forEach(x => x.classList.toggle('on', x === b));
   }));
   $('#startBtn').addEventListener('click', startGame);
+  const applyAuth = wireAuth();
   $('#a1next').addEventListener('click', () => answer(true));
   $('#a2seal').addEventListener('click', () => answer(collectDecision()));
   $('#a3nextBtn').addEventListener('click', () => answer(true));
@@ -1618,6 +1647,8 @@ function boot() {
       b.querySelector('.tn').textContent = t(b.dataset.tier);
       b.querySelector('.td').textContent = t(b.dataset.tier + 'D');
     });
+    const n = $('#nickNote');
+    if (n && !n.hidden) n.textContent = S.authNick ? t('signedIn', { N: S.authNick }) : t('guestNote');
   });
   $$('#tiers button').forEach(b => {
     b.querySelector('.tn').textContent = t(b.dataset.tier);
