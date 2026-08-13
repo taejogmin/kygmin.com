@@ -1284,6 +1284,14 @@ const T = {
   bdEndLegal:  { en: ['Declared stock sold off at the close'], kr: ['폐장 시 장부 재고 처분'] },
   bdEndHidden: { en: ['Hidden stock sold off at the close'], kr: ['폐장 시 밀창고 재고 처분'] },
   bdDividend:  { en: ['Dividend on the stock left in the sea'], kr: ['바다에 남은 어족 배당'] },
+  storeD:      { en: ['What you do not sell stays in a store. The bonded store is the one customs knows about: it costs %F a tonne every round and %SL% of it spoils anyway. The dark store is the one nobody knows about, but it rots harder — a %SH% chance each round of losing %SLO–%SHI% of it — and an audit seizes the whole thing. Whatever is still in a store when the season closes is dumped: %EL% of face value from the bonded store, %EH% from the dark one.'],
+                 kr: ['팔지 않은 어획은 창고에 남습니다. 장부 재고는 세관이 아는 재고입니다 — 라운드마다 톤당 %F의 보관료가 붙고 그래도 %SL%는 썩습니다. 밀창고는 아무도 모르는 재고지만 더 심하게 썩고(라운드마다 %SH% 확률로 %SLO~%SHI% 손실), 수사에 걸리면 통째로 몰수됩니다. 폐장 때 창고에 남은 것은 헐값에 처분됩니다 — 장부 재고는 정가의 %EL%, 밀창고는 %EH%.'] },
+  launderD:    { en: ['Laundering means pushing dark tonnage through the legal market. It pays, but the sale is published while the boats that caught it are not — and that gap between what you sold and what your licensed fleet could plausibly have landed is exactly what an auditor looks at.'],
+                 kr: ['세탁은 밀창고 물량을 합법 시장으로 흘려보내는 것입니다. 돈은 되지만 판매는 공시되고 그걸 잡은 배는 공시되지 않습니다 — 판 양과 합법 선단이 잡았을 법한 양 사이의 그 간극이, 바로 수사관이 들여다보는 지점입니다.'] },
+  priceD:      { en: ['Quote is the season\u2019s market mood, an unpredictable drift between ×%PLO and ×%PHI. Market price is what a tonne actually fetched: base %P × quote × congestion. Congestion is the part you share — once the six of you sell more than about %HREF tonnes in one round, everybody\u2019s price falls together.'],
+                 kr: ['시세는 그 라운드의 시장 분위기입니다. ×%PLO에서 ×%PHI 사이를 예측 불가능하게 떠다닙니다. 시장가는 실제로 톤당 받은 값이고요 — 기본가 %P × 시세 × 혼잡도. 혼잡도는 여섯이 공유하는 부분입니다. 한 라운드에 다 합쳐 %HREF톤쯤을 넘겨 팔면 모두의 값이 함께 떨어집니다.'] },
+  restraintD:  { en: ['The same line is the restraint line. Below %B every delegation pulls its fleet back — the five you are playing against do it too, which is why this sea settles just under the line instead of on it.'],
+                 kr: ['같은 선이 절제선이기도 합니다. %B 아래로 내려가면 모든 대표단이 선단을 줄입니다 — 상대하는 다섯도 그렇게 합니다. 이 바다가 선 위가 아니라 선 바로 아래에 자리 잡는 이유입니다.'] },
   bdItem:      { en: ['ITEM'], kr: ['항목'] },
   bdTotal:     { en: ['Total'], kr: ['총점'] },   // 라운드 표의 '누적' 과 달리 여기서는 최종 총점이다
   bdAmount:    { en: ['AMOUNT'], kr: ['금액'] },
@@ -1306,9 +1314,27 @@ function msyFacts(cfg) {
     Bmsy, allee, collapsePct: Math.round(allee / Bmsy * 100),
   };
 }
+// 창고·가격 문구의 숫자는 전부 CFG 에서 나온다. msyFacts 와 같은 규율이다 —
+// 상수를 건드리면 문구가 따라오고, 문구만 옛날 값으로 남는 일이 생기지 않는다.
+function storeFacts(cfg) {
+  return {
+    F: num(cfg.STORAGE_FEE), SL: Math.round(cfg.SPOIL_L * 100),
+    SH: Math.round(cfg.SPOIL_H_P * 100),
+    SLO: Math.round(cfg.SPOIL_H_LO * 100), SHI: Math.round(cfg.SPOIL_H_HI * 100),
+    EL: Math.round(cfg.END_LEGAL * 100), EH: Math.round(cfg.END_HIDDEN * 100),
+  };
+}
+function priceFacts(cfg) {
+  return { PLO: cfg.PRICE_LO.toFixed(1), PHI: cfg.PRICE_HI.toFixed(1),
+           P: num(cfg.p), HREF: num(cfg.HREF) };
+}
 function t(key, vars) {
   let s = (T[key] && T[key][lang()] ? T[key][lang()][0] : key);
-  if (vars) for (const k of Object.keys(vars)) s = s.split('%' + k).join(vars[k]);
+  // 긴 키부터 치환한다. %SL 이 %SLO 보다 먼저 걸리면 "%SLO" 가 "5O" 로 뭉개진다 —
+  // 한 키가 다른 키의 접두사인 순간 조용히 틀리므로, 순서로 그 종류의 버그를 통째로 없앤다.
+  if (vars) for (const k of Object.keys(vars).sort((a, b) => b.length - a.length)) {
+    s = s.split('%' + k).join(vars[k]);
+  }
   return s;
 }
 const EVK = { redtide: 'Redtide', cold: 'Cold', migration: 'Migration', typhoon: 'Typhoon', demand: 'Demand' };
@@ -1396,7 +1422,9 @@ function renderLegend() {
 function renderGauge() {
   const f = msyFacts(S.cfg);
   renderLegend();
-  $('#msyNote').textContent = t('msyGauge', f);
+  // 절제선은 MSY 와 같은 값이라 게이지에 선이 하나뿐이다. 이름만 있고 근거가 없으면
+  // 라벨이 둘인 이유를 아무도 모른다 — 그래서 같은 문단에서 바로 설명한다.
+  $('#msyNote').textContent = t('msyGauge', f) + ' ' + t('restraintD', f);
   const bhat = S.seat.est.B;
   $('#gauge').innerHTML = gaugeSVG();
   $('#gaugeNum').textContent = `${num(bhat)} ± ${Math.round(S.band.v * 100)}%`;
@@ -1484,6 +1512,8 @@ function renderAct2(ctx, keep) {
         <div class="rv"><b id="sSHv">0%</b> <span class="u">· ${t('dark')} ${num(S.game.invH[0], 1)}${t('tonnes')}</span></div>
       </div>
     </div>
+    <p class="hint">${t('storeD', storeFacts(c))}</p>
+    <p class="hint">${t('launderD')}</p>
     <div class="fld">
       <label class="lb">${t('report')}</label>
       <div class="seg" id="rep">
@@ -1564,7 +1594,8 @@ function renderLedger(q) {
       <th>${t('colNation')}</th><th class="num">${t('colFleet')}</th><th class="num">${t('colSold')}</th>
       <th class="num">${t('colGdp')}</th><th class="num">${t('colDecl')}</th><th class="num">${t('colStore')}</th>
       <th class="num">${t('colTotal')}</th></tr></thead><tbody>${rows.join('')}</tbody></table>
-      <p class="cap">${t('marketPrice')} ${pub.pt.toFixed(2)} · ${t('quote')} ×${S.game.quote.toFixed(2)}</p>`;
+      <p class="cap">${t('marketPrice')} ${pub.pt.toFixed(2)} · ${t('quote')} ×${S.game.quote.toFixed(2)}</p>
+      <p class="hint">${t('priceD', priceFacts(c))}</p>`;
 }
 function pushLog(html) {
   S.log.push(html);
