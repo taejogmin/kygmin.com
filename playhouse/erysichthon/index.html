@@ -1,0 +1,1624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Erysichthon — KYGMIN</title>
+<meta name="description" content="Erysichthon — six delegations share one sea. Overfishing is the equilibrium and the institutions barely hold it back. A Gordon-Schaefer bioeconomic model with Ostrom-style self-reporting, forensic audits and bounties. UN SDG 14.4." />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=IBM+Plex+Mono:wght@400;500;600&family=Pretendard:wght@400;500;700&display=swap" rel="stylesheet" />
+<script>
+window.KYG_LANG=(function(){try{var v=localStorage.getItem('kyg_lang');if(v==='kr'||v==='en')return v;}catch(e){}return 'en';})();
+window.APP_LANG=window.KYG_LANG;
+if(window.KYG_LANG!=='en'){
+  document.documentElement.setAttribute('lang','ko');
+  document.documentElement.className+=' lang-pending';
+  setTimeout(function(){document.documentElement.classList.remove('lang-pending');},2000);
+}
+</script>
+<style>html.lang-pending .tx{visibility:hidden}</style>
+<style>
+:root{
+  --paper:#F6F6F4; --ink:#141414; --gray:#DDDDD8; --green:#2BB673; --green-deep:#0F6E56;
+  --arch:'Archivo','Pretendard',sans-serif;
+  --sans:'Pretendard',-apple-system,'Apple SD Gothic Neo','Malgun Gothic','Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono','SF Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+/* .btns 등에 display 를 주면 author 스타일이 UA 의 [hidden]{display:none} 을 이긴다.
+   숨김이 조용히 풀리는 버그의 원인이므로 명시적으로 못박는다. */
+[hidden]{display:none!important;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}*,*::before,*::after{transition:none!important;}}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.65;
+  -webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:break-word;}
+a{color:inherit;}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--green);outline-offset:3px;}
+.wrap{max-width:960px;margin:0 auto;padding:0 20px;}
+
+nav{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:3px solid var(--ink);}
+.nav-inner{max-width:960px;margin:0 auto;padding:12px 20px;display:flex;justify-content:space-between;align-items:center;gap:16px;}
+.logo{font-family:var(--arch);font-weight:900;font-size:19px;letter-spacing:-0.5px;text-decoration:none;white-space:nowrap;}
+.logo em{font-style:normal;background:var(--green);color:var(--paper);padding:0 6px;display:inline-block;transform:rotate(-1.5deg);}
+.nav-links{display:flex;gap:8px;flex-wrap:wrap;}
+.nav-links a{font-family:var(--arch);font-size:12px;font-weight:700;text-transform:uppercase;
+  border:2px solid var(--ink);padding:6px 13px;background:#fff;text-decoration:none;
+  box-shadow:3px 3px 0 var(--ink);transition:transform .1s,box-shadow .1s;}
+.nav-links a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+.nav-links a.on{background:var(--green);color:var(--paper);}
+
+header{padding:52px 0 34px;border-bottom:3px solid var(--ink);}
+.sec-tag{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--green-deep);letter-spacing:1px;display:block;margin-bottom:14px;}
+h1{font-family:var(--arch);font-weight:900;text-transform:uppercase;font-size:clamp(30px,5.2vw,48px);
+  line-height:1.04;letter-spacing:-2px;max-width:840px;}
+h1 .box{background:var(--ink);color:var(--paper);padding:0 12px;display:inline-block;transform:rotate(-1deg);}
+.myth{margin-top:16px;font-family:var(--mono);font-size:13px;color:#4A4A46;max-width:560px;
+  border-left:3px solid var(--green);padding-left:12px;line-height:1.7;}
+.hero-sub{margin-top:16px;font-size:16px;max-width:640px;font-weight:500;}
+.hero-note{margin-top:12px;font-family:var(--mono);font-size:11.5px;color:#4A4A46;letter-spacing:.4px;}
+
+main{padding:32px 0 90px;}
+h2{font-family:var(--arch);font-weight:900;text-transform:uppercase;font-size:20px;letter-spacing:-0.8px;margin-bottom:14px;}
+.panel{border:3px solid var(--ink);background:#fff;box-shadow:6px 6px 0 var(--ink);padding:20px;margin-bottom:22px;}
+.hint{font-size:13px;color:#4A4A46;margin-top:6px;}
+.u{font-family:var(--mono);font-size:12px;color:#6B6B67;}
+.btn{font-family:var(--arch);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.3px;
+  border:2px solid var(--ink);background:#fff;padding:10px 16px;box-shadow:3px 3px 0 var(--ink);
+  cursor:pointer;transition:transform .1s,box-shadow .1s;}
+.btn:hover:not(:disabled){transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+.btn:disabled{opacity:.45;cursor:not-allowed;}
+.btn.go{background:var(--green);color:var(--paper);}
+.btn.big{font-size:15px;padding:13px 22px;}
+
+/* 난이도 */
+#tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:18px;}
+#tiers button{text-align:left;border:3px solid var(--ink);background:#fff;box-shadow:4px 4px 0 var(--ink);
+  padding:14px 15px;cursor:pointer;font-family:inherit;transition:transform .1s,box-shadow .1s;}
+#tiers button:hover{transform:translate(-1px,-1px);box-shadow:6px 6px 0 var(--ink);}
+#tiers button.on{background:var(--green);color:var(--paper);}
+#tiers .tn{display:block;font-family:var(--arch);font-weight:900;font-size:15px;text-transform:uppercase;letter-spacing:-.4px;}
+#tiers .td{display:block;font-size:12.5px;margin-top:5px;line-height:1.5;}
+#tiers button.on .td{color:#EAF7F0;}
+.nickrow{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;}
+.nickrow label{display:block;font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#4A4A46;margin-bottom:5px;}
+input[type=text],input[type=number]{font-family:var(--mono);font-size:14px;border:3px solid var(--ink);background:#fff;padding:9px 11px;min-width:180px;}
+
+/* HUD */
+#hud{position:sticky;top:60px;z-index:15;background:var(--paper);border-bottom:3px solid var(--ink);padding:9px 0;margin-bottom:20px;}
+.hudrow{display:flex;gap:14px;align-items:center;flex-wrap:wrap;font-family:var(--mono);font-size:12px;}
+.hudrow .k{color:#6B6B67;}
+.hudrow b{font-family:var(--arch);font-size:14px;}
+.hudsep{width:2px;height:18px;background:var(--gray);}
+.tick{width:180px;height:34px;}
+
+/* 국가 칩 */
+.nat{display:inline-flex;align-items:center;gap:7px;white-space:nowrap;}
+.nat b{font-weight:700;font-size:13.5px;}
+.nat.me b{background:var(--green);color:var(--paper);padding:0 5px;}
+.emb{flex-shrink:0;display:block;}
+
+/* 게이지 */
+.gauge{width:100%;height:auto;max-width:560px;display:block;}
+.gl{font-family:var(--mono);font-size:9px;fill:#4A4A46;letter-spacing:.5px;}
+#gaugeNum{font-family:var(--arch);font-weight:900;font-size:22px;letter-spacing:-.6px;}
+
+/* 이벤트 배너 */
+.ev{border:3px solid var(--ink);background:var(--ink);color:var(--paper);padding:14px 16px;}
+.ev.quiet{background:#fff;color:var(--ink);}
+.ev .k{font-family:var(--mono);font-size:10.5px;letter-spacing:1.4px;color:var(--green);}
+.ev .evt{font-family:var(--arch);font-weight:900;font-size:22px;text-transform:uppercase;letter-spacing:-.8px;margin-top:3px;}
+.ev p{font-size:13.5px;margin-top:5px;max-width:560px;}
+.warn{border:3px solid var(--ink);border-left-width:9px;background:#fff;padding:11px 14px;margin-top:12px;
+  font-family:var(--mono);font-size:12.5px;}
+
+/* 결정 폼 */
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+@media(max-width:640px){.row2{grid-template-columns:1fr;}}
+.fld{border:3px solid var(--ink);background:#fff;padding:12px 14px;}
+.fld.dark{background:#EDEDE8;}
+.lb{display:block;font-family:var(--arch);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.2px;margin-bottom:8px;}
+.tag{font-family:var(--mono);font-size:9.5px;border:2px solid var(--ink);padding:1px 5px;letter-spacing:.8px;vertical-align:2px;}
+.tag.sec{background:var(--ink);color:var(--paper);}
+input[type=range]{width:100%;accent-color:#2BB673;}
+.rv{margin-top:5px;font-family:var(--mono);font-size:12px;}
+.rv b{font-family:var(--arch);font-size:17px;}
+.cst{color:#6B6B67;}
+.seg{display:flex;gap:7px;flex-wrap:wrap;}
+.seg button{font-family:var(--arch);font-weight:700;font-size:12px;text-transform:uppercase;border:2px solid var(--ink);
+  background:#fff;padding:7px 12px;cursor:pointer;box-shadow:3px 3px 0 var(--ink);}
+.seg button.on{background:var(--ink);color:var(--paper);}
+#repNum{margin-top:9px;}
+.chk{display:flex;gap:9px;align-items:center;margin-top:14px;font-size:14px;cursor:pointer;}
+.chk input{width:18px;height:18px;accent-color:#2BB673;}
+
+/* 표 */
+table{border-collapse:collapse;width:100%;background:#fff;border:3px solid var(--ink);font-size:13px;}
+th,td{border-bottom:1px solid var(--gray);padding:7px 9px;text-align:left;}
+th.num,td.num{text-align:right;font-family:var(--mono);white-space:nowrap;}
+thead th{background:var(--ink);color:var(--paper);font-family:var(--mono);font-size:10.5px;
+  font-weight:600;letter-spacing:.6px;text-transform:uppercase;border-bottom:none;}
+tbody tr:last-child td{border-bottom:none;}
+tr.mine td{background:#EAF7F0;}
+.cap{font-family:var(--mono);font-size:11px;color:#4A4A46;margin-top:8px;}
+.tw{overflow-x:auto;}
+
+/* 신고·투표 */
+.ask{border:3px solid var(--ink);border-left-width:9px;background:#fff;padding:14px 16px;margin-top:16px;}
+.ask .q{font-family:var(--arch);font-weight:900;font-size:16px;letter-spacing:-.3px;}
+.pick{display:flex;gap:8px;flex-wrap:wrap;margin:11px 0;}
+.pick button{border:2px solid var(--ink);background:#fff;padding:6px 10px;cursor:pointer;box-shadow:3px 3px 0 var(--ink);font-family:inherit;}
+.pick button.on{background:var(--ink);}
+.pick button.on .nat b{color:var(--paper);}
+.btns{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px;}
+#a3log{list-style:none;margin-top:14px;}
+#a3log li{font-family:var(--mono);font-size:12.5px;padding:7px 0 7px 14px;border-left:3px solid var(--green);margin-bottom:6px;background:#fff;}
+
+/* 종료 */
+#endTitle{font-family:var(--arch);font-weight:900;font-size:clamp(26px,4.6vw,40px);text-transform:uppercase;
+  letter-spacing:-1.6px;line-height:1.05;background:var(--ink);color:var(--paper);display:inline-block;padding:2px 12px;transform:rotate(-1deg);}
+#endTitle.bad{background:#fff;color:var(--ink);border:3px solid var(--ink);}
+#endLead{margin-top:18px;font-size:16px;font-weight:500;max-width:600px;}
+#endMsy{font-family:var(--arch);font-weight:900;font-size:19px;margin-top:20px;letter-spacing:-.5px;}
+#endSdg{font-family:var(--mono);font-size:11.5px;color:#4A4A46;margin-top:8px;max-width:620px;line-height:1.7;}
+
+footer{border-top:3px solid var(--ink);padding:20px 0;}
+.foot-inner{max-width:960px;margin:0 auto;padding:0 20px;display:flex;justify-content:space-between;
+  gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;color:#4A4A46;}
+
+#langtoggle{position:fixed;right:14px;bottom:14px;z-index:30;display:flex;border:3px solid var(--ink);
+  box-shadow:4px 4px 0 var(--ink);background:#fff;}
+#langtoggle button{font-family:var(--arch);font-weight:700;font-size:12px;border:none;background:#fff;
+  padding:7px 12px;cursor:pointer;}
+#langtoggle button.on{background:var(--green);color:var(--paper);}
+.scr{opacity:.55;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="/index.html">KYG<em>MIN</em></a>
+    <div class="nav-links">
+      <a href="/index.html" class="tx" data-en="Home" data-kr="홈">Home</a>
+      <a href="/playhouse/">PLAYHOUSE</a>
+      <a href="/notes/">Notes</a>
+      <a href="/cv.html">CV &#128274;</a>
+    </div>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <span class="sec-tag tx" data-en="COMMONS · SDG 14.4" data-kr="공유지 · SDG 14.4">COMMONS · SDG 14.4</span>
+    <h1><span class="box tx" data-en="ERYSICHTHON" data-kr="에리시크톤">ERYSICHTHON</span></h1>
+    <p class="myth tx" data-en="The king who felled Demeter’s sacred grove, and was given a hunger that ate him." data-kr="데메테르의 성림을 벤 왕, 그리고 그에게 주어진, 그를 먹어치운 허기.">The king who felled Demeter’s sacred grove, and was given a hunger that ate him.</p>
+    <p class="hero-sub tx" data-en="Six delegations share one sea. Overfishing is the equilibrium, the institutions barely hold it back — and the only thing anyone can see is the ledger." data-kr="여섯 대표단이 바다 하나를 씁니다. 남획이 균형이고 제도가 그것을 겨우 막고 있으며, 누구든 볼 수 있는 것은 장부뿐입니다.">Six delegations share one sea. Overfishing is the equilibrium, the institutions barely hold it back — and the only thing anyone can see is the ledger.</p>
+    <p class="hero-note">GORDON-SCHAEFER · OSTROM INSTITUTIONS · FORENSIC AUDIT</p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <!-- 설정 -->
+    <section id="setup">
+      <div class="panel">
+        <h2 class="tx" data-en="Pick your water" data-kr="바다를 고르세요">Pick your water</h2>
+        <p class="hint tx" data-en="The rooms differ in precision, not appetite: sharper hands, clearer eyes, a keener customs house." data-kr="방마다 다른 것은 탐욕이 아니라 정밀도입니다 — 더 정밀한 손, 더 맑은 눈, 더 예리한 세관.">The rooms differ in precision, not appetite: sharper hands, clearer eyes, a keener customs house.</p>
+        <div id="tiers" style="margin-top:14px;">
+          <button data-tier="easy"><span class="tn"></span><span class="td"></span></button>
+          <button data-tier="normal" class="on"><span class="tn"></span><span class="td"></span></button>
+          <button data-tier="hard"><span class="tn"></span><span class="td"></span></button>
+          <button data-tier="brutal"><span class="tn"></span><span class="td"></span></button>
+        </div>
+        <div class="nickrow">
+          <div>
+            <label class="tx" data-en="YOUR DELEGATION" data-kr="당신의 대표단">YOUR DELEGATION</label>
+            <input type="text" id="nick" maxlength="18" autocomplete="off" />
+          </div>
+          <button class="btn go big" id="startBtn"><span class="tx" data-en="Open the season" data-kr="조업 개시">Open the season</span> &rarr;</button>
+        </div>
+        <p class="hint tx" data-en="The five other delegations are invented. No real country is cast as a poacher." data-kr="다른 다섯 대표단은 가상입니다. 실존 국가를 밀렵꾼으로 그리지 않습니다.">The five other delegations are invented. No real country is cast as a poacher.</p>
+      </div>
+    </section>
+
+    <!-- 게임 -->
+    <section id="game" hidden>
+      <div id="hud">
+        <div class="hudrow">
+          <span id="hudName"></span>
+          <span class="hudsep"></span>
+          <span><span class="k">R</span> <b id="hudRound">1</b></span>
+          <span id="hudTier" class="k"></span>
+          <span class="hudsep"></span>
+          <span><span class="k tx" data-en="SCORE" data-kr="점수">SCORE</span> <b id="hudScore">0</b></span>
+          <span><span class="k tx" data-en="BONDED" data-kr="장부">BONDED</span> <b id="hudStoreL">0</b></span>
+          <span><span class="k tx" data-en="DARK" data-kr="밀창고">DARK</span> <b id="hudStoreH">0</b></span>
+          <span class="hudsep"></span>
+          <span><span class="k tx" data-en="QUOTE" data-kr="시세">QUOTE</span> <b id="hudQuote">×1.00</b></span>
+          <span id="ticker"></span>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2 class="tx" data-en="Stock estimate" data-kr="어족 추정">Stock estimate</h2>
+        <div id="gaugeNum">—</div>
+        <div id="gauge"></div>
+        <p class="hint tx" data-en="The band is what you know, not what is true. A survey resets it; idling widens it. The bots read the same estimator — nobody here sees the real number." data-kr="이 밴드는 진실이 아니라 당신이 아는 만큼입니다. 조사는 되돌리고, 쉬면 넓어집니다. 봇도 같은 추정기를 봅니다 — 여기서 진짜 숫자를 보는 사람은 없습니다.">The band is what you know, not what is true. A survey resets it; idling widens it. The bots read the same estimator — nobody here sees the real number.</p>
+      </div>
+
+      <!-- 1막 -->
+      <div class="act panel" id="act1" hidden>
+        <div id="a1ev"></div>
+        <div class="warn" id="a1cap" hidden></div>
+        <div class="btns" style="margin-top:16px;">
+          <button class="btn go" id="a1next"><span class="tx" data-en="Write the orders" data-kr="결정하러 가기">Write the orders</span> &rarr;</button>
+        </div>
+      </div>
+
+      <!-- 2막 -->
+      <div class="act panel" id="act2" hidden>
+        <h2 class="tx" data-en="Sealed orders" data-kr="밀봉 결정">Sealed orders</h2>
+        <div id="a2body"></div>
+        <div class="btns" style="margin-top:16px;">
+          <button class="btn go big" id="a2seal"><span class="tx" data-en="Seal the orders" data-kr="밀봉 제출">Seal the orders</span></button>
+        </div>
+      </div>
+
+      <!-- 3막 -->
+      <div class="act panel" id="act3" hidden>
+        <h2 class="tx" data-en="The ledger" data-kr="공시와 신고">The ledger</h2>
+        <div class="tw" id="a3table"></div>
+        <ul id="a3log"></ul>
+        <div id="a3ask"></div>
+        <div class="btns" id="a3next" hidden style="margin-top:16px;">
+          <button class="btn go" id="a3nextBtn"><span class="tx" data-en="Next round" data-kr="다음 라운드">Next round</span> &rarr;</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 종료 -->
+    <section id="end" hidden>
+      <div class="panel">
+        <div id="endTitle"></div>
+        <p id="endLead"></p>
+        <div class="tw" id="endBoard" style="margin-top:20px;"></div>
+        <p id="endMsy"></p>
+        <p id="endSdg"></p>
+        <div class="btns" style="margin-top:20px;">
+          <button class="btn go" id="againBtn"><span class="tx" data-en="Another season" data-kr="다시 한 판">Another season</span></button>
+          <a class="btn" href="/playhouse/"><span class="tx" data-en="Back to the Playhouse" data-kr="플레이하우스로">Back to the Playhouse</span></a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <span>&copy; KYGMIN.COM</span>
+    <span class="tx" data-en="CLIENT-SIDE ONLY · NOTHING IS STORED" data-kr="클라이언트 전용 · 아무것도 저장하지 않습니다">CLIENT-SIDE ONLY · NOTHING IS STORED</span>
+    <a class="tx" href="/privacy.html" data-en="PRIVACY POLICY" data-kr="개인정보처리방침">PRIVACY POLICY</a>
+  </div>
+</footer>
+
+<div id="langtoggle" aria-label="Language">
+  <button data-lang="en" class="on">EN</button>
+  <button data-lang="kr">한</button>
+</div>
+
+<script>
+// ─── rng.mjs ───
+// portable_rng.py 의 mulberry32 이식. 규약은 그 파일 상단 주석 그대로.
+// 이 파일과 파이썬판이 비트 단위로 같아야 parity가 성립한다.
+
+class PortableRNG {
+  constructor(seed) {
+    this.s = seed >>> 0;
+  }
+  random() {
+    // 파이썬: self.s = (self.s + 0x6D2B79F5) & 0xFFFFFFFF
+    this.s = (this.s + 0x6D2B79F5) >>> 0;
+    let t = this.s;
+    // t = ((t ^ (t >> 15)) * (t | 1)) & 0xFFFFFFFF
+    t = Math.imul(t ^ (t >>> 15), t | 1) >>> 0;
+    // t = (t ^ (t + (((t ^ (t >> 7)) * (t | 61)) & 0xFFFFFFFF))) & 0xFFFFFFFF
+    t = (t ^ (t + (Math.imul(t ^ (t >>> 7), t | 61) >>> 0)) >>> 0) >>> 0;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296.0;
+  }
+  uniform(a, b) { return a + (b - a) * this.random(); }
+  gauss(mu, sd) {
+    // 캐시 없음 — 매 호출 uniform 2개 소비, cos항만 사용
+    let u1 = this.random();
+    const u2 = this.random();
+    u1 = Math.max(u1, 1e-12);
+    return mu + sd * Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2);
+  }
+  randrange(n) { return Math.trunc(this.random() * n); }
+  choice(seq) { return seq[this.randrange(seq.length)]; }
+  sample(seq, k) {
+    const arr = Array.from(seq);
+    for (let i = 0; i < k; i++) {
+      const j = i + this.randrange(arr.length - i);
+      const tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+    }
+    return arr.slice(0, k);
+  }
+  shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = this.randrange(i + 1);
+      const tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+    }
+    return arr;
+  }
+}
+
+// ─── engine.mjs ───
+// 공유 바다 — 엔진 v1.6 JS 이식 (engine.py 1:1)
+//
+// 규칙은 전부 여기 산다. UI는 사본을 들지 않고 zscore / myopicL / Estimator 를 그대로 부른다.
+//
+// ── 이식 규약 (parity의 생명) ──────────────────────────────────────────────
+// 1. RNG 호출 순서 = 사양이다. 파이썬 코드의 문장 순서를 그대로 보존했다.
+// 2. 단축 평가(short-circuit)가 곧 RNG 소비 여부다. 다음 네 곳은 조건이 먼저 걸러져야
+//    난수를 먹지 않는다 — 순서를 바꾸면 시드가 갈린다:
+//      · GLUTTON 의 불법 주사위 (persona 검사가 먼저)
+//      · OPPORTUNIST 의 불법 주사위 (persona + climate 가 먼저)
+//      · 밀창고 부패 (invH > 0 가 먼저)
+//      · blurB 의 gauss (estsd > 0 일 때만 — BRUTAL 은 0이라 아예 안 먹는다)
+// 3. B̂ < 0.28K 조기 반환은 L 반올림·불법·조사·sellSlope 난수를 전부 건너뛴다.
+// 4. 파이썬 round() 는 banker's rounding 이다. Math.round 를 쓰면 coop_L 이 갈린다 → pyRound.
+// 5. gauss 는 캐시 없이 매 호출 uniform 2개를 먹는다 (rng.mjs).
+
+
+// 파이썬 round(x): 짝수로 반올림 (round-half-to-even). JS Math.round 와 다르다.
+function pyRound(x) {
+  const f = Math.floor(x);
+  const d = x - f;
+  if (d > 0.5) return f + 1;
+  if (d < 0.5) return f;
+  return (f % 2 === 0) ? f : f + 1;
+}
+
+const CFG = {
+  K: 1000.0, r: 0.35, B0: 700.0, q: 0.05, p: 10.0, c: 60.0,
+  F_MAX: 5, F_ILL: 3, N: 6, ALLEE_FRAC: 0.15,
+  SIGMA: 0.12,                       // 배별 어획 운
+  CLIMATE_P: 0.25,                   // (사문화 — engine.py 에서도 참조되지 않는다)
+  CLIMATE_LO: 0.2, CLIMATE_HI: 0.7,  // (사문화)
+  SURVEY_COST: 12.0, SURVEY_SD: 0.05,
+  PI_RAND: 0.10,
+  FINE_MULT: 3.0, FINE_FIX: 200.0,
+  FA_FINE: 150.0,
+  MISREPORT_TOL: 0.15, MISREPORT_MULT: 0.5,
+  BASE_ROUNDS: 12, END_P: 0.20, MAX_ROUNDS: 24,
+  AUDIT_LOOKBACK: 1,                 // (플래그 — 로직에서 참조되지 않는다)
+  PRICE_ETA: 0.6, HREF: 90.0,
+  COST_GAMMA: 1.25, C_ILL: 60.0,
+  RESIDUAL_DIVIDEND: 0.0,
+  RESTRAINT: 0.50,
+  SPOIL_L: 0.05,
+  SPOIL_H_P: 0.35, SPOIL_H_LO: 0.10, SPOIL_H_HI: 0.50,
+  PRICE_PHI: 0.6, PRICE_SD: 0.12, PRICE_LO: 0.6, PRICE_HI: 1.6,
+  STORAGE_FEE: 2.0,
+  END_LEGAL: 0.6, END_HIDDEN: 0.45,
+  EVENT_P: 0.35,
+  R_NOISE: 0.15,
+  SURVEY_INTEL: true,
+  BOUNTY: 0.40,
+};
+
+const TIERS = {
+  // 낮은 방 = 어설픈 손 + 흐린 눈 + 둔한 세관 / 높은 방 = 정밀한 손 + 맑은 눈 + 예리한 세관.
+  // gfloor 는 명세 §9 가 "무력"이라 적었으나 실제로는 살아있다 (BRUTAL 에서 다섯 중 넷을
+  // greed 0.70 으로 밀어올린다). fixtures 가 이 상태로 생성됐으므로 그대로 이식한다.
+  easy:   { dull: 1.8, z_acc: 4.6, z_vote: 3.6, jit: 2.2, estsd: 0.11, iscale: 1.30, appr: 0.12, gfloor: 0.00, wcap: 0.28 },
+  normal: { dull: 1.2, z_acc: 3.8, z_vote: 3.0, jit: 1.5, estsd: 0.06, iscale: 1.00, appr: 0.12, gfloor: 0.45, wcap: 0.33 },
+  hard:   { dull: 0.7, z_acc: 3.5, z_vote: 2.9, jit: 0.8, estsd: 0.03, iscale: 0.65, appr: 0.12, gfloor: 0.60, wcap: 0.41 },
+  brutal: { dull: 0.4, z_acc: 3.2, z_vote: 2.7, jit: 0.4, estsd: 0.00, iscale: 0.45, appr: 0.12, gfloor: 0.70, wcap: 0.44 },
+};
+
+const PERSONAS = ["GLUTTON", "STEWARD", "GRIM", "TITTAT", "OPPORTUNIST"];
+const GREED = { GLUTTON: 0.78, STEWARD: 0.45, GRIM: 0.62, TITTAT: 0.62, OPPORTUNIST: 0.65 };
+const ILL   = { GLUTTON: 0.20, STEWARD: 0.0, GRIM: 0.0, TITTAT: 0.0, OPPORTUNIST: 0.28 };
+
+// 포렌식 회계 z. 장부는 공개다: implied 어획 = 판매 + 장부 재고 증가.
+// 회유 이벤트는 관측자의 상한을 넓혀 세탁 창이 된다 — 알리바이의 수학적 실체.
+function zscore(cfg, pub, j, Bhat, dull = 0.7, noise = 0.0) {
+  const Et = Math.max(1e-9, pub.Etot_pub);
+  const Lj = pub.L[j];
+  const implied = pub.sold[j] + Math.max(0.0, pub.invL[j] - pub.invL_prev[j]);
+  const u = 1 - Math.exp(-cfg.q * Et);
+  let plaus = pub.Etot_pub > 0 ? u * Bhat * (Lj / Et) : 0.0;
+  if (pub.event === 'migration') plaus *= 1.35;
+  const sd = Math.max(3.0, plaus * (cfg.SIGMA * 1.5 + cfg.R_NOISE * 1.2) + 4.0 * dull);
+  return (implied - plaus + noise) / sd;
+}
+
+function myopicL(cfg, Bhat, others) {
+  let bestM = 0, bestG = -1e18;
+  for (let m = 0; m <= cfg.F_MAX; m++) {
+    const E = m + others;
+    let g;
+    if (E === 0) g = 0;
+    else {
+      const u = 1 - Math.exp(-cfg.q * E);
+      const H = u * Bhat;
+      const pt = cfg.p * Math.min(1.6, Math.pow(cfg.HREF / Math.max(1e-9, H), cfg.PRICE_ETA));
+      g = pt * H * (m / E) - cfg.c * Math.pow(m, cfg.COST_GAMMA);
+    }
+    if (g > bestG) { bestM = m; bestG = g; }   // 동점은 작은 m 유지 (파이썬과 동일)
+  }
+  return bestM;
+}
+
+function growth(B, K, rEff) { return B + rEff * B * (1 - B / K); }
+
+// 봇도 진짜 B를 모른다 (확정 결정 #8). CPUE + 조사만.
+class Estimator {
+  constructor(cfg, rng) { this.cfg = cfg; this.rng = rng; this.B = cfg.B0; }
+  survey(trueB) { this.B = trueB * (1 + this.rng.gauss(0, this.cfg.SURVEY_SD)); }
+  observe(myE, myH, pubL, rUsedGuess) {
+    const c = this.cfg;
+    const pred = growth(this.B * 0.92, c.K, rUsedGuess);   // 남들이 좀 잡았다고 가정
+    if (myE > 0 && myH > 0) {
+      const Etot = Math.max(pubL, myE);                    // 남의 불법은 모른다 → 하향편의
+      const u = 1 - Math.exp(-c.q * Etot);
+      const obs = u > 0 ? myH / (u * (myE / Etot)) : pred;
+      this.B = 0.55 * obs + 0.45 * pred;
+    } else {
+      this.B = pred;
+    }
+    this.B = Math.max(30.0, Math.min(c.K * 1.2, this.B));
+  }
+}
+
+class Bot {
+  constructor(persona, tier, cfg, rng) {
+    this.p = persona; this.t = TIERS[tier]; this.cfg = cfg; this.rng = rng;
+    this.est = new Estimator(cfg, rng);
+    // 지터 5회 — 순서 고정 (ill → greed → z_acc → z_vote → dull)
+    const j = (s) => 1 + rng.uniform(-s, s) * this.t.jit;
+    this.ill = ILL[persona] * this.t.iscale * j(0.4);
+    this.greed = Math.min(0.98, Math.max(this.t.gfloor, GREED[persona] * j(0.12)));
+    this.z_acc = this.t.z_acc * j(0.15);
+    this.z_vote = this.t.z_vote * j(0.15);
+    this.dull = this.t.dull * j(0.2);
+    this.punish = 0;        // GRIM/TITTAT 응징 잔여 라운드 (-1 = 영구)
+    this.prevBhat = null;
+    this.lastL = undefined; // getattr(self,'lastL',2)
+    this.sellSlope = undefined;
+    this.overcnt = 0;
+    this.intel = null;
+  }
+  coopL() {
+    const c = this.cfg, B = this.est.B;
+    let tgt = c.r * B * (1 - B / c.K);
+    if (B > 0.55 * c.K) tgt *= 1.3;
+    if (B < 0.45 * c.K) tgt *= 0.5;
+    const u = B > 0 ? Math.min(0.95, tgt / B) : 0;
+    const Etot = u > 0 ? -Math.log(1 - u) / c.q : 0;
+    return Math.max(0, Math.min(c.F_MAX, pyRound(Etot / c.N)));
+  }
+  blurB() {
+    const e = this.t.estsd;
+    return e > 0 ? this.est.B * (1 + this.rng.gauss(0, e)) : this.est.B;   // estsd 0 이면 난수 안 먹는다
+  }
+  decide(ctx) {
+    const c = this.cfg;
+    const B = this.blurB();
+    const K = c.K;
+    // 멸종 회피 = 전 티어 공통 (-inf). GLUTTON 도 자살하지 않는다.
+    // 여기서 반환하면 이후 난수를 하나도 먹지 않는다 (sellSlope 초기화도 미뤄진다).
+    if (B < 0.28 * K) return { L: 0, X: 0, report: null, survey: false };
+    const others = Math.max(0, ctx.lastE - (this.lastL === undefined ? 2 : this.lastL));
+    let w = this.greed;
+    if (this.p === "OPPORTUNIST") w = B > 0.60 * K ? 0.90 : (B < 0.45 * K ? 0.40 : 0.70);
+    if ((this.p === "GRIM" || this.p === "TITTAT") && this.punish !== 0) {
+      w = B > 0.50 * K ? 0.90 : 0.35;                 // 점증적 제재 (Ostrom #5)
+      if (this.punish > 0) this.punish -= 1;
+    }
+    if (B < c.RESTRAINT * K) w = Math.min(w, this.t.wcap);   // 위험역 절제 = 티어 정밀도
+    const Lf = w * myopicL(c, B, others) + (1 - w) * this.coopL();
+    const Li = Math.trunc(Lf);
+    let L = Li + (this.rng.random() < Lf - Li ? 1 : 0);      // 확률적 반올림 (봇 전용)
+    L = Math.max(0, Math.min(c.F_MAX, L));
+    let X = 0;
+    // 단축 평가 순서 그대로: persona → 주사위 → B 조건
+    if (this.p === "GLUTTON" && this.rng.random() < this.ill && B > 0.45 * K) X = 1;
+    if (this.p === "OPPORTUNIST" && ctx.climate && this.rng.random() < this.ill * 2.2 && B > 0.40 * K) {
+      X = 1 + (this.rng.random() < 0.3 ? 1 : 0);
+    }
+    X = Math.min(X, c.F_ILL);
+    const survey = this.rng.random() < this.t.appr;
+    this.lastL = L;
+    const qv = ctx.quote === undefined ? 1.0 : ctx.quote;
+    if (this.sellSlope === undefined) {
+      this.sellSlope = 1.4 + this.rng.uniform(-0.35, 0.35) * this.t.jit;   // 최초 1회만
+    }
+    const sl = this.sellSlope;
+    let sellL = Math.min(1.0, Math.max(0.20, 0.5 + sl * (qv - 1.0)));
+    if (ctx.t >= ctx.base) sellL = 1.0;                       // 종반 처분
+    let sellH = 0.15;
+    if (ctx.event === 'demand') { sellL = 1.0; sellH = 0.9; }
+    else if (ctx.event === 'migration') sellH = 0.8;
+    else if (qv > 1.15) sellH = 0.5;
+    let report = 'truth';
+    if (this.p === "GLUTTON") report = null;
+    if (X > 0) report = 'cover';
+    return { L, X, report, survey, sellL, sellH };
+  }
+  suspicion(j, pub, EtotPub) {
+    const n = this.rng.gauss(0, 4 * this.dull);               // 둔감 노이즈 (톤 단위)
+    let z = zscore(this.cfg, pub, j, this.est.B, this.dull, n);
+    const it = this.intel;
+    if (it) {
+      const c = this.cfg, dark = it.dark;
+      if (dark > this.est.B * c.SIGMA * 2.0) {
+        z += Math.min(0.9, dark / (this.est.B * c.SIGMA * 4));
+      }
+    }
+    return z;
+  }
+  postRound(pub, ctx) {
+    if (this.p === "GRIM" || this.p === "TITTAT") {
+      // (a) 공개 남획 트리거
+      const fair = Math.max(1, this.coopL());
+      const over = pub.L.filter(l => l > fair + 2);
+      this.overcnt = this.overcnt + (over.length ? 1 : 0);
+      if (over.length && this.overcnt >= 2 && this.punish === 0) {
+        this.punish = this.p === "GRIM" ? -1 : 3;
+      }
+      if (!over.length && this.p === "TITTAT" && this.punish === 0) this.overcnt = 0;
+      // (b) 숨은 어획 트리거: 어족 감소가 공개 선단과 모순
+      if (this.punish === 0 && this.prevBhat) {
+        const drop = (this.prevBhat - this.est.B) / Math.max(1, this.prevBhat);
+        const expect = 1 - Math.exp(-this.cfg.q * pub.Etot_pub);
+        if (drop > expect * 1.35 && !ctx.climate) {
+          this.punish = this.p === "GRIM" ? -1 : 2;
+        }
+      }
+    }
+    this.prevBhat = this.est.B;
+  }
+}
+
+class Game {
+  constructor(tier, seat0, cfg = null, rng = null) {
+    this.cfg = Object.assign({}, CFG, cfg || {});
+    this.rng = rng || new PortableRNG(1);
+    this.tier = tier;
+    this.seat0 = seat0;                       // 사람 좌석 (또는 대역 전략)
+    this.bots = PERSONAS.map(p => new Bot(p, tier, this.cfg, this.rng));
+    this.N = this.cfg.N;
+    this.score = new Array(this.N).fill(0.0);
+    this.B = this.cfg.B0;
+    this.t = 0;
+    this.lastH = 0.0; this.lastEtotTrue = 0;
+    this.lastEpub = undefined; this.lastBpre = undefined;
+    this.invL = new Array(this.N).fill(0.0);
+    this.invH = new Array(this.N).fill(0.0);
+    this.quote = 1.0;
+    this.trace = null;
+    this.log = {
+      ill_rounds: Array.from({ length: this.N }, () => []),
+      invest: 0, hits: 0, false_acc: 0, accusations: 0, extinct: false, rounds: 0,
+    };
+  }
+
+  // 규칙 루프는 하나뿐이다. play() 가 본체이고, run() 은 동기 드라이버,
+  // UI 는 같은 제너레이터를 비동기로 몬다 (사본 금지 원칙 — 루프를 복제하지 않는다).
+  // yield 지점은 사람이 개입하거나 화면이 갱신돼야 하는 곳뿐이고,
+  // yield 자체는 난수를 소비하지 않으므로 RNG 순서는 그대로다.
+  run() {
+    const it = this.play();
+    let r = it.next();
+    while (!r.done) {
+      const q = r.value;
+      if (q.phase === 'decide') r = it.next(this.seat0.decide(q.ctx, this));
+      else if (q.phase === 'accuse') r = it.next(typeof this.seat0.accuse === 'function' ? this.seat0.accuse(q.pub, this) : null);
+      else if (q.phase === 'vote') r = it.next(typeof this.seat0.vote === 'function' ? this.seat0.vote(q.tgt, q.pub, this) : false);
+      else r = it.next();   // 화면용 훅 — 동기 드라이버는 그냥 지나간다
+    }
+    return r.value;
+  }
+
+  *play() {
+    const c = this.cfg;
+    for (;;) {
+      this.t += 1;
+      let ev = null;
+      let rEff = c.r * (1 + this.rng.gauss(0, c.R_NOISE));
+      let href = c.HREF;
+      let capped = new Set();
+      if (this.rng.random() < c.EVENT_P) {
+        ev = this.rng.choice(['redtide', 'cold', 'migration', 'typhoon', 'demand']);
+        if (ev === 'redtide') rEff = c.r * this.rng.uniform(0.2, 0.6);
+        if (ev === 'cold') rEff = c.r * this.rng.uniform(0.4, 0.8);
+        if (ev === 'migration') this.B = Math.min(c.K * 1.1, this.B + this.rng.uniform(0.05, 0.15) * c.K);
+        if (ev === 'typhoon') capped = new Set(this.rng.sample([...Array(this.N).keys()], 2));
+        if (ev === 'demand') href = c.HREF * this.rng.uniform(1.3, 1.8);
+      }
+      const climate = (ev === 'redtide' || ev === 'cold');   // GRIM 트리거의 어족 알리바이
+
+      this.quote = 1.0 + c.PRICE_PHI * (this.quote - 1.0) + this.rng.gauss(0, c.PRICE_SD);
+      if (ev === 'redtide' || ev === 'cold') this.quote *= this.rng.uniform(1.10, 1.30);
+      if (ev === 'migration') this.quote *= this.rng.uniform(0.80, 0.95);
+      if (ev === 'demand') this.quote *= this.rng.uniform(1.30, 1.80);
+      this.quote = Math.max(c.PRICE_LO, Math.min(c.PRICE_HI, this.quote));
+
+      const ctx = {
+        climate, event: ev, capped, t: this.t, quote: this.quote,
+        base: c.BASE_ROUNDS,
+        lastE: this.lastEpub === undefined ? c.N * 2 : this.lastEpub,
+      };
+
+      yield { phase: 'roundStart', ctx, B: this.B, quote: this.quote, event: ev, capped };
+
+      // --- 결정 (seat0 먼저, 그다음 봇 1..5) ---
+      const acts = [];
+      const a0 = yield { phase: 'decide', ctx };
+      acts.push(a0);
+      for (const b of this.bots) acts.push(b.decide(ctx));
+
+      // --- 조사 구매 (봇 순서 → seat0) ---
+      for (let i = 0; i < this.bots.length; i++) {
+        if (acts[i + 1].survey) {
+          this.score[i + 1] -= c.SURVEY_COST;
+          this.bots[i].est.survey(this.B);
+          if (c.SURVEY_INTEL && this.t > 1) {
+            const uL = 1 - Math.exp(-c.q * (this.lastEpub === undefined ? 0 : this.lastEpub));
+            this.bots[i].intel = { dark: this.lastH - uL * (this.lastBpre === undefined ? this.B : this.lastBpre) };
+          }
+        }
+      }
+      if (a0.survey) {
+        this.score[0] -= c.SURVEY_COST;
+        this.seat0.est.survey(this.B);
+        if (c.SURVEY_INTEL && this.t > 1) {
+          const uL = 1 - Math.exp(-c.q * (this.lastEpub === undefined ? 0 : this.lastEpub));
+          this.seat0.intel = { dark: this.lastH - uL * (this.lastBpre === undefined ? this.B : this.lastBpre) };
+        }
+      }
+
+      const L = acts.map(a => a.L);
+      const X = acts.map(a => a.X);
+      for (const i of capped) L[i] = Math.min(L[i], Math.floor((c.F_MAX + 1) / 2));
+      const E = L.map((l, i) => l + X[i]);
+      const Etot = E.reduce((s, v) => s + v, 0);
+      const EtotPub = L.reduce((s, v) => s + v, 0);
+
+      // --- 어획 ---
+      const u = Etot > 0 ? 1 - Math.exp(-c.q * Etot) : 0.0;
+      const H = u * this.B;
+      const raw = [];
+      for (let i = 0; i < this.N; i++) {
+        raw.push(Etot > 0 ? H * E[i] / Etot * (1 + this.rng.gauss(0, c.SIGMA)) : 0);
+      }
+      const sm = raw.reduce((s, v) => s + v, 0);
+      const catchArr = raw.map(x => sm > 0 ? x * H / sm : 0);
+      this.lastH = H; this.lastEtotTrue = Etot; this.lastBpre = this.B;
+      const invLPrev = this.invL.slice();
+
+      // 어획 분해: 합법분 → 장부 재고(공개), 불법분 → 장부 밖 재고(비밀)
+      for (let i = 0; i < this.N; i++) {
+        let leg, hid;
+        if (E[i] > 0) { leg = catchArr[i] * (L[i] / E[i]); hid = catchArr[i] - leg; }
+        else { leg = 0.0; hid = 0.0; }
+        this.invL[i] += leg; this.invH[i] += hid;
+      }
+
+      // 판매: GDP = 판매 수입 − 비용
+      const sold = new Array(this.N).fill(0.0);
+      const laundered = new Array(this.N).fill(0.0);
+      for (let i = 0; i < this.N; i++) {
+        const a = acts[i];
+        const fL = Math.min(1.0, Math.max(0.0, a.sellL === undefined ? 1.0 : a.sellL));
+        const fH = Math.min(1.0, Math.max(0.0, a.sellH === undefined ? 0.0 : a.sellH));
+        const sl = this.invL[i] * fL, sh = this.invH[i] * fH;
+        this.invL[i] -= sl; this.invH[i] -= sh;
+        sold[i] = sl + sh; laundered[i] = sh;
+      }
+      const totalSold = sold.reduce((s, v) => s + v, 0);
+      const pt = totalSold > 0
+        ? c.p * this.quote * Math.min(1.6, Math.pow(href / Math.max(1e-9, totalSold), c.PRICE_ETA))
+        : c.p * this.quote;
+      const gdp = [];
+      for (let i = 0; i < this.N; i++) {
+        gdp.push(pt * sold[i] - c.c * Math.pow(L[i], c.COST_GAMMA) - c.C_ILL * X[i]);
+      }
+      const illgain = laundered.map(v => Math.max(0.0, pt * v));
+
+      // 부패·보관료 (밀창고 주사위는 invH>0 일 때만 굴린다)
+      for (let i = 0; i < this.N; i++) {
+        this.invL[i] *= (1 - c.SPOIL_L);
+        this.score[i] -= c.STORAGE_FEE * this.invL[i];
+        if (this.invH[i] > 0 && this.rng.random() < c.SPOIL_H_P) {
+          this.invH[i] *= (1 - this.rng.uniform(c.SPOIL_H_LO, c.SPOIL_H_HI));
+        }
+      }
+      for (let i = 0; i < this.N; i++) {
+        this.score[i] += gdp[i];
+        if (X[i] > 0) this.log.ill_rounds[i].push(this.t);
+      }
+      this.B = growth(this.B - H, c.K, rEff);
+
+      // --- 추정 갱신 ---
+      this.seat0.est.observe(E[0], catchArr[0], EtotPub, c.r);
+      for (let i = 0; i < this.bots.length; i++) {
+        this.bots[i].est.observe(E[i + 1], catchArr[i + 1], EtotPub, c.r);
+      }
+
+      // --- 공시 (신고: 진실 / 위장 / 침묵 / 임의 수치) ---
+      const rep = [];
+      for (let i = 0; i < this.N; i++) {
+        const rp = acts[i].report;
+        if (rp === 'truth') rep.push(catchArr[i]);
+        else if (rp === 'cover') {
+          const uL = 1 - Math.exp(-c.q * EtotPub);
+          rep.push(uL * this.estPub(i, L, EtotPub));
+        } else if (rp === null || rp === undefined || rp === 'silent') rep.push(null);
+        else rep.push(rp);
+      }
+      const pub = {
+        L, gdp, report: rep, Etot_pub: EtotPub, pt, sold,
+        invL: this.invL.slice(), invL_prev: invLPrev, event: ev,
+      };
+      this.lastEpub = EtotPub;
+
+      if (this.trace !== null) {
+        this.trace.push({
+          t: this.t, event: ev, quote: this.quote, B: this.B, pt,
+          L: L.slice(), X: X.slice(), sold: sold.slice(), gdp: gdp.slice(),
+          invL: this.invL.slice(), invH: this.invH.slice(), score: this.score.slice(),
+        });
+      }
+
+      yield { phase: 'disclose', pub, ctx, catch: catchArr.slice(), illgain: illgain.slice(),
+              B: this.B, score: this.score.slice(), invH: this.invH.slice() };
+
+      // --- 수사: 무작위 + 신고 ---
+      const audited = new Set();
+      if (this.rng.random() < c.PI_RAND) {
+        const tgt = this.rng.randrange(this.N);
+        audited.add(tgt);
+        const guilty = this._audit(tgt, X, illgain, catchArr, rep, false, null);
+        yield { phase: 'audit', by: 'random', tgt, guilty, proposer: null, score: this.score.slice() };
+      }
+      yield* this._accusationPhase(pub, EtotPub, X, illgain, catchArr, rep, audited, ctx);
+
+      for (const b of this.bots) b.postRound(pub, ctx);
+      if (typeof this.seat0.postRound === 'function') this.seat0.postRound(pub, ctx, this);
+
+      // --- 종료 ---
+      this.log.rounds = this.t;
+      yield { phase: 'roundEnd', t: this.t, B: this.B, score: this.score.slice() };
+      if (this.B < c.ALLEE_FRAC * c.K) { this.log.extinct = true; return this._finish(true); }
+      if (this.t >= c.MAX_ROUNDS) return this._finish(false);
+      if (this.t >= c.BASE_ROUNDS && this.rng.random() < c.END_P) return this._finish(false);
+    }
+  }
+
+  // 위장 신고자가 쓰는 "합법 선단이면 이 정도" 수치 (자기 B 추정 기반)
+  estPub(i, L, EtotPub) {
+    const est = i > 0 ? this.bots[i - 1].est.B : this.seat0.est.B;
+    return est * (L[i] / Math.max(1e-9, EtotPub));
+  }
+
+  _audit(tgt, X, illgain, catchArr, rep, byAcc, proposer) {
+    const c = this.cfg;
+    this.log.invest += 1;
+    const guilty = X[tgt] > 0 || illgain[tgt] > 1.0 || this.invH[tgt] > 1.0;
+    if (guilty) {
+      const fine = c.FINE_MULT * illgain[tgt] + c.FINE_FIX;
+      this.score[tgt] -= fine;
+      this.invH[tgt] = 0.0;                                   // 은닉 재고 몰수
+      if (byAcc && proposer !== null && proposer !== undefined) {
+        this.score[proposer] += c.BOUNTY * fine;              // 포상금 (무작위 수사는 국고)
+      }
+      this.log.hits += 1;
+      if (rep[tgt] !== null && rep[tgt] !== undefined &&
+          Math.abs(rep[tgt] - catchArr[tgt]) > c.MISREPORT_TOL * Math.max(1, catchArr[tgt])) {
+        this.score[tgt] -= c.MISREPORT_MULT * c.p * Math.abs(rep[tgt] - catchArr[tgt]);
+      }
+      return true;
+    }
+    if (rep[tgt] !== null && rep[tgt] !== undefined &&
+        Math.abs(rep[tgt] - catchArr[tgt]) > c.MISREPORT_TOL * Math.max(1, catchArr[tgt])) {
+      this.score[tgt] -= c.MISREPORT_MULT * c.p * Math.abs(rep[tgt] - catchArr[tgt]);
+    }
+    if (byAcc && proposer !== null && proposer !== undefined) {
+      this.score[proposer] -= c.FA_FINE;
+      this.log.false_acc += 1;
+    }
+    return false;
+  }
+
+  // 라운드당 신고 수사 1건. 제안 순서는 무작위. 제안자·피고 제외 4인 중 2표.
+  *_accusationPhase(pub, EtotPub, X, illgain, catchArr, rep, audited, ctx) {
+    const order = [...Array(this.N).keys()];
+    this.rng.shuffle(order);
+    for (const i of order) {
+      let tgt = null;
+      if (i === 0) {
+        tgt = yield { phase: 'accuse', pub, ctx };
+      } else {
+        const b = this.bots[i - 1];
+        let bestZ = 0, bestJ = null;
+        for (let j = 0; j < this.N; j++) {
+          if (j === i) continue;
+          const z = b.suspicion(j, pub, EtotPub);
+          if (z > bestZ) { bestZ = z; bestJ = j; }
+        }
+        if (bestZ > b.z_acc + 0.5) tgt = bestJ;
+      }
+      if (tgt === null || tgt === undefined || audited.has(tgt)) continue;
+      this.log.accusations += 1;
+      let votes = 0;
+      for (let k = 0; k < this.N; k++) {
+        if (k === i || k === tgt) continue;
+        if (k === 0) {
+          const v = yield { phase: 'vote', tgt, pub, proposer: i, ctx };
+          votes += v ? 1 : 0;
+        } else {
+          const z = this.bots[k - 1].suspicion(tgt, pub, EtotPub);
+          votes += z > this.bots[k - 1].z_vote ? 1 : 0;
+        }
+      }
+      if (votes >= 2) {
+        const guilty = this._audit(tgt, X, illgain, catchArr, rep, true, i);
+        yield { phase: 'audit', by: 'accusation', tgt, guilty, proposer: i, votes, score: this.score.slice() };
+        return true;
+      }
+      yield { phase: 'audit', by: 'rejected', tgt, guilty: null, proposer: i, votes, score: this.score.slice() };
+      return false;   // 이번 라운드 신고 기회 소진
+    }
+    return false;
+  }
+
+  _finish(extinct = false) {
+    const c = this.cfg;
+    if (!extinct) {
+      for (let i = 0; i < this.N; i++) {
+        this.score[i] += c.p * c.END_LEGAL * this.invL[i];
+        this.score[i] += c.p * c.END_HIDDEN * this.invH[i];
+      }
+    }
+    if (c.RESIDUAL_DIVIDEND > 0 && !extinct) {
+      const div = c.RESIDUAL_DIVIDEND * this.B / c.K * 1000 / this.N;
+      for (let i = 0; i < this.N; i++) this.score[i] += div;
+    }
+    if (extinct) return { winner: null, score: this.score, log: this.log };
+    let w = 0;
+    for (let i = 1; i < this.N; i++) if (this.score[i] > this.score[w]) w = i;   // 동점은 앞선 좌석
+    return { winner: w, score: this.score, log: this.log };
+  }
+}
+
+// ─── nations.mjs ───
+// 가상 국명·문장 생성기.
+//
+// 왜 이미지가 아니라 절차적 SVG 인가: 봇 5국의 이름이 매 판 새로 나오므로 고정된
+// 이미지 세트로는 이름과 문장이 따로 논다. 이름 문자열을 해시해 도형을 조합하면
+// 항상 일치하고, 단일 HTML 요구에도 맞는다.
+//
+// 실존 국가명·유사명 회피 (확정 결정 #11) — 특정 국가를 불법 어획 상습범으로
+// 그리지 않기 위한 규칙이다. 음절표는 실존 국명과 겹치지 않도록 골랐고,
+// 완성된 이름은 BLOCKLIST 로 한 번 더 거른다.
+
+// 음절은 EN/KR 쌍으로 같이 산다 — 한 판의 국명이 두 언어에서 같은 나라여야 한다.
+const HEAD = [
+  ['Kar', '카르'], ['Vor', '보르'], ['Tal', '탈'], ['Mel', '멜'], ['Sur', '수르'],
+  ['Nix', '닉스'], ['Dro', '드로'], ['Hal', '할'], ['Zen', '젠'], ['Bra', '브라'],
+  ['Ulm', '울름'], ['Cae', '카이'], ['Ryn', '륀'], ['Oss', '오스'], ['Fen', '펜'],
+  ['Ith', '이스'], ['Gal', '갈'], ['Pyr', '피르'], ['Tor', '토르'], ['Ves', '베스'],
+];
+const TAIL = [
+  ['dova', '도바'], ['mara', '마라'], ['heim', '하임'], ['stad', '스타드'], ['vik', '비크'],
+  ['tania', '타니아'], ['gard', '가르드'], ['osk', '오스크'], ['elle', '엘레'], ['ura', '우라'],
+  ['antis', '안티스'], ['bourg', '부르'], ['nesia', '네시아'], ['korn', '코른'], ['ovia', '오비아'],
+  ['sund', '순드'], ['rike', '리케'], ['thal', '탈'], ['mor', '모르'], ['ise', '이세'],
+];
+// 완성형이 실존국·유사명이 되는 조합만 막는다 (소문자 비교).
+const BLOCKLIST = [
+  'moldova', 'romania', 'tanzania', 'indonesia', 'polynesia', 'micronesia', 'mauritania',
+  'bolivia', 'latvia', 'estonia', 'mongolia', 'somalia', 'albania', 'armenia', 'georgia',
+  'reykjavik', 'denmark', 'finland', 'iceland', 'norway', 'sweden', 'luxembourg', 'monaco',
+];
+
+// FNV-1a — 이름에서 문장을 결정적으로 뽑기 위한 해시
+function hash32(str) {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < str.length; i++) {
+    h ^= str.charCodeAt(i);
+    h = Math.imul(h, 0x01000193) >>> 0;
+  }
+  return h >>> 0;
+}
+
+function ok(en) {
+  const low = en.toLowerCase();
+  return !BLOCKLIST.some(b => low === b || low.includes(b) || b.includes(low));
+}
+
+// rng: PortableRNG 호환 객체 (randrange). 게임 RNG 와 분리된 스트림을 쓴다 —
+// 국명 추첨이 규칙 난수를 소비하면 parity 가 깨진다.
+function makeNations(rng, count, userName) {
+  const out = [];
+  const usedHead = new Set(), usedTail = new Set(), usedEn = new Set();
+  let guard = 0;
+  while (out.length < count && guard++ < 4000) {
+    const hi = rng.randrange(HEAD.length), ti = rng.randrange(TAIL.length);
+    if (usedHead.has(hi) || usedTail.has(ti)) continue;      // 머리·꼬리 모두 겹치지 않게
+    // 자음이 겹쳐 붙는 조합 회피 (Ith+heim → Ithheim)
+    if (HEAD[hi][0].slice(-1).toLowerCase() === TAIL[ti][0][0].toLowerCase()) continue;
+    const en = HEAD[hi][0] + TAIL[ti][0];
+    const kr = HEAD[hi][1] + TAIL[ti][1];
+    if (!ok(en) || usedEn.has(en)) continue;
+    usedHead.add(hi); usedTail.add(ti); usedEn.add(en);
+    out.push({ en, kr, seed: hash32(en) });
+  }
+  // 음절이 동나는 극단은 없지만, 방어적으로 번호를 붙인다
+  while (out.length < count) {
+    const en = 'Delegate ' + (out.length + 1), kr = '대표단 ' + (out.length + 1);
+    out.push({ en, kr, seed: hash32(en) });
+  }
+  return out;
+}
+
+// ── 문장 (emblem) ─────────────────────────────────────────────────────────
+// 이름 해시로 결정되는 기하 도형. 잉크 + 녹색 2색, 빨강 금지.
+// 유저 좌석은 항상 녹색 채움으로 구분한다.
+const SHAPES = 6;
+
+function emblemSVG(seed, opts = {}) {
+  const size = opts.size || 28;
+  const ink = opts.ink || '#141414';
+  const green = opts.green || '#2BB673';
+  const paper = opts.paper || '#F6F6F4';
+  const mine = !!opts.mine;
+  const fill = mine ? green : paper;
+  const s = seed >>> 0;
+  const form = s % SHAPES;
+  const rot = (s >> 3) % 4;
+  const bars = 2 + ((s >> 6) % 3);
+  const off = ((s >> 9) % 3) - 1;
+  const V = 32;
+  const p = [];
+  p.push(`<rect x="1.5" y="1.5" width="${V - 3}" height="${V - 3}" fill="${fill}" stroke="${ink}" stroke-width="3"/>`);
+  const g = mine ? paper : ink;
+  if (form === 0) {                       // 수평 띠
+    for (let i = 0; i < bars; i++) p.push(`<rect x="6" y="${8 + i * 6}" width="20" height="3" fill="${g}"/>`);
+  } else if (form === 1) {                // 대각
+    p.push(`<path d="M6 26 L26 6" stroke="${g}" stroke-width="3.5" fill="none"/>`);
+    p.push(`<circle cx="${11 + off * 2}" cy="11" r="3" fill="${g}"/>`);
+  } else if (form === 2) {                // 중앙 원 + 축
+    p.push(`<circle cx="16" cy="16" r="6.5" fill="none" stroke="${g}" stroke-width="3"/>`);
+    p.push(`<rect x="15" y="4" width="2.5" height="${8 + bars}" fill="${g}"/>`);
+  } else if (form === 3) {                // 삼각
+    p.push(`<path d="M16 7 L26 25 L6 25 Z" fill="none" stroke="${g}" stroke-width="3"/>`);
+  } else if (form === 4) {                // 사분면
+    p.push(`<rect x="6" y="6" width="9.5" height="9.5" fill="${g}"/>`);
+    p.push(`<rect x="${16.5 + off * 0}" y="16.5" width="9.5" height="9.5" fill="${g}"/>`);
+  } else {                                // 수직 띠 + 점
+    for (let i = 0; i < bars; i++) p.push(`<rect x="${8 + i * 6}" y="6" width="3" height="20" fill="${g}"/>`);
+    p.push(`<circle cx="24" cy="24" r="2.5" fill="${g}"/>`);
+  }
+  const inner = `<g transform="rotate(${rot * 90} 16 16)">${p.slice(1).join('')}</g>`;
+  return `<svg class="emb" width="${size}" height="${size}" viewBox="0 0 ${V} ${V}" aria-hidden="true">${p[0]}${inner}</svg>`;
+}
+
+</script>
+<script>
+
+window.APP_LANG = window.KYG_LANG || 'en';
+window.APP_LANG_LISTENERS = [];
+(function(){
+  var POOL = ("ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎㅏㅑㅓㅕㅗㅛㅜㅠㅡㅣ"
+    + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-·").split("");
+  function esc(c){return c==="&"?"&amp;":c==="<"?"&lt;":c===">"?"&gt;":c;}
+  function Scramble(el){ this.el=el; this.raf=null; this.frame=this.frame.bind(this); }
+  Scramble.prototype.set=function(txt){
+    var old = this.el.dataset.plain!==undefined ? this.el.dataset.plain : this.el.textContent;
+    var len=Math.max(old.length, txt.length);
+    this.q=[];
+    for(var i=0;i<len;i++){
+      var from=old[i]||"", to=txt[i]||"";
+      var start=Math.floor(Math.random()*20);
+      var end=start+Math.floor(Math.random()*25)+12;
+      this.q.push({from:from,to:to,start:start,end:end,ch:null});
+    }
+    if(this.raf) cancelAnimationFrame(this.raf);
+    this.f=0; this.txt=txt; this.frame();
+  };
+  Scramble.prototype.frame=function(){
+    var out="", done=0;
+    for(var i=0;i<this.q.length;i++){
+      var it=this.q[i];
+      if(this.f>=it.end){ done++; out+=esc(it.to); }
+      else if(this.f>=it.start){
+        if(!it.ch || Math.random()<0.3){ it.ch=POOL[Math.floor(Math.random()*POOL.length)]; }
+        out+='<span class="scr">'+esc(it.ch)+'</span>';
+      } else out+=esc(it.from);
+    }
+    this.el.innerHTML=out;
+    if(done===this.q.length){ this.el.dataset.plain=this.txt; }
+    else { this.f++; this.raf=requestAnimationFrame(this.frame); }
+  };
+  var els=[].slice.call(document.querySelectorAll('.tx'));
+  els.forEach(function(el){ el.dataset.plain=el.textContent; el._s=new Scramble(el); });
+  (function(){
+    var L = window.KYG_LANG || 'en';
+    var btns=document.querySelectorAll('#langtoggle button');
+    for(var i=0;i<btns.length;i++){ btns[i].classList.toggle('on', btns[i].dataset.lang===L); }
+    if(L!=='en') els.forEach(function(el){ var t=el.dataset[L]; if(t!==undefined){ el.textContent=t; el.dataset.plain=t; } });
+    document.documentElement.classList.remove('lang-pending');
+  })();
+  function setLang(lang){
+    if(lang===window.APP_LANG) return;
+    window.APP_LANG = lang;
+    try{ localStorage.setItem('kyg_lang', lang); }catch(e){}
+    document.documentElement.lang = (lang==='kr'?'ko':'en');
+    var btns=document.querySelectorAll('#langtoggle button');
+    for(var i=0;i<btns.length;i++){ btns[i].classList.toggle('on', btns[i].dataset.lang===lang); }
+    els.forEach(function(el){ var t=el.dataset[lang]; if(t!==undefined) el._s.set(t); });
+    window.APP_LANG_LISTENERS.forEach(function(fn){ try{ fn(lang); }catch(e){ console.error(e); } });
+  }
+  document.getElementById('langtoggle').addEventListener('click', function(e){
+    var b=e.target.closest('button'); if(b) setLang(b.dataset.lang);
+  });
+})();
+
+</script>
+<script>
+// 공유 바다 — UI.
+//
+// 규칙은 단 한 줄도 여기 없다. 게이지도 z 도 엔진이 export 한 함수를 그대로 부른다
+// (zscore / myopicL / Estimator). 이 파일이 하는 일은 제너레이터 play() 를 비동기로 몰면서
+// 사람이 결정할 지점에서 화면을 띄우고 기다리는 것뿐이다.
+//
+// 난수 스트림은 셋으로 분리한다:
+//   gameRng   — 규칙 전용. parity 의 대상. UI 가 절대 건드리지 않는다
+//   seatRng   — 사람 좌석의 조사 오차 (엔진의 seat0.est 가 쓴다)
+//   deco      — 국명·연출용. 규칙 난수를 소비하면 parity 가 깨지므로 완전히 분리
+
+
+
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const lang = () => window.APP_LANG || 'en';
+
+// ── 문자열 ────────────────────────────────────────────────────────────────
+const T = {
+  tier:        { en: ['Difficulty'], kr: ['난이도'] },
+  easy:        { en: ['SHALLOWS'], kr: ['얕은 바다'] },
+  normal:      { en: ['OPEN SEA'], kr: ['먼바다'] },
+  hard:        { en: ['DEEP WATER'], kr: ['심해'] },
+  brutal:      { en: ['THE TRENCH'], kr: ['해구'] },
+  easyD:       { en: ['Clumsy hands, cloudy eyes, a dull customs house.'], kr: ['어설픈 손, 흐린 눈, 둔한 세관.'] },
+  normalD:     { en: ['They fish competently and they do look at the ledger.'], kr: ['제법 잡고, 장부도 들여다봅니다.'] },
+  hardD:       { en: ['Precise hands, clear eyes, a sharp customs house.'], kr: ['정밀한 손, 맑은 눈, 예리한 세관.'] },
+  brutalD:     { en: ['They know the sea almost exactly. They will find you.'], kr: ['바다를 거의 정확히 압니다. 찾아냅니다.'] },
+  start:       { en: ['Open the season'], kr: ['조업 개시'] },
+  yourName:    { en: ['Your delegation'], kr: ['당신의 대표단'] },
+  traveler:    { en: ['Traveler'], kr: ['여행자'] },
+  round:       { en: ['Round'], kr: ['라운드'] },
+  stock:       { en: ['STOCK ESTIMATE'], kr: ['어족 추정'] },
+  quote:       { en: ['QUOTE'], kr: ['시세'] },
+  msy:         { en: ['MSY'], kr: ['MSY'] },
+  allee:       { en: ['COLLAPSE'], kr: ['붕괴선'] },
+  restraint:   { en: ['RESTRAINT LINE'], kr: ['절제선'] },
+  bandNote:    { en: ['The band is what you know, not what is true. A survey resets it; idling widens it.'],
+                 kr: ['이 밴드는 진실이 아니라 당신이 아는 만큼입니다. 조사는 되돌리고, 쉬면 넓어집니다.'] },
+  sameAsBots:  { en: ['The bots read the same estimator. Nobody here sees the real number.'],
+                 kr: ['봇도 같은 추정기를 봅니다. 여기서 진짜 숫자를 보는 사람은 없습니다.'] },
+  act1:        { en: ['THE SEASON OPENS'], kr: ['라운드 시작'] },
+  act2:        { en: ['SEALED ORDERS'], kr: ['밀봉 결정'] },
+  act3:        { en: ['THE LEDGER'], kr: ['공시와 신고'] },
+  next:        { en: ['Write the orders'], kr: ['결정하러 가기'] },
+  seal:        { en: ['Seal the orders'], kr: ['밀봉 제출'] },
+  legalFleet:  { en: ['Licensed fleet'], kr: ['합법 선단'] },
+  illegalFleet:{ en: ['Unlicensed fleet'], kr: ['불법 선단'] },
+  secret:      { en: ['SECRET'], kr: ['비밀'] },
+  public:      { en: ['PUBLIC'], kr: ['공개'] },
+  sellL:       { en: ['Sell from the bonded store'], kr: ['장부 재고 판매'] },
+  sellH:       { en: ['Launder from the dark store'], kr: ['밀창고 세탁 판매'] },
+  survey:      { en: ['Send the survey vessel'], kr: ['조사선 출항'] },
+  surveyD:     { en: ['Costs 12. Measures the stock to ±5% and counts last round’s dark tonnage. The reading lands with the ledger, so it buys you a report, not a better haul this round.'],
+                 kr: ['비용 12. 어족을 ±5%로 실측하고 지난 라운드의 암선단 물량을 셉니다. 결과는 공시와 함께 도착합니다 — 이번 어획이 아니라 신고를 위한 도구입니다.'] },
+  report:      { en: ['Catch declaration'], kr: ['어획 신고'] },
+  rTruth:      { en: ['Declare honestly'], kr: ['정직하게 신고'] },
+  rSilent:     { en: ['Say nothing'], kr: ['침묵'] },
+  rNumber:     { en: ['Declare this figure'], kr: ['이 수치로 신고'] },
+  rTruthD:     { en: ['Whatever you actually land is published.'], kr: ['실제로 잡은 양이 그대로 공시됩니다.'] },
+  rNumberD:    { en: ['You commit the figure before you know the haul. Off by more than 15% and an audit adds a penalty.'],
+                 kr: ['어획량을 알기 전에 수치를 겁니다. 15%를 넘게 틀리면 수사 시 가산 처벌이 붙습니다.'] },
+  cost:        { en: ['Cost'], kr: ['비용'] },
+  bonded:      { en: ['Bonded store'], kr: ['장부 재고'] },
+  dark:        { en: ['Dark store'], kr: ['밀창고'] },
+  typhoonCap:  { en: ['Typhoon — your licensed fleet is capped at 3 this round.'], kr: ['태풍 — 이번 라운드 합법 선단 상한은 3척입니다.'] },
+  gdpTable:    { en: ['GDP DISCLOSURE'], kr: ['GDP 공시'] },
+  colNation:   { en: ['Delegation'], kr: ['대표단'] },
+  colFleet:    { en: ['Fleet'], kr: ['선단'] },
+  colSold:     { en: ['Sold'], kr: ['판매'] },
+  colGdp:      { en: ['GDP'], kr: ['GDP'] },
+  colDecl:     { en: ['Declared'], kr: ['신고'] },
+  colStore:    { en: ['Store'], kr: ['재고'] },
+  colTotal:    { en: ['Total'], kr: ['누적'] },
+  silent:      { en: ['—'], kr: ['—'] },
+  marketPrice: { en: ['Market price'], kr: ['시장가'] },
+  accuseQ:     { en: ['Your turn to speak. Report a delegation?'], kr: ['당신 차례입니다. 신고하시겠습니까?'] },
+  accuseD:     { en: ['A hit pays you 40% of the fine. A miss costs you 150, and only you.'],
+                 kr: ['적중하면 벌금의 40%를 받습니다. 빗나가면 150을 제안자 혼자 뭅니다.'] },
+  accuseSkip:  { en: ['Say nothing'], kr: ['말하지 않는다'] },
+  accuseGo:    { en: ['Report'], kr: ['신고'] },
+  voteQ:       { en: ['%P has reported %T. Do you back the audit?'], kr: ['%P가 %T를 신고했습니다. 수사에 찬성합니까?'] },
+  voteD:       { en: ['Two votes from the four bystanders open the books. Voting costs you nothing.'],
+                 kr: ['방관 4국 중 2표면 장부가 열립니다. 투표에는 비용이 없습니다.'] },
+  yes:         { en: ['Back it'], kr: ['찬성'] },
+  no:          { en: ['Abstain'], kr: ['반대'] },
+  auditRand:   { en: ['A random audit opened %T’s books.'], kr: ['무작위 수사가 %T의 장부를 열었습니다.'] },
+  auditAcc:    { en: ['The audit went ahead, %V votes to open.'], kr: ['%V표로 수사가 진행됐습니다.'] },
+  auditRej:    { en: ['The report failed, %V votes. No books were opened.'], kr: ['%V표에 그쳐 신고가 부결됐습니다. 장부는 열리지 않았습니다.'] },
+  guilty:      { en: ['%T was found to have fished outside the licence. The dark store was seized.'],
+                 kr: ['%T가 면허 밖에서 조업한 것으로 확인됐습니다. 밀창고는 몰수됐습니다.'] },
+  clean:       { en: ['%T’s books were clean.'], kr: ['%T의 장부는 깨끗했습니다.'] },
+  bounty:      { en: ['Bounty paid to %P.'], kr: ['포상금이 %P에게 지급됐습니다.'] },
+  faFine:      { en: ['%P paid the false-report fine.'], kr: ['%P가 허위 고발 벌금을 물었습니다.'] },
+  intel:       { en: ['Survey intel — last round, roughly %X tonnes were landed that the public fleets do not explain.'],
+                 kr: ['조사 인텔 — 지난 라운드, 공개 선단으로 설명되지 않는 어획이 약 %X톤이었습니다.'] },
+  intelNone:   { en: ['Survey intel — last round’s landings are consistent with the public fleets.'],
+                 kr: ['조사 인텔 — 지난 라운드 어획은 공개 선단과 모순되지 않습니다.'] },
+  continue:    { en: ['Next round'], kr: ['다음 라운드'] },
+  evRedtide:   { en: ['RED TIDE'], kr: ['적조'] },
+  evCold:      { en: ['COLD INTRUSION'], kr: ['냉수대'] },
+  evMigration: { en: ['MIGRATION'], kr: ['회유'] },
+  evTyphoon:   { en: ['TYPHOON'], kr: ['태풍'] },
+  evDemand:    { en: ['DEMAND SURGE'], kr: ['수요 급증'] },
+  evRedtideD:  { en: ['Recruitment is down by an amount nobody has published.'], kr: ['번식이 줄었습니다. 얼마나인지는 아무도 공시하지 않습니다.'] },
+  evColdD:     { en: ['Recruitment is down. Milder than a red tide, and just as unmeasured.'], kr: ['번식이 줄었습니다. 적조보다 약하고, 역시 측정되지 않았습니다.'] },
+  evMigrationD:{ en: ['A shoal moved in. Auditors must widen their bounds this round.'], kr: ['어군이 들어왔습니다. 이번 라운드 수사관의 상한이 넓어집니다.'] },
+  evTyphoonD:  { en: ['Licensed fleets are halved for: %W. Unlicensed boats sail anyway.'], kr: ['합법 선단이 반감된 나라: %W. 무면허 배는 그냥 나갑니다.'] },
+  evDemandD:   { en: ['Buyers are paying. A surge is an alibi for emptying a store.'], kr: ['시장이 값을 쳐줍니다. 재고를 비울 명분이 생겼습니다.'] },
+  noEvent:     { en: ['A quiet season.'], kr: ['조용한 계절입니다.'] },
+  endTreaty:   { en: ['THE TREATY WAS SIGNED'], kr: ['협약이 타결됐다'] },
+  endExtinct:  { en: ['THE SEA WAS EMPTIED'], kr: ['바다가 비었다'] },
+  endExtinctD: { en: ['The stock fell below the collapse line. There is no winner. There is no next season.'],
+                 kr: ['어족이 붕괴선 아래로 떨어졌습니다. 승자는 없습니다. 다음 계절도 없습니다.'] },
+  scoreboard:  { en: ['FINAL LEDGER'], kr: ['최종 원장'] },
+  msyLine:     { en: ['Your sea closed at %P% of MSY.'], kr: ['당신들의 바다는 MSY 대비 %P%에서 폐장했습니다.'] },
+  sdg:         { en: ['UN SDG 14.4 — end overfishing and restore stocks to the level that produces maximum sustainable yield.'],
+                 kr: ['UN SDG 14.4 — 과잉어획을 종식하고, 어족을 최대지속가능생산량 수준으로 회복한다.'] },
+  again:       { en: ['Another season'], kr: ['다시 한 판'] },
+  youWon:      { en: ['You finished first.'], kr: ['당신이 1위입니다.'] },
+  youLost:     { en: ['%W finished first.'], kr: ['%W가 1위입니다.'] },
+  you:         { en: ['you'], kr: ['당신'] },
+  tonnes:      { en: ['t'], kr: ['톤'] },
+};
+function t(key, vars) {
+  let s = (T[key] && T[key][lang()] ? T[key][lang()][0] : key);
+  if (vars) for (const k of Object.keys(vars)) s = s.split('%' + k).join(vars[k]);
+  return s;
+}
+const EVK = { redtide: 'Redtide', cold: 'Cold', migration: 'Migration', typhoon: 'Typhoon', demand: 'Demand' };
+const num = (v, d = 0) => (Math.round(v * Math.pow(10, d)) / Math.pow(10, d)).toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d });
+
+// ── 사람 좌석 ─────────────────────────────────────────────────────────────
+// 엔진이 요구하는 인터페이스는 est 하나뿐이다 (decide/accuse/vote 는 제너레이터가 yield 로 묻는다).
+class Seat {
+  constructor(cfg, rng) { this.cfg = cfg; this.est = new Estimator(cfg, rng); this.intel = null; }
+}
+
+// ── 불확실성 밴드 (UI 전용) ────────────────────────────────────────────────
+// 엔진에는 밴드가 없다. 점 추정 B̂ 만 있다. 이 값은 규칙에 전혀 영향을 주지 않고,
+// 추정기가 실제로 겪는 오차원을 그대로 따라간다:
+//   조사 = SURVEY_SD 로 리셋 · 조업 = 관측(SIGMA)과 예측(직전 밴드 + 번식 변동)의 0.55/0.45 혼합
+//   미조업 = 예측만이므로 번식 변동만큼 넓어진다
+// "조사 안 사면 넓고, 조업을 쉬면 흐려지고, 사면 리셋" (인수인계 §4)의 구현이다.
+class Band {
+  constructor(cfg) { this.cfg = cfg; this.v = 0.10; }
+  survey() { this.v = this.cfg.SURVEY_SD; }
+  fished() {
+    const c = this.cfg;
+    const obs = c.SIGMA, pred = this.v + c.R_NOISE * 0.5;
+    this.v = Math.min(0.45, Math.sqrt(Math.pow(0.55 * obs, 2) + Math.pow(0.45 * pred, 2)) + 0.02);
+  }
+  idled() { this.v = Math.min(0.45, this.v + this.cfg.R_NOISE); }
+}
+
+// ── 상태 ──────────────────────────────────────────────────────────────────
+const S = {
+  tier: 'normal', nations: [], me: 0, game: null, it: null, seat: null, band: null,
+  cfg: null, resolve: null, last: null, pub: null, log: [], history: [],
+  peakB: CFG.B0, myName: { en: 'Traveler', kr: '여행자' },
+};
+
+function nation(i) { return S.nations[i]; }
+function nname(i) { const n = nation(i); return lang() === 'kr' ? n.kr : n.en; }
+function chip(i, extra = '') {
+  return `<span class="nat ${i === 0 ? 'me' : ''} ${extra}">${emblemSVG(nation(i).seed, { size: 20, mine: i === 0 })}<b>${nname(i)}</b></span>`;
+}
+
+// ── 어족 게이지 ───────────────────────────────────────────────────────────
+function gaugeSVG() {
+  const c = S.cfg, K = c.K;
+  const W = 520, H = 96, PADL = 8, PADR = 8, top = 26, h = 34;
+  const x = v => PADL + (Math.max(0, Math.min(K * 1.1, v)) / (K * 1.1)) * (W - PADL - PADR);
+  const bhat = S.seat.est.B;
+  const lo = Math.max(0, bhat * (1 - S.band.v)), hi = Math.min(K * 1.15, bhat * (1 + S.band.v));
+  const p = [];
+  p.push(`<rect x="${PADL}" y="${top}" width="${W - PADL - PADR}" height="${h}" fill="#fff" stroke="#141414" stroke-width="3"/>`);
+  // 밴드
+  p.push(`<rect x="${x(lo)}" y="${top + 3}" width="${Math.max(2, x(hi) - x(lo))}" height="${h - 6}" fill="#2BB673" opacity="0.30"/>`);
+  // 점 추정
+  p.push(`<rect x="${x(bhat) - 2}" y="${top - 4}" width="4" height="${h + 8}" fill="#0F6E56"/>`);
+  // MSY(K/2)와 절제선(RESTRAINT·K)은 값이 같다 — 선 하나에 라벨 둘.
+  // 이게 이 게임의 요점이다: 최대지속가능생산량 지점이 곧 봇들이 절제를 시작하는 선이고,
+  // 바다는 그 선 바로 아래로 자기조직화한다 (설계 원리 기록 §12).
+  p.push(`<rect x="${x(K / 2) - 1}" y="${top - 10}" width="2" height="${h + 14}" fill="#141414"/>`);
+  p.push(`<text x="${x(K / 2)}" y="${top - 14}" class="gl" text-anchor="middle">${t('msy')} ${num(K / 2)}</text>`);
+  p.push(`<text x="${x(c.RESTRAINT * K)}" y="${top + h + 16}" class="gl" text-anchor="middle">${t('restraint')}</text>`);
+  // 붕괴선 (검정 점선 — 빨강 금지)
+  p.push(`<line x1="${x(c.ALLEE_FRAC * K)}" y1="${top - 8}" x2="${x(c.ALLEE_FRAC * K)}" y2="${top + h + 8}" stroke="#141414" stroke-width="3" stroke-dasharray="4 4"/>`);
+  p.push(`<text x="${x(c.ALLEE_FRAC * K) + 4}" y="${top - 12}" class="gl">${t('allee')}</text>`);
+  return `<svg viewBox="0 0 ${W} ${H}" class="gauge" role="img" aria-label="${t('stock')}">${p.join('')}</svg>`;
+}
+
+function renderGauge() {
+  const bhat = S.seat.est.B;
+  $('#gauge').innerHTML = gaugeSVG();
+  $('#gaugeNum').textContent = `${num(bhat)} ± ${Math.round(S.band.v * 100)}%`;
+}
+
+// ── 시세 티커 ─────────────────────────────────────────────────────────────
+function tickerSVG() {
+  const hs = S.history.slice(-12);
+  if (!hs.length) return '';
+  const W = 180, H = 34;
+  const xs = (i) => 2 + (i / Math.max(1, hs.length - 1)) * (W - 4);
+  const ys = (q) => H - 3 - ((q - 0.6) / 1.0) * (H - 6);
+  const d = hs.map((r, i) => `${i ? 'L' : 'M'}${xs(i).toFixed(1)} ${ys(r.quote).toFixed(1)}`).join(' ');
+  return `<svg viewBox="0 0 ${W} ${H}" class="tick"><line x1="0" y1="${ys(1)}" x2="${W}" y2="${ys(1)}" stroke="#DDDDD8" stroke-width="2"/><path d="${d}" fill="none" stroke="#141414" stroke-width="2.5"/><circle cx="${xs(hs.length - 1)}" cy="${ys(hs[hs.length - 1].quote)}" r="3.5" fill="#2BB673" stroke="#141414" stroke-width="2"/></svg>`;
+}
+
+// ── HUD ───────────────────────────────────────────────────────────────────
+function renderHud(q) {
+  $('#hudRound').textContent = String(q ? q.ctx.t : S.game.t);
+  $('#hudTier').textContent = t(S.tier);
+  $('#hudScore').textContent = num(S.game.score[0], 0);
+  $('#hudStoreL').textContent = num(S.game.invL[0], 1);
+  $('#hudStoreH').textContent = num(S.game.invH[0], 1);
+  $('#hudQuote').textContent = '×' + S.game.quote.toFixed(2);
+  $('#ticker').innerHTML = tickerSVG();
+}
+
+// ── 막 전환 ───────────────────────────────────────────────────────────────
+function showAct(n) {
+  $$('.act').forEach(a => a.hidden = true);
+  $('#act' + n).hidden = false;
+  $('#act' + n).scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+}
+const wait = () => new Promise(res => { S.resolve = res; });
+function answer(v) { const r = S.resolve; S.resolve = null; if (r) r(v); }
+
+// ── 1막 ───────────────────────────────────────────────────────────────────
+function renderAct1(q) {
+  const ev = q.event;
+  const cap = q.capped.has(0);
+  let title = t('noEvent'), body = '', kicker = '';
+  if (ev) {
+    kicker = t('ev' + EVK[ev]);
+    title = kicker;
+    body = t('ev' + EVK[ev] + 'D', ev === 'typhoon'
+      ? { W: [...q.capped].map(i => nname(i)).join(', ') } : null);
+  }
+  $('#a1ev').innerHTML = ev
+    ? `<div class="ev"><span class="k">${t('act1')}</span><div class="evt">${title}</div><p>${body}</p></div>`
+    : `<div class="ev quiet"><span class="k">${t('act1')}</span><div class="evt">${title}</div></div>`;
+  $('#a1cap').hidden = !cap;
+  $('#a1cap').textContent = t('typhoonCap');
+  renderGauge();
+  renderHud(q);
+}
+
+// ── 2막 ───────────────────────────────────────────────────────────────────
+function renderAct2(ctx, keep) {
+  const c = S.cfg;
+  const capped = S.last && S.last.capped.has(0);
+  const maxL = capped ? Math.floor((c.F_MAX + 1) / 2) : c.F_MAX;
+  const el = $('#a2body');
+  el.innerHTML = `
+    <div class="row2">
+      <div class="fld">
+        <label class="lb">${t('legalFleet')} <span class="tag">${t('public')}</span></label>
+        <input type="range" id="sL" min="0" max="${c.F_MAX}" step="1" value="${Math.min(2, maxL)}">
+        <div class="rv"><b id="sLv">2</b> <span class="u">/ ${c.F_MAX}</span><span class="cst" id="sLc"></span></div>
+      </div>
+      <div class="fld dark">
+        <label class="lb">${t('illegalFleet')} <span class="tag sec">${t('secret')}</span></label>
+        <input type="range" id="sX" min="0" max="${c.F_ILL}" step="1" value="0">
+        <div class="rv"><b id="sXv">0</b> <span class="u">/ ${c.F_ILL}</span><span class="cst" id="sXc"></span></div>
+      </div>
+    </div>
+    <div class="row2">
+      <div class="fld">
+        <label class="lb">${t('sellL')}</label>
+        <input type="range" id="sSL" min="0" max="100" step="5" value="100">
+        <div class="rv"><b id="sSLv">100%</b> <span class="u">· ${t('bonded')} ${num(S.game.invL[0], 1)}${t('tonnes')}</span></div>
+      </div>
+      <div class="fld dark">
+        <label class="lb">${t('sellH')}</label>
+        <input type="range" id="sSH" min="0" max="100" step="5" value="0">
+        <div class="rv"><b id="sSHv">0%</b> <span class="u">· ${t('dark')} ${num(S.game.invH[0], 1)}${t('tonnes')}</span></div>
+      </div>
+    </div>
+    <div class="fld">
+      <label class="lb">${t('report')}</label>
+      <div class="seg" id="rep">
+        <button data-r="truth" class="on">${t('rTruth')}</button>
+        <button data-r="silent">${t('rSilent')}</button>
+        <button data-r="num">${t('rNumber')}</button>
+      </div>
+      <div id="repNum" hidden><input type="number" id="rNum" min="0" step="1" value="0" inputmode="numeric"> <span class="u">${t('tonnes')}</span></div>
+      <p class="hint" id="repHint">${t('rTruthD')}</p>
+    </div>
+    <label class="chk"><input type="checkbox" id="sSv"> <span>${t('survey')} <span class="u">· ${t('cost')} ${c.SURVEY_COST}</span></span></label>
+    <p class="hint">${t('surveyD')}</p>
+  `;
+  const sL = $('#sL'), sX = $('#sX');
+  sL.max = String(maxL);
+  const upd = () => {
+    $('#sLv').textContent = sL.value;
+    $('#sXv').textContent = sX.value;
+    $('#sLc').textContent = ` · ${t('cost')} ${num(c.c * Math.pow(+sL.value, c.COST_GAMMA), 0)}`;
+    $('#sXc').textContent = ` · ${t('cost')} ${num(c.C_ILL * +sX.value, 0)}`;
+    $('#sSLv').textContent = $('#sSL').value + '%';
+    $('#sSHv').textContent = $('#sSH').value + '%';
+  };
+  $$('#a2body input[type=range]').forEach(r => r.addEventListener('input', upd));
+  upd();
+  $('#rep').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    $$('#rep button').forEach(x => x.classList.toggle('on', x === b));
+    $('#repNum').hidden = b.dataset.r !== 'num';
+    $('#repHint').textContent = b.dataset.r === 'num' ? t('rNumberD') : (b.dataset.r === 'truth' ? t('rTruthD') : '');
+  });
+  // 언어 전환으로 다시 그릴 때 사람이 이미 움직여둔 값을 잃지 않는다
+  if (keep) {
+    for (const [id, v] of Object.entries(keep.ranges)) { const el = $('#' + id); if (el) el.value = v; }
+    $('#sSv').checked = keep.survey;
+    const b = $(`#rep button[data-r="${keep.rep}"]`);
+    if (b) { $$('#rep button').forEach(x => x.classList.toggle('on', x === b)); $('#repNum').hidden = keep.rep !== 'num'; }
+    if (keep.repNum !== null) $('#rNum').value = keep.repNum;
+    upd();
+  }
+}
+function grabAct2() {
+  if (!$('#sL')) return null;
+  return {
+    ranges: { sL: $('#sL').value, sX: $('#sX').value, sSL: $('#sSL').value, sSH: $('#sSH').value },
+    survey: $('#sSv').checked,
+    rep: $('#rep .on') ? $('#rep .on').dataset.r : 'truth',
+    repNum: $('#rNum') ? $('#rNum').value : null,
+  };
+}
+function collectDecision() {
+  const rep = $('#rep .on').dataset.r;
+  return {
+    L: +$('#sL').value, X: +$('#sX').value,
+    report: rep === 'truth' ? 'truth' : (rep === 'silent' ? null : Math.max(0, +$('#rNum').value)),
+    survey: $('#sSv').checked,
+    sellL: +$('#sSL').value / 100, sellH: +$('#sSH').value / 100,
+  };
+}
+
+// ── 3막 ───────────────────────────────────────────────────────────────────
+function renderLedger(q) {
+  const pub = q.pub, c = S.cfg;
+  const rows = [];
+  for (let i = 0; i < c.N; i++) {
+    const decl = pub.report[i] === null || pub.report[i] === undefined ? t('silent') : num(pub.report[i], 1);
+    rows.push(`<tr class="${i === 0 ? 'mine' : ''}">
+      <td>${chip(i)}</td>
+      <td class="num">${pub.L[i]}</td>
+      <td class="num">${num(pub.sold[i], 1)}</td>
+      <td class="num">${num(pub.gdp[i], 0)}</td>
+      <td class="num">${decl}</td>
+      <td class="num">${num(pub.invL[i], 1)}</td>
+      <td class="num">${num(q.score[i], 0)}</td>
+    </tr>`);
+  }
+  $('#a3table').innerHTML = `<table><thead><tr>
+      <th>${t('colNation')}</th><th class="num">${t('colFleet')}</th><th class="num">${t('colSold')}</th>
+      <th class="num">${t('colGdp')}</th><th class="num">${t('colDecl')}</th><th class="num">${t('colStore')}</th>
+      <th class="num">${t('colTotal')}</th></tr></thead><tbody>${rows.join('')}</tbody></table>
+      <p class="cap">${t('marketPrice')} ${pub.pt.toFixed(2)} · ${t('quote')} ×${S.game.quote.toFixed(2)}</p>`;
+}
+function pushLog(html) {
+  S.log.push(html);
+  $('#a3log').innerHTML = S.log.map(x => `<li>${x}</li>`).join('');
+}
+
+// ── 종료 ──────────────────────────────────────────────────────────────────
+function renderEnd(res) {
+  const c = S.cfg, extinct = res.winner === null;
+  const msy = c.K / 2;
+  const pct = Math.round((S.game.B / msy) * 100);
+  $('#endTitle').textContent = extinct ? t('endExtinct') : t('endTreaty');
+  $('#endTitle').classList.toggle('bad', extinct);
+  const order = [...Array(c.N).keys()].sort((a, b) => res.score[b] - res.score[a]);
+  $('#endBoard').innerHTML = `<table><thead><tr><th>#</th><th>${t('colNation')}</th><th class="num">${t('colTotal')}</th></tr></thead><tbody>` +
+    order.map((i, r) => `<tr class="${i === 0 ? 'mine' : ''}"><td class="num">${r + 1}</td><td>${chip(i)}</td><td class="num">${num(res.score[i], 0)}</td></tr>`).join('') +
+    `</tbody></table>`;
+  $('#endLead').innerHTML = extinct ? t('endExtinctD')
+    : (res.winner === 0 ? t('youWon') : t('youLost', { W: nname(res.winner) }));
+  $('#endMsy').textContent = t('msyLine', { P: pct });
+  $('#endSdg').textContent = t('sdg');
+  $$('.act').forEach(a => a.hidden = true);
+  $('#game').hidden = true;
+  $('#end').hidden = false;
+  $('#end').scrollIntoView({ block: 'start', behavior: 'smooth' });
+}
+
+// ── 드라이버 ──────────────────────────────────────────────────────────────
+async function drive() {
+  let r = S.it.next();
+  while (!r.done) {
+    const q = r.value;
+    switch (q.phase) {
+      case 'roundStart': {
+        S.last = q; S.log = []; $('#a3log').innerHTML = ''; $('#a3ask').innerHTML = ''; $('#a3next').hidden = true;
+        S.history.push({ t: q.ctx.t, quote: q.quote });
+        S.peakB = Math.max(S.peakB, q.B);
+        renderAct1(q);
+        showAct(1);
+        await wait();
+        renderAct2(q.ctx);
+        showAct(2);
+        r = S.it.next();
+        break;
+      }
+      case 'decide': {
+        const a = await wait();
+        S.myAct = a;
+        r = S.it.next(a);
+        break;
+      }
+      case 'disclose': {
+        // 밴드 갱신 — 추정기가 겪은 것과 같은 사건을 따라간다
+        if (S.myAct.survey) S.band.survey();
+        else if (S.myAct.L + S.myAct.X > 0) S.band.fished();
+        else S.band.idled();
+        S.pub = q;
+        renderLedger(q);
+        renderGauge();
+        renderHud();
+        if (S.myAct.survey && S.seat.intel) {
+          const d = S.seat.intel.dark;
+          pushLog(d > 1 ? t('intel', { X: num(d, 1) }) : t('intelNone'));
+        }
+        showAct(3);
+        r = S.it.next();
+        break;
+      }
+      case 'accuse': {
+        $('#a3next').hidden = true;
+        $('#a3ask').innerHTML = `<div class="ask"><p class="q">${t('accuseQ')}</p><p class="hint">${t('accuseD')}</p>
+          <div class="pick" id="pick">${[...Array(S.cfg.N).keys()].filter(i => i !== 0).map(i => `<button data-i="${i}">${chip(i)}</button>`).join('')}</div>
+          <div class="btns"><button class="btn" id="accSkip">${t('accuseSkip')}</button><button class="btn go" id="accGo" disabled>${t('accuseGo')}</button></div></div>`;
+        let sel = null;
+        $('#pick').addEventListener('click', e => {
+          const b = e.target.closest('button'); if (!b) return;
+          sel = +b.dataset.i;
+          $$('#pick button').forEach(x => x.classList.toggle('on', x === b));
+          $('#accGo').disabled = false;
+        });
+        $('#accSkip').addEventListener('click', () => answer(null));
+        $('#accGo').addEventListener('click', () => answer(sel));
+        const tgt = await wait();
+        $('#a3ask').innerHTML = '';
+        r = S.it.next(tgt);
+        break;
+      }
+      case 'vote': {
+        $('#a3next').hidden = true;
+        $('#a3ask').innerHTML = `<div class="ask"><p class="q">${t('voteQ', { P: nname(q.proposer), T: nname(q.tgt) })}</p>
+          <p class="hint">${t('voteD')}</p>
+          <div class="btns"><button class="btn" id="vNo">${t('no')}</button><button class="btn go" id="vYes">${t('yes')}</button></div></div>`;
+        $('#vNo').addEventListener('click', () => answer(false));
+        $('#vYes').addEventListener('click', () => answer(true));
+        const v = await wait();
+        $('#a3ask').innerHTML = '';
+        r = S.it.next(v);
+        break;
+      }
+      case 'audit': {
+        if (q.by === 'random') pushLog(t('auditRand', { T: nname(q.tgt) }));
+        else if (q.by === 'rejected') { pushLog(t('auditRej', { V: q.votes })); }
+        else pushLog(t('auditAcc', { V: q.votes }));
+        if (q.guilty === true) {
+          pushLog(t('guilty', { T: nname(q.tgt) }));
+          if (q.proposer !== null && q.proposer !== undefined) pushLog(t('bounty', { P: nname(q.proposer) }));
+        } else if (q.guilty === false) {
+          pushLog(t('clean', { T: nname(q.tgt) }));
+          if (q.proposer !== null && q.proposer !== undefined) pushLog(t('faFine', { P: nname(q.proposer) }));
+        }
+        renderLedger(Object.assign({}, S.pub, { score: q.score }));
+        renderHud();
+        r = S.it.next();
+        break;
+      }
+      case 'roundEnd': {
+        $('#a3next').hidden = false;
+        await wait();
+        $('#a3next').hidden = true;
+        r = S.it.next();
+        break;
+      }
+      default: r = S.it.next();
+    }
+  }
+  renderEnd(r.value);
+}
+
+// ── 시작 ──────────────────────────────────────────────────────────────────
+function startGame() {
+  const cfg = Object.assign({}, CFG);
+  S.cfg = cfg;
+  const seed = (Date.now() ^ (Math.random() * 0xffffffff)) >>> 0;
+  const gameRng = new PortableRNG(seed);          // 규칙 전용
+  const seatRng = new PortableRNG((seed ^ 0x9e3779b9) >>> 0);   // 사람 좌석 조사 오차
+  const deco = new PortableRNG((seed ^ 0x85ebca6b) >>> 0);      // 국명·연출 — 규칙과 분리
+  const nick = ($('#nick').value || '').trim();
+  S.myName = nick ? { en: nick, kr: nick }
+    : { en: t('traveler') + ' ' + (1000 + deco.randrange(9000)), kr: '여행자 ' + (1000 + deco.randrange(9000)) };
+  const bots = makeNations(deco, 5);
+  S.nations = [{ en: S.myName.en, kr: S.myName.kr, seed: hash32(S.myName.en) }, ...bots];
+  S.seat = new Seat(cfg, seatRng);
+  S.band = new Band(cfg);
+  S.game = new Game(S.tier, S.seat, null, gameRng);
+  S.it = S.game.play();
+  S.history = []; S.log = []; S.peakB = cfg.B0;
+  $('#setup').hidden = true;
+  $('#end').hidden = true;
+  $('#game').hidden = false;
+  $('#hudName').innerHTML = chip(0);
+  drive();
+}
+
+function boot() {
+  $$('#tiers button').forEach(b => b.addEventListener('click', () => {
+    S.tier = b.dataset.tier;
+    $$('#tiers button').forEach(x => x.classList.toggle('on', x === b));
+  }));
+  $('#startBtn').addEventListener('click', startGame);
+  $('#a1next').addEventListener('click', () => answer(true));
+  $('#a2seal').addEventListener('click', () => answer(collectDecision()));
+  $('#a3nextBtn').addEventListener('click', () => answer(true));
+  $('#againBtn').addEventListener('click', () => { $('#end').hidden = true; $('#setup').hidden = false; });
+  // 언어 전환 시 동적 문자열 다시 그리기
+  (window.APP_LANG_LISTENERS = window.APP_LANG_LISTENERS || []).push(() => {
+    if (!$('#game').hidden) {
+      const shown = $$('.act').findIndex(a => !a.hidden) + 1;   // 지금 열려 있는 막
+      if (S.last) renderAct1(S.last);
+      if (shown === 2) renderAct2(S.last.ctx, grabAct2());      // 입력값 보존
+      if (S.pub) renderLedger(S.pub);
+      renderGauge(); renderHud();
+      if (shown >= 1) showAct(shown);                            // 열려 있던 막을 그대로 둔다
+    }
+    $$('#tiers button').forEach(b => {
+      b.querySelector('.tn').textContent = t(b.dataset.tier);
+      b.querySelector('.td').textContent = t(b.dataset.tier + 'D');
+    });
+  });
+  $$('#tiers button').forEach(b => {
+    b.querySelector('.tn').textContent = t(b.dataset.tier);
+    b.querySelector('.td').textContent = t(b.dataset.tier + 'D');
+  });
+}
+
+boot();
+
+</script>
+</body>
+</html>
