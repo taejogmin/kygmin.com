@@ -179,6 +179,10 @@ table.bd tr.tot td.neg{color:#FF9A90;}
   letter-spacing:-1.6px;line-height:1.05;background:var(--ink);color:var(--paper);display:inline-block;padding:2px 12px;transform:rotate(-1deg);}
 #endTitle.bad{background:#fff;color:var(--ink);border:3px solid var(--ink);}
 #endLead{margin-top:18px;font-size:16px;font-weight:500;max-width:600px;}
+/* 누적 한 줄. 성적표의 다른 문장보다 조용해야 한다 — 잔소리가 아니라 계기판이다. */
+.tally{margin-top:18px;border-left:4px solid var(--green);background:#fff;padding:10px 14px;
+  font-size:13.5px;color:#3A3A38;}
+.tally a{font-family:var(--mono);font-size:12px;color:var(--green-deep);white-space:nowrap;}
 #endMsy{font-family:var(--arch);font-weight:900;font-size:19px;margin-top:20px;letter-spacing:-.5px;}
 #endSdg{font-family:var(--mono);font-size:11.5px;color:#4A4A46;margin-top:8px;max-width:620px;line-height:1.7;}
 
@@ -319,6 +323,7 @@ footer{border-top:3px solid var(--ink);padding:20px 0;}
         <p id="endBreakLead" class="hint" style="max-width:620px;"></p>
         <div class="tw" id="endBreak" style="margin-top:12px;"></div>
         <p id="endBreakNote" class="cap"></p>
+        <p id="endTally" class="tally" hidden></p>
         <p id="endMsy"></p>
         <p id="endMsyWhat" class="hint"></p>
         <p id="endSdg"></p>
@@ -1296,6 +1301,13 @@ const T = {
                  kr: ['시세는 그 라운드의 시장 분위기입니다. ×%PLO에서 ×%PHI 사이를 예측 불가능하게 떠다닙니다. 시장가는 실제로 톤당 받은 값이고요 — 기본가 %P × 시세 × 혼잡도. 혼잡도는 여섯이 공유하는 부분입니다. 한 라운드에 다 합쳐 %HREF톤쯤을 넘겨 팔면 모두의 값이 함께 떨어집니다.'] },
   restraintD:  { en: ['The same line is the restraint line. Below %B every delegation pulls its fleet back — the five you are playing against do it too, which is why this sea settles just under the line instead of on it.'],
                  kr: ['같은 선이 절제선이기도 합니다. %B 아래로 내려가면 모든 대표단이 선단을 줄입니다 — 상대하는 다섯도 그렇게 합니다. 이 바다가 선 위가 아니라 선 바로 아래에 자리 잡는 이유입니다.'] },
+  noRank:      { en: ['A collapsed sea has no places. This is the closing ledger, not a table of finishers — nobody here gets a next season.'],
+                 kr: ['무너진 바다에는 등수가 없습니다. 이건 순위표가 아니라 폐장 장부입니다 — 여기 누구도 다음 계절을 갖지 못합니다.'] },
+  tallyLine:   { en: ['You have played %G seasons. The sea collapsed in %C of them.'],
+                 kr: ['이번이 %G번째 시즌이었습니다. 그중 %C번은 바다가 무너졌습니다.'] },
+  tallyClean:  { en: ['You have played %G seasons and have not emptied a sea yet.'],
+                 kr: ['이번이 %G번째 시즌이고, 아직 바다를 비운 적은 없습니다.'] },
+  tallyLink:   { en: ['See the whole record →'], kr: ['전체 기록 보기 →'] },
   bdItem:      { en: ['ITEM'], kr: ['항목'] },
   bdTotal:     { en: ['Total'], kr: ['총점'] },   // 라운드 표의 '누적' 과 달리 여기서는 최종 총점이다
   bdAmount:    { en: ['AMOUNT'], kr: ['금액'] },
@@ -1371,7 +1383,7 @@ class Band {
 const S = {
   tier: 'normal', nations: [], me: 0, game: null, it: null, seat: null, band: null,
   cfg: null, resolve: null, last: null, pub: null, log: [], history: [],
-  peakB: CFG.B0, myName: { en: 'Traveler', kr: '여행자' }, endRes: null, tape: null,
+  peakB: CFG.B0, myName: { en: 'Traveler', kr: '여행자' }, endRes: null, tape: null, tally: null,
 };
 
 function nation(i) { return S.nations[i]; }
@@ -1678,10 +1690,14 @@ function paintEnd(res) {
   const pct = Math.round((S.game.B / (c.K / 2)) * 100);
   $('#endTitle').textContent = extinct ? t('endExtinct') : t('endTreaty');
   $('#endTitle').classList.toggle('bad', extinct);
+  // 리드 문구는 "승자는 없습니다" 라고 말하는데 표가 1~6등을 매기고 있었다.
+  // 붕괴한 판에서는 # 열을 아예 없앤다 — 숫자를 "—" 로 채우는 것으로는 부족하다.
+  // 점수 순 정렬은 유지한다. 장부는 큰 것부터 읽는 게 맞고, 캡션이 이게 순위가 아님을 말한다.
   const order = [...Array(c.N).keys()].sort((a, b) => res.score[b] - res.score[a]);
-  $('#endBoard').innerHTML = `<table><thead><tr><th>#</th><th>${t('colNation')}</th><th class="num">${t('colTotal')}</th></tr></thead><tbody>` +
-    order.map((i, r) => `<tr class="${i === 0 ? 'mine' : ''}"><td class="num">${r + 1}</td><td>${chip(i)}</td><td class="num">${num(res.score[i], 0)}</td></tr>`).join('') +
-    `</tbody></table>`;
+  const head = extinct ? '' : '<th>#</th>';
+  $('#endBoard').innerHTML = `<table><thead><tr>${head}<th>${t('colNation')}</th><th class="num">${t('bdTotal')}</th></tr></thead><tbody>` +
+    order.map((i, r) => `<tr class="${i === 0 ? 'mine' : ''}">${extinct ? '' : `<td class="num">${r + 1}</td>`}<td>${chip(i)}</td><td class="num">${num(res.score[i], 0)}</td></tr>`).join('') +
+    `</tbody></table>` + (extinct ? `<p class="cap">${t('noRank')}</p>` : '');
   $('#endLead').innerHTML = extinct ? t('endExtinctD')
     : (res.winner === 0 ? t('youWon') : t('youLost', { W: nname(res.winner) }));
   renderBreakdown(res, extinct);
@@ -1690,7 +1706,24 @@ function paintEnd(res) {
   $('#endMsyWhat').textContent = t('msyWhat',
     Object.assign({}, f, { P: pct, S: num(S.game.B, 0), C: f.collapsePct }));
   $('#endSdg').textContent = t('sdg');
+  paintTally();
 }
+
+// 경각심이 생기는 순간은 /me/ 가 아니라 판이 끝난 직후다. 다만 이 줄은 기록에서 오므로
+// 로그인한 사람에게만, 그리고 두 판째부터만 뜬다 — "1번째 시즌 중 0번 붕괴" 는 소음이다.
+function paintTally() {
+  const el = $('#endTally');
+  if (!el) return;
+  const d = S.tally;
+  if (!d || !(d.games >= 2)) { el.hidden = true; return; }
+  const txt = d.collapsed > 0
+    ? t('tallyLine', { G: d.games, C: d.collapsed })
+    : t('tallyClean', { G: d.games });
+  el.innerHTML = `${esc(txt)} <a href="/me/">${esc(t('tallyLink'))}</a>`;
+  el.hidden = false;
+}
+const esc = (v) => String(v).replace(/[&<>"]/g, (ch) =>
+  ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
 
 function renderEnd(res) {
   S.endRes = res;
@@ -1904,8 +1937,17 @@ function logGame(res) {
       acc_made: tape.accMade, acc_hit: tape.accHit, surveys: tape.surveys,
     };
     A.client.from('ery_games').insert([row]).then((r) => {
-      if (r && r.error) console.warn('ery log rejected', r.error.message);
-    });
+      if (r && r.error) { console.warn('ery log rejected', r.error.message); return; }
+      if (!uid) return;                       // 게스트는 집계 RPC 를 부를 수 없다
+      // 방금 넣은 행까지 포함한 값을 받기 위해 insert 가 끝난 뒤에 부른다.
+      return A.client.rpc('ery_my_totals').then((q) => {
+        if (q && q.error) throw q.error;
+        const d = (q && q.data && q.data[0]) || null;
+        if (!d) return;
+        S.tally = { games: Number(d.games || 0), collapsed: Number(d.collapsed || 0) };
+        paintTally();
+      });
+    }).catch((e) => console.warn('ery tally failed', e));
   } catch (e) { console.warn('ery log failed', e); }
 }
 
