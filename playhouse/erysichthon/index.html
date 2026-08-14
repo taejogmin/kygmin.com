@@ -192,6 +192,10 @@ footer{border-top:3px solid var(--ink);padding:20px 0;}
   padding:7px 12px;cursor:pointer;}
 #langtoggle button.on{background:var(--green);color:var(--paper);}
 .scr{opacity:.55;}
+/* 초점 링. 막이 바뀔 때 컨테이너로 초점이 가므로 그 자리가 보여야 한다.
+   :focus-visible 이라 마우스로 누를 때는 나타나지 않는다. */
+:focus-visible{outline:3px solid var(--green-deep,#0F6E56);outline-offset:2px;}
+.act:focus-visible,.ask .q:focus-visible{outline-offset:4px;}
 </style>
 </head>
 <body>
@@ -268,7 +272,7 @@ footer{border-top:3px solid var(--ink);padding:20px 0;}
 
       <div class="panel">
         <h2 class="tx" data-en="Stock estimate" data-kr="어족 추정">Stock estimate</h2>
-        <div id="gaugeNum">—</div>
+        <div id="gaugeNum" aria-hidden="true">—</div>
         <div id="gauge"></div>
         <div class="legend" id="gaugeLegend"></div>
         <p class="hint mono" id="msyNote"></p>
@@ -276,7 +280,7 @@ footer{border-top:3px solid var(--ink);padding:20px 0;}
       </div>
 
       <!-- 1막 -->
-      <div class="act panel" id="act1" hidden>
+      <div class="act panel" id="act1" hidden tabindex="-1" role="group" aria-label="Round">
         <div id="a1ev"></div>
         <div class="warn" id="a1cap" hidden></div>
         <div class="btns" style="margin-top:16px;">
@@ -285,8 +289,8 @@ footer{border-top:3px solid var(--ink);padding:20px 0;}
       </div>
 
       <!-- 2막 -->
-      <div class="act panel" id="act2" hidden>
-        <h2 class="tx" data-en="Sealed orders" data-kr="밀봉 결정">Sealed orders</h2>
+      <div class="act panel" id="act2" hidden tabindex="-1" role="group" aria-labelledby="a2h">
+        <h2 id="a2h" class="tx" data-en="Sealed orders" data-kr="밀봉 결정">Sealed orders</h2>
         <div id="a2body"></div>
         <div class="btns" style="margin-top:16px;">
           <button class="btn go big" id="a2seal"><span class="tx" data-en="Seal the orders" data-kr="밀봉 제출">Seal the orders</span></button>
@@ -294,10 +298,10 @@ footer{border-top:3px solid var(--ink);padding:20px 0;}
       </div>
 
       <!-- 3막 -->
-      <div class="act panel" id="act3" hidden>
-        <h2 class="tx" data-en="The ledger" data-kr="공시와 신고">The ledger</h2>
+      <div class="act panel" id="act3" hidden tabindex="-1" role="group" aria-labelledby="a3h">
+        <h2 id="a3h" class="tx" data-en="The ledger" data-kr="공시와 신고">The ledger</h2>
         <div class="tw" id="a3table"></div>
-        <ul id="a3log"></ul>
+        <ul id="a3log" aria-live="polite" aria-atomic="false"></ul>
         <div id="a3ask"></div>
         <div class="btns" id="a3next" hidden style="margin-top:16px;">
           <button class="btn go" id="a3nextBtn"><span class="tx" data-en="Next round" data-kr="다음 라운드">Next round</span> &rarr;</button>
@@ -1402,7 +1406,12 @@ function gaugeSVG() {
   // 붕괴선 (검정 점선 — 빨강 금지)
   p.push(`<line x1="${x(c.ALLEE_FRAC * K)}" y1="${top - 8}" x2="${x(c.ALLEE_FRAC * K)}" y2="${top + h + 8}" stroke="#141414" stroke-width="3" stroke-dasharray="4 4"/>`);
   p.push(`<text x="${x(c.ALLEE_FRAC * K) + 4}" y="${top - 12}" class="gl">${t('allee')}</text>`);
-  return `<svg viewBox="0 0 ${W} ${H}" class="gauge" role="img" aria-label="${t('stock')}">${p.join('')}</svg>`;
+  // 눈으로 보는 사람에게는 범례를 붙였다. 안 보는 사람에게는 이 문장이 그림 전체다 —
+  // 표시 넷의 값이 전부 들어가야 범례와 같은 정보량이 된다.
+  const f = msyFacts(c);
+  const label = `${num(bhat)} ± ${Math.round(S.band.v * 100)}% ` +
+    `(${num(lo)}–${num(hi)}) · ${t('msy')} ${f.B} · ${t('allee')} ${f.A} · K ${num(K)}`;
+  return `<svg viewBox="0 0 ${W} ${H}" class="gauge" role="img" aria-label="${label}">${p.join('')}</svg>`;
 }
 
 // 게이지에 표시가 넷인데 어느 것도 자기가 뭔지 말하지 않았다 (MSY 때와 같은 누락).
@@ -1455,8 +1464,21 @@ function renderHud(q) {
 // ── 막 전환 ───────────────────────────────────────────────────────────────
 function showAct(n) {
   $$('.act').forEach(a => a.hidden = true);
-  $('#act' + n).hidden = false;
-  $('#act' + n).scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  const el = $('#act' + n);
+  el.hidden = false;
+  el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  // 막이 바뀌면 초점을 옮긴다. 스크롤은 눈으로 보는 사람에게만 알리는 신호이고,
+  // 화면을 안 보는 사람에게는 방금 무엇이 바뀌었는지 알릴 방법이 이것뿐이다.
+  // preventScroll: 초점 이동이 위의 부드러운 스크롤을 덮어쓰지 않도록.
+  try { el.focus({ preventScroll: true }); } catch (e) { el.focus(); }
+}
+// 질문이 뜨면 질문 문장에 초점을 준다. 버튼만 생겨나면 무엇을 묻는지 듣지 못한 채
+// 탭으로 더듬어야 한다. tabindex="-1" 은 초점만 받고 탭 순서에는 끼지 않는다.
+function focusAsk() {
+  const q = $('#a3ask .q');
+  if (!q) return;
+  q.setAttribute('tabindex', '-1');
+  try { q.focus({ preventScroll: true }); } catch (e) { q.focus(); }
 }
 const wait = () => new Promise(res => { S.resolve = res; });
 function answer(v) { const r = S.resolve; S.resolve = null; if (r) r(v); }
@@ -1490,24 +1512,24 @@ function renderAct2(ctx, keep) {
   el.innerHTML = `
     <div class="row2">
       <div class="fld">
-        <label class="lb">${t('legalFleet')} <span class="tag">${t('public')}</span></label>
+        <label class="lb" for="sL">${t('legalFleet')} <span class="tag">${t('public')}</span></label>
         <input type="range" id="sL" min="0" max="${c.F_MAX}" step="1" value="${Math.min(2, maxL)}">
         <div class="rv"><b id="sLv">2</b> <span class="u">/ ${c.F_MAX}</span><span class="cst" id="sLc"></span></div>
       </div>
       <div class="fld dark">
-        <label class="lb">${t('illegalFleet')} <span class="tag sec">${t('secret')}</span></label>
+        <label class="lb" for="sX">${t('illegalFleet')} <span class="tag sec">${t('secret')}</span></label>
         <input type="range" id="sX" min="0" max="${c.F_ILL}" step="1" value="0">
         <div class="rv"><b id="sXv">0</b> <span class="u">/ ${c.F_ILL}</span><span class="cst" id="sXc"></span></div>
       </div>
     </div>
     <div class="row2">
       <div class="fld">
-        <label class="lb">${t('sellL')}</label>
+        <label class="lb" for="sSL">${t('sellL')}</label>
         <input type="range" id="sSL" min="0" max="100" step="5" value="100">
         <div class="rv"><b id="sSLv">100%</b> <span class="u">· ${t('bonded')} ${num(S.game.invL[0], 1)}${t('tonnes')}</span></div>
       </div>
       <div class="fld dark">
-        <label class="lb">${t('sellH')}</label>
+        <label class="lb" for="sSH">${t('sellH')}</label>
         <input type="range" id="sSH" min="0" max="100" step="5" value="0">
         <div class="rv"><b id="sSHv">0%</b> <span class="u">· ${t('dark')} ${num(S.game.invH[0], 1)}${t('tonnes')}</span></div>
       </div>
@@ -1515,13 +1537,14 @@ function renderAct2(ctx, keep) {
     <p class="hint">${t('storeD', storeFacts(c))}</p>
     <p class="hint">${t('launderD')}</p>
     <div class="fld">
-      <label class="lb">${t('report')}</label>
-      <div class="seg" id="rep">
-        <button data-r="truth" class="on">${t('rTruth')}</button>
-        <button data-r="silent">${t('rSilent')}</button>
-        <button data-r="num">${t('rNumber')}</button>
+      <label class="lb" id="repLab">${t('report')}</label>
+      <div class="seg" id="rep" role="radiogroup" aria-labelledby="repLab">
+        <button data-r="truth" class="on" role="radio" aria-checked="true">${t('rTruth')}</button>
+        <button data-r="silent" role="radio" aria-checked="false">${t('rSilent')}</button>
+        <button data-r="num" role="radio" aria-checked="false">${t('rNumber')}</button>
       </div>
-      <div id="repNum" hidden><input type="number" id="rNum" min="0" step="1" value="0" inputmode="numeric"> <span class="u">${t('tonnes')}</span></div>
+      <div id="repNum" hidden><label class="u" for="rNum">${t('rNumber')}</label>
+        <input type="number" id="rNum" min="0" step="1" value="0" inputmode="numeric"> <span class="u">${t('tonnes')}</span></div>
       <p class="hint" id="repHint">${t('rTruthD')}</p>
     </div>
     <label class="chk"><input type="checkbox" id="sSv"> <span>${t('survey')} <span class="u">· ${t('cost')} ${c.SURVEY_COST}</span></span></label>
@@ -1529,19 +1552,32 @@ function renderAct2(ctx, keep) {
   `;
   const sL = $('#sL'), sX = $('#sX');
   sL.max = String(maxL);
+  // 화면에는 숫자만 크게 띄우지만, 스크린리더에는 단위와 비용까지 붙여 읽힌다.
+  // 「슬라이더, 2」 로는 무엇을 2로 놓았는지 알 수 없다 — 게이지에 범례를 붙인 것과 같은 이유다.
   const upd = () => {
+    const costL = num(c.c * Math.pow(+sL.value, c.COST_GAMMA), 0);
+    const costX = num(c.C_ILL * +sX.value, 0);
     $('#sLv').textContent = sL.value;
     $('#sXv').textContent = sX.value;
-    $('#sLc').textContent = ` · ${t('cost')} ${num(c.c * Math.pow(+sL.value, c.COST_GAMMA), 0)}`;
-    $('#sXc').textContent = ` · ${t('cost')} ${num(c.C_ILL * +sX.value, 0)}`;
+    $('#sLc').textContent = ` · ${t('cost')} ${costL}`;
+    $('#sXc').textContent = ` · ${t('cost')} ${costX}`;
     $('#sSLv').textContent = $('#sSL').value + '%';
     $('#sSHv').textContent = $('#sSH').value + '%';
+    sL.setAttribute('aria-valuetext', `${sL.value} / ${c.F_MAX} · ${t('cost')} ${costL}`);
+    sX.setAttribute('aria-valuetext', `${sX.value} / ${c.F_ILL} · ${t('cost')} ${costX}`);
+    $('#sSL').setAttribute('aria-valuetext',
+      `${$('#sSL').value}% · ${t('bonded')} ${num(S.game.invL[0], 1)}${t('tonnes')}`);
+    $('#sSH').setAttribute('aria-valuetext',
+      `${$('#sSH').value}% · ${t('dark')} ${num(S.game.invH[0], 1)}${t('tonnes')}`);
   };
   $$('#a2body input[type=range]').forEach(r => r.addEventListener('input', upd));
   upd();
   $('#rep').addEventListener('click', e => {
     const b = e.target.closest('button'); if (!b) return;
-    $$('#rep button').forEach(x => x.classList.toggle('on', x === b));
+    $$('#rep button').forEach(x => {
+      x.classList.toggle('on', x === b);
+      x.setAttribute('aria-checked', String(x === b));   // 클래스만 바꾸면 화면에만 알린 셈이다
+    });
     $('#repNum').hidden = b.dataset.r !== 'num';
     $('#repHint').textContent = b.dataset.r === 'num' ? t('rNumberD') : (b.dataset.r === 'truth' ? t('rTruthD') : '');
   });
@@ -1726,6 +1762,7 @@ async function drive() {
         });
         $('#accSkip').addEventListener('click', () => answer(null));
         $('#accGo').addEventListener('click', () => answer(sel));
+        focusAsk();
         const tgt = await wait();
         if (tgt !== null && tgt !== undefined) S.tape.accMade++;
         $('#a3ask').innerHTML = '';
@@ -1739,6 +1776,7 @@ async function drive() {
           <div class="btns"><button class="btn" id="vNo">${t('no')}</button><button class="btn go" id="vYes">${t('yes')}</button></div></div>`;
         $('#vNo').addEventListener('click', () => answer(false));
         $('#vYes').addEventListener('click', () => answer(true));
+        focusAsk();
         const v = await wait();
         $('#a3ask').innerHTML = '';
         r = S.it.next(v);
