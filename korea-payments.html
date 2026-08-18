@@ -174,6 +174,11 @@ footer{border-top:3px solid var(--ink);padding:26px 0;}
   .feebar b{font-size:11px;} .feebar i{font-size:9.5px;}
   .shrink-lbl{flex:0 0 92px;font-size:9.5px;} .shrink-val{flex:0 0 46px;font-size:10px;}
 }
+.flow-side{font-family:var(--mono);font-size:10.5px;color:#6B6B67;}
+/* 브리지 — 교육 섹션을 findings 로 잇는 한 문장. 장식이 아니라 하중을 받는 자리라
+   패널 안에서 유일하게 초록 좌선을 준다. */
+.flow-bridge{margin-top:20px;padding:13px 15px;border-left:5px solid var(--green);
+  background:#F2F2EF;font-size:13.5px;line-height:1.7;color:#2A2A28;}
 .flow-note{margin-top:18px;padding-top:16px;border-top:2px solid var(--gray);
   font-size:13.5px;line-height:1.7;color:#3A3A38;}
 @media(max-width:560px){
@@ -237,29 +242,37 @@ if(window.KYG_LANG!=='en'){
   <div class="section">
     <h2 class="tx" data-en="What a PG and a VAN Actually Do" data-kr="PG와 VAN이 하는 일">What a PG and a VAN Actually Do</h2>
     <p class="tx" data-en="The moment a card is used, the merchant and the card issuer are not talking to each other directly. Two intermediaries sit in between — the PG and the VAN, which are what this research is about." data-kr="결제하는 순간, 가맹점과 카드사가 직접 소통하는 것이 아닙니다. 그 사이에 두 중개자가 존재하는데, 이번 리서치의 주인공인 PG와 VAN입니다.">The moment a card is used, the merchant and the card issuer are not talking to each other directly. Two intermediaries sit in between — the PG and the VAN, which are what this research is about.</p>
-    <p class="tx" data-en="A VAN — value-added network — is the network that carries payment data safely and accurately. In Korea, wiring eight card issuers to millions of merchants one by one is impossible, so a VAN connects once and routes on everyone's behalf: authorisation, sales-slip capture, terminal support." data-kr="VAN(부가통신사업자)은 결제 데이터를 안전하고 정확하게 연결해주는 네트워크입니다. 대한민국을 예로 들자면 8개의 카드사와 수백만 개의 가맹점을 일일이 잇는 것은 불가능하니, VAN이 한 번 연결해 모두를 대신 중계합니다. 승인, 매출전표 매입, 단말 지원이 그 일입니다.">A VAN — value-added network — is the network that carries payment data safely and accurately. In Korea, wiring eight card issuers to millions of merchants one by one is impossible, so a VAN connects once and routes on everyone's behalf: authorisation, sales-slip capture, terminal support.</p>
+    <p class="tx" data-en="A VAN — value-added network — is the network that carries payment data safely and accurately. In Korea, wiring eight card issuers to millions of merchants one by one is impossible, so a VAN connects once and routes on everyone's behalf: authorisation, capturing the record of each transaction (sales-slip capture), and terminal support." data-kr="VAN(부가통신사업자)은 결제 데이터를 안전하고 정확하게 연결해주는 네트워크입니다. 대한민국을 예로 들자면 8개의 카드사와 수백만 개의 가맹점을 일일이 잇는 것은 불가능하니, VAN이 한 번 연결해 모두를 대신 중계합니다. 승인, 거래 기록 수집(매출전표 매입), 단말 지원이 그 일입니다.">A VAN — value-added network — is the network that carries payment data safely and accurately. In Korea, wiring eight card issuers to millions of merchants one by one is impossible, so a VAN connects once and routes on everyone's behalf: authorisation, capturing the record of each transaction (sales-slip capture), and terminal support.</p>
     <p class="tx" data-en="A PG — payment gateway — works as the checkout counter for online commerce. Most online merchants cannot contract with card issuers directly, so the PG contracts in their place, receives the money, and settles it to the merchant in a single payment — which takes the confusion out of reconciling several issuers and makes cash flow easy to read." data-kr="PG(결제대행사)는 온라인 계산대와 같은 역할을 수행합니다. 대부분의 온라인 가맹점은 카드사와 직접 계약을 맺기 어렵기 때문에 PG가 대신 계약하고, 대금을 받아, 가맹점에 한 번에 정산해 주어 정산에 대한 혼란을 없애주며, 현금흐름을 파악하기 쉽게 해줍니다.">A PG — payment gateway — works as the checkout counter for online commerce. Most online merchants cannot contract with card issuers directly, so the PG contracts in their place, receives the money, and settles it to the merchant in a single payment — which takes the confusion out of reconciling several issuers and makes cash flow easy to read.</p>
     <p class="tx" data-en="The fee structure and the flow of funds look like this:" data-kr="수수료 구조와 자금 흐름은 다음과 같습니다:">The fee structure and the flow of funds look like this:</p>
 
     <div class="flow">
       <div class="flow-row">
-        <span class="flow-tag tx" data-en="OFFLINE" data-kr="오프라인">OFFLINE</span>
+        <span class="flow-tag tx" data-en="AUTHORISATION (OFFLINE)" data-kr="승인 (오프라인)">AUTHORISATION (OFFLINE)</span>
         <div class="flow-line">
           <span class="node tx" data-en="Cardholder" data-kr="소비자">Cardholder</span> <span class="ar">&#8594;</span> <span class="node tx" data-en="Merchant" data-kr="가맹점">Merchant</span> <span class="ar">&#8594;</span> <span class="node key">VAN</span> <span class="ar">&#8594;</span> <span class="node tx" data-en="Card issuer" data-kr="카드사">Card issuer</span>
         </div>
       </div>
       <div class="flow-row">
-        <span class="flow-tag tx" data-en="ONLINE" data-kr="온라인">ONLINE</span>
+        <span class="flow-tag tx" data-en="AUTHORISATION (ONLINE)" data-kr="승인 (온라인)">AUTHORISATION (ONLINE)</span>
         <div class="flow-line">
           <span class="node tx" data-en="Cardholder" data-kr="소비자">Cardholder</span> <span class="ar">&#8594;</span> <span class="node tx" data-en="Merchant" data-kr="가맹점">Merchant</span> <span class="ar">&#8594;</span> <span class="node key">PG</span> <span class="ar">&#8594;</span> <span class="node key">VAN</span> <span class="ar">&#8594;</span> <span class="node tx" data-en="Card issuer" data-kr="카드사">Card issuer</span>
         </div>
       </div>
       <div class="flow-row settle">
-        <span class="flow-tag tx" data-en="SETTLEMENT" data-kr="정산">SETTLEMENT</span>
+        <span class="flow-tag tx" data-en="SETTLEMENT (ONLINE)" data-kr="정산 (온라인)">SETTLEMENT (ONLINE)</span>
         <div class="flow-line">
-          <span class="node tx" data-en="Card issuer" data-kr="카드사">Card issuer</span> <span class="ar">&#8594;</span> <span class="node key">PG</span> <span class="ar">&#8594;</span> <span class="node key">VAN</span> <span class="ar">&#8594;</span> <span class="node tx" data-en="Merchant" data-kr="가맹점">Merchant</span>
+          <span class="node tx" data-en="Card issuer" data-kr="카드사">Card issuer</span> <span class="ar">&#8594;</span> <span class="node key">PG</span> <span class="ar">&#8594;</span> <span class="node tx" data-en="Merchant" data-kr="가맹점">Merchant</span>
         </div>
       </div>
+      <div class="flow-row settle">
+        <span class="flow-tag tx" data-en="SETTLEMENT (OFFLINE)" data-kr="정산 (오프라인)">SETTLEMENT (OFFLINE)</span>
+        <div class="flow-line">
+          <span class="node tx" data-en="Card issuer" data-kr="카드사">Card issuer</span> <span class="ar">&#8594;</span> <span class="node tx" data-en="Merchant" data-kr="가맹점">Merchant</span>
+          <span class="flow-side tx" data-en="direct &mdash; the VAN never touches the money" data-kr="직접 &mdash; VAN은 돈을 만지지 않습니다">direct &mdash; the VAN never touches the money</span>
+        </div>
+      </div>
+      <p class="flow-bridge tx" data-en="Hold onto one distinction from these diagrams: the VAN moves data; the PG moves money. It is why the sector's biggest realised loss &mdash; the TMON&ndash;WeMakePrice insolvency &mdash; landed on PGs, and why this paper's conclusion is that the binding constraint on a buyout is settlement float." data-kr="이 도표에서 하나만 기억하면 됩니다 &mdash; VAN은 데이터를 나르고, PG는 돈을 나릅니다. 이 섹터에서 가장 큰 실현손실인 티메프 사태가 PG에서 터진 이유가 여기에 있고, 이 리서치가 인수의 진짜 제약을 정산 float이라고 결론 내린 이유도 같습니다.">Hold onto one distinction from these diagrams: the VAN moves data; the PG moves money. It is why the sector's biggest realised loss &mdash; the TMON&ndash;WeMakePrice insolvency &mdash; landed on PGs, and why this paper's conclusion is that the binding constraint on a buyout is settlement float.</p>
       <div class="feewrap">
         <div class="feecap tx" data-en="Of every &#8361;1.00 a PG collects in fees" data-kr="PG가 수수료로 받는 1원 중">Of every &#8361;1.00 a PG collects in fees</div>
         <div class="feebar">
@@ -287,7 +300,7 @@ if(window.KYG_LANG!=='en'){
           <p class="feefoot tx" data-en="* 82&ndash;87% across the three names; the 82% end mixes VAN agency costs, issuer/agency split undisclosed." data-kr="* 3사 기준 82~87%. 82% 쪽은 VAN 대리점 비용이 섞인 수치이며, 카드사 대 대리점 배분은 미공시.">* 82&ndash;87% across the three names; the 82% end mixes VAN agency costs, issuer/agency split undisclosed.</p>
         </div>
       </div>
-      <p class="flow-note tx" data-en="The merchant fee is taken out on the way down. What is left of it, after the issuer and the VAN are paid, is the PG's own revenue." data-kr="가맹점수수료는 내려오는 길에 떼입니다. 카드사와 VAN 몫을 치르고 남는 것이 PG 자신의 매출입니다.">The merchant fee is taken out on the way down. What is left of it, after the issuer and the VAN are paid, is the PG's own revenue.</p>
+      <p class="flow-note tx" data-en="The merchant fee is taken out on the way down. What is left after the issuer is paid is the PG's real take &mdash; its net revenue." data-kr="가맹점수수료는 내려오는 길에 떼입니다. 카드사 몫을 치르고 남는 것이 PG가 실제로 가져가는 몫 &mdash; net revenue입니다.">The merchant fee is taken out on the way down. What is left after the issuer is paid is the PG's real take &mdash; its net revenue.</p>
     </div>
   </div>
 
@@ -306,12 +319,12 @@ if(window.KYG_LANG!=='en'){
 
     <div class="finding">
       <h3 class="tx" data-en="The constraint is settlement float, not capex" data-kr="제약은 CAPEX가 아니라 정산 float">The constraint is settlement float, not capex</h3>
-      <p class="tx" data-en="Nine data points — three companies, three years — all clear a 60% cash-conversion gate, and capex is only 3–15% of EBITDA. Terminal investment is not on these balance sheets at all; it is carried by the agency network, and that is written into statute rather than chosen as accounting. What actually swings is working capital in the settlement cycle, by ±KRW 100bn, and pending rules would make that float unpledgeable." data-kr="3사 × 3개년 = 9개 데이터포인트 전부가 현금 전환율 60% 게이트를 넘고, CAPEX는 EBITDA의 3~15%에 불과합니다. 단말 투자는 애초에 이 회사들 장부에 없습니다 — 대리점 망이 부담하며, 이는 회계 선택이 아니라 법에 내장돼 있습니다. 실제로 널뛰는 것은 정산 사이클의 운전자본이고(±1,000억원 단위), 예고된 규제가 시행되면 그 float는 담보로 쓸 수 없게 됩니다.">Nine data points — three companies, three years — all clear a 60% cash-conversion gate, and capex is only 3–15% of EBITDA. Terminal investment is not on these balance sheets at all; it is carried by the agency network, and that is written into statute rather than chosen as accounting. What actually swings is working capital in the settlement cycle, by ±KRW 100bn, and pending rules would make that float unpledgeable.</p>
+      <p class="tx" data-en="Nine data points — three companies, three years — all clear a 60% cash-conversion gate, and capex is only 3–15% of EBITDA. At the agency-network operator terminal investment is not on the balance sheet at all — the agency network carries it, and the registration regime behind that sits in statute rather than in an accounting choice — while the direct-sales operator does carry terminals itself. That gap is a diligence question, not a footnote. What actually swings is working capital in the settlement cycle, by more than KRW 100bn from one year to the next, and pending rules would make that float unpledgeable." data-kr="3사 × 3개년 = 9개 데이터포인트 전부가 현금 전환율 60% 게이트를 넘고, CAPEX는 EBITDA의 3~15%에 불과합니다. 대리점 모델 사업자는 단말 투자가 장부에 아예 없습니다 — 대리점 망이 부담하고, 그 뒤의 등록제는 회계 선택이 아니라 법에 있습니다. 반면 직영 모델 사업자는 단말을 자기 장부에 얹습니다. 이 차이는 각주가 아니라 실사 논점입니다. 실제로 널뛰는 것은 정산 사이클의 운전자본이고(전년 대비 1,000억원 이상), 예고된 규제가 시행되면 그 float는 담보로 쓸 수 없게 됩니다.">Nine data points — three companies, three years — all clear a 60% cash-conversion gate, and capex is only 3–15% of EBITDA. At the agency-network operator terminal investment is not on the balance sheet at all — the agency network carries it, and the registration regime behind that sits in statute rather than in an accounting choice — while the direct-sales operator does carry terminals itself. That gap is a diligence question, not a footnote. What actually swings is working capital in the settlement cycle, by more than KRW 100bn from one year to the next, and pending rules would make that float unpledgeable.</p>
     </div>
 
     <div class="finding">
       <h3 class="tx" data-en="The consolidator is legally pre-determined" data-kr="통합의 주체는 법이 미리 정해 두었다">The consolidator is legally pre-determined</h3>
-      <p class="tx" data-en="Acquiring is a licensed business here, so the independent-acquirer model that reshaped Europe cannot exist — the global processor that killed Europe's roll-ups is, in Korea, a customer of the local PGs. Private equity has already completed one buyout in this sector. What has not happened is horizontal combination, and the blocker is merger clearance rather than price: the largest domestic operator reached a shortlist and withdrew on exactly that ground. If strategics are blocked by regulation, the consolidator can only be a non-affiliated financial investor." data-kr="국내에서 매입(acquiring)은 허가 사업이라, 유럽을 바꿔 놓은 독립 애퀴이어러 모델이 성립하지 않습니다 — 유럽 롤업을 무너뜨린 글로벌 사업자가 한국에서는 로컬 PG의 고객입니다. 사모펀드는 이미 이 섹터에서 인수를 한 번 완주했습니다. 일어나지 않은 것은 수평 결합이고, 막고 있는 것은 가격이 아니라 기업결합 심사입니다 — 국내 최대 사업자가 쇼트리스트까지 갔다가 바로 그 이유로 철수했습니다. 전략적 인수자가 규제에 막힌다면, 통합의 주체는 비계열 재무적 투자자일 수밖에 없습니다.">Acquiring is a licensed business here, so the independent-acquirer model that reshaped Europe cannot exist — the global processor that killed Europe's roll-ups is, in Korea, a customer of the local PGs. Private equity has already completed one buyout in this sector. What has not happened is horizontal combination, and the blocker is merger clearance rather than price: the largest domestic operator reached a shortlist and withdrew on exactly that ground. If strategics are blocked by regulation, the consolidator can only be a non-affiliated financial investor.</p>
+      <p class="tx" data-en="Acquiring is a licensed business here, so the independent-acquirer model that reshaped Europe cannot exist — the global processor that killed Europe's roll-ups is, in Korea, a customer of the local PGs. Private equity has already executed one buyout here, and still holds it. What has not happened is horizontal combination, and the blocker is merger clearance rather than price: the largest domestic operator reached a shortlist and withdrew on exactly that ground. If strategics are blocked by regulation, the consolidator can only be a non-affiliated financial investor." data-kr="국내에서 매입(acquiring)은 허가 사업이라, 유럽을 바꿔 놓은 독립 애퀴이어러 모델이 성립하지 않습니다 — 유럽 롤업을 무너뜨린 글로벌 사업자가 한국에서는 로컬 PG의 고객입니다. 사모펀드는 이미 이 섹터에서 인수를 한 건 실행했고, 지금도 보유 중입니다. 일어나지 않은 것은 수평 결합이고, 막고 있는 것은 가격이 아니라 기업결합 심사입니다 — 국내 최대 사업자가 쇼트리스트까지 갔다가 바로 그 이유로 철수했습니다. 전략적 인수자가 규제에 막힌다면, 통합의 주체는 비계열 재무적 투자자일 수밖에 없습니다.">Acquiring is a licensed business here, so the independent-acquirer model that reshaped Europe cannot exist — the global processor that killed Europe's roll-ups is, in Korea, a customer of the local PGs. Private equity has already executed one buyout here, and still holds it. What has not happened is horizontal combination, and the blocker is merger clearance rather than price: the largest domestic operator reached a shortlist and withdrew on exactly that ground. If strategics are blocked by regulation, the consolidator can only be a non-affiliated financial investor.</p>
     </div>
   </div>
 
