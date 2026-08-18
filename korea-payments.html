@@ -71,7 +71,13 @@ h1{
 }
 h1 .box{background:var(--ink);color:var(--paper);padding:0 12px;display:inline-block;transform:rotate(-1deg);}
 .hero-sub{margin-top:20px;font-size:16px;max-width:600px;font-weight:500;}
-.hero-note{margin-top:14px;font-family:var(--mono);font-size:12px;color:#4A4A46;}
+.hero-note{margin-top:16px;font-family:var(--mono);font-size:12px;color:#4A4A46;
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+/* 히어로에서 곧장 전문(PDF)으로 — 결론만 읽고 원문을 원하는 독자의 최단 경로. */
+.hn-pdf{font-weight:600;color:var(--green-deep);border:2px solid var(--ink);background:#fff;
+  padding:5px 11px;box-shadow:3px 3px 0 var(--ink);white-space:nowrap;
+  transition:transform .1s, box-shadow .1s;}
+.hn-pdf:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
 /* ── Main ── */
 main{padding:48px 0 88px;}
 .section{margin-top:52px;}
@@ -226,7 +232,10 @@ if(window.KYG_LANG!=='en'){
     <span class="sec-tag tx" data-en="RESEARCH — PG / VAN SECTOR DEEP-DIVE" data-kr="리서치 — PG / VAN 섹터 딥다이브">RESEARCH — PG / VAN SECTOR DEEP-DIVE</span>
     <h1><span class="tx" data-en="KOREA " data-kr="한국 ">KOREA </span><span class="box"><span class="tx" data-en="PAYMENT" data-kr="결제">PAYMENT</span></span><span class="tx" data-en=" INFRASTRUCTURE" data-kr=" 인프라"> INFRASTRUCTURE</span></h1>
     <p class="hero-sub tx" data-en="Korea's payment infrastructure is a consolidation story in which the consolidator is legally pre-determined: regulated fee compression forces the roll-up, 61–94% cash conversion funds it, merger review blocks every strategic buyer — and a top-tier listed PG trades at 0–5.5× EV/EBITDA." data-kr="한국 결제 인프라에서 통합은 일어날 수밖에 없고, 그 주체는 법이 이미 정해놓았다. 규제된 단가 압축이 롤업을 강제하고, 61~94%의 현금 전환이 이를 뒷받침하며, 기업결합 심사는 모든 전략적 인수자를 배제한다. 대표 상장 자산은 현재 EV/EBITDA 0~5.5배에 거래되고 있다.">Korea's payment infrastructure is a consolidation story in which the consolidator is legally pre-determined: regulated fee compression forces the roll-up, 61–94% cash conversion funds it, merger review blocks every strategic buyer — and a top-tier listed PG trades at 0–5.5× EV/EBITDA.</p>
-    <p class="hero-note tx" data-en="AUG 2026" data-kr="2026.08">AUG 2026</p>
+    <p class="hero-note">
+      <span class="tx" data-en="AUG 2026" data-kr="2026.08">AUG 2026</span>
+      <a class="hn-pdf" href="korea-payments/Korea_Payments_Sector_DeepDive.pdf" target="_blank" rel="noopener"><span class="tx" data-en="PDF &mdash; FULL RESEARCH" data-kr="PDF &mdash; 전문 보기">PDF &mdash; FULL RESEARCH</span> <span class="arw">&#8599;</span></a>
+    </p>
   </div>
 </header>
 
