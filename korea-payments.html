@@ -134,6 +134,57 @@ footer{border-top:3px solid var(--ink);padding:26px 0;}
   box-shadow:5px 5px 0 var(--ink);padding:16px 18px;margin-top:16px;max-width:680px;}
 .finding h3{font-family:var(--arch);font-weight:900;font-size:14px;text-transform:uppercase;letter-spacing:-.2px;}
 .finding p{margin-top:7px;font-size:14.5px;color:#3A3A38;}
+/* ── 결제 흐름 도표 (HTML/CSS — SVG 대신. 언어 토글이 textContent 를 갈아끼우므로
+      SVG <text> 안에서는 스크램블 span 이 렌더되지 않는다) ── */
+.flow{margin-top:22px;border:3px solid var(--ink);background:#fff;box-shadow:6px 6px 0 var(--ink);padding:20px 18px;}
+.flow-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.flow-row+.flow-row{margin-top:20px;padding-top:20px;border-top:2px solid var(--gray);}
+.flow-tag{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--green-deep);
+  border:2px solid var(--ink);padding:3px 9px;background:var(--gray);white-space:nowrap;flex:0 0 auto;}
+.flow-line{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.node{font-family:var(--mono);font-size:12px;font-weight:600;border:2px solid var(--ink);
+  background:#fff;padding:7px 11px;white-space:nowrap;}
+.node.key{background:var(--green);color:var(--paper);}
+.ar{font-family:var(--mono);font-size:14px;color:#8A8A85;}
+.feewrap{margin-top:20px;padding-top:18px;border-top:2px solid var(--gray);}
+.feecap{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--green-deep);letter-spacing:.5px;}
+.feebar{display:flex;border:2px solid var(--ink);min-height:52px;margin-top:9px;box-shadow:3px 3px 0 var(--ink);}
+.feebar>span{display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:2px;padding:6px 8px;text-align:center;}
+.feebar b{font-family:var(--mono);font-size:12.5px;font-weight:700;white-space:nowrap;}
+.feebar i{font-style:normal;font-family:var(--mono);font-size:10.5px;opacity:.72;line-height:1.35;}
+.feebar .through{flex:0 0 87%;background:var(--ink);color:var(--paper);}
+.feebar .kept{flex:1 1 13%;background:var(--green);color:var(--paper);}
+.feebar-note{margin-top:6px;text-align:right;font-family:var(--mono);font-size:10.5px;color:#6B6B67;}
+.feemeasured{margin-top:10px;font-family:var(--mono);font-size:11.5px;color:#3A3A38;line-height:1.6;}
+.shrink{margin-top:20px;padding-top:16px;border-top:2px solid var(--gray);}
+.shrink-h{font-family:var(--arch);font-weight:900;font-size:13px;text-transform:uppercase;letter-spacing:-.2px;}
+.shrink-row{display:flex;align-items:center;gap:10px;margin-top:9px;}
+.shrink-lbl{flex:0 0 128px;font-family:var(--mono);font-size:10.5px;color:#4A4A46;}
+/* 막대는 '채움'에만 테두리를 준다. 예전엔 전체 폭 트랙에 테두리가 있어서
+   두 행이 같은 길이로 보였고, 길이 비교라는 이 그래프의 유일한 목적이 죽었다. */
+.shrink-track{flex:1 1 auto;}
+.shrink-track i{display:block;height:17px;border:2px solid var(--ink);box-sizing:border-box;}
+.shrink-track i.g{background:#9A9A94;}
+.shrink-track i.r{background:var(--red);}
+.shrink-val{flex:0 0 54px;font-family:var(--mono);font-size:11px;font-weight:700;text-align:right;}
+.shrink-note{margin-top:11px;font-size:13px;line-height:1.65;color:#3A3A38;}
+.feefoot{margin-top:9px;font-family:var(--mono);font-size:10.5px;line-height:1.6;color:#6B6B67;}
+@media(max-width:560px){
+  .feebar b{font-size:11px;} .feebar i{font-size:9.5px;}
+  .shrink-lbl{flex:0 0 92px;font-size:9.5px;} .shrink-val{flex:0 0 46px;font-size:10px;}
+}
+.flow-note{margin-top:18px;padding-top:16px;border-top:2px solid var(--gray);
+  font-size:13.5px;line-height:1.7;color:#3A3A38;}
+@media(max-width:560px){
+  .node{font-size:11px;padding:6px 8px;}
+  .flow-row{gap:9px;}
+}
+.sourcenote{
+  margin-top:20px;border-left:5px solid var(--green);background:#fff;
+  padding:13px 0 13px 16px;max-width:680px;
+  font-size:14.5px;font-weight:700;line-height:1.7;color:#242422;
+}
 .disclaimer{margin-top:40px;border:2px dashed var(--ink);background:var(--gray);
   padding:14px 16px;font-family:var(--mono);font-size:11.5px;line-height:1.75;color:#3A3A38;max-width:680px;}
 </style>
@@ -180,6 +231,64 @@ if(window.KYG_LANG!=='en'){
     <h2 class="tx" data-en="Why This Sector" data-kr="왜 이 섹터인가">Why This Sector</h2>
     <p class="tx" data-en="If you have looked around this site and read the Careers section, it will not be surprising that payment infrastructure is the first sector I chose to write about." data-kr="이 사이트를 둘러보고 「경력」을 읽어보셨다면, 제가 첫 리서치 주제로 결제 인프라를 고른 것이 그리 놀랍지 않으실 겁니다.">If you have looked around this site and read the Careers section, it will not be surprising that payment infrastructure is the first sector I chose to write about.</p>
     <p class="tx" data-en="As an analyst at Mizuho Bank, my first project was the ISO 20022 migration — work that connects directly to BOK-Wire+ and the SWIFT network. The migration also brought a new payment product into the bank, which is how I came to work with VAN companies. That is where the idea came from: research the sector I already knew from the inside." data-kr="미즈호은행 애널리스트로서 제 첫 프로젝트는 ISO 20022 전환이었습니다. 한은금융망(BOK-Wire+)과 SWIFT 망에 직접 맞닿아 있는 일입니다. 이 전환과 함께 은행이 새로운 결제 상품을 도입했고, 그러면서 VAN사들과 함께 일하게 됐습니다. 생각은 거기서 나왔습니다 — 이미 안에서 본 섹터부터 연구하자.">As an analyst at Mizuho Bank, my first project was the ISO 20022 migration — work that connects directly to BOK-Wire+ and the SWIFT network. The migration also brought a new payment product into the bank, which is how I came to work with VAN companies. That is where the idea came from: research the sector I already knew from the inside.</p>
+    <p class="sourcenote tx" data-en="Everything here is built from public sources — DART filings, audited financial statements, Bank of Korea statistics, statute, press reporting, and credit-bureau data for unlisted companies. No confidential or non-public information was used. Nothing in this research represents the views of Mizuho Bank or of any company named in it." data-kr="이 리서치는 전부 공개된 자료로 만들었습니다 — DART 공시, 감사보고서, 한국은행 통계, 법조문, 언론 보도, 그리고 비상장사의 경우 신용평가사 자료. 비공개 정보나 내부 자료는 일절 사용하지 않았습니다. 여기의 어떤 내용도 미즈호은행이나 언급된 어느 회사의 견해를 대변하지 않습니다.">Everything here is built from public sources — DART filings, audited financial statements, Bank of Korea statistics, statute, press reporting, and credit-bureau data for unlisted companies. No confidential or non-public information was used. Nothing in this research represents the views of Mizuho Bank or of any company named in it.</p>
+  </div>
+
+  <div class="section">
+    <h2 class="tx" data-en="What a PG and a VAN Actually Do" data-kr="PG와 VAN이 하는 일">What a PG and a VAN Actually Do</h2>
+    <p class="tx" data-en="The moment a card is used, the merchant and the card issuer are not talking to each other directly. Two intermediaries sit in between — the PG and the VAN, which are what this research is about." data-kr="결제하는 순간, 가맹점과 카드사가 직접 소통하는 것이 아닙니다. 그 사이에 두 중개자가 존재하는데, 이번 리서치의 주인공인 PG와 VAN입니다.">The moment a card is used, the merchant and the card issuer are not talking to each other directly. Two intermediaries sit in between — the PG and the VAN, which are what this research is about.</p>
+    <p class="tx" data-en="A VAN — value-added network — is the network that carries payment data safely and accurately. In Korea, wiring eight card issuers to millions of merchants one by one is impossible, so a VAN connects once and routes on everyone's behalf: authorisation, sales-slip capture, terminal support." data-kr="VAN(부가통신사업자)은 결제 데이터를 안전하고 정확하게 연결해주는 네트워크입니다. 대한민국을 예로 들자면 8개의 카드사와 수백만 개의 가맹점을 일일이 잇는 것은 불가능하니, VAN이 한 번 연결해 모두를 대신 중계합니다. 승인, 매출전표 매입, 단말 지원이 그 일입니다.">A VAN — value-added network — is the network that carries payment data safely and accurately. In Korea, wiring eight card issuers to millions of merchants one by one is impossible, so a VAN connects once and routes on everyone's behalf: authorisation, sales-slip capture, terminal support.</p>
+    <p class="tx" data-en="A PG — payment gateway — works as the checkout counter for online commerce. Most online merchants cannot contract with card issuers directly, so the PG contracts in their place, receives the money, and settles it to the merchant in a single payment — which takes the confusion out of reconciling several issuers and makes cash flow easy to read." data-kr="PG(결제대행사)는 온라인 계산대와 같은 역할을 수행합니다. 대부분의 온라인 가맹점은 카드사와 직접 계약을 맺기 어렵기 때문에 PG가 대신 계약하고, 대금을 받아, 가맹점에 한 번에 정산해 주어 정산에 대한 혼란을 없애주며, 현금흐름을 파악하기 쉽게 해줍니다.">A PG — payment gateway — works as the checkout counter for online commerce. Most online merchants cannot contract with card issuers directly, so the PG contracts in their place, receives the money, and settles it to the merchant in a single payment — which takes the confusion out of reconciling several issuers and makes cash flow easy to read.</p>
+    <p class="tx" data-en="The fee structure and the flow of funds look like this:" data-kr="수수료 구조와 자금 흐름은 다음과 같습니다:">The fee structure and the flow of funds look like this:</p>
+
+    <div class="flow">
+      <div class="flow-row">
+        <span class="flow-tag tx" data-en="OFFLINE" data-kr="오프라인">OFFLINE</span>
+        <div class="flow-line">
+          <span class="node tx" data-en="Cardholder" data-kr="소비자">Cardholder</span> <span class="ar">&#8594;</span> <span class="node tx" data-en="Merchant" data-kr="가맹점">Merchant</span> <span class="ar">&#8594;</span> <span class="node key">VAN</span> <span class="ar">&#8594;</span> <span class="node tx" data-en="Card issuer" data-kr="카드사">Card issuer</span>
+        </div>
+      </div>
+      <div class="flow-row">
+        <span class="flow-tag tx" data-en="ONLINE" data-kr="온라인">ONLINE</span>
+        <div class="flow-line">
+          <span class="node tx" data-en="Cardholder" data-kr="소비자">Cardholder</span> <span class="ar">&#8594;</span> <span class="node tx" data-en="Merchant" data-kr="가맹점">Merchant</span> <span class="ar">&#8594;</span> <span class="node key">PG</span> <span class="ar">&#8594;</span> <span class="node key">VAN</span> <span class="ar">&#8594;</span> <span class="node tx" data-en="Card issuer" data-kr="카드사">Card issuer</span>
+        </div>
+      </div>
+      <div class="flow-row settle">
+        <span class="flow-tag tx" data-en="SETTLEMENT" data-kr="정산">SETTLEMENT</span>
+        <div class="flow-line">
+          <span class="node tx" data-en="Card issuer" data-kr="카드사">Card issuer</span> <span class="ar">&#8594;</span> <span class="node key">PG</span> <span class="ar">&#8594;</span> <span class="node key">VAN</span> <span class="ar">&#8594;</span> <span class="node tx" data-en="Merchant" data-kr="가맹점">Merchant</span>
+        </div>
+      </div>
+      <div class="feewrap">
+        <div class="feecap tx" data-en="Of every &#8361;1.00 a PG collects in fees" data-kr="PG가 수수료로 받는 1원 중">Of every &#8361;1.00 a PG collects in fees</div>
+        <div class="feebar">
+          <span class="through">
+            <b class="tx" data-en="&#8361;0.87 &middot; passes through" data-kr="0.87원 &middot; 통과">&#8361;0.87 &middot; passes through</b>
+            <i class="tx" data-en="mostly to card issuers" data-kr="대부분 카드사로">mostly to card issuers</i>
+          </span>
+          <span class="kept"><b class="tx" data-en="&#8361;0.13" data-kr="0.13원">&#8361;0.13</b></span>
+        </div>
+        <div class="feebar-note tx" data-en="stays with the company &mdash; net revenue" data-kr="회사에 남는 몫 &mdash; net revenue">stays with the company &mdash; net revenue</div>
+        <div class="feemeasured tx" data-en="Measured (Inicis, FY25): gross 642.2bn &minus; pass-through 556.8bn = net 85.4bn" data-kr="실측 (이니시스, FY25): gross 6,422억 &minus; 통과 5,568억 = net 854억">Measured (Inicis, FY25): gross 642.2bn &minus; pass-through 556.8bn = net 85.4bn</div>
+        <div class="shrink">
+          <div class="shrink-h tx" data-en="And the slice shrinks faster than the flow" data-kr="그리고 그 조각은 흐름보다 빨리 줄어든다">And the slice shrinks faster than the flow</div>
+          <div class="shrink-row">
+            <span class="shrink-lbl tx" data-en="Gross fee revenue" data-kr="Gross 수수료매출">Gross fee revenue</span>
+            <span class="shrink-track"><i class="g" style="width:19.5%"></i></span>
+            <span class="shrink-val">&minus;2.3%</span>
+          </div>
+          <div class="shrink-row">
+            <span class="shrink-lbl tx" data-en="Net revenue" data-kr="Net revenue">Net revenue</span>
+            <span class="shrink-track"><i class="r" style="width:100%"></i></span>
+            <span class="shrink-val">&minus;11.8%</span>
+          </div>
+          <p class="shrink-note tx" data-en="Only the company's slice got cut &mdash; reading gross revenue is reading the wrong number." data-kr="깎인 것은 회사 몫뿐입니다 &mdash; gross 매출을 읽는 것은 틀린 숫자를 읽는 것입니다.">Only the company's slice got cut &mdash; reading gross revenue is reading the wrong number.</p>
+          <p class="feefoot tx" data-en="* 82&ndash;87% across the three names; the 82% end mixes VAN agency costs, issuer/agency split undisclosed." data-kr="* 3사 기준 82~87%. 82% 쪽은 VAN 대리점 비용이 섞인 수치이며, 카드사 대 대리점 배분은 미공시.">* 82&ndash;87% across the three names; the 82% end mixes VAN agency costs, issuer/agency split undisclosed.</p>
+        </div>
+      </div>
+      <p class="flow-note tx" data-en="The merchant fee is taken out on the way down. What is left of it, after the issuer and the VAN are paid, is the PG's own revenue." data-kr="가맹점수수료는 내려오는 길에 떼입니다. 카드사와 VAN 몫을 치르고 남는 것이 PG 자신의 매출입니다.">The merchant fee is taken out on the way down. What is left of it, after the issuer and the VAN are paid, is the PG's own revenue.</p>
+    </div>
   </div>
 
   <div class="section">
@@ -244,7 +353,7 @@ if(window.KYG_LANG!=='en'){
       <a class="btn btn-green" href="korea-payments/Korea_Payments_Sector_DeepDive.pdf" target="_blank" rel="noopener"><span class="tx" data-en="Open the deck (PDF)" data-kr="덱 열기 (PDF)">Open the deck (PDF)</span> <span class="arw">&#8599;</span></a>
       <a class="btn" href="index.html#research">&larr; <span class="tx" data-en="Back to Research" data-kr="리서치로 돌아가기">Back to Research</span></a>
     </div>
-    <p class="disclaimer tx" data-en="Independent research prepared in a personal capacity. Not investment advice, not a recommendation, and no offer or solicitation. No affiliation with, sponsorship by, or endorsement from any company named, or from any employer. Figures are drawn from public disclosures as of August 2026 and may since have changed." data-kr="개인 자격으로 작성한 독립 리서치입니다. 투자 자문이나 권유가 아니며, 어떠한 청약이나 유인도 아닙니다. 언급된 어느 회사와도, 그리고 어느 고용주와도 제휴·후원·보증 관계가 없습니다. 수치는 2026년 8월 기준 공개 자료에서 가져온 것으로 이후 변경되었을 수 있습니다.">Independent research prepared in a personal capacity. Not investment advice, not a recommendation, and no offer or solicitation. No affiliation with, sponsorship by, or endorsement from any company named, or from any employer. Figures are drawn from public disclosures as of August 2026 and may since have changed.</p>
+    <p class="disclaimer tx" data-en="Independent research prepared in a personal capacity. Not investment advice, not a recommendation, and no offer or solicitation. Figures are drawn from public disclosures as of August 2026 and may since have changed." data-kr="개인 자격으로 작성한 독립 리서치입니다. 투자 자문이나 권유가 아니며, 어떠한 청약이나 유인도 아닙니다. 수치는 2026년 8월 기준 공개 자료에서 가져온 것으로 이후 변경되었을 수 있습니다.">Independent research prepared in a personal capacity. Not investment advice, not a recommendation, and no offer or solicitation. Figures are drawn from public disclosures as of August 2026 and may since have changed.</p>
   </div>
 
 </main>
