@@ -152,6 +152,9 @@ footer{border-top:3px solid var(--ink);padding:26px 0;}
   background:#fff;padding:7px 11px;white-space:nowrap;}
 .node.key{background:var(--green);color:var(--paper);}
 .ar{font-family:var(--mono);font-size:14px;color:#8A8A85;}
+/* 화살표는 뒤따르는 노드와 한 덩어리로 묶는다. 안 묶으면 좁은 폭에서
+   노드만 다음 줄로 떨어지고 화살표가 앞줄 끝에 홀로 남는다. */
+.hop{display:inline-flex;align-items:center;gap:8px;}
 .feewrap{margin-top:20px;padding-top:18px;border-top:2px solid var(--gray);}
 .feecap{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--green-deep);letter-spacing:.5px;}
 .feebar{display:flex;border:2px solid var(--ink);min-height:52px;margin-top:9px;box-shadow:3px 3px 0 var(--ink);}
@@ -242,10 +245,10 @@ if(window.KYG_LANG!=='en'){
 <main class="wrap">
 
   <div class="section">
-    <h2 class="tx" data-en="Why This Sector" data-kr="해당 섹터를 선택한 이유">Why This Sector</h2>
+    <h2 class="tx" data-en="Why This Sector" data-kr="이 섹터를 선택한 이유">Why This Sector</h2>
     <p class="tx" data-en="If you have looked around this site and read the Careers section, it will not be surprising that payment infrastructure is the first sector I chose to write about." data-kr="제 사이트를 둘러보고 경력을 확인하셨다면, 어째서 첫 리서치 주제로 결제 인프라를 선택하였는지 눈치채셨을 겁니다.">If you have looked around this site and read the Careers section, it will not be surprising that payment infrastructure is the first sector I chose to write about.</p>
     <p class="tx" data-en="As an analyst at Mizuho Bank, my first project was the ISO 20022 migration — work that connects directly to BOK-Wire+ and the SWIFT network. The migration also brought a new payment product into the bank, which is how I came to work with VAN companies. That is where the idea came from: research the sector I already knew from the inside." data-kr="미즈호은행 애널리스트로서 제 첫 프로젝트는 ISO 20022 전환이었습니다. 한은금융망(BOK-Wire+)과 SWIFT 망에 직접 맞닿아 있는 일입니다. 이 전환과 함께 새로운 결제 상품이 도입되면서 VAN사들과 함께 일할 수 있었고, 제가 익숙한 주제로 시작하는 것이 옳다고 판단해 첫 주제를 결제 인프라로 정하게 되었습니다.">As an analyst at Mizuho Bank, my first project was the ISO 20022 migration — work that connects directly to BOK-Wire+ and the SWIFT network. The migration also brought a new payment product into the bank, which is how I came to work with VAN companies. That is where the idea came from: research the sector I already knew from the inside.</p>
-    <p class="sourcenote tx" data-en="Everything here is built from public sources — DART filings, audited financial statements, Bank of Korea statistics, statute, press reporting, and credit-bureau data for unlisted companies. No confidential or non-public information was used. Nothing in this research represents the views of Mizuho Bank or of any company named in it." data-kr="해당 리서치는 전부 공개된 자료로 만들었습니다 — DART 공시, 감사보고서, 한국은행 통계, 법조문, 언론 보도, 그리고 비상장사의 경우 신용평가사 자료. 비공개 정보나 내부 자료는 일절 사용하지 않았습니다. 여기의 어떤 내용도 미즈호은행이나 언급된 어느 회사의 견해를 대변하지 않습니다.">Everything here is built from public sources — DART filings, audited financial statements, Bank of Korea statistics, statute, press reporting, and credit-bureau data for unlisted companies. No confidential or non-public information was used. Nothing in this research represents the views of Mizuho Bank or of any company named in it.</p>
+    <p class="sourcenote tx" data-en="Everything here is built from public sources — DART filings, audited financial statements, Bank of Korea statistics, statute, press reporting, and credit-bureau data for unlisted companies. No confidential or non-public information was used. Nothing in this research represents the views of Mizuho Bank or of any company named in it." data-kr="이 리서치는 전부 공개된 자료로 만들었습니다 — DART 공시, 감사보고서, 한국은행 통계, 법조문, 언론 보도, 그리고 비상장사의 경우 신용평가사 자료. 비공개 정보나 내부 자료는 일절 사용하지 않았습니다. 이 리서치의 어떤 내용도 미즈호은행이나 언급된 어느 회사의 견해를 대변하지 않습니다.">Everything here is built from public sources — DART filings, audited financial statements, Bank of Korea statistics, statute, press reporting, and credit-bureau data for unlisted companies. No confidential or non-public information was used. Nothing in this research represents the views of Mizuho Bank or of any company named in it.</p>
   </div>
 
   <div class="section">
@@ -259,29 +262,29 @@ if(window.KYG_LANG!=='en'){
       <div class="flow-row">
         <span class="flow-tag tx" data-en="AUTHORISATION (OFFLINE)" data-kr="승인 (오프라인)">AUTHORISATION (OFFLINE)</span>
         <div class="flow-line">
-          <span class="node tx" data-en="Cardholder" data-kr="소비자">Cardholder</span> <span class="ar">&#8594;</span> <span class="node tx" data-en="Merchant" data-kr="가맹점">Merchant</span> <span class="ar">&#8594;</span> <span class="node key">VAN</span> <span class="ar">&#8594;</span> <span class="node tx" data-en="Card issuer" data-kr="카드사">Card issuer</span>
+          <span class="node tx" data-en="Cardholder" data-kr="소비자">Cardholder</span> <span class="hop"><span class="ar">&#8594;</span> <span class="node tx" data-en="Merchant" data-kr="가맹점">Merchant</span></span> <span class="hop"><span class="ar">&#8594;</span> <span class="node key">VAN</span></span> <span class="hop"><span class="ar">&#8594;</span> <span class="node tx" data-en="Card issuer" data-kr="카드사">Card issuer</span></span>
         </div>
       </div>
       <div class="flow-row">
         <span class="flow-tag tx" data-en="AUTHORISATION (ONLINE)" data-kr="승인 (온라인)">AUTHORISATION (ONLINE)</span>
         <div class="flow-line">
-          <span class="node tx" data-en="Cardholder" data-kr="소비자">Cardholder</span> <span class="ar">&#8594;</span> <span class="node tx" data-en="Merchant" data-kr="가맹점">Merchant</span> <span class="ar">&#8594;</span> <span class="node key">PG</span> <span class="ar">&#8594;</span> <span class="node key">VAN</span> <span class="ar">&#8594;</span> <span class="node tx" data-en="Card issuer" data-kr="카드사">Card issuer</span>
+          <span class="node tx" data-en="Cardholder" data-kr="소비자">Cardholder</span> <span class="hop"><span class="ar">&#8594;</span> <span class="node tx" data-en="Merchant" data-kr="가맹점">Merchant</span></span> <span class="hop"><span class="ar">&#8594;</span> <span class="node key">PG</span></span> <span class="hop"><span class="ar">&#8594;</span> <span class="node key">VAN</span></span> <span class="hop"><span class="ar">&#8594;</span> <span class="node tx" data-en="Card issuer" data-kr="카드사">Card issuer</span></span>
         </div>
       </div>
       <div class="flow-row settle">
         <span class="flow-tag tx" data-en="SETTLEMENT (ONLINE)" data-kr="정산 (온라인)">SETTLEMENT (ONLINE)</span>
         <div class="flow-line">
-          <span class="node tx" data-en="Card issuer" data-kr="카드사">Card issuer</span> <span class="ar">&#8594;</span> <span class="node key">PG</span> <span class="ar">&#8594;</span> <span class="node tx" data-en="Merchant" data-kr="가맹점">Merchant</span>
+          <span class="node tx" data-en="Card issuer" data-kr="카드사">Card issuer</span> <span class="hop"><span class="ar">&#8594;</span> <span class="node key">PG</span></span> <span class="hop"><span class="ar">&#8594;</span> <span class="node tx" data-en="Merchant" data-kr="가맹점">Merchant</span></span>
         </div>
       </div>
       <div class="flow-row settle">
         <span class="flow-tag tx" data-en="SETTLEMENT (OFFLINE)" data-kr="정산 (오프라인)">SETTLEMENT (OFFLINE)</span>
         <div class="flow-line">
-          <span class="node tx" data-en="Card issuer" data-kr="카드사">Card issuer</span> <span class="ar">&#8594;</span> <span class="node tx" data-en="Merchant" data-kr="가맹점">Merchant</span>
+          <span class="node tx" data-en="Card issuer" data-kr="카드사">Card issuer</span> <span class="hop"><span class="ar">&#8594;</span> <span class="node tx" data-en="Merchant" data-kr="가맹점">Merchant</span></span>
           <span class="flow-side tx" data-en="direct &mdash; the VAN never touches the money" data-kr="직접 &mdash; VAN은 돈을 만지지 않습니다">direct &mdash; the VAN never touches the money</span>
         </div>
       </div>
-      <p class="flow-bridge tx" data-en="Hold onto one distinction from these diagrams: the VAN moves data; the PG moves money. It is why the sector's biggest realised loss &mdash; the TMON&ndash;WeMakePrice insolvency &mdash; landed on PGs, and why this paper's conclusion is that the binding constraint on a buyout is settlement float." data-kr="해당 도표에서 하나만 기억하면 됩니다 &mdash; VAN은 데이터를 나르고, PG는 돈을 나릅니다. 섹터에서 가장 큰 실현손실인 티메프 사태가 PG에서 터진 이유가 여기에 있고, 해당 리서치가 인수의 진짜 제약을 정산 float이라고 결론 내린 것도 같은 이유입니다.">Hold onto one distinction from these diagrams: the VAN moves data; the PG moves money. It is why the sector's biggest realised loss &mdash; the TMON&ndash;WeMakePrice insolvency &mdash; landed on PGs, and why this paper's conclusion is that the binding constraint on a buyout is settlement float.</p>
+      <p class="flow-bridge tx" data-en="Hold onto one distinction from these diagrams: the VAN moves data; the PG moves money. It is why the sector's biggest realised loss &mdash; the TMON&ndash;WeMakePrice insolvency &mdash; landed on PGs, and why this paper's conclusion is that the binding constraint on a buyout is settlement float." data-kr="이 도표에서 하나만 기억하면 됩니다 &mdash; VAN은 데이터를 나르고, PG는 돈을 나릅니다. 섹터에서 가장 큰 실현손실인 티메프 사태가 PG에서 터진 이유가 여기에 있고, 이 리서치가 인수의 진짜 제약을 정산 float이라고 결론 내린 것도 같은 이유입니다.">Hold onto one distinction from these diagrams: the VAN moves data; the PG moves money. It is why the sector's biggest realised loss &mdash; the TMON&ndash;WeMakePrice insolvency &mdash; landed on PGs, and why this paper's conclusion is that the binding constraint on a buyout is settlement float.</p>
       <div class="feewrap">
         <div class="feecap tx" data-en="Of every &#8361;1.00 a PG collects in fees" data-kr="PG가 수수료로 받는 1원 중">Of every &#8361;1.00 a PG collects in fees</div>
         <div class="feebar">
@@ -355,7 +358,7 @@ if(window.KYG_LANG!=='en'){
     <div class="slidewrap">
       <figure>
         <img src="korea-payments/slide-02.png" alt="Executive summary slide" loading="lazy" width="1600" height="900" />
-        <figcaption class="tx" data-en="02 — Executive summary. Four boxes and the case for timing." data-kr="02 — 요약. 네 개의 박스와 지금인 이유.">02 — Executive summary. Four boxes and the case for timing.</figcaption>
+        <figcaption class="tx" data-en="02 — Executive summary. Four boxes and the case for timing." data-kr="02 — 요약. 네 개의 박스, 그리고 왜 지금인가.">02 — Executive summary. Four boxes and the case for timing.</figcaption>
       </figure>
       <figure>
         <img src="korea-payments/slide-06.png" alt="Cash conversion slide" loading="lazy" width="1600" height="900" />
