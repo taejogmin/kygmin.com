@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Korea Payment Infrastructure — Sector Deep-Dive — KYGMIN</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#F6F6F4;
+  --ink:#141414;
+  --gray:#DDDDD8;
+  --green:#2BB673;
+  --green-deep:#0F6E56;
+  --red:#A32D2D;
+  --arch:'Archivo','Pretendard',sans-serif;
+  --sans:'Pretendard',-apple-system,'Apple SD Gothic Neo','Malgun Gothic','Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono','SF Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{transition:none!important;}
+}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:16px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  word-break:keep-all;overflow-wrap:break-word;
+}
+a{color:inherit;text-decoration:none;}
+a:focus-visible,button:focus-visible{outline:3px solid var(--green);outline-offset:3px;}
+.wrap{max-width:820px;margin:0 auto;padding:0 24px;}
+/* ── Nav ── */
+nav{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:3px solid var(--ink);}
+.nav-inner{
+  max-width:820px;margin:0 auto;padding:14px 24px;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+}
+.logo{font-family:var(--arch);font-weight:900;font-size:19px;letter-spacing:-0.5px;}
+.logo em{font-style:normal;background:var(--green);color:var(--paper);padding:0 6px;display:inline-block;transform:rotate(-1.5deg);}
+.nav-links{display:flex;gap:8px;flex-wrap:wrap;}
+.nav-links a{
+  font-family:var(--arch);font-size:12px;font-weight:700;text-transform:uppercase;
+  border:2px solid var(--ink);padding:6px 13px;background:#fff;
+  box-shadow:3px 3px 0 var(--ink);transition:transform .1s, box-shadow .1s;
+}
+.nav-links a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+.nav-links a.on{background:var(--green);color:var(--paper);}
+/* ── Language toggle (floating) ── */
+#langtoggle{
+  position:fixed;right:20px;bottom:20px;z-index:50;display:inline-flex;
+  border:2px solid var(--ink);box-shadow:3px 3px 0 var(--ink);background:#fff;
+  font-family:var(--arch);font-weight:700;font-size:12px;overflow:hidden;
+}
+#langtoggle button{font:inherit;border:none;background:none;cursor:pointer;padding:9px 14px;color:var(--ink);letter-spacing:.5px;transition:background .1s,color .1s;}
+#langtoggle button.on{background:var(--green);color:var(--paper);}
+#langtoggle button+button{border-left:2px solid var(--ink);}
+.scr{color:var(--green);}
+.box .scr{color:var(--paper);}
+/* ── Hero ── */
+header{padding:64px 0 44px;border-bottom:3px solid var(--ink);}
+.sec-tag{
+  font-family:var(--mono);font-size:12.5px;font-weight:600;
+  color:var(--green-deep);letter-spacing:1px;display:block;margin-bottom:16px;
+}
+h1{
+  font-family:var(--arch);font-weight:900;text-transform:uppercase;
+  font-size:clamp(32px, 6vw, 54px);line-height:1.04;letter-spacing:-2px;
+}
+h1 .box{background:var(--ink);color:var(--paper);padding:0 12px;display:inline-block;transform:rotate(-1deg);}
+.hero-sub{margin-top:20px;font-size:16px;max-width:600px;font-weight:500;}
+.hero-note{margin-top:14px;font-family:var(--mono);font-size:12px;color:#4A4A46;}
+/* ── Main ── */
+main{padding:48px 0 88px;}
+.section{margin-top:52px;}
+.section:first-child{margin-top:0;}
+.section h2{
+  font-family:var(--arch);font-weight:900;font-size:15px;text-transform:uppercase;
+  letter-spacing:-0.3px;border-bottom:3px solid var(--ink);padding-bottom:8px;margin-bottom:18px;
+}
+.section p{font-size:15px;color:#3A3A38;max-width:680px;}
+.section p+p{margin-top:12px;}
+.meta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;}
+.meta-chip{
+  font-family:var(--mono);font-size:11.5px;font-weight:600;
+  border:2px solid var(--ink);padding:4px 10px;background:var(--gray);
+}
+.meta-chip.g{background:var(--green);color:var(--paper);}
+ol.steps{margin-top:18px;max-width:680px;counter-reset:step;list-style:none;}
+ol.steps li{
+  position:relative;padding-left:44px;margin-bottom:16px;font-size:14.5px;color:#3A3A38;
+}
+ol.steps li::before{
+  counter-increment:step;content:counter(step);
+  position:absolute;left:0;top:0;width:28px;height:28px;
+  background:var(--ink);color:var(--paper);font-family:var(--mono);font-weight:600;font-size:13px;
+  display:flex;align-items:center;justify-content:center;
+}
+.gallery{display:grid;gap:22px;margin-top:20px;}
+.gallery figure{border:3px solid var(--ink);background:#fff;box-shadow:6px 6px 0 var(--ink);padding:14px;}
+.gallery img{display:block;width:100%;height:auto;border:2px solid var(--ink);}
+.gallery figcaption{margin-top:10px;font-family:var(--mono);font-size:12px;color:#4A4A46;}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px;margin-top:20px;max-width:680px;}
+.stat{border:3px solid var(--ink);background:#fff;box-shadow:5px 5px 0 var(--ink);padding:18px;text-align:center;}
+.stat .num{font-family:var(--arch);font-weight:900;font-size:22px;color:var(--green-deep);}
+.stat .lbl{font-family:var(--mono);font-size:11px;color:#4A4A46;margin-top:6px;}
+.stat-note{margin-top:12px;font-family:var(--mono);font-size:11.5px;color:#6B6B67;max-width:680px;}
+.cert-frame{max-width:480px;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:10px;background:#fff;margin-top:20px;}
+.cert-frame img{display:block;width:100%;border:2px solid var(--ink);}
+.link-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:22px;}
+.btn{
+  display:inline-block;font-family:var(--arch);font-size:14px;font-weight:700;text-transform:uppercase;
+  border:3px solid var(--ink);padding:12px 24px;box-shadow:5px 5px 0 var(--ink);
+  transition:transform .1s, box-shadow .1s;background:#fff;cursor:pointer;color:var(--ink);
+}
+.btn:hover{transform:translate(2px,2px);box-shadow:3px 3px 0 var(--ink);}
+.btn-green{background:var(--green);color:var(--paper);}
+/* footer */
+footer{border-top:3px solid var(--ink);padding:26px 0;}
+.foot-inner{max-width:820px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:12px;color:#4A4A46;}
+@media(max-width:640px){
+  header{padding:48px 0 36px;}
+}
+
+/* ── 이 페이지 전용 ── */
+.slidewrap{margin-top:20px;display:grid;gap:22px;}
+.slidewrap figure{border:3px solid var(--ink);background:#fff;box-shadow:6px 6px 0 var(--ink);padding:12px;}
+.slidewrap img{display:block;width:100%;height:auto;border:2px solid var(--ink);}
+.slidewrap figcaption{margin-top:10px;font-family:var(--mono);font-size:12px;color:#4A4A46;}
+.finding{border-left:5px solid var(--green);background:#fff;border-top:3px solid var(--ink);
+  border-right:3px solid var(--ink);border-bottom:3px solid var(--ink);
+  box-shadow:5px 5px 0 var(--ink);padding:16px 18px;margin-top:16px;max-width:680px;}
+.finding h3{font-family:var(--arch);font-weight:900;font-size:14px;text-transform:uppercase;letter-spacing:-.2px;}
+.finding p{margin-top:7px;font-size:14.5px;color:#3A3A38;}
+.disclaimer{margin-top:40px;border:2px dashed var(--ink);background:var(--gray);
+  padding:14px 16px;font-family:var(--mono);font-size:11.5px;line-height:1.75;color:#3A3A38;max-width:680px;}
+</style>
+<script>
+/* 사이트 공통 언어 유지 (claude/site-language-persistence.md).
+   경력 상세 페이지들(bridge-hackathon 등)은 이 블록이 없어 홈에서 고른 언어가 풀린다.
+   새 페이지는 처음부터 홈과 같은 것을 넣는다. */
+window.KYG_LANG=(function(){try{var v=localStorage.getItem('kyg_lang');if(v==='kr'||v==='en')return v;}catch(e){}return 'en';})();
+window.APP_LANG=window.KYG_LANG;
+if(window.KYG_LANG!=='en'){
+  document.documentElement.setAttribute('lang','ko');
+  document.documentElement.className+=' lang-pending';
+  setTimeout(function(){document.documentElement.classList.remove('lang-pending');},2000);
+}
+</script>
+<style>html.lang-pending .tx{visibility:hidden}</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="index.html">KYG<em>MIN</em></a>
+    <div class="nav-links">
+      <a href="index.html"><span class="tx" data-en="Home" data-kr="홈">Home</span></a>
+      <a href="index.html#portfolio"><span class="tx" data-en="Careers" data-kr="경력">Careers</span></a>
+      <a class="on" href="korea-payments.html"><span class="tx" data-en="Korea Payments" data-kr="한국 결제">Korea Payments</span></a>
+      <a href="cv.html">CV &#128274;</a>
+    </div>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <span class="sec-tag tx" data-en="RESEARCH — PG / VAN SECTOR DEEP-DIVE" data-kr="리서치 — PG / VAN 섹터 딥다이브">RESEARCH — PG / VAN SECTOR DEEP-DIVE</span>
+    <h1><span class="tx" data-en="KOREA " data-kr="한국 ">KOREA </span><span class="box"><span class="tx" data-en="PAYMENT" data-kr="결제">PAYMENT</span></span><span class="tx" data-en=" INFRASTRUCTURE" data-kr=" 인프라"> INFRASTRUCTURE</span></h1>
+    <p class="hero-sub tx" data-en="KRW 1,300tn a year moves across Korea's card rail, but only about KRW 1tn of it is a fee pool anyone can buy — and every won of that sits behind a licensing moat. This is a twelve-slide study of who owns that pool, why the margins inside one industry span twentyfold, and who is legally able to consolidate it." data-kr="한국 카드 레일 위로 연 1,300조원이 흐르지만, 그중 인수할 수 있는 수수료 풀은 약 1조원이고 그 전부가 등록제 해자 안에 있습니다. 이 풀을 누가 갖고 있는지, 같은 산업 안에서 마진이 왜 20배씩 벌어지는지, 그리고 이 시장을 법적으로 통합할 수 있는 주체가 누구인지를 12장으로 정리한 리서치입니다.">KRW 1,300tn a year moves across Korea's card rail, but only about KRW 1tn of it is a fee pool anyone can buy — and every won of that sits behind a licensing moat. This is a twelve-slide study of who owns that pool, why the margins inside one industry span twentyfold, and who is legally able to consolidate it.</p>
+    <p class="hero-note tx" data-en="AUG 2026 · 12 SLIDES · INDEPENDENT RESEARCH · EVERY FIGURE FROM PRIMARY DISCLOSURES" data-kr="2026.08 · 12장 · 독립 리서치 · 전 수치 1차 공시 기반">AUG 2026 · 12 SLIDES · INDEPENDENT RESEARCH · EVERY FIGURE FROM PRIMARY DISCLOSURES</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="section">
+    <h2 class="tx" data-en="Why This Sector" data-kr="왜 이 섹터인가">Why This Sector</h2>
+    <p class="tx" data-en="Korean payments run on two rails. The bank rail is BOK-Wire+ and KFTC clearing; the card rail is issuers, VANs and PGs. My day job at Mizuho sits on the bank rail — FX interbank settlement and the ISO 20022 migration — which is what makes the two-rail split second nature and what pointed me at the other rail. The conclusion this paper reaches, that the binding constraint on a payments buyout is settlement float rather than capex, is the kind of thing you notice from having run settlements." data-kr="한국의 결제는 두 개의 레일 위에서 돌아갑니다. 은행 레일은 한은금융망(BOK-Wire+)과 금융결제원 청산이고, 카드 레일은 카드사·VAN·PG입니다. 제 본업인 미즈호 실무는 은행 레일 쪽입니다 — FX 인터뱅크 정산과 ISO 20022 전환. 그래서 두 레일의 구분이 몸에 익어 있고, 그 감각이 반대편 레일로 시선을 돌리게 했습니다. 결제 인수의 진짜 제약이 CAPEX가 아니라 정산 float이라는 이 리서치의 결론은, 정산 실무를 해 본 사람의 관점에서 나온 것입니다.">Korean payments run on two rails. The bank rail is BOK-Wire+ and KFTC clearing; the card rail is issuers, VANs and PGs. My day job at Mizuho sits on the bank rail — FX interbank settlement and the ISO 20022 migration — which is what makes the two-rail split second nature and what pointed me at the other rail. The conclusion this paper reaches, that the binding constraint on a payments buyout is settlement float rather than capex, is the kind of thing you notice from having run settlements.</p>
+    <div class="meta-row">
+      <span class="meta-chip g tx" data-en="Sector deep-dive" data-kr="섹터 딥다이브">Sector deep-dive</span>
+      <span class="meta-chip tx" data-en="12 slides" data-kr="12장">12 slides</span>
+      <span class="meta-chip tx" data-en="Aug 2026" data-kr="2026.08">Aug 2026</span>
+      <span class="meta-chip">PG · VAN</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="tx" data-en="What It Finds" data-kr="무엇을 찾았나">What It Finds</h2>
+
+    <div class="finding">
+      <h3 class="tx" data-en="The margin is the mix, not the volume" data-kr="마진을 정하는 것은 거래액이 아니라 가맹점 믹스">The margin is the mix, not the volume</h3>
+      <p class="tx" data-en="Inside one industry in one year, operating margins run from 0.35% to 7.2% — a twentyfold spread. It tracks merchant mix, not scale: the enterprise-heavy PG bought +33% transaction growth at almost no margin, while the long-tail PG with 190k merchants keeps 7.2%. That turns into a screening rule — enterprise-heavy PGs are volume assets, long-tail PGs are margin assets — and into the first diligence request." data-kr="같은 산업, 같은 해에 영업마진이 0.35%에서 7.2%까지 20배 벌어집니다. 규모가 아니라 가맹점 믹스를 따라갑니다 — 대형 편중 PG는 거래액 +33% 성장을 사실상 마진 없이 샀고, 19만 롱테일 가맹점을 가진 PG는 7.2%를 남깁니다. 이것이 스크리닝 기준이 됩니다 — 대형 편중 PG는 볼륨 자산, 롱테일 PG가 마진 자산 — 그리고 실사 첫 번째 요구자료가 됩니다.">Inside one industry in one year, operating margins run from 0.35% to 7.2% — a twentyfold spread. It tracks merchant mix, not scale: the enterprise-heavy PG bought +33% transaction growth at almost no margin, while the long-tail PG with 190k merchants keeps 7.2%. That turns into a screening rule — enterprise-heavy PGs are volume assets, long-tail PGs are margin assets — and into the first diligence request.</p>
+    </div>
+
+    <div class="finding">
+      <h3 class="tx" data-en="Big money passes through; the slice shrinks faster than the flow" data-kr="큰돈은 통과하고, 남는 조각이 흐름보다 빨리 준다">Big money passes through; the slice shrinks faster than the flow</h3>
+      <p class="tx" data-en="All three names show the same shape: 82–87% of gross revenue is pass-through. The real size of the business is what is left. At one operator gross fee revenue fell 2.3% while net revenue fell 11.8% — five times faster. Only the company's own slice was cut. Any read of this sector that stops at gross revenue is reading the wrong number." data-kr="세 회사 모두 같은 모양입니다 — 총매출의 82~87%가 통과합니다. 사업의 실제 크기는 남는 부분입니다. 한 사업자는 총 수수료매출이 2.3% 줄 때 net revenue가 11.8% 줄었습니다 — 다섯 배 빠릅니다. 깎인 것은 회사 몫뿐입니다. 이 섹터를 총매출에서 멈춰 읽으면 틀린 숫자를 보는 셈입니다.">All three names show the same shape: 82–87% of gross revenue is pass-through. The real size of the business is what is left. At one operator gross fee revenue fell 2.3% while net revenue fell 11.8% — five times faster. Only the company's own slice was cut. Any read of this sector that stops at gross revenue is reading the wrong number.</p>
+    </div>
+
+    <div class="finding">
+      <h3 class="tx" data-en="The constraint is settlement float, not capex" data-kr="제약은 CAPEX가 아니라 정산 float">The constraint is settlement float, not capex</h3>
+      <p class="tx" data-en="Nine data points — three companies, three years — all clear a 60% cash-conversion gate, and capex is only 3–15% of EBITDA. Terminal investment is not on these balance sheets at all; it is carried by the agency network, and that is written into statute rather than chosen as accounting. What actually swings is working capital in the settlement cycle, by ±KRW 100bn, and pending rules would make that float unpledgeable." data-kr="3사 × 3개년 = 9개 데이터포인트 전부가 현금 전환율 60% 게이트를 넘고, CAPEX는 EBITDA의 3~15%에 불과합니다. 단말 투자는 애초에 이 회사들 장부에 없습니다 — 대리점 망이 부담하며, 이는 회계 선택이 아니라 법에 내장돼 있습니다. 실제로 널뛰는 것은 정산 사이클의 운전자본이고(±1,000억원 단위), 예고된 규제가 시행되면 그 float는 담보로 쓸 수 없게 됩니다.">Nine data points — three companies, three years — all clear a 60% cash-conversion gate, and capex is only 3–15% of EBITDA. Terminal investment is not on these balance sheets at all; it is carried by the agency network, and that is written into statute rather than chosen as accounting. What actually swings is working capital in the settlement cycle, by ±KRW 100bn, and pending rules would make that float unpledgeable.</p>
+    </div>
+
+    <div class="finding">
+      <h3 class="tx" data-en="The consolidator is legally pre-determined" data-kr="통합의 주체는 법이 미리 정해 두었다">The consolidator is legally pre-determined</h3>
+      <p class="tx" data-en="Acquiring is a licensed business here, so the independent-acquirer model that reshaped Europe cannot exist — the global processor that killed Europe's roll-ups is, in Korea, a customer of the local PGs. Private equity has already completed one buyout in this sector. What has not happened is horizontal combination, and the blocker is merger clearance rather than price: the largest domestic operator reached a shortlist and withdrew on exactly that ground. If strategics are blocked by regulation, the consolidator can only be a non-affiliated financial investor." data-kr="국내에서 매입(acquiring)은 허가 사업이라, 유럽을 바꿔 놓은 독립 애퀴이어러 모델이 성립하지 않습니다 — 유럽 롤업을 무너뜨린 글로벌 사업자가 한국에서는 로컬 PG의 고객입니다. 사모펀드는 이미 이 섹터에서 인수를 한 번 완주했습니다. 일어나지 않은 것은 수평 결합이고, 막고 있는 것은 가격이 아니라 기업결합 심사입니다 — 국내 최대 사업자가 쇼트리스트까지 갔다가 바로 그 이유로 철수했습니다. 전략적 인수자가 규제에 막힌다면, 통합의 주체는 비계열 재무적 투자자일 수밖에 없습니다.">Acquiring is a licensed business here, so the independent-acquirer model that reshaped Europe cannot exist — the global processor that killed Europe's roll-ups is, in Korea, a customer of the local PGs. Private equity has already completed one buyout in this sector. What has not happened is horizontal combination, and the blocker is merger clearance rather than price: the largest domestic operator reached a shortlist and withdrew on exactly that ground. If strategics are blocked by regulation, the consolidator can only be a non-affiliated financial investor.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="tx" data-en="How It Is Built" data-kr="어떻게 만들었나">How It Is Built</h2>
+    <p class="tx" data-en="The point of the deck is not the conclusion but that every number in it can be checked. Financial figures come from FY25 annual reports on DART, cited to the page. Market size comes from Bank of Korea payment statistics; the moat comes from the statute itself; deal values come from the advising counsel's own announcements rather than press estimates." data-kr="이 덱의 요점은 결론이 아니라 안의 모든 숫자를 검증할 수 있다는 것입니다. 재무 수치는 DART의 FY25 사업보고서에서 페이지까지 인용했습니다. 시장 규모는 한국은행 지급결제 통계, 해자는 법조문 자체, 딜 금액은 언론 추정이 아니라 자문 법무법인의 공식 공지에서 가져왔습니다.">The point of the deck is not the conclusion but that every number in it can be checked. Financial figures come from FY25 annual reports on DART, cited to the page. Market size comes from Bank of Korea payment statistics; the moat comes from the statute itself; deal values come from the advising counsel's own announcements rather than press estimates.</p>
+    <p class="tx" data-en="Two rules do most of the work. Perimeter consistency: a numerator and a denominator must come from the same reporting entity, so separate-basis, group-segment and consolidated figures are never mixed to make a rate look better. And disclosure absence is recorded as a finding: where a company stopped publishing transaction volume in the year its results turned, that silence is written down as diligence item one rather than filled in with an estimate." data-kr="두 가지 원칙이 일의 대부분을 합니다. 첫째, 경계 일치 — 분자와 분모는 같은 보고 실체에서 와야 하므로, 별도·부문·연결 숫자를 섞어 비율을 좋아 보이게 만들지 않습니다. 둘째, 공시 부재를 발견으로 기록 — 실적이 꺾인 해부터 거래액 공시가 사라진 경우, 그 침묵을 추정치로 메우지 않고 실사 1번 항목으로 적어 둡니다.">Two rules do most of the work. Perimeter consistency: a numerator and a denominator must come from the same reporting entity, so separate-basis, group-segment and consolidated figures are never mixed to make a rate look better. And disclosure absence is recorded as a finding: where a company stopped publishing transaction volume in the year its results turned, that silence is written down as diligence item one rather than filled in with an estimate.</p>
+    <div class="meta-row">
+      <span class="meta-chip g">DART</span>
+      <span class="meta-chip tx" data-en="Bank of Korea" data-kr="한국은행">Bank of Korea</span>
+      <span class="meta-chip tx" data-en="Statute" data-kr="법조문">Statute</span>
+      <span class="meta-chip tx" data-en="Counsel announcements" data-kr="자문사 공지">Counsel announcements</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="tx" data-en="Three Pages From It" data-kr="본문에서 세 장">Three Pages From It</h2>
+    <div class="slidewrap">
+      <figure>
+        <img src="korea-payments/slide-02.png" alt="Executive summary slide" loading="lazy" width="1600" height="900" />
+        <figcaption class="tx" data-en="02 — Executive summary. Four boxes and the case for timing." data-kr="02 — 요약. 네 개의 박스와 지금인 이유.">02 — Executive summary. Four boxes and the case for timing.</figcaption>
+      </figure>
+      <figure>
+        <img src="korea-payments/slide-06.png" alt="Cash conversion slide" loading="lazy" width="1600" height="900" />
+        <figcaption class="tx" data-en="06 — Cash conversion. Nine data points, one gate, and the methodology note kept on the page." data-kr="06 — 현금 전환. 9개 데이터포인트와 게이트, 그리고 방법론 각주를 본문에 남겨 둔 화면.">06 — Cash conversion. Nine data points, one gate, and the methodology note kept on the page.</figcaption>
+      </figure>
+      <figure>
+        <img src="korea-payments/slide-10.png" alt="Screening and valuation slide" loading="lazy" width="1600" height="900" />
+        <figcaption class="tx" data-en="10 — Screening and valuation anchors. What these assets cost today." data-kr="10 — 스크리닝과 밸류에이션 앵커. 지금 이 자산들의 가격.">10 — Screening and valuation anchors. What these assets cost today.</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="tx" data-en="Read It" data-kr="읽어보기">Read It</h2>
+    <p class="tx" data-en="The full deck is a single PDF. It is laid out wide for the screen, so a desktop or tablet reads best." data-kr="전체 덱은 PDF 한 개입니다. 화면에 맞춰 가로로 넓게 짜여 있어 데스크톱이나 태블릿에서 가장 잘 읽힙니다.">The full deck is a single PDF. It is laid out wide for the screen, so a desktop or tablet reads best.</p>
+    <div class="link-row">
+      <a class="btn btn-green" href="korea-payments/Korea_Payments_Sector_DeepDive.pdf" target="_blank" rel="noopener"><span class="tx" data-en="Open the deck (PDF)" data-kr="덱 열기 (PDF)">Open the deck (PDF)</span> <span class="arw">&#8599;</span></a>
+      <a class="btn" href="index.html#research">&larr; <span class="tx" data-en="Back to Research" data-kr="리서치로 돌아가기">Back to Research</span></a>
+    </div>
+    <p class="disclaimer tx" data-en="Independent research prepared in a personal capacity. Not investment advice, not a recommendation, and no offer or solicitation. No affiliation with, sponsorship by, or endorsement from any company named, or from any employer. Figures are drawn from public disclosures as of August 2026 and may since have changed." data-kr="개인 자격으로 작성한 독립 리서치입니다. 투자 자문이나 권유가 아니며, 어떠한 청약이나 유인도 아닙니다. 언급된 어느 회사와도, 그리고 어느 고용주와도 제휴·후원·보증 관계가 없습니다. 수치는 2026년 8월 기준 공개 자료에서 가져온 것으로 이후 변경되었을 수 있습니다.">Independent research prepared in a personal capacity. Not investment advice, not a recommendation, and no offer or solicitation. No affiliation with, sponsorship by, or endorsement from any company named, or from any employer. Figures are drawn from public disclosures as of August 2026 and may since have changed.</p>
+  </div>
+
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <span>© KYGMIN.COM</span>
+    <span class="tx" data-en="KOREA PAYMENT INFRASTRUCTURE · PG / VAN SECTOR DEEP-DIVE · AUG 2026" data-kr="한국 결제 인프라 · PG / VAN 섹터 딥다이브 · 2026.08">KOREA PAYMENT INFRASTRUCTURE · PG / VAN SECTOR DEEP-DIVE · AUG 2026</span>
+  </div>
+</footer>
+
+
+<div id="langtoggle" aria-label="Language">
+  <button data-lang="en" class="on">EN</button>
+  <button data-lang="kr">한</button>
+</div>
+
+<script>
+(function(){
+  var POOL = ("ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎㅏㅑㅓㅕㅗㅛㅜㅠㅡㅣ"
+    + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-·").split("");
+  function esc(c){return c==="&"?"&amp;":c==="<"?"&lt;":c===">"?"&gt;":c;}
+
+  function Scramble(el){ this.el=el; this.raf=null; this.frame=this.frame.bind(this); }
+  Scramble.prototype.set=function(txt){
+    var old = this.el.dataset.plain!==undefined ? this.el.dataset.plain : this.el.textContent;
+    var len=Math.max(old.length, txt.length);
+    this.q=[];
+    for(var i=0;i<len;i++){
+      var from=old[i]||"", to=txt[i]||"";
+      var start=Math.floor(Math.random()*20);
+      var end=start+Math.floor(Math.random()*25)+12;
+      this.q.push({from:from,to:to,start:start,end:end,ch:null});
+    }
+    if(this.raf) cancelAnimationFrame(this.raf);
+    this.f=0; this.txt=txt; this.frame();
+  };
+  Scramble.prototype.frame=function(){
+    var out="", done=0;
+    for(var i=0;i<this.q.length;i++){
+      var it=this.q[i];
+      if(this.f>=it.end){ done++; out+=esc(it.to); }
+      else if(this.f>=it.start){
+        if(!it.ch || Math.random()<0.3){ it.ch=POOL[Math.floor(Math.random()*POOL.length)]; }
+        out+='<span class="scr">'+esc(it.ch)+'</span>';
+      } else out+=esc(it.from);
+    }
+    this.el.innerHTML=out;
+    if(done===this.q.length){ this.el.dataset.plain=this.txt; }
+    else { this.f++; this.raf=requestAnimationFrame(this.frame); }
+  };
+
+  var els=[].slice.call(document.querySelectorAll('.tx'));
+  els.forEach(function(el){ el.dataset.plain=el.textContent; el._s=new Scramble(el); });
+  /* 복원은 스크램블을 타지 않는다. dataset.plain 도 같이 갱신해야
+     다음 전환의 시작 문자열이 어긋나지 않는다. */
+  (function(){
+    var L = window.KYG_LANG || 'en';
+    var b0=document.querySelectorAll('#langtoggle button');
+    for(var i=0;i<b0.length;i++){ b0[i].classList.toggle('on', b0[i].dataset.lang===L); }
+    if(L!=='en') els.forEach(function(el){ var t=el.dataset[L]; if(t!==undefined){ el.textContent=t; el.dataset.plain=t; } });
+    document.documentElement.classList.remove('lang-pending');
+  })();
+  var cur=(window.KYG_LANG==='kr'?'kr':'en');
+  function setLang(lang){
+    if(lang===cur) return; cur=lang;
+    window.APP_LANG=lang;
+    try{ localStorage.setItem('kyg_lang', lang); }catch(e){}
+    document.documentElement.lang = (lang==='kr'?'ko':'en');
+    var btns=document.querySelectorAll('#langtoggle button');
+    for(var i=0;i<btns.length;i++){ btns[i].classList.toggle('on', btns[i].dataset.lang===lang); }
+    els.forEach(function(el){ var t=el.dataset[lang]; if(t!==undefined) el._s.set(t); });
+  }
+  document.getElementById('langtoggle').addEventListener('click', function(e){
+    var b=e.target.closest('button'); if(b) setLang(b.dataset.lang);
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -110,6 +110,11 @@ h2 .u{box-shadow:inset 0 -12px 0 var(--green);}
   border:2px solid var(--ink);padding:2px 9px;background:var(--gray);
 }
 .tag.g{background:var(--green);color:var(--paper);border-color:var(--ink);}
+/* 리서치 섹션 고지 — 눈에 띄되 경고처럼 보이지 않게, 몸글보다 한 단계 작게 */
+.sec-note{
+  margin:14px 0 20px;max-width:620px;border-left:4px solid var(--green);
+  padding:9px 0 9px 14px;font-family:var(--mono);font-size:11.5px;line-height:1.8;color:#5A5A56;
+}
 .ledger-body a{color:var(--green-deep);text-decoration:underline;font-weight:600;}
 .ledger-body a:hover{color:var(--green);}
 .ledger-body .arw{font-size:11px;opacity:.65;text-decoration:none;}
@@ -207,10 +212,11 @@ if(window.KYG_LANG!=='en'){
   <h1>PARK,<br/>KYUNG-<span class="boxg">MIN</span></h1>
   <p class="hero-sub">
     <strong class="tx" data-en="Welcome — I'm Min." data-kr="안녕하세요 — 박경민입니다.">Welcome — I'm Min.</strong><br/><br/>
-    <span class="tx" data-en="Second year at Mizuho Bank, currently PM on the ISO 20022 Hybrid. Look around to get to know me, or jump into the PLAYHOUSE." data-kr="미즈호 은행에서 ISO 20022 Hybrid 프로젝트 PM으로 일하고 있습니다. 편하게 둘러보시고, 플레이하우스에서 재미있게 즐겨보세요!">Second year at Mizuho Bank, currently PM on the ISO 20022 Hybrid. Look around to get to know me, or jump into the PLAYHOUSE.</span>
+    <span class="tx" data-en="Second year at Mizuho Bank, currently PM on the ISO 20022 Hybrid. Look around to get to know me, read my sector research, or jump into the PLAYHOUSE." data-kr="미즈호 은행에서 ISO 20022 Hybrid 프로젝트 PM으로 일하고 있습니다. 편하게 둘러보시고, 섹터 리서치도 읽어보시고, 플레이하우스에서 재미있게 즐겨보세요!">Second year at Mizuho Bank, currently PM on the ISO 20022 Hybrid. Look around to get to know me, read my sector research, or jump into the PLAYHOUSE.</span>
   </p>
   <div class="hero-actions">
     <a class="btn btn-green tx" href="#portfolio" data-en="Careers" data-kr="경력">Careers</a>
+    <a class="btn tx" href="#research" data-en="Research" data-kr="리서치">Research</a>
     <a class="btn" href="#projects">PLAYHOUSE</a>
   </div>
 </header>
@@ -297,6 +303,30 @@ if(window.KYG_LANG!=='en'){
   </div>
 </section>
 
+<section id="research">
+  <div class="wrap">
+    <span class="sec-tag tx" data-en="02 — Research" data-kr="02 — 리서치">02 — Research</span>
+    <h2><span class="u"><span class="tx" data-en="Sector Work" data-kr="섹터 리서치">Sector Work</span></span></h2>
+    <p class="sec-note tx" data-en="Independent research, written in a personal capacity from publicly available sources. It does not represent the views of my employer, contains no confidential or internal information, and is not investment advice." data-kr="개인 자격으로 공개된 자료만을 사용해 작성한 독립 리서치입니다. 고용주의 견해를 대변하지 않으며, 비공개 정보나 내부 자료를 담고 있지 않고, 투자 자문이 아닙니다.">Independent research, written in a personal capacity from publicly available sources. It does not represent the views of my employer, contains no confidential or internal information, and is not investment advice.</p>
+    <div class="ledger">
+      <div class="ledger-row">
+        <div class="ledger-date tx" data-en="AUG 2026" data-kr="2026.08">AUG 2026</div>
+        <div class="ledger-body">
+          <h3 class="tx" data-en="Korea Payment Infrastructure (PG / VAN)" data-kr="한국 결제 인프라 (PG / VAN)">Korea Payment Infrastructure (PG / VAN)</h3>
+          <p class="org tx" data-en="Sector deep-dive · independent research" data-kr="섹터 딥다이브 · 독립 리서치">Sector deep-dive · independent research</p>
+          <p class="tx" data-en="Korea's payment infrastructure is a consolidation story in which the consolidator is legally pre-determined: regulated fee compression forces the roll-up, 61–94% cash conversion funds it, merger review blocks every strategic buyer — and a top-tier listed PG trades at 0–5.5× EV/EBITDA." data-kr="한국 결제 인프라에서 통합은 일어날 수밖에 없고, 그 주체는 법이 이미 정해놓았다. 규제된 단가 압축이 롤업을 강제하고, 61~94%의 현금 전환이 이를 뒷받침하며, 기업결합 심사는 모든 전략적 인수자를 배제한다. 대표 상장 자산은 현재 EV/EBITDA 0~5.5배에 거래되고 있다.">Korea's payment infrastructure is a consolidation story in which the consolidator is legally pre-determined: regulated fee compression forces the roll-up, 61–94% cash conversion funds it, merger review blocks every strategic buyer — and a top-tier listed PG trades at 0–5.5× EV/EBITDA.</p>
+          <div class="tags">
+            <span class="tag g tx" data-en="Sector research" data-kr="섹터 리서치">Sector research</span>
+            <span class="tag tx" data-en="Payment infrastructure" data-kr="결제 인프라">Payment infrastructure</span>
+            <span class="tag">PG · VAN</span>
+          </div>
+          <p><a href="korea-payments.html"><span class="tx" data-en="Korea Payment Infrastructure — the deck" data-kr="Korea Payment Infrastructure — 덱 보기">Korea Payment Infrastructure — the deck</span> <span class="arw">&#8594;</span></a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="cv-gate" style="padding:48px 0;">
   <div class="wrap">
     <div style="border:3px solid var(--ink);background:var(--green);box-shadow:6px 6px 0 var(--ink);padding:26px 28px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;">
@@ -311,7 +341,7 @@ if(window.KYG_LANG!=='en'){
 
 <section id="projects">
   <div class="wrap">
-    <span class="sec-tag">02 — PLAYHOUSE</span>
+    <span class="sec-tag">03 — PLAYHOUSE</span>
     <h2>PLAY<span class="u">HOUSE</span></h2>
     <p style="font-size:15px;color:#3A3A38;max-width:620px;margin:-16px 0 28px;" class="tx" data-en="Try out the things I've built. More if you enter the Playhouse." data-kr="다양한 놀거리가 준비되어 있습니다. 플레이하우스에서 더 많은 경험을 해보세요.">Try out the things I've built. More if you enter the Playhouse.</p>
     <div class="proj-grid">
@@ -339,7 +369,7 @@ if(window.KYG_LANG!=='en'){
 
 <section id="notes">
   <div class="wrap">
-    <span class="sec-tag">03 &mdash; NOTES</span>
+    <span class="sec-tag">04 &mdash; NOTES</span>
     <h2><span class="u">NOTES</span></h2>
     <p style="font-size:15px;color:#3A3A38;max-width:620px;margin:-16px 0 10px;" class="tx" data-en="How the things in the Playhouse actually work &mdash; and what I got wrong building them. Three below; the rest are in the NOTES." data-kr="플레이하우스의 것들이 실제로 어떻게 작동하는지, 그리고 만들면서 무엇을 틀렸는지. 세 편만 골라 소개하고, 나머지는 NOTES에 있습니다.">How the things in the Playhouse actually work &mdash; and what I got wrong building them. Three below; the rest are in the NOTES.</p>
     <p class="notes-meta tx" data-en="8 WRITE-UPS &middot; 24,000 WORDS &middot; ENGLISH ONLY" data-kr="해설 8편 &middot; 24,000단어 &middot; 영어로만 작성">8 WRITE-UPS &middot; 24,000 WORDS &middot; ENGLISH ONLY</p>
