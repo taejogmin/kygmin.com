@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Research &amp; Track Record — KYGMIN</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#F6F6F4;
+  --ink:#141414;
+  --gray:#DDDDD8;
+  --green:#2BB673;
+  --green-deep:#0F6E56;
+  --red:#A32D2D;
+  --arch:'Archivo','Pretendard',sans-serif;
+  --sans:'Pretendard',-apple-system,'Apple SD Gothic Neo','Malgun Gothic','Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono','SF Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto;}*,*::before,*::after{transition:none!important;}}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:break-word;}
+a{color:inherit;text-decoration:none;}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--green);outline-offset:3px;}
+.wrap{max-width:820px;margin:0 auto;padding:0 24px;}
+nav{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:3px solid var(--ink);}
+.nav-inner{max-width:820px;margin:0 auto;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;}
+.logo{font-family:var(--arch);font-weight:900;font-size:19px;letter-spacing:-0.5px;}
+.logo em{font-style:normal;background:var(--green);color:var(--paper);padding:0 6px;display:inline-block;transform:rotate(-1.5deg);}
+.nav-links{display:flex;gap:8px;flex-wrap:wrap;}
+.nav-links a{font-family:var(--arch);font-size:12px;font-weight:700;text-transform:uppercase;
+  border:2px solid var(--ink);padding:6px 13px;background:#fff;box-shadow:3px 3px 0 var(--ink);transition:transform .1s, box-shadow .1s;}
+.nav-links a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+.nav-links a.on{background:var(--green);color:var(--paper);}
+#langtoggle{position:fixed;right:20px;bottom:20px;z-index:50;display:inline-flex;
+  border:2px solid var(--ink);box-shadow:3px 3px 0 var(--ink);background:#fff;font-family:var(--arch);font-weight:700;font-size:12px;overflow:hidden;}
+#langtoggle button{font:inherit;border:none;background:none;cursor:pointer;padding:9px 14px;color:var(--ink);letter-spacing:.5px;}
+#langtoggle button.on{background:var(--green);color:var(--paper);}
+#langtoggle button+button{border-left:2px solid var(--ink);}
+.scr{color:var(--green);}
+.box .scr{color:var(--paper);}
+
+
+header{padding:56px 0 40px;border-bottom:3px solid var(--ink);}
+.sec-tag{font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--green-deep);letter-spacing:1px;display:block;margin-bottom:16px;}
+h1{font-family:var(--arch);font-weight:900;text-transform:uppercase;font-size:clamp(32px,6vw,54px);line-height:1.04;letter-spacing:-2px;}
+h1 .box{background:var(--ink);color:var(--paper);padding:0 12px;display:inline-block;transform:rotate(-1deg);}
+.hero-sub{margin-top:20px;font-size:15.5px;max-width:640px;font-weight:500;}
+.hero-note{margin-top:16px;font-family:var(--mono);font-size:12px;color:#4A4A46;}
+
+main{padding:44px 0 88px;}
+.section{margin-top:52px;}
+.section:first-child{margin-top:0;}
+.section h2{font-family:var(--arch);font-weight:900;font-size:15px;text-transform:uppercase;letter-spacing:-0.3px;
+  border-bottom:3px solid var(--ink);padding-bottom:8px;margin-bottom:18px;}
+.section p{font-size:15px;color:#3A3A38;max-width:680px;}
+.section p+p{margin-top:12px;}
+
+/* ── 성과 요약 타일 ── */
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:22px;}
+.stat{border:3px solid var(--ink);background:#fff;box-shadow:5px 5px 0 var(--ink);padding:16px;text-align:center;}
+.stat .num{font-family:var(--arch);font-weight:900;font-size:26px;letter-spacing:-1px;}
+.stat .num.up{color:var(--green-deep);}
+.stat .lbl{font-family:var(--mono);font-size:10.5px;color:#4A4A46;margin-top:5px;line-height:1.45;}
+.stat .vs{font-family:var(--mono);font-size:11px;font-weight:700;margin-top:7px;padding-top:6px;border-top:2px solid var(--gray);}
+.stat .vs.up{color:var(--green-deep);} .stat .vs.dn{color:var(--red);}
+.stat .vs .vsl{font-weight:400;color:#6B6B67;font-size:10px;}
+.chip.sl{padding-left:8px;}
+/* 선택 상태를 초록으로 칠하면 '전체 노출' 칩의 왼쪽 계열색(초록)이 배경에 묻힌다.
+   이 칩들은 내비게이션이 아니라 범례라서, 계열색이 두 상태 모두에서 보여야 한다. */
+.chip.sl.on{background:var(--ink);color:var(--paper);}
+
+/* ── 차트 ── */
+.chartcard{border:3px solid var(--ink);background:#fff;box-shadow:6px 6px 0 var(--ink);padding:16px 16px 12px;position:relative;}
+.legend{display:flex;gap:18px;flex-wrap:wrap;align-items:center;font-family:var(--mono);font-size:11.5px;font-weight:600;margin-bottom:8px;}
+.legend{margin-bottom:10px;}
+.legend i{display:inline-block;width:22px;height:0;border-top:3px solid var(--green);vertical-align:middle;margin-right:7px;}
+.legend .b i{border-top:2px dashed var(--ink);}
+.chartbox{position:relative;}
+.chartbox svg{display:block;width:100%;height:auto;}
+.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--paper);font-family:var(--mono);font-size:11px;
+  padding:7px 9px;line-height:1.55;white-space:nowrap;opacity:0;transition:opacity .08s;z-index:3;}
+.tip b{font-weight:600;}
+.tip .g{color:var(--green);}
+.methodnote{margin-top:10px;font-family:var(--mono);font-size:10.5px;color:#6B6B67;line-height:1.65;}
+details.tableview{margin-top:12px;}
+details.tableview summary{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--green-deep);cursor:pointer;}
+
+/* ── 표 ── */
+.tbl{width:100%;border-collapse:collapse;margin-top:14px;font-family:var(--mono);font-size:12px;}
+.tbl th{background:var(--ink);color:var(--paper);font-weight:600;font-size:10.5px;letter-spacing:.4px;
+  text-align:right;padding:8px 10px;white-space:nowrap;}
+.tbl th:first-child,.tbl td:first-child{text-align:left;}
+.tbl td{border-bottom:2px solid var(--gray);padding:9px 10px;text-align:right;white-space:nowrap;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl .tk{font-weight:600;}
+.tbl .nm{color:#6B6B67;font-size:11px;}
+.tbl .up{color:var(--green-deep);font-weight:600;}
+.tbl .dn{color:var(--red);font-weight:600;}
+.tbl td.muted{color:#9A9A94;}
+.wrapscroll{overflow-x:auto;border:3px solid var(--ink);background:#fff;box-shadow:5px 5px 0 var(--ink);padding:0 0 2px;}
+.wrapscroll .tbl{margin-top:0;}
+.flag{display:inline-block;font-family:var(--mono);font-size:9.5px;font-weight:600;border:2px solid var(--ink);
+  padding:1px 6px;margin-left:7px;vertical-align:1px;}
+.flag.legacy{background:#F2F2EF;}
+.flag.cash{background:var(--gray);}
+.flag.r-pick{background:var(--green);color:var(--paper);border-color:var(--green-deep);}
+.flag.r-legacy{background:#F2F2EF;}
+.flag.r-equitisation{background:var(--gray);}
+.flag.r-income{background:var(--gray);}
+/* 보유 타임라인. 막대 길이는 보유 기간, 끝의 숫자는 매수가 대비 수익률. */
+#timeline{margin-top:22px;}
+.tl-head{font-family:var(--arch);font-weight:900;font-size:12.5px;text-transform:uppercase;color:#3A3A38;margin-bottom:12px;}
+.tl{position:relative;}
+.tl-axis{position:relative;height:15px;margin-left:52px;margin-right:104px;}
+.tl-year{position:absolute;top:0;transform:translateX(-50%);font-family:var(--mono);font-size:10px;color:#9A9A94;}
+.tl-row{display:flex;align-items:center;gap:8px;margin-bottom:9px;}
+.tl-tk{flex:0 0 44px;font-family:var(--mono);font-size:11.5px;font-weight:700;}
+.tl-track{flex:1 1 auto;position:relative;height:22px;}
+.tl-grid{position:absolute;top:0;bottom:0;width:0;border-left:1px solid var(--gray);}
+.tl-bar{position:absolute;top:0;height:22px;background:var(--green);border:2px solid var(--ink);
+  box-sizing:border-box;display:flex;align-items:center;}
+.tl-bar.dn{background:var(--red);}
+.tl-bar b{font-family:var(--mono);font-size:9.5px;font-weight:600;color:var(--paper);padding-left:6px;white-space:nowrap;}
+.tl-val{flex:0 0 60px;font-family:var(--mono);font-size:12px;font-weight:700;text-align:right;}
+.tl-val.up{color:var(--green-deep);} .tl-val.dn{color:var(--red);}
+.tl-mo{flex:0 0 44px;font-family:var(--mono);font-size:10px;color:#6B6B67;text-align:right;}
+@media(max-width:560px){
+  .tl-tk{flex:0 0 38px;font-size:10.5px;} .tl-val{flex:0 0 50px;font-size:11px;}
+  .tl-mo{flex:0 0 34px;font-size:9px;} .tl-axis{margin-left:46px;margin-right:84px;}
+  .tl-bar b{display:none;}
+}
+.privacy{margin-top:11px;font-family:var(--mono);font-size:10.5px;color:#6B6B67;line-height:1.65;}
+/* 청산 사유 — 표에는 숫자만 두고 이유는 글로 뺀다. 표에 산문을 넣으면
+   행 높이가 무너지고 모바일에서 실현 수익률 컬럼이 화면 밖으로 밀린다. */
+#closednotes{margin-top:20px;}
+#closednotes h4{font-family:var(--arch);font-weight:900;font-size:12.5px;text-transform:uppercase;
+  letter-spacing:-.1px;color:#3A3A38;margin-bottom:10px;}
+.cnote{border-left:4px solid var(--gray);padding:8px 0 8px 13px;margin-bottom:11px;font-size:13.5px;
+  line-height:1.7;color:#3A3A38;max-width:680px;}
+.cnote.broken{border-left-color:var(--red);}
+.cnote.confirmed{border-left-color:var(--green);}
+.cnote .who{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink);margin-right:8px;}
+.cnote .oc{display:inline-block;font-family:var(--mono);font-size:9.5px;font-weight:600;
+  border:2px solid var(--ink);padding:1px 6px;margin-right:8px;vertical-align:1px;background:#F2F2EF;}
+.cnote .oc.broken{background:var(--red);color:#fff;border-color:var(--red);}
+.cnote .oc.confirmed{background:var(--green);color:var(--paper);border-color:var(--green-deep);}
+.cnote a.src{font-family:var(--mono);font-size:11px;font-weight:600;border-bottom:2px solid var(--green);}
+
+/* ── 필터 ── */
+.filters{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-bottom:6px;}
+.chip{font-family:var(--mono);font-size:11.5px;font-weight:600;border:2px solid var(--ink);padding:5px 11px;
+  background:#fff;cursor:pointer;box-shadow:2px 2px 0 var(--ink);}
+.chip.on{background:var(--green);color:var(--paper);}
+.filters select,.filters input{font-family:var(--mono);font-size:11.5px;border:2px solid var(--ink);
+  padding:5px 9px;background:#fff;color:var(--ink);box-shadow:2px 2px 0 var(--ink);}
+.filters input{min-width:170px;flex:1 1 170px;}
+.count{font-family:var(--mono);font-size:11px;color:#6B6B67;margin:10px 0 0;}
+
+/* ── 리서치 카드 ── */
+.rcard{border-left:5px solid var(--green);border-top:3px solid var(--ink);border-right:3px solid var(--ink);
+  border-bottom:3px solid var(--ink);background:#fff;box-shadow:5px 5px 0 var(--ink);padding:16px 18px;margin-top:16px;}
+.rcard.eq{border-left-color:var(--ink);}
+.rhead{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;}
+.rdate{font-family:var(--mono);font-size:11.5px;font-weight:600;color:var(--green-deep);flex:0 0 auto;}
+.rcard h3{font-family:var(--arch);font-weight:900;font-size:15px;letter-spacing:-.2px;flex:1 1 260px;}
+.rkind{font-family:var(--mono);font-size:10.5px;font-weight:600;color:#6B6B67;margin-top:4px;}
+.rcard p.sum{margin-top:8px;font-size:14px;color:#3A3A38;}
+.rtags{display:flex;gap:7px;flex-wrap:wrap;margin-top:11px;}
+.rtag{font-family:var(--mono);font-size:10px;font-weight:600;border:2px solid var(--ink);padding:2px 7px;background:#F2F2EF;}
+.rlinks{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;}
+.rlinks a{font-family:var(--mono);font-size:11.5px;font-weight:600;border-bottom:2px solid var(--green);padding-bottom:1px;}
+.rlinks a.off{color:#9A9A94;border-bottom-color:var(--gray);cursor:not-allowed;}
+.hold.past{border-left-color:#9A9A94;}
+.hold{margin-top:11px;padding:8px 11px;background:#F2F2EF;border-left:4px solid var(--ink);
+  font-family:var(--mono);font-size:10.5px;color:#3A3A38;line-height:1.6;}
+.empty{font-family:var(--mono);font-size:12px;color:#6B6B67;padding:22px 0;}
+
+.disclaimer{margin-top:20px;padding-top:14px;border-top:2px solid var(--gray);font-size:12.5px;color:#6B6B67;line-height:1.7;max-width:680px;}
+.coverage{border-left:5px solid var(--green);background:#F2F2EF;padding:13px 15px;margin-top:16px;font-size:14px;line-height:1.7;color:#2A2A28;max-width:680px;}
+footer{border-top:3px solid var(--ink);padding:24px 0;}
+.foot-inner{max-width:820px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:12px;color:#4A4A46;}
+@media(max-width:560px){
+  .stat .num{font-size:22px;}
+  .rcard h3{font-size:14px;}
+}
+</style>
+<script>
+window.KYG_LANG=(function(){try{var v=localStorage.getItem('kyg_lang');if(v==='kr'||v==='en')return v;}catch(e){}return 'en';})();
+window.APP_LANG=window.KYG_LANG;
+if(window.KYG_LANG!=='en'){
+  document.documentElement.setAttribute('lang','ko');
+  document.documentElement.className+=' lang-pending';
+  setTimeout(function(){document.documentElement.classList.remove('lang-pending');},2000);
+}
+</script>
+<style>html.lang-pending .tx{visibility:hidden}</style>
+</head>
+<body>
+
+
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="index.html">KYG<em>MIN</em></a>
+    <div class="nav-links">
+      <a href="index.html"><span class="tx" data-en="Home" data-kr="홈">Home</span></a>
+      <a href="index.html#portfolio"><span class="tx" data-en="Careers" data-kr="경력">Careers</span></a>
+      <a class="on" href="research.html"><span class="tx" data-en="Research" data-kr="리서치">Research</span></a>
+      <a href="cv.html">CV &#128274;</a>
+    </div>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <span class="sec-tag tx" data-en="INDEPENDENT RESEARCH &amp; TRACK RECORD" data-kr="독립 리서치 &amp; 운용 기록">INDEPENDENT RESEARCH &amp; TRACK RECORD</span>
+    <h1><span class="box"><span class="tx" data-en="RESEARCH" data-kr="리서치">RESEARCH</span></span></h1>
+    <p class="hero-sub tx" data-en="From running my own book to the research behind it." data-kr="개인 자산 운용부터 그 뒤의 리서치까지.">From running my own book to the research behind it.</p>
+    <p class="hero-note"><span class="tx" data-en="AS OF" data-kr="기준일">AS OF</span> <span id="asof">—</span></p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <div class="section">
+      <h2 class="tx" data-en="Track Record" data-kr="운용 기록">Track Record</h2>
+
+      <div class="stat-grid" id="stats"></div>
+
+      <div class="chartcard">
+
+        <div class="filters" id="sleevepick" style="margin-bottom:12px;"></div>
+        <div class="chartbox" id="chartbox"><div class="tip" id="tip"></div></div>
+        <p class="methodnote" id="methodnote"></p>
+        <details class="tableview">
+          <summary class="tx" data-en="View as table" data-kr="데이터를 표로 보기">View as table</summary>
+          <div id="seriestable"></div>
+        </details>
+      </div>
+
+      <div class="filters" style="margin-top:24px;">
+        <button class="chip on" data-book="held"><span class="tx" data-en="HELD" data-kr="보유">HELD</span></button>
+        <button class="chip" data-book="closed"><span class="tx" data-en="CLOSED" data-kr="청산">CLOSED</span></button>
+      </div>
+      <div class="wrapscroll" style="margin-top:10px;">
+        <table class="tbl" id="holdings"></table>
+      </div>
+      <p class="privacy" id="privacy"></p>
+      <div id="timeline"></div>
+      <div id="closednotes"></div>
+    </div>
+
+    <div class="section">
+      <h2 class="tx" data-en="Research" data-kr="리서치">Research</h2>
+
+      <div class="filters">
+        <button class="chip on" data-f="all"><span class="tx" data-en="ALL" data-kr="전체">ALL</span></button>
+        <button class="chip" data-f="sector">#SECTOR</button>
+        <button class="chip" data-f="equity">#EQUITIES</button>
+        <select id="yearsel"></select>
+        <input id="q" type="search" placeholder="Ticker or name" />
+      </div>
+      <p class="count" id="count"></p>
+
+      <div id="list"></div>
+    </div>
+
+    <div class="section">
+      <h2 class="tx" data-en="Coverage &amp; Disclosure" data-kr="커버리지와 고지">Coverage &amp; Disclosure</h2>
+      <p class="coverage tx" id="coverage" data-en="" data-kr=""></p>
+      <p class="disclaimer tx" data-en="Prepared in a personal capacity. All research on this site is built from publicly available information, and nothing in it represents the views of Mizuho Bank or of any company named. Every trade in the book was made through the required pre-clearance process. Nothing on this page recommends buying or selling anything; investment decisions are yours to make on your own analysis. Positions are disclosed on a quarterly lag, and timing within a quarter is neither disclosed nor inferable." data-kr="개인 자격으로 작성했습니다. 이 사이트의 모든 리서치는 공개된 정보를 기반으로 만들었으며, 어떠한 내용도 미즈호은행이나 언급된 어느 회사의 견해를 대변하지 않습니다. 운용 자산의 모든 매매는 사전 승인 절차를 거쳤습니다. 이 페이지의 어떠한 내용도 매매를 권유하지 않으며, 투자 판단은 각자의 분석과 선택으로 하시기 바랍니다. 보유 현황은 분기 단위로 지연 공개하며, 분기 중의 매매 시점은 공개하지 않고 추정할 수 없습니다.">Prepared in a personal capacity. All research on this site is built from publicly available information, and nothing in it represents the views of Mizuho Bank or of any company named. Every trade in the book was made through the required pre-clearance process. Nothing on this page recommends buying or selling anything; investment decisions are yours to make on your own analysis. Positions are disclosed on a quarterly lag, and timing within a quarter is neither disclosed nor inferable.</p>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <span>KYGMIN</span>
+    <span class="tx" data-en="RESEARCH &amp; TRACK RECORD" data-kr="리서치 &amp; 운용 기록">RESEARCH &amp; TRACK RECORD</span>
+  </div>
+</footer>
+
+<div id="langtoggle">
+  <button data-lang="en" class="on">EN</button>
+  <button data-lang="kr">한</button>
+</div>
+
+<script>
+/* ── 언어 시스템. 기존 페이지와 동일하되, 동적으로 그린 노드도 등록할 수 있도록
+      scan() 을 노출한다. 이게 없으면 JSON 으로 렌더한 카드가 토글에 반응하지 않는다. ── */
+window.KYG_TX=(function(){
+  var POOL=("ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎㅏㅑㅓㅕㅗㅛㅜㅠㅡㅣ"
+    +"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-·").split("");
+  function esc(c){return c==="&"?"&amp;":c==="<"?"&lt;":c===">"?"&gt;":c;}
+  function Scramble(el){this.el=el;this.raf=null;this.frame=this.frame.bind(this);}
+  Scramble.prototype.set=function(txt){
+    var old=this.el.dataset.plain!==undefined?this.el.dataset.plain:this.el.textContent;
+    var len=Math.max(old.length,txt.length);this.q=[];
+    for(var i=0;i<len;i++){
+      var start=Math.floor(Math.random()*20);
+      this.q.push({from:old[i]||"",to:txt[i]||"",start:start,end:start+Math.floor(Math.random()*25)+12,ch:null});
+    }
+    if(this.raf)cancelAnimationFrame(this.raf);
+    this.f=0;this.txt=txt;this.frame();
+  };
+  Scramble.prototype.frame=function(){
+    var out="",done=0;
+    for(var i=0;i<this.q.length;i++){
+      var it=this.q[i];
+      if(this.f>=it.end){done++;out+=esc(it.to);}
+      else if(this.f>=it.start){
+        if(!it.ch||Math.random()<0.3){it.ch=POOL[Math.floor(Math.random()*POOL.length)];}
+        out+='<span class="scr">'+esc(it.ch)+'</span>';
+      } else out+=esc(it.from);
+    }
+    this.el.innerHTML=out;
+    if(done===this.q.length){this.el.dataset.plain=this.txt;}
+    else{this.f++;this.raf=requestAnimationFrame(this.frame);}
+  };
+  var cur=(window.KYG_LANG==='kr'?'kr':'en');
+  var els=[];
+  function scan(root){
+    var found=[].slice.call((root||document).querySelectorAll('.tx'));
+    found.forEach(function(el){
+      if(el._s) return;
+      el.dataset.plain=el.textContent; el._s=new Scramble(el); els.push(el);
+      if(cur!=='en'){var t=el.dataset[cur];if(t!==undefined){el.textContent=t;el.dataset.plain=t;}}
+    });
+  }
+  scan(document);
+  (function(){
+    var b0=document.querySelectorAll('#langtoggle button');
+    for(var i=0;i<b0.length;i++){b0[i].classList.toggle('on',b0[i].dataset.lang===cur);}
+    document.documentElement.classList.remove('lang-pending');
+  })();
+  function setLang(lang){
+    if(lang===cur)return;cur=lang;window.APP_LANG=lang;
+    try{localStorage.setItem('kyg_lang',lang);}catch(e){}
+    document.documentElement.lang=(lang==='kr'?'ko':'en');
+    var btns=document.querySelectorAll('#langtoggle button');
+    for(var i=0;i<btns.length;i++){btns[i].classList.toggle('on',btns[i].dataset.lang===lang);}
+    els.forEach(function(el){var t=el.dataset[lang];if(t!==undefined)el._s.set(t);});
+    if(window.KYG_ONLANG)window.KYG_ONLANG(lang);
+  }
+  document.getElementById('langtoggle').addEventListener('click',function(e){
+    var b=e.target.closest('button');if(b)setLang(b.dataset.lang);
+  });
+  return {scan:scan,lang:function(){return cur;}};
+})();
+</script>
+
+<script>
+/* ── 데이터 → 화면. 홈의 "최신 하나", 이 페이지의 목록·필터·검색, 그리고
+      개별 종목 리포트의 보유 고지가 전부 이 파일 하나에서 파생된다. ── */
+(function(){
+  var D=null, filter='all', year='all', q='';
+
+  function pct(v,d){return (v>=0?'+':'−')+Math.abs(v*100).toFixed(d===undefined?1:d)+'%';}
+  function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!==undefined)e.textContent=txt;return e;}
+  function tx(tag,cls,en,kr){var e=el(tag,(cls?cls+' ':'')+'tx',en);e.dataset.en=en;e.dataset.kr=kr;return e;}
+
+  fetch('research/index.json').then(function(r){return r.json();}).then(function(d){D=d;render();})
+    .catch(function(err){console.error('RENDER FAIL',err);document.getElementById('list').innerHTML='<p class="empty">index.json 을 읽지 못했습니다.</p>';});
+
+  function render(){
+    document.getElementById('asof').textContent=D.portfolio.as_of;
+    renderStats(); renderSleevePick(); renderChart(); renderSeriesTable(); renderHoldings(); renderCoverage(); buildYears(); renderList();
+    window.KYG_TX.scan(document);
+  }
+
+  /* ── 슬리브 계산. 원가 비중 가중, 매수 평균가 대비. ── */
+  function sleeveAgg(roles){
+    var ps=D.portfolio.positions.filter(function(p){return roles.indexOf(p.role)>=0&&p.status==='active';});
+    var cost=0,val=0;
+    ps.forEach(function(p){cost+=p.weight;val+=p.weight*(p.last_price/p.avg_buy);});
+    return cost? {cost:cost, ret:val/cost-1} : {cost:0,ret:0};
+  }
+  function mktWeight(p){
+    var tot=0;
+    D.portfolio.positions.forEach(function(x){if(x.status==='active')tot+=x.weight*(x.last_price/x.avg_buy);});
+    return p.weight*(p.last_price/p.avg_buy)/tot;
+  }
+
+  /* ── 요약 타일 ── */
+  function renderStats(){
+    var box=document.getElementById('stats'); box.innerHTML='';
+    D.portfolio.sleeves.forEach(function(sl){
+      var a=sleeveAgg(sl.roles);
+      var d=el('div','stat');
+      d.appendChild(el('div','num'+(a.ret>=0?' up':''),pct(a.ret,2)));
+      d.appendChild(tx('div','lbl',sl.label_en,sl.label_kr));
+      var se=(D.portfolio.series||[]).filter(function(x){return x.key===sl.key;})[0];
+      if(se&&se.bench&&se.bench.length){
+        var bp=Math.round((se.points[se.points.length-1][1]-se.bench[se.bench.length-1][1])*10000);
+        var v=el('div','vs'+(bp>=0?' up':' dn'),(bp>=0?'+':'−')+Math.abs(bp)+'bp');
+        v.appendChild(tx('span',' vsl',' vs S&P','  S&P 대비'));
+        d.appendChild(v);
+      }
+      box.appendChild(d);
+    });
+  }
+
+  function mnum(m){ return parseInt(m.slice(0,4),10)*12 + parseInt(m.slice(5,7),10) - 1; }
+  var SLCOL={all:'#2BB673',ex_eq:'#A32D2D',stocks:'#2F6FB5',picks:'#C77B0A'};
+  var picked=['all'];
+
+  /* ── 선 그래프. 벤치마크는 "같은 달에 같은 원가 비중을 SPYM 에 넣었다면"으로 만든다.
+        자금과 시점을 고정하고 종목 선택만 바꾼 비교라야 공정하다. ── */
+  function renderChart(){
+    var SER=D.portfolio.series||[];
+    if(!SER.length||!SER[0].points){ document.getElementById('chartbox').innerHTML=''; return; }
+    var sel=SER.filter(function(x){return picked.indexOf(x.key)>=0;});
+    if(!sel.length){ sel=[SER[0]]; picked=[SER[0].key]; }
+    var lines=[];
+    sel.forEach(function(x){
+      var sl=D.portfolio.sleeves.filter(function(y){return y.key===x.key;})[0];
+      lines.push({pts:x.points,color:SLCOL[x.key]||'#141414',dash:null,
+                  en:sl.label_en,kr:sl.label_kr});
+    });
+    var prim=sel[0];
+    lines.push({pts:prim.bench,color:'#141414',dash:'7 4',
+                en:D.portfolio.bench_label_en,kr:D.portfolio.bench_label_kr});
+
+    var W=760,H=290,L=44,R=74,T=14,B=30;
+    var months=[],lo=0,hi=0;
+    lines.forEach(function(l){l.pts.forEach(function(q){
+      if(months.indexOf(q[0])<0)months.push(q[0]);
+      lo=Math.min(lo,q[1]);hi=Math.max(hi,q[1]);});});
+    months.sort();
+    var m0=mnum(months[0]),m1=mnum(months[months.length-1]),span=Math.max(m1-m0,1);
+    var pad=(hi-lo)*0.14||0.02; lo-=pad; hi+=pad;
+    function X(m){return L+(mnum(m)-m0)/span*(W-L-R);}
+    function Y(v){return T+(hi-v)*(H-T-B)/(hi-lo);}
+
+    var svg='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Cumulative return versus benchmark">';
+    var ticks=[];for(var i=0;i<=4;i++)ticks.push(lo+(hi-lo)/4*i);
+    ticks.forEach(function(t){
+      svg+='<line x1="'+L+'" y1="'+Y(t).toFixed(1)+'" x2="'+(W-R)+'" y2="'+Y(t).toFixed(1)+'" stroke="#DDDDD8" stroke-width="1"/>'
+        +'<text x="'+(L-7)+'" y="'+(Y(t)+4).toFixed(1)+'" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6B6B67">'+(t*100).toFixed(0)+'%</text>';
+    });
+    if(lo<0&&hi>0)svg+='<line x1="'+L+'" y1="'+Y(0).toFixed(1)+'" x2="'+(W-R)+'" y2="'+Y(0).toFixed(1)+'" stroke="#141414" stroke-width="2"/>';
+    months.forEach(function(m){
+      if(m.slice(5)==='01'||m===months[0])
+        svg+='<text x="'+X(m).toFixed(1)+'" y="'+(H-9)+'" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="#6B6B67">'+m.slice(2).replace('-','.')+'</text>';
+    });
+    lines.forEach(function(l){
+      var d=l.pts.map(function(q,i){return (i?'L':'M')+X(q[0]).toFixed(1)+' '+Y(q[1]).toFixed(1);}).join(' ');
+      svg+='<path d="'+d+'" fill="none" stroke="'+l.color+'" stroke-width="'+(l.dash?2:2.6)+'"'+(l.dash?' stroke-dasharray="'+l.dash+'"':'')+'/>';
+      var last=l.pts[l.pts.length-1];
+      svg+='<text x="'+(X(last[0])+7)+'" y="'+(Y(last[1])+4).toFixed(1)+'" font-family="IBM Plex Mono,monospace" font-size="10.5" font-weight="600" fill="'+l.color+'">'+pct(last[1],1)+'</text>';
+    });
+    svg+='<line id="cross" x1="0" y1="'+T+'" x2="0" y2="'+(H-B)+'" stroke="#141414" stroke-width="1" opacity="0"/>';
+    svg+='<rect id="hit" x="'+L+'" y="'+T+'" width="'+(W-L-R)+'" height="'+(H-T-B)+'" fill="transparent"/></svg>';
+
+    var boxEl=document.getElementById('chartbox');
+    boxEl.innerHTML='<div class="tip" id="tip"></div>'+svg;
+    var lg=el('div','legend');
+    lines.forEach(function(l){
+      var sp=el('span',l.dash?'b':'');
+      var i2=el('i');i2.style.borderTopColor=l.color;
+      if(l.dash)i2.style.borderTopStyle='dashed';
+      sp.appendChild(i2);sp.appendChild(tx('span','',l.en,l.kr));lg.appendChild(sp);
+    });
+    boxEl.insertBefore(lg,boxEl.firstChild.nextSibling);
+
+    var tip=document.getElementById('tip');
+    var svgEl=boxEl.querySelector('svg'),cross=boxEl.querySelector('#cross'),hit=boxEl.querySelector('#hit');
+    hit.addEventListener('mousemove',function(ev){
+      var r=svgEl.getBoundingClientRect(), cx=(ev.clientX-r.left)*(W/r.width);
+      var best=months[0],bd=1e9;
+      months.forEach(function(m){var d=Math.abs(X(m)-cx);if(d<bd){bd=d;best=m;}});
+      var kr=(window.KYG_TX.lang()==='kr');
+      var html='<b>'+best+'</b>';
+      lines.forEach(function(l){
+        var q=l.pts.filter(function(z){return z[0]===best;})[0];
+        if(q)html+='<br><span style="color:'+(l.color==='#141414'?'#DDDDD8':l.color)+'">'+(kr?l.kr:l.en)+'</span> '+pct(q[1],1);
+      });
+      tip.innerHTML=html;
+      cross.setAttribute('x1',X(best));cross.setAttribute('x2',X(best));cross.setAttribute('opacity','0.3');
+      var px=X(best)*(r.width/W);
+      tip.style.left=Math.min(Math.max(px-tip.offsetWidth/2,0),r.width-tip.offsetWidth)+'px';
+      tip.style.top='4px';tip.style.opacity='1';
+    });
+    hit.addEventListener('mouseleave',function(){tip.style.opacity='0';cross.setAttribute('opacity','0');});
+
+    var rb=D.meta.return_basis;
+    var enN='Last updated '+D.portfolio.price_as_of+'. '+rb.note_en;
+    var krN=D.portfolio.price_as_of+' 기준. '+rb.note_kr;
+    var mn=document.getElementById('methodnote');
+    mn.className='methodnote tx';mn.dataset.en=enN;mn.dataset.kr=krN;mn.textContent=enN;
+  }
+
+  function renderSleevePick(){
+    var box=document.getElementById('sleevepick'); box.innerHTML='';
+    D.portfolio.sleeves.forEach(function(sl){
+      var b=el('button','chip sl'+(picked.indexOf(sl.key)>=0?' on':''));
+      b.dataset.sleeve=sl.key;
+      b.style.borderLeft='6px solid '+(SLCOL[sl.key]||'#141414');
+      b.appendChild(tx('span','',sl.label_en,sl.label_kr));
+      b.addEventListener('click',function(){
+        var i=picked.indexOf(sl.key);
+        if(i>=0){ if(picked.length>1) picked.splice(i,1); } else picked.push(sl.key);
+        renderSleevePick(); renderChart(); window.KYG_TX.scan(document);
+      });
+      box.appendChild(b);
+    });
+  }
+
+  /* ── 보유 타임라인. 언제부터 들고 있는지를 월 단위로만 보여준다. ── */
+  function renderTimeline(){
+    var box=document.getElementById('timeline'); box.innerHTML='';
+    if(book!=='held') return;
+    var rows=D.portfolio.positions.filter(function(p){return p.status==='active'&&p.opened;});
+    if(!rows.length) return;
+    var nowM=mnum(D.portfolio.as_of.slice(0,7))+1;
+    var minM=Math.min.apply(null,rows.map(function(p){return mnum(p.opened);}));
+    var span=nowM-minM;
+    rows.sort(function(a,b){return mnum(a.opened)-mnum(b.opened);});
+    var head=document.createElement('h4');head.className='tl-head tx';
+    head.dataset.en=D.portfolio.timeline_head_en;head.dataset.kr=D.portfolio.timeline_head_kr;
+    head.textContent=D.portfolio.timeline_head_en;box.appendChild(head);
+    var grid=el('div','tl');
+    rows.forEach(function(p){
+      var st=mnum(p.opened), r=p.last_price/p.avg_buy-1;
+      var row=el('div','tl-row');
+      row.appendChild(el('span','tl-tk',p.ticker));
+      var track=el('span','tl-track');
+      var bar=el('span','tl-bar'+(r<0?' dn':''));
+      bar.style.left=((st-minM)/span*100)+'%';
+      bar.style.width=((nowM-st)/span*100)+'%';
+      bar.appendChild(el('b','',p.opened.replace('-','.')));
+      track.appendChild(bar);row.appendChild(track);
+      row.appendChild(el('span','tl-val'+(r>=0?' up':' dn'),pct(r,1)));
+      var mo=el('span','tl-mo tx');mo.dataset.en=(nowM-st)+' mo';mo.dataset.kr=(nowM-st)+'개월';
+      mo.textContent=mo.dataset.en;row.appendChild(mo);
+      grid.appendChild(row);
+    });
+    box.appendChild(grid);
+    window.KYG_TX.scan(box);
+  }
+
+  function renderSeriesTable(){
+    var det=document.querySelector('details.tableview');
+    var SER=(D.portfolio.series||[]).filter(function(x){return x.key===picked[0];})[0];
+    if(!SER){ det.style.display='none'; return; }
+    det.style.display='';
+    var t='<table class="tbl"><thead><tr><th>MONTH</th><th>PORTFOLIO</th><th>BENCHMARK</th></tr></thead><tbody>';
+    SER.points.forEach(function(q,i){
+      t+='<tr><td class="tk">'+q[0]+'</td><td>'+pct(q[1],1)+'</td><td>'+pct(SER.bench[i][1],1)+'</td></tr>';
+    });
+    document.getElementById('seriestable').innerHTML=t+'</tbody></table>';
+  }
+
+  /* ── 보유 현황 / 청산 기록. 실현 수익률과 등락률은 저장하지 않고 단가에서 계산한다.
+        저장해 두면 언젠가 단가와 어긋나기 때문이다. ── */
+  var book='held';
+  function qnum(q){ if(!q) return null; return parseInt(q.slice(0,4),10)*4 + parseInt(q.slice(5),10); }
+  function nameCell(p,withTicker){
+    var nm='<span class="nm tx" data-en="'+p.name_en+'" data-kr="'+p.name_kr+'">'+p.name_en+'</span>';
+    return withTicker ? '<span class="tk">'+p.ticker+'</span> '+nm : nm;
+  }
+  function head(en,kr){
+    var h='<thead><tr>';
+    en.forEach(function(c,i){h+='<th><span class="tx" data-en="'+c+'" data-kr="'+kr[i]+'">'+c+'</span></th>';});
+    return h+'</tr></thead><tbody>';
+  }
+  function delta(v){
+    var cls=v>=0?'up':'dn';
+    return '<span class="'+cls+'">'+(v>=0?'+':'−')+Math.abs(v*100).toFixed(1)+'%</span>';
+  }
+
+  function renderHoldings(){
+    var t=document.getElementById('holdings'), pv=document.getElementById('privacy'), h;
+    if(book==='held'){
+      var anyQ=D.portfolio.positions.some(function(p){return p.status==='active'&&p.opened_q;});
+      h=anyQ
+        ? head(['POSITION','FIRST BUY','COST WT','MKT WT','AVG BUY','PRICE','VS AVG BUY'],
+               ['종목','최초 매수','원가 비중','평가 비중','평균 매수가','현재가','매수가 대비'])
+        : head(['POSITION','COST WT','MKT WT','AVG BUY','PRICE','VS AVG BUY'],
+               ['종목','원가 비중','평가 비중','평균 매수가','현재가','매수가 대비']);
+      var RL=D.portfolio.role_labels||{};
+      D.portfolio.positions.filter(function(p){return p.status==='active';})
+        .sort(function(a,b){return b.weight-a.weight;}).forEach(function(p){
+        var flag='';
+        if(RL[p.role])flag='<span class="flag r-'+p.role+' tx" data-en="'+RL[p.role].en+'" data-kr="'+RL[p.role].kr+'">'+RL[p.role].en+'</span>';
+        var d=(p.last_price!=null&&p.avg_buy)?delta(p.last_price/p.avg_buy-1):'—';
+        h+='<tr><td>'+nameCell(p,true)+flag+'</td>'
+          +(anyQ?'<td class="muted">'+(p.opened_q||'—')+'</td>':'')
+          +'<td>'+(p.weight*100).toFixed(2)+'%</td>'
+          +'<td>'+(mktWeight(p)*100).toFixed(2)+'%</td>'
+          +'<td>$'+p.avg_buy.toFixed(2)+'</td>'
+          +'<td>$'+p.last_price.toFixed(2)+'</td>'
+          +'<td>'+d+'</td></tr>';
+      });
+      var e=(D.portfolio.disclosure_en+' '+D.portfolio.entry_note_en).trim();
+      var k=(D.portfolio.disclosure_kr+' '+D.portfolio.entry_note_kr).trim();
+      pv.dataset.en=e;pv.dataset.kr=k;
+    } else {
+      h=head(['POSITION','BOUGHT','SOLD','AVG BUY','AVG SELL','REALISED','HELD'],
+             ['종목','매수','매도','평균 매수가','평균 매도가','실현 수익률','보유']);
+      var rows=D.portfolio.positions.filter(function(p){return p.status==='closed';})
+        .sort(function(a,b){return qnum(b.closed_q)-qnum(a.closed_q);});
+      if(!rows.length){
+        h+='<tr><td colspan="7" class="muted"><span class="tx" data-en="No closed positions yet." data-kr="아직 청산한 종목이 없습니다.">No closed positions yet.</span></td></tr>';
+      }
+      rows.forEach(function(p){
+        var q=qnum(p.closed_q)-qnum(p.opened_q);
+        h+='<tr><td>'+nameCell(p,true)+'</td>'
+          +'<td>'+p.opened_q+'</td><td>'+p.closed_q+'</td>'
+          +'<td>$'+p.avg_buy.toFixed(2)+'</td><td>$'+p.avg_sell.toFixed(2)+'</td>'
+          +'<td>'+delta(p.avg_sell/p.avg_buy-1)+'</td>'
+          +'<td>'+q+'Q</td></tr>';
+      });
+      pv.dataset.en=D.portfolio.closed_note_en;
+      pv.dataset.kr=D.portfolio.closed_note_kr;
+    }
+    t.innerHTML=h+'</tbody></table>';
+    renderTimeline(); renderPosNotes();
+    pv.className='privacy tx';
+    pv.textContent=pv.dataset[window.KYG_TX.lang()]||pv.dataset.en;
+    pv._s=null; window.KYG_TX.scan(document.getElementById('holdings').parentNode.parentNode);
+  }
+
+  /* 청산 사유. 결과 태그(적중/파기/교체)를 붙여 두면 읽는 사람이
+     "이 사람은 자기가 틀린 걸 몇 번 인정했나"를 셀 수 있다. */
+  function renderPosNotes(){
+    var box=document.getElementById('closednotes');
+    box.innerHTML='';
+    if(book==='held'){ renderHeldNotes(box); return; }
+    var rows=D.portfolio.positions.filter(function(p){return p.status==='closed';})
+      .sort(function(a,b){return qnum(b.closed_q)-qnum(a.closed_q);});
+    if(!rows.length) return;
+    var head=document.createElement('h4');
+    head.className='tx';head.dataset.en=D.portfolio.notes_head_en;head.dataset.kr=D.portfolio.notes_head_kr;
+    head.textContent=D.portfolio.notes_head_en;
+    box.appendChild(head);
+    var LB=D.portfolio.outcome_labels||{};
+    rows.forEach(function(p){
+      var kind=p.outcome==='thesis_broken'?'broken':(p.outcome==='thesis_confirmed'?'confirmed':'');
+      var d=document.createElement('div');
+      d.className='cnote'+(kind?' '+kind:'');
+      var who=document.createElement('span');
+      who.className='who';who.textContent=p.ticker+' · '+p.closed_q;
+      d.appendChild(who);
+      if(p.outcome&&LB[p.outcome]){
+        var oc=document.createElement('span');
+        oc.className='oc'+(kind?' '+kind:'')+' tx';
+        oc.dataset.en=LB[p.outcome].en;oc.dataset.kr=LB[p.outcome].kr;oc.textContent=LB[p.outcome].en;
+        d.appendChild(oc);
+      }
+      var txt=document.createElement('span');
+      txt.className='tx';txt.dataset.en=p.note_en;txt.dataset.kr=p.note_kr;txt.textContent=p.note_en;
+      d.appendChild(txt);
+      if(p.research_slug){
+        var r=D.research.filter(function(x){return x.slug===p.research_slug;})[0];
+        if(r){
+          d.appendChild(document.createTextNode(' '));
+          var a=document.createElement('a');
+          a.className='src';a.href=r.page||r.pdf||'#';
+          if(!r.page){a.target='_blank';a.rel='noopener';}
+          var sp=document.createElement('span');
+          sp.className='tx';sp.dataset.en='Read the original thesis ('+r.date+') →';
+          sp.dataset.kr='당시 논지 보기 ('+r.date+') →';sp.textContent=sp.dataset.en;
+          a.appendChild(sp);d.appendChild(a);
+        }
+      }
+      box.appendChild(d);
+    });
+    window.KYG_TX.scan(box);
+  }
+
+  /* 보유 사유. 리포트가 있는 종목은 한 줄 + 링크로 끝내고, 없는 종목은 이 줄이 유일한 기록이다. */
+  function renderHeldNotes(box){
+    var rows=D.portfolio.positions.filter(function(p){return p.status==='active'&&(p.note_kr||p.note_en);});
+    if(!rows.length) return;
+    var head=document.createElement('h4');
+    head.className='tx';head.dataset.en=D.portfolio.held_head_en;head.dataset.kr=D.portfolio.held_head_kr;
+    head.textContent=D.portfolio.held_head_en;box.appendChild(head);
+    var RL=D.portfolio.role_labels||{};
+    rows.sort(function(a,b){return b.weight-a.weight;}).forEach(function(p){
+      var d=document.createElement('div');d.className='cnote';
+      var who=document.createElement('span');who.className='who';who.textContent=p.ticker;d.appendChild(who);
+      if(RL[p.role]){
+        var oc=document.createElement('span');oc.className='oc tx';
+        oc.dataset.en=RL[p.role].en;oc.dataset.kr=RL[p.role].kr;oc.textContent=RL[p.role].en;d.appendChild(oc);
+      }
+      var t=document.createElement('span');t.className='tx';
+      t.dataset.en=p.note_en;t.dataset.kr=p.note_kr;t.textContent=p.note_en;d.appendChild(t);
+      var r=D.research.filter(function(x){return (x.tickers||[]).indexOf(p.ticker)>=0;})[0];
+      if(r){
+        d.appendChild(document.createTextNode(' '));
+        var a=document.createElement('a');a.className='src';a.href=r.page||r.pdf||'#';
+        if(!r.page){a.target='_blank';a.rel='noopener';}
+        var sp=document.createElement('span');sp.className='tx';
+        sp.dataset.en='Read the research ('+r.date+') →';sp.dataset.kr='리서치 보기 ('+r.date+') →';
+        sp.textContent=sp.dataset.en;a.appendChild(sp);d.appendChild(a);
+      }
+      box.appendChild(d);
+    });
+    window.KYG_TX.scan(box);
+  }
+
+  function renderCoverage(){
+    var c=document.getElementById('coverage');
+    c.dataset.en=D.meta.coverage_rule_en;c.dataset.kr=D.meta.coverage_rule_kr;c.textContent=D.meta.coverage_rule_en;
+  }
+
+  function buildYears(){
+    var ys={};D.research.forEach(function(r){ys[r.date.slice(0,4)]=1;});
+    var sel=document.getElementById('yearsel');
+    sel.innerHTML='<option value="all">ALL YEARS</option>'+Object.keys(ys).sort().reverse().map(function(y){return '<option value="'+y+'">'+y+'</option>';}).join('');
+    sel.addEventListener('change',function(){year=sel.value;renderList();});
+  }
+
+  /* ── 보유 고지는 손으로 쓰지 않는다. tickers 와 포지션 목록을 대조해 만든다. ── */
+  function holdingFor(r){
+    if(!r.tickers||!r.tickers.length)return null;
+    var hit=null;
+    D.portfolio.positions.forEach(function(p){
+      if(p.status!=='cash'&&r.tickers.indexOf(p.ticker)>=0)hit=p;
+    });
+    return hit;
+  }
+  function disclosureText(h){
+    if(h.status==='closed'){
+      var rr=(h.avg_sell/h.avg_buy-1);
+      var sign=(rr>=0?'+':'−')+Math.abs(rr*100).toFixed(1)+'%';
+      return {en:'The author held '+h.ticker+' at publication and closed the position in '+h.closed_q+' at a realised '+sign+'. The record is in Track Record above.',
+              kr:'작성 시점에 저자는 '+h.ticker+'를 보유하고 있었고, '+h.closed_q+'에 실현 '+sign+'로 청산했습니다. 기록은 위 운용 기록에 있습니다.'};
+    }
+    var e='As of publication the author held '+h.ticker+'. The position weight ('+(h.weight*100).toFixed(1)+'%) is disclosed in Track Record above.';
+    var k='작성 시점 기준 저자는 '+h.ticker+'를 보유 중이며, 보유 비중('+(h.weight*100).toFixed(1)+'%)은 위 운용 기록에 공개돼 있습니다.';
+    if(h.status==='legacy'){
+      e+=' Acquired before employment; disposal is restricted.';
+      k+=' 입사 전 취득한 종목으로 처분이 제한돼 있습니다.';
+    }
+    return {en:e,kr:k};
+  }
+
+  function renderList(){
+    var list=document.getElementById('list');list.innerHTML='';
+    var qq=q.trim().toLowerCase();
+    var rows=D.research.filter(function(r){
+      if(filter!=='all'&&r.type!==filter)return false;
+      if(year!=='all'&&r.date.slice(0,4)!==year)return false;
+      if(!qq)return true;
+      var hay=[r.title_en,r.title_kr,(r.tickers||[]).join(' '),(r.tags||[]).join(' ')].join(' ').toLowerCase();
+      return hay.indexOf(qq)>=0;
+    }).sort(function(a,b){return a.date<b.date?1:-1;});
+
+    var cnt=document.getElementById('count');
+    cnt.className='count tx';
+    cnt.dataset.en=rows.length+' of '+D.research.length+' shown';
+    cnt.dataset.kr='전체 '+D.research.length+'건 중 '+rows.length+'건';
+    cnt.textContent=cnt.dataset[window.KYG_TX.lang()];
+
+    if(!rows.length){
+      var e=tx('p','empty','No research matches these filters.','조건에 맞는 리서치가 없습니다.');
+      list.appendChild(e);window.KYG_TX.scan(list);return;
+    }
+
+    rows.forEach(function(r){
+      var c=el('div','rcard'+(r.type==='equity'?' eq':''));
+      var head=el('div','rhead');
+      head.appendChild(el('span','rdate',r.date.replace('-','.')));
+      var h3=el('h3');h3.appendChild(tx('span','',r.title_en,r.title_kr));head.appendChild(h3);
+      c.appendChild(head);
+      c.appendChild(tx('div','rkind',
+        r.type==='sector'?'Sector deep-dive · independent research':'Single-name valuation · independent research',
+        r.type==='sector'?'섹터 딥다이브 · 독립 리서치':'개별 종목 밸류에이션 · 독립 리서치'));
+      c.appendChild(tx('p','sum',r.summary_en,r.summary_kr));
+
+      var tg=el('div','rtags');
+      (r.tags||[]).forEach(function(t){tg.appendChild(el('span','rtag',t));});
+      (r.tickers||[]).forEach(function(t){tg.appendChild(el('span','rtag','$'+t));});
+      c.appendChild(tg);
+
+      var hold=holdingFor(r);
+      if(hold){
+        var dt=disclosureText(hold);
+        c.appendChild(tx('div','hold'+(hold.status==='closed'?' past':''),dt.en,dt.kr));
+      }
+
+      var lk=el('div','rlinks');
+      if(r.page){var a=el('a','',null);a.href=r.page;a.appendChild(tx('span','','Read the page →','페이지 읽기 →'));lk.appendChild(a);}
+      if(r.pdf){var b=el('a','',null);b.href=r.pdf;b.target='_blank';b.rel='noopener';b.appendChild(tx('span','','PDF ↗','PDF ↗'));lk.appendChild(b);}
+      if(r.model){var m=el('a','',null);m.href=r.model;m.target='_blank';m.rel='noopener';m.appendChild(tx('span','','Model (XLSX) ↗','모델 (XLSX) ↗'));lk.appendChild(m);}
+      c.appendChild(lk);
+      list.appendChild(c);
+    });
+    window.KYG_TX.scan(list);
+  }
+
+  document.querySelectorAll('.chip[data-f]').forEach(function(b){
+    b.addEventListener('click',function(){
+      document.querySelectorAll('.chip[data-f]').forEach(function(x){x.classList.remove('on');});
+      b.classList.add('on');filter=b.dataset.f;renderList();
+    });
+  });
+  document.querySelectorAll('.chip[data-book]').forEach(function(b){
+    b.addEventListener('click',function(){
+      document.querySelectorAll('.chip[data-book]').forEach(function(x){x.classList.remove('on');});
+      b.classList.add('on');book=b.dataset.book;renderHoldings();window.KYG_TX.scan(document);
+    });
+  });
+  document.getElementById('q').addEventListener('input',function(e){q=e.target.value;renderList();});
+  window.KYG_ONLANG=function(){ if(D){ renderList(); renderHoldings(); window.KYG_TX.scan(document); } };
+})();
+</script>
+
+</body>
+</html>
