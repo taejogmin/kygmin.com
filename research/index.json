@@ -1,0 +1,1147 @@
+{
+  "_note": "실제 보유 데이터. 진입 논지(note_kr/note_en)는 아직 비어 있음 — 채워야 함.",
+  "meta": {
+    "updated": "2026-08-20",
+    "coverage_rule_en": "Coverage is about what I research, not what I own. Single-name work avoids companies that overlap with my employer's client base — Korean and Japanese corporates, and banks. Broad index funds are outside that rule and are held for portfolio construction reasons stated below.",
+    "coverage_rule_kr": "커버리지 원칙은 무엇을 보유하는가가 아니라 무엇을 리서치하는가에 대한 것입니다. 개별 종목 리서치는 고용주의 고객군과 겹치는 기업 — 한국·일본 기업과 은행 — 을 다루지 않습니다. 분산형 인덱스 펀드는 이 원칙의 대상이 아니며, 아래에 밝힌 포트폴리오 구성상의 이유로 보유합니다.",
+    "return_basis": {
+      "method_en": "Return since average cost, cost-weighted",
+      "method_kr": "매수 평균가 대비, 원가 비중 가중",
+      "currency": "USD",
+      "dividends_en": "price only",
+      "dividends_kr": "배당 제외",
+      "benchmark_en": "Benchmark: same weights, same months, into SPYM.",
+      "benchmark_kr": "벤치마크: 같은 비중·같은 시점으로 SPYM 편입.",
+      "model_en": "Positions modelled as entering at their first-purchase month; later tranches not modelled.",
+      "model_kr": "각 포지션은 최초 매수 월 편입으로 재구성, 이후 분할 매수 미반영.",
+      "note_en": "Please note: each position is modelled as entering in the month it was first bought, measured from its average purchase price; purchases added later are not modelled separately. The portfolio return is weighted by capital invested rather than by current value, in USD, excluding dividends. Benchmark: the same weights placed into SPYM in the same months.",
+      "note_kr": "참고: 각 종목은 최초 매수한 달에 편입된 것으로 보고 평균 매수가부터 계산했으며, 이후 추가 매수는 따로 반영하지 않았습니다. 포트폴리오 수익률은 현재 평가액이 아니라 투입한 원금을 기준으로 가중했고, 달러 기준이며 배당은 제외했습니다. 벤치마크는 같은 비중을 같은 달에 SPYM에 넣었을 경우입니다."
+    }
+  },
+  "portfolio": {
+    "as_of": "2026-08-20",
+    "price_as_of": "2026-08-20",
+    "disclosure_en": "Weights and average prices only. Amounts, share counts and cash balances are not disclosed. Cash, deposits and fixed income sit outside this book and are not published. Exact dates and amounts are not disclosed; the timeline is drawn on month boundaries so positions cannot be reverse-engineered.",
+    "disclosure_kr": "비중과 평균 단가만 공개합니다. 투자 금액, 보유 수량, 현금 잔고는 공개하지 않습니다. 현금·예적금·채권은 이 북 밖에 있으며 공개하지 않습니다. 정확한 매매 일자와 금액은 공개하지 않으며, 타임라인은 월 단위로 그려 포지션을 역산할 수 없게 했습니다.",
+    "entry_note_en": "",
+    "entry_note_kr": "",
+    "role_labels": {
+      "pick": {
+        "en": "RESEARCH PICK",
+        "kr": "리서치 픽"
+      },
+      "legacy": {
+        "en": "PRE-EMPLOYMENT",
+        "kr": "입사 전 취득"
+      },
+      "equitisation": {
+        "en": "CASH EQUITISATION",
+        "kr": "현금 주식화"
+      },
+      "income": {
+        "en": "INTERNATIONAL INCOME",
+        "kr": "해외 배당 노출"
+      }
+    },
+    "sleeves": [
+      {
+        "key": "all",
+        "roles": [
+          "pick",
+          "legacy",
+          "income",
+          "equitisation"
+        ],
+        "label_en": "Total book",
+        "label_kr": "전체 노출"
+      },
+      {
+        "key": "ex_eq",
+        "roles": [
+          "pick",
+          "legacy",
+          "income"
+        ],
+        "label_en": "Ex cash equitisation",
+        "label_kr": "현금 주식화 자산 제외"
+      },
+      {
+        "key": "stocks",
+        "roles": [
+          "pick",
+          "legacy"
+        ],
+        "label_en": "Individual equities only",
+        "label_kr": "개별 종목만"
+      },
+      {
+        "key": "picks",
+        "roles": [
+          "pick"
+        ],
+        "label_en": "Research picks",
+        "label_kr": "리서치 픽"
+      }
+    ],
+    "reference": {
+      "ticker": "SPYM",
+      "label_en": "SPYM — tracks the S&P 500",
+      "label_kr": "SPYM — S&P 500 추종"
+    },
+    "positions": [
+      {
+        "ticker": "AVGO",
+        "name_en": "Broadcom",
+        "name_kr": "브로드컴",
+        "role": "pick",
+        "status": "active",
+        "weight": 0.2824272,
+        "avg_buy": 330.86,
+        "last_price": 367.35,
+        "avg_sell": null,
+        "closed_q": null,
+        "note_en": "Seen as a direct beneficiary of AI infrastructure spend. Not a cheap stock, but bought for the growth ahead of it — and for a dividend record that is unusual for a technology company.",
+        "note_kr": "AI 인프라 지출의 직접적인 수혜 기업이라고 봤습니다. 저평가된 기업은 아니었지만 성장 여력이 크다고 판단해 편입했습니다. 테크 기업으로는 드물게 배당을 꾸준히 지급해 왔다는 점도 이유였습니다.",
+        "opened": "2025-09",
+        "note_recorded": "2026-08"
+      },
+      {
+        "ticker": "AXP",
+        "name_en": "American Express",
+        "name_kr": "아메리칸 익스프레스",
+        "role": "pick",
+        "status": "active",
+        "weight": 0.1283027,
+        "avg_buy": 300.61,
+        "last_price": 340.04,
+        "avg_sell": null,
+        "closed_q": null,
+        "note_en": "Set beside Visa and Mastercard, this was the lowest multiple of the three, and the dividend had been steady — the same payments exposure at a lower price.",
+        "note_kr": "비자·마스터카드와 나란히 놓았을 때 배수가 가장 낮다고 봤고, 배당도 꾸준했습니다. 같은 결제 산업 노출을 더 낮은 값에 갖는 쪽을 택했습니다.",
+        "opened": "2025-02",
+        "note_recorded": "2026-08"
+      },
+      {
+        "ticker": "PANW",
+        "name_en": "Palo Alto Networks",
+        "name_kr": "팔로알토 네트웍스",
+        "role": "pick",
+        "status": "active",
+        "weight": 0.08610845,
+        "avg_buy": 201.75,
+        "last_price": 361.14,
+        "avg_sell": null,
+        "closed_q": null,
+        "note_en": "As AI advances, attacks scale with it. Demand for cybersecurity looked structurally higher, expanding the market as a whole.",
+        "note_kr": "AI가 발전하면서 사이버 공격도 함께 늘고 있습니다. 사이버보안 수요가 구조적으로 커지면서 시장 전체가 확대될 것이라고 판단했습니다.",
+        "opened": "2025-05",
+        "note_recorded": "2026-08"
+      },
+      {
+        "ticker": "ABBV",
+        "name_en": "AbbVie",
+        "name_kr": "애브비",
+        "role": "pick",
+        "status": "active",
+        "weight": 0.05068555,
+        "avg_buy": 237.51,
+        "last_price": 264.58,
+        "avg_sell": null,
+        "closed_q": null,
+        "note_en": "Getting through the Humira patent cliff was read as evidence of execution rather than luck: the dividend held through it and R&D spending continued.",
+        "note_kr": "휴미라 특허 만료를 넘긴 과정을 운이 아니라 실행력의 증거로 읽었습니다. 그 기간 내내 배당이 유지됐고 연구개발 투자도 이어졌다는 점을 근거로 편입했습니다.",
+        "opened": "2026-06",
+        "note_recorded": "2026-08"
+      },
+      {
+        "ticker": "CSCO",
+        "name_en": "Cisco Systems",
+        "name_kr": "시스코",
+        "role": "pick",
+        "status": "active",
+        "weight": 0.0452032,
+        "avg_buy": 105.91,
+        "last_price": 110.88,
+        "avg_sell": null,
+        "closed_q": null,
+        "note_en": "As Palo Alto re-rated upward the valuation case thinned, while Cisco offered network-plus-security exposure at a lower multiple and paid a dividend while waiting.",
+        "note_kr": "팔로알토가 오르면서 밸류에이션 부담이 커진 반면, 시스코는 네트워크와 보안이 결합된 노출을 더 낮은 배수에 가질 수 있고 기다리는 동안 배당도 받는다고 판단했습니다.",
+        "opened": "2026-05",
+        "note_recorded": "2026-08"
+      },
+      {
+        "ticker": "BAC",
+        "name_en": "Bank of America",
+        "name_kr": "뱅크오브아메리카",
+        "role": "legacy",
+        "status": "active",
+        "weight": 0.08292463,
+        "avg_buy": 43.17564,
+        "last_price": 63.24,
+        "avg_sell": null,
+        "closed_q": null,
+        "note_en": "Acquired before joining the bank. Disposal is restricted while employed, so it is held with a long horizon and is excluded from the research-pick sleeve — it was not chosen through this process.",
+        "note_kr": "입사 전에 취득했습니다. 재직 중에는 처분이 제한되어 장기 보유 전제로 두고 있으며, 이 과정으로 고른 종목이 아니므로 리서치 픽 슬리브에서는 제외합니다.",
+        "opened": "2024-04"
+      },
+      {
+        "ticker": "SPYM",
+        "name_en": "SPDR Portfolio S&P 500 ETF",
+        "name_kr": "SPDR 포트폴리오 S&P 500 ETF",
+        "role": "equitisation",
+        "status": "active",
+        "weight": 0.2402459,
+        "avg_buy": 86.5985,
+        "last_price": 90.64,
+        "avg_sell": null,
+        "closed_q": null,
+        "note_en": "Single-name purchases need compliance pre-clearance, which can take up to a week. This position keeps market exposure on during that wait instead of sitting in cash — cash equitisation — and carries market rather than single-name risk. It is not a hedge: it falls with the market.",
+        "note_kr": "개별 종목 매수는 사전 컴플라이언스 검토가 필요하고 길게는 일주일이 걸립니다. 그 대기 기간 동안 현금으로 두는 대신 시장 노출을 유지하기 위한 자리이며(cash equitisation), 개별 기업 위험이 아니라 시장 위험을 집니다. 헤지가 아닙니다 — 시장이 빠지면 같이 빠집니다.",
+        "opened": "2026-05"
+      },
+      {
+        "ticker": "VYMI",
+        "name_en": "Vanguard International High Dividend Yield ETF",
+        "name_kr": "뱅가드 인터내셔널 고배당 ETF",
+        "role": "income",
+        "status": "active",
+        "weight": 0.08410245,
+        "avg_buy": 98.525,
+        "last_price": 104.41,
+        "avg_sell": null,
+        "closed_q": null,
+        "note_en": "Held for international dividend exposure the single-name book does not cover.",
+        "note_kr": "개별 종목 북이 담지 않는 해외 배당 노출을 얻기 위해 보유합니다.",
+        "opened": "2026-05"
+      }
+    ],
+    "series": [
+      {
+        "key": "all",
+        "points": [
+          [
+            "2024-04",
+            -0.142804
+          ],
+          [
+            "2024-05",
+            -0.073783
+          ],
+          [
+            "2024-06",
+            -0.078879
+          ],
+          [
+            "2024-07",
+            -0.066372
+          ],
+          [
+            "2024-08",
+            -0.056181
+          ],
+          [
+            "2024-09",
+            -0.080963
+          ],
+          [
+            "2024-10",
+            -0.031398
+          ],
+          [
+            "2024-11",
+            0.100389
+          ],
+          [
+            "2024-12",
+            0.017935
+          ],
+          [
+            "2025-01",
+            0.072364
+          ],
+          [
+            "2025-02",
+            0.027298
+          ],
+          [
+            "2025-03",
+            -0.076915
+          ],
+          [
+            "2025-04",
+            -0.099071
+          ],
+          [
+            "2025-05",
+            -0.016644
+          ],
+          [
+            "2025-06",
+            0.057288
+          ],
+          [
+            "2025-07",
+            -0.015826
+          ],
+          [
+            "2025-08",
+            0.076767
+          ],
+          [
+            "2025-09",
+            0.051079
+          ],
+          [
+            "2025-10",
+            0.148991
+          ],
+          [
+            "2025-11",
+            0.179903
+          ],
+          [
+            "2025-12",
+            0.099737
+          ],
+          [
+            "2026-01",
+            0.053571
+          ],
+          [
+            "2026-02",
+            -0.027397
+          ],
+          [
+            "2026-03",
+            -0.042091
+          ],
+          [
+            "2026-04",
+            0.161539
+          ],
+          [
+            "2026-05",
+            0.179373
+          ],
+          [
+            "2026-06",
+            0.153269
+          ],
+          [
+            "2026-07",
+            0.171734
+          ],
+          [
+            "2026-08",
+            0.178676
+          ]
+        ],
+        "bench": [
+          [
+            "2024-04",
+            0.0
+          ],
+          [
+            "2024-05",
+            0.050119
+          ],
+          [
+            "2024-06",
+            0.083644
+          ],
+          [
+            "2024-07",
+            0.095835
+          ],
+          [
+            "2024-08",
+            0.122249
+          ],
+          [
+            "2024-09",
+            0.143075
+          ],
+          [
+            "2024-10",
+            0.132408
+          ],
+          [
+            "2024-11",
+            0.200305
+          ],
+          [
+            "2024-12",
+            0.167288
+          ],
+          [
+            "2025-01",
+            0.198781
+          ],
+          [
+            "2025-02",
+            0.071989
+          ],
+          [
+            "2025-03",
+            0.008642
+          ],
+          [
+            "2025-04",
+            5.3e-05
+          ],
+          [
+            "2025-05",
+            0.045039
+          ],
+          [
+            "2025-06",
+            0.095686
+          ],
+          [
+            "2025-07",
+            0.120557
+          ],
+          [
+            "2025-08",
+            0.144072
+          ],
+          [
+            "2025-09",
+            0.092751
+          ],
+          [
+            "2025-10",
+            0.119253
+          ],
+          [
+            "2025-11",
+            0.121346
+          ],
+          [
+            "2025-12",
+            0.118974
+          ],
+          [
+            "2026-01",
+            0.135434
+          ],
+          [
+            "2026-02",
+            0.126507
+          ],
+          [
+            "2026-03",
+            0.067643
+          ],
+          [
+            "2026-04",
+            0.179512
+          ],
+          [
+            "2026-05",
+            0.147881
+          ],
+          [
+            "2026-06",
+            0.126068
+          ],
+          [
+            "2026-07",
+            0.126324
+          ],
+          [
+            "2026-08",
+            0.161434
+          ]
+        ]
+      },
+      {
+        "key": "ex_eq",
+        "points": [
+          [
+            "2024-04",
+            -0.142804
+          ],
+          [
+            "2024-05",
+            -0.073783
+          ],
+          [
+            "2024-06",
+            -0.078879
+          ],
+          [
+            "2024-07",
+            -0.066372
+          ],
+          [
+            "2024-08",
+            -0.056181
+          ],
+          [
+            "2024-09",
+            -0.080963
+          ],
+          [
+            "2024-10",
+            -0.031398
+          ],
+          [
+            "2024-11",
+            0.100389
+          ],
+          [
+            "2024-12",
+            0.017935
+          ],
+          [
+            "2025-01",
+            0.072364
+          ],
+          [
+            "2025-02",
+            0.027298
+          ],
+          [
+            "2025-03",
+            -0.076915
+          ],
+          [
+            "2025-04",
+            -0.099071
+          ],
+          [
+            "2025-05",
+            -0.016644
+          ],
+          [
+            "2025-06",
+            0.057288
+          ],
+          [
+            "2025-07",
+            -0.015826
+          ],
+          [
+            "2025-08",
+            0.076767
+          ],
+          [
+            "2025-09",
+            0.051079
+          ],
+          [
+            "2025-10",
+            0.148991
+          ],
+          [
+            "2025-11",
+            0.179903
+          ],
+          [
+            "2025-12",
+            0.099737
+          ],
+          [
+            "2026-01",
+            0.053571
+          ],
+          [
+            "2026-02",
+            -0.027397
+          ],
+          [
+            "2026-03",
+            -0.042091
+          ],
+          [
+            "2026-04",
+            0.161539
+          ],
+          [
+            "2026-05",
+            0.230556
+          ],
+          [
+            "2026-06",
+            0.197055
+          ],
+          [
+            "2026-07",
+            0.221287
+          ],
+          [
+            "2026-08",
+            0.220419
+          ]
+        ],
+        "bench": [
+          [
+            "2024-04",
+            0.0
+          ],
+          [
+            "2024-05",
+            0.050119
+          ],
+          [
+            "2024-06",
+            0.083644
+          ],
+          [
+            "2024-07",
+            0.095835
+          ],
+          [
+            "2024-08",
+            0.122249
+          ],
+          [
+            "2024-09",
+            0.143075
+          ],
+          [
+            "2024-10",
+            0.132408
+          ],
+          [
+            "2024-11",
+            0.200305
+          ],
+          [
+            "2024-12",
+            0.167288
+          ],
+          [
+            "2025-01",
+            0.198781
+          ],
+          [
+            "2025-02",
+            0.071989
+          ],
+          [
+            "2025-03",
+            0.008642
+          ],
+          [
+            "2025-04",
+            5.3e-05
+          ],
+          [
+            "2025-05",
+            0.045039
+          ],
+          [
+            "2025-06",
+            0.095686
+          ],
+          [
+            "2025-07",
+            0.120557
+          ],
+          [
+            "2025-08",
+            0.144072
+          ],
+          [
+            "2025-09",
+            0.092751
+          ],
+          [
+            "2025-10",
+            0.119253
+          ],
+          [
+            "2025-11",
+            0.121346
+          ],
+          [
+            "2025-12",
+            0.118974
+          ],
+          [
+            "2026-01",
+            0.135434
+          ],
+          [
+            "2026-02",
+            0.126507
+          ],
+          [
+            "2026-03",
+            0.067643
+          ],
+          [
+            "2026-04",
+            0.179512
+          ],
+          [
+            "2026-05",
+            0.197985
+          ],
+          [
+            "2026-06",
+            0.170087
+          ],
+          [
+            "2026-07",
+            0.170354
+          ],
+          [
+            "2026-08",
+            0.206836
+          ]
+        ]
+      },
+      {
+        "key": "stocks",
+        "points": [
+          [
+            "2024-04",
+            -0.142804
+          ],
+          [
+            "2024-05",
+            -0.073783
+          ],
+          [
+            "2024-06",
+            -0.078879
+          ],
+          [
+            "2024-07",
+            -0.066372
+          ],
+          [
+            "2024-08",
+            -0.056181
+          ],
+          [
+            "2024-09",
+            -0.080963
+          ],
+          [
+            "2024-10",
+            -0.031398
+          ],
+          [
+            "2024-11",
+            0.100389
+          ],
+          [
+            "2024-12",
+            0.017935
+          ],
+          [
+            "2025-01",
+            0.072364
+          ],
+          [
+            "2025-02",
+            0.027298
+          ],
+          [
+            "2025-03",
+            -0.076915
+          ],
+          [
+            "2025-04",
+            -0.099071
+          ],
+          [
+            "2025-05",
+            -0.016644
+          ],
+          [
+            "2025-06",
+            0.057288
+          ],
+          [
+            "2025-07",
+            -0.015826
+          ],
+          [
+            "2025-08",
+            0.076767
+          ],
+          [
+            "2025-09",
+            0.051079
+          ],
+          [
+            "2025-10",
+            0.148991
+          ],
+          [
+            "2025-11",
+            0.179903
+          ],
+          [
+            "2025-12",
+            0.099737
+          ],
+          [
+            "2026-01",
+            0.053571
+          ],
+          [
+            "2026-02",
+            -0.027397
+          ],
+          [
+            "2026-03",
+            -0.042091
+          ],
+          [
+            "2026-04",
+            0.161539
+          ],
+          [
+            "2026-05",
+            0.25954
+          ],
+          [
+            "2026-06",
+            0.221994
+          ],
+          [
+            "2026-07",
+            0.242471
+          ],
+          [
+            "2026-08",
+            0.240421
+          ]
+        ],
+        "bench": [
+          [
+            "2024-04",
+            0.0
+          ],
+          [
+            "2024-05",
+            0.050119
+          ],
+          [
+            "2024-06",
+            0.083644
+          ],
+          [
+            "2024-07",
+            0.095835
+          ],
+          [
+            "2024-08",
+            0.122249
+          ],
+          [
+            "2024-09",
+            0.143075
+          ],
+          [
+            "2024-10",
+            0.132408
+          ],
+          [
+            "2024-11",
+            0.200305
+          ],
+          [
+            "2024-12",
+            0.167288
+          ],
+          [
+            "2025-01",
+            0.198781
+          ],
+          [
+            "2025-02",
+            0.071989
+          ],
+          [
+            "2025-03",
+            0.008642
+          ],
+          [
+            "2025-04",
+            5.3e-05
+          ],
+          [
+            "2025-05",
+            0.045039
+          ],
+          [
+            "2025-06",
+            0.095686
+          ],
+          [
+            "2025-07",
+            0.120557
+          ],
+          [
+            "2025-08",
+            0.144072
+          ],
+          [
+            "2025-09",
+            0.092751
+          ],
+          [
+            "2025-10",
+            0.119253
+          ],
+          [
+            "2025-11",
+            0.121346
+          ],
+          [
+            "2025-12",
+            0.118974
+          ],
+          [
+            "2026-01",
+            0.135434
+          ],
+          [
+            "2026-02",
+            0.126507
+          ],
+          [
+            "2026-03",
+            0.067643
+          ],
+          [
+            "2026-04",
+            0.179512
+          ],
+          [
+            "2026-05",
+            0.224629
+          ],
+          [
+            "2026-06",
+            0.192895
+          ],
+          [
+            "2026-07",
+            0.193166
+          ],
+          [
+            "2026-08",
+            0.230359
+          ]
+        ]
+      },
+      {
+        "key": "picks",
+        "points": [
+          [
+            "2025-02",
+            0.001164
+          ],
+          [
+            "2025-03",
+            -0.104987
+          ],
+          [
+            "2025-04",
+            -0.113769
+          ],
+          [
+            "2025-05",
+            -0.031631
+          ],
+          [
+            "2025-06",
+            0.04232
+          ],
+          [
+            "2025-07",
+            -0.058623
+          ],
+          [
+            "2025-08",
+            0.038697
+          ],
+          [
+            "2025-09",
+            0.027077
+          ],
+          [
+            "2025-10",
+            0.13414
+          ],
+          [
+            "2025-11",
+            0.169439
+          ],
+          [
+            "2025-12",
+            0.070674
+          ],
+          [
+            "2026-01",
+            0.023761
+          ],
+          [
+            "2026-02",
+            -0.057694
+          ],
+          [
+            "2026-03",
+            -0.070665
+          ],
+          [
+            "2026-04",
+            0.148744
+          ],
+          [
+            "2026-05",
+            0.269396
+          ],
+          [
+            "2026-06",
+            0.208321
+          ],
+          [
+            "2026-07",
+            0.215558
+          ],
+          [
+            "2026-08",
+            0.209041
+          ]
+        ],
+        "bench": [
+          [
+            "2025-02",
+            0.0
+          ],
+          [
+            "2025-03",
+            -0.059093
+          ],
+          [
+            "2025-04",
+            -0.067105
+          ],
+          [
+            "2025-05",
+            -0.004795
+          ],
+          [
+            "2025-06",
+            0.043437
+          ],
+          [
+            "2025-07",
+            0.067122
+          ],
+          [
+            "2025-08",
+            0.089515
+          ],
+          [
+            "2025-09",
+            0.053746
+          ],
+          [
+            "2025-10",
+            0.079302
+          ],
+          [
+            "2025-11",
+            0.08132
+          ],
+          [
+            "2025-12",
+            0.079033
+          ],
+          [
+            "2026-01",
+            0.094905
+          ],
+          [
+            "2026-02",
+            0.086297
+          ],
+          [
+            "2026-03",
+            0.029534
+          ],
+          [
+            "2026-04",
+            0.13741
+          ],
+          [
+            "2026-05",
+            0.181309
+          ],
+          [
+            "2026-06",
+            0.151611
+          ],
+          [
+            "2026-07",
+            0.151873
+          ],
+          [
+            "2026-08",
+            0.187779
+          ]
+        ]
+      }
+    ],
+    "closed_note_en": "Closed positions. Realised return is calculated from average buy and average sell prices; holding period is counted in quarters. A position is recorded here only when it is fully exited — partial sales show up as a reduced weight in the held table.",
+    "closed_note_kr": "청산한 종목입니다. 실현 수익률은 평균 매수가와 평균 매도가로 계산했고, 보유 기간은 분기 수로 셉니다. 완전히 청산한 경우에만 여기에 기록하며, 부분 매도는 보유 표의 비중 감소로 나타납니다.",
+    "outcome_labels": {
+      "thesis_confirmed": {
+        "en": "THESIS CONFIRMED",
+        "kr": "논지 적중"
+      },
+      "thesis_broken": {
+        "en": "THESIS BROKEN",
+        "kr": "논지 파기"
+      },
+      "rotated": {
+        "en": "ROTATED",
+        "kr": "교체"
+      },
+      "matured": {
+        "en": "MATURED",
+        "kr": "만기"
+      }
+    },
+    "notes_head_en": "Why each position was closed",
+    "notes_head_kr": "청산 사유",
+    "held_head_en": "Why each position is held",
+    "held_head_kr": "보유 사유",
+    "timeline_head_en": "How long each position has been held",
+    "timeline_head_kr": "종목별 보유 기간",
+    "bench_label_en": "S&P 500 — same money, same timing",
+    "bench_label_kr": "S&P 500 — 같은 시점에 같은 금액을 넣었다면",
+    "note_recorded_en": "Theses for positions opened before this disclosure were written in August 2026, after the fact. From the next new position onward the thesis is recorded at purchase and not edited afterwards.",
+    "note_recorded_kr": "이번 공개 이전에 편입한 종목의 논지는 2026년 8월에 사후적으로 적었습니다. 다음 신규 편입부터는 매수 시점에 기록하고 이후 수정하지 않습니다."
+  },
+  "research": [
+    {
+      "slug": "korea-payments",
+      "type": "sector",
+      "date": "2026-08",
+      "title_en": "Korea Payment Infrastructure (PG / VAN)",
+      "title_kr": "한국 결제 인프라 (PG / VAN)",
+      "summary_en": "Consolidation in Korean payment infrastructure is inevitable and the consolidator is legally pre-determined: regulated fee compression forces the roll-up, 61–94% cash conversion funds it, merger review blocks every strategic buyer — and a top-tier listed PG trades at 0–5.5× EV/EBITDA.",
+      "summary_kr": "한국 결제 인프라에서 통합은 일어날 수밖에 없고, 그 주체는 법이 이미 정해놓았다. 규제된 단가 압축이 롤업을 강제하고, 61~94%의 현금 전환이 이를 뒷받침하며, 기업결합 심사는 모든 전략적 인수자를 배제한다. 대표 상장 자산은 현재 EV/EBITDA 0~5.5배에 거래되고 있다.",
+      "tags": [
+        "#SECTOR",
+        "#PAYMENTS",
+        "#KOREA"
+      ],
+      "tickers": [],
+      "page": "korea-payments.html",
+      "pdf": "korea-payments/Korea_Payments_Sector_DeepDive.pdf",
+      "model": null
+    }
+  ]
+}
