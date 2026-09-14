@@ -157,9 +157,10 @@ footer{border-top:3px solid var(--ink);padding:20px 0;}
 /* 이 페이지의 nav 이름이 길어서 4개인데도 3줄이 됐다 (플레이하우스는 같은 폭에서 2줄).
    이름을 줄이는 대신 좁은 화면에서만 글자와 여백을 줄인다. */
 @media(max-width:430px){
-  .nav-links{gap:6px;}
-  .nav-links a{font-size:11px;padding:5px 9px;box-shadow:2px 2px 0 var(--ink);}
-  .logo{font-size:17px;}
+  .nav-links{gap:5px;}
+  .nav-links a{font-size:10.5px;padding:5px 8px;box-shadow:2px 2px 0 var(--ink);}
+  .logo{font-size:16px;}
+  .nav-inner{padding-left:14px;padding-right:14px;gap:10px;}
 }
 
 /* ── 언어 토글 (사이트 공통) ── */
@@ -194,6 +195,7 @@ if(window.KYG_LANG!=='en'){
       <a href="/index.html"><span class="tx" data-en="Home" data-kr="홈">Home</span></a>
       <a href="/playhouse/">PLAYHOUSE</a>
       <a class="on" href="./"><span class="tx" data-en="Unreliable Numbers" data-kr="믿을 수 없는 숫자">Unreliable Numbers</span></a>
+      <a href="/me/">ME</a>
       <a href="/cv.html">CV &#128274;</a>
     </div>
   </div>
@@ -250,9 +252,16 @@ window.APP_LANG_LISTENERS = window.APP_LANG_LISTENERS || [];
       this.q.push({from:from,to:to,start:start,end:end,ch:null});
     }
     if(this.raf) cancelAnimationFrame(this.raf);
-    this.f=0; this.txt=txt; this.frame();
+    this.f=0; this.t0=null; this.txt=txt; this.frame();
   };
-  Scramble.prototype.frame=function(){
+  /* 진행도를 «프레임 수»가 아니라 «경과 시간»으로 센다.
+     프레임을 세면 144Hz 화면에서 같은 애니메이션이 60Hz의 2.42배로 끝난다
+     (최악 55프레임 = 60Hz 917ms 대 145Hz 379ms). 짧은 라벨은 0.2초에 끝나서
+     사람 눈에는 «애니메이션이 안 된다»로 보인다. 기준은 60fps 로 고정한다. */
+  Scramble.prototype.frame=function(ts){
+    var now = (typeof ts === 'number') ? ts : performance.now();
+    if(this.t0===null || this.t0===undefined) this.t0=now;
+    this.f = (now - this.t0) / (1000/60);
     var out="", done=0;
     for(var i=0;i<this.q.length;i++){
       var it=this.q[i];
@@ -263,8 +272,8 @@ window.APP_LANG_LISTENERS = window.APP_LANG_LISTENERS || [];
       } else out+=esc(it.from);
     }
     this.el.innerHTML=out;
-    if(done===this.q.length){ this.el.dataset.plain=this.txt; }
-    else { this.f++; this.raf=requestAnimationFrame(this.frame); }
+    if(done===this.q.length){ this.el.dataset.plain=this.txt; this.raf=null; }
+    else { this.raf=requestAnimationFrame(this.frame); }
   };
   /* 탭이 배경이면 rAF 가 0프레임이라 스크램블이 중간 상태로 얼어붙는다. 본문은 즉시 바뀌므로
      「위만 깨진」 화면이 된다. 그때만 애니메이션을 건너뛴다.
