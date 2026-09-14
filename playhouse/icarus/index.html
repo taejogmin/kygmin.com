@@ -266,7 +266,7 @@ h1 .box .scr{color:var(--paper);}
     <span class="sec-tag tx" data-en="PLAYHOUSE &mdash; ICARUS" data-kr="PLAYHOUSE &mdash; &#51060;&#52852;&#47196;&#49828;">PLAYHOUSE &mdash; ICARUS</span>
     <h1>ICA<span class="box">RUS</span></h1>
     <p class="hero-sub tx" data-en="Fly higher and it pays more. Fly too high and you burn. Nobody tells you where the sun is." data-kr="&#45558;&#51060; &#45216;&#49688;&#47197; &#44050;&#51060; &#50724;&#47476;&#44256;, &#45320;&#47924; &#45558;&#51004;&#47732; &#53507;&#45768;&#45796;. &#53468;&#50577;&#51060; &#50612;&#46356; &#51080;&#45716;&#51648;&#45716; &#50500;&#47924;&#46020; &#47568;&#54644;&#51452;&#51648; &#50506;&#49845;&#45768;&#45796;.">Fly higher and it pays more. Fly too high and you burn. Nobody tells you where the sun is.</p>
-    <p class="hero-note">8 ROUNDS &middot; ONE DECK, NO SHUFFLE &middot; 4 DIFFICULTIES &middot; NO SIGN-IN</p>
+    <p class="hero-note">8 ROUNDS &middot; ONE DECK, NO SHUFFLE &middot; 4 DIFFICULTIES &middot; SIGN-IN OPTIONAL</p>
   </div>
 </header>
 
@@ -691,6 +691,7 @@ function shuffle(arr, rnd){
 
 </script>
 
+<!-- UI:BEGIN -->
 <script>
 /* ══════════════════════════════════════════════════════════════════
    ICARUS — 화면 · 라운드 루프
@@ -779,14 +780,80 @@ const S = {
                kr:'누적 손익과 마진이 다른 이유는 보험료가 팟으로 가지 않고 소멸하기 때문입니다. 그 차이가 곧 보험에 쓴 값입니다.'},
   recFine2:   {en:'A game is 8 rounds and about 14 decisions, so one game is mostly variance. The difficulty shows up in the running totals, not in a single game.',
                kr:'한 판은 8라운드 · 결정 약 14회라 한 판은 대부분 운입니다. 난이도는 한 판이 아니라 누적에서 드러납니다.'},
-  recLocal:   {en:'Kept in this browser only.', kr:'이 브라우저에만 저장됩니다.'},
+  recLocal:   {en:'Kept in this browser only. Sign in from the chip at the bottom left to keep it with your account.',
+               kr:'이 브라우저에만 저장됩니다. 왼쪽 아래 칩에서 로그인하면 계정에 남길 수 있습니다.'},
+  recAcct:    {en:'Kept with your account.', kr:'계정에 저장됩니다.'},
+  recLoading: {en:'Loading your record&hellip;', kr:'전적을 불러오는 중&hellip;'},
+  savedOK:    {en:'Saved to your account.', kr:'계정에 저장했습니다.'},
+  savedGuest: {en:'Saved anonymously. Sign in to keep it with your account.',
+               kr:'익명으로 저장했습니다. 로그인하면 계정에 남길 수 있습니다.'},
+  savedFail:  {en:'Could not save this game. Your record below is unchanged.',
+               kr:'이 판을 저장하지 못했습니다. 아래 전적은 그대로입니다.'},
+  del1:       {en:'Delete my record', kr:'내 기록 삭제'},
+  del2:       {en:'Tap again to delete', kr:'한 번 더 누르면 삭제'},
+  delDone:    {en:'Deleted.', kr:'삭제했습니다.'},
+  best:       {en:'BEST', kr:'최고'}, worst:{en:'WORST', kr:'최저'},
   poolHead:   {en:'Their remaining limits', kr:'상대의 남은 한도'},
   poolNote:   {en:'Eight limits, one each. Revealed limits are struck through. Locked on the top two difficulties.',
                kr:'한도는 여덟 장, 각 한 장씩입니다. 공개된 것은 지워집니다. 상위 두 난이도에서는 잠깁니다.'}
 };
 
+/* ── 저장 ──────────────────────────────────────────────────
+   사이트 게임 테이블 관례 (site-infrastructure §1-1): insert 만 하고 select 는 못 한다.
+   본인 전적은 ic_my_record() 로만 받는다. 비로그인은 guest_id 로 익명 수집한다.
+
+   저장 결과는 «성공 / 익명 저장 / 실패» 세 가지가 화면에서 구분돼야 한다.
+   조용한 성공처럼 보이는 실패가 제일 나쁘다. */
+const AUTH = { user:null, client:null, ready:false };
+let lastUserId = null, serverRec = null, recState = 'local', saveMsg = null;
+
+function guestId(){
+  try {
+    let g = localStorage.getItem('kyg_guest');
+    if (!g){ g = 'g_' + Math.random().toString(36).slice(2) + Date.now().toString(36);
+             localStorage.setItem('kyg_guest', g); }
+    return g;
+  } catch(e){ return null; }
+}
+
+function saveGame(row){
+  if (!AUTH.client){ saveMsg = AUTH.user ? S.savedFail : null; return Promise.resolve(); }
+  const payload = Object.assign({
+    user_id: AUTH.user ? AUTH.user.id : null,
+    guest_id: AUTH.user ? null : guestId()
+  }, row);
+  return AUTH.client.from('ic_games').insert(payload).then(function(res){
+    if (res.error){ saveMsg = S.savedFail; console.error('ic_games insert', res.error); }
+    else { saveMsg = AUTH.user ? S.savedOK : S.savedGuest; }
+  }).catch(function(e){ saveMsg = S.savedFail; console.error(e); })
+    .then(function(){ return AUTH.user ? fetchRecord() : null; })
+    .then(function(){ render(); });
+}
+
+function fetchRecord(){
+  if (!AUTH.client || !AUTH.user){ serverRec = null; recState = 'local'; return Promise.resolve(); }
+  recState = 'loading';
+  return AUTH.client.rpc('ic_my_record').then(function(res){
+    if (res.error){ serverRec = null; recState = 'failed'; console.error('ic_my_record', res.error); }
+    else { serverRec = {}; (res.data || []).forEach(function(r){ serverRec[r.difficulty] = r; });
+           recState = 'account'; }
+  }).catch(function(e){ serverRec = null; recState = 'failed'; console.error(e); })
+    .then(function(){ paintRecord(); });
+}
+
+/* 로그인 상태는 위젯이 알려준다. TOKEN_REFRESHED 와 닉네임 변경에서도 발화하므로
+   직전 user.id 와 비교하는 가드가 필요하다 (site-infrastructure §2-1). */
+window.KYG_AUTH_LISTENERS = window.KYG_AUTH_LISTENERS || [];
+window.KYG_AUTH_LISTENERS.push(function(user, nickname, client){
+  AUTH.user = user || null; AUTH.client = client || null; AUTH.ready = true;
+  const uid = user ? user.id : null;
+  if (uid !== lastUserId){ lastUserId = uid; serverRec = null; fetchRecord(); }
+  paintRecord();
+});
+
 /* ── 상태 ──────────────────────────────────────────────── */
 let G = null, repaint = function(){};
+let delArmed = false, delTimer = null;   // 삭제는 인라인 2단계 (confirm 은 자동화를 멈춘다)
 const TIER_KEYS = ['intern','player','sharper','demon'];
 let tier = 'player';
 
@@ -808,6 +875,7 @@ function newGame(){
     rnd, deck, seats: [mk(), mk()], gone: [[], []],
     round: 0, phase: 'bet', turn: 0, first: 0, pending: false,
     log: [], lastRound: null, reason: 'done',
+    tally: { insured:0, folds:0, busts:0 },      // 저장용 — 내 좌석만 센다
     tier: tier, peek: TIERS[tier].peek, counting: TIERS[tier].counting
   };
   G.seats[1].counting = G.counting;
@@ -963,6 +1031,9 @@ function settle(){
   const revealed = !(a.folded || b.folded);
   if (revealed){ G.gone[0].push(a.limit); G.gone[1].push(b.limit); }
 
+  if (a.insured) G.tally.insured++;
+  if (a.folded)  G.tally.folds++;
+  if (a.busted)  G.tally.busts++;
   G.lastRound = { ma: mA, mb: mB, pa, pb, revealed,
                   aL: a.limit, bL: b.limit, aB: a.busted, bB: b.busted,
                   aF: a.folded, bF: b.folded };
@@ -980,13 +1051,24 @@ function nextRound(){
 function endGame(){
   const [a, b] = G.seats;
   const margin = a.budget - b.budget, pnl = a.budget - CFG.budget;
+  /* 로컬 전적은 로그인 여부와 무관하게 항상 쌓는다 — 서버가 죽어도 화면이 비지 않는다. */
   const rec = loadRec(); const k = G.tier;
   const r = rec[k] || { g:0, w:0, l:0, d:0, pnl:0, margin:0 };
   r.g++; r.pnl += pnl; r.margin += margin;
   if (margin > 0) r.w++; else if (margin < 0) r.l++; else r.d++;
   rec[k] = r; saveRec(rec);
+
   G.phase = 'over'; G.margin = margin; G.pnl = pnl;
+  saveMsg = null;
   render();
+
+  saveGame({
+    rules_ver: RULES_VER, difficulty: G.tier, rounds: G.round,
+    my_budget: +a.budget.toFixed(4), ai_budget: +b.budget.toFixed(4),
+    net_pnl: +pnl.toFixed(4), net_margin: +margin.toFixed(4),
+    insured_count: G.tally.insured, folds: G.tally.folds, busts: G.tally.busts,
+    completed: G.reason === 'done' && G.round >= ROUNDS
+  });
 }
 
 /* ── 그리기 ────────────────────────────────────────────── */
@@ -1161,17 +1243,59 @@ function renderSetup(){
 }
 
 function paintRecord(){
-  const rec = loadRec()[tier] || { g:0, w:0, l:0, d:0, pnl:0, margin:0 };
+  const local = loadRec()[tier] || { g:0, w:0, l:0, d:0, pnl:0, margin:0 };
+  const sv = serverRec && serverRec[tier];
+  /* 로그인해 있으면 서버 집계를, 아니면 로컬을 보인다. 어느 쪽을 보고 있는지 반드시 적는다 —
+     어디에 저장되는지 모르는 전적은 전적이 아니다. */
+  const useSv = (recState === 'account') && !!AUTH.user;
+  /* sv 가 없을 수 있다 — 로그인은 했는데 «이 난이도로는 아직 한 판도 안 한» 경우다.
+     ic_my_record() 는 난이도별 group by 라 그 난이도 행이 아예 없다.
+     먼저 sv.games 를 읽었다가 TypeError 를 냈다. 0 으로 채우는 게 맞다. */
+  const r = (useSv && sv)
+    ? { g:+sv.games||0, w:+sv.wins||0, l:+sv.losses||0, d:+sv.draws||0,
+        pnl:+sv.net_pnl||0, margin:+sv.net_margin||0 }
+    : useSv
+    ? { g:0, w:0, l:0, d:0, pnl:0, margin:0 }
+    : local;
+
   const cell = (k, v) => `<div class="cell"><span class="k">${esc(t(k))}</span><span class="v">${v}</span></div>`;
+  const sgn = x => (x >= 0 ? '+' : '') + (+x).toFixed(1);
+  const where = !AUTH.ready ? t(S.recLoading)
+              : recState === 'loading' ? t(S.recLoading)
+              : recState === 'account' ? t(S.recAcct)
+              : recState === 'failed'  ? t(S.savedFail)
+              : t(S.recLocal);
+
+  let extra = '';
+  if (useSv && sv && sv.best != null)
+    extra = cell(S.best, sgn(sv.best)) + cell(S.worst, sgn(sv.worst));
+
+  const delBtn = (AUTH.user && useSv && r.g > 0)
+    ? `<button class="btn" id="delrec" style="font-size:11.5px;padding:7px 12px;box-shadow:3px 3px 0 var(--ink);margin-top:12px">${esc(t(delArmed ? S.del2 : S.del1))}</button>`
+    : '';
+
   $('#rec').innerHTML = `<h3>${esc(t(S.recHead))} &middot; ${t(({intern:S.t1n, player:S.t2n, sharper:S.t3n, demon:S.t4n})[tier])}</h3>
     <div class="grid">
-      ${cell(S.recG, rec.g)}
-      ${cell(S.recW, rec.w + ' / ' + rec.l + ' / ' + rec.d)}
-      ${cell(S.recP, (rec.pnl >= 0 ? '+' : '') + rec.pnl.toFixed(1))}
-      ${cell(S.recM, (rec.margin >= 0 ? '+' : '') + rec.margin.toFixed(1))}
+      ${cell(S.recG, r.g)}
+      ${cell(S.recW, r.w + ' / ' + r.l + ' / ' + r.d)}
+      ${cell(S.recP, sgn(r.pnl))}
+      ${cell(S.recM, sgn(r.margin))}
+      ${extra}
     </div>
+    ${saveMsg ? `<p class="fine" style="border:none;padding-top:8px;color:${saveMsg === S.savedFail ? '#8A2E2E' : 'var(--green-deep)'}">${esc(t(saveMsg))}</p>` : ''}
     <p class="fine">${t(S.recFine)}</p>
-    <p class="fine" style="border:none;padding-top:0">${t(S.recFine2)} ${esc(t(S.recLocal))}</p>`;
+    <p class="fine" style="border:none;padding-top:0">${t(S.recFine2)} ${esc(where)}</p>
+    ${delBtn}`;
+
+  const d = $('#delrec');
+  if (d) d.onclick = () => {
+    if (!delArmed){ delArmed = true; paintRecord();
+      clearTimeout(delTimer); delTimer = setTimeout(() => { delArmed = false; paintRecord(); }, 6000);
+      return; }
+    delArmed = false; clearTimeout(delTimer);
+    AUTH.client.rpc('ic_delete_mine').then(() => { saveMsg = S.delDone; return fetchRecord(); })
+      .catch(e => { saveMsg = S.savedFail; console.error(e); paintRecord(); });
+  };
 }
 
 /* 언어가 바뀌면 현재 화면을 다시 그린다. 진행 상태는 G 에 있으므로 잃지 않는다. */
@@ -1193,5 +1317,7 @@ try{ if (location.search.indexOf('test') >= 0){
 renderSetup();
 
 </script>
+<!-- UI:END -->
+<script src="/auth-widget.js" defer></script>
 </body>
 </html>
