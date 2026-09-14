@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -150,7 +150,29 @@ footer{border-top:3px solid var(--ink);padding:20px 0;}
   .panel{padding:20px 18px 24px;box-shadow:5px 5px 0 var(--ink);}
   .btn{padding:11px 18px;}
 }
+
+/* ── 언어 토글 (사이트 공통) ── */
+#langtoggle{position:fixed;right:20px;bottom:20px;z-index:50;display:inline-flex;
+  border:2px solid var(--ink);box-shadow:3px 3px 0 var(--ink);background:#fff;
+  font-family:var(--arch);font-weight:700;font-size:12px;overflow:hidden;}
+#langtoggle button{font:inherit;border:none;background:none;cursor:pointer;
+  padding:9px 14px;color:var(--ink);letter-spacing:.5px;transition:background .1s,color .1s;}
+#langtoggle button.on{background:var(--green);color:var(--paper);}
+#langtoggle button+button{border-left:2px solid var(--ink);}
+.scr{color:var(--green);}
+h1 .box .scr{color:var(--paper);}
 </style>
+<!-- 언어 기억: 선택한 언어를 저장해 두고, 다음 페이지에서 첫 페인트 전에 복원한다 -->
+<script>
+window.KYG_LANG=(function(){try{var v=localStorage.getItem('kyg_lang');if(v==='kr'||v==='en')return v;}catch(e){}return 'en';})();
+window.APP_LANG=window.KYG_LANG;
+if(window.KYG_LANG!=='en'){
+  document.documentElement.setAttribute('lang','ko');
+  document.documentElement.className+=' lang-pending';
+  setTimeout(function(){document.documentElement.classList.remove('lang-pending');},2000);
+}
+</script>
+<style>html.lang-pending .tx{visibility:hidden}</style>
 </head>
 <body>
 
@@ -158,9 +180,9 @@ footer{border-top:3px solid var(--ink);padding:20px 0;}
   <div class="nav-inner">
     <a class="logo" href="/index.html">KYG<em>MIN</em></a>
     <div class="nav-links">
-      <a href="/index.html">Home</a>
+      <a href="/index.html"><span class="tx" data-en="Home" data-kr="홈">Home</span></a>
       <a href="/playhouse/">PLAYHOUSE</a>
-      <a class="on" href="./">Unreliable Numbers</a>
+      <a class="on" href="./"><span class="tx" data-en="Unreliable Numbers" data-kr="믿을 수 없는 숫자">Unreliable Numbers</span></a>
       <a href="/cv.html">CV &#128274;</a>
     </div>
   </div>
@@ -168,12 +190,12 @@ footer{border-top:3px solid var(--ink);padding:20px 0;}
 
 <header>
   <div class="wrap">
-    <span class="sec-tag">BELIEF UPDATING · v0 · 프로토타입</span>
-    <h1>믿을 수 없는<br><span class="box">숫자</span></h1>
-    <p class="hero-sub">숫자를 보고 판단하고, 얼마나 확신하는지 적습니다.
-      그 다음 새로운 정보가 공개되고, 다시 묻습니다.
-      이 도구가 재는 것은 정답이 아니라 <b>당신의 확신이 어떻게 움직였는가</b>입니다.</p>
-    <p class="hero-note" id="heroNote">한국어만 · 영문 미작성</p>
+    <span class="sec-tag tx" data-en="BELIEF UPDATING · v0 · PROTOTYPE" data-kr="BELIEF UPDATING · v0 · 프로토타입">BELIEF UPDATING · v0 · PROTOTYPE</span>
+    <h1><span class="tx" data-en="UNRELIABLE" data-kr="믿을 수 없는">UNRELIABLE</span><br><span class="box"><span class="tx" data-en="NUMBERS" data-kr="숫자">NUMBERS</span></span></h1>
+    <p class="hero-sub" id="heroSub">You look at some numbers, make a call, and write down how sure you are.
+      Then new information arrives and you are asked again.
+      What this measures is not the answer but <b>how your confidence moved</b>.</p>
+    <p class="hero-note" id="heroNote"></p>
   </div>
 </header>
 
@@ -182,236 +204,565 @@ footer{border-top:3px solid var(--ink);padding:20px 0;}
   <div class="panel" id="panel"></div>
 </div></main>
 
+<div id="langtoggle" aria-label="Language">
+  <button data-lang="en" class="on">EN</button>
+  <button data-lang="kr">한</button>
+</div>
+
 <script src="/auth-widget.js" defer></script>
 
 <footer>
   <div class="foot-inner">
     <span>&#169; KYGMIN.COM</span>
-    <span>UNRELIABLE NUMBERS · 판정하지 않는다 · 궤적만 보여준다</span>
+    <span class="tx" data-en="UNRELIABLE NUMBERS · NO VERDICT · JUST THE TRAJECTORY" data-kr="UNRELIABLE NUMBERS · 판정하지 않는다 · 궤적만 보여준다">UNRELIABLE NUMBERS · NO VERDICT · JUST THE TRAJECTORY</span>
   </div>
 </footer>
+
+<!-- 언어 토글: 페이지 로직과 독립된 스크립트 (사이트 공통 패턴) -->
+<script>
+window.APP_LANG = window.KYG_LANG || 'en';
+window.APP_LANG_LISTENERS = window.APP_LANG_LISTENERS || [];
+(function(){
+  var POOL = ("\u3131\u3134\u3137\u3139\u3141\u3142\u3145\u3147\u3148\u314a\u314b\u314c\u314d\u314e"
+    + "\u314f\u3151\u3153\u3155\u3157\u315b\u315c\u3160\u3161\u3163"
+    + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-\u00b7").split("");
+  function esc(c){return c==="&"?"&amp;":c==="<"?"&lt;":c===">"?"&gt;":c;}
+  function Scramble(el){ this.el=el; this.raf=null; this.frame=this.frame.bind(this); }
+  Scramble.prototype.set=function(txt){
+    var old = this.el.dataset.plain!==undefined ? this.el.dataset.plain : this.el.textContent;
+    var len=Math.max(old.length, txt.length);
+    this.q=[];
+    for(var i=0;i<len;i++){
+      var from=old[i]||"", to=txt[i]||"";
+      var start=Math.floor(Math.random()*20);
+      var end=start+Math.floor(Math.random()*25)+12;
+      this.q.push({from:from,to:to,start:start,end:end,ch:null});
+    }
+    if(this.raf) cancelAnimationFrame(this.raf);
+    this.f=0; this.txt=txt; this.frame();
+  };
+  Scramble.prototype.frame=function(){
+    var out="", done=0;
+    for(var i=0;i<this.q.length;i++){
+      var it=this.q[i];
+      if(this.f>=it.end){ done++; out+=esc(it.to); }
+      else if(this.f>=it.start){
+        if(!it.ch || Math.random()<0.3){ it.ch=POOL[Math.floor(Math.random()*POOL.length)]; }
+        out+='<span class="scr">'+esc(it.ch)+'</span>';
+      } else out+=esc(it.from);
+    }
+    this.el.innerHTML=out;
+    if(done===this.q.length){ this.el.dataset.plain=this.txt; }
+    else { this.f++; this.raf=requestAnimationFrame(this.frame); }
+  };
+  var els=[].slice.call(document.querySelectorAll('.tx'));
+  els.forEach(function(el){ el.dataset.plain=el.textContent; el._s=new Scramble(el); });
+  // 저장된 언어를 애니메이션 없이 즉시 반영한다 (페이지 이동 후 복원)
+  (function(){
+    var L = window.KYG_LANG || 'en';
+    var btns=document.querySelectorAll('#langtoggle button');
+    for(var i=0;i<btns.length;i++){ btns[i].classList.toggle('on', btns[i].dataset.lang===L); }
+    if(L!=='en') els.forEach(function(el){ var t=el.dataset[L]; if(t!==undefined){ el.textContent=t; el.dataset.plain=t; } });
+    document.documentElement.classList.remove('lang-pending');
+  })();
+  function setLang(lang){
+    if(lang===window.APP_LANG) return;
+    window.APP_LANG = lang;
+    try{ localStorage.setItem('kyg_lang', lang); }catch(e){}
+    document.documentElement.lang = (lang==='kr'?'ko':'en');
+    var btns=document.querySelectorAll('#langtoggle button');
+    for(var i=0;i<btns.length;i++){ btns[i].classList.toggle('on', btns[i].dataset.lang===lang); }
+    els.forEach(function(el){ var t=el.dataset[lang]; if(t!==undefined) el._s.set(t); });
+    window.APP_LANG_LISTENERS.forEach(function(fn){ try{ fn(lang); }catch(e){ console.error(e); } });
+  }
+  document.getElementById('langtoggle').addEventListener('click', function(e){
+    var b=e.target.closest('button'); if(b) setLang(b.dataset.lang);
+  });
+})();
+</script>
 
 <script>
 /* ─────────────────────────────────────────────────────────────
    문항 정의. 기준선(band)과 대조(contrast)는 validate.py 가 계산한 값이며
    화면에서 다시 계산하지 않는다. 두 구현이 갈라지면 화면이 거짓말을 한다.
+
+   사람이 읽는 문자열은 전부 {en,kr} 이다. t() 를 거쳐서만 화면에 나간다.
+   표의 숫자 칸은 언어와 무관하므로 그냥 문자열로 둔다 — t() 가 통과시킨다.
    ───────────────────────────────────────────────────────────── */
 const ITEMS = [
 {
-  id:'q1', name:'정밀 검사',
+  id:'q1',
+  name:{en:'The Audit', kr:'정밀 검사'},
   axis:{belief:'내림', choice:'유지'},
-  given:'이 회사의 전국 평균 불량률은 <b>3%</b>입니다.',
+  given:{
+    en:"This company's defect rate across all its sites is <b>3%</b>.",
+    kr:'이 회사의 전국 평균 불량률은 <b>3%</b>입니다.'},
   s1:{
-    head:['지점','관측 불량률'],
+    head:[{en:'Site',kr:'지점'}, {en:'Observed defect rate',kr:'관측 불량률'}],
     rows:[['A','2.8%'],['B','3.2%'],['C','3.0%'],['D','10.0%']],
     hot:3,
-    q:'한 곳만 정밀 검사할 수 있습니다. 어디로 보내겠습니까?',
+    q:{en:'You can send an inspection team to one site. Which one?',
+       kr:'한 곳만 정밀 검사할 수 있습니다. 어디로 보내겠습니까?'},
     options:['A','B','C','D'],
-    claim:'D의 진짜 불량률은 3%보다 높다.'
+    claim:{en:"D's true defect rate is above 3%.",
+           kr:'D의 진짜 불량률은 3%보다 높다.'}
   },
   s2:{
-    given:'검사한 제품 수가 공개되었습니다.',
-    head:['지점','검사 수','불량','불량률'],
+    given:{en:'The number of units inspected has been released.',
+           kr:'검사한 제품 수가 공개되었습니다.'},
+    head:[{en:'Site',kr:'지점'},{en:'Inspected',kr:'검사 수'},
+          {en:'Defective',kr:'불량'},{en:'Rate',kr:'불량률'}],
     rows:[['A','500','14','2.8%'],['B','500','16','3.2%'],
           ['C','500','15','3.0%'],['D','20','2','10.0%']],
-    hot:3,
-    q:'선택을 바꾸겠습니까?'
+    hot:3
   },
-  s3:['네 지점의 진짜 불량률은 <b>모두 3.0%</b>였습니다.',
-      'D에서는 20개 중 2개의 불량품이 관측되었습니다.',
-      '진짜 불량률이 3%일 때 20개 중 2개 이상이 불량일 확률은 <b>12%</b>입니다.'],
+  s3:[{en:'All four sites had a true defect rate of <b>3.0%</b>.',
+       kr:'네 지점의 진짜 불량률은 <b>모두 3.0%</b>였습니다.'},
+      {en:'D turned up 2 defective units out of 20.',
+       kr:'D에서는 20개 중 2개의 불량품이 관측되었습니다.'},
+      {en:'When the true rate is 3%, the chance of 2 or more defects in 20 units is <b>12%</b>.',
+       kr:'진짜 불량률이 3%일 때 20개 중 2개 이상이 불량일 확률은 <b>12%</b>입니다.'}],
   band:[62,80],
-  contrast:{k:'기준 · D도 500개를 검사했다면', v:'100%'},
+  contrast:{k:{en:'Reference · if D had also inspected 500',
+               kr:'기준 · D도 500개를 검사했다면'}, v:'100%'},
   best:'D',
-  bestNote:'검사 수가 공개된 뒤에도 D의 추정 불량률은 네 곳 중 가장 높습니다. '
-          +'검사지를 D로 보내는 결정은 두 단계 모두에서 옳습니다.',
-  xlab:['숫자만 봤을 때','검사 수를 본 뒤']
+  bestNote:{
+    en:'Even after the counts are released, D still has the highest estimated defect rate '
+      +'of the four. Sending the team to D is the right call at both stages.',
+    kr:'검사 수가 공개된 뒤에도 D의 추정 불량률은 네 곳 중 가장 높습니다. '
+      +'검사지를 D로 보내는 결정은 두 단계 모두에서 옳습니다.'},
+  xlab:[{en:'Numbers only',kr:'숫자만 봤을 때'},{en:'After the counts',kr:'검사 수를 본 뒤'}]
 },
 {
-  id:'q2', name:'A/B 테스트',
+  id:'q2',
+  name:{en:'The A/B Test', kr:'A/B 테스트'},
   axis:{belief:'올림', choice:'유지'},
-  given:'어떤 서비스가 <b>가입 버튼의 문구</b>를 A와 B 두 가지로 만들어 실험했습니다. '
-       +'방문자에게 둘 중 하나를 보여주고, 버튼을 본 사람 가운데 몇 명이 실제로 '
-       +'가입했는지를 셌습니다. 버튼을 통한 가입율을 A/B 테스트에서 '
-       +'<b>전환율</b>로 부릅니다.<br><br>'
-       +'실험이 끝나면 <b>한 문구만 남기고</b> 앞으로의 모든 방문자에게 그것을 보여줍니다. '
-       +'이 회사의 이전 실험들에서 두 문구의 전환율 차이는 대체로 <b>±0.3%p</b> 안이었습니다.',
+  given:{
+    en:'A service tried two versions of its sign-up button, A and B. Each visitor saw one of '
+      +'them, and the company counted how many of the people who saw the button actually '
+      +'signed up. In an A/B test that rate is called the <b>conversion rate</b>.<br><br>'
+      +'When the test ends, <b>one version stays</b> and every future visitor sees it. '
+      +"In this company's earlier tests the gap between two versions was usually within "
+      +'<b>±0.3%p</b>.',
+    kr:'어떤 서비스가 <b>가입 버튼의 문구</b>를 A와 B 두 가지로 만들어 실험했습니다. '
+      +'방문자에게 둘 중 하나를 보여주고, 버튼을 본 사람 가운데 몇 명이 실제로 '
+      +'가입했는지를 셌습니다. 버튼을 통한 가입율을 A/B 테스트에서 '
+      +'<b>전환율</b>로 부릅니다.<br><br>'
+      +'실험이 끝나면 <b>한 문구만 남기고</b> 앞으로의 모든 방문자에게 그것을 보여줍니다. '
+      +'이 회사의 이전 실험들에서 두 문구의 전환율 차이는 대체로 <b>±0.3%p</b> 안이었습니다.'},
   s1:{
-    head:['문구','전환율'],
+    head:[{en:'Version',kr:'문구'},{en:'Conversion rate',kr:'전환율'}],
     rows:[['A','2.00%'],['B','2.12%']],
     hot:1,
-    q:'어느 문구를 남기겠습니까?',
+    q:{en:'Which version do you keep?', kr:'어느 문구를 남기겠습니까?'},
     options:['A','B'],
-    claim:'B 문구를 계속 쓰면 A 문구를 사용했을 때보다 가입이 더 많다.'
+    claim:{en:'Keeping B gets more sign-ups than keeping A would.',
+           kr:'B 문구를 계속 쓰면 A 문구를 사용했을 때보다 가입이 더 많다.'}
   },
   s2:{
-    given:'각 문구를 <b>몇 명이 봤는지</b>가 공개되었습니다.',
-    head:['문구','버튼을 본 사람','가입한 사람','전환율'],
+    given:{en:'The number of people who <b>saw</b> each button has been released.',
+           kr:'각 문구를 <b>몇 명이 봤는지</b>가 공개되었습니다.'},
+    head:[{en:'Version',kr:'문구'},{en:'Saw the button',kr:'버튼을 본 사람'},
+          {en:'Signed up',kr:'가입한 사람'},{en:'Conversion rate',kr:'전환율'}],
     rows:[['A','200,000','4,000','2.00%'],['B','200,000','4,240','2.12%']],
-    hot:1,
-    q:'선택을 바꾸겠습니까?'
+    hot:1
   },
-  s3:['A 문구의 진짜 전환율은 <b>2.00%</b>, B는 <b>2.10%</b>였습니다.',
-      'B가 실제로 더 낫습니다. 방문자 <b>1,000명당 1명</b>이 더 가입합니다.',
-      '각 20만 명 규모에서 0.12%p의 관측 차이는 우연으로 설명되지 않습니다.'],
+  s3:[{en:"A's true conversion rate was <b>2.00%</b>, B's was <b>2.10%</b>.",
+       kr:'A 문구의 진짜 전환율은 <b>2.00%</b>, B는 <b>2.10%</b>였습니다.'},
+      {en:'B really is better — <b>one more sign-up per 1,000</b> visitors.',
+       kr:'B가 실제로 더 낫습니다. 방문자 <b>1,000명당 1명</b>이 더 가입합니다.'},
+      {en:'At 200,000 people each, a 0.12%p observed gap is not explained by chance.',
+       kr:'각 20만 명 규모에서 0.12%p의 관측 차이는 우연으로 설명되지 않습니다.'}],
   band:[99,100],
-  contrast:{k:'기준 · 각 2,000명만 봤다면', v:'53%'},
+  contrast:{k:{en:'Reference · if only 2,000 had seen each',
+               kr:'기준 · 각 2,000명만 봤다면'}, v:'53%'},
   best:'B',
-  bestNote:'두 단계 모두 B를 남기는 것이 최선입니다. 바뀔 수 있었던 것은 선택이 아니라 확신입니다.',
-  xlab:['전환율만 봤을 때','실험 규모를 본 뒤'],
-  closing:'문항 1에서 표본 수는 확신을 <b>내렸고</b>, 여기서는 <b>올렸습니다</b>. '
-         +'표본 수는 확신을 낮추는 장치가 아니라 증거의 세기를 정하는 장치이고, '
-         +'방향은 상황이 정합니다.'
+  bestNote:{en:'Keeping B is the better call at both stages. What could have changed is not '
+              +'the choice but the confidence.',
+            kr:'두 단계 모두 B를 남기는 것이 최선입니다. 바뀔 수 있었던 것은 선택이 아니라 확신입니다.'},
+  xlab:[{en:'Rates only',kr:'전환율만 봤을 때'},{en:'After the scale',kr:'실험 규모를 본 뒤'}],
+  closing:{
+    en:'In item 1 the sample size <b>lowered</b> confidence; here it <b>raised</b> it. '
+      +'Sample size is not a device for lowering confidence — it sets how strong the evidence '
+      +'is, and the direction is decided by the situation.',
+    kr:'문항 1에서 표본 수는 확신을 <b>내렸고</b>, 여기서는 <b>올렸습니다</b>. '
+      +'표본 수는 확신을 낮추는 장치가 아니라 증거의 세기를 정하는 장치이고, '
+      +'방향은 상황이 정합니다.'}
 },
 {
-  id:'q3', name:'수술 성공률',
+  id:'q3',
+  name:{en:'The Surgery', kr:'수술 성공률'},
   axis:{belief:'내림', choice:'바뀜'},
-  given:'당신은 이 수술을 받아야 하고, 의사는 당신을 <b>중증</b>으로 분류했습니다.<br><br>'
-       +'아래는 두 병원이 지난 1년간 이 수술을 각각 1,000건씩 하고 남긴 성공률입니다. '
-       +'이 지역 병원들 사이에서 <b>같은 중증도</b> 환자의 성공률 차이는 대체로 '
-       +'<b>5%p</b> 안팎입니다.',
+  given:{
+    en:'You need this operation, and your doctor has classified you as <b>severe</b>.<br><br>'
+      +'Below are the results of 1,000 of these operations at each hospital last year. '
+      +'Among hospitals in this region, the gap for patients of the <b>same severity</b> '
+      +'is usually around <b>5%p</b>.',
+    kr:'당신은 이 수술을 받아야 하고, 의사는 당신을 <b>중증</b>으로 분류했습니다.<br><br>'
+      +'아래는 두 병원이 지난 1년간 이 수술을 각각 1,000건씩 하고 남긴 성공률입니다. '
+      +'이 지역 병원들 사이에서 <b>같은 중증도</b> 환자의 성공률 차이는 대체로 '
+      +'<b>5%p</b> 안팎입니다.'},
   s1:{
-    head:['병원','수술','성공','성공률'],
+    head:[{en:'Hospital',kr:'병원'},{en:'Operations',kr:'수술'},
+          {en:'Successes',kr:'성공'},{en:'Success rate',kr:'성공률'}],
     rows:[['A','1,000','785','78.5%'],['B','1,000','740','74.0%']],
     hot:0,
-    q:'어느 병원에서 수술을 받겠습니까?',
+    q:{en:'Which hospital do you go to?', kr:'어느 병원에서 수술을 받겠습니까?'},
     options:['A','B'],
-    claim:'중증 환자에게는 A의 성공 확률이 B보다 높다.'
+    claim:{en:"For severe patients, A's success rate is higher than B's.",
+           kr:'중증 환자에게는 A의 성공 확률이 B보다 높다.'}
   },
   s2:{
-    given:'두 병원이 받은 환자의 <b>중증도 구성</b>이 공개되었습니다.',
-    head:['병원','중증도','수술','성공','성공률'],
-    rows:[['A','경증','700','621','88.7%'],['A','중증','300','164','54.7%'],
-          ['B','경증','300','275','91.7%'],['B','중증','700','465','66.4%']],
-    hot:[1,3],
-    q:'선택을 바꾸겠습니까?'
+    given:{en:"The <b>severity mix</b> of each hospital's patients has been released.",
+           kr:'두 병원이 받은 환자의 <b>중증도 구성</b>이 공개되었습니다.'},
+    head:[{en:'Hospital',kr:'병원'},{en:'Severity',kr:'중증도'},{en:'Operations',kr:'수술'},
+          {en:'Successes',kr:'성공'},{en:'Rate',kr:'성공률'}],
+    rows:[['A',{en:'Mild',kr:'경증'},'700','621','88.7%'],
+          ['A',{en:'Severe',kr:'중증'},'300','164','54.7%'],
+          ['B',{en:'Mild',kr:'경증'},'300','275','91.7%'],
+          ['B',{en:'Severe',kr:'중증'},'700','465','66.4%']],
+    hot:[1,3]
   },
-  s3:['진짜 성공률은 경증 <b>A 88% · B 93%</b>, 중증 <b>A 55% · B 65%</b>였습니다.',
-      'B가 두 중증도 <b>모두에서</b> 더 높습니다.',
-      '전체 숫자가 반대로 보인 것은 A가 경증 환자를 훨씬 많이 받았기 때문입니다.'],
+  s3:[{en:'The true success rates were <b>A 88% · B 93%</b> for mild cases and '
+        +'<b>A 55% · B 65%</b> for severe cases.',
+       kr:'진짜 성공률은 경증 <b>A 88% · B 93%</b>, 중증 <b>A 55% · B 65%</b>였습니다.'},
+      {en:'B is higher in <b>both</b> groups.',
+       kr:'B가 두 중증도 <b>모두에서</b> 더 높습니다.'},
+      {en:'The overall numbers looked reversed because A took far more mild cases.',
+       kr:'전체 숫자가 반대로 보인 것은 A가 경증 환자를 훨씬 많이 받았기 때문입니다.'}],
   band:[0,4],
-  contrast:{k:'참고 · 두 병원이 같은 환자 구성을 받았다면', v:'A 71.7% · B 79.0%'},
+  contrast:{k:{en:'Reference · if both hospitals had the same patient mix',
+               kr:'참고 · 두 병원이 같은 환자 구성을 받았다면'}, v:'A 71.7% · B 79.0%'},
   best:'B',
-  bestNote:'중증 환자의 성공률이 높은 쪽은 B입니다 — 66.4% 대 54.7%.',
-  xlab:['전체 성공률만 봤을 때','환자 구성을 본 뒤'],
-  closing:'앞의 두 문항에서 새 정보는 확신만 움직였습니다. 여기서는 '
-         +'<b>선택 자체가 바뀌어야 했습니다</b>. 확신과 선택은 같이 움직이지 않고, '
-         +'그래서 따로 물어야 합니다.'
+  bestNote:{en:"The higher success rate for severe patients is B's — 66.4% against 54.7%.",
+            kr:'중증 환자의 성공률이 높은 쪽은 B입니다 — 66.4% 대 54.7%.'},
+  xlab:[{en:'Overall rates only',kr:'전체 성공률만 봤을 때'},
+        {en:'After the mix',kr:'환자 구성을 본 뒤'}],
+  closing:{
+    en:'In the first two items the new information moved only the confidence. Here '
+      +'<b>the choice itself had to change</b>. Confidence and choice do not move together, '
+      +'and that is why they are asked separately.',
+    kr:'앞의 두 문항에서 새 정보는 확신만 움직였습니다. 여기서는 '
+      +'<b>선택 자체가 바뀌어야 했습니다</b>. 확신과 선택은 같이 움직이지 않고, '
+      +'그래서 따로 물어야 합니다.'}
 },
 {
-  id:'q4', name:'정시 배송률',
+  id:'q4',
+  name:{en:'On-Time Delivery', kr:'정시 배송률'},
   axis:{belief:'유지', choice:'유지'},
-  given:'당신은 두 배송업체 중 하나와 계약합니다. '
-       +'<b>당신의 배송지는 비수도권입니다.</b><br><br>'
-       +'아래는 두 업체가 지난 분기에 처리한 배송 1,000건씩의 정시 도착률입니다. '
-       +'이 업계에서 업체 간 정시율 차이는 대체로 <b>5%p</b> 안팎입니다.',
+  given:{
+    en:'You are signing with one of two delivery firms. '
+      +'<b>Your address is outside the capital region.</b><br><br>'
+      +'Below are the results of 1,000 deliveries at each firm last quarter. '
+      +'In this industry the gap between firms is usually around <b>5%p</b>.',
+    kr:'당신은 두 배송업체 중 하나와 계약합니다. '
+      +'<b>당신의 배송지는 비수도권입니다.</b><br><br>'
+      +'아래는 두 업체가 지난 분기에 처리한 배송 1,000건씩의 정시 도착률입니다. '
+      +'이 업계에서 업체 간 정시율 차이는 대체로 <b>5%p</b> 안팎입니다.'},
   s1:{
-    head:['업체','배송','정시','정시율'],
+    head:[{en:'Firm',kr:'업체'},{en:'Deliveries',kr:'배송'},
+          {en:'On time',kr:'정시'},{en:'On-time rate',kr:'정시율'}],
     rows:[['A','1,000','905','90.5%'],['B','1,000','834','83.4%']],
     hot:0,
-    q:'어느 업체와 계약하겠습니까?',
+    q:{en:'Which firm do you sign with?', kr:'어느 업체와 계약하겠습니까?'},
     options:['A','B'],
-    claim:'비수도권에서는 A의 정시 도착률이 B보다 높다.'
+    claim:{en:"Outside the capital region, A's on-time rate is higher than B's.",
+           kr:'비수도권에서는 A의 정시 도착률이 B보다 높다.'}
   },
   s2:{
-    given:'두 업체가 처리한 배송의 <b>지역 구성</b>이 공개되었습니다.',
-    head:['업체','지역','배송','정시','정시율'],
-    rows:[['A','수도권','700','641','91.6%'],['A','비수도권','300','264','88.0%'],
-          ['B','수도권','300','261','87.0%'],['B','비수도권','700','573','81.9%']],
-    hot:[1,3],
-    q:'선택을 바꾸겠습니까?'
+    given:{en:"The <b>regional mix</b> of each firm's deliveries has been released.",
+           kr:'두 업체가 처리한 배송의 <b>지역 구성</b>이 공개되었습니다.'},
+    head:[{en:'Firm',kr:'업체'},{en:'Region',kr:'지역'},{en:'Deliveries',kr:'배송'},
+          {en:'On time',kr:'정시'},{en:'Rate',kr:'정시율'}],
+    rows:[['A',{en:'Capital',kr:'수도권'},'700','641','91.6%'],
+          ['A',{en:'Outside',kr:'비수도권'},'300','264','88.0%'],
+          ['B',{en:'Capital',kr:'수도권'},'300','261','87.0%'],
+          ['B',{en:'Outside',kr:'비수도권'},'700','573','81.9%']],
+    hot:[1,3]
   },
-  s3:['진짜 정시율은 수도권 <b>A 92% · B 87%</b>, 비수도권 <b>A 89% · B 84%</b>였습니다.',
-      'A가 두 지역 <b>모두에서</b> 5%p 앞섭니다.',
-      '지역 구성은 크게 달랐지만 순서를 바꾸지는 않았습니다.'],
+  s3:[{en:'The true on-time rates were <b>A 92% · B 87%</b> in the capital region and '
+        +'<b>A 89% · B 84%</b> outside it.',
+       kr:'진짜 정시율은 수도권 <b>A 92% · B 87%</b>, 비수도권 <b>A 89% · B 84%</b>였습니다.'},
+      {en:'A is ahead by 5%p in <b>both</b> regions.',
+       kr:'A가 두 지역 <b>모두에서</b> 5%p 앞섭니다.'},
+      {en:'The regional mixes were very different, but they did not change the order.',
+       kr:'지역 구성은 크게 달랐지만 순서를 바꾸지는 않았습니다.'}],
   band:[95,100],
-  contrast:{k:'참고 · 두 업체가 같은 지역 구성을 받았다면', v:'A 89.8% · B 84.4%'},
+  contrast:{k:{en:'Reference · if both firms had the same regional mix',
+               kr:'참고 · 두 업체가 같은 지역 구성을 받았다면'}, v:'A 89.8% · B 84.4%'},
   best:'A',
-  bestNote:'비수도권에서 정시율이 높은 쪽도 A입니다 — 88.0% 대 81.9%. '
-          +'선택은 두 단계 모두 A입니다.',
-  xlab:['전체 정시율만 봤을 때','지역 구성을 본 뒤'],
-  closing:'문항 3에서는 구성을 나누자 결론이 <b>뒤집혔습니다</b>. 여기서는 구성이 '
-         +'그만큼 달랐는데도 <b>아무것도 바뀌지 않았습니다</b>. 나누어 보는 것은 '
-         +'규칙이 아니라 확인입니다 — 나눠보기 전에는 어느 쪽인지 알 수 없습니다.'
+  bestNote:{en:'Outside the capital region the higher on-time rate is also A’s — '
+              +'88.0% against 81.9%. The choice is A at both stages.',
+            kr:'비수도권에서 정시율이 높은 쪽도 A입니다 — 88.0% 대 81.9%. '
+              +'선택은 두 단계 모두 A입니다.'},
+  xlab:[{en:'Overall rates only',kr:'전체 정시율만 봤을 때'},
+        {en:'After the mix',kr:'지역 구성을 본 뒤'}],
+  closing:{
+    en:'In item 3, splitting by the mix <b>reversed</b> the conclusion. Here the mix was just '
+      +'as lopsided and <b>nothing changed</b>. Splitting is not a rule, it is a check — '
+      +'before you split you cannot know which case you are in.',
+    kr:'문항 3에서는 구성을 나누자 결론이 <b>뒤집혔습니다</b>. 여기서는 구성이 '
+      +'그만큼 달랐는데도 <b>아무것도 바뀌지 않았습니다</b>. 나누어 보는 것은 '
+      +'규칙이 아니라 확인입니다 — 나눠보기 전에는 어느 쪽인지 알 수 없습니다.'}
 },
 {
-  id:'q5', name:'학원 합격률',
+  id:'q5',
+  name:{en:'The Cram School', kr:'학원 합격률'},
   axis:{belief:'내림', choice:'바뀜'},
-  given:'당신은 두 학원 중 한 곳에 등록합니다.<br><br>'
-       +'아래는 두 학원이 홈페이지에 올린 지난해 <b>합격률</b>입니다. '
-       +'이 지역 학원들 사이의 합격률 차이는 대체로 <b>10%p</b> 안팎입니다.',
+  given:{
+    en:'You are enrolling at one of two cram schools.<br><br>'
+      +'Below are the <b>pass rates</b> each school published on its website for last year. '
+      +'Among schools in this area the gap is usually around <b>10%p</b>.',
+    kr:'당신은 두 학원 중 한 곳에 등록합니다.<br><br>'
+      +'아래는 두 학원이 홈페이지에 올린 지난해 <b>합격률</b>입니다. '
+      +'이 지역 학원들 사이의 합격률 차이는 대체로 <b>10%p</b> 안팎입니다.'},
   s1:{
-    head:['학원','합격률'],
+    head:[{en:'School',kr:'학원'},{en:'Pass rate',kr:'합격률'}],
     rows:[['A','77.6%'],['B','54.0%']],
     hot:0,
-    q:'어느 학원에 등록하겠습니까?',
+    q:{en:'Which school do you enrol at?', kr:'어느 학원에 등록하겠습니까?'},
     options:['A','B'],
-    claim:'A에 등록하면 B에 등록했을 때보다 합격할 확률이 높다.'
+    claim:{en:'Enrolling at A gives a higher chance of passing than enrolling at B.',
+           kr:'A에 등록하면 B에 등록했을 때보다 합격할 확률이 높다.'}
   },
   s2:{
-    given:'두 합격률의 <b>분모</b>가 공개되었습니다.',
-    head:['학원','등록','끝까지 수강','합격','홈페이지 합격률'],
+    given:{en:'The <b>denominator</b> behind each pass rate has been released.',
+           kr:'두 합격률의 <b>분모</b>가 공개되었습니다.'},
+    head:[{en:'School',kr:'학원'},{en:'Enrolled',kr:'등록'},
+          {en:'Finished the course',kr:'끝까지 수강'},{en:'Passed',kr:'합격'},
+          {en:'Published rate',kr:'홈페이지 합격률'}],
     rows:[['A','500','255','198','77.6%'],['B','500','478','258','54.0%']],
-    hot:0,
-    q:'선택을 바꾸겠습니까?'
+    hot:0
   },
-  s3:['A의 77.6%는 <b>끝까지 수강한 255명</b>만 센 숫자입니다. '
-      +'등록한 500명 기준으로는 <b>39.6%</b>입니다.',
-      'B는 478명이 끝까지 수강했고, 등록 기준 합격률은 <b>51.6%</b>입니다.',
-      '등록하는 시점의 당신은 「끝까지 수강할 사람」이 아니라 「등록한 사람」입니다.'],
+  s3:[{en:"A's 77.6% counts only the <b>255 who finished the course</b>. "
+        +'Out of the 500 who enrolled it is <b>39.6%</b>.',
+       kr:'A의 77.6%는 <b>끝까지 수강한 255명</b>만 센 숫자입니다. '
+         +'등록한 500명 기준으로는 <b>39.6%</b>입니다.'},
+      {en:'At B, 478 finished, and the pass rate per enrolled student is <b>51.6%</b>.',
+       kr:'B는 478명이 끝까지 수강했고, 등록 기준 합격률은 <b>51.6%</b>입니다.'},
+      {en:'On the day you enrol you are not «someone who will finish» — '
+        +'you are «someone who enrolled».',
+       kr:'등록하는 시점의 당신은 「끝까지 수강할 사람」이 아니라 「등록한 사람」입니다.'}],
   band:[0,2],
-  contrast:{k:'참고 · 등록한 500명 기준 합격률', v:'A 39.6% · B 51.6%'},
+  contrast:{k:{en:'Reference · pass rate per 500 enrolled',
+               kr:'참고 · 등록한 500명 기준 합격률'}, v:'A 39.6% · B 51.6%'},
   best:'B',
-  bestNote:'등록 기준으로 합격률이 높은 쪽은 B입니다 — 51.6% 대 39.6%.',
-  xlab:['홈페이지 숫자만 봤을 때','분모를 본 뒤'],
-  closing:'앞의 네 문항은 표를 <b>읽는</b> 방법이었습니다. 여기서는 표에 적힌 숫자가 '
-         +'전부 참인데도 틀렸습니다 — <b>표에 없는 사람들</b> 때문입니다. '
-         +'아무리 잘 읽어도 없는 줄은 보이지 않습니다.'
+  bestNote:{en:"Per enrolled student the higher pass rate is B's — 51.6% against 39.6%.",
+            kr:'등록 기준으로 합격률이 높은 쪽은 B입니다 — 51.6% 대 39.6%.'},
+  xlab:[{en:'Published rates only',kr:'홈페이지 숫자만 봤을 때'},
+        {en:'After the denominator',kr:'분모를 본 뒤'}],
+  closing:{
+    en:'The first four items were about <b>reading</b> a table. Here every number in the table '
+      +'was true and the answer was still wrong — because of <b>the people who are not in it</b>. '
+      +'No amount of careful reading shows you a row that is not there.',
+    kr:'앞의 네 문항은 표를 <b>읽는</b> 방법이었습니다. 여기서는 표에 적힌 숫자가 '
+      +'전부 참인데도 틀렸습니다 — <b>표에 없는 사람들</b> 때문입니다. '
+      +'아무리 잘 읽어도 없는 줄은 보이지 않습니다.'}
 },
 {
-  id:'q6', name:'금연 프로그램',
+  id:'q6',
+  name:{en:'Quit-Smoking Program', kr:'금연 프로그램'},
   axis:{belief:'유지', choice:'유지'},
-  given:'당신은 두 금연 프로그램 중 하나에 등록합니다.<br><br>'
-       +'아래는 각 프로그램이 지난해 참가자를 대상으로 낸 <b>6개월 금연 성공률</b>입니다. '
-       +'프로그램 간 성공률 차이는 대체로 <b>10%p</b> 안팎입니다.',
+  given:{
+    en:'You are enrolling in one of two quit-smoking programs.<br><br>'
+      +'Below are the <b>six-month success rates</b> each program reported for last year’s '
+      +'participants. Gaps between programs are usually around <b>10%p</b>.',
+    kr:'당신은 두 금연 프로그램 중 하나에 등록합니다.<br><br>'
+      +'아래는 각 프로그램이 지난해 참가자를 대상으로 낸 <b>6개월 금연 성공률</b>입니다. '
+      +'프로그램 간 성공률 차이는 대체로 <b>10%p</b> 안팎입니다.'},
   s1:{
-    head:['프로그램','성공률'],
+    head:[{en:'Program',kr:'프로그램'},{en:'Success rate',kr:'성공률'}],
     rows:[['A','61.9%'],['B','43.8%']],
     hot:0,
-    q:'어느 프로그램에 등록하겠습니까?',
+    q:{en:'Which program do you enrol in?', kr:'어느 프로그램에 등록하겠습니까?'},
     options:['A','B'],
-    claim:'A에 등록하면 B에 등록했을 때보다 6개월 뒤 금연해 있을 확률이 높다.'
+    claim:{en:'Enrolling in A gives a higher chance of being smoke-free at six months '
+             +'than enrolling in B.',
+           kr:'A에 등록하면 B에 등록했을 때보다 6개월 뒤 금연해 있을 확률이 높다.'}
   },
   s2:{
-    given:'두 성공률의 <b>분모</b>가 공개되었습니다. '
-         +'일부 참가자는 6개월 뒤 연락이 닿지 않아 결과를 확인하지 못했습니다.',
-    head:['프로그램','등록','결과 확인','미확인','성공','성공률'],
+    given:{en:'The <b>denominator</b> behind each rate has been released. Some participants '
+             +'could not be reached at six months, so their outcome is unknown.',
+           kr:'두 성공률의 <b>분모</b>가 공개되었습니다. '
+             +'일부 참가자는 6개월 뒤 연락이 닿지 않아 결과를 확인하지 못했습니다.'},
+    head:[{en:'Program',kr:'프로그램'},{en:'Enrolled',kr:'등록'},{en:'Reached',kr:'결과 확인'},
+          {en:'Not reached',kr:'미확인'},{en:'Success',kr:'성공'},{en:'Rate',kr:'성공률'}],
     rows:[['A','400','333','67','206','61.9%'],['B','400','365','35','160','43.8%']],
-    hot:0,
-    q:'선택을 바꾸겠습니까?'
+    hot:0
   },
-  s3:['A의 61.9%는 결과가 확인된 333명 중 206명입니다. 67명은 확인되지 않았습니다.',
-      '미확인 인원을 <b>A는 전원 실패, B는 전원 성공</b>으로 놓아도 — 가장 불리한 '
-      +'가정입니다 — A <b>51.5%</b> 대 B <b>48.8%</b>입니다.',
-      '결론은 버팁니다. 빠진 데이터가 있다는 것과 결론이 틀렸다는 것은 다릅니다.'],
+  s3:[{en:"A's 61.9% is 206 out of the 333 who were reached. 67 were not reached.",
+       kr:'A의 61.9%는 결과가 확인된 333명 중 206명입니다. 67명은 확인되지 않았습니다.'},
+      {en:'Put the unreached down as <b>all failures for A and all successes for B</b> — '
+        +'the most unfavourable assumption — and it is A <b>51.5%</b> against B <b>48.8%</b>.',
+       kr:'미확인 인원을 <b>A는 전원 실패, B는 전원 성공</b>으로 놓아도 — 가장 불리한 '
+         +'가정입니다 — A <b>51.5%</b> 대 B <b>48.8%</b>입니다.'},
+      {en:'The conclusion holds. «There is missing data» and «the conclusion is wrong» '
+        +'are not the same thing.',
+       kr:'결론은 버팁니다. 빠진 데이터가 있다는 것과 결론이 틀렸다는 것은 다릅니다.'}],
   band:[98,100],
-  contrast:{k:'참고 · 가장 불리한 가정에서', v:'A 51.5% · B 48.8%'},
+  contrast:{k:{en:'Reference · under the most unfavourable assumption',
+               kr:'참고 · 가장 불리한 가정에서'}, v:'A 51.5% · B 48.8%'},
   best:'A',
-  bestNote:'등록 기준으로도 성공률이 높은 쪽은 A입니다. 선택은 두 단계 모두 A입니다.',
-  xlab:['성공률만 봤을 때','분모를 본 뒤'],
-  closing:'문항 5에서는 빠진 사람들이 결론을 <b>뒤집었습니다</b>. 여기서는 빠진 사람들을 '
-         +'<b>전부 최악으로 채워 넣어도</b> 결론이 버텼습니다. 「빠진 데이터가 있다」는 '
-         +'판정이 아니라 질문입니다 — 얼마나 빠졌는지 재보기 전에는 답이 없습니다.'
+  bestNote:{en:'Per enrolled participant the higher success rate is also A’s. '
+              +'The choice is A at both stages.',
+            kr:'등록 기준으로도 성공률이 높은 쪽은 A입니다. 선택은 두 단계 모두 A입니다.'},
+  xlab:[{en:'Success rates only',kr:'성공률만 봤을 때'},
+        {en:'After the denominator',kr:'분모를 본 뒤'}],
+  closing:{
+    en:'In item 5 the missing people <b>reversed</b> the conclusion. Here it held even after '
+      +'<b>filling every one of them in at the worst</b>. «There is missing data» is a question, '
+      +'not a verdict — there is no answer until you measure how much is missing.',
+    kr:'문항 5에서는 빠진 사람들이 결론을 <b>뒤집었습니다</b>. 여기서는 빠진 사람들을 '
+      +'<b>전부 최악으로 채워 넣어도</b> 결론이 버텼습니다. 「빠진 데이터가 있다」는 '
+      +'판정이 아니라 질문입니다 — 얼마나 빠졌는지 재보기 전에는 답이 없습니다.'}
 }
 ];
+
+/* ── 화면 공통 문구 ────────────────────────────────────────── */
+const S = {
+  heroNote:   {en:'items · sign-in required', kr:'문항 · 로그인 필요'},
+  heroSub:    {en:'You look at some numbers, make a call, and write down how sure you are. '
+                 +'Then new information arrives and you are asked again. What this measures is '
+                 +'not the answer but <b>how your confidence moved</b>.',
+               kr:'숫자를 보고 판단하고, 얼마나 확신하는지 적습니다. 그 다음 새로운 정보가 '
+                 +'공개되고, 다시 묻습니다. 이 도구가 재는 것은 정답이 아니라 '
+                 +'<b>당신의 확신이 어떻게 움직였는가</b>입니다.'},
+  before:     {en:'Before you start', kr:'시작 전'},
+  summary:    {en:'Summary', kr:'종합'},
+  next:       {en:'Next', kr:'다음'},
+  seeMine:    {en:'See my answers', kr:'내 판단 보기'},
+  nextItem:   {en:'Next item', kr:'다음 문항'},
+  seeSummary: {en:'See the summary', kr:'종합 보기'},
+  start:      {en:'Start', kr:'시작하기'},
+  again:      {en:'Try again', kr:'다시 해보기'},
+  againNoRec: {en:'Try again without recording', kr:'기록 없이 다시 해보기'},
+  changePick: {en:'Do you want to change your choice?', kr:'선택을 바꾸겠습니까?'},
+  believeQ:   {en:'How much do you believe this?', kr:'이 주장을 얼마나 믿습니까?'},
+  moveSlider: {en:'Move the slider to answer', kr:'슬라이더를 움직여 답하세요'},
+  carried:    {en:'carried over from stage 1', kr:'1단계의 답에서 이어집니다'},
+  you:        {en:'You', kr:'당신'},
+  refAfter:   {en:'Reference · ', kr:'기준 · '},
+  refBand:    {en:'Reference ', kr:'기준 '},
+
+  warnHead:   {en:'Read this first', kr:'먼저 읽어주세요'},
+  warn1:      {en:'These six items are recorded <b>only the first time.</b> '
+                 +'After that you can play as often as you like and the record will not change.',
+               kr:'이 여섯 문항은 <b>최초 1회만 기록됩니다.</b> '
+                 +'두 번째부터는 몇 번을 풀어도 기록이 바뀌지 않습니다.'},
+  warn2:      {en:'Once you have played, you know the twists, so a second run cannot measure the '
+                 +'same thing. What is being measured is <b>you before you know anything</b>.',
+               kr:'한 번 풀고 나면 반전을 알게 되므로, 두 번째 판은 같은 것을 재지 못합니다. '
+                 +'재는 대상이 <b>아무것도 모르는 상태에서의 당신</b>이기 때문입니다.'},
+  warn3:      {en:'Take your time. There is no going back.',
+               kr:'천천히, 신중하게 답하세요. 되돌릴 기회는 없습니다.'},
+  checking:   {en:'Checking whether you are signed in…', kr:'로그인 상태를 확인하는 중입니다…'},
+  checkingRec:{en:'Checking your record…', kr:'기록을 확인하는 중입니다…'},
+  needSignIn: {en:'You need to sign in to start.', kr:'로그인해야 시작할 수 있습니다.'},
+  whySignIn:  {en:'Because there is only one recorded run, it has to be clear whose run it is. '
+                 +'This is not about keeping anyone out — it is so that one person’s first '
+                 +'run is counted once.',
+               kr:'기록이 최초 1회뿐이라, 그 한 번이 누구의 것인지 알아야 합니다. '
+                 +'접근을 막으려는 것이 아니라 같은 사람의 첫 판을 한 번만 세기 위해서입니다.'},
+  chipHint:   {en:'The sign-in chip is at the <b>bottom left</b> of the screen.',
+               kr:'로그인 칩은 <b>화면 왼쪽 아래</b>에 있습니다.'},
+  peekHint:   {en:'You are welcome to look around without signing in — that is not recorded. '
+                 +'But afterwards you cannot go back to seeing these items for the first time.',
+               kr:'로그인하지 않고 화면만 둘러보고 싶다면, 그건 기록되지 않습니다 — '
+                 +'다만 그 뒤에는 이 문항들을 처음 보는 상태로 되돌릴 수 없습니다.'},
+  haveHead:   {en:'You already have a record', kr:'이미 기록이 있습니다'},
+  haveLine:   {en:'You played once on %D. <b>Playing again will not change that record.</b>',
+               kr:'%D에 한 번 푸셨습니다. <b>지금 다시 풀어도 그 기록은 바뀌지 않습니다.</b>'},
+  haveSee:    {en:'You can see it on your <a href="/me/" style="text-decoration:underline">personal page</a>.',
+               kr:'기록은 <a href="/me/" style="text-decoration:underline">개인 페이지</a>에서 볼 수 있습니다.'},
+  willRecord: {en:'Will be recorded · <b>%N items</b> · about 10 minutes · '
+                 +'nothing is recorded if you leave partway',
+               kr:'기록 대상 · <b>%N문항</b> · 약 10분 · 중간에 나가면 기록되지 않습니다'},
+
+  savedMsg:   {en:'This run has been <b>recorded as your first.</b> However many times you play '
+                 +'from now on, this record will not change. You can see it on your '
+                 +'<a href="/me/" style="text-decoration:underline">personal page</a>.',
+               kr:'이번 판이 <b>최초 기록으로 저장되었습니다.</b> 앞으로 몇 번을 풀어도 이 기록은 '
+                 +'바뀌지 않습니다. <a href="/me/" style="text-decoration:underline">개인 페이지</a>에서 '
+                 +'볼 수 있습니다.'},
+  alreadyMsg: {en:'Your existing <b>first record is unchanged.</b> This run was not saved.',
+               kr:'이미 있던 <b>최초 기록은 그대로입니다.</b> 이번 판은 저장되지 않았습니다.'},
+  nologinMsg: {en:'You were not signed in, so <b>nothing was saved.</b>',
+               kr:'로그인하지 않아 <b>저장되지 않았습니다.</b>'},
+  failedMsg:  {en:'Saving <b>failed.</b> Check your connection and whether you are signed in. '
+                 +'This run exists only on this screen.',
+               kr:'저장에 <b>실패했습니다.</b> 네트워크나 로그인 상태를 확인해 주세요. '
+                 +'이번 판의 답은 화면에만 남아 있습니다.'},
+  savingMsg:  {en:'Checking whether it was saved…', kr:'저장 결과를 확인하는 중입니다…'},
+
+  noteProcess:{en:'The reference is <b>what could be known at that moment</b>, not what turned '
+                 +'out to be true. The truth revealed at the end was not knowable then, so the '
+                 +'two lines do not contradict each other.',
+               kr:'기준은 <b>그 시점에 알 수 있었던 것</b>이지 나중에 밝혀진 사실이 아닙니다. '
+                 +'마지막에 공개된 진실은 그때 알 수 없었으므로, 두 줄은 서로 모순되지 않습니다.'},
+  noteBand:   {en:'The reference is a range, not a single value. Depending on the assumptions it '
+                 +'moves between %LO% and %HI%. There is no reference on the first screen — '
+                 +'at that point there is nothing to compute.',
+               kr:'기준은 하나의 값이 아니라 범위입니다. 가정에 따라 %LO%에서 %HI% 사이에서 '
+                 +'움직입니다. 첫 화면에는 기준이 없습니다 — 그 시점에는 계산할 것이 없기 때문입니다.'},
+  noteYours:  {en:'What changed is for you to judge.', kr:'무엇이 달라졌는지는 당신이 판단하세요.'},
+  movedTo:    {en:'You moved to %B at stage 2. ', kr:'2단계에서 %B로 옮겼습니다. '},
+  youPicked:  {en:' You picked %P.', kr:' 당신은 %P를 골랐습니다.'},
+
+  sumLead:    {en:'The trajectories, in order. The <b>first number</b> is how sure you were in '
+                 +'each item before you knew anything.<br><br>'
+                 +'<b>Do not compare these to each other.</b> Each item’s claim looks '
+                 +'plausible to a different degree at first sight, so a rise or fall may be the '
+                 +'item, not you. Whether someone grows more careful as they go can only be '
+                 +'measured once the item order is randomised and many people’s runs '
+                 +'have accumulated.',
+               kr:'문항별 궤적을 순서대로 둡니다. <b>첫 숫자</b>는 각 문항에서 '
+                 +'아무 정보도 없이 얼마나 확신했는지입니다.<br><br>'
+                 +'이 값들을 <b>서로 비교하지는 마세요.</b> 문항마다 처음 보이는 주장의 '
+                 +'그럴듯함이 다르기 때문에, 값이 오르내리는 것은 당신이 아니라 문항이 만든 것일 수 '
+                 +'있습니다. 「할수록 조심스러워지는가」는 문항 순서를 무작위로 돌리고 여러 사람의 '
+                 +'기록이 쌓인 뒤에야 잴 수 있습니다.'},
+  sumPairs:   {en:'The six items are <b>three pairs</b>. 1·2 are <b>sample size</b>, '
+                 +'3·4 are <b>splitting by the mix</b>, 5·6 are <b>the people missing from the '
+                 +'table</b>. In all three pairs the same device worked one way, then the other.',
+               kr:'여섯 문항은 <b>세 쌍</b>입니다. 1·2는 <b>표본의 크기</b>, '
+                 +'3·4는 <b>구성을 나눠 보기</b>, 5·6은 <b>표에서 빠진 사람</b>. '
+                 +'세 쌍 모두 같은 장치가 한 번은 이쪽으로, 한 번은 저쪽으로 작동했습니다.'},
+  sumRule:    {en:'Knowing the device and knowing the direction are different things. '
+                 +'«Small sample, believe it less», «split it and it flips», «there is missing '
+                 +'data so I cannot trust it» — memorised as rules, each is wrong half the time. '
+                 +'The direction has to be measured every time.',
+               kr:'장치를 아는 것과 방향을 아는 것은 다른 일입니다. '
+                 +'「표본이 작으니 덜 믿자」도 「나눠 보면 뒤집힌다」도 「빠진 데이터가 있으니 '
+                 +'못 믿겠다」도, 규칙으로 외우면 절반을 틀립니다. 방향은 매번 재봐야 합니다.'},
+  sumNoVerdict:{en:'There is no verdict. Only the trajectory.',
+                kr:'판정은 없습니다. 궤적만 있습니다.'},
+  axisWord:   {belief:{'내림':{en:'down',kr:'내림'},'올림':{en:'up',kr:'올림'},
+                       '유지':{en:'steady',kr:'유지'}},
+               choice:{'유지':{en:'choice kept',kr:'선택 유지'},
+                       '바뀜':{en:'choice changed',kr:'선택 바뀜'}}}
+};
 
 /* ───────────────────────────── 엔진 ───────────────────────────── */
 const ITEM_SET = 'v1';          // 문항 세트 버전. 문항이 바뀌면 올린다
 const log = [];                 // 문항별 {pick1,c1,pick2,c2,anchor}
-let idx = 0, stage = 1, cur = null;
+let idx = -1, stage = 1, cur = null;
+let repaint = function(){};     // 언어가 바뀌면 현재 화면을 이걸로 다시 그린다
 
 const $ = s => document.querySelector(s);
 const esc = s => String(s);
+/* 사람이 읽는 문자열은 {en,kr}. 그 밖의 값(숫자 칸 등)은 그대로 통과시킨다. */
+function t(v){
+  if (v && typeof v === 'object' && !Array.isArray(v) && ('en' in v || 'kr' in v)){
+    return v[window.APP_LANG] !== undefined ? v[window.APP_LANG] : v.en;
+  }
+  return v;
+}
+function fill(str, vars){
+  var out = String(str);
+  Object.keys(vars).sort(function(a,b){ return b.length - a.length; })
+    .forEach(function(k){ out = out.split('%' + k).join(vars[k]); });
+  return out;
+}
 
 /* ── 로그인 · 기록 ──────────────────────────────────────────────
    이 게임은 로그인해야 시작할 수 있다. 이유는 접근 제어가 아니라 측정이다 —
@@ -443,7 +794,8 @@ function submitRun(){
   if (AUTH.existing){ AUTH.saved = 'already'; return Promise.resolve(); }
   const payload = ITEMS.map(function(it, i){
     const d = log[i] || {};
-    return { id:it.id, name:it.name, order:i, anchor:d.anchor,
+    // 이름은 두 언어를 다 저장한다 — /me/ 는 보는 사람의 언어로 그려야 한다
+    return { id:it.id, name:it.name.kr, name_en:it.name.en, order:i, anchor:d.anchor,
              pick1:d.pick1, c1:d.c1, pick2:d.pick2, c2:d.c2,
              band:it.band, best:it.best, axis:it.axis };
   });
@@ -459,27 +811,27 @@ function submitRun(){
 
 function crumbs(){
   const c = $('#crumbs'); c.innerHTML = '';
-  if (idx === -1){ c.innerHTML = '<span class="crumb on">시작 전</span>'; return; }
+  if (idx === -1){ c.innerHTML = '<span class="crumb on">' + esc(t(S.before)) + '</span>'; return; }
   ITEMS.forEach((it,i)=>{
     const d = document.createElement('span');
     d.className = 'crumb' + (i<idx ? ' done' : i===idx ? ' on' : '');
-    d.textContent = (i+1) + '. ' + it.name;
+    d.textContent = (i+1) + '. ' + t(it.name);
     c.appendChild(d);
   });
   const d = document.createElement('span');
   d.className = 'crumb' + (idx>=ITEMS.length ? ' on' : '');
-  d.textContent = '종합';
+  d.textContent = t(S.summary);
   c.appendChild(d);
 }
 
 function tableHTML(spec){
   const hot = Array.isArray(spec.hot) ? spec.hot : [spec.hot];
   let h = '<table><thead><tr>';
-  spec.head.forEach(x => h += '<th>'+esc(x)+'</th>');
+  spec.head.forEach(x => h += '<th>' + esc(t(x)) + '</th>');
   h += '</tr></thead><tbody>';
   spec.rows.forEach((r,ri) => {
     h += '<tr>';
-    r.forEach(cell => h += '<td'+(hot.indexOf(ri)>=0?' class="hot"':'')+'>'+esc(cell)+'</td>');
+    r.forEach(cell => h += '<td'+(hot.indexOf(ri)>=0?' class="hot"':'')+'>'+esc(t(cell))+'</td>');
     h += '</tr>';
   });
   return '<div class="tw">' + h + '</tbody></table></div>';
@@ -491,55 +843,60 @@ function randAnchor(){ return 15 + Math.floor(Math.random()*71); }
 
 function confHTML(claim, value, hint){
   return '<div class="conf">'
-    + '<p class="lbl">이 주장을 얼마나 믿습니까?</p>'
-    + '<p class="claim">'+claim+'</p>'
+    + '<p class="lbl">' + esc(t(S.believeQ)) + '</p>'
+    + '<p class="claim">' + t(claim) + '</p>'
     + '<input type="range" id="sl" min="0" max="100" value="'+value+'">'
     + '<p class="val" id="slv">'
-    + (hint ? '<span class="untouched">'+hint+'</span>'
-            : value+'%<small>1단계의 답에서 이어집니다</small>')
+    + (hint ? '<span class="untouched">'+esc(t(S.moveSlider))+'</span>'
+            : value+'%<small>'+esc(t(S.carried))+'</small>')
     + '</p></div>';
 }
 
 function renderStage(){
+  repaint = renderStage;
   const it = ITEMS[idx], p = $('#panel');
   crumbs();
 
   if (stage === 1){
-    cur = { anchor: randAnchor(), pick1:null, c1:null };
-    p.innerHTML = '<p class="given">'+it.given+'</p>'
+    // 언어 전환으로 다시 그릴 때 답을 잃지 않는다 — 같은 문항이면 상태를 이어쓴다
+    if (!cur || cur.item !== idx) cur = { item:idx, anchor:randAnchor(), pick1:null, c1:null };
+    const touched = cur.c1 !== null;
+    p.innerHTML = '<p class="given">'+t(it.given)+'</p>'
       + tableHTML(it.s1)
-      + '<p class="q">'+it.s1.q+'</p>'
+      + '<p class="q">'+esc(t(it.s1.q))+'</p>'
       + '<div class="picks" id="picks"></div>'
-      + confHTML(it.s1.claim, cur.anchor, '슬라이더를 움직여 답하세요')
-      + '<button class="btn go" id="go" disabled>다음</button>';
-    wirePicks(it.s1.options, s => { cur.pick1 = s; gate(); });
+      + confHTML(it.s1.claim, touched ? cur.c1 : cur.anchor, !touched)
+      + '<button class="btn go" id="go" disabled>'+esc(t(S.next))+'</button>';
+    wirePicks(it.s1.options, s => { cur.pick1 = s; gate(); }, cur.pick1);
     wireSlider(v => { cur.c1 = v; gate(); });
+    if (touched) $('#slv').textContent = cur.c1 + '%';
     $('#go').onclick = () => { stage = 2; renderStage(); };
+    gate();
     function gate(){ $('#go').disabled = !(cur.pick1 && cur.c1 !== null); }
 
   } else if (stage === 2){
-    cur.pick2 = cur.pick1; cur.c2 = cur.c1;
-    p.innerHTML = '<p class="given">'+it.s2.given+'</p>'
+    if (cur.pick2 === undefined || cur.pick2 === null){ cur.pick2 = cur.pick1; cur.c2 = cur.c1; }
+    p.innerHTML = '<p class="given">'+t(it.s2.given)+'</p>'
       + tableHTML(it.s2)
-      + '<p class="q">'+it.s2.q+'</p>'
+      + '<p class="q">'+esc(t(S.changePick))+'</p>'
       + '<div class="picks" id="picks"></div>'
-      + confHTML(it.s1.claim, cur.c1, '')
-      + '<button class="btn go" id="go">다음</button>';
-    wirePicks(it.s1.options, s => { cur.pick2 = s; }, cur.pick1);
+      + confHTML(it.s1.claim, cur.c2, false)
+      + '<button class="btn go" id="go">'+esc(t(S.next))+'</button>';
+    wirePicks(it.s1.options, s => { cur.pick2 = s; }, cur.pick2);
     wireSlider(v => { cur.c2 = v; });
     $('#go').onclick = () => { stage = 3; renderStage(); };
 
   } else if (stage === 3){
     p.innerHTML = '<div class="reveal">'
-      + it.s3.map(x => '<p>'+x+'</p>').join('')
-      + '</div><br><button class="btn go" id="go">내 판단 보기</button>';
+      + it.s3.map(x => '<p>'+t(x)+'</p>').join('')
+      + '</div><br><button class="btn go" id="go">'+esc(t(S.seeMine))+'</button>';
     $('#go').onclick = () => { stage = 4; renderStage(); };
 
   } else {
     log[idx] = Object.assign({}, cur);
     renderResult();
   }
-  window.scrollTo({top:0,behavior:'instant'});  // 단계 전환은 이동이 아니라 화면 교체다. smooth 면 긴 패널에서 중간부터 읽게 된다
+  window.scrollTo({top:0,behavior:'instant'});  // 단계 전환은 이동이 아니라 화면 교체다
 }
 
 function wirePicks(options, onPick, preset){
@@ -566,53 +923,47 @@ function wireSlider(store){
 }
 
 function renderResult(){
+  repaint = renderResult;
+  crumbs();
   const it = ITEMS[idx], d = log[idx], p = $('#panel');
-  const inBand = d.c2 >= it.band[0] && d.c2 <= it.band[1];
 
   let choiceNote;
-  if (d.pick1 === it.best && d.pick2 === it.best)
-    choiceNote = it.bestNote;
-  else if (d.pick2 === it.best)
-    choiceNote = '2단계에서 '+it.best+'로 옮겼습니다. ' + it.bestNote;
-  else
-    choiceNote = it.bestNote + ' 당신은 '+d.pick2+'를 골랐습니다.';
+  if (d.pick1 === it.best && d.pick2 === it.best) choiceNote = t(it.bestNote);
+  else if (d.pick2 === it.best) choiceNote = fill(t(S.movedTo), {B:it.best}) + t(it.bestNote);
+  else choiceNote = t(it.bestNote) + fill(t(S.youPicked), {P:d.pick2});
 
   p.innerHTML = chart(d.c1, d.c2, it)
     + '<div class="rows">'
-    + row('당신', d.pick1+' '+d.c1+'%  →  '+d.pick2+' '+d.c2+'%', true)
-    + row('기준 · '+it.xlab[1], it.band[0]+' ~ '+it.band[1]+'%')
-    + row(it.contrast.k, it.contrast.v)
+    + row(t(S.you), d.pick1+' '+d.c1+'%  →  '+d.pick2+' '+d.c2+'%', true)
+    + row(t(S.refAfter) + t(it.xlab[1]), it.band[0]+' ~ '+it.band[1]+'%')
+    + row(t(it.contrast.k), it.contrast.v)
     + '</div>'
     + '<p class="note">'+choiceNote+'</p>'
-    + (it.closing ? '<p class="note">'+it.closing+'</p>' : '')
-    + '<p class="note">기준은 <b>그 시점에 알 수 있었던 것</b>이지 나중에 밝혀진 사실이 아닙니다. '
-    + '마지막에 공개된 진실은 그때 알 수 없었으므로, 두 줄은 서로 모순되지 않습니다.</p>'
-    + '<p class="note">기준은 하나의 값이 아니라 범위입니다. 가정에 따라 '
-    + it.band[0]+'%에서 '+it.band[1]+'% 사이에서 움직입니다. '
-    + '첫 화면에는 기준이 없습니다 — 그 시점에는 계산할 것이 없기 때문입니다.</p>'
-    + '<p class="note">무엇이 달라졌는지는 당신이 판단하세요.</p>'
+    + (it.closing ? '<p class="note">'+t(it.closing)+'</p>' : '')
+    + '<p class="note">'+t(S.noteProcess)+'</p>'
+    + '<p class="note">'+fill(t(S.noteBand), {LO:it.band[0], HI:it.band[1]})+'</p>'
+    + '<p class="note">'+esc(t(S.noteYours))+'</p>'
     + '<br><button class="btn go" id="go">'
-    + (idx+1 < ITEMS.length ? '다음 문항' : '종합 보기') + '</button>';
+    + esc(idx+1 < ITEMS.length ? t(S.nextItem) : t(S.seeSummary)) + '</button>';
 
-  $('#go').onclick = () => { idx++; stage = 1;
+  $('#go').onclick = () => { idx++; stage = 1; cur = null;
     if (idx < ITEMS.length) renderStage();
     // 저장 결과를 기다리는 동안 종합 화면을 먼저 띄운다. 저장이 끝나면 그 줄만 다시 그린다 —
     // 그 사이에 「다시 해보기」를 눌렀으면 덮어쓰지 않는다.
     else { submitRun().then(() => { if (idx === ITEMS.length) renderSummary(); });
            renderSummary(); } };
-  void inBand;
 }
 
 function row(k, v, mine){
-  return '<div class="row'+(mine?' mine':'')+'"><span class="k">'+k+'</span>'
-       + '<span class="v">'+v+'</span></div>';
+  return '<div class="row'+(mine?' mine':'')+'"><span class="k">'+esc(k)+'</span>'
+       + '<span class="v">'+esc(v)+'</span></div>';
 }
 
 function chart(a, b, it){
   const W=620,H=230,L=46,R=20,T=26,B=44;
   const x1=L+60, x2=W-R-60;
   const y=v => T + (H-T-B) * (1 - v/100);
-  let s = '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="확신도 궤적">';
+  let s = '<svg viewBox="0 0 '+W+' '+H+'" role="img">';
   [0,50,100].forEach(v => {
     s += '<line x1="'+L+'" y1="'+y(v)+'" x2="'+(W-R)+'" y2="'+y(v)+'" stroke="'
        + (v===0?'#141414':'#DDDDD8')+'" stroke-width="'+(v===0?3:1)+'"/>'
@@ -622,9 +973,9 @@ function chart(a, b, it){
   // 기준 밴드 — 2단계에만 존재한다
   s += '<rect x="'+(x2-54)+'" y="'+y(it.band[1])+'" width="108" height="'
      + Math.max(y(it.band[0])-y(it.band[1]),4)+'" fill="#DDDDD8" stroke="#141414" stroke-width="2"/>'
-     + '<text x="'+x2+'" y="'+(y(it.band[1])-9)+'" text-anchor="middle" '
-     + 'font-family="IBM Plex Mono,monospace" font-size="10" fill="#4A4A46">기준 '
-     + it.band[0]+'~'+it.band[1]+'%</text>';
+     + '<text x="'+x2+'" y="'+(y(it.band[1])-10)+'" text-anchor="middle" '
+     + 'font-family="IBM Plex Mono,monospace" font-size="10" fill="#4A4A46">'
+     + esc(t(S.refBand)) + it.band[0]+'~'+it.band[1]+'%</text>';
   // 당신
   s += '<line x1="'+x1+'" y1="'+y(a)+'" x2="'+x2+'" y2="'+y(b)+'" stroke="#0F6E56" stroke-width="3"/>'
      + dot(x1,y(a)) + dot(x2,y(b))
@@ -632,9 +983,9 @@ function chart(a, b, it){
      // 2단계 라벨이 기준 밴드나 그 제목과 겹치면 점 아래로 내린다
      + lab(x2, y(b), b, (b >= it.band[0]-8 && b <= it.band[1]+8) || b>=88 ? 20 : -13)
      + '<text x="'+x1+'" y="'+(H-12)+'" text-anchor="middle" font-family="IBM Plex Mono,monospace" '
-     + 'font-size="10" fill="#6B6B67">'+it.xlab[0]+'</text>'
+     + 'font-size="10" fill="#6B6B67">'+esc(t(it.xlab[0]))+'</text>'
      + '<text x="'+x2+'" y="'+(H-12)+'" text-anchor="middle" font-family="IBM Plex Mono,monospace" '
-     + 'font-size="10" fill="#6B6B67">'+it.xlab[1]+'</text>';
+     + 'font-size="10" fill="#6B6B67">'+esc(t(it.xlab[1]))+'</text>';
   return s + '</svg>';
   function dot(cx,cy){ return '<rect x="'+(cx-6)+'" y="'+(cy-6)+'" width="12" height="12" '
     + 'fill="#2BB673" stroke="#141414" stroke-width="3"/>'; }
@@ -642,104 +993,88 @@ function chart(a, b, it){
     + 'font-family="Archivo,sans-serif" font-weight="700" font-size="13" fill="#0F6E56">'+v+'%</text>'; }
 }
 
-/* 종합 — 문항별 첫 확신도를 순서대로 보여준다.
-   학습 효과를 없애는 대신 결과물로 만드는 쪽이다. */
+/* 저장 결과를 숨기지 않는다. 실패했으면 실패했다고 적는다 —
+   regime 프로젝트 R-1 의 「조용히 성공한 척하는 실패」를 여기서 반복하지 않는다. */
+function saveLine(){
+  const m = { saved:S.savedMsg, already:S.alreadyMsg, nologin:S.nologinMsg, failed:S.failedMsg };
+  return '<p class="stat">' + t(m[AUTH.saved] || S.savingMsg) + '</p>';
+}
+
+/* 종합 — 문항별 궤적을 순서대로. 첫 확신도는 서로 비교할 수 없다(문항 난이도와 뒤섞인다). */
 function renderSummary(){
+  repaint = renderSummary;
   crumbs();
   let rows = '';
   ITEMS.forEach((it,i) => {
     rows += row(
-      (i+1)+'. '+it.name+' · 믿음 '+it.axis.belief+' × 선택 '+it.axis.choice,
-      log[i].c1+'%  →  '+log[i].c2+'%   (기준 '+it.band[0]+'~'+it.band[1]+'%)');
+      (i+1)+'. '+t(it.name)+' · '+t(S.axisWord.belief[it.axis.belief])
+        +' × '+t(S.axisWord.choice[it.axis.choice]),
+      log[i].c1+'%  →  '+log[i].c2+'%   ('+t(S.refBand)+it.band[0]+'~'+it.band[1]+'%)');
   });
   $('#panel').innerHTML =
-      '<p class="given">문항별 궤적을 순서대로 둡니다. <b>첫 숫자</b>는 각 문항에서 '
-    + '아무 정보도 없이 얼마나 확신했는지입니다.<br><br>'
-    + '이 값들을 <b>서로 비교하지는 마세요.</b> 문항마다 처음 보이는 주장의 '
-    + '그럴듯함이 다르기 때문에, 값이 오르내리는 것은 당신이 아니라 문항이 만든 것일 수 '
-    + '있습니다. 「할수록 조심스러워지는가」는 문항 순서를 무작위로 돌리고 여러 사람의 '
-    + '기록이 쌓인 뒤에야 잴 수 있습니다.</p>'
+      '<p class="given">' + t(S.sumLead) + '</p>'
     + '<div class="rows">' + rows + '</div>'
-    + '<p class="note">여섯 문항은 <b>세 쌍</b>입니다. 1·2는 <b>표본의 크기</b>, '
-    + '3·4는 <b>구성을 나눠 보기</b>, 5·6은 <b>표에서 빠진 사람</b>. '
-    + '세 쌍 모두 같은 장치가 한 번은 이쪽으로, 한 번은 저쪽으로 작동했습니다.</p>'
-    + '<p class="note">장치를 아는 것과 방향을 아는 것은 다른 일입니다. '
-    + '「표본이 작으니 덜 믿자」도 「나눠 보면 뒤집힌다」도 「빠진 데이터가 있으니 '
-    + '못 믿겠다」도, 규칙으로 외우면 절반을 틀립니다. 방향은 매번 재봐야 합니다.</p>'
-    + '<p class="note">판정은 없습니다. 궤적만 있습니다.</p>'
+    + '<p class="note">' + t(S.sumPairs) + '</p>'
+    + '<p class="note">' + t(S.sumRule) + '</p>'
+    + '<p class="note">' + esc(t(S.sumNoVerdict)) + '</p>'
     + saveLine()
-    + '<br><button class="btn go" id="go">다시 해보기</button>';
+    + '<br><button class="btn go" id="go">'+esc(t(S.again))+'</button>';
   $('#go').onclick = begin;
-  window.scrollTo({top:0,behavior:'instant'});  // 단계 전환은 이동이 아니라 화면 교체다. smooth 면 긴 패널에서 중간부터 읽게 된다
-}
-
-/* 저장 결과를 숨기지 않는다. 실패했으면 실패했다고 적는다 —
-   regime 프로젝트 R-1 의 「조용히 성공한 척하는 실패」를 여기서 반복하지 않는다. */
-function saveLine(){
-  const m = {
-    saved:   '이번 판이 <b>최초 기록으로 저장되었습니다.</b> 앞으로 몇 번을 풀어도 이 기록은 바뀌지 않습니다. '
-           + '<a href="/me/" style="text-decoration:underline">개인 페이지</a>에서 볼 수 있습니다.',
-    already: '이미 있던 <b>최초 기록은 그대로입니다.</b> 이번 판은 저장되지 않았습니다.',
-    nologin: '로그인하지 않아 <b>저장되지 않았습니다.</b>',
-    failed:  '저장에 <b>실패했습니다.</b> 네트워크나 로그인 상태를 확인해 주세요. '
-           + '이번 판의 답은 화면에만 남아 있습니다.'
-  };
-  return '<p class="stat">' + (m[AUTH.saved] || '저장 결과를 확인하는 중입니다…') + '</p>';
+  window.scrollTo({top:0,behavior:'instant'});
 }
 
 /* ───────────────────────── 시작 전 화면 ─────────────────────────
    로그인하지 않았으면 시작할 수 없다. 이미 기록이 있으면 그것도 먼저 알린다 —
    다 풀고 나서 "사실 저장 안 됐어요"라고 말하면 그건 배신이다.            */
 function renderGate(){
+  repaint = renderGate;
   crumbs();
   const p = $('#panel');
-  const warn =
-      '<div class="warn"><h3>먼저 읽어주세요</h3>'
-    + '<p>이 여섯 문항은 <b>최초 1회만 기록됩니다.</b> '
-    + '두 번째부터는 몇 번을 풀어도 기록이 바뀌지 않습니다.</p>'
-    + '<p>한 번 풀고 나면 반전을 알게 되므로, 두 번째 판은 같은 것을 재지 못합니다. '
-    + '재는 대상이 <b>아무것도 모르는 상태에서의 당신</b>이기 때문입니다.</p>'
-    + '<p>천천히, 신중하게 답하세요. 되돌릴 기회는 없습니다.</p></div>';
+  const warn = '<div class="warn"><h3>' + esc(t(S.warnHead)) + '</h3>'
+    + '<p>' + t(S.warn1) + '</p><p>' + t(S.warn2) + '</p><p>' + t(S.warn3) + '</p></div>';
 
   if (!AUTH.ready){
-    p.innerHTML = '<p class="given">로그인 상태를 확인하는 중입니다…</p>';
+    p.innerHTML = '<p class="given">' + esc(t(S.checking)) + '</p>';
   } else if (!AUTH.user){
     p.innerHTML = warn
-      + '<p class="q">로그인해야 시작할 수 있습니다.</p>'
-      + '<p class="note">기록이 최초 1회뿐이라, 그 한 번이 누구의 것인지 알아야 합니다. '
-      + '접근을 막으려는 것이 아니라 같은 사람의 첫 판을 한 번만 세기 위해서입니다.</p>'
-      + '<p class="note">로그인 칩은 <b>화면 왼쪽 아래</b>에 있습니다.</p>'
-      + '<p class="note">로그인하지 않고 화면만 둘러보고 싶다면, 그건 기록되지 않습니다 — '
-      + '다만 그 뒤에는 이 문항들을 처음 보는 상태로 되돌릴 수 없습니다.</p>';
+      + '<p class="q">' + esc(t(S.needSignIn)) + '</p>'
+      + '<p class="note">' + t(S.whySignIn) + '</p>'
+      + '<p class="note">' + t(S.chipHint) + '</p>'
+      + '<p class="note">' + t(S.peekHint) + '</p>';
   } else if (AUTH.existing === undefined){
-    p.innerHTML = warn + '<p class="given">기록을 확인하는 중입니다…</p>';
+    p.innerHTML = warn + '<p class="given">' + esc(t(S.checkingRec)) + '</p>';
   } else if (AUTH.existing){
     const d = new Date(AUTH.existing.created_at);
-    p.innerHTML =
-        '<div class="warn"><h3>이미 기록이 있습니다</h3>'
-      + '<p>' + d.getFullYear() + '년 ' + (d.getMonth()+1) + '월 ' + d.getDate() + '일에 '
-      + '한 번 푸셨습니다. <b>지금 다시 풀어도 그 기록은 바뀌지 않습니다.</b></p>'
-      + '<p>기록은 <a href="/me/" style="text-decoration:underline">개인 페이지</a>에서 볼 수 있습니다.</p>'
-      + '</div>'
-      + '<button class="btn go" id="start">기록 없이 다시 해보기</button>';
+    const ds = window.APP_LANG === 'kr'
+      ? d.getFullYear()+'년 '+(d.getMonth()+1)+'월 '+d.getDate()+'일'
+      : d.toLocaleDateString('en-GB', {year:'numeric', month:'long', day:'numeric'});
+    p.innerHTML = '<div class="warn"><h3>' + esc(t(S.haveHead)) + '</h3>'
+      + '<p>' + fill(t(S.haveLine), {D:ds}) + '</p>'
+      + '<p>' + t(S.haveSee) + '</p></div>'
+      + '<button class="btn go" id="start">'+esc(t(S.againNoRec))+'</button>';
     $('#start').onclick = begin;
   } else {
     p.innerHTML = warn
-      + '<p class="stat">기록 대상 · <b>' + ITEMS.length + '문항</b> · 약 10분 · '
-      + '중간에 나가면 기록되지 않습니다</p><br>'
-      + '<button class="btn go" id="start">시작하기</button>';
+      + '<p class="stat">' + fill(t(S.willRecord), {N:ITEMS.length}) + '</p><br>'
+      + '<button class="btn go" id="start">'+esc(t(S.start))+'</button>';
     $('#start').onclick = begin;
   }
   window.scrollTo({top:0,behavior:'instant'});
 }
 
-function begin(){ idx = 0; stage = 1; log.length = 0; AUTH.saved = null; renderStage(); }
+function begin(){ idx = 0; stage = 1; cur = null; log.length = 0; AUTH.saved = null; renderStage(); }
 
 /* 편수는 문안에 박지 않는다 — ITEMS 에서 유도한다 (사이트 카드 문안 규약과 같은 이유) */
-$('#heroNote').textContent =
-  '한국어만 · 영문 미작성 · 문항 ' + ITEMS.length + '개 · 로그인 필요';
+function paintChrome(){
+  $('#heroNote').textContent = ITEMS.length + ' ' + t(S.heroNote);
+  $('#heroSub').innerHTML = t(S.heroSub);
+}
 
-idx = -1;
+/* 언어가 바뀌면 화면을 다시 그린다. 답은 cur/log 에 있으므로 잃지 않는다. */
+window.APP_LANG_LISTENERS = window.APP_LANG_LISTENERS || [];
+window.APP_LANG_LISTENERS.push(function(){ paintChrome(); repaint(); });
+
+paintChrome();
 renderGate();
 </script>
 </body>
