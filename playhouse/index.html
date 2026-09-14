@@ -183,8 +183,8 @@ if(window.KYG_LANG!=='en'){
 
     <div class="proj-grid" id="grid">
 
-      <a class="proj" href="/unreliable-numbers/" data-tags="belief updating confidence calibration bayes posterior reference band sample size simpsons paradox confounding case mix stratify survivorship bias selection bias missing data attrition bounding worst case statistics numbers unreliable sign-in 믿을 수 없는 숫자 확신 판단 갱신 신념 갱신 베이즈 사후확률 기준 범위 표본 크기 표본수 심슨의 역설 교란 환자 구성 층화 생존자 편향 선택 편향 빠진 데이터 중도 이탈 추적 실패 경계 분석 최악 가정 통계 숫자 착시 로그인 필요 최초 1회">
-        <div class="proj-head"><span class="proj-name tx" data-en="unreliable-numbers" data-kr="믿을 수 없는 숫자">unreliable-numbers</span><span class="proj-badges"><span class="badge signin tx" data-en="SIGN IN" data-kr="로그인 필요">SIGN IN</span><span class="badge live">PLAY &#9658;</span></span></div>
+      <a class="proj" href="/unreliable-numbers/" data-tags="belief updating confidence calibration bayes posterior reference band sample size simpsons paradox confounding case mix stratify survivorship bias selection bias missing data attrition bounding worst case statistics numbers unreliable sign-in 믿을 수 없는 숫자 확신 판단 갱신 신념 갱신 베이즈 사후확률 기준 범위 표본 크기 표본수 심슨의 역설 교란 환자 구성 층화 생존자 편향 선택 편향 빠진 데이터 중도 이탈 추적 실패 경계 분석 최악 가정 통계 숫자 착시 로그인 필요 최초 1회 notes writeup 해설 원리 게이트 사전등록 전형성 기준 밴드">
+        <div class="proj-head"><span class="proj-name tx" data-en="unreliable-numbers" data-kr="믿을 수 없는 숫자">unreliable-numbers</span><span class="proj-badges"><span class="badge notes" role="link" tabindex="0" data-href="/notes/unreliable-numbers/" title="How it works">NOTES</span><span class="badge signin tx" data-en="SIGN IN" data-kr="로그인 필요">SIGN IN</span><span class="badge live">PLAY &#9658;</span></span></div>
         <p class="tx" data-en="You judge, you say how sure you are, then one more fact arrives. What gets measured is not the answer but the move." data-kr="판단하고, 얼마나 확신하는지 적고, 그 다음 사실 하나가 더 나옵니다. 재는 것은 답이 아니라 그 움직임입니다.">You judge, you say how sure you are, then one more fact arrives. What gets measured is not the answer but the move.</p>
         <p class="stack">Belief Updating &middot; Simpson's Paradox &middot; Survivorship Bias</p>
       </a>
@@ -243,9 +243,9 @@ if(window.KYG_LANG!=='en'){
 
     <div class="notes-cta">
       <div>
-        <div class="t tx" data-en="Most of these have a write-up." data-kr="여기 있는 것들 대부분에는 해설이 있습니다.">Most of these have a write-up.</div>
+        <div class="t tx" data-en="Every one of these has a write-up." data-kr="여기 있는 것들 전부에 해설이 있습니다.">Every one of these has a write-up.</div>
         <p class="d tx" data-en="What each one measures, what it refuses to claim, and what broke on the way there." data-kr="각각이 무엇을 재는지, 무엇까지는 주장하지 않는지, 그리고 거기까지 오면서 무엇이 망가졌는지.">What each one measures, what it refuses to claim, and what broke on the way there.</p>
-        <p class="m tx" data-en="7 WRITE-UPS &middot; ENGLISH ONLY" data-kr="해설 7편 &middot; 영어로만 작성">7 WRITE-UPS &middot; ENGLISH ONLY</p>
+        <p class="m tx" data-en="9 WRITE-UPS &middot; ENGLISH ONLY" data-kr="해설 9편 &middot; 영어로만 작성">9 WRITE-UPS &middot; ENGLISH ONLY</p>
       </div>
       <a class="go tx" href="/notes/" data-en="Read the NOTES &rarr;" data-kr="NOTES 읽기 &rarr;">Read the NOTES &rarr;</a>
     </div>
@@ -286,9 +286,16 @@ window.APP_LANG_LISTENERS = [];
       this.q.push({from:from,to:to,start:start,end:end,ch:null});
     }
     if(this.raf) cancelAnimationFrame(this.raf);
-    this.f=0; this.txt=txt; this.frame();
+    this.f=0; this.t0=null; this.txt=txt; this.frame();
   };
-  Scramble.prototype.frame=function(){
+  /* 진행도를 «프레임 수»가 아니라 «경과 시간»으로 센다.
+     프레임을 세면 144Hz 화면에서 같은 애니메이션이 60Hz의 2.42배로 끝난다
+     (최악 55프레임 = 60Hz 917ms 대 145Hz 379ms). 짧은 라벨은 0.2초에 끝나서
+     사람 눈에는 «애니메이션이 안 된다»로 보인다. 기준은 60fps 로 고정한다. */
+  Scramble.prototype.frame=function(ts){
+    var now = (typeof ts === 'number') ? ts : performance.now();
+    if(this.t0===null || this.t0===undefined) this.t0=now;
+    this.f = (now - this.t0) / (1000/60);
     var out="", done=0;
     for(var i=0;i<this.q.length;i++){
       var it=this.q[i];
@@ -299,8 +306,8 @@ window.APP_LANG_LISTENERS = [];
       } else out+=esc(it.from);
     }
     this.el.innerHTML=out;
-    if(done===this.q.length){ this.el.dataset.plain=this.txt; }
-    else { this.f++; this.raf=requestAnimationFrame(this.frame); }
+    if(done===this.q.length){ this.el.dataset.plain=this.txt; this.raf=null; }
+    else { this.raf=requestAnimationFrame(this.frame); }
   };
   var els=[].slice.call(document.querySelectorAll('.tx'));
   els.forEach(function(el){ el.dataset.plain=el.textContent; el._s=new Scramble(el); });
