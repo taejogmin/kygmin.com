@@ -449,6 +449,15 @@ footer{border-top:3px solid var(--ink);padding:26px 0;}
 .ask-chip.ctx:hover{background:var(--green-deep);color:var(--paper);}
 .ask-chip[hidden]{display:none;}
 @media(max-width:560px){.ask-strip .more{margin-left:0;}}
+
+/* 상단 메뉴에 ME 가 들어가면서 좁은 화면에서 한 줄이 더 생긴다.
+   글자와 여백만 줄여 두 줄로 되돌린다 — 링크를 빼지 않는다. */
+@media(max-width:430px){
+  .nav-links{gap:5px;}
+  .nav-links a{font-size:10.5px;padding:5px 8px;}   /* 그림자는 페이지마다 색·크기가 달라 건드리지 않는다 */
+  .logo{font-size:16px;}
+  .nav-inner{padding-left:14px;padding-right:14px;gap:10px;}
+}
 </style>
 <!-- 언어 기억: 선택한 언어를 저장해 두고, 다음 페이지에서 첫 페인트 전에 복원한다 -->
 <script>
@@ -471,6 +480,7 @@ if(window.KYG_LANG!=='en'){
       <a href="/index.html"><span class="tx" data-en="Home" data-kr="홈">Home</span></a>
       <a href="/playhouse/">PLAYHOUSE</a>
       <a class="on" href="./"><span class="tx" data-en="Indian Poker" data-kr="인디안 포커">Indian Poker</span></a>
+      <a href="/me/">ME</a>
       <a href="/cv.html">CV &#128274;</a>
     </div>
   </div>
