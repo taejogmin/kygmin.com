@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Unreliable Numbers — KYGMIN</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#F6F6F4;
+  --ink:#141414;
+  --gray:#DDDDD8;
+  --green:#2BB673;
+  --green-deep:#0F6E56;
+  --arch:'Archivo','Pretendard',sans-serif;
+  --sans:'Pretendard',-apple-system,'Apple SD Gothic Neo','Malgun Gothic','Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono','SF Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{transition:none!important;}
+}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:16px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  word-break:keep-all;overflow-wrap:break-word;
+}
+a{color:inherit;text-decoration:none;}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--green);outline-offset:3px;}
+.wrap{max-width:960px;margin:0 auto;padding:0 24px;}
+
+/* ── Nav ── */
+nav{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:3px solid var(--ink);}
+.nav-inner{max-width:960px;margin:0 auto;padding:14px 24px;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;}
+.logo{font-family:var(--arch);font-weight:900;font-size:19px;letter-spacing:-0.5px;white-space:nowrap;}
+.logo em{font-style:normal;background:var(--green);color:var(--paper);padding:0 6px;display:inline-block;transform:rotate(-1.5deg);}
+.nav-links{display:flex;gap:8px;flex-wrap:wrap;}
+.nav-links a{font-family:var(--arch);font-size:12px;font-weight:700;text-transform:uppercase;
+  border:2px solid var(--ink);padding:6px 13px;background:#fff;
+  box-shadow:3px 3px 0 var(--ink);transition:transform .1s, box-shadow .1s;}
+.nav-links a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+.nav-links a.on{background:var(--green);color:var(--paper);}
+
+/* ── Hero ── */
+header{padding:52px 0 34px;border-bottom:3px solid var(--ink);}
+.sec-tag{font-family:var(--mono);font-size:12.5px;font-weight:600;
+  color:var(--green-deep);letter-spacing:1px;display:block;margin-bottom:14px;}
+h1{font-family:var(--arch);font-weight:900;text-transform:uppercase;
+  font-size:clamp(32px, 6.2vw, 54px);line-height:1.02;letter-spacing:-2px;}
+h1 .box{background:var(--ink);color:var(--paper);padding:0 12px;display:inline-block;transform:rotate(-1deg);}
+.hero-sub{margin-top:18px;font-size:15.5px;max-width:620px;font-weight:500;}
+.hero-note{margin-top:12px;font-family:var(--mono);font-size:12px;color:#4A4A46;}
+
+main{padding:34px 0 88px;}
+
+/* ── 진행 표시 ── */
+.crumbs{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:22px;}
+.crumb{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:1.2px;
+  border:2px solid var(--ink);padding:3px 9px;background:#fff;color:#6B6B67;}
+.crumb.on{background:var(--ink);color:var(--paper);}
+.crumb.done{background:var(--gray);}
+
+/* ── 패널 ── */
+.panel{border:3px solid var(--ink);background:#fff;box-shadow:6px 6px 0 var(--ink);
+  padding:26px 26px 30px;max-width:680px;}
+.given{font-family:var(--mono);font-size:13px;line-height:1.75;color:#3A3A38;
+  border-left:3px solid var(--green);padding-left:13px;margin-bottom:24px;}
+.given br+br{content:'';display:block;height:6px;}
+.given b{font-weight:600;color:var(--ink);}
+
+.tw{overflow-x:auto;margin-bottom:26px;}   /* 열이 많은 표는 좁은 화면에서 가로로 민다 */
+table{border-collapse:collapse;width:100%;min-width:340px;font-family:var(--mono);font-size:13px;}
+th,td{border-bottom:1px solid var(--gray);padding:9px 10px;text-align:right;}
+th:first-child,td:first-child{text-align:left;}
+th{font-family:var(--arch);font-size:11px;text-transform:uppercase;letter-spacing:.5px;
+  border-bottom:3px solid var(--ink);background:#EFEFEA;font-weight:700;}
+tr:last-child td{border-bottom:none;}
+td.hot{font-weight:600;}
+
+.q{font-family:var(--arch);font-weight:700;font-size:17px;line-height:1.4;margin-bottom:16px;}
+.picks{display:flex;gap:12px;margin-bottom:30px;flex-wrap:wrap;}
+.btn{display:inline-block;font-family:var(--arch);font-size:14px;font-weight:700;text-transform:uppercase;
+  border:3px solid var(--ink);padding:12px 24px;box-shadow:5px 5px 0 var(--ink);
+  transition:transform .1s, box-shadow .1s;background:#fff;cursor:pointer;color:var(--ink);}
+.btn:hover{transform:translate(2px,2px);box-shadow:3px 3px 0 var(--ink);}
+.btn[aria-pressed="true"]{background:var(--green);color:var(--paper);}
+.btn:disabled{opacity:.35;cursor:not-allowed;}
+.btn:disabled:hover{transform:none;box-shadow:5px 5px 0 var(--ink);}
+.pick{min-width:76px;text-align:center;}
+.go{width:100%;background:var(--ink);color:var(--paper);}
+.go:disabled{background:var(--gray);color:#8A8A85;}
+
+/* ── 확신도 ── */
+.conf{margin-bottom:30px;}
+.conf .lbl{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:1px;
+  text-transform:uppercase;color:#6B6B67;margin-bottom:6px;}
+.claim{border:3px solid var(--ink);background:#EFEFEA;padding:12px 15px;
+  font-size:15px;font-weight:500;margin-bottom:18px;}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:34px;
+  background:transparent;cursor:pointer;}
+input[type=range]::-webkit-slider-runnable-track{height:14px;background:#fff;border:3px solid var(--ink);}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;
+  background:var(--green);border:3px solid var(--ink);margin-top:-9px;box-shadow:3px 3px 0 var(--ink);}
+input[type=range]::-moz-range-track{height:14px;background:#fff;border:3px solid var(--ink);}
+input[type=range]::-moz-range-thumb{width:22px;height:22px;background:var(--green);
+  border:3px solid var(--ink);border-radius:0;}
+.val{font-family:var(--arch);font-weight:900;font-size:30px;line-height:1.1;margin-top:12px;min-height:33px;}
+.val small{font-family:var(--mono);font-weight:400;font-size:11px;color:#8A8A85;
+  letter-spacing:.5px;margin-left:10px;text-transform:uppercase;}
+.val .untouched{font-family:var(--mono);font-weight:500;font-size:12px;color:#8A8A85;
+  letter-spacing:1px;text-transform:uppercase;}
+
+/* ── 공개 ── */
+.reveal p{font-size:15px;margin-bottom:11px;}
+.reveal p:last-child{margin-bottom:0;}
+.reveal b{background:var(--green);color:var(--paper);padding:0 5px;font-weight:700;}
+
+/* ── 경고 · 상태 ── */
+.warn{border:3px solid var(--ink);background:#EFEFEA;padding:18px 20px;margin-bottom:26px;}
+.warn h3{font-family:var(--arch);font-weight:900;font-size:14px;text-transform:uppercase;
+  letter-spacing:.5px;margin-bottom:9px;}
+.warn p{font-size:14.5px;margin-bottom:9px;}
+.warn p:last-child{margin-bottom:0;}
+.warn b{font-weight:700;}
+.stat{font-family:var(--mono);font-size:12px;color:#4A4A46;margin-top:16px;}
+.stat b{color:var(--ink);font-weight:600;}
+
+/* ── 결과 ── */
+svg{display:block;width:100%;height:230px;margin-bottom:10px;}
+.rows{border-top:3px solid var(--ink);margin-bottom:24px;}
+.row{display:flex;justify-content:space-between;align-items:baseline;gap:14px;
+  padding:11px 2px;border-bottom:1px solid var(--gray);}
+.row .k{font-family:var(--mono);font-size:12px;color:#4A4A46;}
+.row .v{font-family:var(--arch);font-weight:700;font-size:17px;white-space:nowrap;}
+.row.mine .v{color:var(--green-deep);}
+.note{font-size:14px;color:#3A3A38;margin-bottom:14px;max-width:620px;}
+.note:last-child{margin-bottom:0;}
+.note b{font-weight:600;color:var(--ink);}
+
+footer{border-top:3px solid var(--ink);padding:20px 0;}
+.foot-inner{max-width:960px;margin:0 auto;padding:0 24px;display:flex;
+  justify-content:space-between;gap:16px;flex-wrap:wrap;
+  font-family:var(--mono);font-size:12px;color:#4A4A46;}
+.hidden{display:none;}
+@media(max-width:560px){
+  .panel{padding:20px 18px 24px;box-shadow:5px 5px 0 var(--ink);}
+  .btn{padding:11px 18px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="/index.html">KYG<em>MIN</em></a>
+    <div class="nav-links">
+      <a href="/index.html">Home</a>
+      <a href="/playhouse/">PLAYHOUSE</a>
+      <a class="on" href="./">Unreliable Numbers</a>
+      <a href="/cv.html">CV &#128274;</a>
+    </div>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <span class="sec-tag">BELIEF UPDATING · v0 · 프로토타입</span>
+    <h1>믿을 수 없는<br><span class="box">숫자</span></h1>
+    <p class="hero-sub">숫자를 보고 판단하고, 얼마나 확신하는지 적습니다.
+      그 다음 새로운 정보가 공개되고, 다시 묻습니다.
+      이 도구가 재는 것은 정답이 아니라 <b>당신의 확신이 어떻게 움직였는가</b>입니다.</p>
+    <p class="hero-note" id="heroNote">한국어만 · 영문 미작성</p>
+  </div>
+</header>
+
+<main><div class="wrap">
+  <div class="crumbs" id="crumbs"></div>
+  <div class="panel" id="panel"></div>
+</div></main>
+
+<script src="/auth-widget.js" defer></script>
+
+<footer>
+  <div class="foot-inner">
+    <span>&#169; KYGMIN.COM</span>
+    <span>UNRELIABLE NUMBERS · 판정하지 않는다 · 궤적만 보여준다</span>
+  </div>
+</footer>
+
+<script>
+/* ─────────────────────────────────────────────────────────────
+   문항 정의. 기준선(band)과 대조(contrast)는 validate.py 가 계산한 값이며
+   화면에서 다시 계산하지 않는다. 두 구현이 갈라지면 화면이 거짓말을 한다.
+   ───────────────────────────────────────────────────────────── */
+const ITEMS = [
+{
+  id:'q1', name:'정밀 검사',
+  axis:{belief:'내림', choice:'유지'},
+  given:'이 회사의 전국 평균 불량률은 <b>3%</b>입니다.',
+  s1:{
+    head:['지점','관측 불량률'],
+    rows:[['A','2.8%'],['B','3.2%'],['C','3.0%'],['D','10.0%']],
+    hot:3,
+    q:'한 곳만 정밀 검사할 수 있습니다. 어디로 보내겠습니까?',
+    options:['A','B','C','D'],
+    claim:'D의 진짜 불량률은 3%보다 높다.'
+  },
+  s2:{
+    given:'검사한 제품 수가 공개되었습니다.',
+    head:['지점','검사 수','불량','불량률'],
+    rows:[['A','500','14','2.8%'],['B','500','16','3.2%'],
+          ['C','500','15','3.0%'],['D','20','2','10.0%']],
+    hot:3,
+    q:'선택을 바꾸겠습니까?'
+  },
+  s3:['네 지점의 진짜 불량률은 <b>모두 3.0%</b>였습니다.',
+      'D에서는 20개 중 2개의 불량품이 관측되었습니다.',
+      '진짜 불량률이 3%일 때 20개 중 2개 이상이 불량일 확률은 <b>12%</b>입니다.'],
+  band:[62,80],
+  contrast:{k:'기준 · D도 500개를 검사했다면', v:'100%'},
+  best:'D',
+  bestNote:'검사 수가 공개된 뒤에도 D의 추정 불량률은 네 곳 중 가장 높습니다. '
+          +'검사지를 D로 보내는 결정은 두 단계 모두에서 옳습니다.',
+  xlab:['숫자만 봤을 때','검사 수를 본 뒤']
+},
+{
+  id:'q2', name:'A/B 테스트',
+  axis:{belief:'올림', choice:'유지'},
+  given:'어떤 서비스가 <b>가입 버튼의 문구</b>를 A와 B 두 가지로 만들어 실험했습니다. '
+       +'방문자에게 둘 중 하나를 보여주고, 버튼을 본 사람 가운데 몇 명이 실제로 '
+       +'가입했는지를 셌습니다. 버튼을 통한 가입율을 A/B 테스트에서 '
+       +'<b>전환율</b>로 부릅니다.<br><br>'
+       +'실험이 끝나면 <b>한 문구만 남기고</b> 앞으로의 모든 방문자에게 그것을 보여줍니다. '
+       +'이 회사의 이전 실험들에서 두 문구의 전환율 차이는 대체로 <b>±0.3%p</b> 안이었습니다.',
+  s1:{
+    head:['문구','전환율'],
+    rows:[['A','2.00%'],['B','2.12%']],
+    hot:1,
+    q:'어느 문구를 남기겠습니까?',
+    options:['A','B'],
+    claim:'B 문구를 계속 쓰면 A 문구를 사용했을 때보다 가입이 더 많다.'
+  },
+  s2:{
+    given:'각 문구를 <b>몇 명이 봤는지</b>가 공개되었습니다.',
+    head:['문구','버튼을 본 사람','가입한 사람','전환율'],
+    rows:[['A','200,000','4,000','2.00%'],['B','200,000','4,240','2.12%']],
+    hot:1,
+    q:'선택을 바꾸겠습니까?'
+  },
+  s3:['A 문구의 진짜 전환율은 <b>2.00%</b>, B는 <b>2.10%</b>였습니다.',
+      'B가 실제로 더 낫습니다. 방문자 <b>1,000명당 1명</b>이 더 가입합니다.',
+      '각 20만 명 규모에서 0.12%p의 관측 차이는 우연으로 설명되지 않습니다.'],
+  band:[99,100],
+  contrast:{k:'기준 · 각 2,000명만 봤다면', v:'53%'},
+  best:'B',
+  bestNote:'두 단계 모두 B를 남기는 것이 최선입니다. 바뀔 수 있었던 것은 선택이 아니라 확신입니다.',
+  xlab:['전환율만 봤을 때','실험 규모를 본 뒤'],
+  closing:'문항 1에서 표본 수는 확신을 <b>내렸고</b>, 여기서는 <b>올렸습니다</b>. '
+         +'표본 수는 확신을 낮추는 장치가 아니라 증거의 세기를 정하는 장치이고, '
+         +'방향은 상황이 정합니다.'
+},
+{
+  id:'q3', name:'수술 성공률',
+  axis:{belief:'내림', choice:'바뀜'},
+  given:'당신은 이 수술을 받아야 하고, 의사는 당신을 <b>중증</b>으로 분류했습니다.<br><br>'
+       +'아래는 두 병원이 지난 1년간 이 수술을 각각 1,000건씩 하고 남긴 성공률입니다. '
+       +'이 지역 병원들 사이에서 <b>같은 중증도</b> 환자의 성공률 차이는 대체로 '
+       +'<b>5%p</b> 안팎입니다.',
+  s1:{
+    head:['병원','수술','성공','성공률'],
+    rows:[['A','1,000','785','78.5%'],['B','1,000','740','74.0%']],
+    hot:0,
+    q:'어느 병원에서 수술을 받겠습니까?',
+    options:['A','B'],
+    claim:'중증 환자에게는 A의 성공 확률이 B보다 높다.'
+  },
+  s2:{
+    given:'두 병원이 받은 환자의 <b>중증도 구성</b>이 공개되었습니다.',
+    head:['병원','중증도','수술','성공','성공률'],
+    rows:[['A','경증','700','621','88.7%'],['A','중증','300','164','54.7%'],
+          ['B','경증','300','275','91.7%'],['B','중증','700','465','66.4%']],
+    hot:[1,3],
+    q:'선택을 바꾸겠습니까?'
+  },
+  s3:['진짜 성공률은 경증 <b>A 88% · B 93%</b>, 중증 <b>A 55% · B 65%</b>였습니다.',
+      'B가 두 중증도 <b>모두에서</b> 더 높습니다.',
+      '전체 숫자가 반대로 보인 것은 A가 경증 환자를 훨씬 많이 받았기 때문입니다.'],
+  band:[0,4],
+  contrast:{k:'참고 · 두 병원이 같은 환자 구성을 받았다면', v:'A 71.7% · B 79.0%'},
+  best:'B',
+  bestNote:'중증 환자의 성공률이 높은 쪽은 B입니다 — 66.4% 대 54.7%.',
+  xlab:['전체 성공률만 봤을 때','환자 구성을 본 뒤'],
+  closing:'앞의 두 문항에서 새 정보는 확신만 움직였습니다. 여기서는 '
+         +'<b>선택 자체가 바뀌어야 했습니다</b>. 확신과 선택은 같이 움직이지 않고, '
+         +'그래서 따로 물어야 합니다.'
+},
+{
+  id:'q4', name:'정시 배송률',
+  axis:{belief:'유지', choice:'유지'},
+  given:'당신은 두 배송업체 중 하나와 계약합니다. '
+       +'<b>당신의 배송지는 비수도권입니다.</b><br><br>'
+       +'아래는 두 업체가 지난 분기에 처리한 배송 1,000건씩의 정시 도착률입니다. '
+       +'이 업계에서 업체 간 정시율 차이는 대체로 <b>5%p</b> 안팎입니다.',
+  s1:{
+    head:['업체','배송','정시','정시율'],
+    rows:[['A','1,000','905','90.5%'],['B','1,000','834','83.4%']],
+    hot:0,
+    q:'어느 업체와 계약하겠습니까?',
+    options:['A','B'],
+    claim:'비수도권에서는 A의 정시 도착률이 B보다 높다.'
+  },
+  s2:{
+    given:'두 업체가 처리한 배송의 <b>지역 구성</b>이 공개되었습니다.',
+    head:['업체','지역','배송','정시','정시율'],
+    rows:[['A','수도권','700','641','91.6%'],['A','비수도권','300','264','88.0%'],
+          ['B','수도권','300','261','87.0%'],['B','비수도권','700','573','81.9%']],
+    hot:[1,3],
+    q:'선택을 바꾸겠습니까?'
+  },
+  s3:['진짜 정시율은 수도권 <b>A 92% · B 87%</b>, 비수도권 <b>A 89% · B 84%</b>였습니다.',
+      'A가 두 지역 <b>모두에서</b> 5%p 앞섭니다.',
+      '지역 구성은 크게 달랐지만 순서를 바꾸지는 않았습니다.'],
+  band:[95,100],
+  contrast:{k:'참고 · 두 업체가 같은 지역 구성을 받았다면', v:'A 89.8% · B 84.4%'},
+  best:'A',
+  bestNote:'비수도권에서 정시율이 높은 쪽도 A입니다 — 88.0% 대 81.9%. '
+          +'선택은 두 단계 모두 A입니다.',
+  xlab:['전체 정시율만 봤을 때','지역 구성을 본 뒤'],
+  closing:'문항 3에서는 구성을 나누자 결론이 <b>뒤집혔습니다</b>. 여기서는 구성이 '
+         +'그만큼 달랐는데도 <b>아무것도 바뀌지 않았습니다</b>. 나누어 보는 것은 '
+         +'규칙이 아니라 확인입니다 — 나눠보기 전에는 어느 쪽인지 알 수 없습니다.'
+},
+{
+  id:'q5', name:'학원 합격률',
+  axis:{belief:'내림', choice:'바뀜'},
+  given:'당신은 두 학원 중 한 곳에 등록합니다.<br><br>'
+       +'아래는 두 학원이 홈페이지에 올린 지난해 <b>합격률</b>입니다. '
+       +'이 지역 학원들 사이의 합격률 차이는 대체로 <b>10%p</b> 안팎입니다.',
+  s1:{
+    head:['학원','합격률'],
+    rows:[['A','77.6%'],['B','54.0%']],
+    hot:0,
+    q:'어느 학원에 등록하겠습니까?',
+    options:['A','B'],
+    claim:'A에 등록하면 B에 등록했을 때보다 합격할 확률이 높다.'
+  },
+  s2:{
+    given:'두 합격률의 <b>분모</b>가 공개되었습니다.',
+    head:['학원','등록','끝까지 수강','합격','홈페이지 합격률'],
+    rows:[['A','500','255','198','77.6%'],['B','500','478','258','54.0%']],
+    hot:0,
+    q:'선택을 바꾸겠습니까?'
+  },
+  s3:['A의 77.6%는 <b>끝까지 수강한 255명</b>만 센 숫자입니다. '
+      +'등록한 500명 기준으로는 <b>39.6%</b>입니다.',
+      'B는 478명이 끝까지 수강했고, 등록 기준 합격률은 <b>51.6%</b>입니다.',
+      '등록하는 시점의 당신은 「끝까지 수강할 사람」이 아니라 「등록한 사람」입니다.'],
+  band:[0,2],
+  contrast:{k:'참고 · 등록한 500명 기준 합격률', v:'A 39.6% · B 51.6%'},
+  best:'B',
+  bestNote:'등록 기준으로 합격률이 높은 쪽은 B입니다 — 51.6% 대 39.6%.',
+  xlab:['홈페이지 숫자만 봤을 때','분모를 본 뒤'],
+  closing:'앞의 네 문항은 표를 <b>읽는</b> 방법이었습니다. 여기서는 표에 적힌 숫자가 '
+         +'전부 참인데도 틀렸습니다 — <b>표에 없는 사람들</b> 때문입니다. '
+         +'아무리 잘 읽어도 없는 줄은 보이지 않습니다.'
+},
+{
+  id:'q6', name:'금연 프로그램',
+  axis:{belief:'유지', choice:'유지'},
+  given:'당신은 두 금연 프로그램 중 하나에 등록합니다.<br><br>'
+       +'아래는 각 프로그램이 지난해 참가자를 대상으로 낸 <b>6개월 금연 성공률</b>입니다. '
+       +'프로그램 간 성공률 차이는 대체로 <b>10%p</b> 안팎입니다.',
+  s1:{
+    head:['프로그램','성공률'],
+    rows:[['A','61.9%'],['B','43.8%']],
+    hot:0,
+    q:'어느 프로그램에 등록하겠습니까?',
+    options:['A','B'],
+    claim:'A에 등록하면 B에 등록했을 때보다 6개월 뒤 금연해 있을 확률이 높다.'
+  },
+  s2:{
+    given:'두 성공률의 <b>분모</b>가 공개되었습니다. '
+         +'일부 참가자는 6개월 뒤 연락이 닿지 않아 결과를 확인하지 못했습니다.',
+    head:['프로그램','등록','결과 확인','미확인','성공','성공률'],
+    rows:[['A','400','333','67','206','61.9%'],['B','400','365','35','160','43.8%']],
+    hot:0,
+    q:'선택을 바꾸겠습니까?'
+  },
+  s3:['A의 61.9%는 결과가 확인된 333명 중 206명입니다. 67명은 확인되지 않았습니다.',
+      '미확인 인원을 <b>A는 전원 실패, B는 전원 성공</b>으로 놓아도 — 가장 불리한 '
+      +'가정입니다 — A <b>51.5%</b> 대 B <b>48.8%</b>입니다.',
+      '결론은 버팁니다. 빠진 데이터가 있다는 것과 결론이 틀렸다는 것은 다릅니다.'],
+  band:[98,100],
+  contrast:{k:'참고 · 가장 불리한 가정에서', v:'A 51.5% · B 48.8%'},
+  best:'A',
+  bestNote:'등록 기준으로도 성공률이 높은 쪽은 A입니다. 선택은 두 단계 모두 A입니다.',
+  xlab:['성공률만 봤을 때','분모를 본 뒤'],
+  closing:'문항 5에서는 빠진 사람들이 결론을 <b>뒤집었습니다</b>. 여기서는 빠진 사람들을 '
+         +'<b>전부 최악으로 채워 넣어도</b> 결론이 버텼습니다. 「빠진 데이터가 있다」는 '
+         +'판정이 아니라 질문입니다 — 얼마나 빠졌는지 재보기 전에는 답이 없습니다.'
+}
+];
+
+/* ───────────────────────────── 엔진 ───────────────────────────── */
+const ITEM_SET = 'v1';          // 문항 세트 버전. 문항이 바뀌면 올린다
+const log = [];                 // 문항별 {pick1,c1,pick2,c2,anchor}
+let idx = 0, stage = 1, cur = null;
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s);
+
+/* ── 로그인 · 기록 ──────────────────────────────────────────────
+   이 게임은 로그인해야 시작할 수 있다. 이유는 접근 제어가 아니라 측정이다 —
+   기록이 최초 1회뿐이므로 그 1회가 누구의 것인지 알아야 한다.               */
+const AUTH = { user:null, client:null, ready:false, existing:undefined, saved:null };
+let lastUserId = null;
+
+window.KYG_AUTH_LISTENERS = window.KYG_AUTH_LISTENERS || [];
+window.KYG_AUTH_LISTENERS.push(function(user, nickname, client){
+  AUTH.user = user || null; AUTH.client = client || null; AUTH.ready = true;
+  // 리스너는 TOKEN_REFRESHED 와 닉네임 변경에서도 발화한다. 같은 사용자면 다시 조회하지 않는다.
+  const uid = user ? user.id : null;
+  if (uid !== lastUserId){ lastUserId = uid; AUTH.existing = undefined; checkExisting(); }
+  else if (idx === -1) renderGate();
+});
+// 위젯이 아예 안 뜨는 경우(스크립트 실패·오프라인)에도 화면이 멈춰 있지 않게 한다
+setTimeout(function(){ if (!AUTH.ready){ AUTH.ready = true; if (idx === -1) renderGate(); } }, 4000);
+
+function checkExisting(){
+  if (!AUTH.user || !AUTH.client){ AUTH.existing = null; if (idx === -1) renderGate(); return; }
+  AUTH.client.rpc('un_my_record').then(function(res){
+    AUTH.existing = (!res.error && res.data && res.data.length) ? res.data[0] : null;
+  }).catch(function(){ AUTH.existing = null; })
+    .then(function(){ if (idx === -1) renderGate(); });
+}
+
+function submitRun(){
+  if (!AUTH.user || !AUTH.client){ AUTH.saved = 'nologin'; return Promise.resolve(); }
+  if (AUTH.existing){ AUTH.saved = 'already'; return Promise.resolve(); }
+  const payload = ITEMS.map(function(it, i){
+    const d = log[i] || {};
+    return { id:it.id, name:it.name, order:i, anchor:d.anchor,
+             pick1:d.pick1, c1:d.c1, pick2:d.pick2, c2:d.c2,
+             band:it.band, best:it.best, axis:it.axis };
+  });
+  return AUTH.client.from('un_runs')
+    .insert({ user_id: AUTH.user.id, item_set: ITEM_SET, answers: payload })
+    .then(function(res){
+      // 23505 = 기본키 중복. 에러가 아니라 "이미 기록됨"이다.
+      if (res.error) AUTH.saved = (res.error.code === '23505') ? 'already' : 'failed';
+      else AUTH.saved = 'saved';
+    })
+    .catch(function(){ AUTH.saved = 'failed'; });
+}
+
+function crumbs(){
+  const c = $('#crumbs'); c.innerHTML = '';
+  if (idx === -1){ c.innerHTML = '<span class="crumb on">시작 전</span>'; return; }
+  ITEMS.forEach((it,i)=>{
+    const d = document.createElement('span');
+    d.className = 'crumb' + (i<idx ? ' done' : i===idx ? ' on' : '');
+    d.textContent = (i+1) + '. ' + it.name;
+    c.appendChild(d);
+  });
+  const d = document.createElement('span');
+  d.className = 'crumb' + (idx>=ITEMS.length ? ' on' : '');
+  d.textContent = '종합';
+  c.appendChild(d);
+}
+
+function tableHTML(spec){
+  const hot = Array.isArray(spec.hot) ? spec.hot : [spec.hot];
+  let h = '<table><thead><tr>';
+  spec.head.forEach(x => h += '<th>'+esc(x)+'</th>');
+  h += '</tr></thead><tbody>';
+  spec.rows.forEach((r,ri) => {
+    h += '<tr>';
+    r.forEach(cell => h += '<td'+(hot.indexOf(ri)>=0?' class="hot"':'')+'>'+esc(cell)+'</td>');
+    h += '</tr>';
+  });
+  return '<div class="tw">' + h + '</tbody></table></div>';
+}
+
+/* 슬라이더 초기 위치는 그 자체로 앵커다. 고정값을 쓰면 모든 플레이어에게
+   같은 방향으로 편향이 걸리므로, 1단계는 매번 무작위로 놓고 그 값을 기록한다. */
+function randAnchor(){ return 15 + Math.floor(Math.random()*71); }
+
+function confHTML(claim, value, hint){
+  return '<div class="conf">'
+    + '<p class="lbl">이 주장을 얼마나 믿습니까?</p>'
+    + '<p class="claim">'+claim+'</p>'
+    + '<input type="range" id="sl" min="0" max="100" value="'+value+'">'
+    + '<p class="val" id="slv">'
+    + (hint ? '<span class="untouched">'+hint+'</span>'
+            : value+'%<small>1단계의 답에서 이어집니다</small>')
+    + '</p></div>';
+}
+
+function renderStage(){
+  const it = ITEMS[idx], p = $('#panel');
+  crumbs();
+
+  if (stage === 1){
+    cur = { anchor: randAnchor(), pick1:null, c1:null };
+    p.innerHTML = '<p class="given">'+it.given+'</p>'
+      + tableHTML(it.s1)
+      + '<p class="q">'+it.s1.q+'</p>'
+      + '<div class="picks" id="picks"></div>'
+      + confHTML(it.s1.claim, cur.anchor, '슬라이더를 움직여 답하세요')
+      + '<button class="btn go" id="go" disabled>다음</button>';
+    wirePicks(it.s1.options, s => { cur.pick1 = s; gate(); });
+    wireSlider(v => { cur.c1 = v; gate(); });
+    $('#go').onclick = () => { stage = 2; renderStage(); };
+    function gate(){ $('#go').disabled = !(cur.pick1 && cur.c1 !== null); }
+
+  } else if (stage === 2){
+    cur.pick2 = cur.pick1; cur.c2 = cur.c1;
+    p.innerHTML = '<p class="given">'+it.s2.given+'</p>'
+      + tableHTML(it.s2)
+      + '<p class="q">'+it.s2.q+'</p>'
+      + '<div class="picks" id="picks"></div>'
+      + confHTML(it.s1.claim, cur.c1, '')
+      + '<button class="btn go" id="go">다음</button>';
+    wirePicks(it.s1.options, s => { cur.pick2 = s; }, cur.pick1);
+    wireSlider(v => { cur.c2 = v; });
+    $('#go').onclick = () => { stage = 3; renderStage(); };
+
+  } else if (stage === 3){
+    p.innerHTML = '<div class="reveal">'
+      + it.s3.map(x => '<p>'+x+'</p>').join('')
+      + '</div><br><button class="btn go" id="go">내 판단 보기</button>';
+    $('#go').onclick = () => { stage = 4; renderStage(); };
+
+  } else {
+    log[idx] = Object.assign({}, cur);
+    renderResult();
+  }
+  window.scrollTo({top:0,behavior:'instant'});  // 단계 전환은 이동이 아니라 화면 교체다. smooth 면 긴 패널에서 중간부터 읽게 된다
+}
+
+function wirePicks(options, onPick, preset){
+  const box = $('#picks');
+  options.forEach(s => {
+    const b = document.createElement('button');
+    b.className = 'btn pick'; b.textContent = s;
+    b.setAttribute('aria-pressed', s === preset ? 'true' : 'false');
+    b.onclick = () => {
+      Array.prototype.forEach.call(box.children,
+        c => c.setAttribute('aria-pressed', c === b ? 'true' : 'false'));
+      onPick(s);
+    };
+    box.appendChild(b);
+  });
+}
+
+function wireSlider(store){
+  const sl = $('#sl'), out = $('#slv');
+  sl.addEventListener('input', () => {
+    out.textContent = sl.value + '%';
+    store(parseInt(sl.value,10));
+  });
+}
+
+function renderResult(){
+  const it = ITEMS[idx], d = log[idx], p = $('#panel');
+  const inBand = d.c2 >= it.band[0] && d.c2 <= it.band[1];
+
+  let choiceNote;
+  if (d.pick1 === it.best && d.pick2 === it.best)
+    choiceNote = it.bestNote;
+  else if (d.pick2 === it.best)
+    choiceNote = '2단계에서 '+it.best+'로 옮겼습니다. ' + it.bestNote;
+  else
+    choiceNote = it.bestNote + ' 당신은 '+d.pick2+'를 골랐습니다.';
+
+  p.innerHTML = chart(d.c1, d.c2, it)
+    + '<div class="rows">'
+    + row('당신', d.pick1+' '+d.c1+'%  →  '+d.pick2+' '+d.c2+'%', true)
+    + row('기준 · '+it.xlab[1], it.band[0]+' ~ '+it.band[1]+'%')
+    + row(it.contrast.k, it.contrast.v)
+    + '</div>'
+    + '<p class="note">'+choiceNote+'</p>'
+    + (it.closing ? '<p class="note">'+it.closing+'</p>' : '')
+    + '<p class="note">기준은 <b>그 시점에 알 수 있었던 것</b>이지 나중에 밝혀진 사실이 아닙니다. '
+    + '마지막에 공개된 진실은 그때 알 수 없었으므로, 두 줄은 서로 모순되지 않습니다.</p>'
+    + '<p class="note">기준은 하나의 값이 아니라 범위입니다. 가정에 따라 '
+    + it.band[0]+'%에서 '+it.band[1]+'% 사이에서 움직입니다. '
+    + '첫 화면에는 기준이 없습니다 — 그 시점에는 계산할 것이 없기 때문입니다.</p>'
+    + '<p class="note">무엇이 달라졌는지는 당신이 판단하세요.</p>'
+    + '<br><button class="btn go" id="go">'
+    + (idx+1 < ITEMS.length ? '다음 문항' : '종합 보기') + '</button>';
+
+  $('#go').onclick = () => { idx++; stage = 1;
+    if (idx < ITEMS.length) renderStage();
+    // 저장 결과를 기다리는 동안 종합 화면을 먼저 띄운다. 저장이 끝나면 그 줄만 다시 그린다 —
+    // 그 사이에 「다시 해보기」를 눌렀으면 덮어쓰지 않는다.
+    else { submitRun().then(() => { if (idx === ITEMS.length) renderSummary(); });
+           renderSummary(); } };
+  void inBand;
+}
+
+function row(k, v, mine){
+  return '<div class="row'+(mine?' mine':'')+'"><span class="k">'+k+'</span>'
+       + '<span class="v">'+v+'</span></div>';
+}
+
+function chart(a, b, it){
+  const W=620,H=230,L=46,R=20,T=26,B=44;
+  const x1=L+60, x2=W-R-60;
+  const y=v => T + (H-T-B) * (1 - v/100);
+  let s = '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="확신도 궤적">';
+  [0,50,100].forEach(v => {
+    s += '<line x1="'+L+'" y1="'+y(v)+'" x2="'+(W-R)+'" y2="'+y(v)+'" stroke="'
+       + (v===0?'#141414':'#DDDDD8')+'" stroke-width="'+(v===0?3:1)+'"/>'
+       + '<text x="'+(L-9)+'" y="'+(y(v)+4)+'" text-anchor="end" font-family="IBM Plex Mono,monospace" '
+       + 'font-size="10" fill="#6B6B67">'+v+'</text>';
+  });
+  // 기준 밴드 — 2단계에만 존재한다
+  s += '<rect x="'+(x2-54)+'" y="'+y(it.band[1])+'" width="108" height="'
+     + Math.max(y(it.band[0])-y(it.band[1]),4)+'" fill="#DDDDD8" stroke="#141414" stroke-width="2"/>'
+     + '<text x="'+x2+'" y="'+(y(it.band[1])-9)+'" text-anchor="middle" '
+     + 'font-family="IBM Plex Mono,monospace" font-size="10" fill="#4A4A46">기준 '
+     + it.band[0]+'~'+it.band[1]+'%</text>';
+  // 당신
+  s += '<line x1="'+x1+'" y1="'+y(a)+'" x2="'+x2+'" y2="'+y(b)+'" stroke="#0F6E56" stroke-width="3"/>'
+     + dot(x1,y(a)) + dot(x2,y(b))
+     + lab(x1, y(a), a, a>=88?20:-13)
+     // 2단계 라벨이 기준 밴드나 그 제목과 겹치면 점 아래로 내린다
+     + lab(x2, y(b), b, (b >= it.band[0]-8 && b <= it.band[1]+8) || b>=88 ? 20 : -13)
+     + '<text x="'+x1+'" y="'+(H-12)+'" text-anchor="middle" font-family="IBM Plex Mono,monospace" '
+     + 'font-size="10" fill="#6B6B67">'+it.xlab[0]+'</text>'
+     + '<text x="'+x2+'" y="'+(H-12)+'" text-anchor="middle" font-family="IBM Plex Mono,monospace" '
+     + 'font-size="10" fill="#6B6B67">'+it.xlab[1]+'</text>';
+  return s + '</svg>';
+  function dot(cx,cy){ return '<rect x="'+(cx-6)+'" y="'+(cy-6)+'" width="12" height="12" '
+    + 'fill="#2BB673" stroke="#141414" stroke-width="3"/>'; }
+  function lab(cx,cy,v,dy){ return '<text x="'+cx+'" y="'+(cy+dy)+'" text-anchor="middle" '
+    + 'font-family="Archivo,sans-serif" font-weight="700" font-size="13" fill="#0F6E56">'+v+'%</text>'; }
+}
+
+/* 종합 — 문항별 첫 확신도를 순서대로 보여준다.
+   학습 효과를 없애는 대신 결과물로 만드는 쪽이다. */
+function renderSummary(){
+  crumbs();
+  let rows = '';
+  ITEMS.forEach((it,i) => {
+    rows += row(
+      (i+1)+'. '+it.name+' · 믿음 '+it.axis.belief+' × 선택 '+it.axis.choice,
+      log[i].c1+'%  →  '+log[i].c2+'%   (기준 '+it.band[0]+'~'+it.band[1]+'%)');
+  });
+  $('#panel').innerHTML =
+      '<p class="given">문항별 궤적을 순서대로 둡니다. <b>첫 숫자</b>는 각 문항에서 '
+    + '아무 정보도 없이 얼마나 확신했는지입니다.<br><br>'
+    + '이 값들을 <b>서로 비교하지는 마세요.</b> 문항마다 처음 보이는 주장의 '
+    + '그럴듯함이 다르기 때문에, 값이 오르내리는 것은 당신이 아니라 문항이 만든 것일 수 '
+    + '있습니다. 「할수록 조심스러워지는가」는 문항 순서를 무작위로 돌리고 여러 사람의 '
+    + '기록이 쌓인 뒤에야 잴 수 있습니다.</p>'
+    + '<div class="rows">' + rows + '</div>'
+    + '<p class="note">여섯 문항은 <b>세 쌍</b>입니다. 1·2는 <b>표본의 크기</b>, '
+    + '3·4는 <b>구성을 나눠 보기</b>, 5·6은 <b>표에서 빠진 사람</b>. '
+    + '세 쌍 모두 같은 장치가 한 번은 이쪽으로, 한 번은 저쪽으로 작동했습니다.</p>'
+    + '<p class="note">장치를 아는 것과 방향을 아는 것은 다른 일입니다. '
+    + '「표본이 작으니 덜 믿자」도 「나눠 보면 뒤집힌다」도 「빠진 데이터가 있으니 '
+    + '못 믿겠다」도, 규칙으로 외우면 절반을 틀립니다. 방향은 매번 재봐야 합니다.</p>'
+    + '<p class="note">판정은 없습니다. 궤적만 있습니다.</p>'
+    + saveLine()
+    + '<br><button class="btn go" id="go">다시 해보기</button>';
+  $('#go').onclick = begin;
+  window.scrollTo({top:0,behavior:'instant'});  // 단계 전환은 이동이 아니라 화면 교체다. smooth 면 긴 패널에서 중간부터 읽게 된다
+}
+
+/* 저장 결과를 숨기지 않는다. 실패했으면 실패했다고 적는다 —
+   regime 프로젝트 R-1 의 「조용히 성공한 척하는 실패」를 여기서 반복하지 않는다. */
+function saveLine(){
+  const m = {
+    saved:   '이번 판이 <b>최초 기록으로 저장되었습니다.</b> 앞으로 몇 번을 풀어도 이 기록은 바뀌지 않습니다. '
+           + '<a href="/me/" style="text-decoration:underline">개인 페이지</a>에서 볼 수 있습니다.',
+    already: '이미 있던 <b>최초 기록은 그대로입니다.</b> 이번 판은 저장되지 않았습니다.',
+    nologin: '로그인하지 않아 <b>저장되지 않았습니다.</b>',
+    failed:  '저장에 <b>실패했습니다.</b> 네트워크나 로그인 상태를 확인해 주세요. '
+           + '이번 판의 답은 화면에만 남아 있습니다.'
+  };
+  return '<p class="stat">' + (m[AUTH.saved] || '저장 결과를 확인하는 중입니다…') + '</p>';
+}
+
+/* ───────────────────────── 시작 전 화면 ─────────────────────────
+   로그인하지 않았으면 시작할 수 없다. 이미 기록이 있으면 그것도 먼저 알린다 —
+   다 풀고 나서 "사실 저장 안 됐어요"라고 말하면 그건 배신이다.            */
+function renderGate(){
+  crumbs();
+  const p = $('#panel');
+  const warn =
+      '<div class="warn"><h3>먼저 읽어주세요</h3>'
+    + '<p>이 여섯 문항은 <b>최초 1회만 기록됩니다.</b> '
+    + '두 번째부터는 몇 번을 풀어도 기록이 바뀌지 않습니다.</p>'
+    + '<p>한 번 풀고 나면 반전을 알게 되므로, 두 번째 판은 같은 것을 재지 못합니다. '
+    + '재는 대상이 <b>아무것도 모르는 상태에서의 당신</b>이기 때문입니다.</p>'
+    + '<p>천천히, 신중하게 답하세요. 되돌릴 기회는 없습니다.</p></div>';
+
+  if (!AUTH.ready){
+    p.innerHTML = '<p class="given">로그인 상태를 확인하는 중입니다…</p>';
+  } else if (!AUTH.user){
+    p.innerHTML = warn
+      + '<p class="q">로그인해야 시작할 수 있습니다.</p>'
+      + '<p class="note">기록이 최초 1회뿐이라, 그 한 번이 누구의 것인지 알아야 합니다. '
+      + '접근을 막으려는 것이 아니라 같은 사람의 첫 판을 한 번만 세기 위해서입니다.</p>'
+      + '<p class="note">로그인 칩은 <b>화면 왼쪽 아래</b>에 있습니다.</p>'
+      + '<p class="note">로그인하지 않고 화면만 둘러보고 싶다면, 그건 기록되지 않습니다 — '
+      + '다만 그 뒤에는 이 문항들을 처음 보는 상태로 되돌릴 수 없습니다.</p>';
+  } else if (AUTH.existing === undefined){
+    p.innerHTML = warn + '<p class="given">기록을 확인하는 중입니다…</p>';
+  } else if (AUTH.existing){
+    const d = new Date(AUTH.existing.created_at);
+    p.innerHTML =
+        '<div class="warn"><h3>이미 기록이 있습니다</h3>'
+      + '<p>' + d.getFullYear() + '년 ' + (d.getMonth()+1) + '월 ' + d.getDate() + '일에 '
+      + '한 번 푸셨습니다. <b>지금 다시 풀어도 그 기록은 바뀌지 않습니다.</b></p>'
+      + '<p>기록은 <a href="/me/" style="text-decoration:underline">개인 페이지</a>에서 볼 수 있습니다.</p>'
+      + '</div>'
+      + '<button class="btn go" id="start">기록 없이 다시 해보기</button>';
+    $('#start').onclick = begin;
+  } else {
+    p.innerHTML = warn
+      + '<p class="stat">기록 대상 · <b>' + ITEMS.length + '문항</b> · 약 10분 · '
+      + '중간에 나가면 기록되지 않습니다</p><br>'
+      + '<button class="btn go" id="start">시작하기</button>';
+    $('#start').onclick = begin;
+  }
+  window.scrollTo({top:0,behavior:'instant'});
+}
+
+function begin(){ idx = 0; stage = 1; log.length = 0; AUTH.saved = null; renderStage(); }
+
+/* 편수는 문안에 박지 않는다 — ITEMS 에서 유도한다 (사이트 카드 문안 규약과 같은 이유) */
+$('#heroNote').textContent =
+  '한국어만 · 영문 미작성 · 문항 ' + ITEMS.length + '개 · 로그인 필요';
+
+idx = -1;
+renderGate();
+</script>
+</body>
+</html>
