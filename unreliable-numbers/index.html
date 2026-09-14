@@ -288,6 +288,10 @@ window.APP_LANG_LISTENERS = window.APP_LANG_LISTENERS || [];
     if(this.raf) cancelAnimationFrame(this.raf);
     this.raf=null; this.el.textContent=txt; this.el.dataset.plain=txt;
   };
+  /* 본문 패널(엔진이 innerHTML 로 그리는 영역)에서도 쓸 수 있게 내보낸다. */
+  window.KYG_Scramble = Scramble;
+  window.KYG_noAnim   = noAnim;
+
   var els=[].slice.call(document.querySelectorAll('.tx'));
   els.forEach(function(el){ el.dataset.plain=el.textContent; el._s=new Scramble(el); });
   /* 탭이 다시 보이면 얼어 있던 것을 확정한다 — 돌아왔는데 깨진 글자가 남아 있으면 안 된다. */
@@ -1122,7 +1126,90 @@ function paintChrome(){
 
 /* 언어가 바뀌면 화면을 다시 그린다. 답은 cur/log 에 있으므로 잃지 않는다. */
 window.APP_LANG_LISTENERS = window.APP_LANG_LISTENERS || [];
-window.APP_LANG_LISTENERS.push(function(){ paintChrome(); repaint(); });
+/* 본문 패널은 .tx 가 아니다 — 엔진이 innerHTML 로 통째로 그린다. 그래서 언어를 바꾸면
+   상단 .tx 만 스크램블되고 본문은 글자가 툭 바뀌었다.
+   「위는 되는데 밑은 얼어 있다」는 프레임 문제가 아니라 이것이었다.
+
+   .tx 용 Scramble 을 그대로 쓰면 안 된다. 그 POOL 은 좁은 라틴과 넓은 한글이 섞여 있어서
+   여러 줄짜리 본문에서는 애니메이션 도중 줄바꿈이 달라지고 패널 높이가 27px 씩 출렁인다
+   (.tx 는 전부 한 줄짜리 짧은 라벨이라 이 문제가 안 보였다). 그래서 두 가지를 지킨다.
+     · 대체 글자를 «원래 글자와 같은 폭 부류»에서만 고른다 (한글↔한글, 라틴↔라틴)
+     · 공백은 절대 안 건드린다 — 단어 경계가 움직이면 줄바꿈이 통째로 흔들린다
+   rAF 도 스팬마다 돌리지 않고 하나로 몰아 돌린다. */
+const POOL_WIDE   = '가나다라마바사아자차카타파하거너더러머버서어저처커터퍼허'.split('');
+const POOL_NARROW = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'.split('');
+const SCRAMBLE_CHAR_CAP = 4000;   // 이보다 길면 조용히 넘어간다. 끊기는 것보다 안 하는 게 낫다
+
+function poolFor(ch){
+  const c = ch.charCodeAt(0);
+  return ((c >= 0xAC00 && c <= 0xD7A3) || (c >= 0x3131 && c <= 0x3163)) ? POOL_WIDE : POOL_NARROW;
+}
+function escChar(c){ return c === '&' ? '&amp;' : c === '<' ? '&lt;' : c === '>' ? '&gt;' : c; }
+
+let panelRAF = null;
+function scramblePanel(root){
+  if (panelRAF){ cancelAnimationFrame(panelRAF); panelRAF = null; }
+  if (!root) return;
+  if (window.KYG_noAnim && window.KYG_noAnim()) return;
+
+  const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode: function(n){
+      return (n.nodeValue && n.nodeValue.trim()) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+    }
+  });
+  const nodes = []; let n;
+  while ((n = w.nextNode())) nodes.push(n);
+
+  let total = 0;
+  nodes.forEach(function(x){ total += x.nodeValue.length; });
+  if (!total || total > SCRAMBLE_CHAR_CAP) return;
+
+  const units = [];
+  nodes.forEach(function(node){
+    const txt  = node.nodeValue;
+    const span = document.createElement('span');
+    node.parentNode.replaceChild(span, node);
+    span.textContent = txt;
+    const q = [];
+    for (let i = 0; i < txt.length; i++){
+      const ch = txt[i];
+      if (/\s/.test(ch)){ q.push({ ch: ch, fixed: true }); continue; }   // 공백 고정
+      const st = Math.floor(Math.random() * 20);
+      q.push({ ch: ch, fixed: false, start: st, end: st + Math.floor(Math.random() * 25) + 12, cur: null });
+    }
+    units.push({ el: span, q: q, txt: txt });
+  });
+
+  const t0 = performance.now();
+  (function frame(ts){
+    const now = (typeof ts === 'number') ? ts : performance.now();
+    const f = (now - t0) / (1000 / 60);          // 프레임이 아니라 시간으로 (§8-D)
+    let allDone = true;
+    for (let u = 0; u < units.length; u++){
+      const it = units[u];
+      if (it.done) continue;
+      let out = '', done = 0;
+      for (let i = 0; i < it.q.length; i++){
+        const c = it.q[i];
+        if (c.fixed || f >= c.end){ done++; out += escChar(c.ch); }
+        else if (f >= c.start){
+          if (!c.cur || Math.random() < 0.3){
+            const pool = poolFor(c.ch); c.cur = pool[Math.floor(Math.random() * pool.length)];
+          }
+          out += '<span class="scr">' + escChar(c.cur) + '</span>';
+        } else { out += escChar(c.ch); }   /* 시작 전에는 원문 그대로 — 자리가 안 빈다.
+             done 은 올리지 않는다. 올렸더니 첫 프레임에 «전부 끝남»으로 읽혀
+             아직 시작도 안 한 글자를 두고 애니메이션이 즉시 종료됐다. */
+      }
+      it.el.innerHTML = out;
+      if (done === it.q.length) it.done = true; else allDone = false;
+    }
+    if (allDone){ panelRAF = null; units.forEach(function(u){ u.el.textContent = u.txt; }); }
+    else panelRAF = requestAnimationFrame(frame);
+  })();
+}
+
+window.APP_LANG_LISTENERS.push(function(){ paintChrome(); repaint(); scramblePanel($('#panel')); });
 
 paintChrome();
 renderGate();
