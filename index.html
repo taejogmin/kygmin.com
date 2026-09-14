@@ -376,8 +376,13 @@ if(window.KYG_LANG!=='en'){
     <span class="sec-tag">04 &mdash; NOTES</span>
     <h2><span class="u">NOTES</span></h2>
     <p style="font-size:15px;color:#3A3A38;max-width:620px;margin:-16px 0 10px;" class="tx" data-en="How the things in the Playhouse actually work &mdash; and what I got wrong building them. Three below; the rest are in the NOTES." data-kr="플레이하우스의 것들이 실제로 어떻게 작동하는지, 그리고 만들면서 무엇을 틀렸는지. 세 편만 골라 소개하고, 나머지는 NOTES에 있습니다.">How the things in the Playhouse actually work &mdash; and what I got wrong building them. Three below; the rest are in the NOTES.</p>
-    <p class="notes-meta tx" data-en="8 WRITE-UPS &middot; 24,000 WORDS &middot; ENGLISH ONLY" data-kr="해설 8편 &middot; 24,000단어 &middot; 영어로만 작성">8 WRITE-UPS &middot; 24,000 WORDS &middot; ENGLISH ONLY</p>
+    <p class="notes-meta tx" data-en="9 WRITE-UPS &middot; 28,000 WORDS &middot; ENGLISH ONLY" data-kr="해설 9편 &middot; 28,000단어 &middot; 영어로만 작성">9 WRITE-UPS &middot; 28,000 WORDS &middot; ENGLISH ONLY</p>
     <div class="proj-grid">
+      <a class="proj" href="notes/unreliable-numbers/">
+        <div class="proj-head"><span class="proj-name">NOTES &mdash; 09</span><span class="badge read">READ &#8594;</span></div>
+        <p class="note-title">I wrote the test first. Then it failed my best item.</p>
+        <p class="stack">Unreliable Numbers &middot; Prior-Sensitivity Sweep &middot; 2 conditions, 4 versions killed</p>
+      </a>
       <a class="proj" href="notes/erysichthon/">
         <div class="proj-head"><span class="proj-name">NOTES &mdash; 08</span><span class="badge read">READ &#8594;</span></div>
         <p class="note-title">Twelve fixes died. One was still breathing.</p>
@@ -387,11 +392,6 @@ if(window.KYG_LANG!=='en'){
         <div class="proj-head"><span class="proj-name">NOTES &mdash; 07</span><span class="badge read">READ &#8594;</span></div>
         <p class="note-title">Every test passed. None of them was real.</p>
         <p class="stack">Vocal Range &middot; YIN F0 Estimation &middot; 85 assertions, 2 notes captured</p>
-      </a>
-      <a class="proj" href="notes/blueberry/">
-        <div class="proj-head"><span class="proj-name">NOTES &mdash; 06</span><span class="badge read">READ &#8594;</span></div>
-        <p class="note-title">Every release made it claim less</p>
-        <p class="stack">Blueberry Smoothie &middot; Viterbi Octave Correction &middot; 20 versions</p>
       </a>
     </div>
     <div style="margin-top:28px;">
@@ -451,9 +451,16 @@ if(window.KYG_LANG!=='en'){
       this.q.push({from:from,to:to,start:start,end:end,ch:null});
     }
     if(this.raf) cancelAnimationFrame(this.raf);
-    this.f=0; this.txt=txt; this.frame();
+    this.f=0; this.t0=null; this.txt=txt; this.frame();
   };
-  Scramble.prototype.frame=function(){
+  /* 진행도를 «프레임 수»가 아니라 «경과 시간»으로 센다.
+     프레임을 세면 144Hz 화면에서 같은 애니메이션이 60Hz의 2.42배로 끝난다
+     (최악 55프레임 = 60Hz 917ms 대 145Hz 379ms). 짧은 라벨은 0.2초에 끝나서
+     사람 눈에는 «애니메이션이 안 된다»로 보인다. 기준은 60fps 로 고정한다. */
+  Scramble.prototype.frame=function(ts){
+    var now = (typeof ts === 'number') ? ts : performance.now();
+    if(this.t0===null || this.t0===undefined) this.t0=now;
+    this.f = (now - this.t0) / (1000/60);
     var out="", done=0;
     for(var i=0;i<this.q.length;i++){
       var it=this.q[i];
@@ -464,8 +471,8 @@ if(window.KYG_LANG!=='en'){
       } else out+=esc(it.from);
     }
     this.el.innerHTML=out;
-    if(done===this.q.length){ this.el.dataset.plain=this.txt; }
-    else { this.f++; this.raf=requestAnimationFrame(this.frame); }
+    if(done===this.q.length){ this.el.dataset.plain=this.txt; this.raf=null; }
+    else { this.raf=requestAnimationFrame(this.frame); }
   };
 
   var els=[].slice.call(document.querySelectorAll('.tx'));
