@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Icarus &mdash; KYGMIN</title>
+<meta name="description" content="Two players draw from one deck toward a bust line only they can see. The higher you fly the more it pays, and nobody tells you where the sun is." />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<!-- 언어는 localStorage 에 두고, 다음 페이지에서 첫 페인트 전에 복원한다 -->
+<script>
+window.KYG_LANG=(function(){try{var v=localStorage.getItem('kyg_lang');if(v==='kr'||v==='en')return v;}catch(e){}return 'en';})();
+window.APP_LANG=window.KYG_LANG;
+if(window.KYG_LANG!=='en'){
+  document.documentElement.setAttribute('lang','ko');
+  document.documentElement.className+=' lang-pending';
+  setTimeout(function(){document.documentElement.classList.remove('lang-pending');},2000);
+}
+</script>
+<style>html.lang-pending .tx{visibility:hidden}</style>
+<style>
+
+:root{
+  --paper:#F6F6F4;
+  --ink:#141414;
+  --gray:#DDDDD8;
+  --green:#2BB673;
+  --green-deep:#0F6E56;
+  --arch:'Archivo','Pretendard',sans-serif;
+  --sans:'Pretendard',-apple-system,'Apple SD Gothic Neo','Malgun Gothic','Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono','SF Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{transition:none!important;}
+}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:16px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  word-break:keep-all;overflow-wrap:break-word;
+}
+a{color:inherit;text-decoration:none;}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--green);outline-offset:3px;}
+.wrap{max-width:960px;margin:0 auto;padding:0 24px;}
+
+/* ── Nav ── */
+nav{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:3px solid var(--ink);}
+.nav-inner{max-width:960px;margin:0 auto;padding:14px 24px;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;}
+.logo{font-family:var(--arch);font-weight:900;font-size:19px;letter-spacing:-0.5px;white-space:nowrap;}
+.logo em{font-style:normal;background:var(--green);color:var(--paper);padding:0 6px;display:inline-block;transform:rotate(-1.5deg);}
+.nav-links{display:flex;gap:8px;flex-wrap:wrap;}
+.nav-links a{font-family:var(--arch);font-size:12px;font-weight:700;text-transform:uppercase;
+  border:2px solid var(--ink);padding:6px 13px;background:#fff;
+  box-shadow:3px 3px 0 var(--ink);transition:transform .1s, box-shadow .1s;}
+.nav-links a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+.nav-links a.on{background:var(--green);color:var(--paper);}
+
+/* ── Hero ── */
+header{padding:52px 0 34px;border-bottom:3px solid var(--ink);}
+.sec-tag{font-family:var(--mono);font-size:12.5px;font-weight:600;
+  color:var(--green-deep);letter-spacing:1px;display:block;margin-bottom:14px;}
+h1{font-family:var(--arch);font-weight:900;text-transform:uppercase;
+  font-size:clamp(32px, 6.2vw, 54px);line-height:1.02;letter-spacing:-2px;}
+h1 .box{background:var(--ink);color:var(--paper);padding:0 12px;display:inline-block;transform:rotate(-1deg);}
+.hero-sub{margin-top:18px;font-size:15.5px;max-width:620px;font-weight:500;}
+.hero-note{margin-top:12px;font-family:var(--mono);font-size:12px;color:#4A4A46;}
+
+main{padding:34px 0 88px;}
+
+/* ── 진행 표시 ── */
+.crumbs{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:22px;}
+.crumb{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:1.2px;
+  border:2px solid var(--ink);padding:3px 9px;background:#fff;color:#6B6B67;}
+.crumb.on{background:var(--ink);color:var(--paper);}
+.crumb.done{background:var(--gray);}
+
+/* ── 패널 ── */
+.panel{border:3px solid var(--ink);background:#fff;box-shadow:6px 6px 0 var(--ink);
+  padding:26px 26px 30px;max-width:680px;}
+.given{font-family:var(--mono);font-size:13px;line-height:1.75;color:#3A3A38;
+  border-left:3px solid var(--green);padding-left:13px;margin-bottom:24px;}
+.given br+br{content:'';display:block;height:6px;}
+.given b{font-weight:600;color:var(--ink);}
+
+.tw{overflow-x:auto;margin-bottom:26px;}   /* 열이 많은 표는 좁은 화면에서 가로로 민다 */
+table{border-collapse:collapse;width:100%;min-width:340px;font-family:var(--mono);font-size:13px;}
+th,td{border-bottom:1px solid var(--gray);padding:9px 10px;text-align:right;}
+th:first-child,td:first-child{text-align:left;}
+th{font-family:var(--arch);font-size:11px;text-transform:uppercase;letter-spacing:.5px;
+  border-bottom:3px solid var(--ink);background:#EFEFEA;font-weight:700;}
+tr:last-child td{border-bottom:none;}
+td.hot{font-weight:600;}
+
+.q{font-family:var(--arch);font-weight:700;font-size:17px;line-height:1.4;margin-bottom:16px;}
+.picks{display:flex;gap:12px;margin-bottom:30px;flex-wrap:wrap;}
+.btn{display:inline-block;font-family:var(--arch);font-size:14px;font-weight:700;text-transform:uppercase;
+  border:3px solid var(--ink);padding:12px 24px;box-shadow:5px 5px 0 var(--ink);
+  transition:transform .1s, box-shadow .1s;background:#fff;cursor:pointer;color:var(--ink);}
+.btn:hover{transform:translate(2px,2px);box-shadow:3px 3px 0 var(--ink);}
+.btn[aria-pressed="true"]{background:var(--green);color:var(--paper);}
+.btn:disabled{opacity:.35;cursor:not-allowed;}
+.btn:disabled:hover{transform:none;box-shadow:5px 5px 0 var(--ink);}
+.pick{min-width:76px;text-align:center;}
+.go{width:100%;background:var(--ink);color:var(--paper);}
+.go:disabled{background:var(--gray);color:#8A8A85;}
+
+/* ── 확신도 ── */
+.conf{margin-bottom:30px;}
+.conf .lbl{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:1px;
+  text-transform:uppercase;color:#6B6B67;margin-bottom:6px;}
+.claim{border:3px solid var(--ink);background:#EFEFEA;padding:12px 15px;
+  font-size:15px;font-weight:500;margin-bottom:18px;}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:34px;
+  background:transparent;cursor:pointer;}
+input[type=range]::-webkit-slider-runnable-track{height:14px;background:#fff;border:3px solid var(--ink);}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;
+  background:var(--green);border:3px solid var(--ink);margin-top:-9px;box-shadow:3px 3px 0 var(--ink);}
+input[type=range]::-moz-range-track{height:14px;background:#fff;border:3px solid var(--ink);}
+input[type=range]::-moz-range-thumb{width:22px;height:22px;background:var(--green);
+  border:3px solid var(--ink);border-radius:0;}
+.val{font-family:var(--arch);font-weight:900;font-size:30px;line-height:1.1;margin-top:12px;min-height:33px;}
+.val small{font-family:var(--mono);font-weight:400;font-size:11px;color:#8A8A85;
+  letter-spacing:.5px;margin-left:10px;text-transform:uppercase;}
+.val .untouched{font-family:var(--mono);font-weight:500;font-size:12px;color:#8A8A85;
+  letter-spacing:1px;text-transform:uppercase;}
+
+/* ── 공개 ── */
+.reveal p{font-size:15px;margin-bottom:11px;}
+.reveal p:last-child{margin-bottom:0;}
+.reveal b{background:var(--green);color:var(--paper);padding:0 5px;font-weight:700;}
+
+/* ── 경고 · 상태 ── */
+.warn{border:3px solid var(--ink);background:#EFEFEA;padding:18px 20px;margin-bottom:26px;}
+.warn h3{font-family:var(--arch);font-weight:900;font-size:14px;text-transform:uppercase;
+  letter-spacing:.5px;margin-bottom:9px;}
+.warn p{font-size:14.5px;margin-bottom:9px;}
+.warn p:last-child{margin-bottom:0;}
+.warn b{font-weight:700;}
+.stat{font-family:var(--mono);font-size:12px;color:#4A4A46;margin-top:16px;}
+.stat b{color:var(--ink);font-weight:600;}
+
+/* ── 결과 ── */
+svg{display:block;width:100%;height:230px;margin-bottom:10px;}
+.rows{border-top:3px solid var(--ink);margin-bottom:24px;}
+/* 좁은 화면에서는 값이 아래 줄로 내려간다. flex-wrap 없이 두면 키가 한 단어 너비로
+   눌리고 nowrap 인 값이 패널 밖으로 삐져나간다 (실측 최대 23px). */
+.row{display:flex;justify-content:space-between;align-items:baseline;
+  flex-wrap:wrap;gap:4px 14px;
+  padding:11px 2px;border-bottom:1px solid var(--gray);}
+.row .k{font-family:var(--mono);font-size:12px;color:#4A4A46;flex:1 1 auto;min-width:150px;}
+.row .v{font-family:var(--arch);font-weight:700;font-size:17px;white-space:nowrap;flex:0 0 auto;}
+.row.mine .v{color:var(--green-deep);}
+.note{font-size:14px;color:#3A3A38;margin-bottom:14px;max-width:620px;}
+.note:last-child{margin-bottom:0;}
+.note b{font-weight:600;color:var(--ink);}
+
+footer{border-top:3px solid var(--ink);padding:20px 0;}
+.foot-inner{max-width:960px;margin:0 auto;padding:0 24px;display:flex;
+  justify-content:space-between;gap:16px;flex-wrap:wrap;
+  font-family:var(--mono);font-size:12px;color:#4A4A46;}
+.hidden{display:none;}
+@media(max-width:560px){
+  .panel{padding:20px 18px 24px;box-shadow:5px 5px 0 var(--ink);}
+  .btn{padding:11px 18px;}
+  .row .v{font-size:16px;}
+}
+/* 이 페이지의 nav 이름이 길어서 4개인데도 3줄이 됐다 (플레이하우스는 같은 폭에서 2줄).
+   이름을 줄이는 대신 좁은 화면에서만 글자와 여백을 줄인다. */
+@media(max-width:430px){
+  .nav-links{gap:5px;}
+  .nav-links a{font-size:10.5px;padding:5px 8px;box-shadow:2px 2px 0 var(--ink);}
+  .logo{font-size:16px;}
+  .nav-inner{padding-left:14px;padding-right:14px;gap:10px;}
+}
+
+/* ── 언어 토글 (사이트 공통) ── */
+#langtoggle{position:fixed;right:20px;bottom:20px;z-index:50;display:inline-flex;
+  border:2px solid var(--ink);box-shadow:3px 3px 0 var(--ink);background:#fff;
+  font-family:var(--arch);font-weight:700;font-size:12px;overflow:hidden;}
+#langtoggle button{font:inherit;border:none;background:none;cursor:pointer;
+  padding:9px 14px;color:var(--ink);letter-spacing:.5px;transition:background .1s,color .1s;}
+#langtoggle button.on{background:var(--green);color:var(--paper);}
+#langtoggle button+button{border-left:2px solid var(--ink);}
+.scr{color:var(--green);}
+h1 .box .scr{color:var(--paper);}
+
+/* ── 이카로스 전용 ─────────────────────────────────────── */
+.bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;}
+.chip{border:3px solid var(--ink);background:#fff;box-shadow:3px 3px 0 var(--ink);
+  padding:7px 12px;font-family:var(--mono);font-size:12px;min-width:78px;}
+.chip .k{display:block;font-size:10px;color:#6B6B67;letter-spacing:.5px;}
+.chip .v{font-family:var(--arch);font-weight:900;font-size:17px;letter-spacing:-.5px;}
+.chip.me{background:#EAF7F0;}
+.seat{border:3px solid var(--ink);background:#fff;box-shadow:5px 5px 0 var(--ink);
+  padding:16px 18px;margin-bottom:14px;}
+.seat.mine{border-left-width:9px;border-left-color:var(--green);}
+.seat h4{font-family:var(--arch);font-weight:900;font-size:14px;text-transform:uppercase;
+  letter-spacing:-.3px;display:flex;justify-content:space-between;align-items:center;gap:10px;}
+.seat h4 .tag{font-family:var(--mono);font-size:10.5px;font-weight:600;color:#6B6B67;
+  border:2px solid var(--gray);padding:1px 7px;text-transform:none;letter-spacing:0;}
+.cards{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0 8px;}
+.card{width:38px;height:52px;border:3px solid var(--ink);background:var(--paper);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--arch);font-weight:900;font-size:17px;box-shadow:2px 2px 0 var(--ink);}
+.card.new{background:var(--green);color:var(--paper);}
+.sums{font-family:var(--mono);font-size:12.5px;color:#4A4A46;display:flex;gap:14px;flex-wrap:wrap;}
+.sums b{font-family:var(--arch);font-size:15px;color:var(--ink);}
+.acts{display:flex;gap:9px;flex-wrap:wrap;margin-top:6px;}
+/* .go 는 사이트 공통에서 width:100% 다. 행동 버튼은 나란히 서야 하므로 여기서만 푼다 —
+   안 풀면 HIT 만 한 줄을 다 먹고 나머지가 아래로 밀린다 (모바일에서 눈에 띄었다). */
+.acts .btn{flex:0 0 auto;width:auto;}
+@media(max-width:430px){ .acts .btn{flex:1 1 auto;padding:12px 14px;} }
+.btn:disabled{opacity:.38;cursor:not-allowed;box-shadow:2px 2px 0 var(--ink);transform:none;}
+.strip{font-family:var(--mono);font-size:11.5px;color:#4A4A46;line-height:1.9;
+  border-left:4px solid var(--gray);padding-left:12px;margin:16px 0;max-height:150px;overflow-y:auto;}
+.strip b{color:var(--green-deep);}
+.ledger{font-family:var(--mono);font-size:11.5px;color:#4A4A46;margin:12px 0;}
+.ledger span{display:inline-block;border:2px solid var(--gray);padding:1px 7px;margin:2px 3px 2px 0;}
+.ledger span.out{text-decoration:line-through;opacity:.4;}
+.rec{border:3px solid var(--ink);background:#fff;box-shadow:5px 5px 0 var(--ink);padding:18px 20px;margin-top:30px;}
+.rec h3{font-family:var(--arch);font-weight:900;font-size:15px;text-transform:uppercase;margin-bottom:12px;}
+.rec .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(108px,1fr));gap:12px;}
+.rec .cell .k{font-family:var(--mono);font-size:10.5px;color:#6B6B67;letter-spacing:.5px;display:block;}
+.rec .cell .v{font-family:var(--arch);font-weight:900;font-size:20px;letter-spacing:-.5px;}
+.fine{font-family:var(--mono);font-size:11px;color:#6B6B67;line-height:1.75;margin-top:12px;
+  border-top:1px solid var(--gray);padding-top:10px;}
+.tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:11px;margin:16px 0;}
+.tier{border:3px solid var(--ink);background:#fff;box-shadow:4px 4px 0 var(--ink);padding:13px 14px;
+  cursor:pointer;text-align:left;font:inherit;transition:transform .1s,box-shadow .1s;}
+.tier:hover{transform:translate(1px,1px);box-shadow:3px 3px 0 var(--ink);}
+.tier.on{background:var(--green);color:var(--paper);}
+.tier .n{font-family:var(--arch);font-weight:900;font-size:15px;text-transform:uppercase;display:block;}
+.tier .d{font-family:var(--mono);font-size:11px;line-height:1.65;margin-top:5px;display:block;}
+.res{font-family:var(--mono);font-size:12.5px;}
+.res .big{font-family:var(--arch);font-weight:900;font-size:26px;letter-spacing:-1px;display:block;margin:4px 0;}
+.up{color:var(--green-deep);} .dn{color:#8A2E2E;}
+@media(max-width:430px){
+  .nav-links{gap:5px;}
+  .nav-links a{font-size:10.5px;padding:5px 8px;}
+  .logo{font-size:16px;}
+  .card{width:33px;height:46px;font-size:15px;}
+  .chip{min-width:70px;padding:6px 10px;}
+}
+
+</style></head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="/index.html">KYG<em>MIN</em></a>
+    <div class="nav-links">
+      <a href="/index.html"><span class="tx" data-en="Home" data-kr="&#54856;">Home</span></a>
+      <a href="/playhouse/">PLAYHOUSE</a>
+      <a class="on" href="./"><span class="tx" data-en="Icarus" data-kr="&#51060;&#52852;&#47196;&#49828;">Icarus</span></a>
+      <a href="/me/">ME</a>
+      <a href="/cv.html">CV &#128274;</a>
+    </div>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <span class="sec-tag tx" data-en="PLAYHOUSE &mdash; ICARUS" data-kr="PLAYHOUSE &mdash; &#51060;&#52852;&#47196;&#49828;">PLAYHOUSE &mdash; ICARUS</span>
+    <h1>ICA<span class="box">RUS</span></h1>
+    <p class="hero-sub tx" data-en="Fly higher and it pays more. Fly too high and you burn. Nobody tells you where the sun is." data-kr="&#45558;&#51060; &#45216;&#49688;&#47197; &#44050;&#51060; &#50724;&#47476;&#44256;, &#45320;&#47924; &#45558;&#51004;&#47732; &#53507;&#45768;&#45796;. &#53468;&#50577;&#51060; &#50612;&#46356; &#51080;&#45716;&#51648;&#45716; &#50500;&#47924;&#46020; &#47568;&#54644;&#51452;&#51648; &#50506;&#49845;&#45768;&#45796;.">Fly higher and it pays more. Fly too high and you burn. Nobody tells you where the sun is.</p>
+    <p class="hero-note">8 ROUNDS &middot; ONE DECK, NO SHUFFLE &middot; 4 DIFFICULTIES &middot; NO SIGN-IN</p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="panel" id="panel"></div>
+    <div class="rec" id="rec"></div>
+  </div>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <span>&copy; KYGMIN.COM</span>
+    <span class="tx" data-en="ICARUS &middot; RULES v1.3 &middot; RUNS IN YOUR TAB" data-kr="&#51060;&#52852;&#47196;&#49828; &middot; &#47308; v1.3 &middot; &#53469;&#50504;&#50640;&#49436;&#47564; &#46028;&#45768;&#45796;">ICARUS &middot; RULES v1.3 &middot; RUNS IN YOUR TAB</span>
+    <a class="tx" href="/privacy.html" data-en="PRIVACY POLICY" data-kr="&#44060;&#51064;&#51221;&#48372;&#52376;&#47532;&#48169;&#52840;">PRIVACY POLICY</a>
+  </div>
+</footer>
+
+<div id="langtoggle"><button data-lang="en">EN</button><button data-lang="kr">KR</button></div>
+
+<!-- 언어 토글: 페이지 로직과 독립된 스크립트 (사이트 공통 패턴) -->
+<script>
+window.APP_LANG = window.KYG_LANG || 'en';
+window.APP_LANG_LISTENERS = window.APP_LANG_LISTENERS || [];
+(function(){
+  var POOL = ("\u3131\u3134\u3137\u3139\u3141\u3142\u3145\u3147\u3148\u314a\u314b\u314c\u314d\u314e"
+    + "\u314f\u3151\u3153\u3155\u3157\u315b\u315c\u3160\u3161\u3163"
+    + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-\u00b7").split("");
+  function esc(c){return c==="&"?"&amp;":c==="<"?"&lt;":c===">"?"&gt;":c;}
+  function Scramble(el){ this.el=el; this.raf=null; this.frame=this.frame.bind(this); }
+  Scramble.prototype.set=function(txt){
+    var old = this.el.dataset.plain!==undefined ? this.el.dataset.plain : this.el.textContent;
+    var len=Math.max(old.length, txt.length);
+    this.q=[];
+    for(var i=0;i<len;i++){
+      var from=old[i]||"", to=txt[i]||"";
+      var start=Math.floor(Math.random()*20);
+      var end=start+Math.floor(Math.random()*25)+12;
+      this.q.push({from:from,to:to,start:start,end:end,ch:null});
+    }
+    if(this.raf) cancelAnimationFrame(this.raf);
+    this.f=0; this.t0=null; this.txt=txt; this.frame();
+  };
+  /* 진행도를 «프레임 수»가 아니라 «경과 시간»으로 센다.
+     프레임을 세면 144Hz 화면에서 같은 애니메이션이 60Hz의 2.42배로 끝난다
+     (최악 55프레임 = 60Hz 917ms 대 145Hz 379ms). 짧은 라벨은 0.2초에 끝나서
+     사람 눈에는 «애니메이션이 안 된다»로 보인다. 기준은 60fps 로 고정한다. */
+  Scramble.prototype.frame=function(ts){
+    var now = (typeof ts === 'number') ? ts : performance.now();
+    if(this.t0===null || this.t0===undefined) this.t0=now;
+    this.f = (now - this.t0) / (1000/60);
+    var out="", done=0;
+    for(var i=0;i<this.q.length;i++){
+      var it=this.q[i];
+      if(this.f>=it.end){ done++; out+=esc(it.to); }
+      else if(this.f>=it.start){
+        if(!it.ch || Math.random()<0.3){ it.ch=POOL[Math.floor(Math.random()*POOL.length)]; }
+        out+='<span class="scr">'+esc(it.ch)+'</span>';
+      } else out+=esc(it.from);
+    }
+    this.el.innerHTML=out;
+    if(done===this.q.length){ this.el.dataset.plain=this.txt; this.raf=null; }
+    else { this.raf=requestAnimationFrame(this.frame); }
+  };
+  /* 탭이 배경이면 rAF 가 0프레임이라 스크램블이 중간 상태로 얼어붙는다. 본문은 즉시 바뀌므로
+     「위만 깨진」 화면이 된다. 그때만 애니메이션을 건너뛴다.
+
+     prefers-reduced-motion 은 보지 않는다 — 사이트의 다른 페이지가 전부 안 보기 때문이다.
+     한 페이지만 모션 설정을 존중하면 같은 사이트에서 언어 전환이 페이지마다 다르게 보인다.
+     (접근성 쪽으로 가려면 이 가드를 여기 되살릴 게 아니라 사이트 전체에 같이 넣어야 한다.) */
+  function noAnim(){
+    try{ return document.visibilityState !== 'visible'; }catch(e){ return false; }
+  }
+  Scramble.prototype.settle=function(txt){
+    if(this.raf) cancelAnimationFrame(this.raf);
+    this.raf=null; this.el.textContent=txt; this.el.dataset.plain=txt;
+  };
+  /* 본문 패널(엔진이 innerHTML 로 그리는 영역)에서도 쓸 수 있게 내보낸다. */
+  window.KYG_Scramble = Scramble;
+  window.KYG_noAnim   = noAnim;
+
+  var els=[].slice.call(document.querySelectorAll('.tx'));
+  els.forEach(function(el){ el.dataset.plain=el.textContent; el._s=new Scramble(el); });
+  /* 탭이 다시 보이면 얼어 있던 것을 확정한다 — 돌아왔는데 깨진 글자가 남아 있으면 안 된다. */
+  document.addEventListener('visibilitychange', function(){
+    if(document.visibilityState !== 'visible') return;
+    var L = window.APP_LANG || 'en';
+    els.forEach(function(el){ var t=el.dataset[L];
+      if(t!==undefined && el.textContent!==t) el._s.settle(t); });
+  });
+  // 저장된 언어를 애니메이션 없이 즉시 반영한다 (페이지 이동 후 복원)
+  (function(){
+    var L = window.KYG_LANG || 'en';
+    var btns=document.querySelectorAll('#langtoggle button');
+    for(var i=0;i<btns.length;i++){ btns[i].classList.toggle('on', btns[i].dataset.lang===L); }
+    if(L!=='en') els.forEach(function(el){ var t=el.dataset[L]; if(t!==undefined){ el.textContent=t; el.dataset.plain=t; } });
+    document.documentElement.classList.remove('lang-pending');
+  })();
+  function setLang(lang){
+    if(lang===window.APP_LANG) return;
+    window.APP_LANG = lang;
+    try{ localStorage.setItem('kyg_lang', lang); }catch(e){}
+    document.documentElement.lang = (lang==='kr'?'ko':'en');
+    var btns=document.querySelectorAll('#langtoggle button');
+    for(var i=0;i<btns.length;i++){ btns[i].classList.toggle('on', btns[i].dataset.lang===lang); }
+    var skip = noAnim();
+    els.forEach(function(el){
+      var t=el.dataset[lang]; if(t===undefined) return;
+      if(skip) el._s.settle(t);
+      else {
+        el._s.set(t);
+        /* 그물망: 3.5초 뒤에도 안 끝났으면 강제로 확정한다. rAF 가 도중에 끊겨도 글자가 안 남는다. */
+        (function(e2,txt){ setTimeout(function(){
+          if(e2.textContent!==txt) e2._s.settle(txt); }, 3500); })(el,t);
+      }
+    });
+    window.APP_LANG_LISTENERS.forEach(function(fn){ try{ fn(lang); }catch(e){ console.error(e); } });
+  }
+  document.getElementById('langtoggle').addEventListener('click', function(e){
+    var b=e.target.closest('button'); if(b) setLang(b.dataset.lang);
+  });
+})();
+</script>
+
+<script>
+/* 본문 패널은 .tx 가 아니다 — 엔진이 innerHTML 로 통째로 그린다. 그래서 언어를 바꾸면
+   상단 .tx 만 스크램블되고 본문은 글자가 툭 바뀌었다.
+   「위는 되는데 밑은 얼어 있다」는 프레임 문제가 아니라 이것이었다.
+
+   .tx 용 Scramble 을 그대로 쓰면 안 된다. 그 POOL 은 좁은 라틴과 넓은 한글이 섞여 있어서
+   여러 줄짜리 본문에서는 애니메이션 도중 줄바꿈이 달라지고 패널 높이가 27px 씩 출렁인다
+   (.tx 는 전부 한 줄짜리 짧은 라벨이라 이 문제가 안 보였다). 그래서 두 가지를 지킨다.
+     · 대체 글자를 «원래 글자와 같은 폭 부류»에서만 고른다 (한글↔한글, 라틴↔라틴)
+     · 공백은 절대 안 건드린다 — 단어 경계가 움직이면 줄바꿈이 통째로 흔들린다
+   rAF 도 스팬마다 돌리지 않고 하나로 몰아 돌린다. */
+const POOL_WIDE   = '가나다라마바사아자차카타파하거너더러머버서어저처커터퍼허'.split('');
+const POOL_NARROW = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'.split('');
+const SCRAMBLE_CHAR_CAP = 4000;   // 이보다 길면 조용히 넘어간다. 끊기는 것보다 안 하는 게 낫다
+
+function poolFor(ch){
+  const c = ch.charCodeAt(0);
+  return ((c >= 0xAC00 && c <= 0xD7A3) || (c >= 0x3131 && c <= 0x3163)) ? POOL_WIDE : POOL_NARROW;
+}
+function escChar(c){ return c === '&' ? '&amp;' : c === '<' ? '&lt;' : c === '>' ? '&gt;' : c; }
+
+let panelRAF = null;
+function scramblePanel(root){
+  if (panelRAF){ cancelAnimationFrame(panelRAF); panelRAF = null; }
+  if (!root) return;
+  if (window.KYG_noAnim && window.KYG_noAnim()) return;
+
+  const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode: function(n){
+      return (n.nodeValue && n.nodeValue.trim()) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+    }
+  });
+  const nodes = []; let n;
+  while ((n = w.nextNode())) nodes.push(n);
+
+  let total = 0;
+  nodes.forEach(function(x){ total += x.nodeValue.length; });
+  if (!total || total > SCRAMBLE_CHAR_CAP) return;
+
+  const units = [];
+  nodes.forEach(function(node){
+    const txt  = node.nodeValue;
+    const span = document.createElement('span');
+    node.parentNode.replaceChild(span, node);
+    span.textContent = txt;
+    const q = [];
+    for (let i = 0; i < txt.length; i++){
+      const ch = txt[i];
+      if (/\s/.test(ch)){ q.push({ ch: ch, fixed: true }); continue; }   // 공백 고정
+      const st = Math.floor(Math.random() * 20);
+      q.push({ ch: ch, fixed: false, start: st, end: st + Math.floor(Math.random() * 25) + 12, cur: null });
+    }
+    units.push({ el: span, q: q, txt: txt });
+  });
+
+  const t0 = performance.now();
+  (function frame(ts){
+    const now = (typeof ts === 'number') ? ts : performance.now();
+    const f = (now - t0) / (1000 / 60);          // 프레임이 아니라 시간으로 (§8-D)
+    let allDone = true;
+    for (let u = 0; u < units.length; u++){
+      const it = units[u];
+      if (it.done) continue;
+      let out = '', done = 0;
+      for (let i = 0; i < it.q.length; i++){
+        const c = it.q[i];
+        if (c.fixed || f >= c.end){ done++; out += escChar(c.ch); }
+        else if (f >= c.start){
+          if (!c.cur || Math.random() < 0.3){
+            const pool = poolFor(c.ch); c.cur = pool[Math.floor(Math.random() * pool.length)];
+          }
+          out += '<span class="scr">' + escChar(c.cur) + '</span>';
+        } else { out += escChar(c.ch); }   /* 시작 전에는 원문 그대로 — 자리가 안 빈다.
+             done 은 올리지 않는다. 올렸더니 첫 프레임에 «전부 끝남»으로 읽혀
+             아직 시작도 안 한 글자를 두고 애니메이션이 즉시 종료됐다. */
+      }
+      it.el.innerHTML = out;
+      if (done === it.q.length) it.done = true; else allDone = false;
+    }
+    if (allDone){ panelRAF = null; units.forEach(function(u){ u.el.textContent = u.txt; }); }
+    else panelRAF = requestAnimationFrame(frame);
+  })();
+}
+
+
+</script>
+
+<script>
+/* ══════════════════════════════════════════════════════════════════
+   ICARUS — 엔진 (engine.py v1.3 의 JS 이식)
+
+   파리티 규약 (검토 §3-2):
+     · 배수·버짓은 오차 0 을 목표로 한다.
+     · decide() 는 EV 동률이 3.5% 발생하며, 동률은 «비교 순서» 가 푼다.
+       파이썬 max() + `best==ev_p` 선검사와 같게 **push > hit > stand** 로 고정한다.
+     · BET_UNITS 를 [0.3,1.1,1.9] 로 «적지 않는다». 파이썬은 0.30+(1.60)*i/2 로 만들며
+       가운데 값이 1.0999999999999999 다. 하드코딩하면 베팅액 끝자리가 갈린다.
+   ══════════════════════════════════════════════════════════════════ */
+
+const RULES_VER = 'v1.3';
+const LIMITS = [20, 21, 22, 23, 24, 25, 26, 27];
+const ROUNDS = 8;
+
+function makeUnits(k){
+  if (k === 1) return [1.0];
+  const lo = 0.30, hi = 1.90, out = [];
+  for (let i = 0; i < k; i++) out.push(lo + (hi - lo) * i / (k - 1));
+  return out;
+}
+const BET_UNITS = makeUnits(3);
+
+const EDGE   = {20:-0.141, 21:-0.089, 22:-0.090, 23:-0.026, 24:0.027, 25:0.055, 26:0.142, 27:0.271};
+const BUST_P = {20:0.195, 21:0.201, 22:0.224, 23:0.241, 24:0.235, 25:0.251, 26:0.235, 27:0.226};
+const SURV_M = {20:1.063, 21:1.126, 22:1.154, 23:1.221, 24:1.288, 25:1.381, 26:1.451, 27:1.604};
+const FRESH_HI = 16 / 52;
+
+const CFG = {
+  budget: 100.0, betBase: 15.0, betCapFrac: 0.5, betLevels: 3,
+  transfersPerGame: 2, raisesPerRound: 2, raiseStep: 0.5,
+  mOppBust: 1.68, mWinBase: 0.78, mWinPerDiff: 0.10, mTie: 1.00, mLose: 0.40,
+  mFold: 0.50, mFoldWin: 1.25,
+  gamma: 0.18, gammaRef: 19,
+  insPrice: 1.00, insRecover: 0.60, insUpside: 0.12,
+  betTemp: 0.20, bluffRate: 0.15,
+  raiseTh: 1.22, foldTh: 0.58, raiseBluff: 0.08, kappa: 1.0
+};
+
+const TIERS = {
+  intern:  { peek: 0.00, counting: false, ledger: true  },
+  player:  { peek: 0.00, counting: true,  ledger: true  },
+  sharper: { peek: 0.50, counting: true,  ledger: false },
+  demon:   { peek: 0.85, counting: true,  ledger: false }
+};
+
+/* ── 카드 ───────────────────────────────────────────────── */
+function freshDeck(){
+  const d = [];
+  for (let i = 0; i < 4; i++){
+    d.push(11);
+    for (let v = 2; v <= 10; v++) d.push(v);
+    d.push(10, 10, 10);
+  }
+  return d;
+}
+function handMin(c){ let s = 0; for (const x of c) s += (x === 11 ? 1 : x); return s; }
+function handBest(c, L){ const lo = handMin(c); return (c.indexOf(11) >= 0 && lo + 10 <= L) ? lo + 10 : lo; }
+function isBust(c, L){ return handMin(c) > L; }
+/* JS 객체는 «정수처럼 보이는 키» 를 오름차순으로 재정렬한다. 파이썬 dict 는 삽입 순서다.
+   이 순서가 다르면 EV 합산 순서가 달라져 끝자리가 갈리고, 동률 근처에서 decide() 가 뒤집힌다.
+   실제로 2,500건 중 35건이 그렇게 어긋났다. Map 은 삽입 순서를 지키므로 파이썬과 같아진다. */
+function countsOf(deck){
+  const d = new Map();
+  for (const x of deck) d.set(x, (d.get(x) || 0) + 1);
+  return d;
+}
+function countsTotal(counts){ let n = 0; for (const v of counts.values()) n += v; return n; }
+function bustProb(cards, L, counts){
+  const n = countsTotal(counts);
+  if (!n) return 0;
+  const lo = handMin(cards);
+  let bad = 0;
+  for (const [v, k] of counts) if (lo + (v === 11 ? 1 : v) > L) bad += k;
+  return bad / n;
+}
+
+/* ── 배당 ───────────────────────────────────────────────── */
+function outcomeMult(mc, mL, mb, oc, oL, ob){
+  if (mb) return 0.0;
+  if (ob) return CFG.mOppBust;
+  const sa = handBest(mc, mL), sb = handBest(oc, oL);
+  const ta = mL - sa, tb = oL - sb;              // 작을수록 좋다
+  if (ta === tb){
+    if (sa === sb) return CFG.mTie;
+    return sa > sb ? (CFG.mWinBase + CFG.gamma * (sa - CFG.gammaRef)) : CFG.mLose;
+  }
+  const g = CFG.gamma * (sa - CFG.gammaRef);
+  if (ta < tb) return CFG.mWinBase + CFG.mWinPerDiff * (tb - ta) + g;
+  return CFG.mLose;
+}
+
+/* ── 보험 ───────────────────────────────────────────────── */
+function fairGain(limit){
+  const p = BUST_P[limit];
+  return p * CFG.insRecover + (1 - p) * SURV_M[limit] * CFG.insUpside;
+}
+function insPrice(limit){ return Math.max(0, CFG.insPrice * fairGain(limit)); }
+function deckRisk(deck){
+  if (!deck.length) return 1.0;
+  let hi = 0; for (const c of deck) if (c === 10) hi++;
+  return (hi / deck.length) / FRESH_HI;
+}
+/* 봇의 보험 판단. 가격은 «새 덱» 기준이고 판단은 «지금 덱» 기준이다 —
+   그 어긋남이 이 장치의 전부다 (룰북 §1.9). */
+function decideInsurance(limit, deck){
+  const price = insPrice(limit);
+  const p = Math.min(0.85, BUST_P[limit] * Math.pow(deckRisk(deck), 1.5));
+  const gain = p * CFG.insRecover + (1 - p) * SURV_M[limit] * CFG.insUpside;
+  return gain > price;
+}
+
+/* ── 베팅 정책 ──────────────────────────────────────────── */
+function betPolicy(limit){
+  const e = EDGE[limit], units = BET_UNITS;
+  const sc = units.map(u => u * e / CFG.betTemp);
+  const mx = Math.max.apply(null, sc);
+  const ex = sc.map(s => Math.exp(s - mx));
+  const tot = ex.reduce((a, b) => a + b, 0);
+  const b = CFG.bluffRate;
+  return ex.map(x => (1 - b) * (x / tot) + b / units.length);
+}
+function pickBet(limit, rnd){
+  const p = betPolicy(limit);
+  let r = rnd(), acc = 0;
+  for (let i = 0; i < p.length; i++){ acc += p[i]; if (r < acc) return i; }
+  return p.length - 1;
+}
+
+/* ── 신념 ───────────────────────────────────────────────── */
+/* 읽기 층은 출시에서 끈다 (룰북 §2.12). 남는 것은 소거 추론과 열람뿐이다. */
+function posterior(pool, peekLimit){
+  if (peekLimit != null){ const o = {}; o[peekLimit] = 1.0; return o; }
+  const p = pool.length ? pool : LIMITS.slice();
+  const o = {};
+  for (const L of p) o[L] = 1.0 / p.length;
+  return o;
+}
+
+/* ── EV ────────────────────────────────────────────────── */
+function evStand(mc, mL, oc, post){
+  if (isBust(mc, mL)) return 0.0;
+  let s = 0;
+  for (const k in post){ const L = +k;
+    s += post[k] * outcomeMult(mc, mL, false, oc, L, isBust(oc, L)); }
+  return s;
+}
+function evSpread(me, opp, post){
+  const vals = [];
+  for (const k in post){ const p = post[k]; if (p <= 1e-9) continue;
+    const one = {}; one[k] = 1.0;
+    vals.push([p, evStand(me.cards, me.limit, opp.cards, one)]); }
+  if (vals.length < 2) return 0.0;
+  let m = 0; for (const [p, v] of vals) m += p * v;
+  let s = 0; for (const [p, v] of vals) s += p * (v - m) * (v - m);
+  return Math.sqrt(s);
+}
+function bestEv(me, opp, deck, post){
+  if (isBust(me.cards, me.limit)) return 0.0;
+  if (!deck.length) return evStand(me.cards, me.limit, opp.cards, post);
+  const counts = me.counting ? countsOf(deck) : countsOf(freshDeck());
+  const n = countsTotal(counts);
+  const evS = evStand(me.cards, me.limit, opp.cards, post);
+  let evH = 0;
+  for (const [v, k] of counts){ const nc = me.cards.concat([v]);
+    if (isBust(nc, me.limit)) continue;
+    evH += (k / n) * evStand(nc, me.limit, opp.cards, post); }
+  return Math.max(evS, evH);
+}
+
+/* decide — 동률 우선순위 push > hit > stand (파이썬과 같게 고정) */
+function decide(me, opp, deck, post){
+  if (!deck.length || isBust(me.cards, me.limit)) return 'stand';
+  const counts = me.counting ? countsOf(deck) : countsOf(freshDeck());
+  const n = countsTotal(counts);
+
+  const evS = evStand(me.cards, me.limit, opp.cards, post);
+  let evH = 0;
+  for (const [v, k] of counts){ const nc = me.cards.concat([v]);
+    if (isBust(nc, me.limit)) continue;
+    evH += (k / n) * evStand(nc, me.limit, opp.cards, post); }
+
+  let evP = -1.0;
+  if (me.transfersLeft > 0 && !opp.stopped){
+    evP = 0;
+    for (const [v, k] of counts)
+      evP += (k / n) * evStand(me.cards, me.limit, opp.cards.concat([v]), post);
+  }
+  const best = Math.max(evS, evH, evP);
+  return best === evP ? 'push' : (best === evH ? 'hit' : 'stand');
+}
+
+/* ── 난수 (mulberry32 — 시드 가능, 파이썬과 수열은 다르다) ── */
+function rngFrom(seed){
+  let a = seed >>> 0;
+  return function(){
+    a |= 0; a = (a + 0x6D2B79F5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+function shuffle(arr, rnd){
+  for (let i = arr.length - 1; i > 0; i--){
+    const j = Math.floor(rnd() * (i + 1));
+    const t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+  }
+  return arr;
+}
+
+</script>
+
+<script>
+/* ══════════════════════════════════════════════════════════════════
+   ICARUS — 화면 · 라운드 루프
+   룰: 숨은 한도 블랙잭 룰북 v1.3. 엔진은 engine.js (파이썬과 파리티 확인).
+   ══════════════════════════════════════════════════════════════════ */
+
+const $ = s => document.querySelector(s);
+function t(o){ return (o && typeof o === 'object' && ('en' in o)) ? (o[window.APP_LANG] || o.en) : o; }
+function esc(s){ return String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+function fill(s, m){ return String(s).replace(/%([A-Z])/g, (_, k) => (k in m ? m[k] : '%' + k)); }
+
+/* ── 문안 ──────────────────────────────────────────────── */
+const S = {
+  crumbR:     {en:'ROUND', kr:'라운드'},
+  budget:     {en:'BUDGET', kr:'버짓'},
+  oppBudget:  {en:'OPPONENT', kr:'상대'},
+  round:      {en:'ROUND', kr:'라운드'},
+  transfers:  {en:'TRANSFERS', kr:'전가'},
+  deckLeft:   {en:'DECK', kr:'덱'},
+
+  setupTag:   {en:'Before you start', kr:'시작 전'},
+  pickTier:   {en:'Choose who you are playing against.', kr:'상대를 고르세요.'},
+  tierNote:   {en:'Two of them are allowed to look at your limit. That is a rule, not a trick — which is why it is written here.',
+               kr:'둘은 당신의 한도를 볼 수 있습니다. 속임수가 아니라 룰이고, 그래서 여기 적어둡니다.'},
+  t1n:{en:'Intern', kr:'초짜'},      t1d:{en:'Does not count the deck. Never sees your limit.', kr:'덱을 세지 않습니다. 당신의 한도를 보지 않습니다.'},
+  t2n:{en:'Player', kr:'선수'},      t2d:{en:'Counts exactly. Never sees your limit.', kr:'정확히 셉니다. 당신의 한도를 보지 않습니다.'},
+  t3n:{en:'Sharper', kr:'타짜'},     t3d:{en:'Counts, and sees your limit in about half the rounds.', kr:'세고, 라운드의 절반쯤 당신의 한도를 봅니다.'},
+  t4n:{en:'Laplace&rsquo;s Demon', kr:'라플라스의 악마'},
+  t4d:{en:'Counts, and sees your limit in almost every round.', kr:'세고, 거의 매 라운드 당신의 한도를 봅니다.'},
+  start:      {en:'Deal', kr:'시작하기'},
+
+  yourLimit:  {en:'YOUR LIMIT', kr:'내 한도'},
+  oppLimit:   {en:'THEIR LIMIT', kr:'상대 한도'},
+  hidden:     {en:'hidden', kr:'비공개'},
+  sum:        {en:'SUM', kr:'합'},
+  dist:       {en:'DISTANCE', kr:'거리'},
+  stake:      {en:'STAKE', kr:'스테이크'},
+  bet:        {en:'BET', kr:'베팅'},
+
+  betAsk:     {en:'You have seen your limit. How much do you put up?', kr:'한도를 봤습니다. 얼마를 걸까요?'},
+  betNote:    {en:'Your bet is public. Your limit is not.', kr:'베팅액은 공개됩니다. 한도는 아닙니다.'},
+  small:      {en:'Small', kr:'적게'}, mid:{en:'Standard', kr:'보통'}, big:{en:'Large', kr:'크게'},
+
+  insAsk:     {en:'Insurance?', kr:'보험을 들까요?'},
+  insBody:    {en:'If you go over, your multiplier is floored at <b>0.60</b>. If you survive, the round pays <b>1.12&times;</b>. The premium is priced to your own limit, so it is not the same number your opponent sees.',
+               kr:'터지면 배수가 <b>0.60</b>으로 보장됩니다. 살아남으면 그 라운드 배당이 <b>1.12배</b>가 됩니다. 보험료는 <b>당신의 한도에 맞춰</b> 산정되므로 상대가 보는 값과 다릅니다.'},
+  insPrem:    {en:'Premium', kr:'보험료'},
+  insBuy:     {en:'Buy', kr:'든다'}, insSkip:{en:'Skip', kr:'안 든다'},
+  insWarn:    {en:'The premium is priced off a player who pushes to the end. If you tend to stop early, insurance costs more than it is worth to you.',
+               kr:'보험료는 «끝까지 밀어붙이는 플레이»를 기준으로 산정돼 있습니다. 일찍 멈추는 편이라면 보험은 당신에게는 값보다 비쌉니다.'},
+  insOn:      {en:'INSURED', kr:'보험'},
+
+  hit:{en:'Hit', kr:'히트'}, push:{en:'Transfer', kr:'전가'},
+  stand:{en:'Stand', kr:'스탠드'}, raise:{en:'Raise', kr:'증액'},
+  match:{en:'Match', kr:'동조'}, fold:{en:'Forfeit', kr:'포기'},
+  yourTurn:   {en:'Your move.', kr:'당신 차례입니다.'},
+  answerRaise:{en:'They raised. Match it or forfeit.', kr:'상대가 증액했습니다. 동조하거나 포기하세요.'},
+  pushHint:   {en:'The next card off the deck goes to them. Only while they are still in.', kr:'덱의 다음 카드를 상대에게 넘깁니다. 상대가 아직 활성일 때만.'},
+
+  reveal:     {en:'Round %R', kr:'%R라운드'},
+  youBust:    {en:'You went over.', kr:'당신이 터졌습니다.'},
+  oppBust:    {en:'They went over.', kr:'상대가 터졌습니다.'},
+  youFold:    {en:'You forfeited.', kr:'당신이 포기했습니다.'},
+  oppFold:    {en:'They forfeited.', kr:'상대가 포기했습니다.'},
+  noReveal:   {en:'Neither limit is revealed on a forfeited round.', kr:'포기로 끝난 라운드는 양쪽 한도가 공개되지 않습니다.'},
+  mult:       {en:'MULTIPLIER', kr:'배수'},
+  pnlR:       {en:'THIS ROUND', kr:'이 라운드'},
+  next:       {en:'Next round', kr:'다음 라운드'},
+  seeEnd:     {en:'See the result', kr:'결과 보기'},
+
+  over:       {en:'Game over', kr:'게임 종료'},
+  wonBy:      {en:'You finished ahead by %M.', kr:'%M 앞섰습니다.'},
+  lostBy:     {en:'You finished behind by %M.', kr:'%M 뒤졌습니다.'},
+  drew:       {en:'Dead even.', kr:'동률입니다.'},
+  broke:      {en:'You ran out of budget.', kr:'버짓이 바닥났습니다.'},
+  oppBroke:   {en:'They ran out of budget.', kr:'상대의 버짓이 바닥났습니다.'},
+  again:      {en:'Play again', kr:'한 판 더'},
+  changeTier: {en:'Change opponent', kr:'상대 바꾸기'},
+
+  recHead:    {en:'Your record', kr:'전적'},
+  recW:{en:'W / L / D', kr:'승 / 패 / 무'},
+  recP:{en:'NET P&L', kr:'누적 순손익'},
+  recM:{en:'NET MARGIN', kr:'누적 마진'},
+  recG:{en:'GAMES', kr:'판'},
+  recFine:    {en:'Net P&amp;L and net margin differ because premiums do not go into a pot &mdash; they are burned. The gap is what you have spent on insurance.',
+               kr:'누적 손익과 마진이 다른 이유는 보험료가 팟으로 가지 않고 소멸하기 때문입니다. 그 차이가 곧 보험에 쓴 값입니다.'},
+  recFine2:   {en:'A game is 8 rounds and about 14 decisions, so one game is mostly variance. The difficulty shows up in the running totals, not in a single game.',
+               kr:'한 판은 8라운드 · 결정 약 14회라 한 판은 대부분 운입니다. 난이도는 한 판이 아니라 누적에서 드러납니다.'},
+  recLocal:   {en:'Kept in this browser only.', kr:'이 브라우저에만 저장됩니다.'},
+  poolHead:   {en:'Their remaining limits', kr:'상대의 남은 한도'},
+  poolNote:   {en:'Eight limits, one each. Revealed limits are struck through. Locked on the top two difficulties.',
+               kr:'한도는 여덟 장, 각 한 장씩입니다. 공개된 것은 지워집니다. 상위 두 난이도에서는 잠깁니다.'}
+};
+
+/* ── 상태 ──────────────────────────────────────────────── */
+let G = null, repaint = function(){};
+const TIER_KEYS = ['intern','player','sharper','demon'];
+let tier = 'player';
+
+function loadRec(){
+  try { return JSON.parse(localStorage.getItem('icarus_rec') || '{}'); } catch(e){ return {}; }
+}
+function saveRec(r){ try { localStorage.setItem('icarus_rec', JSON.stringify(r)); } catch(e){} }
+
+function newGame(){
+  const rnd = rngFrom((Math.random() * 4294967296) >>> 0);
+  const deck = shuffle(freshDeck(), rnd);
+  const mk = () => ({
+    budget: CFG.budget, limitDeck: shuffle(LIMITS.slice(), rnd),
+    transfersLeft: CFG.transfersPerGame, cards: [], limit: 21,
+    stopped: false, busted: false, folded: false, insured: false,
+    bet: 0, betIdx: 1, stake: 1.0, raisesLeft: 0, newCards: 0
+  });
+  G = {
+    rnd, deck, seats: [mk(), mk()], gone: [[], []],
+    round: 0, phase: 'bet', turn: 0, first: 0, pending: false,
+    log: [], lastRound: null, reason: 'done',
+    tier: tier, peek: TIERS[tier].peek, counting: TIERS[tier].counting
+  };
+  G.seats[1].counting = G.counting;
+  startRound();
+}
+
+function startRound(){
+  G.round++;
+  const s = G.seats;
+  for (const x of s){
+    x.cards = []; x.stopped = false; x.busted = false; x.folded = false;
+    x.stake = 1.0; x.raisesLeft = CFG.raisesPerRound; x.newCards = 0;
+    x.limit = x.limitDeck.pop();
+  }
+  G.first = (G.round - 1) % 2;
+  G.peeking = G.peek > 0 && G.rnd() < G.peek;      // 봇이 이번 라운드 내 한도를 보는가
+  /* 한도 → 베팅 → 보험 순서. 뒤의 것이 앞의 것을 입력으로 쓴다 (핸드오프 §3). */
+  const bot = s[1];
+  bot.insured = decideInsurance(bot.limit, G.deck);
+  bot.betIdx = pickBet(bot.limit, G.rnd);
+  bot.bet = Math.min(bot.budget, Math.max(1.0, Math.min(bot.budget * CFG.betCapFrac,
+            CFG.betBase * BET_UNITS[bot.betIdx])));
+  G.phase = 'bet';
+  G.log = [];
+  render();
+}
+
+function playerBet(idx){
+  const me = G.seats[0];
+  me.betIdx = idx;
+  me.bet = Math.min(me.budget, Math.max(1.0, Math.min(me.budget * CFG.betCapFrac,
+           CFG.betBase * BET_UNITS[idx])));
+  G.phase = 'ins';
+  render();
+}
+function playerIns(buy){
+  G.seats[0].insured = !!buy;
+  dealTwo();
+}
+function dealTwo(){
+  const s = G.seats;
+  for (let i = 0; i < 2; i++)
+    for (const k of [G.first, 1 - G.first]) s[k].cards.push(G.deck.pop());
+  for (const x of s) if (isBust(x.cards, x.limit)) { x.busted = true; x.stopped = true; }
+  G.turn = G.first; G.pending = false; G.phase = 'play';
+  logLine({en:`Round ${G.round} — ${G.first === 0 ? 'you lead' : 'they lead'}`,
+           kr:`${G.round}라운드 — ${G.first === 0 ? '당신이 선공' : '상대가 선공'}`});
+  render();
+  if (G.turn === 1) setTimeout(botTurn, 480);
+}
+
+function logLine(o){ G.log.push(o); }
+
+function oppPool(seatIdx){
+  return G.counting ? LIMITS.filter(L => G.gone[1 - seatIdx].indexOf(L) < 0) : LIMITS.slice();
+}
+
+/* ── 봇 ────────────────────────────────────────────────── */
+function botTurn(){
+  if (G.phase !== 'play') return;
+  const me = G.seats[1], opp = G.seats[0];
+  if (me.stopped){
+    if (G.pending) G.pending = false;
+    G.turn = 0; render(); afterTurn(); return;
+  }
+  const pool = oppPool(1);
+  const post = posterior(pool, G.peeking ? opp.limit : null);
+
+  if (G.pending){                                   // 동조 또는 포기
+    let ev = bestEv(me, opp, G.deck, post);
+    ev += CFG.kappa * evSpread(me, opp, post);      // 불확실성 «가산» (포기 판단)
+    if (ev < CFG.foldTh){
+      me.folded = true; me.stopped = true; G.pending = false;
+      logLine({en:'They forfeit.', kr:'상대가 포기했습니다.'});
+      render(); settle(); return;
+    }
+    me.stake += CFG.raiseStep; G.pending = false; G.turn = 0;
+    logLine({en:`They match. Their stake ${me.stake.toFixed(1)}&times;`, kr:`상대가 동조했습니다. 스테이크 ${me.stake.toFixed(1)}배`});
+    render(); afterTurn(); return;
+  }
+
+  const act = decide(me, opp, G.deck, post);
+  if (me.raisesLeft > 0 && !opp.stopped){
+    let ev = bestEv(me, opp, G.deck, post);
+    ev -= CFG.kappa * evSpread(me, opp, post);      // 불확실성 «차감» (증액 판단)
+    if (ev > CFG.raiseTh || G.rnd() < CFG.raiseBluff){
+      me.raisesLeft--; me.stake += CFG.raiseStep; G.pending = true; G.turn = 0;
+      logLine({en:`They raise. Their stake ${me.stake.toFixed(1)}&times;`, kr:`상대가 증액했습니다. 스테이크 ${me.stake.toFixed(1)}배`});
+      render(); afterTurn(); return;
+    }
+  }
+  applyAct(1, act);
+}
+
+function applyAct(i, act){
+  const me = G.seats[i], opp = G.seats[1 - i];
+  const who = i === 0 ? {en:'You', kr:'당신'} : {en:'They', kr:'상대'};
+  if (act === 'stand'){
+    me.stopped = true;
+    logLine({en:`${t(who)} stand.`, kr:`${t(who)}이 멈췄습니다.`});
+  } else if (act === 'hit'){
+    me.cards.push(G.deck.pop()); me.newCards = 1;
+    if (isBust(me.cards, me.limit)){ me.busted = true; me.stopped = true;
+      logLine(i === 0 ? {en:'You went over. They cannot tell.', kr:'터졌습니다. 상대는 모릅니다.'}
+                      : {en:'They stop.', kr:'상대가 멈췄습니다.'});
+    } else logLine({en:`${t(who)} hit.`, kr:`${t(who)}이 히트했습니다.`});
+  } else {                                          // push
+    me.transfersLeft--;
+    opp.cards.push(G.deck.pop()); opp.newCards = 1;
+    if (isBust(opp.cards, opp.limit)){ opp.busted = true; opp.stopped = true; }
+    logLine({en:`${t(who)} transfer a card.`, kr:`${t(who)}이 카드를 전가했습니다.`});
+  }
+  G.turn = 1 - i;
+  render();
+  afterTurn();
+}
+
+function afterTurn(){
+  const s = G.seats;
+  if ((s[0].stopped && s[1].stopped) || !G.deck.length){ settle(); return; }
+  if (s[G.turn].stopped){                           // 멈춘 쪽은 건너뛴다
+    if (G.pending) G.pending = false;
+    G.turn = 1 - G.turn;
+  }
+  if (G.turn === 1) setTimeout(botTurn, 480);
+}
+
+/* ── 정산 ──────────────────────────────────────────────── */
+function settle(){
+  const [a, b] = G.seats;
+  let ma, mb;
+  if (a.folded || b.folded){
+    if (a.folded && b.folded){ ma = CFG.mFold; mb = CFG.mFold; }
+    else if (a.folded){ ma = CFG.mFold; mb = CFG.mFoldWin; }
+    else { ma = CFG.mFoldWin; mb = CFG.mFold; }
+  } else {
+    ma = outcomeMult(a.cards, a.limit, a.busted, b.cards, b.limit, b.busted);
+    mb = outcomeMult(b.cards, b.limit, b.busted, a.cards, a.limit, a.busted);
+  }
+  /* 보험 적용 — 룰북 §1.9 «포기한 쪽에는 생존 가산이 없다» (엔진과 같은 읽기) */
+  function applyIns(s, m){
+    if (!s.insured) return [m, 0];
+    const price = insPrice(s.limit);
+    if (s.busted) m = Math.max(m, CFG.insRecover);
+    else if (!s.folded) m = m * (1 + CFG.insUpside);
+    return [m, price];
+  }
+  const [mA, cA] = applyIns(a, ma), [mB, cB] = applyIns(b, mb);
+  const pa = a.bet * a.stake * (mA - 1 - cA);
+  const pb = b.bet * b.stake * (mB - 1 - cB);
+  a.budget += pa; b.budget += pb;
+
+  const revealed = !(a.folded || b.folded);
+  if (revealed){ G.gone[0].push(a.limit); G.gone[1].push(b.limit); }
+
+  G.lastRound = { ma: mA, mb: mB, pa, pb, revealed,
+                  aL: a.limit, bL: b.limit, aB: a.busted, bB: b.busted,
+                  aF: a.folded, bF: b.folded };
+  G.phase = 'reveal';
+  render();
+}
+
+function nextRound(){
+  if (G.seats.some(s => s.budget <= 0)){ G.reason = 'bankrupt'; endGame(); return; }
+  if (G.round >= ROUNDS){ G.reason = 'done'; endGame(); return; }
+  if (G.deck.length < 4){ G.reason = 'deck'; endGame(); return; }
+  startRound();
+}
+
+function endGame(){
+  const [a, b] = G.seats;
+  const margin = a.budget - b.budget, pnl = a.budget - CFG.budget;
+  const rec = loadRec(); const k = G.tier;
+  const r = rec[k] || { g:0, w:0, l:0, d:0, pnl:0, margin:0 };
+  r.g++; r.pnl += pnl; r.margin += margin;
+  if (margin > 0) r.w++; else if (margin < 0) r.l++; else r.d++;
+  rec[k] = r; saveRec(rec);
+  G.phase = 'over'; G.margin = margin; G.pnl = pnl;
+  render();
+}
+
+/* ── 그리기 ────────────────────────────────────────────── */
+function statusBar(){
+  const [a, b] = G.seats;
+  const chip = (k, v, cls) => `<div class="chip ${cls||''}"><span class="k">${esc(t(k))}</span><span class="v">${v}</span></div>`;
+  return `<div class="bar">
+    ${chip(S.budget, a.budget.toFixed(1), 'me')}
+    ${chip(S.oppBudget, b.budget.toFixed(1))}
+    ${chip(S.round, G.round + ' / ' + ROUNDS)}
+    ${chip(S.transfers, a.transfersLeft)}
+    ${chip(S.deckLeft, G.deck.length)}
+  </div>`;
+}
+
+function seatBox(i, showLimit){
+  const s = G.seats[i], mine = i === 0;
+  const best = handBest(s.cards, s.limit), lo = handMin(s.cards);
+  const cards = s.cards.map((c, j) =>
+    `<div class="card${(j === s.cards.length - 1 && s.newCards) ? ' new' : ''}">${c === 11 ? 'A' : c}</div>`).join('');
+  const tags = [];
+  if (s.insured && (mine || showLimit)) tags.push(esc(t(S.insOn)));
+  if (s.stake > 1.0) tags.push(esc(t(S.stake)) + ' ' + s.stake.toFixed(1) + '&times;');
+  const limTxt = showLimit ? s.limit : (mine ? s.limit : esc(t(S.hidden)));
+  let sums = `<span>${esc(t(mine ? S.yourLimit : S.oppLimit))} <b>${limTxt}</b></span>
+              <span>${esc(t(S.sum))} <b>${mine || showLimit ? best : lo}</b></span>`;
+  if (mine || showLimit) sums += `<span>${esc(t(S.dist))} <b>${s.limit - best}</b></span>`;
+  sums += `<span>${esc(t(S.bet))} <b>${(s.bet * s.stake).toFixed(1)}</b></span>`;
+  return `<div class="seat${mine ? ' mine' : ''}">
+    <h4>${mine ? (window.APP_LANG === 'kr' ? '나' : 'You') : (window.APP_LANG === 'kr' ? '상대' : 'Opponent')}
+      ${tags.length ? '<span class="tag">' + tags.join(' · ') + '</span>' : ''}</h4>
+    <div class="cards">${cards}</div>
+    <div class="sums">${sums}</div></div>`;
+}
+
+function ledgerBox(){
+  if (!TIERS[G.tier].ledger) return '';
+  const cells = LIMITS.map(L => {
+    const out = G.gone[1].indexOf(L) >= 0;
+    return `<span class="${out ? 'out' : ''}">${L}</span>`;
+  }).join('');
+  return `<div class="ledger"><div style="margin-bottom:5px">${esc(t(S.poolHead))}</div>${cells}
+    <div style="margin-top:7px;opacity:.75">${esc(t(S.poolNote))}</div></div>`;
+}
+
+function stripBox(){
+  if (!G.log.length) return '';
+  return `<div class="strip">${G.log.map(l => t(l)).join('<br>')}</div>`;
+}
+
+function render(){
+  repaint = render;
+  const p = $('#panel');
+  if (!G){ renderSetup(); return; }
+  const [me, opp] = G.seats;
+
+  if (G.phase === 'bet'){
+    p.innerHTML = statusBar()
+      + `<p class="q">${esc(t(S.betAsk))}</p>`
+      + `<p class="given">${esc(t(S.yourLimit))} <b style="font-family:var(--arch);font-size:24px">${me.limit}</b></p>`
+      + `<p class="note">${esc(t(S.betNote))}</p>`
+      + `<div class="acts">` + [S.small, S.mid, S.big].map((lab, i) =>
+          `<button class="btn" data-bet="${i}">${esc(t(lab))} &middot; ${(CFG.betBase * BET_UNITS[i]).toFixed(1)}</button>`).join('') + `</div>`
+      + ledgerBox();
+    p.querySelectorAll('[data-bet]').forEach(b => b.onclick = () => playerBet(+b.dataset.bet));
+  }
+  else if (G.phase === 'ins'){
+    const pr = insPrice(me.limit), cost = me.bet * pr;
+    p.innerHTML = statusBar()
+      + `<p class="q">${esc(t(S.insAsk))}</p>`
+      + `<p class="given">${t(S.insBody)}</p>`
+      + `<p class="stat">${esc(t(S.insPrem))} <b>${cost.toFixed(2)}</b> <span style="font-family:var(--mono);font-size:12px;color:#6B6B67">(${(pr * 100).toFixed(1)}% &times; ${me.bet.toFixed(1)})</span></p>`
+      + `<div class="warn"><p>${esc(t(S.insWarn))}</p></div>`
+      + `<div class="acts"><button class="btn go" id="ib">${esc(t(S.insBuy))}</button>
+         <button class="btn" id="is">${esc(t(S.insSkip))}</button></div>`;
+    $('#ib').onclick = () => playerIns(true);
+    $('#is').onclick = () => playerIns(false);
+  }
+  else if (G.phase === 'play'){
+    const myTurn = G.turn === 0 && !me.stopped;
+    let acts = '';
+    if (myTurn){
+      if (G.pending){
+        acts = `<button class="btn go" id="a-match">${esc(t(S.match))}</button>
+                <button class="btn" id="a-fold">${esc(t(S.fold))}</button>`;
+      } else {
+        const canPush = me.transfersLeft > 0 && !opp.stopped;
+        const canRaise = me.raisesLeft > 0 && !opp.stopped;
+        acts = `<button class="btn go" id="a-hit">${esc(t(S.hit))}</button>
+                <button class="btn" id="a-stand">${esc(t(S.stand))}</button>
+                <button class="btn" id="a-push"${canPush ? '' : ' disabled'}>${esc(t(S.push))}</button>
+                <button class="btn" id="a-raise"${canRaise ? '' : ' disabled'}>${esc(t(S.raise))}</button>`;
+      }
+    }
+    p.innerHTML = statusBar() + seatBox(1, false) + seatBox(0, true)
+      + `<p class="note">${myTurn ? esc(t(G.pending ? S.answerRaise : S.yourTurn)) : '&nbsp;'}</p>`
+      + `<div class="acts">${acts}</div>` + ledgerBox() + stripBox();
+    const on = (id, fn) => { const e = $(id); if (e) e.onclick = fn; };
+    on('#a-hit', () => applyAct(0, 'hit'));
+    on('#a-stand', () => applyAct(0, 'stand'));
+    on('#a-push', () => applyAct(0, 'push'));
+    on('#a-raise', () => {
+      me.raisesLeft--; me.stake += CFG.raiseStep; G.pending = true; G.turn = 1;
+      logLine({en:`You raise. Your stake ${me.stake.toFixed(1)}&times;`, kr:`증액했습니다. 스테이크 ${me.stake.toFixed(1)}배`});
+      render(); setTimeout(botTurn, 480);
+    });
+    on('#a-match', () => {
+      me.stake += CFG.raiseStep; G.pending = false; G.turn = 1;
+      logLine({en:`You match. Your stake ${me.stake.toFixed(1)}&times;`, kr:`동조했습니다. 스테이크 ${me.stake.toFixed(1)}배`});
+      render(); afterTurn();
+    });
+    on('#a-fold', () => {
+      me.folded = true; me.stopped = true; G.pending = false;
+      logLine({en:'You forfeit.', kr:'포기했습니다.'});
+      settle();
+    });
+  }
+  else if (G.phase === 'reveal'){
+    const r = G.lastRound;
+    const lines = [];
+    if (r.aF) lines.push(t(S.youFold)); if (r.bF) lines.push(t(S.oppFold));
+    if (r.aB) lines.push(t(S.youBust)); if (r.bB) lines.push(t(S.oppBust));
+    if (!r.revealed) lines.push(t(S.noReveal));
+    const cls = r.pa >= 0 ? 'up' : 'dn';
+    p.innerHTML = statusBar()
+      + `<p class="crumbs" style="margin-bottom:14px"><span class="crumb on">${fill(t(S.reveal), {R:G.round})}</span></p>`
+      + seatBox(1, r.revealed) + seatBox(0, true)
+      + (lines.length ? `<p class="note">${lines.join(' ')}</p>` : '')
+      + `<div class="res"><span>${esc(t(S.mult))} ${r.ma.toFixed(2)}</span>
+         <span class="big ${cls}">${r.pa >= 0 ? '+' : ''}${r.pa.toFixed(1)}</span>
+         <span style="color:#6B6B67">${esc(t(S.pnlR))}</span></div>`
+      + `<div class="acts" style="margin-top:18px"><button class="btn go" id="nx">${esc(t(G.round >= ROUNDS ? S.seeEnd : S.next))}</button></div>`
+      + stripBox();
+    $('#nx').onclick = nextRound;
+  }
+  else if (G.phase === 'over'){
+    const m = G.margin;
+    const head = m > 0 ? fill(t(S.wonBy), {M:m.toFixed(1)}) : m < 0 ? fill(t(S.lostBy), {M:Math.abs(m).toFixed(1)}) : t(S.drew);
+    const extra = G.reason === 'bankrupt'
+      ? (G.seats[0].budget <= 0 ? t(S.broke) : t(S.oppBroke)) : '';
+    p.innerHTML = `<p class="crumbs" style="margin-bottom:14px"><span class="crumb on">${esc(t(S.over))}</span></p>`
+      + `<div class="res"><span class="big ${m > 0 ? 'up' : m < 0 ? 'dn' : ''}">${esc(head)}</span></div>`
+      + (extra ? `<p class="note">${esc(extra)}</p>` : '')
+      + `<div class="rows">
+           <div class="row"><span class="k">${esc(t(S.budget))}</span><span class="v">${G.seats[0].budget.toFixed(1)}</span></div>
+           <div class="row"><span class="k">${esc(t(S.oppBudget))}</span><span class="v">${G.seats[1].budget.toFixed(1)}</span></div>
+           <div class="row"><span class="k">${esc(t(S.recP))}</span><span class="v">${G.pnl >= 0 ? '+' : ''}${G.pnl.toFixed(1)}</span></div>
+           <div class="row"><span class="k">${esc(t(S.recM))}</span><span class="v">${m >= 0 ? '+' : ''}${m.toFixed(1)}</span></div>
+         </div>`
+      + `<div class="acts" style="margin-top:18px"><button class="btn go" id="ag">${esc(t(S.again))}</button>
+         <button class="btn" id="ct">${esc(t(S.changeTier))}</button></div>`;
+    $('#ag').onclick = newGame;
+    $('#ct').onclick = () => { G = null; render(); };
+  }
+  paintRecord();
+}
+
+function renderSetup(){
+  const p = $('#panel');
+  const defs = [[S.t1n, S.t1d], [S.t2n, S.t2d], [S.t3n, S.t3d], [S.t4n, S.t4d]];
+  p.innerHTML = `<p class="crumbs" style="margin-bottom:14px"><span class="crumb on">${esc(t(S.setupTag))}</span></p>`
+    + `<p class="q">${esc(t(S.pickTier))}</p>`
+    + `<div class="tiers">` + TIER_KEYS.map((k, i) =>
+        `<button class="tier${k === tier ? ' on' : ''}" data-tier="${k}">
+           <span class="n">${t(defs[i][0])}</span><span class="d">${esc(t(defs[i][1]))}</span></button>`).join('') + `</div>`
+    + `<p class="note">${esc(t(S.tierNote))}</p>`
+    + `<div class="acts" style="margin-top:16px"><button class="btn go" id="go">${esc(t(S.start))}</button></div>`;
+  p.querySelectorAll('[data-tier]').forEach(b => b.onclick = () => { tier = b.dataset.tier; renderSetup(); paintRecord(); });
+  $('#go').onclick = newGame;
+  repaint = renderSetup;
+  paintRecord();
+}
+
+function paintRecord(){
+  const rec = loadRec()[tier] || { g:0, w:0, l:0, d:0, pnl:0, margin:0 };
+  const cell = (k, v) => `<div class="cell"><span class="k">${esc(t(k))}</span><span class="v">${v}</span></div>`;
+  $('#rec').innerHTML = `<h3>${esc(t(S.recHead))} &middot; ${t(({intern:S.t1n, player:S.t2n, sharper:S.t3n, demon:S.t4n})[tier])}</h3>
+    <div class="grid">
+      ${cell(S.recG, rec.g)}
+      ${cell(S.recW, rec.w + ' / ' + rec.l + ' / ' + rec.d)}
+      ${cell(S.recP, (rec.pnl >= 0 ? '+' : '') + rec.pnl.toFixed(1))}
+      ${cell(S.recM, (rec.margin >= 0 ? '+' : '') + rec.margin.toFixed(1))}
+    </div>
+    <p class="fine">${t(S.recFine)}</p>
+    <p class="fine" style="border:none;padding-top:0">${t(S.recFine2)} ${esc(t(S.recLocal))}</p>`;
+}
+
+/* 언어가 바뀌면 현재 화면을 다시 그린다. 진행 상태는 G 에 있으므로 잃지 않는다. */
+window.APP_LANG_LISTENERS = window.APP_LANG_LISTENERS || [];
+/* 스크램블은 «언어가 바뀔 때만» 돈다. render() 안에 두면 히트·스탠드 할 때마다
+   패널 전체가 다시 흩어져서 게임이 굼떠 보인다 (헤드리스 플레이에서 잡혔다). */
+window.APP_LANG_LISTENERS.push(function(){
+  repaint();
+  scramblePanel($('#panel'));
+  scramblePanel($('#rec'));
+});
+
+/* 회귀 시험용 훅. 평소에는 달지 않는다 — 콘솔에서 상대 한도를 읽을 수 있으면
+   난이도 사다리가 의미를 잃는다. ?test=1 일 때만 연다. */
+try{ if (location.search.indexOf('test') >= 0){
+  window.__icarus = { state: () => G, tier: k => { tier = k; }, S: S };
+} }catch(e){}
+
+renderSetup();
+
+</script>
+</body>
+</html>
