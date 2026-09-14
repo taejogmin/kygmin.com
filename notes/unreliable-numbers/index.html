@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Unreliable Numbers — KYGMIN Notes</title>
+<meta name="description" content="A write-up of the belief-updating game: two pass conditions written before any item existed, the four versions those conditions killed — including the one I liked best — and why the game grades the move rather than the answer." />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#F6F6F4;
+  --ink:#141414;
+  --gray:#DDDDD8;
+  --green:#2BB673;
+  --green-deep:#0F6E56;
+  --red:#A32D2D;
+  --arch:'Archivo','Pretendard',sans-serif;
+  --sans:'Pretendard',-apple-system,'Apple SD Gothic Neo','Malgun Gothic','Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono','SF Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{transition:none!important;}
+}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:16px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  word-break:keep-all;overflow-wrap:break-word;
+}
+a{color:inherit;}
+a:focus-visible,button:focus-visible{outline:3px solid var(--green);outline-offset:3px;}
+.wrap{max-width:960px;margin:0 auto;padding:0 24px;}
+.narrow{max-width:720px;}
+
+/* ── Nav ── */
+nav{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:3px solid var(--ink);}
+.nav-inner{
+  max-width:960px;margin:0 auto;padding:14px 24px;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;
+}
+.logo{font-family:var(--arch);font-weight:900;font-size:19px;letter-spacing:-0.5px;text-decoration:none;white-space:nowrap;}
+.logo em{font-style:normal;background:var(--green);color:var(--paper);padding:0 6px;display:inline-block;transform:rotate(-1.5deg);}
+.nav-links{display:flex;gap:8px;flex-wrap:wrap;}
+.nav-links a{
+  font-family:var(--arch);font-size:12px;font-weight:700;text-transform:uppercase;
+  border:2px solid var(--ink);padding:6px 13px;background:#fff;text-decoration:none;
+  box-shadow:3px 3px 0 var(--ink);transition:transform .1s, box-shadow .1s;
+}
+.nav-links a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+.nav-links a.on{background:var(--green);color:var(--paper);}
+
+/* ── Hero ── */
+header{padding:64px 0 44px;border-bottom:3px solid var(--ink);}
+.sec-tag{
+  font-family:var(--mono);font-size:12.5px;font-weight:600;
+  color:var(--green-deep);letter-spacing:1px;display:block;margin-bottom:16px;
+}
+h1{
+  font-family:var(--arch);font-weight:900;text-transform:uppercase;
+  font-size:clamp(30px, 5.4vw, 50px);line-height:1.05;letter-spacing:-2px;max-width:840px;
+}
+h1 .box{background:var(--ink);color:var(--paper);padding:0 12px;display:inline-block;transform:rotate(-1deg);}
+.hero-sub{margin-top:22px;font-size:16.5px;max-width:640px;font-weight:500;}
+.hero-note{margin-top:14px;font-family:var(--mono);font-size:12px;color:#4A4A46;}
+.hero-cta{margin-top:20px;display:flex;align-items:center;gap:9px;flex-wrap:wrap;}
+.hero-cta a,.hero-cta span{
+  font-family:var(--arch);font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;
+  border:2px solid var(--ink);padding:6px 12px;text-decoration:none;white-space:nowrap;
+  box-shadow:3px 3px 0 var(--ink);transition:transform .1s, box-shadow .1s;
+}
+.hero-cta a{background:#fff;color:var(--ink);}
+.hero-cta a:first-child{background:var(--green);color:var(--paper);}
+.hero-cta a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+.hero-cta span{background:var(--paper);color:#6B6B67;border-color:#B9B9B3;box-shadow:none;
+  font-family:var(--mono);font-size:10.5px;padding:6px 10px;}
+
+/* ── Article ── */
+main{padding:52px 0 96px;}
+article h2{
+  font-family:var(--arch);font-weight:900;text-transform:uppercase;
+  font-size:clamp(21px,3vw,27px);letter-spacing:-1px;line-height:1.2;
+  margin:56px 0 6px;padding-top:22px;border-top:3px solid var(--ink);
+}
+article h2:first-child{margin-top:0;padding-top:0;border-top:none;}
+article h2 .n{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--green-deep);
+  display:block;letter-spacing:1px;margin-bottom:8px;text-transform:none;}
+article h3{font-family:var(--arch);font-weight:700;font-size:17px;margin:32px 0 6px;letter-spacing:-0.3px;}
+article p{margin:14px 0;max-width:720px;}
+article ul{margin:14px 0 14px 22px;max-width:720px;}
+article li{margin:7px 0;}
+article strong{font-weight:700;}
+code{font-family:var(--mono);font-size:.9em;background:#EDEDE8;padding:1px 5px;border:1px solid var(--gray);}
+.eq{
+  font-family:var(--mono);font-size:13.5px;line-height:1.9;
+  background:#fff;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);
+  padding:18px 20px;margin:22px 0;max-width:720px;overflow-x:auto;white-space:pre;
+}
+.eq b{color:var(--green-deep);font-weight:600;}
+
+/* callouts */
+.note{
+  border-left:6px solid var(--green);background:#fff;border:3px solid var(--ink);
+  border-left-width:9px;padding:16px 20px;margin:24px 0;max-width:720px;
+}
+.note .k{font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:1px;
+  color:var(--green-deep);display:block;margin-bottom:6px;}
+.note.warn{border-left-color:var(--red);}
+.note.warn .k{color:var(--red);}
+.note p{margin:8px 0;}
+.note p:first-of-type{margin-top:0;}
+.note p:last-child{margin-bottom:0;}
+
+/* tables */
+.tw{overflow-x:auto;margin:24px 0;max-width:720px;}
+table{border-collapse:collapse;font-size:13.5px;width:100%;background:#fff;
+  border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);}
+caption{caption-side:bottom;text-align:left;font-family:var(--mono);font-size:11.5px;
+  color:#4A4A46;padding-top:10px;line-height:1.6;}
+th,td{border-bottom:1px solid var(--gray);padding:8px 12px;text-align:right;white-space:nowrap;}
+th:first-child,td:first-child{text-align:left;}
+th:not(.num),td:not(.num){text-align:left;white-space:normal;}
+th.num,td.num{text-align:right;white-space:nowrap;}
+thead th{background:var(--ink);color:var(--paper);font-family:var(--mono);
+  font-size:11.5px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;border-bottom:none;}
+tbody tr:last-child td{border-bottom:none;}
+td.num,th.num{font-family:var(--mono);}
+tr.hi td{background:#EAF7F0;font-weight:700;}
+tr.bad td{background:#FBEDED;}
+
+/* inline bars */
+.bars{margin:22px 0;max-width:640px;}
+.bar-row{margin-bottom:9px;}
+.bar-row .top{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;margin-bottom:3px;}
+.bar-row .track{height:14px;background:var(--gray);border:2px solid var(--ink);}
+.bar-row .fill{height:100%;background:var(--green);}
+.bar-row .fill.b{background:var(--ink);}
+
+.foot-cta{
+  margin-top:64px;border:3px solid var(--ink);background:#fff;box-shadow:6px 6px 0 var(--ink);
+  padding:24px;max-width:720px;
+}
+.foot-cta a{
+  display:inline-block;font-family:var(--arch);font-weight:700;font-size:13px;text-transform:uppercase;
+  border:2px solid var(--ink);background:var(--green);color:var(--paper);
+  padding:9px 16px;box-shadow:3px 3px 0 var(--ink);text-decoration:none;margin-top:12px;
+  transition:transform .1s, box-shadow .1s;
+}
+.foot-cta a:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--ink);}
+
+footer{border-top:3px solid var(--ink);padding:22px 0;}
+.foot-inner{max-width:960px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;
+  gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:11.5px;color:#4A4A46;}
+</style></head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="/index.html">KYG<em>MIN</em></a>
+    <div class="nav-links">
+      <a href="/index.html">Home</a>
+      <a href="/playhouse/">PLAYHOUSE</a>
+      <a href="/notes/">Notes</a>
+      <a href="/cv.html">CV &#128274;</a>
+    </div>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <span class="sec-tag">NOTES &mdash; 09 &middot; UNRELIABLE NUMBERS</span>
+    <h1>I wrote the test first. <span class="box">Then it failed my best item.</span></h1>
+    <p class="hero-sub">Six items about numbers that betray you. Before any of them existed I wrote down two conditions an item had to pass, which felt like ceremony at the time. They went on to kill four versions, including the one I liked most and the one that would have been a lie.</p>
+    <p class="hero-note">ENGLISH ONLY &middot; ~17 MIN &middot; 6 ITEMS &middot; 2 CONDITIONS WRITTEN FIRST &middot; 4 VERSIONS THEY KILLED &middot; 0 VERDICTS PASSED</p>
+    <div class="hero-cta">
+      <a href="/unreliable-numbers/">Play Unreliable Numbers &rarr;</a>
+      <a href="/notes/">All the write-ups &rarr;</a>
+      <span>SIGN-IN REQUIRED &middot; FIRST RUN ONLY</span>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap narrow">
+  <article>
+
+    <h2><span class="n">01</span>It does not grade your answer</h2>
+
+    <p>Six items. Each one shows you a small table, asks you to make a decision, and asks how sure you are of a specific claim on a slider. Then one more fact arrives &mdash; a sample size, a breakdown, a column that was missing &mdash; and it asks both questions again. Then it shows you what was actually true.</p>
+
+    <p>What the page measures is the gap between your two confidence numbers, compared against a reference band computed from exactly what was on the screen at that moment. Not against the truth. The truth arrives at stage three and is never used to score anybody, because the player could not have known it and grading someone on information they did not have is not measurement, it is a trick.</p>
+
+    <p>Two things follow from that, and they shaped almost every decision below. First, the reference is a <em>band</em>, not a point: a single number promises a resolution the screen never had. Second, in four of the six items the correct decision does not change &mdash; only the confidence does. That is the argument. Knowing that a statistical device exists is not the same as knowing which way it points this time.</p>
+
+    <div class="tw">
+    <table>
+      <caption>The six items, and what the extra fact does to each. The reference band is the range a reasonable updater lands in across the priors a player could plausibly hold.</caption>
+      <thead><tr><th>Item</th><th>Device</th><th>Belief</th><th>Decision</th><th class="num">Band</th></tr></thead>
+      <tbody>
+        <tr><td>1 &middot; Factory inspection</td><td>Sample size</td><td>down</td><td>same</td><td class="num">62&ndash;80%</td></tr>
+        <tr><td>2 &middot; A/B test</td><td>Sample size</td><td><strong>up</strong></td><td>same</td><td class="num">99&ndash;100%</td></tr>
+        <tr><td>3 &middot; Surgery success rate</td><td>Case mix</td><td>down</td><td><strong>flips</strong></td><td class="num">0&ndash;4%</td></tr>
+        <tr><td>4 &middot; On-time delivery</td><td>Case mix</td><td>holds</td><td>same</td><td class="num">95&ndash;100%</td></tr>
+        <tr><td>5 &middot; Exam-prep pass rate</td><td>Who is missing</td><td>down</td><td><strong>flips</strong></td><td class="num">0&ndash;2%</td></tr>
+        <tr><td>6 &middot; Quit-smoking programme</td><td>Who is missing</td><td>holds</td><td>same</td><td class="num">98&ndash;100%</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2><span class="n">02</span>Two conditions, written before any item existed</h2>
+
+    <p>The failure mode of a game like this is obvious in advance. You want the reveal to land, so you build an observation that looks shocking, then you tell the player their shock was an illusion. If the observation really was shocking under the truth you are about to reveal, the item has just lied to them, and it lied in the exact direction that makes the author look clever.</p>
+
+    <p>So before writing a single item I wrote down what an item had to survive.</p>
+
+    <div class="eq">GATE 1 &mdash; <b>the tail</b>
+  Under the data-generating process the item is about to reveal,
+  the two-sided probability of each observed cell must be &ge; 0.05.
+  If the reveal says "you were fooled" about data that was
+  genuinely surprising, the item is the thing doing the fooling.
+
+GATE 2 &mdash; <b>prior sensitivity</b>
+  Across the priors a reasonable player could hold,
+  the width of the reference band must be &le; 0.20.
+  If the answer swings on an assumption nobody was told about,
+  the scoring is unfair no matter how correct the arithmetic is.</div>
+
+    <p>Both live in <code>validate.py</code> and both re-run on every item, every time an item is added or changed. That matters more than it sounds: a condition you only check once is a ceremony, and a condition that re-runs is a test.</p>
+
+    <div class="note">
+      <span class="k">WHY THIS IS WORTH WRITING DOWN FIRST</span>
+      <p>Every one of the four rejections below arrived with a reason to make an exception. The dramatic version was dramatic. The 3.3&sigma; world was the first seed and looked fine. If the conditions had been written after the items, I would have been writing them to fit items I was already attached to, and every one of those exceptions would have been granted.</p>
+    </div>
+
+    <h2><span class="n">03</span>The first item I wrote was a lie</h2>
+
+    <p>Item 1 is four factories. Three have been inspected 500 times each and sit near 3% defective. The fourth, D, shows 10%. You get one deep inspection; where do you send it? Then stage two reveals the inspection counts: A, B and C were checked 500 times, D was checked <em>twenty</em>.</p>
+
+    <p>My first draft had D at 3 defects out of 20. Fifteen percent, nice and alarming, and the reveal says all four factories were truly at 3.0%.</p>
+
+    <div class="eq">n = 20, true p = 0.03
+
+P(X &ge; 3)  =  1 &minus; 0.5438 &minus; 0.3364 &minus; 0.0988  =  <b>0.0210</b>
+
+gate 1 threshold: 0.05        <b>FAIL</b></div>
+
+    <p>Three defects in twenty at a true rate of 3% happens about two times in a hundred. The item was about to tell the player that their alarm was a small-sample illusion, when in fact the observation was genuinely unusual and their alarm was the correct response. I had written, in §12 of my own notes, a warning against exactly this item, and then built it four sections later.</p>
+
+    <p>Two out of twenty passes: <code>P(X &ge; 2) = 0.120</code>. Less alarming on screen, honest underneath. That is the trade the gate exists to force, and it is not a trade I would have made by eye.</p>
+
+    <h2><span class="n">04</span>The dramatic version was the unfair version</h2>
+
+    <p>With the observation fixed, the question became what claim the confidence slider should attach to. I wanted something with teeth, so the first version asked how sure you were that D's true defect rate was <strong>more than double the national average</strong> &mdash; above 6%. This is a lovely reveal: a player who has just seen 10% on screen will sit up around 90%, and the reference band lands in the teens. A forty-point drop. Beautiful.</p>
+
+    <div class="tw">
+    <table>
+      <caption>Gate 2 on the dramatic version. <code>n&#8320;</code> is the strength of the prior a player brings &mdash; how many factories' worth of experience they are implicitly carrying about how much plants vary around the national rate.</caption>
+      <thead><tr><th>Claim</th><th class="num">n&#8320; = 30</th><th class="num">50</th><th class="num">100</th><th class="num">200</th><th class="num">400</th><th class="num">Width</th></tr></thead>
+      <tbody>
+        <tr class="bad"><td>P(D&rsquo;s true rate &gt; 6%)</td><td class="num">0.405</td><td class="num">0.299</td><td class="num">0.152</td><td class="num">0.045</td><td class="num">0.005</td><td class="num">0.400</td></tr>
+        <tr class="hi"><td>P(D&rsquo;s true rate &gt; 3%)</td><td class="num">0.799</td><td class="num">0.765</td><td class="num">0.713</td><td class="num">0.662</td><td class="num">0.621</td><td class="num">0.179</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>The dramatic version's answer runs from half a percent to forty percent, and the only thing moving is an assumption the player was never asked about and never told. Two players reasoning perfectly from different priors get scored forty points apart. The item was not measuring their updating; it was measuring a hidden parameter.</p>
+
+    <p>The surviving version &mdash; is D's true rate above the national 3% &mdash; comes in at a width of 0.179, just inside the line I had set at 0.20. It is a duller reveal. It is the one that can be scored.</p>
+
+    <div class="note">
+      <span class="k">THE SENTENCE I KEPT</span>
+      <p><strong>The dramatic version was the unfair version.</strong> Not sometimes, and not as a coincidence: the thing that made it dramatic &mdash; a claim far out in the tail where the posterior is thin &mdash; is precisely the thing that made it swing on the prior. The drama and the unfairness were the same property, looked at from two sides.</p>
+    </div>
+
+    <h2><span class="n">05</span>You cannot grade a prior nobody declared</h2>
+
+    <p>Gate 2 handed me a second problem, and it did not go away by picking a better claim. Even the surviving version needs a prior to have a reference band at all, and the width across plausible priors was 0.179 &mdash; inside the limit, but not nothing. A player who came in believing factories vary wildly and a player who came in believing they are all much the same would be graded against the same band.</p>
+
+    <p>The fix was to stop treating the prior as something to infer about the player and start treating it as something the item supplies. The national average defect rate, 3%, is now printed on stage one, before any decision. Everyone reasons from the same starting point, so the band is a fair yardstick for all of them.</p>
+
+    <p>The obvious worry is that this gives the reveal away. It does not, and the reason is worth being precise about: knowing the national average tells you what the typical factory looks like. It tells you nothing about whether D is typical. The entire question &mdash; is this a bad factory or a small sample &mdash; is untouched. What the base rate removes is not the puzzle, it is the undeclared variance in how players approach it.</p>
+
+    <h2><span class="n">06</span>The same gate, pointed at the author</h2>
+
+    <p>Item 3 is Simpson's paradox, and the first item where the correct <em>decision</em> flips rather than just the confidence. Hospital A shows 78.5% surgical success, hospital B shows 74.0%. You are a severe case. Stage two splits by severity and B is better in both strata; A only looked better because A took far more mild cases.</p>
+
+    <p>The counts in that table were not chosen by me. I drew them from the true rates with a seed, because hand-picked counts are exactly how an author accidentally builds a world that cannot happen. The first seed produced this:</p>
+
+    <div class="eq">seed 11   B &middot; severe:  497 / 700   (true rate 65%)
+          two-sided P  =  <b>0.001</b>        3.3&sigma;
+
+seed  0   A&middot;mild 0.608  A&middot;severe 0.952
+          B&middot;mild 0.421  B&middot;severe 0.453     all pass</div>
+
+    <p>I was one accepted seed away from shipping a 3.3&sigma; world as if it were an ordinary Tuesday at a hospital. Nothing about the table would have looked wrong &mdash; 497 out of 700 is 71%, six points above the true rate, which reads as unremarkable if you are not computing the tail.</p>
+
+    <p>What I find interesting is that gate 1 did a different job here than it did in item 1. In items 1 and 2 it was asking <em>does the reveal lie to the player</em>. Here it was asking <em>is the world the author drew a typical one</em>. Same threshold, same code, two distinct failure modes. I did not anticipate the second when I wrote the condition; the condition was simply general enough to catch it.</p>
+
+    <h2><span class="n">07</span>The item that disagreed with its own reveal</h2>
+
+    <p>Item 4 is item 3's partner: the same device, pointed the other way. Your delivery address is outside the capital region. Courier A shows 90.5% on-time, B shows 83.4%. Stage two splits by region &mdash; and the case mix is as lopsided as item 3's, 700/300 against 300/700 &mdash; but A is ahead in both regions. The alarm goes off and nothing changes.</p>
+
+    <p>Seed 0 passed gate 1 on all four cells. It was still unusable.</p>
+
+    <div class="eq">seed 0    A &middot; capital      91.9%
+          A &middot; non-capital  91.7%      difference: 0.2pp
+
+reveal    "region really does affect on-time rate:
+           A is 92% in the capital, 89% outside"
+
+the screen and the reveal disagree.</div>
+
+    <p>Every individual cell was plausible. The pattern the item was built to talk about had been sampled away. A player looking at 91.9 and 91.7 would read the reveal's claim about regional effects as authorial assertion, unsupported by the very table they were shown.</p>
+
+    <p>So a third condition went in, and it is the only one added after the fact rather than before:</p>
+
+    <div class="eq">TYPICALITY
+  gate 1 asks:    is each cell individually plausible?
+  typicality asks: is the drawn world typical in the respects
+                   the item actually talks about?
+
+  item 4:  stratum gap must land in 3.5&ndash;6.5pp
+           and the region effect must survive in the observation
+
+  seed 2 passes.</div>
+
+    <p>The distinction is the useful part. Gate 1 is a per-cell condition and it is blind to the shape of the thing the item claims. Typicality is claim-specific by construction &mdash; you cannot write it in general, you write it once per item, from the sentence the reveal is going to say out loud. An author who only runs the general condition will keep producing items that are individually defensible and collectively beside the point.</p>
+
+    <h2><span class="n">08</span>Three devices, each used in both directions</h2>
+
+    <p>The finished structure is three pairs. Each pair uses one device twice, once in each direction.</p>
+
+    <div class="tw">
+    <table>
+      <caption>The argument of the whole thing. Learning the device is half the job; the direction has to be re-measured every time.</caption>
+      <thead><tr><th>Device</th><th>Direction that reverses</th><th>Direction that holds</th></tr></thead>
+      <tbody>
+        <tr><td>How big the sample is</td><td><strong>1</strong> &mdash; lowers your confidence</td><td><strong>2</strong> &mdash; raises it</td></tr>
+        <tr><td>Splitting by composition</td><td><strong>3</strong> &mdash; the conclusion flips</td><td><strong>4</strong> &mdash; nothing changes</td></tr>
+        <tr><td>Who is missing from the table</td><td><strong>5</strong> &mdash; the conclusion flips</td><td><strong>6</strong> &mdash; survives the worst case</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Item 2 is the one that makes the pairing do work. It is an A/B test on signup-button copy: A converts at 2.00%, B at 2.12%, a difference you would not look at twice. Stage two reveals that each version was shown to 200,000 people. A player who came out of item 1 with the rule <em>small sample means trust it less</em> walks into item 2 and applies it backwards. I imitated that player in a headless run &mdash; 58% down to 44% &mdash; against a reference band of 99&ndash;100%. The gap is visible on the player's own summary screen, which is the point.</p>
+
+    <blockquote style="margin:22px 0;padding-left:18px;border-left:4px solid var(--green);max-width:720px;font-weight:500;">Sample size is not a device for lowering confidence. It is a device for setting the weight of the evidence, and the direction is set by the situation.</blockquote>
+
+    <h3>The frame I got wrong</h3>
+
+    <p>My first draft of this structure was a two-axis grid &mdash; belief up/down/same crossed with decision same/flips &mdash; and I wrote that the remaining cells needed filling. That framing is wrong, and it took building items 5 and 6 to see why. Items 5 and 6 land in the same cells as 3 and 4, and there is nothing whatever wrong with them. <strong>Design to fill a grid and you produce puzzles, not items.</strong> The direction label is a diagnostic you record afterwards; it is not the specification.</p>
+
+    <p>One cell is unfillable in principle, which is a more interesting fact than it first looks. The only way confidence stays put while the decision changes is asymmetric consequences &mdash; when being wrong costs differently in the two directions. Same probability, different call. That is not a story about numbers betraying you; it is a story about numbers not being the whole input. It belongs on the closing screen as a sentence, not as a seventh item.</p>
+
+    <h2><span class="n">09</span>The item that exists so the previous one does not teach the wrong thing</h2>
+
+    <p>The third device is different in kind from the first two. Sample size and case mix are both about <em>reading the table properly</em>, and both assume every number in the table is true. The third device asks who the table left out, and no amount of careful reading catches it. Absent rows are invisible.</p>
+
+    <p>Item 5 is an exam-prep school. A advertises a 77.6% pass rate, B advertises 54.0%. Stage two: 500 enrolled at each, but only 255 of A's finished the course. A's headline counts the 255. On an enrolment basis it is 39.6% against B's 51.6%, and the decision flips hard &mdash; band 0&ndash;2%.</p>
+
+    <p>If item 5 were the last word, the lesson a player takes away is <em>missing data means the number is garbage</em>, and that is a worse heuristic than the one they came in with. It is unfalsifiable, it applies to every real dataset, and it terminates thinking. Item 6 exists to stop it.</p>
+
+    <div class="eq">Quit-smoking programme        A            B
+enrolled                      400          400
+outcome confirmed             333          365
+outcome unknown                67           35
+succeeded                     206          160
+headline rate               61.9%        43.8%
+
+worst case for A: all 67 unknowns failed,
+                  all 35 of B's succeeded
+
+                            <b>51.5%</b>       <b>48.8%</b>     margin 2.8pp</div>
+
+    <p>The move item 6 teaches is the only transferable skill in the whole set: fill the missing rows with the worst case for your preferred answer and see whether the conclusion is still standing. Five of the six items say <em>do not</em>. This one says <em>here is what to do instead</em>.</p>
+
+    <p>The 2.8-point margin is not an accident of the data. It is a typicality condition: <code>0.005 &lt; margin &lt; 0.05</code>. A wide margin makes the exercise pointless &mdash; of course it survives &mdash; and a negative one makes the item a duplicate of item 5. Surviving by a hair is the entire content.</p>
+
+    <h3>Gate 2 shakes something different here</h3>
+
+    <p>In items 1 through 5, gate 2 varies the prior over a parameter. In item 6 there is no parameter to have a prior about; what a reasonable person could disagree on is <strong>what to assume about the people who were never followed up</strong>. So the sweep varies that instead: unknowns behave like the confirmed, unknowns are wholly unknown, unknowns break against A, unknowns break for A. Width 0.025.</p>
+
+    <p>That is the second time a gate did a job I had not specified for it, and both times it happened because the gate was written as a question rather than a formula. <em>Does the answer swing on something the player was not told?</em> survives the change of subject. <em>Compute the posterior under five beta priors</em> would not have.</p>
+
+    <h2><span class="n">10</span>What the screen is not allowed to say</h2>
+
+    <p>A page about misleading numbers cannot afford to be sloppy about its own presentation, so the screen rules are stated as prohibitions and checked per item.</p>
+
+    <ul>
+      <li><strong>No reference band at stage one.</strong> There is nothing to compute yet. Grading someone against information you have not given them is the exact sin the whole page is about.</li>
+      <li><strong>The word "Bayes" appears zero times on screen.</strong> The labels are "you" and "reference". It appears freely here, in the write-up. The screen is an experience; the write-up is an explanation; they are allowed different vocabularies and they are not allowed to swap.</li>
+      <li><strong>A band, never a point.</strong> Following the <code>confBand</code> precedent from <a href="/notes/who-wrote/">Who Wrote This</a>. A single number claims a resolution the screen never had.</li>
+      <li><strong>No adverbs.</strong> "Substantially", "nearly", "slightly" &mdash; all cut. Numbers are neutral and adverbs are not.</li>
+      <li><strong>No verdict.</strong> The last line is "what changed is for you to judge". There is no score, no rank, no grade. The site palette has a warning red and the game screen never once uses it, because nothing on it is being marked wrong.</li>
+      <li><strong>The bands are constants, not computed in the browser.</strong> <code>validate.py</code> produces them and they are pasted in. Two implementations of the same quantity drift, and when they drift the screen is lying. Same reasoning as the single-computation-path rule from the regime project.</li>
+    </ul>
+
+    <div class="note">
+      <span class="k">MOVING-GOALPOST AUDIT</span>
+      <p>Run per item, because this is the failure the page would least survive. Stage-one decision: correct under the information given, no penalty. Stage-one confidence: not scored at all. Stage-two decision: still correct. Stage-two confidence: compared only against a band computed from what is on screen. Stage-three truth: never used for scoring. <strong>No point at which the goalposts move.</strong></p>
+      <p>Two items needed wording changes to keep that true. Item 3 puts the word "severe" on stage one, before the split exists, because the claim being rated is about severe patients &mdash; if that word first appeared at stage two the target would have moved. Item 5 pins its claim to "if you enrol" for the same reason. A sharp player can then get suspicious at stage one, which is a reward, not a leak.</p>
+    </div>
+
+    <h2><span class="n">11</span>The readout I built and then took down</h2>
+
+    <p>Halfway through I proposed something that sounded good: since players learn as they go, do not fight it &mdash; measure it. Put the six first-round confidences in a row and show the decline curve. Calibration improving in real time, on your own summary screen.</p>
+
+    <p>Then I looked at three of them: 92, 58, 85.</p>
+
+    <p>They do not decline, and they were never going to, because the thing that moves them is not learning. It is how plausible each item's opening claim looks on its face. Item 1's "10% against a 3% average" reads as obviously true and pulls people to 90-plus. Item 2's "2.00 against 2.12" reads as noise and pulls people to the middle. One person's six numbers are a measurement of six different item surfaces, not of that person changing.</p>
+
+    <p>The measurement I had proposed was <strong>completely confounded with item difficulty</strong>, and I proposed it anyway, in the middle of building a thing whose subject is exactly this. I pulled the claim off the screen and put the limitation in its place: the summary now says in as many words that these six numbers are not comparable to each other.</p>
+
+    <p>It also settled an open question. Randomising item order is not a nice-to-have for a future version; without it, even aggregate data across many players cannot separate learning from item difficulty, because every player meets the items in the same sequence. The order is still fixed today. That is a known defect, recorded as one.</p>
+
+    <h2><span class="n">12</span>What playing it caught that computing it did not</h2>
+
+    <p>Everything above came out of arithmetic. The following came out of opening the page and looking at it, and none of it was visible from the maths.</p>
+
+    <div class="tw">
+    <table>
+      <caption>Found by playing, not by computing. The last one was found by a person who was not me, which is the only reason it was found at all.</caption>
+      <thead><tr><th>What was wrong</th><th>Why it mattered</th></tr></thead>
+      <tbody>
+        <tr><td>The slider started at 50</td><td>A page about anchoring shipped with an anchor. 50 is not neutral; it pulls every player the same way. Now randomised 15&ndash;85 per item, and the starting value is recorded with the answer.</td></tr>
+        <tr><td>The probability on screen was wrong</td><td>It said 24% for "2 or more defects in 20". 24% is the <em>two-sided</em> figure the gate uses; the player's question is one-sided and the answer is 12%. Two different quantities were living under one variable name.</td></tr>
+        <tr><td>Reference and truth read as contradictory</td><td>Right after "all four were truly at 3%", a band of 62&ndash;80% looks like a typo. The band is what was knowable <em>then</em>; the truth is what came after. Obvious in the author's head, absent from the screen, so a paragraph now says it.</td></tr>
+        <tr><td>Chart label collided with the band label</td><td>When the player's stage-two value lands inside the reference band the two labels overlap. Label drops below the dot within &plusmn;8 of the band.</td></tr>
+        <tr><td>An em dash read as a rule</td><td>The empty-state placeholder was a dash at 30px Archivo 900, which renders as a horizontal line across the panel. Replaced with a 12px mono hint.</td></tr>
+        <tr class="bad"><td>Item 2 never explained its own domain</td><td>The draft said "conversion rate" and "one version ships to everyone" and stopped. What it is a rate <em>of</em>, and why you must pick one, were nowhere on screen.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>That last row is the one worth dwelling on. I had played item 2 headlessly five times and read every word on the screen each time. The gap was invisible to me and immediately visible to the first person who was not me.</p>
+
+    <div class="note">
+      <span class="k">THE RULE THAT CAME OUT OF IT</span>
+      <p><strong>A person who knows the content cannot see that the explanation is missing.</strong> Item 1 got away with one line because "defect rate" and "deep inspection" explain themselves; I generalised that into a rule and it was not one. Domain explanation is now a checklist item per item: is it on screen what these numbers are a rate of, and why this decision has to be made at all?</p>
+      <p>The fix changed no numbers, so no gate had to re-run. That is the difference between explaining an item better and changing it.</p>
+    </div>
+
+    <h3>One more, from the site itself</h3>
+
+    <p>Stage transitions slid gently down the page instead of cutting. The cause was <code>html{scroll-behavior:smooth}</code> in the shared site CSS, which turns <code>window.scrollTo(0,0)</code> into an animation; on item 2's long panel the player starts reading from the middle before the scroll finishes. A stage transition is not a movement through a document, it is a screen replacement, so it is <code>behavior:'instant'</code> now. First place the inherited site CSS collided with this page's interaction model, and it will not be the last.</p>
+
+    <h2><span class="n">13</span>What it refuses to claim</h2>
+
+    <p>The page records your first run and only your first run &mdash; enforced in the database, where <code>user_id</code> is the primary key, so a second attempt is rejected by Postgres rather than by a rule in the browser that could be got around. The screen says so before you start, in a warning, because once you have seen the reveals you are a different subject and the second run measures something else.</p>
+
+    <p>What a saved run therefore is: one person's six pairs of confidence numbers, each with a reference band, on six items in a fixed order, on a single occasion, with no repeat. What it is not: a calibration score, a ranking, a claim that you are well or badly calibrated in general, or a measurement that survives comparison between items. The <code>/me/</code> card shows what you did next to what the bands were, and passes no verdict on it. Six items is not a psychometric instrument, and the page does not have a sentence anywhere that pretends otherwise.</p>
+
+    <h2><span class="n">14</span>What I still do not know</h2>
+
+    <ul>
+      <li><strong>Whether the pairs teach the thing they are built to teach.</strong> The argument &mdash; that direction must be re-measured &mdash; is a design claim, not a measured one. Testing it needs the randomised order from section 11, several hundred first runs, and a comparison of second-item behaviour by which item came first. None of that exists yet.</li>
+      <li><strong>Whether 0.20 is the right width for gate 2.</strong> It was chosen by judgement before any item existed, which is the right time to choose it and the worst time to calibrate it. Item 1's surviving version came in at 0.179. A threshold of 0.15 would have killed it and I do not have an argument for why that would have been wrong.</li>
+      <li><strong>Whether the base-rate-on-screen fix generalises.</strong> It worked for item 1 because the national average is a real quantity a real decision-maker would have. Not every item has one of those lying around, and I do not know what to do when the declared prior would itself be an artefact of the item.</li>
+      <li><strong>Whether typicality can be written down in general.</strong> Right now it is hand-written per item, derived from the sentence the reveal says. That works and it does not scale, and I suspect the reason is that it is not really a statistical condition at all &mdash; it is a consistency check between prose and data, and those may simply have to be written one at a time.</li>
+      <li><strong>What a seventh item would be for.</strong> Three devices &times; two directions closed the structure. A seventh only makes sense with a new device, and the only candidate I have is asymmetric consequences, which section 08 argues is not a statistics item at all.</li>
+    </ul>
+
+    <div class="foot-cta">
+      <p style="margin-top:0"><strong>Six items, one run, no score.</strong> You judge, you say how sure you are, then one more fact arrives &mdash; and what gets recorded is not the answer but the move. Sign-in required; the first run is the only one that is kept.</p>
+      <a href="/unreliable-numbers/">Open Unreliable Numbers &rarr;</a>
+    </div>
+
+  </article>
+  </div>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <span>&copy; KYGMIN.COM</span>
+    <span>NOTES 09 &middot; UNRELIABLE NUMBERS &middot; MEASURED 2026-09</span>
+  </div>
+</footer>
+
+</body>
+</html>
