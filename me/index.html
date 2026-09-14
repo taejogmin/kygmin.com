@@ -690,7 +690,9 @@ function unumBody(c, row){
        '<th>' + esc(L(U.unHdBand))  + '</th>' +
        '<th>' + esc(L(U.unHdWhere)) + '</th></tr></thead><tbody>';
   A.forEach(function(a){
-    h += '<tr><td>' + esc(a.name || a.id) + '</td>' +
+    /* 문항 이름은 기록에 두 언어가 다 들어 있다. 옛 기록에는 name_en 이 없으므로 한국어로 떨어진다. */
+    var nm = (window.APP_LANG === 'en' && a.name_en) ? a.name_en : (a.name || a.id);
+    h += '<tr><td>' + esc(nm) + '</td>' +
          '<td>' + a.c1 + '% \u2192 ' + a.c2 + '%</td>' +
          '<td>' + a.band[0] + '~' + a.band[1] + '%</td>' +
          '<td>' + esc(L(unumWhere(a))) + '</td></tr>';
