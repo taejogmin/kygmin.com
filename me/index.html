@@ -152,9 +152,16 @@ window.APP_LANG_LISTENERS = [];
       this.q.push({from:from,to:to,start:start,end:end,ch:null});
     }
     if(this.raf) cancelAnimationFrame(this.raf);
-    this.f=0; this.txt=txt; this.frame();
+    this.f=0; this.t0=null; this.txt=txt; this.frame();
   };
-  Scramble.prototype.frame=function(){
+  /* 진행도를 «프레임 수»가 아니라 «경과 시간»으로 센다.
+     프레임을 세면 144Hz 화면에서 같은 애니메이션이 60Hz의 2.42배로 끝난다
+     (최악 55프레임 = 60Hz 917ms 대 145Hz 379ms). 짧은 라벨은 0.2초에 끝나서
+     사람 눈에는 «애니메이션이 안 된다»로 보인다. 기준은 60fps 로 고정한다. */
+  Scramble.prototype.frame=function(ts){
+    var now = (typeof ts === 'number') ? ts : performance.now();
+    if(this.t0===null || this.t0===undefined) this.t0=now;
+    this.f = (now - this.t0) / (1000/60);
     var out="", done=0;
     for(var i=0;i<this.q.length;i++){
       var it=this.q[i];
@@ -165,8 +172,8 @@ window.APP_LANG_LISTENERS = [];
       } else out+=esc(it.from);
     }
     this.el.innerHTML=out;
-    if(done===this.q.length){ this.el.dataset.plain=this.txt; }
-    else { this.f++; this.raf=requestAnimationFrame(this.frame); }
+    if(done===this.q.length){ this.el.dataset.plain=this.txt; this.raf=null; }
+    else { this.raf=requestAnimationFrame(this.frame); }
   };
   var els=[].slice.call(document.querySelectorAll('.tx'));
   els.forEach(function(el){ el.dataset.plain=el.textContent; el._s=new Scramble(el); });
