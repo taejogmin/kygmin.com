@@ -132,10 +132,13 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;background:var(--gree
 /* ── 결과 ── */
 svg{display:block;width:100%;height:230px;margin-bottom:10px;}
 .rows{border-top:3px solid var(--ink);margin-bottom:24px;}
-.row{display:flex;justify-content:space-between;align-items:baseline;gap:14px;
+/* 좁은 화면에서는 값이 아래 줄로 내려간다. flex-wrap 없이 두면 키가 한 단어 너비로
+   눌리고 nowrap 인 값이 패널 밖으로 삐져나간다 (실측 최대 23px). */
+.row{display:flex;justify-content:space-between;align-items:baseline;
+  flex-wrap:wrap;gap:4px 14px;
   padding:11px 2px;border-bottom:1px solid var(--gray);}
-.row .k{font-family:var(--mono);font-size:12px;color:#4A4A46;}
-.row .v{font-family:var(--arch);font-weight:700;font-size:17px;white-space:nowrap;}
+.row .k{font-family:var(--mono);font-size:12px;color:#4A4A46;flex:1 1 auto;min-width:150px;}
+.row .v{font-family:var(--arch);font-weight:700;font-size:17px;white-space:nowrap;flex:0 0 auto;}
 .row.mine .v{color:var(--green-deep);}
 .note{font-size:14px;color:#3A3A38;margin-bottom:14px;max-width:620px;}
 .note:last-child{margin-bottom:0;}
@@ -149,6 +152,14 @@ footer{border-top:3px solid var(--ink);padding:20px 0;}
 @media(max-width:560px){
   .panel{padding:20px 18px 24px;box-shadow:5px 5px 0 var(--ink);}
   .btn{padding:11px 18px;}
+  .row .v{font-size:16px;}
+}
+/* 이 페이지의 nav 이름이 길어서 4개인데도 3줄이 됐다 (플레이하우스는 같은 폭에서 2줄).
+   이름을 줄이는 대신 좁은 화면에서만 글자와 여백을 줄인다. */
+@media(max-width:430px){
+  .nav-links{gap:6px;}
+  .nav-links a{font-size:11px;padding:5px 9px;box-shadow:2px 2px 0 var(--ink);}
+  .logo{font-size:17px;}
 }
 
 /* ── 언어 토글 (사이트 공통) ── */
