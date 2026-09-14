@@ -162,6 +162,15 @@ nav{position:sticky; top:0; z-index:40; background:var(--bg); border-bottom:3px 
   body{padding:16px 10px 120px}
   .readout .row{grid-template-columns:minmax(70px,110px) 1fr 52px; font-size:12px}
 }
+
+/* 상단 메뉴에 ME 가 들어가면서 좁은 화면에서 한 줄이 더 생긴다.
+   글자와 여백만 줄여 두 줄로 되돌린다 — 링크를 빼지 않는다. */
+@media(max-width:430px){
+  .nav-links{gap:5px;}
+  .nav-links a{font-size:10.5px;padding:5px 8px;}   /* 그림자는 페이지마다 색·크기가 달라 건드리지 않는다 */
+  .logo{font-size:16px;}
+  .nav-inner{padding-left:14px;padding-right:14px;gap:10px;}
+}
 </style>
 </head>
 <body>
@@ -176,6 +185,7 @@ nav{position:sticky; top:0; z-index:40; background:var(--bg); border-bottom:3px 
       <a href="/index.html"><span class="tx" data-en="Home" data-kr="홈">Home</span></a>
       <a href="/playhouse/">PLAYHOUSE</a>
       <a class="on" href="./"><span class="tx" data-en="Who Wrote This" data-kr="누가 썼게">Who Wrote This</span></a>
+      <a href="/me/">ME</a>
     </div>
   </div>
 </nav>
