@@ -999,6 +999,11 @@ function afterTurn(){
   if (s[G.turn].stopped){                           // 멈춘 쪽은 건너뛴다
     if (G.pending) G.pending = false;
     G.turn = 1 - G.turn;
+    /* 턴을 되돌렸으면 «반드시» 다시 그린다.
+       호출하는 쪽(applyAct · botTurn)은 render() 를 afterTurn() «앞에서» 한다.
+       그래서 여기서 턴만 바꾸고 말면 화면은 상대 차례인 채로 멈추고 내 버튼이 안 나온다.
+       전가로 상대를 터뜨린 직후가 정확히 그 경우였고, 게임이 1라운드에서 얼어붙었다. */
+    render();
   }
   if (G.turn === 1) setTimeout(botTurn, 480);
 }
