@@ -412,10 +412,22 @@ function poolFor(ch){
 }
 function escChar(c){ return c === '&' ? '&amp;' : c === '<' ? '&lt;' : c === '>' ? '&gt;' : c; }
 
-let panelRAF = null;
-function scramblePanel(root){
-  if (panelRAF){ cancelAnimationFrame(panelRAF); panelRAF = null; }
+/* rAF 핸들과 진행 중인 단위를 «루트마다» 따로 둔다.
+   전역 하나를 쓰면 #panel 을 그리는 도중에 #rec 호출이 그걸 취소해서
+   패널이 중간 상태로 굳는다 — 「라운어」「보장됩니다O」 같은 글자가 그대로 남았다. */
+function settleUnits(units){
+  if (!units) return;
+  for (let i = 0; i < units.length; i++) units[i].el.textContent = units[i].txt;
+}
+function clearScramble(root){
   if (!root) return;
+  if (root.__scrRAF){ cancelAnimationFrame(root.__scrRAF); root.__scrRAF = null; }
+  if (root.__scrNet){ clearTimeout(root.__scrNet); root.__scrNet = null; }
+  if (root.__scrUnits){ settleUnits(root.__scrUnits); root.__scrUnits = null; }
+}
+function scramblePanel(root){
+  if (!root) return;
+  clearScramble(root);
   if (window.KYG_noAnim && window.KYG_noAnim()) return;
 
   const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
@@ -446,6 +458,16 @@ function scramblePanel(root){
     units.push({ el: span, q: q, txt: txt });
   });
 
+  root.__scrUnits = units;
+  /* 그물망 — 3.5초 뒤에도 안 끝났으면 강제로 확정한다.
+     rAF 가 어떤 이유로든 끊겨도(탭 전환 · 스로틀 · 취소) 깨진 글자가 영구히 안 남는다.
+     .tx 쪽 setLang 은 이미 같은 그물망을 갖고 있었는데 여기만 없었다. */
+  root.__scrNet = setTimeout(function(){
+    settleUnits(units); root.__scrUnits = null;
+    if (root.__scrRAF){ cancelAnimationFrame(root.__scrRAF); root.__scrRAF = null; }
+    root.__scrNet = null;
+  }, 3500);
+
   const t0 = performance.now();
   (function frame(ts){
     const now = (typeof ts === 'number') ? ts : performance.now();
@@ -470,8 +492,12 @@ function scramblePanel(root){
       it.el.innerHTML = out;
       if (done === it.q.length) it.done = true; else allDone = false;
     }
-    if (allDone){ panelRAF = null; units.forEach(function(u){ u.el.textContent = u.txt; }); }
-    else panelRAF = requestAnimationFrame(frame);
+    if (allDone){
+      root.__scrRAF = null; root.__scrUnits = null;
+      if (root.__scrNet){ clearTimeout(root.__scrNet); root.__scrNet = null; }
+      settleUnits(units);
+    }
+    else root.__scrRAF = requestAnimationFrame(frame);
   })();
 }
 
@@ -743,6 +769,18 @@ const S = {
   insWarn:    {en:'The premium is priced off a player who pushes to the end. If you tend to stop early, insurance costs more than it is worth to you.',
                kr:'보험료는 «끝까지 밀어붙이는 플레이»를 기준으로 산정돼 있습니다. 일찍 멈추는 편이라면 보험은 당신에게는 값보다 비쌉니다.'},
   insOn:      {en:'INSURED', kr:'보험'},
+  /* 정산 화면에서 «보험이 실제로 일했는지» 를 글자로 보여준다.
+     이게 없으면 터진 판에 «배수 0.60» 만 뜨는데, 0.60 이 구조된 값인지
+     그냥 진 값인지 화면만 봐서는 구분이 안 된다 — 실제로 그렇게 읽혔다. */
+  insSaved:   {en:'Insurance paid. Multiplier %A &rarr; %B, premium %P deducted. Without it this round was %N.',
+               kr:'보험이 작동했습니다. 배수 %A &rarr; %B, 보험료 %P 차감. 보험이 없었다면 이 라운드는 %N 였습니다.'},
+  insBonus:   {en:'Insurance paid. Survival bonus %A &rarr; %B, premium %P deducted.',
+               kr:'보험이 작동했습니다. 생존 가산 %A &rarr; %B, 보험료 %P 차감.'},
+  insDead:    {en:'Insurance did nothing. A forfeited round gets no survival bonus, but the premium %P is still burned.',
+               kr:'보험은 아무 일도 하지 않았습니다. 포기한 라운드에는 생존 가산이 없고, 보험료 %P 는 그대로 소멸합니다.'},
+  /* esc() 를 거쳐 나가므로 HTML 엔티티가 아니라 «글자» 로 적는다. */
+  insScale:   {en:'Quoted at the current stake. If the stake is raised later the premium is charged on the raised bet — the cover grows with it.',
+               kr:'지금 스테이크 기준 견적입니다. 나중에 스테이크가 오르면 보험료도 «오른 베팅» 에 붙습니다 — 보장 금액도 같이 커집니다.'},
 
   hit:{en:'Hit', kr:'히트'}, push:{en:'Transfer', kr:'전가'},
   stand:{en:'Stand', kr:'스탠드'}, raise:{en:'Raise', kr:'증액'},
@@ -1031,6 +1069,11 @@ function settle(){
   const [mA, cA] = applyIns(a, ma), [mB, cB] = applyIns(b, mb);
   const pa = a.bet * a.stake * (mA - 1 - cA);
   const pb = b.bet * b.stake * (mB - 1 - cB);
+  /* 보험료는 «오른 베팅» 에 붙는다 (bet × stake × 비율). 보장 금액도 같은 배수로 커지므로
+     이게 맞는 값이다 — 기본 베팅에만 걸면 싸게 든 뒤 스테이크를 올리는 공짜 레버리지가 된다.
+     다만 구매 화면 견적은 그때의 스테이크 기준이라 숫자가 달라 보인다. 그래서 여기서 실제 청구액을 적는다. */
+  const premA = a.bet * a.stake * cA;
+  const pnlNoInsA = a.bet * a.stake * (ma - 1);
   a.budget += pa; b.budget += pb;
 
   const revealed = !(a.folded || b.folded);
@@ -1041,7 +1084,8 @@ function settle(){
   if (a.busted)  G.tally.busts++;
   G.lastRound = { ma: mA, mb: mB, pa, pb, revealed,
                   aL: a.limit, bL: b.limit, aB: a.busted, bB: b.busted,
-                  aF: a.folded, bF: b.folded };
+                  aF: a.folded, bF: b.folded,
+                  aIns: a.insured, aRaw: ma, aPrem: premA, aNoIns: pnlNoInsA };
   G.phase = 'reveal';
   render();
 }
@@ -1141,12 +1185,12 @@ function render(){
     p.querySelectorAll('[data-bet]').forEach(b => b.onclick = () => playerBet(+b.dataset.bet));
   }
   else if (G.phase === 'ins'){
-    const pr = insPrice(me.limit), cost = me.bet * pr;
+    const pr = insPrice(me.limit), cost = me.bet * me.stake * pr;
     p.innerHTML = statusBar()
       + `<p class="q">${esc(t(S.insAsk))}</p>`
       + `<p class="given">${t(S.insBody)}</p>`
-      + `<p class="stat">${esc(t(S.insPrem))} <b>${cost.toFixed(2)}</b> <span style="font-family:var(--mono);font-size:12px;color:#6B6B67">(${(pr * 100).toFixed(1)}% &times; ${me.bet.toFixed(1)})</span></p>`
-      + `<div class="warn"><p>${esc(t(S.insWarn))}</p></div>`
+      + `<p class="stat">${esc(t(S.insPrem))} <b>${cost.toFixed(2)}</b> <span style="font-family:var(--mono);font-size:12px;color:#6B6B67">(${(pr * 100).toFixed(1)}% &times; ${(me.bet * me.stake).toFixed(1)})</span></p>`
+      + `<div class="warn"><p>${esc(t(S.insWarn))}</p><p>${esc(t(S.insScale))}</p></div>`
       + `<div class="acts"><button class="btn go" id="ib">${esc(t(S.insBuy))}</button>
          <button class="btn" id="is">${esc(t(S.insSkip))}</button></div>`;
     $('#ib').onclick = () => playerIns(true);
@@ -1198,10 +1242,21 @@ function render(){
     if (r.aB) lines.push(t(S.youBust)); if (r.bB) lines.push(t(S.oppBust));
     if (!r.revealed) lines.push(t(S.noReveal));
     const cls = r.pa >= 0 ? 'up' : 'dn';
+    /* 보험 한 줄 — 세 갈래다. 터져서 바닥이 깔렸을 때 · 살아남아 가산이 붙었을 때 ·
+       포기해서 아무 일도 안 했을 때. 셋을 뭉뚱그리면 «샀는데 왜 0.60 이냐» 가 또 나온다. */
+    let insLine = '';
+    if (r.aIns){
+      const P = r.aPrem.toFixed(2), A = r.aRaw.toFixed(2), B = r.ma.toFixed(2);
+      if (r.aF)      insLine = fill(t(S.insDead),  {P:P});
+      else if (r.aB) insLine = fill(t(S.insSaved), {A:A, B:B, P:P,
+                       N:(r.aNoIns >= 0 ? '+' : '') + r.aNoIns.toFixed(1)});
+      else           insLine = fill(t(S.insBonus), {A:A, B:B, P:P});
+    }
     p.innerHTML = statusBar()
       + `<p class="crumbs" style="margin-bottom:14px"><span class="crumb on">${fill(t(S.reveal), {R:G.round})}</span></p>`
       + seatBox(1, r.revealed) + seatBox(0, true)
       + (lines.length ? `<p class="note">${lines.join(' ')}</p>` : '')
+      + (insLine ? `<div class="warn"><p>${insLine}</p></div>` : '')
       + `<div class="res"><span>${esc(t(S.mult))} ${r.ma.toFixed(2)}</span>
          <span class="big ${cls}">${r.pa >= 0 ? '+' : ''}${r.pa.toFixed(1)}</span>
          <span style="color:#6B6B67">${esc(t(S.pnlR))}</span></div>`
@@ -1316,7 +1371,10 @@ window.APP_LANG_LISTENERS.push(function(){
 /* 회귀 시험용 훅. 평소에는 달지 않는다 — 콘솔에서 상대 한도를 읽을 수 있으면
    난이도 사다리가 의미를 잃는다. ?test=1 일 때만 연다. */
 try{ if (location.search.indexOf('test') >= 0){
-  window.__icarus = { state: () => G, tier: k => { tier = k; }, S: S };
+  window.__icarus = { state: () => G, tier: k => { tier = k; }, S: S,
+    /* 보험 회귀용 — 좌석을 직접 세팅하고 정산만 돌린다.
+       실제 플레이로는 «터졌는데 보험 있음» 을 원하는 타이밍에 만들 수가 없다. */
+    settle: () => settle(), render: () => render(), handMin: handMin };
 } }catch(e){}
 
 renderSetup();
