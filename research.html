@@ -148,6 +148,8 @@ details.tableview summary{font-family:var(--mono);font-size:11px;font-weight:600
 .cnote .oc.broken{background:var(--red);color:#fff;border-color:var(--red);}
 .cnote .oc.confirmed{background:var(--green);color:var(--paper);border-color:var(--green-deep);}
 .cnote a.src{font-family:var(--mono);font-size:11px;font-weight:600;border-bottom:2px solid var(--green);}
+.cnote .thesis{display:block;margin-top:6px;font-size:12.5px;color:#5A5A55;}
+.cnote .thesis b{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.3px;margin-right:6px;}
 
 /* ── 필터 ── */
 .filters{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-bottom:6px;}
@@ -372,11 +374,17 @@ window.KYG_TX=(function(){
     window.KYG_TX.scan(document);
   }
 
-  /* ── 슬리브 계산. 원가 비중 가중, 매수 평균가 대비. ── */
+  /* ── 슬리브 계산. 원가 비중 가중, 매수 평균가 대비.
+        청산한 종목도 넣는다 — 평균 매도가로 고정된 실현 수익으로. 빼면 판 종목이 기록에서
+        사라지고(생존편향), 이 타일의 % 와 바로 옆 bp(시계열에서 읽는다)가 서로 다른 정의가 된다.
+        청산이 0건이던 동안엔 드러나지 않았다. 청산 종목의 weight 는 보유 종목과 같은 원가 단위다. ── */
   function sleeveAgg(roles){
-    var ps=D.portfolio.positions.filter(function(p){return roles.indexOf(p.role)>=0&&p.status==='active';});
+    var ps=D.portfolio.positions.filter(function(p){
+      return roles.indexOf(p.role)>=0&&(p.status==='active'||p.status==='closed');});
     var cost=0,val=0;
-    ps.forEach(function(p){cost+=p.weight;val+=p.weight*(p.last_price/p.avg_buy);});
+    ps.forEach(function(p){
+      var px=p.status==='closed'?p.avg_sell:p.last_price;
+      cost+=p.weight;val+=p.weight*(px/p.avg_buy);});
     return cost? {cost:cost, ret:val/cost-1} : {cost:0,ret:0};
   }
   function mktWeight(p){
@@ -652,9 +660,23 @@ window.KYG_TX=(function(){
         oc.dataset.en=LB[p.outcome].en;oc.dataset.kr=LB[p.outcome].kr;oc.textContent=LB[p.outcome].en;
         d.appendChild(oc);
       }
+      /* 청산 사유는 exit_note 에 둔다. note 는 진입 논지라 수정하지 않는다 —
+         둘을 나란히 보여야 읽는 사람이 결과 태그를 스스로 판정할 수 있다. */
+      var xe=p.exit_note_en||p.note_en, xk=p.exit_note_kr||p.note_kr;
       var txt=document.createElement('span');
-      txt.className='tx';txt.dataset.en=p.note_en;txt.dataset.kr=p.note_kr;txt.textContent=p.note_en;
+      txt.className='tx';txt.dataset.en=xe;txt.dataset.kr=xk;txt.textContent=xe;
       d.appendChild(txt);
+      if(p.exit_note_en&&(p.note_en||p.note_kr)){
+        /* .tx 는 평문 전용이라(스크램블이 textContent 로 다룬다) 라벨과 본문을 따로 둔다 */
+        var th=document.createElement('span');th.className='thesis';
+        var lb=document.createElement('b');lb.className='tx';
+        lb.dataset.en='ENTRY THESIS'+(p.note_recorded?' · WRITTEN '+p.note_recorded:'');
+        lb.dataset.kr='진입 논지'+(p.note_recorded?' · '+p.note_recorded+' 기록':'');
+        lb.textContent=lb.dataset.en;th.appendChild(lb);
+        var tt=document.createElement('span');tt.className='tx';
+        tt.dataset.en=p.note_en;tt.dataset.kr=p.note_kr;tt.textContent=p.note_en;th.appendChild(tt);
+        d.appendChild(th);
+      }
       if(p.research_slug){
         var r=D.research.filter(function(x){return x.slug===p.research_slug;})[0];
         if(r){
