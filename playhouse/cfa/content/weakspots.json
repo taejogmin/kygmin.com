@@ -91,11 +91,9 @@
       "evidence": [
         "M3 Exhibit 3 (parallel inputs)",
         "M3 official Q5 (value added of final step = 3,000, not 5,000)",
-        "M2 official Q4 (picked AC $70; the pricing rule P[1 − 1/ε] = MC gives $120)",
-        "M1 official Q5 (guessed: multi-variable cross-price elasticity — compute Q with all variables first, then coefficient × Pt/Q)"
+        "M2 official Q4 (picked AC $70; the pricing rule P[1 − 1/ε] = MC gives $120)"
       ],
       "seed": [
-        "econ-m1-p05",
         "econ-m2-p04",
         "econ-m3-p05",
         "econ-m3-010",
@@ -103,6 +101,39 @@
         "econ-m1-024",
         "econ-m1-030",
         "econ-m1-005"
+      ]
+    },
+    {
+      "id": "formula-assembly",
+      "name": {
+        "en": "Formula assembly: coefficient × (variable ÷ Q)",
+        "kr": "공식 조립: 계수 × (변수 ÷ Q)"
+      },
+      "rule": {
+        "en": "Every elasticity from a linear demand function is ONE template: E(x) = (coefficient on x) × (x / Q). Variable on top, Q on the bottom, coefficient in front; the sign comes from the coefficient. Step 1 compute Q with all variables; step 2 assemble. Sanity check: if x/Q > 1 the elasticity must be larger than the coefficient, if x/Q < 1 smaller. Distractors: the bare coefficient, the bare ratio, the inverted ratio.",
+        "kr": "선형 수요함수의 모든 탄력성은 한 템플릿: E(x) = (x의 계수) × (x / Q). 변수는 위, Q는 아래, 계수는 앞; 부호는 계수가 결정. ①모든 변수 넣어 Q 계산 ②조립. 검산: x/Q > 1이면 탄력성은 계수보다 커야, < 1이면 작아야 함. 함정: 계수만, 비율만, 뒤집힌 비율."
+      },
+      "traps": [
+        "formula-assembly",
+        "reciprocal",
+        "formula"
+      ],
+      "evidence": [
+        "M1 official Q8 (dropped the coefficient → 0.6)",
+        "M1 official Q9 (inverted ratio → 0.5)",
+        "M1 official Q10 (inverted ratio)",
+        "M1 official Q5 (guessed the cross-price elasticity)"
+      ],
+      "seed": [
+        "econ-m1-p08",
+        "econ-m1-p09",
+        "econ-m1-p10",
+        "econ-m1-p05",
+        "econ-m1-006",
+        "econ-m1-013",
+        "econ-m1-015",
+        "econ-m1-002",
+        "econ-m2-011"
       ]
     },
     {
@@ -246,7 +277,22 @@
     {
       "qid": "econ-m1-p05",
       "when": "2026-10-11",
-      "note": "Guessed (counted as a miss). Compute Q = 24.8375 with all variables, then −0.16 × 3.75/24.8375 = −0.0242."
+      "note": "Guessed (counted as a miss). Same template: Q = 24.8375, then −0.16 × 3.75/Q = −0.0242."
+    },
+    {
+      "qid": "econ-m1-p08",
+      "when": "2026-10-11",
+      "note": "Picked 0.6 = 38/62.4 — the ratio without the coefficient. E = −3.1 × 38/62.4 = −1.9."
+    },
+    {
+      "qid": "econ-m1-p09",
+      "when": "2026-10-11",
+      "note": "Picked 0.5 = 0.8 × 62.4/100 — ratio inverted. E_I = 0.8 × 100/62.4 = 1.3."
+    },
+    {
+      "qid": "econ-m1-p10",
+      "when": "2026-10-11",
+      "note": "Formula assembled wrong. E = 0.9 × 18/62.4 = 0.3 (weak substitutes)."
     }
   ]
 }

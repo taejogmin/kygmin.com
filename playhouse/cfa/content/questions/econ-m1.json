@@ -841,6 +841,78 @@
       "answer": "A",
       "explanation": "Persistent excess demand (a shortage) at the current price means the price is BELOW the market-clearing level — the market would clear if the firm raised the price. Competitor entry would reduce the shortage; faster income growth might shift demand but does not explain why the firm leaves the price below equilibrium.",
       "kr": "지속적 초과수요 = 현재 가격이 균형가격보다 낮음. 가격을 올리면 시장이 청산됨."
+    },
+    {
+      "id": "econ-m1-p08",
+      "section": "6b",
+      "concept": "Own-price elasticity from a multi-variable function (vignette)",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "formula-assembly",
+      "source": "cfai",
+      "stem": "Market demand for private universities is Q = 84 − 3.1Ppr + 0.8I + 0.9Ppu (Q = applicants per year in thousands; Ppr = average private-university price, I = household monthly income, Ppu = average public-university price, all in thousands of USD). Assume Ppr = 38, I = 100 and Ppu = 18. The price elasticity of demand for private universities is closest to:",
+      "choices": {
+        "A": "−3.1",
+        "B": "−1.9",
+        "C": "0.6"
+      },
+      "answer": "B",
+      "explanation": "Step 1: Q = 84 − 3.1(38) + 0.8(100) + 0.9(18) = 84 − 117.8 + 80 + 16.2 = 62.4. Step 2: E = (coefficient on Ppr) × (Ppr/Q) = −3.1 × 38/62.4 = −1.9 (elastic). Choice A is the bare coefficient; choice C (38/62.4) is the ratio with the coefficient dropped. Template: coefficient × (variable ÷ Q).",
+      "kr": "Q = 62.4; E = −3.1 × 38/62.4 = −1.9. 템플릿: 계수 × (변수/Q). −3.1은 계수만, 0.6은 비율만 고른 함정."
+    },
+    {
+      "id": "econ-m1-p09",
+      "section": "6b",
+      "concept": "Income elasticity from a multi-variable function (vignette)",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "formula-assembly",
+      "source": "cfai",
+      "stem": "Market demand for private universities is Q = 84 − 3.1Ppr + 0.8I + 0.9Ppu (Q = applicants per year in thousands; Ppr = average private-university price, I = household monthly income, Ppu = average public-university price, all in thousands of USD). Assume Ppr = 38, I = 100 and Ppu = 18. The income elasticity of demand for private universities is closest to:",
+      "choices": {
+        "A": "0.5",
+        "B": "0.8",
+        "C": "1.3"
+      },
+      "answer": "C",
+      "explanation": "Q = 62.4 (as before). E_I = (coefficient on I) × (I/Q) = 0.8 × 100/62.4 = 1.28 ≈ 1.3 — a normal (income-elastic) good. Choice B is the bare coefficient; choice A (0.8 × 62.4/100 = 0.5) INVERTS the ratio. Sanity check: I/Q = 1.6 > 1, so the elasticity must be LARGER than the coefficient.",
+      "kr": "E_I = 0.8 × 100/62.4 = 1.3. 0.5는 비율을 뒤집은 값(Q/I). 검산: I/Q = 1.6 > 1이면 탄력성은 계수보다 커야 함."
+    },
+    {
+      "id": "econ-m1-p10",
+      "section": "6b",
+      "concept": "Cross-price elasticity from a multi-variable function (vignette)",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "formula-assembly",
+      "source": "cfai",
+      "stem": "Market demand for private universities is Q = 84 − 3.1Ppr + 0.8I + 0.9Ppu (Q = applicants per year in thousands; Ppr = average private-university price, I = household monthly income, Ppu = average public-university price, all in thousands of USD). Assume Ppr = 38, I = 100 and Ppu = 18. The cross-price elasticity of demand for private universities with respect to the price of public universities is closest to:",
+      "choices": {
+        "A": "0.3",
+        "B": "3.1",
+        "C": "3.9"
+      },
+      "answer": "A",
+      "explanation": "Q = 62.4. E_xy = (coefficient on Ppu) × (Ppu/Q) = 0.9 × 18/62.4 = 0.26 ≈ 0.3. Positive → substitutes (public and private universities), but weak. Choice B (0.9 × 62.4/18 = 3.1) inverts the ratio. Sanity check: Ppu/Q = 0.29 < 1, so the elasticity must be SMALLER than the coefficient 0.9.",
+      "kr": "E = 0.9 × 18/62.4 = 0.26 ≈ 0.3 (양수 → 대체재, 약함). 3.1은 비율 뒤집음. 검산: 18/62.4 < 1이면 계수(0.9)보다 작아야 함."
+    },
+    {
+      "id": "econ-m1-p11",
+      "section": "6",
+      "concept": "Negative cross-price elasticity = complements",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "sign",
+      "source": "cfai",
+      "stem": "If the cross-price elasticity of demand between two goods is negative, the goods are classified as:",
+      "choices": {
+        "A": "normal.",
+        "B": "substitutes.",
+        "C": "complements."
+      },
+      "answer": "C",
+      "explanation": "Negative cross-price elasticity: when one good's price rises, demand for the other falls — they are consumed together (complements). Positive → substitutes. 'Normal' is an income-elasticity classification, not a cross-price one.",
+      "kr": "교차탄력성 음수 → 보완재. 양수 → 대체재. '정상재'는 소득탄력성 분류."
     }
   ]
 }

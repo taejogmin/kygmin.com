@@ -439,6 +439,20 @@ E = (250) × (50 / 47,542.8) = 0.26
 E = (−2,000) × (20 / 47,542.8) = −0.84
 ```
 
+### ⭐ THE ONE-LINE TEMPLATE — official vignette Q8–Q10 all missed on this step
+```
+E(x) = (coefficient on x) × ( x / Q )       variable on TOP, Q on the BOTTOM, coefficient in FRONT
+```
+Vignette: Q = 84 − 3.1Ppr + 0.8I + 0.9Ppu at Ppr = 38, I = 100, Ppu = 18 → **Q = 62.4**
+
+| Elasticity | Assemble | Result | The distractor I picked |
+|---|---|---|---|
+| Own-price | −3.1 × 38/62.4 | **−1.9** | 0.6 = 38/62.4 — *coefficient dropped* |
+| Income | 0.8 × 100/62.4 | **1.3** | 0.5 = 0.8 × 62.4/100 — *ratio inverted* |
+| Cross-price (Ppu) | 0.9 × 18/62.4 | **0.3** | 3.1 = 0.9 × 62.4/18 — *ratio inverted* |
+
+**Sanity check that catches the inversion in two seconds:** if x/Q > 1 (income: 100/62.4 = 1.6) the elasticity must be *bigger* than the coefficient (0.8 → 1.3); if x/Q < 1 (public price: 18/62.4 = 0.29) it must be *smaller* (0.9 → 0.3). The sign never needs computing — it is the coefficient's sign. Choices that are just the bare coefficient (−3.1, 0.8) are always wrong.
+
 ### Step 3 — Interpret all three 🔴 this is where the exam points are
 
 | Elasticity | Value | Interpretation | Conclusion |
@@ -1047,7 +1061,11 @@ MC INTERSECTION RULE:   MC cuts ATC and AVC at their MINIMUM points
 | Fixed vs. variable cost classification | Concept | 🟡 Medium |
 | SMC vs. LMC (which inputs are variable) | Concept | 🟡 Medium |
 
-**⭐ Official practice problems (2026-10-11): 7 attempted, 6 correct, Q5 guessed (counted as a miss). Q3 — the earlier miss — now correct.**
+**⭐ Official practice problems (2026-10-11): 11 attempted, 7 correct — Q5 guessed, Q8/Q9/Q10 (the three-elasticity vignette) all missed. Q3 — the earlier miss — now correct.**
+
+| Error type | Question | What to fix |
+|---|---|---|
+| **Formula assembly (coefficient × x/Q)** | Q8, Q9, Q10 | Q = 62.4 was computed correctly; the assembly failed three times: coefficient dropped (Q8 → 0.6), ratio inverted (Q9 → 0.5, Q10). One template, see the ⭐ box in §6b; use the x/Q > 1 or < 1 sanity check. |
 
 | Error type | Question | What to fix |
 |---|---|---|
