@@ -538,6 +538,44 @@ Indicators of AD direction: consumer sentiment, factory orders (durables & nondu
 
 ---
 
+# PART 3 — Economic Growth (preliminary)
+
+## 17. Sources, Sustainability and Measures of Growth — what the practice set tested
+**Exam importance: 🔴 High — ⚠️ PRELIMINARY: built from the official practice questions 26–30, not yet from the curriculum pages. Upload Part 3 and this section gets rewritten in full.**
+
+### The production function and the three sources 🔴
+```
+Y = A × F(K, L)
+A = total factor productivity (TFP) — a scale factor, mainly TECHNOLOGY
+K = capital stock,  L = labor supply
+```
+- **Sources of growth:** labor supply, capital stock, technology/TFP (plus human capital and natural resources, as in §12's LRAS shifters).
+- 🔴 **Developed economies:** technology/TFP is the dominant source. Capital per worker is already deep and labor-force growth is slow, so more K or L runs into **diminishing marginal returns**; only technology lifts that ceiling. *(official Q26)*
+- **TFP↑ means more output for ANY given inputs** — not "higher returns to scale" and not "the sustainable growth rate" (those are different concepts). *(official Q29 — missed)*
+
+### What is measurable 🔴 *(official Q27 — missed)*
+| Measure | Observable? | Why |
+|---|---|---|
+| **Labor productivity** = output per hour worked | **Yes — directly** | Output and hours are both recorded |
+| **Total factor productivity** | No — a **residual** | What remains of output growth after labor and capital contributions are removed |
+| **Potential GDP** | No — an **estimate** | Level unobservable; only its growth rate is inferred (🔗 §13 Case 1 caveat) |
+
+### Sustainable growth rate 🔴 *(official Q28)*
+```
+Sustainable (potential) growth ≈ growth in the LABOR FORCE + growth in LABOR PRODUCTIVITY
+Labor-productivity growth ≈ TFP growth + contribution of capital deepening (capital-to-labor ratio growth)
+```
+⚠️ Distractor: "TFP growth + capital/labor growth" is the decomposition of *labor productivity*, not the whole sustainable growth rate; "weighted average of K and L growth" omits technology.
+
+### Convergence 🔴 *(official Q30)*
+**Diminishing marginal productivity of capital:** each added unit of capital per worker yields less extra output. Capital-scarce emerging economies therefore earn a high marginal product on new capital and grow faster than capital-rich developed ones → **income levels converge** over time. Not caused by TFP alone or by resource exhaustion.
+
+### Links back to Parts 1–2
+- Growth factors = the "both curves" LRAS shifters of §12.
+- Real GDP per capita (§5) is the growth metric; nominal growth overstates it by inflation.
+
+---
+
 ## 15. Quick-Reference Sheet
 
 ### Part 1 — Aggregate Output and Income
@@ -702,17 +740,17 @@ Cyclical = profits track the cycle; defensive = insensitive
 **⭐ Your flagged weak spots (this module so far):**
 - **Exhibit 3 — value-added with PARALLEL inputs (§3):** subtract the sum of ALL inputs feeding a stage (5,000), not the row above; verify Σ value added = final price (18,000); imports REDUCE domestic value added/GDP. Re-do this table from scratch until the 3-step routine is automatic.
 
-**⭐ Official practice problems (2026-10-11): 24 attempted, 10 missed — grouped by error type, not by topic:**
+**⭐ Official practice problems (2026-10-11): 30 attempted (28 unanswered), 13 missed — grouped by error type, not by topic:**
 
 | Error type | Missed | What went wrong → the fix |
 |---|---|---|
 | **Direction / polarity** | Q14, Q16, Q20 | Q14: S↑ with I, Y fixed → net exports must RISE (= capital outflow); Q16: LOWER price level → real FX *depreciates* → NX↑; Q20: a *weak* currency RAISES AD. Fix: write the chain from the direction the stem gives; translate FX into strong/weak first; substitute signs into the identity. |
-| **Which curve? (SRAS vs LRAS, AD vs AS)** | Q19, Q21, Q24 | Q19: indexed wages → SRAS *steeper* (slope = cost stickiness); Q21: LRAS left = *productivity* (resource factor), wages move SRAS only; Q24: stagflation can never come from AD. Fix: cost/price factors → SRAS only; resource/technology → both; output & prices opposite → supply shock. |
+| **Which curve? / short-run vs long-run adjustment** | Q19, Q21, Q24, Q25 | Q19: indexed wages → SRAS *steeper* (slope = cost stickiness); Q21: LRAS left = *productivity* (resource factor), wages move SRAS only; Q24: stagflation can never come from AD. Q25: a supply shock raises prices only in the SHORT run — with no money expansion, slack pulls input prices down, SRAS returns, long-run P unchanged. Fix: cost/price factors → SRAS only; resource/technology → both; output & prices opposite → supply shock; permanent inflation needs money. |
 | **Answering the wrong quantity** | Q5 | Asked for value added by the *final step* (5,000 − 2,000 = 3,000), answered the final price. Fix: re-read the stem's last line before choosing — which step, unit, period? Same family as the Exhibit 3 miss. |
 | **Annualizing / compounding** | Q9 | 190 → 212.8 over two years is (1.12)^½ − 1 = 5.8%/yr, not 12%/2 = 6%. Fix: multi-year "annual" = geometric. |
-| **Definition nuance / coverage gap** | Q12, Q17 | Q12: personal income chain was missing from the note (now §1b); Q17: natural output ≠ *maximum* output — it keeps a modest, stable pool of unemployed. Fix: find the one wrong word in each distractor. |
+| **Definition nuance / coverage gap** | Q12, Q17, Q27, Q29 | Q12: personal income chain was missing from the note (now §1b); Q17: natural output ≠ *maximum* output; Q27: labor productivity (output/hour) is the directly measurable one — TFP is a residual; Q29: TFP↑ = output for given inputs. Q27/Q29 are Part 3, not yet in the note (preliminary §17). Fix: find the one wrong word in each distractor; flag unfamiliar topics as note gaps. |
 
-**Part 2 scored 4/10 vs. Part 1 10/14.** The AD/AS section needs a second pass focused on *directions and curve identification*, not on re-reading definitions. The Study Hub's "My error patterns" panel drills exactly these groups.
+**Part 1 10/14 · Part 2 4/11 · Part 3 2/4 (one unanswered).** The AD/AS section needs a second pass focused on *directions and curve identification*, not on re-reading definitions. The Study Hub's "My error patterns" panel drills exactly these groups.
 
 **⭐ Outstanding practice questions (answer before the next session):**
 - **Q1 (calc, Part 1):** Nominal GDP 4,000 → 4,600; deflator 100 → 110. Real GDP growth is *closest to*: A) 4.5% B) 15.0% C) 5.0%

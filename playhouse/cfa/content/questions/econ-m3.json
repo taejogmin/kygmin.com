@@ -1360,6 +1360,114 @@
       "trap": "definition",
       "front": "The income-side chain: GDP → national income → personal income → personal disposable income",
       "back": "GDP − capital consumption allowance (depreciation) [− statistical discrepancy] = national income (compensation + corporate profits + interest + proprietors' income + rent + indirect business taxes less subsidies).\nNational income − indirect business taxes − corporate income taxes − undistributed corporate profits + transfer payments = personal income (proprietors' income STAYS in).\nPersonal income − personal taxes = personal disposable income → consumption + household saving."
+    },
+    {
+      "id": "econ-m3-p25",
+      "section": "13",
+      "concept": "Supply shock: short run vs long run price level",
+      "type": "mc",
+      "difficulty": 3,
+      "trap": "long-run-vs-short-run",
+      "source": "cfai",
+      "stem": "After a sharp rise in energy prices, the overall price level is most likely to rise in the short run:",
+      "choices": {
+        "A": "and stay elevated indefinitely unless the central bank tightens.",
+        "B": "but return to its original level in the long run unless the money supply is increased.",
+        "C": "and keep rising until all prices have risen by the same proportion."
+      },
+      "answer": "B",
+      "explanation": "The energy shock shifts SRAS left: output falls, prices rise. If AD is unchanged — in particular, if the central bank does not expand money — the slack economy puts downward pressure on input prices, SRAS drifts back to its original position, and the long-run price level is unchanged. Prices rise permanently only if policy accommodates the shock with more money. 'Keep rising proportionally' describes a monetary inflation, not a one-off supply shock.",
+      "kr": "에너지 충격 → SRAS 왼쪽 → 단기 물가↑. AD(통화량) 불변이면 경기 둔화가 투입가격을 끌어내려 SRAS가 원위치 → 장기 물가 불변. 통화 확대로 수용할 때만 영구 상승."
+    },
+    {
+      "id": "econ-m3-p26",
+      "section": "17",
+      "concept": "Technology as the key growth source for developed economies",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "source": "cfai",
+      "stem": "Among developed economies, the source of economic growth most likely to explain superior growth performance is:",
+      "choices": {
+        "A": "technology.",
+        "B": "the capital stock.",
+        "C": "the labor supply."
+      },
+      "answer": "A",
+      "explanation": "Developed economies already have deep capital per worker and slow labor-force growth, so adding more of either runs into diminishing marginal returns. Technological progress (total factor productivity) raises output for any level of inputs and is the dominant growth source for advanced economies.",
+      "kr": "선진국은 자본·노동 추가 시 수확체감에 부딪힘 → 기술(TFP) 진보가 성장 차이를 설명."
+    },
+    {
+      "id": "econ-m3-p27",
+      "section": "17",
+      "concept": "What can be measured directly: labor productivity",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "definition",
+      "source": "cfai",
+      "stem": "Which of the following can be measured directly?",
+      "choices": {
+        "A": "Potential GDP.",
+        "B": "Labor productivity.",
+        "C": "Total factor productivity."
+      },
+      "answer": "B",
+      "explanation": "Labor productivity is observable: output per hour worked. Potential GDP is an unobservable estimate (only its growth rate is inferred), and total factor productivity is a residual — what is left of output growth after the contributions of labor and capital are removed — so it is inferred, never measured directly.",
+      "kr": "노동생산성 = 시간당 산출 → 직접 측정 가능. 잠재 GDP는 추정치, TFP는 잔차(residual)라 간접 추정."
+    },
+    {
+      "id": "econ-m3-p28",
+      "section": "17",
+      "concept": "Sustainable growth rate",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "formula",
+      "source": "cfai",
+      "stem": "The sustainable rate of economic growth is best estimated as:",
+      "choices": {
+        "A": "the weighted average of the growth rates of capital and labor.",
+        "B": "growth in the labor force plus growth in labor productivity.",
+        "C": "growth in total factor productivity plus growth in the capital-to-labor ratio."
+      },
+      "answer": "B",
+      "explanation": "Sustainable (potential) growth = growth of the labor force + growth of labor productivity (output per worker/hour). Choice C is the decomposition of labor-productivity growth itself (TFP growth + the contribution of capital deepening), not the whole; choice A omits technology.",
+      "kr": "지속가능 성장률 = 노동력 증가율 + 노동생산성 증가율. C(TFP + 자본/노동 비율 증가)는 노동생산성 증가의 분해식."
+    },
+    {
+      "id": "econ-m3-p29",
+      "section": "17",
+      "concept": "Total factor productivity in the Solow model",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "definition",
+      "source": "cfai",
+      "stem": "In the neoclassical (Solow) growth model, an increase in total factor productivity reflects an increase in:",
+      "choices": {
+        "A": "returns to scale.",
+        "B": "output for a given level of inputs.",
+        "C": "the sustainable growth rate."
+      },
+      "answer": "B",
+      "explanation": "TFP is the scale factor A in Y = A·F(K, L), reflecting mainly technology: a higher A means more output from ANY given combination of capital and labor. Returns to scale describe what happens when all inputs are scaled; the sustainable growth rate is an outcome that TFP growth feeds into, not what TFP itself measures.",
+      "kr": "TFP = Y = A·F(K,L)의 A. A↑ = 같은 투입으로 더 많은 산출. 규모수익이나 지속가능 성장률 자체가 아님."
+    },
+    {
+      "id": "econ-m3-p30",
+      "section": "17",
+      "concept": "Convergence and diminishing marginal productivity of capital",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "mechanism",
+      "source": "cfai",
+      "stem": "Convergence of income levels over time between emerging and developed economies is most likely the result of:",
+      "choices": {
+        "A": "total factor productivity.",
+        "B": "diminishing marginal productivity of capital.",
+        "C": "the exhaustion of non-renewable resources."
+      },
+      "answer": "B",
+      "explanation": "Each extra unit of capital per worker adds less output as capital deepens. Capital-scarce emerging economies therefore earn a high marginal product on new capital and grow faster than capital-rich developed ones, so income levels converge over time.",
+      "kr": "자본의 한계생산 체감: 자본이 부족한 신흥국은 신규 자본의 한계생산이 높아 더 빨리 성장 → 소득 수렴."
     }
   ]
 }

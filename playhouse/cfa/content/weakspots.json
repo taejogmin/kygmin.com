@@ -3,70 +3,222 @@
   "patterns": [
     {
       "id": "polarity",
-      "name": { "en": "Direction / polarity flips", "kr": "방향·극성 뒤집힘" },
+      "name": {
+        "en": "Direction / polarity flips",
+        "kr": "방향·극성 뒤집힘"
+      },
       "rule": {
         "en": "Never answer a direction question from intuition. Write the chain explicitly (P↑ → … → ?). For identities, substitute signs and solve algebraically. Translate every exchange-rate statement into 'stronger or weaker currency?' before anything else. Trade surplus (X − M > 0) = net capital OUTflow.",
         "kr": "방향 문제는 직관으로 답하지 않는다. 연쇄를 끝까지 적고(P↑ → … → ?), 항등식은 부호를 대입해 대수로 푼다. 환율은 무조건 '자국통화 강세/약세'로 먼저 번역. 무역흑자(X − M > 0) = 순자본 유출."
       },
-      "traps": ["direction", "sign", "convention", "shift-vs-along"],
-      "evidence": ["M1 Q3 (elasticity determinants)", "M2 Q6 (entry → supply right)", "M2 Q7 (regulated price = LRAC)", "M3 official Q14 (saving ↑ → net exports ↑)", "M3 official Q16 (lower P → real FX depreciates)", "M3 official Q20 (weak currency raises AD)"],
-      "seed": ["econ-m3-p14", "econ-m3-p16", "econ-m3-p20", "econ-m3-006", "econ-m3-022", "econ-m3-031", "econ-m1-010", "econ-m2-023"]
+      "traps": [
+        "direction",
+        "sign",
+        "convention",
+        "shift-vs-along"
+      ],
+      "evidence": [
+        "M1 Q3 (elasticity determinants)",
+        "M2 Q6 (entry → supply right)",
+        "M2 Q7 (regulated price = LRAC)",
+        "M3 official Q14 (saving ↑ → net exports ↑)",
+        "M3 official Q16 (lower P → real FX depreciates)",
+        "M3 official Q20 (weak currency raises AD)"
+      ],
+      "seed": [
+        "econ-m3-p14",
+        "econ-m3-p16",
+        "econ-m3-p20",
+        "econ-m3-006",
+        "econ-m3-022",
+        "econ-m3-031",
+        "econ-m1-010",
+        "econ-m2-023"
+      ]
     },
     {
       "id": "which-curve",
-      "name": { "en": "Which curve? (SRAS vs LRAS, AD vs AS, firm vs market)", "kr": "어느 곡선? (SRAS vs LRAS, AD vs AS, 기업 vs 시장)" },
+      "name": {
+        "en": "Which curve? (SRAS vs LRAS, AD vs AS, firm vs market)",
+        "kr": "어느 곡선? (SRAS vs LRAS, AD vs AS, 기업 vs 시장)"
+      },
       "rule": {
         "en": "Cost/price factors (wages, input prices, taxes, subsidies, expectations, FX) move SRAS only; resource/technology factors (labor, capital, productivity) move BOTH. To diagnose a shock from data: output and prices same direction → demand; opposite → supply. Stagflation is never an AD story.",
         "kr": "비용·가격 요인(임금·투입가격·세금·보조금·기대·환율)은 SRAS만, 자원·기술 요인(노동·자본·생산성)은 둘 다. 데이터로 충격 진단: 산출과 물가가 같은 방향 → 수요, 반대 → 공급. 스태그플레이션은 절대 AD 이야기가 아님."
       },
-      "traps": ["which-curve", "mechanism", "long-run-vs-short-run"],
-      "evidence": ["M3 official Q19 (indexed wages → steeper SRAS)", "M3 official Q21 (LRAS left = productivity, not wages)", "M3 official Q24 (stagflation ≠ AD shift)"],
-      "seed": ["econ-m3-p19", "econ-m3-p21", "econ-m3-p24", "econ-m3-035", "econ-m3-036", "econ-m3-005", "econ-m2-010"]
+      "traps": [
+        "which-curve",
+        "mechanism",
+        "long-run-vs-short-run"
+      ],
+      "evidence": [
+        "M3 official Q19 (indexed wages → steeper SRAS)",
+        "M3 official Q21 (LRAS left = productivity, not wages)",
+        "M3 official Q24 (stagflation ≠ AD shift)",
+        "M3 official Q25 (supply shock: long-run price level unchanged unless money expands)"
+      ],
+      "seed": [
+        "econ-m3-p25",
+        "econ-m3-p19",
+        "econ-m3-p21",
+        "econ-m3-p24",
+        "econ-m3-035",
+        "econ-m3-036",
+        "econ-m3-005",
+        "econ-m2-010"
+      ]
     },
     {
       "id": "asked-quantity",
-      "name": { "en": "Answering the wrong quantity", "kr": "묻는 양과 다른 숫자를 답함" },
+      "name": {
+        "en": "Answering the wrong quantity",
+        "kr": "묻는 양과 다른 숫자를 답함"
+      },
       "rule": {
         "en": "Before choosing, re-read the stem's last line: which stage, which unit, which period, average or marginal, price or quantity? Value added at a step = receipts − ALL purchased inputs; the final price is the whole chain's contribution, not the last step's.",
         "kr": "답 고르기 전에 문제의 마지막 줄을 다시 읽는다: 어느 단계·단위·기간, 평균인지 한계인지, 가격인지 수량인지. 단계별 부가가치 = 매출 − 구입 투입 전부; 최종가격은 체인 전체 기여분이지 마지막 단계가 아님."
       },
-      "traps": ["asked-quantity", "parallel-inputs", "p-vs-q", "which-average", "which-intercept", "avg-vs-marginal"],
-      "evidence": ["M3 Exhibit 3 (parallel inputs)", "M3 official Q5 (value added of final step = 3,000, not 5,000)"],
-      "seed": ["econ-m3-p05", "econ-m3-010", "econ-m3-009", "econ-m1-024", "econ-m1-030", "econ-m1-005"]
+      "traps": [
+        "asked-quantity",
+        "parallel-inputs",
+        "p-vs-q",
+        "which-average",
+        "which-intercept",
+        "avg-vs-marginal"
+      ],
+      "evidence": [
+        "M3 Exhibit 3 (parallel inputs)",
+        "M3 official Q5 (value added of final step = 3,000, not 5,000)"
+      ],
+      "seed": [
+        "econ-m3-p05",
+        "econ-m3-010",
+        "econ-m3-009",
+        "econ-m1-024",
+        "econ-m1-030",
+        "econ-m1-005"
+      ]
     },
     {
       "id": "compounding",
-      "name": { "en": "Annualizing / compounding", "kr": "연율화·복리" },
+      "name": {
+        "en": "Annualizing / compounding",
+        "kr": "연율화·복리"
+      },
       "rule": {
         "en": "'Annual' over a multi-year span means geometric: (end/start)^(1/n) − 1, never (total %)/n. Same rule as annualized returns in Quant Methods. Nominal = real × inflation is multiplicative, not additive.",
         "kr": "다년간의 '연간' 성장률은 기하평균: (끝/시작)^(1/n) − 1. 총변화율 ÷ n은 오답. QM 연율화 수익률과 같은 규칙. 명목 = 실질 × 물가도 곱셈이지 덧셈이 아님."
       },
-      "traps": ["compounding"],
-      "evidence": ["M3 official Q9 (deflator 190 → 212.8 over 2 years = 5.8%/yr, not 6%)", "QM sign/annualization error"],
-      "seed": ["econ-m3-p09", "econ-m3-016", "econ-m3-001", "econ-m3-p08"]
+      "traps": [
+        "compounding"
+      ],
+      "evidence": [
+        "M3 official Q9 (deflator 190 → 212.8 over 2 years = 5.8%/yr, not 6%)",
+        "QM sign/annualization error"
+      ],
+      "seed": [
+        "econ-m3-p09",
+        "econ-m3-016",
+        "econ-m3-001",
+        "econ-m3-p08"
+      ]
     },
     {
       "id": "definition-nuance",
-      "name": { "en": "One-word definition traps & coverage gaps", "kr": "정의의 한 단어 함정 · 범위 공백" },
-      "rule": {
-        "en": "For 'best describes' stems, find the single wrong word in each distractor (maximum vs. natural, verifiable, resalable). Natural output is NOT the maximum — it has a modest, stable pool of unemployed. If a topic feels unfamiliar (personal income chain), flag it as a note gap rather than guessing.",
-        "kr": "'best describes' 문제는 각 오답 선지에서 틀린 단어 하나를 찾는다(maximum vs natural, verifiable, resalable). 자연산출은 '최대'가 아니라 소규모 안정적 실업 풀이 있는 수준. 낯선 주제(개인소득 체인)는 찍지 말고 노트 공백으로 표시."
+      "name": {
+        "en": "One-word definition traps & coverage gaps",
+        "kr": "정의의 한 단어 함정 · 범위 공백"
       },
-      "traps": ["definition"],
-      "evidence": ["M3 official Q12 (personal income chain — note gap, now §1b)", "M3 official Q17 (natural output ≠ maximum)"],
-      "seed": ["econ-m3-p12", "econ-m3-p17", "econ-m3-p11", "econ-m3-047", "econ-m3-048"]
+      "rule": {
+        "en": "For 'best describes' stems, find the single wrong word in each distractor (maximum vs. natural, verifiable, resalable). Natural output is NOT the maximum — it has a modest, stable pool of unemployed. If a topic feels unfamiliar (personal income chain), flag it as a note gap rather than guessing. Part 3 growth terms: labor productivity (output/hour, measurable) vs TFP (residual, inferred) vs potential GDP (estimated).",
+        "kr": "'best describes' 문제는 각 오답 선지에서 틀린 단어 하나를 찾는다(maximum vs natural, verifiable, resalable). 자연산출은 '최대'가 아니라 소규모 안정적 실업 풀이 있는 수준. 낯선 주제(개인소득 체인)는 찍지 말고 노트 공백으로 표시. Part 3 성장 용어: 노동생산성(시간당 산출, 측정 가능) vs TFP(잔차, 추정) vs 잠재 GDP(추정치)."
+      },
+      "traps": [
+        "definition"
+      ],
+      "evidence": [
+        "M3 official Q12 (personal income chain — note gap, now §1b)",
+        "M3 official Q17 (natural output ≠ maximum)",
+        "M3 official Q27 (labor productivity is the directly measurable one)",
+        "M3 official Q29 (TFP = output for given inputs)"
+      ],
+      "seed": [
+        "econ-m3-p27",
+        "econ-m3-p29",
+        "econ-m3-p28",
+        "econ-m3-p12",
+        "econ-m3-p17",
+        "econ-m3-p11",
+        "econ-m3-047",
+        "econ-m3-048"
+      ]
     }
   ],
   "official_misses": [
-    { "qid": "econ-m3-p05", "when": "2026-10-11", "note": "Chose the final sale price (5,000) instead of value added at the last step (3,000)." },
-    { "qid": "econ-m3-p09", "when": "2026-10-11", "note": "Divided the 2-year change by 2 (6%) instead of annualizing geometrically (5.8%)." },
-    { "qid": "econ-m3-p12", "when": "2026-10-11", "note": "Personal income chain was not in the notes — knowledge gap, now covered in §1b." },
-    { "qid": "econ-m3-p14", "when": "2026-10-11", "note": "Flipped the identity: higher saving with I, Y fixed must raise net exports (capital outflow), not lower them." },
-    { "qid": "econ-m3-p16", "when": "2026-10-11", "note": "Lower price level → real exchange rate DEPRECIATES → net exports rise. Chose appreciation." },
-    { "qid": "econ-m3-p17", "when": "2026-10-11", "note": "Natural level of output is not the maximum obtainable; it has a modest stable pool of unemployed." },
-    { "qid": "econ-m3-p19", "when": "2026-10-11", "note": "Indexed wages remove the margin incentive → SRAS steeper, not unchanged." },
-    { "qid": "econ-m3-p20", "when": "2026-10-11", "note": "A weak currency RAISES AD (exports cheaper); it cannot be a cause of an AD decrease." },
-    { "qid": "econ-m3-p21", "when": "2026-10-11", "note": "LRAS shifts only with resource/technology factors (productivity); nominal wages move SRAS only." },
-    { "qid": "econ-m3-p24", "when": "2026-10-11", "note": "Stagflation comes from an SRAS shift, so it is the one NOT caused by AD." }
+    {
+      "qid": "econ-m3-p05",
+      "when": "2026-10-11",
+      "note": "Chose the final sale price (5,000) instead of value added at the last step (3,000)."
+    },
+    {
+      "qid": "econ-m3-p09",
+      "when": "2026-10-11",
+      "note": "Divided the 2-year change by 2 (6%) instead of annualizing geometrically (5.8%)."
+    },
+    {
+      "qid": "econ-m3-p12",
+      "when": "2026-10-11",
+      "note": "Personal income chain was not in the notes — knowledge gap, now covered in §1b."
+    },
+    {
+      "qid": "econ-m3-p14",
+      "when": "2026-10-11",
+      "note": "Flipped the identity: higher saving with I, Y fixed must raise net exports (capital outflow), not lower them."
+    },
+    {
+      "qid": "econ-m3-p16",
+      "when": "2026-10-11",
+      "note": "Lower price level → real exchange rate DEPRECIATES → net exports rise. Chose appreciation."
+    },
+    {
+      "qid": "econ-m3-p17",
+      "when": "2026-10-11",
+      "note": "Natural level of output is not the maximum obtainable; it has a modest stable pool of unemployed."
+    },
+    {
+      "qid": "econ-m3-p19",
+      "when": "2026-10-11",
+      "note": "Indexed wages remove the margin incentive → SRAS steeper, not unchanged."
+    },
+    {
+      "qid": "econ-m3-p20",
+      "when": "2026-10-11",
+      "note": "A weak currency RAISES AD (exports cheaper); it cannot be a cause of an AD decrease."
+    },
+    {
+      "qid": "econ-m3-p21",
+      "when": "2026-10-11",
+      "note": "LRAS shifts only with resource/technology factors (productivity); nominal wages move SRAS only."
+    },
+    {
+      "qid": "econ-m3-p24",
+      "when": "2026-10-11",
+      "note": "Stagflation comes from an SRAS shift, so it is the one NOT caused by AD."
+    },
+    {
+      "qid": "econ-m3-p25",
+      "when": "2026-10-11",
+      "note": "Supply shock raises prices only in the short run; with no money expansion the long-run price level is unchanged. Chose 'keeps rising proportionally'."
+    },
+    {
+      "qid": "econ-m3-p27",
+      "when": "2026-10-11",
+      "note": "Labor productivity (output/hour) is directly measurable; TFP is a residual."
+    },
+    {
+      "qid": "econ-m3-p29",
+      "when": "2026-10-11",
+      "note": "TFP↑ = more output for given inputs (the A in Y = A·F(K,L)), not the sustainable growth rate itself."
+    }
   ]
 }
