@@ -1061,7 +1061,7 @@ MC INTERSECTION RULE:   MC cuts ATC and AVC at their MINIMUM points
 | Fixed vs. variable cost classification | Concept | 🟡 Medium |
 | SMC vs. LMC (which inputs are variable) | Concept | 🟡 Medium |
 
-**⭐ Official practice problems (2026-10-11): 11 attempted, 7 correct — Q5 guessed, Q8/Q9/Q10 (the three-elasticity vignette) all missed. Q3 — the earlier miss — now correct.**
+**⭐ Official practice problems (2026-10-11): 14 attempted, 10 correct — Q5 guessed, Q8/Q9/Q10 (the three-elasticity vignette) all missed; every conceptual question (1, 3, 4, 6, 7, 11, 12, 13, 14) correct. Q3 — the earlier miss — now correct.**
 
 | Error type | Question | What to fix |
 |---|---|---|
