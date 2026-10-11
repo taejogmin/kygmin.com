@@ -77,8 +77,8 @@
         "kr": "묻는 양과 다른 숫자 · 주어진 숫자 집기"
       },
       "rule": {
-        "en": "Before choosing, re-read the stem's last line: which stage, which unit, which period, average or marginal, price or quantity? Value added at a step = receipts − ALL purchased inputs; the final price is the whole chain's contribution, not the last step's. If a stem hands you two cost figures and an elasticity, the answer is almost never one of the given figures — apply the rule.",
-        "kr": "답 고르기 전에 문제의 마지막 줄을 다시 읽는다: 어느 단계·단위·기간, 평균인지 한계인지, 가격인지 수량인지. 단계별 부가가치 = 매출 − 구입 투입 전부; 최종가격은 체인 전체 기여분이지 마지막 단계가 아님. 비용 숫자 두 개와 탄력성이 주어지면 답은 거의 주어진 숫자가 아님 — 규칙을 적용할 것."
+        "en": "Before choosing, re-read the stem's last line: which stage, which unit, which period, average or marginal, price or quantity? Value added at a step = receipts − ALL purchased inputs; the final price is the whole chain's contribution, not the last step's. If a stem hands you two cost figures and an elasticity, the answer is almost never one of the given figures — apply the rule. Multi-variable demand function: ALWAYS compute Q with every variable plugged in before any elasticity; then use the coefficient of the variable the question names.",
+        "kr": "답 고르기 전에 문제의 마지막 줄을 다시 읽는다: 어느 단계·단위·기간, 평균인지 한계인지, 가격인지 수량인지. 단계별 부가가치 = 매출 − 구입 투입 전부; 최종가격은 체인 전체 기여분이지 마지막 단계가 아님. 비용 숫자 두 개와 탄력성이 주어지면 답은 거의 주어진 숫자가 아님 — 규칙을 적용할 것. 다변수 수요함수: 탄력성 전에 모든 변수를 넣어 Q부터 계산, 그 다음 문제가 지목한 변수의 계수 × (그 변수/Q)."
       },
       "traps": [
         "asked-quantity",
@@ -91,9 +91,11 @@
       "evidence": [
         "M3 Exhibit 3 (parallel inputs)",
         "M3 official Q5 (value added of final step = 3,000, not 5,000)",
-        "M2 official Q4 (picked AC $70; the pricing rule P[1 − 1/ε] = MC gives $120)"
+        "M2 official Q4 (picked AC $70; the pricing rule P[1 − 1/ε] = MC gives $120)",
+        "M1 official Q5 (guessed: multi-variable cross-price elasticity — compute Q with all variables first, then coefficient × Pt/Q)"
       ],
       "seed": [
+        "econ-m1-p05",
         "econ-m2-p04",
         "econ-m3-p05",
         "econ-m3-010",
@@ -240,6 +242,11 @@
       "qid": "econ-m2-p07",
       "when": "2026-10-11",
       "note": "Regulated price = long-run average cost (normal return). Repeat of the earlier Q7 miss."
+    },
+    {
+      "qid": "econ-m1-p05",
+      "when": "2026-10-11",
+      "note": "Guessed (counted as a miss). Compute Q = 24.8375 with all variables, then −0.16 × 3.75/24.8375 = −0.0242."
     }
   ]
 }

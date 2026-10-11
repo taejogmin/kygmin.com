@@ -2,344 +2,845 @@
   "module": "econ-m1",
   "questions": [
     {
-      "id": "econ-m1-001", "section": "2", "concept": "Demand function: reading coefficient signs", "type": "mc", "difficulty": 1, "trap": "sign",
+      "id": "econ-m1-001",
+      "section": "2",
+      "concept": "Demand function: reading coefficient signs",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "sign",
       "stem": "A household's demand for gasoline is estimated as Qd = 84.5 − 6.39Px + 0.25I − 2Py, where Py is the average price of an automobile. The sign of the coefficient on Py most likely indicates that gasoline and automobiles are:",
-      "choices": {"A": "complements.", "B": "substitutes.", "C": "unrelated goods."},
+      "choices": {
+        "A": "complements.",
+        "B": "substitutes.",
+        "C": "unrelated goods."
+      },
       "answer": "A",
       "explanation": "A negative coefficient on another good's price means that when automobiles get more expensive, less gasoline is demanded — the two are consumed together, i.e., complements. A positive coefficient would indicate substitutes.",
       "kr": "다른 재화 가격의 계수가 음수(−2) → 보완재. 양수면 대체재."
     },
     {
-      "id": "econ-m1-002", "section": "2", "concept": "Slope of demand curve vs. coefficient", "type": "calc", "difficulty": 2, "trap": "reciprocal",
+      "id": "econ-m1-002",
+      "section": "2",
+      "concept": "Slope of demand curve vs. coefficient",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "reciprocal",
       "stem": "Holding income and other prices constant, a demand function simplifies to Qd = 57 − 6.39P. The slope of the corresponding demand curve (price on the vertical axis) is closest to:",
-      "choices": {"A": "−6.39", "B": "−0.156", "C": "8.92"},
+      "choices": {
+        "A": "−6.39",
+        "B": "−0.156",
+        "C": "8.92"
+      },
       "answer": "B",
       "explanation": "Invert the function: P = 57/6.39 − (1/6.39)Q = 8.92 − 0.156Q. The slope of the curve is ΔP/ΔQ = −1/6.39 = −0.156. The coefficient −6.39 is the slope of the demand FUNCTION (ΔQ/ΔP), and 8.92 is the price intercept.",
       "kr": "수요곡선 기울기 = 1/(가격 계수) = −1/6.39 = −0.156. 함수의 계수(−6.39)와 역수 관계."
     },
     {
-      "id": "econ-m1-003", "section": "2", "concept": "Inverse demand intercepts", "type": "calc", "difficulty": 1, "trap": "which-intercept",
+      "id": "econ-m1-003",
+      "section": "2",
+      "concept": "Inverse demand intercepts",
+      "type": "calc",
+      "difficulty": 1,
+      "trap": "which-intercept",
       "stem": "For the demand function Qd = 57 − 6.39P, the price at which quantity demanded falls to zero is closest to:",
-      "choices": {"A": "57.0", "B": "6.39", "C": "8.92"},
+      "choices": {
+        "A": "57.0",
+        "B": "6.39",
+        "C": "8.92"
+      },
       "answer": "C",
       "explanation": "Set Qd = 0: 57 − 6.39P = 0 → P = 57/6.39 = 8.92. This is the vertical (price) intercept of the demand curve. 57 is the quantity intercept (quantity demanded when P = 0).",
       "kr": "Qd = 0으로 두고 풀면 P = 57/6.39 = 8.92 (가격축 절편). 57은 수량축 절편."
     },
     {
-      "id": "econ-m1-004", "section": "2", "concept": "Movement along vs. shift of demand", "type": "mc", "difficulty": 1, "trap": "definition",
+      "id": "econ-m1-004",
+      "section": "2",
+      "concept": "Movement along vs. shift of demand",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
       "stem": "Which of the following events most likely causes a movement along a good's demand curve rather than a shift of the curve?",
-      "choices": {"A": "A rise in consumer income.", "B": "A fall in the good's own price.", "C": "A rise in the price of a substitute good."},
+      "choices": {
+        "A": "A rise in consumer income.",
+        "B": "A fall in the good's own price.",
+        "C": "A rise in the price of a substitute good."
+      },
       "answer": "B",
       "explanation": "Only a change in the good's own price moves you along the curve (a change in quantity demanded). Income, other goods' prices and tastes change the constant term, shifting the whole curve (a change in demand).",
       "kr": "자기 가격 변화 → 곡선 위 이동(수요량 변화). 소득·타재화 가격 → 곡선 자체 이동(수요 변화)."
     },
     {
-      "id": "econ-m1-005", "section": "3", "concept": "Market equilibrium (direct form)", "type": "calc", "difficulty": 1, "trap": "p-vs-q",
+      "id": "econ-m1-005",
+      "section": "3",
+      "concept": "Market equilibrium (direct form)",
+      "type": "calc",
+      "difficulty": 1,
+      "trap": "p-vs-q",
       "stem": "Market demand is Qd = 50 − 2P and market supply is Qs = 10 + 3P. The equilibrium price is closest to:",
-      "choices": {"A": "34", "B": "8", "C": "12"},
+      "choices": {
+        "A": "34",
+        "B": "8",
+        "C": "12"
+      },
       "answer": "B",
       "explanation": "Set Qd = Qs: 50 − 2P = 10 + 3P → 40 = 5P → P* = 8. Then Q* = 50 − 2(8) = 34. Choice A is the equilibrium quantity, not the price — read what the stem asks for.",
       "kr": "Qd = Qs → 50 − 2P = 10 + 3P → P* = 8, Q* = 34. 가격을 물었는지 수량을 물었는지 확인."
     },
     {
-      "id": "econ-m1-006", "section": "4", "concept": "Own-price elasticity calculation", "type": "calc", "difficulty": 2, "trap": "reciprocal",
+      "id": "econ-m1-006",
+      "section": "4",
+      "concept": "Own-price elasticity calculation",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "reciprocal",
       "stem": "A good's demand function is Qd = 57 − 6.39P. At a price of 3.00, the own-price elasticity of demand is closest to:",
-      "choices": {"A": "−0.51", "B": "−1.97", "C": "−6.39"},
+      "choices": {
+        "A": "−0.51",
+        "B": "−1.97",
+        "C": "−6.39"
+      },
       "answer": "A",
       "explanation": "Step 1: Q = 57 − 6.39(3) = 37.83. Step 2: E = (ΔQ/ΔP) × (P/Q) = −6.39 × (3 / 37.83) = −0.507. Demand is inelastic at this point. Choice B inverts the P/Q ratio; choice C is the raw coefficient, which is unit-dependent and is not an elasticity.",
       "kr": "E = 계수 × (P/Q) = −6.39 × 3/37.83 = −0.51. 비탄력적. P/Q를 뒤집으면 −1.97(오답)."
     },
     {
-      "id": "econ-m1-007", "section": "4", "concept": "Interpreting elasticity magnitude", "type": "mc", "difficulty": 1, "trap": "sign",
+      "id": "econ-m1-007",
+      "section": "4",
+      "concept": "Interpreting elasticity magnitude",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "sign",
       "stem": "The own-price elasticity of demand for a good is −1.28. Demand for this good is best described as:",
-      "choices": {"A": "inelastic, because the elasticity is negative.", "B": "elastic, because the absolute value exceeds 1.", "C": "unit elastic, because the law of demand holds."},
+      "choices": {
+        "A": "inelastic, because the elasticity is negative.",
+        "B": "elastic, because the absolute value exceeds 1.",
+        "C": "unit elastic, because the law of demand holds."
+      },
       "answer": "B",
       "explanation": "Own-price elasticity is almost always negative; the sign only confirms the law of demand. Elastic vs. inelastic is judged on the magnitude |E|: |−1.28| = 1.28 > 1 → elastic.",
       "kr": "부호는 수요법칙 확인용. 탄력성 판정은 |E|로: 1.28 > 1 → 탄력적."
     },
     {
-      "id": "econ-m1-008", "section": "4", "concept": "Elasticity varies along a linear demand curve", "type": "mc", "difficulty": 2, "trap": "direction",
+      "id": "econ-m1-008",
+      "section": "4",
+      "concept": "Elasticity varies along a linear demand curve",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "direction",
       "stem": "Along a linear, downward-sloping demand curve, as price rises toward the vertical intercept, demand most likely becomes:",
-      "choices": {"A": "more elastic, because P/Q increases while the slope is constant.", "B": "less elastic, because the slope becomes steeper.", "C": "unchanged, because the slope of a linear curve is constant."},
+      "choices": {
+        "A": "more elastic, because P/Q increases while the slope is constant.",
+        "B": "less elastic, because the slope becomes steeper.",
+        "C": "unchanged, because the slope of a linear curve is constant."
+      },
       "answer": "A",
       "explanation": "E = (ΔQ/ΔP) × (P/Q). The first term is constant along a linear curve, but P/Q rises as price rises and quantity falls, so |E| rises. Above the midpoint demand is elastic, at the midpoint unit elastic, below it inelastic.",
       "kr": "직선 수요곡선: 기울기는 일정하지만 P/Q가 커지므로 가격이 높을수록 더 탄력적. 중점 위 탄력적, 아래 비탄력적."
     },
     {
-      "id": "econ-m1-009", "section": "4", "concept": "Elasticity and total revenue", "type": "mc", "difficulty": 1, "trap": "direction",
+      "id": "econ-m1-009",
+      "section": "4",
+      "concept": "Elasticity and total revenue",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "direction",
       "stem": "A firm faces inelastic demand for its product. If it raises price, total revenue will most likely:",
-      "choices": {"A": "fall, because quantity demanded decreases.", "B": "rise, because the percentage fall in quantity is smaller than the percentage rise in price.", "C": "remain unchanged."},
+      "choices": {
+        "A": "fall, because quantity demanded decreases.",
+        "B": "rise, because the percentage fall in quantity is smaller than the percentage rise in price.",
+        "C": "remain unchanged."
+      },
       "answer": "B",
       "explanation": "With inelastic demand (|E| < 1), the quantity response is proportionally smaller than the price change, so P × Q rises when price rises. Revenue is unchanged only at unit elasticity, and falls with a price rise only when demand is elastic.",
       "kr": "비탄력적이면 가격 인상 → 수량 감소율 < 가격 상승률 → 총수입 증가."
     },
     {
-      "id": "econ-m1-010", "section": "4", "concept": "Determinants of elasticity", "type": "mc", "difficulty": 2, "trap": "direction",
+      "id": "econ-m1-010",
+      "section": "4",
+      "concept": "Determinants of elasticity",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "direction",
       "stem": "The price elasticity of demand for a good will most likely be greater if:",
-      "choices": {"A": "there are no substitutes for the good.", "B": "consumers consider the good to be discretionary.", "C": "consumers spend a small portion of their budget on the good."},
+      "choices": {
+        "A": "there are no substitutes for the good.",
+        "B": "consumers consider the good to be discretionary.",
+        "C": "consumers spend a small portion of their budget on the good."
+      },
       "answer": "B",
       "explanation": "Elastic = the buyer can walk away. Discretionary (optional) goods are easy to give up → more elastic. No substitutes and a small budget share both make demand LESS elastic; A and C state true determinants backwards.",
       "kr": "탄력적 = 소비자가 피할 수 있음. 선택적(사치) 재화 → 탄력적. 대체재 없음·예산 비중 작음은 비탄력적(방향 반대)."
     },
     {
-      "id": "econ-m1-011", "section": "4", "concept": "Durable goods exception (time horizon)", "type": "mc", "difficulty": 3, "trap": "exception",
+      "id": "econ-m1-011",
+      "section": "4",
+      "concept": "Durable goods exception (time horizon)",
+      "type": "mc",
+      "difficulty": 3,
+      "trap": "exception",
       "stem": "Compared with the long run, the short-run price elasticity of demand for a durable good such as a washing machine is most likely:",
-      "choices": {"A": "lower, because consumers need time to adjust.", "B": "higher, because a price change shifts the timing of a purchase consumers were going to make anyway.", "C": "the same, because elasticity does not depend on the time horizon."},
+      "choices": {
+        "A": "lower, because consumers need time to adjust.",
+        "B": "higher, because a price change shifts the timing of a purchase consumers were going to make anyway.",
+        "C": "the same, because elasticity does not depend on the time horizon."
+      },
       "answer": "B",
       "explanation": "For most goods, long-run demand is more elastic. Durables are the exception: a price cut pulls forward replacement purchases (large short-run response), but lifetime quantity barely changes, so long-run elasticity is lower.",
       "kr": "일반 재화는 장기가 더 탄력적. 내구재는 반대: 가격 변화가 구매 시점만 앞당기므로 단기가 더 탄력적."
     },
     {
-      "id": "econ-m1-012", "section": "4", "concept": "Definition of the good and substitutes", "type": "mc", "difficulty": 1, "trap": "direction",
+      "id": "econ-m1-012",
+      "section": "4",
+      "concept": "Definition of the good and substitutes",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "direction",
       "stem": "Which of the following is most likely to have the most elastic demand?",
-      "choices": {"A": "Bread, as a product category.", "B": "Baked goods in general.", "C": "One specific brand of whole-wheat sesame bread."},
+      "choices": {
+        "A": "Bread, as a product category.",
+        "B": "Baked goods in general.",
+        "C": "One specific brand of whole-wheat sesame bread."
+      },
       "answer": "C",
       "explanation": "The narrower the definition of the good, the more close substitutes exist, and the more elastic its demand. A single brand can be swapped instantly; the whole category of bread has few substitutes.",
       "kr": "재화 정의가 좁을수록 대체재가 많아 더 탄력적. 특정 브랜드 > 빵 전체."
     },
     {
-      "id": "econ-m1-013", "section": "5", "concept": "Income elasticity calculation", "type": "calc", "difficulty": 2, "trap": "units",
+      "id": "econ-m1-013",
+      "section": "5",
+      "concept": "Income elasticity calculation",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "units",
       "stem": "Demand is Qd = 84.5 − 6.39Px + 0.25I − 2Py, with income I measured in thousands. At Px = 1.48, I = 50 and Py = 20, quantity demanded is 47.54. The income elasticity of demand is closest to:",
-      "choices": {"A": "0.26", "B": "12.5", "C": "0.53"},
+      "choices": {
+        "A": "0.26",
+        "B": "12.5",
+        "C": "0.53"
+      },
       "answer": "A",
       "explanation": "E_I = (ΔQ/ΔI) × (I/Q) = 0.25 × (50 / 47.54) = 0.263. Positive → normal good. Choice B (12.5) is just 0.25 × 50 without dividing by Q; choice C doubles the income value. Keep income in the units the function uses (thousands).",
       "kr": "E_I = 0.25 × 50/47.54 = 0.26 (양수 → 정상재). 소득 단위(천 단위) 그대로 사용."
     },
     {
-      "id": "econ-m1-014", "section": "5", "concept": "Income elasticity sign and curve shift", "type": "mc", "difficulty": 1, "trap": "sign",
+      "id": "econ-m1-014",
+      "section": "5",
+      "concept": "Income elasticity sign and curve shift",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "sign",
       "stem": "A good has an income elasticity of demand of −0.4. If consumer incomes rise, the good's demand curve will most likely:",
-      "choices": {"A": "shift to the left, because the good is inferior.", "B": "shift to the right, because the good is normal.", "C": "not shift, because demand is inelastic with respect to income."},
+      "choices": {
+        "A": "shift to the left, because the good is inferior.",
+        "B": "shift to the right, because the good is normal.",
+        "C": "not shift, because demand is inelastic with respect to income."
+      },
       "answer": "A",
       "explanation": "Negative income elasticity defines an inferior good: higher income → less demanded at every price → the curve shifts left. The magnitude (0.4) describes strength, not direction.",
       "kr": "소득탄력성 음수 = 열등재 → 소득 증가 시 수요곡선 왼쪽 이동."
     },
     {
-      "id": "econ-m1-015", "section": "6", "concept": "Cross-price elasticity calculation and sign", "type": "calc", "difficulty": 2, "trap": "sign",
+      "id": "econ-m1-015",
+      "section": "6",
+      "concept": "Cross-price elasticity calculation and sign",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "sign",
       "stem": "Using Qd = 84.5 − 6.39Px + 0.25I − 2Py at Px = 1.48, I = 50, Py = 20 (Qd = 47.54), the cross-price elasticity of demand with respect to Py is closest to, and the goods are:",
-      "choices": {"A": "−0.84; complements.", "B": "+0.84; substitutes.", "C": "−0.84; substitutes."},
+      "choices": {
+        "A": "−0.84; complements.",
+        "B": "+0.84; substitutes.",
+        "C": "−0.84; substitutes."
+      },
       "answer": "A",
       "explanation": "E_xy = (ΔQx/ΔPy) × (Py/Qx) = −2 × (20 / 47.54) = −0.84. The negative sign means a rise in Py lowers demand for X → complements. The magnitude below 1 says the relationship is fairly weak.",
       "kr": "E = −2 × 20/47.54 = −0.84. 음수 → 보완재(크기가 1보다 작아 약한 관계)."
     },
     {
-      "id": "econ-m1-016", "section": "6", "concept": "Cross-price elasticity defines substitutes", "type": "mc", "difficulty": 1, "trap": "definition",
+      "id": "econ-m1-016",
+      "section": "6",
+      "concept": "Cross-price elasticity defines substitutes",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
       "stem": "The cross-price elasticity of demand between good X and good Y is +0.6. Which statement is most accurate?",
-      "choices": {"A": "X and Y are substitutes, regardless of whether consumers consider them similar.", "B": "X and Y are complements because they are consumed together.", "C": "X is a normal good."},
+      "choices": {
+        "A": "X and Y are substitutes, regardless of whether consumers consider them similar.",
+        "B": "X and Y are complements because they are consumed together.",
+        "C": "X is a normal good."
+      },
       "answer": "A",
       "explanation": "In economics, a positive cross-price elasticity DEFINES substitutes — the mathematics, not intuition about similarity, settles the classification. Normal vs. inferior is about income elasticity, not cross-price.",
       "kr": "교차탄력성 양수 = 대체재(비슷해 보이는지와 무관). 정상재/열등재는 소득탄력성 문제."
     },
     {
-      "id": "econ-m1-017", "section": "6b", "concept": "Market demand from individual demand", "type": "mc", "difficulty": 2, "trap": "units",
+      "id": "econ-m1-017",
+      "section": "6b",
+      "concept": "Market demand from individual demand",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "units",
       "stem": "An individual consumer's demand is Qd = 84.5 − 6.39P. If the market consists of 1,000 identical consumers, the market demand function is:",
-      "choices": {"A": "Qd = 84,500 − 6,390P", "B": "Qd = 84.5 − 6,390P", "C": "Qd = 84,500 − 6.39P"},
+      "choices": {
+        "A": "Qd = 84,500 − 6,390P",
+        "B": "Qd = 84.5 − 6,390P",
+        "C": "Qd = 84,500 − 6.39P"
+      },
       "answer": "A",
       "explanation": "Market demand is the horizontal sum of individual demands. With identical consumers, multiply EVERY term — the constant and every coefficient — by 1,000. Scaling only one term is the classic slip.",
       "kr": "시장수요 = 개별수요 합. 상수항 포함 모든 항에 1,000을 곱한다."
     },
     {
-      "id": "econ-m1-018", "section": "7", "concept": "Substitution effect direction", "type": "mc", "difficulty": 2, "trap": "definition",
+      "id": "econ-m1-018",
+      "section": "7",
+      "concept": "Substitution effect direction",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "definition",
       "stem": "When the price of an inferior good falls, the substitution effect most likely causes the consumer to:",
-      "choices": {"A": "buy less of the good, because real income rises.", "B": "buy more of the good, because it is now relatively cheaper than its substitutes.", "C": "leave consumption unchanged until the income effect is known."},
+      "choices": {
+        "A": "buy less of the good, because real income rises.",
+        "B": "buy more of the good, because it is now relatively cheaper than its substitutes.",
+        "C": "leave consumption unchanged until the income effect is known."
+      },
       "answer": "B",
       "explanation": "The substitution effect always points the same way for every good, normal or inferior: a relatively cheaper good is bought more. It is the INCOME effect that differs by good type (buy less of an inferior good when real income rises).",
       "kr": "대체효과는 재화 종류와 무관하게 항상 같은 방향(싸지면 더 산다). 열등재에서 반대로 가는 건 소득효과."
     },
     {
-      "id": "econ-m1-019", "section": "7", "concept": "Income effect for inferior goods", "type": "mc", "difficulty": 2, "trap": "direction",
+      "id": "econ-m1-019",
+      "section": "7",
+      "concept": "Income effect for inferior goods",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "direction",
       "stem": "The price of an inferior good falls. The income effect alone most likely leads the consumer to:",
-      "choices": {"A": "buy more of the good, because purchasing power has increased.", "B": "buy less of the good, because higher real income shifts spending toward preferred substitutes.", "C": "buy more of the good, because it is relatively cheaper."},
+      "choices": {
+        "A": "buy more of the good, because purchasing power has increased.",
+        "B": "buy less of the good, because higher real income shifts spending toward preferred substitutes.",
+        "C": "buy more of the good, because it is relatively cheaper."
+      },
       "answer": "B",
       "explanation": "A price fall raises real income. For an inferior good, higher income means buying LESS of it. (Choice C describes the substitution effect, not the income effect.) Because the two effects oppose each other, the demand curve of an inferior good is downward sloping only if the substitution effect dominates.",
       "kr": "가격 하락 → 실질소득 상승 → 열등재는 덜 산다(소득효과). C는 대체효과 설명."
     },
     {
-      "id": "econ-m1-020", "section": "7", "concept": "Meaning of 'inferior good'", "type": "mc", "difficulty": 1, "trap": "definition",
+      "id": "econ-m1-020",
+      "section": "7",
+      "concept": "Meaning of 'inferior good'",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
       "stem": "Which statement about inferior goods is most accurate?",
-      "choices": {"A": "An inferior good is one of low quality.", "B": "A good can be inferior for one consumer group and normal for another.", "C": "Demand for an inferior good always slopes upward."},
+      "choices": {
+        "A": "An inferior good is one of low quality.",
+        "B": "A good can be inferior for one consumer group and normal for another.",
+        "C": "Demand for an inferior good always slopes upward."
+      },
       "answer": "B",
       "explanation": "'Inferior' only means that a rise in income reduces the quantity bought; it says nothing about quality. Classification depends on the consumer: fast food may be normal for a low-income group and inferior for a high-income group. Most inferior goods still have downward-sloping demand; only the Giffen extreme slopes upward.",
       "kr": "열등재 = 소득 오르면 덜 사는 재화(품질과 무관). 같은 재화도 소비자 그룹에 따라 정상/열등이 달라짐."
     },
     {
-      "id": "econ-m1-021", "section": "8", "concept": "Giffen vs. Veblen goods", "type": "mc", "difficulty": 2, "trap": "confusion",
+      "id": "econ-m1-021",
+      "section": "8",
+      "concept": "Giffen vs. Veblen goods",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "confusion",
       "stem": "Which statement about goods with upward-sloping demand curves is most accurate?",
-      "choices": {"A": "Veblen goods are extreme inferior goods.", "B": "A Giffen good's upward slope arises because a negative income effect outweighs the substitution effect.", "C": "Giffen goods are high-status luxury items whose appeal rises with price."},
+      "choices": {
+        "A": "Veblen goods are extreme inferior goods.",
+        "B": "A Giffen good's upward slope arises because a negative income effect outweighs the substitution effect.",
+        "C": "Giffen goods are high-status luxury items whose appeal rises with price."
+      },
       "answer": "B",
       "explanation": "Giffen: an extreme INFERIOR good (negative income elasticity, low-income consumers); the income effect dominates the substitution effect, consistent with utility maximization. Veblen: a status good (NOT inferior), desired more because of its high price — driven by preferences, not the income effect.",
       "kr": "기펜재 = 극단적 열등재, 소득효과 > 대체효과. 베블런재 = 과시재(열등재 아님), 높은 가격 자체가 매력."
     },
     {
-      "id": "econ-m1-022", "section": "9.1", "concept": "Total cost from input hours", "type": "calc", "difficulty": 2, "trap": "units",
+      "id": "econ-m1-022",
+      "section": "9.1",
+      "concept": "Total cost from input hours",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "units",
       "stem": "A firm employs 2 workers for 35 hours each per week at a wage of 20 per hour and runs 3 machines for 12 hours each per week at a rental rate of 50 per machine-hour. Weekly total cost is closest to:",
-      "choices": {"A": "190", "B": "3,200", "C": "1,400"},
+      "choices": {
+        "A": "190",
+        "B": "3,200",
+        "C": "1,400"
+      },
       "answer": "B",
       "explanation": "Inputs are flows of HOURS: L = 2 × 35 = 70 labor hours; K = 3 × 12 = 36 machine hours. TC = wL + rK = 20(70) + 50(36) = 1,400 + 1,800 = 3,200. Choice A uses headcounts instead of hours; choice C omits capital.",
       "kr": "L = 2×35 = 70시간, K = 3×12 = 36시간. TC = 20×70 + 50×36 = 3,200. 인원수가 아니라 시간으로 계산."
     },
     {
-      "id": "econ-m1-023", "section": "9.1", "concept": "Opportunity cost of owned capital", "type": "mc", "difficulty": 1, "trap": "definition",
+      "id": "econ-m1-023",
+      "section": "9.1",
+      "concept": "Opportunity cost of owned capital",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
       "stem": "A firm owns its machinery outright and makes no rental payments. From an economist's perspective, the cost of using those machines is best described as:",
-      "choices": {"A": "zero, because no payment is made.", "B": "the rental income the firm forgoes by not renting the machines to another user.", "C": "equal to the machines' historical purchase price."},
+      "choices": {
+        "A": "zero, because no payment is made.",
+        "B": "the rental income the firm forgoes by not renting the machines to another user.",
+        "C": "equal to the machines' historical purchase price."
+      },
       "answer": "B",
       "explanation": "Economic cost includes opportunity cost: the firm could rent the machines out and earn the rental rate r, so using them internally forgoes that income. This distinction is the seed of economic vs. accounting profit.",
       "kr": "소유 설비도 공짜가 아님 — 남에게 빌려줬을 때 받을 임대료(기회비용)가 경제적 비용."
     },
     {
-      "id": "econ-m1-024", "section": "9.3", "concept": "Average vs. marginal product", "type": "calc", "difficulty": 2, "trap": "avg-vs-marginal",
+      "id": "econ-m1-024",
+      "section": "9.3",
+      "concept": "Average vs. marginal product",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "avg-vs-marginal",
       "stem": "A firm's total product is 360 units with 4 labor hours and 400 units with 5 labor hours. The marginal product of the fifth labor hour is closest to:",
-      "choices": {"A": "80", "B": "40", "C": "400"},
+      "choices": {
+        "A": "80",
+        "B": "40",
+        "C": "400"
+      },
       "answer": "B",
       "explanation": "MP = ΔQ/ΔL = (400 − 360)/(5 − 4) = 40. Choice A is the AVERAGE product at L = 5 (400/5 = 80) — a different question. Choice C is total product.",
       "kr": "MP = (400−360)/1 = 40. 80은 평균생산(AP = 400/5). 평균과 한계를 구분."
     },
     {
-      "id": "econ-m1-025", "section": "9.3", "concept": "Total product vs. productivity (size ≠ efficiency)", "type": "mc", "difficulty": 2, "trap": "size-vs-efficiency",
+      "id": "econ-m1-025",
+      "section": "9.3",
+      "concept": "Total product vs. productivity (size ≠ efficiency)",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "size-vs-efficiency",
       "stem": "Three firms report: A — output 100,000 with 100 labor hours; B — 180,000 with 200 hours; C — 200,000 with 250 hours. Which firm is most productive?",
-      "choices": {"A": "Firm C, because it has the largest output and market share.", "B": "Firm A, because its average product of labor (1,000) is highest.", "C": "Firm B, because its output per hour is closest to the industry average."},
+      "choices": {
+        "A": "Firm C, because it has the largest output and market share.",
+        "B": "Firm A, because its average product of labor (1,000) is highest.",
+        "C": "Firm B, because its output per hour is closest to the industry average."
+      },
       "answer": "B",
       "explanation": "Average product AP = Q/L: A = 1,000, B = 900, C = 800. Total product shows volume and potential market share but says nothing about efficiency. The smallest firm (A) is the most efficient; the largest (C) is the least.",
       "kr": "AP = Q/L: A 1,000 > B 900 > C 800. 총생산(규모)은 효율성을 말해주지 않는다."
     },
     {
-      "id": "econ-m1-026", "section": "9.4", "concept": "Law of diminishing marginal returns", "type": "mc", "difficulty": 2, "trap": "long-run-vs-short-run",
+      "id": "econ-m1-026",
+      "section": "9.4",
+      "concept": "Law of diminishing marginal returns",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "long-run-vs-short-run",
       "stem": "The law of diminishing marginal returns is most accurately described as a:",
-      "choices": {"A": "long-run phenomenon arising from diseconomies of scale.", "B": "short-run phenomenon that occurs because a fixed input constrains the output of additional variable inputs.", "C": "result of later hires being less skilled than earlier hires."},
+      "choices": {
+        "A": "long-run phenomenon arising from diseconomies of scale.",
+        "B": "short-run phenomenon that occurs because a fixed input constrains the output of additional variable inputs.",
+        "C": "result of later hires being less skilled than earlier hires."
+      },
       "answer": "B",
       "explanation": "Diminishing marginal returns requires at least one fixed input (e.g., plant size), which makes it a short-run concept. It assumes all workers are of equal quality. Long-run behavior with all inputs variable is governed by economies and diseconomies of scale instead.",
       "kr": "한계수확체감 = 고정투입이 있는 단기 현상. 노동자 질은 동일하다고 가정. 장기는 규모의 경제/불경제."
     },
     {
-      "id": "econ-m1-027", "section": "10.2", "concept": "Marginal revenue and market structure", "type": "mc", "difficulty": 2, "trap": "definition",
+      "id": "econ-m1-027",
+      "section": "10.2",
+      "concept": "Marginal revenue and market structure",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "definition",
       "stem": "Using MR = P + Q(ΔP/ΔQ), marginal revenue equals price when:",
-      "choices": {"A": "the firm faces a horizontal demand curve, as under perfect competition.", "B": "the firm has a large market share and a differentiated product.", "C": "the firm is a monopolist operating on the elastic portion of demand."},
+      "choices": {
+        "A": "the firm faces a horizontal demand curve, as under perfect competition.",
+        "B": "the firm has a large market share and a differentiated product.",
+        "C": "the firm is a monopolist operating on the elastic portion of demand."
+      },
       "answer": "A",
       "explanation": "The adjustment term Q(ΔP/ΔQ) vanishes only when the slope of the firm's demand curve is zero — a horizontal curve, i.e., a price taker in perfect competition. Any negatively sloped demand (imperfect competition, monopoly) makes MR < P because all units must be sold at the lower price.",
       "kr": "수요곡선 기울기 0(수평) → 조정항 소멸 → MR = P. 우하향 수요면 MR < P."
     },
     {
-      "id": "econ-m1-028", "section": "10.3", "concept": "SMC = w/MP and AVC = w/AP", "type": "calc", "difficulty": 2, "trap": "avg-vs-marginal",
+      "id": "econ-m1-028",
+      "section": "10.3",
+      "concept": "SMC = w/MP and AVC = w/AP",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "avg-vs-marginal",
       "stem": "The wage rate is 20 per labor hour. At the current output level, the marginal product of labor is 40 units and the average product is 80 units. Short-run marginal cost is closest to:",
-      "choices": {"A": "0.25", "B": "0.50", "C": "2.00"},
+      "choices": {
+        "A": "0.25",
+        "B": "0.50",
+        "C": "2.00"
+      },
       "answer": "B",
       "explanation": "SMC = w / MP(L) = 20 / 40 = 0.50. Pair marginal with marginal. Choice A (20/80 = 0.25) is AVC = w/AP, average with average. Choice C inverts the ratio.",
       "kr": "SMC = w/MP = 20/40 = 0.50. AVC = w/AP = 20/80 = 0.25. 한계는 한계와, 평균은 평균과."
     },
     {
-      "id": "econ-m1-029", "section": "10.4", "concept": "Profit-maximization rule", "type": "mc", "difficulty": 1, "trap": "second-order",
+      "id": "econ-m1-029",
+      "section": "10.4",
+      "concept": "Profit-maximization rule",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "second-order",
       "stem": "A firm finds that at its current output, marginal revenue exceeds marginal cost. To maximize profit it should most likely:",
-      "choices": {"A": "reduce output until MR = MC.", "B": "increase output until MR = MC, provided MC is not falling at that point.", "C": "hold output constant, because profit per unit is already maximized."},
+      "choices": {
+        "A": "reduce output until MR = MC.",
+        "B": "increase output until MR = MC, provided MC is not falling at that point.",
+        "C": "hold output constant, because profit per unit is already maximized."
+      },
       "answer": "B",
       "explanation": "If MR > MC, each extra unit adds more revenue than cost, so expand. The complete rule has two parts: (1) MR = MC and (2) MC must not be falling at that output (otherwise adding more labor would still lower cost).",
       "kr": "MR > MC → 생산 확대. 완전한 규칙: ① MR = MC, ② 그 지점에서 MC가 하락 중이면 안 됨."
     },
     {
-      "id": "econ-m1-030", "section": "11.3", "concept": "Building the cost table", "type": "calc", "difficulty": 1, "trap": "which-average",
+      "id": "econ-m1-030",
+      "section": "11.3",
+      "concept": "Building the cost table",
+      "type": "calc",
+      "difficulty": 1,
+      "trap": "which-average",
       "stem": "A firm has total fixed cost of 100. Total cost is 310 at 4 units of output and 400 at 5 units. At 5 units, average total cost is closest to:",
-      "choices": {"A": "60", "B": "80", "C": "90"},
+      "choices": {
+        "A": "60",
+        "B": "80",
+        "C": "90"
+      },
       "answer": "B",
       "explanation": "ATC = TC/Q = 400/5 = 80. Check: AFC = 100/5 = 20, AVC = (400 − 100)/5 = 60, and 20 + 60 = 80 ✓. Choice A is AVC; choice C is MC (400 − 310 = 90).",
       "kr": "ATC = 400/5 = 80 (= AFC 20 + AVC 60). 60은 AVC, 90은 MC."
     },
     {
-      "id": "econ-m1-031", "section": "11.2", "concept": "MC intersection rule; min AVC vs. min ATC", "type": "mc", "difficulty": 2, "trap": "direction",
+      "id": "econ-m1-031",
+      "section": "11.2",
+      "concept": "MC intersection rule; min AVC vs. min ATC",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "direction",
       "stem": "Relative to the quantity at which average total cost is minimized, the quantity at which average variable cost is minimized is most likely:",
-      "choices": {"A": "the same.", "B": "lower.", "C": "higher."},
+      "choices": {
+        "A": "the same.",
+        "B": "lower.",
+        "C": "higher."
+      },
       "answer": "B",
       "explanation": "MC cuts both AVC and ATC at their minimums, but AFC keeps falling with output, so ATC is still being pulled down after AVC has turned up. Min AVC therefore occurs at a LOWER quantity than min ATC (in the curriculum table: Q = 2 vs. Q = 3).",
       "kr": "AFC가 계속 감소하므로 AVC가 바닥을 찍은 뒤에도 ATC는 더 내려감 → min AVC가 더 낮은 Q에서 발생."
     },
     {
-      "id": "econ-m1-032", "section": "11.1", "concept": "Normal profit as a fixed cost", "type": "mc", "difficulty": 2, "trap": "definition",
+      "id": "econ-m1-032",
+      "section": "11.1",
+      "concept": "Normal profit as a fixed cost",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "definition",
       "stem": "Normal profit — the return required by investors on their equity capital — is best classified as:",
-      "choices": {"A": "a variable cost, because it rises with output.", "B": "a fixed cost.", "C": "part of economic profit."},
+      "choices": {
+        "A": "a variable cost, because it rises with output.",
+        "B": "a fixed cost.",
+        "C": "part of economic profit."
+      },
       "answer": "B",
       "explanation": "Normal profit is the opportunity cost of equity capital and is required regardless of output level, so the curriculum treats it as a fixed cost inside total (economic) cost. Economic profit is what remains AFTER normal profit is covered.",
       "kr": "정상이윤 = 자본의 기회비용, 산출량과 무관 → 고정비용. 경제적 이윤은 정상이윤을 뺀 뒤 남는 것."
     },
     {
-      "id": "econ-m1-033", "section": "11.4", "concept": "Minimum ATC ≠ profit maximization", "type": "mc", "difficulty": 2, "trap": "min-ATC-vs-profit",
+      "id": "econ-m1-033",
+      "section": "11.4",
+      "concept": "Minimum ATC ≠ profit maximization",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "min-ATC-vs-profit",
       "stem": "Producing at the output level where average total cost is minimized most likely:",
-      "choices": {"A": "maximizes total profit.", "B": "maximizes profit per unit, but not necessarily total profit.", "C": "is required for the MR = MC condition to hold."},
+      "choices": {
+        "A": "maximizes total profit.",
+        "B": "maximizes profit per unit, but not necessarily total profit.",
+        "C": "is required for the MR = MC condition to hold."
+      },
       "answer": "B",
       "explanation": "Minimum ATC is the least-cost point per unit, so profit per unit is highest there. Total profit, however, is maximized where MR = MC, which generally occurs at a different output level. The firm pursues total profit, not profit per unit.",
       "kr": "최소 ATC = 단위당 이윤 최대. 총이윤 최대는 MR = MC 지점(보통 다른 산출량)."
     },
     {
-      "id": "econ-m1-034", "section": "11.2", "concept": "MC relative to average cost", "type": "mc", "difficulty": 1, "trap": "direction",
+      "id": "econ-m1-034",
+      "section": "11.2",
+      "concept": "MC relative to average cost",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "direction",
       "stem": "If marginal cost is below average total cost at the current output level, then as output increases average total cost will most likely:",
-      "choices": {"A": "fall.", "B": "rise.", "C": "remain at its minimum."},
+      "choices": {
+        "A": "fall.",
+        "B": "rise.",
+        "C": "remain at its minimum."
+      },
       "answer": "A",
       "explanation": "The marginal unit pulls the average toward itself — like a test score below your average dragging the average down. MC < ATC → ATC falling; MC > ATC → ATC rising; MC = ATC → ATC at its minimum.",
       "kr": "MC < ATC → ATC 하락, MC > ATC → ATC 상승, 같을 때 최소."
     },
     {
-      "id": "econ-m1-035", "section": "10.3", "concept": "Short-run vs. long-run marginal cost", "type": "mc", "difficulty": 1, "trap": "definition",
+      "id": "econ-m1-035",
+      "section": "10.3",
+      "concept": "Short-run vs. long-run marginal cost",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
       "stem": "Short-run marginal cost differs from long-run marginal cost primarily because in the short run:",
-      "choices": {"A": "only labor can be varied; capital is fixed because of lead times.", "B": "all inputs are variable but technology is fixed.", "C": "the firm cannot change its output level."},
+      "choices": {
+        "A": "only labor can be varied; capital is fixed because of lead times.",
+        "B": "all inputs are variable but technology is fixed.",
+        "C": "the firm cannot change its output level."
+      },
       "answer": "A",
       "explanation": "SMC measures the added cost of the variable input (labor) needed for one more unit while capital is fixed. LMC allows both labor and capital to adjust. In the short run output can still change — via labor.",
       "kr": "단기 = 자본 고정, 노동만 변동(SMC). 장기 = 모든 투입 조정 가능(LMC)."
     },
     {
-      "id": "econ-m1-f01", "section": "4", "concept": "Own-price elasticity formula", "type": "flash", "difficulty": 1, "trap": "formula",
+      "id": "econ-m1-f01",
+      "section": "4",
+      "concept": "Own-price elasticity formula",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "formula",
       "front": "Own-price elasticity of demand — formula and what each part is",
       "back": "E = (%ΔQd / %ΔP) = (ΔQd/ΔP) × (P/Qd).\n(ΔQd/ΔP) = the coefficient on P in a linear demand function (constant along the curve).\n(P/Qd) = the point you evaluate at (changes along the curve).\nJudge elastic/inelastic by |E| vs. 1; the sign is normally negative."
     },
     {
-      "id": "econ-m1-f02", "section": "5", "concept": "Income elasticity signs", "type": "flash", "difficulty": 1, "trap": "sign",
+      "id": "econ-m1-f02",
+      "section": "5",
+      "concept": "Income elasticity signs",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "sign",
       "front": "Income elasticity: what do positive, negative, >1 and 0–1 tell you?",
       "back": "Positive → normal good (income ↑ → buy more; curve shifts right).\nNegative → inferior good (income ↑ → buy less; curve shifts left).\nAmong normal goods: E > 1 'luxury' (income-elastic), 0 < E < 1 'necessity' (income-inelastic)."
     },
     {
-      "id": "econ-m1-f03", "section": "6", "concept": "Cross-price elasticity signs", "type": "flash", "difficulty": 1, "trap": "sign",
+      "id": "econ-m1-f03",
+      "section": "6",
+      "concept": "Cross-price elasticity signs",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "sign",
       "front": "Cross-price elasticity: sign → relationship",
       "back": "Positive → substitutes (Py ↑ → more X demanded). Negative → complements (Py ↑ → less X).\nThe math defines the relationship, regardless of whether the goods seem 'similar'.\nMemory hook: Substitutes = Same sign."
     },
     {
-      "id": "econ-m1-f04", "section": "2", "concept": "Demand curve slope vs. function coefficient", "type": "flash", "difficulty": 2, "trap": "reciprocal",
+      "id": "econ-m1-f04",
+      "section": "2",
+      "concept": "Demand curve slope vs. function coefficient",
+      "type": "flash",
+      "difficulty": 2,
+      "trap": "reciprocal",
       "front": "Qd = a − bP. What is the slope of the demand CURVE, and what are its intercepts?",
       "back": "Invert: P = a/b − (1/b)Q.\nSlope of the curve (ΔP/ΔQ) = −1/b (the reciprocal of the coefficient −b).\nPrice (vertical) intercept = a/b. Quantity (horizontal) intercept = a."
     },
     {
-      "id": "econ-m1-f05", "section": "10.2", "concept": "MR decomposition", "type": "flash", "difficulty": 2, "trap": "formula",
+      "id": "econ-m1-f05",
+      "section": "10.2",
+      "concept": "MR decomposition",
+      "type": "flash",
+      "difficulty": 2,
+      "trap": "formula",
       "front": "Marginal revenue decomposition — and why MR = P in perfect competition but MR < P otherwise",
       "back": "MR = ΔTR/ΔQ = P + Q(ΔP/ΔQ).\nPerfect competition: demand horizontal → ΔP/ΔQ = 0 → MR = P.\nImperfect competition: ΔP/ΔQ < 0 (must cut price on ALL units to sell more) → MR < P."
     },
     {
-      "id": "econ-m1-f06", "section": "10.3", "concept": "Cost ↔ productivity formulas", "type": "flash", "difficulty": 2, "trap": "avg-vs-marginal",
+      "id": "econ-m1-f06",
+      "section": "10.3",
+      "concept": "Cost ↔ productivity formulas",
+      "type": "flash",
+      "difficulty": 2,
+      "trap": "avg-vs-marginal",
       "front": "Link marginal cost and average variable cost to labor productivity",
       "back": "SMC = w / MP(L)  — marginal with marginal.\nAVC = w / AP(L)  — average with average.\nMP rises (specialization) → SMC falls; MP falls (fixed capital binds) → SMC rises. That is why MC is U-shaped."
     },
     {
-      "id": "econ-m1-f07", "section": "10.4", "concept": "Profit-maximization rule (both parts)", "type": "flash", "difficulty": 1, "trap": "second-order",
+      "id": "econ-m1-f07",
+      "section": "10.4",
+      "concept": "Profit-maximization rule (both parts)",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "second-order",
       "front": "The complete profit-maximization rule",
       "back": "Produce where (1) MR = MC and (2) MC is NOT falling at that output.\nMR > MC → increase Q. MR < MC → reduce Q.\n'Profit' means ECONOMIC profit (TC includes normal profit)."
     },
     {
-      "id": "econ-m1-f08", "section": "8", "concept": "Giffen vs. Veblen table", "type": "flash", "difficulty": 2, "trap": "confusion",
+      "id": "econ-m1-f08",
+      "section": "8",
+      "concept": "Giffen vs. Veblen table",
+      "type": "flash",
+      "difficulty": 2,
+      "trap": "confusion",
       "front": "Giffen good vs. Veblen good — five contrasts",
       "back": "Both can have upward-sloping demand.\nGiffen: extreme INFERIOR good; income effect > substitution effect; income elasticity negative; low-income consumers; consistent with utility maximization.\nVeblen: status/luxury good (NOT inferior); driven by prestige of a high price; income elasticity positive; high-income consumers; outside the standard utility framework."
     },
     {
-      "id": "econ-m1-f09", "section": "4", "concept": "Four determinants of elasticity", "type": "flash", "difficulty": 1, "trap": "direction",
+      "id": "econ-m1-f09",
+      "section": "4",
+      "concept": "Four determinants of elasticity",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "direction",
       "front": "Demand is MORE elastic when the good … (four determinants + the exception)",
       "back": "1) has many close substitutes (narrower definition → more elastic)\n2) takes a large share of the budget\n3) is discretionary rather than necessary\n4) has a longer adjustment time — EXCEPT durables, where short-run demand is more elastic.\nMnemonic: elastic = the buyer can walk away."
     },
     {
-      "id": "econ-m1-f10", "section": "11.2", "concept": "Average/marginal cost relationships", "type": "flash", "difficulty": 2, "trap": "direction",
+      "id": "econ-m1-f10",
+      "section": "11.2",
+      "concept": "Average/marginal cost relationships",
+      "type": "flash",
+      "difficulty": 2,
+      "trap": "direction",
       "front": "Cost-curve relationships: AFC, AVC, ATC, MC",
       "back": "AFC = TFC/Q falls continuously. AVC and ATC are U-shaped; ATC = AFC + AVC.\nMC cuts AVC and ATC at their minimums. MC < average → average falls; MC > average → average rises.\nMin AVC occurs at a LOWER Q than min ATC; the ATC−AVC gap (= AFC) narrows with output.\nMin ATC maximizes profit PER UNIT, not total profit."
     },
     {
-      "id": "econ-m1-f11", "section": "9.1", "concept": "Total cost and input measurement", "type": "flash", "difficulty": 1, "trap": "units",
+      "id": "econ-m1-f11",
+      "section": "9.1",
+      "concept": "Total cost and input measurement",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "units",
       "front": "TC = wL + rK — how are L and K measured, and what is the trap?",
       "back": "L = labor HOURS per period (workers × hours each). K = machine HOURS (machines × hours each).\nw = wage per labor hour, r = rental rate per machine hour.\nOwned capital still carries an opportunity cost (forgone rental income).\nTC is not the cost function C = f(Q), which maps cost to OUTPUT."
     },
     {
-      "id": "econ-m1-f12", "section": "7", "concept": "Substitution vs. income effect (Exhibit 5)", "type": "flash", "difficulty": 2, "trap": "direction",
+      "id": "econ-m1-f12",
+      "section": "7",
+      "concept": "Substitution vs. income effect (Exhibit 5)",
+      "type": "flash",
+      "difficulty": 2,
+      "trap": "direction",
       "front": "Price of a good FALLS. Substitution and income effects for normal vs. inferior goods?",
       "back": "Substitution effect: buy MORE — for every good (always the same direction).\nIncome effect (real income rises): normal good → buy more (effects reinforce → downward demand); inferior good → buy less (effects oppose; substitution usually dominates → still downward; if income effect dominates → Giffen, upward)."
+    },
+    {
+      "id": "econ-m1-p01",
+      "section": "4",
+      "concept": "Unit elastic demand",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "source": "cfai",
+      "stem": "If the price elasticity coefficient of demand for a good equals −1, demand is:",
+      "choices": {
+        "A": "elastic.",
+        "B": "inelastic.",
+        "C": "unit elastic."
+      },
+      "answer": "C",
+      "explanation": "|E| = 1 is unit (unitary) elastic: quantity changes in exact proportion to price, and total revenue is unchanged by a price move. |E| > 1 is elastic, |E| < 1 inelastic — the sign only reflects the law of demand.",
+      "kr": "|E| = 1 → 단위탄력적(총수입 불변). 부호는 수요법칙 표시일 뿐."
+    },
+    {
+      "id": "econ-m1-p02",
+      "section": "4",
+      "concept": "Own-price elasticity from a demand function",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "formula",
+      "source": "cfai",
+      "stem": "Demand for health-club memberships is Q = 400 − 5P. At a membership price of $35, the price elasticity of demand is closest to:",
+      "choices": {
+        "A": "−0.778",
+        "B": "−0.500",
+        "C": "−0.438"
+      },
+      "answer": "A",
+      "explanation": "Step 1: Q = 400 − 5(35) = 225. Step 2: E = (ΔQ/ΔP) × (P/Q) = −5 × (35/225) = −0.778. Inelastic at this price. Always compute Q at the stated price first; the coefficient alone is not an elasticity.",
+      "kr": "Q = 400 − 175 = 225; E = −5 × 35/225 = −0.778. 먼저 Q를 구할 것."
+    },
+    {
+      "id": "econ-m1-p03",
+      "section": "4",
+      "concept": "Determinants of elasticity (direction)",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "direction",
+      "source": "cfai",
+      "stem": "Price elasticity of demand for a good will most likely be greater if:",
+      "choices": {
+        "A": "there are no substitutes for the good.",
+        "B": "consumers consider the good discretionary.",
+        "C": "consumers spend a small portion of their budget on the good."
+      },
+      "answer": "B",
+      "explanation": "Discretionary (optional) goods are easy to give up → more elastic. No substitutes and a small budget share both make demand LESS elastic — the determinants stated backwards. Test each choice with 'can the buyer walk away?'",
+      "kr": "선택적 재화 → 탄력적. 대체재 없음·예산 비중 작음은 비탄력적(방향 반대). '소비자가 피할 수 있나?'로 검사."
+    },
+    {
+      "id": "econ-m1-p04",
+      "section": "5",
+      "concept": "Interpreting income elasticity",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "sign",
+      "source": "cfai",
+      "stem": "If the income elasticity of demand for a product is −0.6, then a:",
+      "choices": {
+        "A": "1% increase in income results in a 0.6% increase in demand.",
+        "B": "1% increase in income results in a 0.6% decrease in demand.",
+        "C": "0.6% increase in income results in a 1% decrease in demand."
+      },
+      "answer": "B",
+      "explanation": "Income elasticity = %ΔQ / %ΔI, so −0.6 means a 1% rise in income lowers quantity demanded (at each price) by 0.6% — an inferior good. Choice C inverts numerator and denominator.",
+      "kr": "소득탄력성 −0.6 = 소득 1%↑ → 수요 0.6%↓ (열등재). C는 분자·분모 뒤집음."
+    },
+    {
+      "id": "econ-m1-p05",
+      "section": "6b",
+      "concept": "Cross-price elasticity from a multi-variable demand function",
+      "type": "calc",
+      "difficulty": 3,
+      "trap": "asked-quantity",
+      "source": "cfai",
+      "stem": "An individual's demand for onions is Q = 3 − 0.05Po + 0.009I − 0.16Pt, where Po is the price of onions, I is household income and Pt is the price of tomatoes. If Po = $1.25, I = $2,500 and Pt = $3.75, the cross-price elasticity of demand for onions with respect to the price of tomatoes is closest to:",
+      "choices": {
+        "A": "−1.0597",
+        "B": "−0.0242",
+        "C": "−0.0081"
+      },
+      "answer": "B",
+      "explanation": "Step 1 — compute Q with ALL variables plugged in: Q = 3 − 0.05(1.25) + 0.009(2,500) − 0.16(3.75) = 3 − 0.0625 + 22.5 − 0.6 = 24.8375. Step 2 — use the coefficient on the OTHER good's price: E = (ΔQ/ΔPt) × (Pt/Q) = −0.16 × (3.75/24.8375) = −0.0242. Negative → weak complements. Choice C uses Po (1.25) instead of Pt; choice A inverts the ratio. Don't guess this one: the only hard part is doing step 1.",
+      "kr": "① 모든 변수를 넣어 Q = 24.8375 ② 토마토 가격 계수 × Pt/Q = −0.16 × 3.75/24.8375 = −0.0242 (보완재, 약함). C는 Pt 대신 Po를 쓴 값."
+    },
+    {
+      "id": "econ-m1-p06",
+      "section": "2",
+      "concept": "Movement along the demand curve",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "source": "cfai",
+      "stem": "A movement along the demand curve for good X is caused by a change in:",
+      "choices": {
+        "A": "income.",
+        "B": "the price of good X.",
+        "C": "the price of a substitute for good X."
+      },
+      "answer": "B",
+      "explanation": "The demand curve plots quantity demanded against the good's OWN price with everything else held constant, so only an own-price change moves along it. Income and other goods' prices shift the whole curve.",
+      "kr": "수요곡선은 자기 가격의 함수 → 자기 가격 변화만 곡선 위 이동. 소득·타재화 가격은 곡선 이동."
+    },
+    {
+      "id": "econ-m1-p07",
+      "section": "3",
+      "concept": "Excess demand and the equilibrium price",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "definition",
+      "source": "cfai",
+      "stem": "A phone maker's new model received strong publicity. Nine months after launch, even with several high-speed assembly lines running, it still cannot meet demand. The most plausible explanation is that:",
+      "choices": {
+        "A": "the phone's price is below the equilibrium price.",
+        "B": "competitors introduced similar phones at a similar price.",
+        "C": "consumer incomes grew faster than the maker anticipated."
+      },
+      "answer": "A",
+      "explanation": "Persistent excess demand (a shortage) at the current price means the price is BELOW the market-clearing level — the market would clear if the firm raised the price. Competitor entry would reduce the shortage; faster income growth might shift demand but does not explain why the firm leaves the price below equilibrium.",
+      "kr": "지속적 초과수요 = 현재 가격이 균형가격보다 낮음. 가격을 올리면 시장이 청산됨."
     }
   ]
 }

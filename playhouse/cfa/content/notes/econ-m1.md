@@ -1047,6 +1047,12 @@ MC INTERSECTION RULE:   MC cuts ATC and AVC at their MINIMUM points
 | Fixed vs. variable cost classification | Concept | 🟡 Medium |
 | SMC vs. LMC (which inputs are variable) | Concept | 🟡 Medium |
 
+**⭐ Official practice problems (2026-10-11): 7 attempted, 6 correct, Q5 guessed (counted as a miss). Q3 — the earlier miss — now correct.**
+
+| Error type | Question | What to fix |
+|---|---|---|
+| **Multi-variable calculation skipped** | Q5 (cross-price elasticity, Qd = 3 − 0.05Po + 0.009I − 0.16Pt) | Step 1: plug in ALL variables → Q = 3 − 0.0625 + 22.5 − 0.6 = **24.8375**. Step 2: coefficient on the named variable × (that variable ÷ Q) = −0.16 × 3.75/24.8375 = **−0.0242** (weak complements). The distractor −0.0081 uses the onion price instead of the tomato price. Nothing here is conceptually new — §6b is exactly this template; the miss was not executing step 1 under time pressure. |
+
 **⭐ Your flagged weak spots (from missed practice questions):**
 - **Q3 — determinants of elasticity** (Section 4): the distractors were the *right four determinants stated backwards*. Test each choice with "can the buyer escape?" before answering. Direction errors, not knowledge gaps.
 
