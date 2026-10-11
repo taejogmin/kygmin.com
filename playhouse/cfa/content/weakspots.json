@@ -191,6 +191,91 @@
         "econ-m3-047",
         "econ-m3-048"
       ]
+    },
+    {
+      "id": "truncated-rule",
+      "name": {
+        "en": "Truncated rule — had the rule, dropped a piece",
+        "kr": "규칙 일부 누락 — 규칙은 알았는데 한 조각을 빠뜨림"
+      },
+      "rule": {
+        "en": "The rule is a complete object — a full ranking, a full mapping, a trigger word, both halves of a two-object stem. Before reading options: (1) translate the stem into curriculum terms (fixed basket = Laspeyres; equipment sold to firms = I; rising costs = cost-push); (2) write the rule's right-hand side in full; (3) if the stem names two things, the option must cover two. Misses cluster on questions that FEEL easy — that's exactly when this step gets skipped.",
+        "kr": "규칙은 하나의 완전한 덩어리다 — 전체 순위, 전체 매핑, 트리거 단어, 두 대상을 묻는 지문의 양쪽. 선지를 읽기 전에 (1) 지문을 교재 용어로 번역(fixed basket = 라스파이레스; 기업용 설비 = I; 비용 상승 = cost-push); (2) 규칙의 우변을 끝까지 쓴다; (3) 지문이 두 가지를 말하면 선지도 두 가지를 덮어야 한다. 오답은 '쉬워 보이는' 문제에 몰린다 — 그때 이 단계를 건너뛴다."
+      },
+      "traps": [
+        "truncated-rule"
+      ],
+      "evidence": [
+        "M4 Ex3 Q3 (ranked durables most cyclical; business I sits above)",
+        "M4 Ex1 Q2 (permanent income → services, not saving rate)",
+        "M4 Ex5 Q4 ('fixed basket' didn't trigger Laspeyres → overstates)",
+        "M4 Ex5 Q6 (stem asked sales AND costs; picked WPI only)",
+        "M4 Ex8 Q1 ('rising costs' → pulled demand-pull indicators)"
+      ],
+      "seed": [
+        "econ-m4-p04",
+        "econ-m4-p02",
+        "econ-m4-p05",
+        "econ-m4-p06",
+        "econ-m4-p09",
+        "econ-m4-q06",
+        "econ-m4-q12",
+        "econ-m4-f02",
+        "econ-m4-f03",
+        "econ-m4-f09",
+        "econ-m4-f11"
+      ]
+    },
+    {
+      "id": "off-model",
+      "name": {
+        "en": "Off-model option — a phrase the curriculum never uses",
+        "kr": "교재에 없는 선지 — 교재가 쓰지 않는 표현을 고름"
+      },
+      "rule": {
+        "en": "If the chosen option isn't a phrase the curriculum uses for that concept, stop. Adjacent concepts (interest rates ~ money; bias ~ noise; policy ~ growth) are the standard lure. Hedge options ('either / both / any') are distractors unless the curriculum literally says both apply. A reason that would make behavior MORE stable can't explain cyclicality.",
+        "kr": "고른 선지가 그 개념에 대해 교재가 쓰는 표현이 아니면 멈춘다. 인접 개념(금리 ~ 통화; 편의 ~ 노이즈; 정책 ~ 성장)이 표준 유인. '둘 다/either/any' 식 헤지 선지는 교재가 명시적으로 둘 다라고 하지 않는 한 오답. 행동을 '더 안정적'으로 만드는 이유는 경기순응성을 설명할 수 없다."
+      },
+      "traps": [
+        "off-model"
+      ],
+      "evidence": [
+        "M4 Ex1 Q1 (durables cyclical because 'needed more' — reverse logic)",
+        "M4 Ex3 Q1 (imports respond to 'industrial policy' — not in the model)",
+        "M4 Ex5 Q7 (headline 'has upward bias' — bias is methodology; headline is noisier)",
+        "M4 Ex8 Q6 (Monetarists → 'interest rates'; it's money growth)",
+        "M4 Ex8 Q3 (cost-push when unemployment 'either high or low' — hedge)"
+      ],
+      "seed": [
+        "econ-m4-p01",
+        "econ-m4-p03",
+        "econ-m4-p07",
+        "econ-m4-p11",
+        "econ-m4-p10",
+        "econ-m4-q15",
+        "econ-m4-f12"
+      ]
+    },
+    {
+      "id": "negation",
+      "name": {
+        "en": "Stem negation — NOT / EXCEPT / least likely",
+        "kr": "부정 지문 — NOT / EXCEPT / least likely"
+      },
+      "rule": {
+        "en": "On a NOT stem, mark every option T/F against the curriculum, then pick the F. In a NOT question a TRUE statement is the distractor; 'sounds right' is the trap. (Retest of the same item, reshuffled: correct.)",
+        "kr": "NOT 지문에서는 선지마다 교재 기준 T/F를 표시한 뒤 F를 고른다. NOT 문제에서 '맞는 말'은 오답이다 — 그럴듯하게 들리는 것이 함정. (같은 문항 재시험: 정답.)"
+      },
+      "traps": [
+        "negation"
+      ],
+      "evidence": [
+        "M4 Ex7 Q1 (NAIRU 'NOT a problem' — picked a TRUE limitation); Ex8 Q8 retest ✓"
+      ],
+      "seed": [
+        "econ-m4-p08",
+        "econ-m4-f11"
+      ]
     }
   ],
   "official_misses": [
@@ -293,6 +378,61 @@
       "qid": "econ-m1-p10",
       "when": "2026-10-11",
       "note": "Formula assembled wrong. E = 0.9 × 18/62.4 = 0.3 (weak substitutes)."
+    },
+    {
+      "qid": "econ-m4-p01",
+      "when": "2026-10-11",
+      "note": "Ex1 Q1 — picked 'needed more'. Long useful life → deferrable → cyclical. (off-model)"
+    },
+    {
+      "qid": "econ-m4-p02",
+      "when": "2026-10-11",
+      "note": "Ex1 Q2 — picked saving rate. Permanent income → services. (truncated rule)"
+    },
+    {
+      "qid": "econ-m4-p03",
+      "when": "2026-10-11",
+      "note": "Ex3 Q1 — picked 'industrial policy'. Imports ← domestic GDP growth. (off-model)"
+    },
+    {
+      "qid": "econ-m4-p04",
+      "when": "2026-10-11",
+      "note": "Ex3 Q3 — picked consumer durables. Equipment sold to firms = I = most cyclical. (truncated rule)"
+    },
+    {
+      "qid": "econ-m4-p05",
+      "when": "2026-10-11",
+      "note": "Ex5 Q4 — picked 'tracks closely'. Fixed basket → Laspeyres → overstates. (truncated rule)"
+    },
+    {
+      "qid": "econ-m4-p06",
+      "when": "2026-10-11",
+      "note": "Ex5 Q6 — picked WPI only. Sales → CPI sub-index, costs → WPI sub-index: both. (truncated rule)"
+    },
+    {
+      "qid": "econ-m4-p07",
+      "when": "2026-10-11",
+      "note": "Ex5 Q7 — picked 'upward bias'. Headline is noisier; bias = construction methodology. (off-model)"
+    },
+    {
+      "qid": "econ-m4-p08",
+      "when": "2026-10-11",
+      "note": "Ex7 Q1 — NOT question, picked a TRUE limitation. T/F every option, pick the F. Retest Ex8 Q8 ✓. (negation)"
+    },
+    {
+      "qid": "econ-m4-p09",
+      "when": "2026-10-11",
+      "note": "Ex8 Q1 — 'rising costs' but pulled money vs GDP. Cost-push → UR vs NAIRU, wages vs productivity. (truncated rule)"
+    },
+    {
+      "qid": "econ-m4-p10",
+      "when": "2026-10-11",
+      "note": "Ex8 Q3 — picked hedge 'either high or low'. Cost-push when unemployment is LOW. (off-model)"
+    },
+    {
+      "qid": "econ-m4-p11",
+      "when": "2026-10-11",
+      "note": "Ex8 Q6 — picked 'interest rates'. Monetarists → money growth. (off-model)"
     }
   ]
 }

@@ -38,6 +38,15 @@
       "short": "Output, Prices & Growth",
       "notes": "content/notes/econ-m3.md",
       "questions": "content/questions/econ-m3.json"
+    },
+    {
+      "id": "econ-m4",
+      "subject": "econ",
+      "order": 4,
+      "title": "Introduction to Business Cycles",
+      "short": "Business Cycles",
+      "notes": "content/notes/econ-m4.md",
+      "questions": "content/questions/econ-m4.json"
     }
   ]
 }
