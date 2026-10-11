@@ -343,6 +343,18 @@ P = MC = minimum AC        (e.g., price 4.50 at output Qᴇ)
 - **P = MC** → the MR = MC condition (MR = P for the price taker)
 - **P = min AC** → TR = TC → **zero economic profit**
 
+### Worked example — the entry threshold as a CALCULATION 🔴 ⭐ *(official practice Q5 — missed)*
+Each firm: TC = 256 + 2Q + 4Q², so AC = 256/Q + 2 + 4Q and MC = 2 + 8Q. Market demand P = 93 − 1.5Q.
+
+```
+Long-run resting point: P = MC = min AC  →  set MC = AC
+2 + 8Q = 256/Q + 2 + 4Q   →   4Q = 256/Q   →   Q² = 64   →   Q = 8
+P = MC at Q = 8 = 2 + 8(8) = 66          (check: AC = 256/8 + 2 + 32 = 66 ✓)
+```
+**New firms enter at any price above 66** (P > min AC → economic profit).
+
+⚠️ **The trap I fell into:** plugging Q = 8 into the *market demand* curve (93 − 1.5 × 8 = 81). The entry threshold is a **cost condition on the firm**, not a reading off demand — the demand curve only tells you how much the *market* buys at a price. Pattern: "which relationship?" — same family as SRAS-vs-LRAS.
+
 ### Zero economic profit ≠ earning nothing ⚠️ 🔴 the distractor that never dies
 The firm still earns its **normal profit** (rental cost of capital) — it's **inside economic costs**. 🔗 M1 §11.1: normal profit is a fixed cost. Closes the loop with §2.1 and §9d.
 
@@ -674,6 +686,14 @@ Regulated solutions "S-N-R-F": Subsidize (P=MC, Amtrak) | Nationalize
 | Porter's five forces | Concept | 🟡 Medium |
 | PC as benchmark; corn example | Concept | 🟡 Medium |
 | Concentrated vs. fragmented; market definition | Concept | 🟢 Low |
+
+**⭐ Official practice problems (2026-10-11): 7 attempted, 3 missed (Q6 now correct on retry):**
+
+| Error type | Missed | What went wrong → the fix |
+|---|---|---|
+| **Grabbing a given number** | Q4 | Monopoly with MC $40, AC $70, εp = 1.5 — answered $70. The pricing rule P[1 − 1/εp] = MC gives P = 40 ÷ (1/3) = **$120**. Fix: when a stem gives cost figures AND an elasticity, the answer is the rule's output, not a given number. |
+| **Which relationship?** | Q5 | Entry threshold = **P = min AC = MC** → Q = 8, P = 66. Answered 81 (Q = 8 plugged into market demand). Fix: entry/exit thresholds are cost conditions on the firm. |
+| **Definition — repeat miss** | Q7 | Regulated price = **long-run average cost** (normal return). Second miss on the same fact → flashcard it until automatic. |
 
 **⭐ Your flagged weak spots:**
 - **Q6 — long-run entry mechanism (§9e):** profit → entry + capacity expansion → supply RIGHT → price falls.

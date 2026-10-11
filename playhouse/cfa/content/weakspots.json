@@ -20,10 +20,10 @@
       "evidence": [
         "M1 Q3 (elasticity determinants)",
         "M2 Q6 (entry → supply right)",
-        "M2 Q7 (regulated price = LRAC)",
         "M3 official Q14 (saving ↑ → net exports ↑)",
         "M3 official Q16 (lower P → real FX depreciates)",
-        "M3 official Q20 (weak currency raises AD)"
+        "M3 official Q20 (weak currency raises AD)",
+        "M2 official Q6 now correct on retry (supply shifts right)"
       ],
       "seed": [
         "econ-m3-p14",
@@ -39,12 +39,12 @@
     {
       "id": "which-curve",
       "name": {
-        "en": "Which curve? (SRAS vs LRAS, AD vs AS, firm vs market)",
-        "kr": "어느 곡선? (SRAS vs LRAS, AD vs AS, 기업 vs 시장)"
+        "en": "Which curve / which relationship? (SRAS vs LRAS, AD vs AS, cost condition vs demand curve)",
+        "kr": "어느 곡선·어느 관계식? (SRAS vs LRAS, AD vs AS, 비용조건 vs 수요곡선)"
       },
       "rule": {
-        "en": "Cost/price factors (wages, input prices, taxes, subsidies, expectations, FX) move SRAS only; resource/technology factors (labor, capital, productivity) move BOTH. To diagnose a shock from data: output and prices same direction → demand; opposite → supply. Stagflation is never an AD story.",
-        "kr": "비용·가격 요인(임금·투입가격·세금·보조금·기대·환율)은 SRAS만, 자원·기술 요인(노동·자본·생산성)은 둘 다. 데이터로 충격 진단: 산출과 물가가 같은 방향 → 수요, 반대 → 공급. 스태그플레이션은 절대 AD 이야기가 아님."
+        "en": "Cost/price factors (wages, input prices, taxes, subsidies, expectations, FX) move SRAS only; resource/technology factors (labor, capital, productivity) move BOTH. To diagnose a shock from data: output and prices same direction → demand; opposite → supply. Stagflation is never an AD story. Long-run entry/exit thresholds are COST conditions (P = min AC = MC), never a reading off the market demand curve.",
+        "kr": "비용·가격 요인(임금·투입가격·세금·보조금·기대·환율)은 SRAS만, 자원·기술 요인(노동·자본·생산성)은 둘 다. 데이터로 충격 진단: 산출과 물가가 같은 방향 → 수요, 반대 → 공급. 스태그플레이션은 절대 AD 이야기가 아님. 장기 진입·퇴출 기준은 비용 조건(P = 최소 AC = MC)이지 시장 수요곡선 값이 아님."
       },
       "traps": [
         "which-curve",
@@ -55,9 +55,11 @@
         "M3 official Q19 (indexed wages → steeper SRAS)",
         "M3 official Q21 (LRAS left = productivity, not wages)",
         "M3 official Q24 (stagflation ≠ AD shift)",
-        "M3 official Q25 (supply shock: long-run price level unchanged unless money expands)"
+        "M3 official Q25 (supply shock: long-run price level unchanged unless money expands)",
+        "M2 official Q5 (entry threshold = min AC = MC → 66; plugged Q into the demand curve → 81)"
       ],
       "seed": [
+        "econ-m2-p05",
         "econ-m3-p25",
         "econ-m3-p19",
         "econ-m3-p21",
@@ -71,12 +73,12 @@
     {
       "id": "asked-quantity",
       "name": {
-        "en": "Answering the wrong quantity",
-        "kr": "묻는 양과 다른 숫자를 답함"
+        "en": "Answering the wrong quantity / grabbing a given number",
+        "kr": "묻는 양과 다른 숫자 · 주어진 숫자 집기"
       },
       "rule": {
-        "en": "Before choosing, re-read the stem's last line: which stage, which unit, which period, average or marginal, price or quantity? Value added at a step = receipts − ALL purchased inputs; the final price is the whole chain's contribution, not the last step's.",
-        "kr": "답 고르기 전에 문제의 마지막 줄을 다시 읽는다: 어느 단계·단위·기간, 평균인지 한계인지, 가격인지 수량인지. 단계별 부가가치 = 매출 − 구입 투입 전부; 최종가격은 체인 전체 기여분이지 마지막 단계가 아님."
+        "en": "Before choosing, re-read the stem's last line: which stage, which unit, which period, average or marginal, price or quantity? Value added at a step = receipts − ALL purchased inputs; the final price is the whole chain's contribution, not the last step's. If a stem hands you two cost figures and an elasticity, the answer is almost never one of the given figures — apply the rule.",
+        "kr": "답 고르기 전에 문제의 마지막 줄을 다시 읽는다: 어느 단계·단위·기간, 평균인지 한계인지, 가격인지 수량인지. 단계별 부가가치 = 매출 − 구입 투입 전부; 최종가격은 체인 전체 기여분이지 마지막 단계가 아님. 비용 숫자 두 개와 탄력성이 주어지면 답은 거의 주어진 숫자가 아님 — 규칙을 적용할 것."
       },
       "traps": [
         "asked-quantity",
@@ -88,9 +90,11 @@
       ],
       "evidence": [
         "M3 Exhibit 3 (parallel inputs)",
-        "M3 official Q5 (value added of final step = 3,000, not 5,000)"
+        "M3 official Q5 (value added of final step = 3,000, not 5,000)",
+        "M2 official Q4 (picked AC $70; the pricing rule P[1 − 1/ε] = MC gives $120)"
       ],
       "seed": [
+        "econ-m2-p04",
         "econ-m3-p05",
         "econ-m3-010",
         "econ-m3-009",
@@ -140,9 +144,11 @@
         "M3 official Q12 (personal income chain — note gap, now §1b)",
         "M3 official Q17 (natural output ≠ maximum)",
         "M3 official Q27 (labor productivity is the directly measurable one)",
-        "M3 official Q29 (TFP = output for given inputs)"
+        "M3 official Q29 (TFP = output for given inputs)",
+        "M2 official Q7 (regulated price = LRAC — repeat miss)"
       ],
       "seed": [
+        "econ-m2-p07",
         "econ-m3-p27",
         "econ-m3-p29",
         "econ-m3-p28",
@@ -219,6 +225,21 @@
       "qid": "econ-m3-p29",
       "when": "2026-10-11",
       "note": "TFP↑ = more output for given inputs (the A in Y = A·F(K,L)), not the sustainable growth rate itself."
+    },
+    {
+      "qid": "econ-m2-p04",
+      "when": "2026-10-11",
+      "note": "Picked the given average cost ($70). Apply MR = MC with MR = P[1 − 1/ε]: P = 40/(1/3) = $120."
+    },
+    {
+      "qid": "econ-m2-p05",
+      "when": "2026-10-11",
+      "note": "Entry threshold is P = min AC = MC = 66 (Q = 8). 81 came from plugging Q = 8 into the market demand curve — wrong relationship."
+    },
+    {
+      "qid": "econ-m2-p07",
+      "when": "2026-10-11",
+      "note": "Regulated price = long-run average cost (normal return). Repeat of the earlier Q7 miss."
     }
   ]
 }
