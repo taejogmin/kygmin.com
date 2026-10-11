@@ -161,6 +161,16 @@ label.opt.subj{border-width:3px;font-weight:600;}
   .modrow .acts{grid-column:1 / -1;}
 }
 
+.panel.pat .patrow{padding:12px 0;border-bottom:1px solid var(--gray);}
+.panel.pat .patrow:last-child{border-bottom:none;}
+.pathead{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.pathead b{font-family:var(--arch);font-weight:900;font-size:14.5px;flex:1 1 220px;}
+.pathead .v{font-family:var(--arch);font-weight:900;font-size:16px;white-space:nowrap;}
+.pathead .v small{font-family:var(--mono);font-weight:500;font-size:11px;color:#6B6B67;margin-left:4px;}
+.pathead .v.up{color:var(--green-deep);} .pathead .v.dn{color:var(--red);}
+.patrow .rule{font-size:14px;margin:8px 0 4px;border-left:4px solid var(--green);padding-left:12px;max-width:760px;}
+.patrow .ev,.row .ev{font-family:var(--mono);font-size:11px;color:#6B6B67;line-height:1.7;}
+
 /* ── Study (notes) ── */
 .study{display:grid;grid-template-columns:260px minmax(0,1fr);gap:22px;align-items:start;}
 .toc{position:sticky;top:78px;border:3px solid var(--ink);background:#fff;box-shadow:5px 5px 0 var(--ink);padding:14px;max-height:calc(100vh - 100px);overflow:auto;}
@@ -313,7 +323,7 @@ h1 .box .scr{color:var(--paper);}
 <footer>
   <div class="foot-inner">
     <span>&copy; KYGMIN.COM</span>
-    <span class="tx" data-en="CFA STUDY HUB &middot; v1.1 &middot; SIGN IN TO SYNC ACROSS DEVICES" data-kr="CFA STUDY HUB &middot; v1.1 &middot; 로그인하면 기기 간 동기화">CFA STUDY HUB &middot; v1.1 &middot; SIGN IN TO SYNC ACROSS DEVICES</span>
+    <span class="tx" data-en="CFA STUDY HUB &middot; v1.2 &middot; SIGN IN TO SYNC ACROSS DEVICES" data-kr="CFA STUDY HUB &middot; v1.2 &middot; 로그인하면 기기 간 동기화">CFA STUDY HUB &middot; v1.2 &middot; SIGN IN TO SYNC ACROSS DEVICES</span>
     <a class="tx" href="/privacy.html" data-en="PRIVACY POLICY" data-kr="개인정보처리방침">PRIVACY POLICY</a>
   </div>
 </footer>
@@ -440,7 +450,7 @@ var T = {
     exam:'EXAM', days:'days', examPast:'done', loading:'Loading content…', loadFail:'Could not load the study content. Reload the page.',
     h_overview:'Overview', h_modules:'Modules', h_weak:'Weak spots', h_sync:'Your data',
     attempts:'ANSWERED', accuracy:'ACCURACY', due:'DUE FOR REVIEW', streak:'DAY STREAK', questions:'QUESTIONS', read:'READ',
-    read_btn:'Read', quiz_btn:'Quiz', notes:'notes', qs:'questions', secs:'sections', modules_n:'modules', answered_l:'answered', src_cfai:'CFA practice (paraphrased)',
+    read_btn:'Read', quiz_btn:'Quiz', notes:'notes', qs:'questions', secs:'sections', modules_n:'modules', answered_l:'answered', src_cfai:'CFA practice (paraphrased)', h_patterns:'My error patterns', pat_sub:'the ways you lose points — kept here until they stop happening', pat_open:'official misses still open', pat_evidence:'Evidence', r_official:'Official practice misses', r_official_sub:'Questions you missed in the CFA practice set — they stay here until you get them right twice in a row in this app.', r_official_all:'Retry all',
     noweak:'No weak spots yet — answer a few questions and the concepts you miss most will show up here.',
     drill:'Drill', drillWeak:'Drill weak spots', misses:'misses', ofN:'of',
     guest:'Guest mode — your progress is kept in this browser only. Sign in (bottom-left chip) to sync across devices.',
@@ -458,13 +468,13 @@ var T = {
     i_min:'min. 2 attempts', i_none:'Not enough data yet.', i_export:'Export JSON', i_clear:'Clear local data', i_clear2:'Tap again to clear', i_cleared:'Cleared.', i_date:'Exam date',
     i_exportNote:'Export your attempts as JSON and hand the file to Claude for a deeper analysis of why you miss what you miss.',
     i_timeAvg:'avg time', i_wrongRate:'wrong rate', i_noTrend:'No answers in the last 14 days.',
-    trap_names:{direction:'Direction / polarity flip', sign:'Sign interpretation', units:'Units & scaling', reciprocal:'Slope vs. coefficient (reciprocal)', 'avg-vs-marginal':'Average vs. marginal', definition:'Definition recall', 'which-curve':'Firm vs. market curve', 'min-ATC-vs-profit':'Min ATC vs. profit max', 'price-off-demand':'Price from demand, not MR', convention:'Notation convention', 'long-run-vs-short-run':'Short run vs. long run', 'inverse-vs-direct':'Inverse vs. direct form', half:'Forgot the ½', formula:'Formula recall', 'second-order':'Second-order condition', 'which-intercept':'Which intercept', 'p-vs-q':'Price vs. quantity asked', exception:'Exception to the rule', confusion:'Confusing two concepts', 'size-vs-efficiency':'Size vs. efficiency', 'twice-as-steep':'MR twice as steep', 'divide-vs-multiply':'Divide vs. multiply', 'non-monotonic':'Non-monotonic table column', 'for-whom':'Desirable for whom', 'absolute-claim':'Absolute claims', 'capital-intensive':'Capital intensity ≠ barriers', 'opportunity-cost':'Opportunity cost', 'most-common':'Most common case', mechanism:'Mechanism', ordering:'Ordering', 'second-vs-third':'2nd vs. 3rd degree', 'technology-detail':'Technology detail', matching:'Matching', 'which-average':'Which average'}
+    trap_names:{direction:'Direction / polarity flip', sign:'Sign interpretation', units:'Units & scaling', reciprocal:'Slope vs. coefficient (reciprocal)', 'avg-vs-marginal':'Average vs. marginal', definition:'Definition recall', 'which-curve':'Firm vs. market curve', 'min-ATC-vs-profit':'Min ATC vs. profit max', 'price-off-demand':'Price from demand, not MR', convention:'Notation convention', 'long-run-vs-short-run':'Short run vs. long run', 'inverse-vs-direct':'Inverse vs. direct form', half:'Forgot the ½', formula:'Formula recall', 'second-order':'Second-order condition', 'which-intercept':'Which intercept', 'p-vs-q':'Price vs. quantity asked', exception:'Exception to the rule', confusion:'Confusing two concepts', 'size-vs-efficiency':'Size vs. efficiency', 'twice-as-steep':'MR twice as steep', 'divide-vs-multiply':'Divide vs. multiply', 'non-monotonic':'Non-monotonic table column', 'for-whom':'Desirable for whom', 'absolute-claim':'Absolute claims', 'capital-intensive':'Capital intensity ≠ barriers', 'opportunity-cost':'Opportunity cost', 'most-common':'Most common case', mechanism:'Mechanism', ordering:'Ordering', 'second-vs-third':'2nd vs. 3rd degree', 'technology-detail':'Technology detail', matching:'Matching', 'which-average':'Which average', compounding:'Annualizing / compounding', 'asked-quantity':'Answered the wrong quantity', 'wrong-reason':'Right answer, wrong reason', 'shift-vs-along':'Shift vs. movement along', 'parallel-inputs':'Parallel inputs (value added)'}
   },
   kr:{
     exam:'시험', days:'일', examPast:'종료', loading:'콘텐츠를 불러오는 중…', loadFail:'학습 콘텐츠를 불러오지 못했습니다. 페이지를 새로 고치세요.',
     h_overview:'현황', h_modules:'모듈', h_weak:'약점', h_sync:'내 데이터',
     attempts:'푼 문제', accuracy:'정답률', due:'복습 대기', streak:'연속 학습일', questions:'문제 수', read:'읽음',
-    read_btn:'읽기', quiz_btn:'퀴즈', notes:'노트', qs:'문제', secs:'섹션', modules_n:'모듈', answered_l:'풀이', src_cfai:'CFA 공식 연습문제(재구성)',
+    read_btn:'읽기', quiz_btn:'퀴즈', notes:'노트', qs:'문제', secs:'섹션', modules_n:'모듈', answered_l:'풀이', src_cfai:'CFA 공식 연습문제(재구성)', h_patterns:'내 오류 패턴', pat_sub:'점수를 잃는 방식 — 사라질 때까지 여기 고정', pat_open:'공식 문제 오답 미해결', pat_evidence:'근거', r_official:'공식 연습문제 오답', r_official_sub:'CFA 공식 연습문제에서 틀린 문제 — 이 앱에서 2회 연속 맞힐 때까지 남습니다.', r_official_all:'전부 다시 풀기',
     noweak:'아직 약점 데이터가 없습니다. 문제를 몇 개 풀면 자주 틀리는 개념이 여기 표시됩니다.',
     drill:'집중 풀기', drillWeak:'약점 집중 풀기', misses:'오답', ofN:'/',
     guest:'게스트 모드 — 진도가 이 브라우저에만 저장됩니다. 왼쪽 아래 칩에서 로그인하면 기기 간 동기화됩니다.',
@@ -482,7 +492,7 @@ var T = {
     i_min:'2회 이상 시도', i_none:'데이터가 아직 충분하지 않습니다.', i_export:'JSON 내보내기', i_clear:'로컬 데이터 삭제', i_clear2:'한 번 더 누르면 삭제', i_cleared:'삭제했습니다.', i_date:'시험일',
     i_exportNote:'풀이 기록을 JSON으로 내보내 Claude에게 주면 왜 반복해서 틀리는지 더 깊이 분석해 줍니다.',
     i_timeAvg:'평균 시간', i_wrongRate:'오답률', i_noTrend:'최근 14일간 풀이 기록이 없습니다.',
-    trap_names:{direction:'방향/극성 뒤집힘', sign:'부호 해석', units:'단위·스케일', reciprocal:'기울기 vs 계수(역수)', 'avg-vs-marginal':'평균 vs 한계', definition:'정의 암기', 'which-curve':'기업 vs 시장 곡선', 'min-ATC-vs-profit':'최소 ATC vs 이윤 극대', 'price-off-demand':'가격은 수요곡선에서', convention:'표기 관례', 'long-run-vs-short-run':'단기 vs 장기', 'inverse-vs-direct':'역함수 vs 직접 형태', half:'½ 누락', formula:'공식 암기', 'second-order':'2차 조건', 'which-intercept':'어느 절편', 'p-vs-q':'가격/수량 혼동', exception:'규칙의 예외', confusion:'두 개념 혼동', 'size-vs-efficiency':'규모 vs 효율', 'twice-as-steep':'MR 기울기 2배', 'divide-vs-multiply':'나누기 vs 곱하기', 'non-monotonic':'표의 비단조 열', 'for-whom':'누구에게 바람직한가', 'absolute-claim':'절대적 주장', 'capital-intensive':'자본집약 ≠ 장벽', 'opportunity-cost':'기회비용', 'most-common':'가장 흔한 경우', mechanism:'메커니즘', ordering:'순서', 'second-vs-third':'2차 vs 3차 차별', 'technology-detail':'기술 세부', matching:'매칭', 'which-average':'어느 평균'}
+    trap_names:{direction:'방향/극성 뒤집힘', sign:'부호 해석', units:'단위·스케일', reciprocal:'기울기 vs 계수(역수)', 'avg-vs-marginal':'평균 vs 한계', definition:'정의 암기', 'which-curve':'기업 vs 시장 곡선', 'min-ATC-vs-profit':'최소 ATC vs 이윤 극대', 'price-off-demand':'가격은 수요곡선에서', convention:'표기 관례', 'long-run-vs-short-run':'단기 vs 장기', 'inverse-vs-direct':'역함수 vs 직접 형태', half:'½ 누락', formula:'공식 암기', 'second-order':'2차 조건', 'which-intercept':'어느 절편', 'p-vs-q':'가격/수량 혼동', exception:'규칙의 예외', confusion:'두 개념 혼동', 'size-vs-efficiency':'규모 vs 효율', 'twice-as-steep':'MR 기울기 2배', 'divide-vs-multiply':'나누기 vs 곱하기', 'non-monotonic':'표의 비단조 열', 'for-whom':'누구에게 바람직한가', 'absolute-claim':'절대적 주장', 'capital-intensive':'자본집약 ≠ 장벽', 'opportunity-cost':'기회비용', 'most-common':'가장 흔한 경우', mechanism:'메커니즘', ordering:'순서', 'second-vs-third':'2차 vs 3차 차별', 'technology-detail':'기술 세부', matching:'매칭', 'which-average':'어느 평균', compounding:'연율화·복리', 'asked-quantity':'묻는 양과 다른 답', 'wrong-reason':'이유가 틀림', 'shift-vs-along':'이동 vs 곡선 위 이동', 'parallel-inputs':'병렬 투입(부가가치)'}
   }
 };
 function L(){ return (window.APP_LANG==='kr') ? 'kr' : 'en'; }
@@ -503,7 +513,7 @@ function secKeyMatches(qSection, secNum){ // question.section "9.3" belongs to "
   return qSection.indexOf(secNum+'.')===0; }
 
 /* ── state ──────────────────────────────────────────────────────────── */
-var MANIFEST=null, MODULES=[], QBYID={}, QLIST=[], NOTES={}, SECTIONS={};   // SECTIONS[moduleId] = [{num,title,level,id}]
+var MANIFEST=null, WEAK=null, MODULES=[], QBYID={}, QLIST=[], NOTES={}, SECTIONS={};   // SECTIONS[moduleId] = [{num,title,level,id}]
 var STORE = { owner:'guest', attempts:[], progress:{ read:{}, settings:{} } };
 var AUTH = { user:null, client:null, ready:false }, lastUserId=null, syncState='local', syncMsg=null;
 var view='home', studyModule=null, quiz=null, clearArmed=false;
@@ -594,12 +604,13 @@ function fetchText(u){ return fetch(u,{cache:'no-cache'}).then(function(r){ if(!
 function loadContent(){
   return fetchJSON('content/manifest.json').then(function(m){
     MANIFEST=m; MODULES=m.modules.slice().sort(function(a,b){ return a.order-b.order; });
-    return Promise.all(MODULES.map(function(mod){
+    var weakP=fetchJSON('content/weakspots.json').then(function(w){ WEAK=w; }, function(){ WEAK=null; });
+    return Promise.all([weakP].concat(MODULES.map(function(mod){
       return Promise.all([fetchText(mod.notes), fetchJSON(mod.questions)]).then(function(r){
         NOTES[mod.id]=r[0]; SECTIONS[mod.id]=parseSections(r[0]);
         (r[1].questions||[]).forEach(function(q){ q.module=mod.id; QBYID[q.id]=q; QLIST.push(q); });
       });
-    }));
+    })));
   });
 }
 var NUMRE=/^(\d+[a-z]?(?:\.\d+)?)\.?\s+(.*)$/;
@@ -641,6 +652,14 @@ function conceptScores(){ // higher = weaker
     var hist=h[q.id]||[]; hist.forEach(function(a){ o.n++; if(!a.correct) o.wrong++; }); if(hist.length && !hist[hist.length-1].correct) o.lastWrong=true; });
   return Object.keys(g).map(function(k){ var o=g[k]; o.score = o.wrong*2 + (o.lastWrong?2:0) - (o.n-o.wrong)*0.5; o.acc=o.n?pct(o.n-o.wrong,o.n):null; return o; });
 }
+function patternStats(pat){ var n=0,c=0; STORE.attempts.forEach(function(a){ if(a.qtype==='flash') return; if(pat.traps.indexOf(a.trap)>=0){ n++; if(a.correct) c++; } }); return {n:n,c:c,acc:pct(c,n)}; }
+function patternPool(pat){
+  var h=historyByQ(); var seed=(pat.seed||[]).map(function(id){ return QBYID[id]; }).filter(Boolean);
+  var rest=QLIST.filter(function(q){ return q.type!=='flash' && pat.traps.indexOf(q.trap)>=0 && (pat.seed||[]).indexOf(q.id)<0; });
+  function pri(q){ var hist=h[q.id]||[]; var st=qStatus(hist); return (st.due?0:hist.length?2:1); }   // due first, then unseen, then mastered
+  return shuffle(seed).sort(function(a,b){ return pri(a)-pri(b); }).concat(shuffle(rest).sort(function(a,b){ return pri(a)-pri(b); }));
+}
+function openOfficialMisses(){ if(!WEAK) return []; var h=historyByQ(); return WEAK.official_misses.filter(function(m){ var q=QBYID[m.qid]; if(!q) return false; var hist=h[m.qid]||[]; return !(hist.length && qStatus(hist).streak>=2); }).map(function(m){ return {m:m,q:QBYID[m.qid]}; }); }
 function streakDays(){ var days={}; STORE.attempts.forEach(function(a){ days[dayKey(a.t)]=1; }); var n=0; var d=new Date(); for(;;){ var k=dayKey(d.toISOString()); if(days[k]){ n++; d.setDate(d.getDate()-1); } else { if(n===0){ d.setDate(d.getDate()-1); if(days[dayKey(d.toISOString())]){ continue; } } break; } } return n; }
 function examDate(){ return (STORE.progress.settings&&STORE.progress.settings.examDate) || (MANIFEST&&MANIFEST.exam&&MANIFEST.exam.defaultDate) || '2027-02-15'; }
 function daysToExam(){ var ex=new Date(examDate()+'T00:00:00'); var now=new Date(); now.setHours(0,0,0,0); return Math.round((ex-now)/86400000); }
@@ -651,7 +670,7 @@ function render(){
   if(view==='home') renderHome(); else if(view==='study') renderStudy(); else if(view==='quiz') renderQuiz(); else if(view==='review') renderReview(); else if(view==='insights') renderInsights();
 }
 function renderDday(){ var d=daysToExam(); $('ddayLabel').textContent=t('exam')+' · '+examDate(); $('ddayVal').innerHTML = d>=0 ? 'D-'+d+'<small>'+t('days')+'</small>' : '<small>'+t('examPast')+'</small>'; }
-function renderReviewBadge(){ var n=dueItems().length; var b=$('reviewCount'); b.textContent=n; b.classList.toggle('hidden', n===0); }
+function renderReviewBadge(){ var n=dueItems().length + openOfficialMisses().filter(function(x){ var hist=historyByQ()[x.q.id]||[]; return !hist.length; }).length; var b=$('reviewCount'); b.textContent=n; b.classList.toggle('hidden', n===0); }
 function setView(v){ if(v==='quiz' && quiz && quiz.i>=quiz.items.length) quiz=null; view=v; document.querySelectorAll('.tab').forEach(function(b){ b.classList.toggle('on', b.dataset.view===v); }); document.querySelectorAll('.view').forEach(function(s){ s.classList.toggle('on', s.id==='view-'+v); }); try{ history.replaceState(null,'','#'+v); }catch(e){} render(); window.scrollTo({top:0,behavior:'instant' in window ? 'auto':'auto'}); }
 $('tabs').addEventListener('click', function(e){ var b=e.target.closest('.tab'); if(b) setView(b.dataset.view); });
 
@@ -694,6 +713,14 @@ function renderHome(){
     html+='</div>';
   });
 
+  if(WEAK && WEAK.patterns && WEAK.patterns.length){
+    var om=openOfficialMisses().length;
+    html+='<div class="panel pat"><h2>'+esc(t('h_patterns'))+'<span class="sub mono">'+esc(t('pat_sub'))+(om?' · '+om+' '+esc(t('pat_open')):'')+'</span></h2>';
+    WEAK.patterns.forEach(function(pat){ var st=patternStats(pat); var nm=pat.name[L()]||pat.name.en; var rule=pat.rule[L()]||pat.rule.en;
+      html+='<div class="patrow"><div class="pathead"><b>'+esc(nm)+'</b><span class="v '+(st.n?(st.acc>=70?'up':'dn'):'')+'">'+(st.n?st.acc+'% <small>'+st.c+'/'+st.n+'</small>':'<small>—</small>')+'</span><button class="btn sm green" data-pattern="'+esc(pat.id)+'">'+esc(t('drill'))+'</button></div>'
+        +'<p class="rule">'+esc(rule)+'</p><p class="ev">'+esc(t('pat_evidence'))+': '+esc((pat.evidence||[]).join(' · '))+'</p></div>'; });
+    html+='</div>';
+  }
   var weak=conceptScores().filter(function(o){ return o.wrong>0; }).sort(function(a,b){ return b.score-a.score; }).slice(0,5);
   html+='<div class="panel"><h2>'+esc(t('h_weak'))+'</h2>';
   if(!weak.length) html+='<p class="empty">'+esc(t('noweak'))+'</p>';
@@ -849,7 +876,12 @@ function renderSummary(el){
 /* ── REVIEW ─────────────────────────────────────────────────────────── */
 function renderReview(){
   var el=$('view-review'); var items=reviewItems().sort(function(a,b){ return (b.s.due-a.s.due) || (b.s.wrong-a.s.wrong); }); var due=items.filter(function(x){ return x.s.due; });
-  var h='<div class="panel"><h2>'+esc(t('r_title'))+'<span class="sub">'+esc(t('r_sub'))+'</span></h2>';
+  var h='';
+  var om=openOfficialMisses();
+  if(om.length){ h+='<div class="panel pat"><h2>'+esc(t('r_official'))+'<span class="sub">'+esc(t('r_official_sub'))+'</span></h2>';
+    om.forEach(function(x){ h+='<div class="row"><div class="k"><b>'+esc(x.q.stem)+'</b><small>'+esc(x.m.when)+' · §'+esc(x.q.section)+' · '+esc(trapName(x.q.trap))+'</small><div class="ev" style="margin-top:4px">'+esc(x.m.note)+'</div></div><div class="acts"><button class="btn sm green" data-retry="'+esc(x.q.id)+'">'+esc(t('r_retry'))+'</button><a class="btn sm" href="#" data-gonote="'+esc(x.q.module)+'|sec-'+esc(x.q.section)+'">§'+esc(x.q.section)+'</a></div></div>'; });
+    h+='<div class="acts" style="margin-top:10px"><button class="btn" data-drill="official">'+esc(t('r_official_all'))+' ('+om.length+')</button></div></div>'; }
+  h+='<div class="panel"><h2>'+esc(t('r_title'))+'<span class="sub">'+esc(t('r_sub'))+'</span></h2>';
   if(!items.length){ h+='<p class="empty">'+esc(t('r_empty'))+'</p></div>'; el.innerHTML=h; return; }
   h+='<div class="acts" style="margin-bottom:10px"><button class="btn green" data-drill="due"'+(due.length?'':' disabled')+'>'+esc(t('r_drill'))+' ('+due.length+')</button></div>';
   var byMod={}; items.forEach(function(x){ (byMod[x.q.module]=byMod[x.q.module]||[]).push(x); });
@@ -922,10 +954,12 @@ document.addEventListener('click', function(e){
   if((b=e.target.closest('[data-quizmod]'))){ SETUP.modules={}; SETUP.modules[b.dataset.quizmod]=true; SETUP.mode='std'; startQuiz(buildPool(),'std'); return; }
   if((b=e.target.closest('[data-quizsec]'))){ var qs=shuffle(questionsFor(studyModule, b.dataset.quizsec).filter(function(q){ return q.type!=='flash'; })); startQuiz(qs,'section'); return; }
   if((b=e.target.closest('[data-markread]'))){ toggleRead(b.dataset.markread); return; }
-  if((b=e.target.closest('[data-drill]'))){
+  if((b=e.target.closest('[data-drill]')) && b.dataset.drill!=='official'){
     if(b.dataset.drill==='due'){ var items=shuffle(dueItems().map(function(x){ return x.q; })); startQuiz(items,'review'); }
     else { var cs={}; conceptScores().forEach(function(o){ cs[o.concept]=o.score; }); var pool=shuffle(QLIST.filter(function(q){ return q.type!=='flash'; })).sort(function(x,y){ return (cs[y.concept]||0)-(cs[x.concept]||0); }).slice(0,10); startQuiz(pool,'weak'); }
     return; }
+  if((b=e.target.closest('[data-pattern]'))){ var pat=WEAK.patterns.filter(function(x){ return x.id===b.dataset.pattern; })[0]; if(pat) startQuiz(patternPool(pat).slice(0,10),'weak'); return; }
+  if((b=e.target.closest('[data-drill="official"]'))){ startQuiz(shuffle(openOfficialMisses().map(function(x){ return x.q; })),'review'); return; }
   if((b=e.target.closest('[data-concept]'))){ var cq=shuffle(QLIST.filter(function(q){ return q.concept===b.dataset.concept; })); startQuiz(cq,'weak'); return; }
   if((b=e.target.closest('[data-retry]'))){ startQuiz([QBYID[b.dataset.retry]],'review'); return; }
   if((b=e.target.closest('[data-gonote]'))){ e.preventDefault(); var p=b.dataset.gonote.split('|'); studyModule=p[0]; setView('study'); setTimeout(function(){ var tgt=document.getElementById(p[1]); if(tgt) tgt.scrollIntoView({block:'start'}); }, 30); return; }

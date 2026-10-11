@@ -981,7 +981,7 @@
       "concept": "Value added at the final step",
       "type": "calc",
       "difficulty": 1,
-      "trap": "formula",
+      "trap": "asked-quantity",
       "source": "cfai",
       "stem": "A painting is produced and sold in 2018 for £5,000. The inputs purchased to produce it cost £2,000. Under the sum-of-value-added method, the value added by the final step of creating the painting is:",
       "choices": {
@@ -1046,6 +1046,320 @@
       "answer": "B",
       "explanation": "Real GDP = nominal / (deflator/100). Start: 100/1.11 = €90.1bn. End: 300/2.00 = €150bn. Growth = (150 − 90.1)/90.1 ≈ 67%. Choice C is the nominal growth (200%); choice A ignores the deflator change at the start.",
       "kr": "실질 GDP: 100/1.11 = 90.1 → 300/2.00 = 150, 증가율 ≈ 67%. 200%는 명목 성장률."
+    },
+    {
+      "id": "econ-m3-p09",
+      "section": "5",
+      "concept": "Annualized price-level growth from the deflator",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "compounding",
+      "source": "cfai",
+      "stem": "The GDP deflator was 190 in Year 1 and 212.8 in Year 3. The annual growth rate of the overall price level over that period is closest to:",
+      "choices": {
+        "A": "5.8%",
+        "B": "6.0%",
+        "C": "12.0%"
+      },
+      "answer": "A",
+      "explanation": "Two years elapse, so annualize geometrically: (212.8/190)^(1/2) − 1 = (1.12)^(0.5) − 1 = 5.83%. Choice C is the total two-year change; choice B divides it by two, which ignores compounding.",
+      "kr": "2년이므로 기하평균: (212.8/190)^(1/2) − 1 = 5.8%. 12%는 2년 누적, 6%는 ÷2(복리 무시)."
+    },
+    {
+      "id": "econ-m3-p11",
+      "section": "1b",
+      "concept": "GDP from components and national income via CCA",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "formula",
+      "source": "cfai",
+      "stem": "For a hypothetical country (in $ trillions): consumption 15.0, capital consumption allowance 1.5, government spending 3.8, imports 1.7, gross private domestic investment 4.0, exports 1.5. Based only on these data, GDP and national income are respectively closest to:",
+      "choices": {
+        "A": "21.1 and 20.6",
+        "B": "22.6 and 21.1",
+        "C": "22.8 and 20.8"
+      },
+      "answer": "B",
+      "explanation": "GDP = C + I + G + (X − M) = 15.0 + 4.0 + 3.8 + (1.5 − 1.7) = 22.6. National income (with no other adjustments given) = GDP − capital consumption allowance = 22.6 − 1.5 = 21.1. Choice C adds imports instead of subtracting them.",
+      "kr": "GDP = 15 + 4 + 3.8 + (1.5 − 1.7) = 22.6; 국민소득 = GDP − 감가상각(CCA) = 21.1. 수입은 빼야 함."
+    },
+    {
+      "id": "econ-m3-p12",
+      "section": "1b",
+      "concept": "National income → personal income adjustments",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "definition",
+      "source": "cfai",
+      "stem": "When deriving personal income from national income, which of the following is NOT subtracted?",
+      "choices": {
+        "A": "Indirect business taxes.",
+        "B": "Undistributed corporate profits.",
+        "C": "Unincorporated business net income."
+      },
+      "answer": "C",
+      "explanation": "Personal income = national income − indirect business taxes − corporate income taxes − undistributed corporate profits + transfer payments. Unincorporated business (proprietors') net income flows to households and STAYS in personal income.",
+      "kr": "개인소득 = 국민소득 − 간접세 − 법인세 − 사내유보이익 + 이전지출. 비법인(자영업) 사업소득은 가계로 가므로 차감하지 않음."
+    },
+    {
+      "id": "econ-m3-p13",
+      "section": "7",
+      "concept": "Identity rearranged for the fiscal deficit",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "sign",
+      "source": "cfai",
+      "stem": "Equality between aggregate expenditure and aggregate output implies that the government's fiscal deficit must equal:",
+      "choices": {
+        "A": "private saving − investment − net exports.",
+        "B": "private saving − investment + net exports.",
+        "C": "investment − private saving + net exports."
+      },
+      "answer": "A",
+      "explanation": "From S = I + (G − T) + (X − M): G − T = (S − I) − (X − M). The fiscal deficit equals the private sector's saving-investment surplus minus net exports (net capital outflows). Substitute signs rather than reasoning in words.",
+      "kr": "S = I + (G − T) + (X − M) → G − T = (S − I) − (X − M). 재정적자 = 민간 저축초과 − 순수출."
+    },
+    {
+      "id": "econ-m3-p14",
+      "section": "7",
+      "concept": "Higher saving with I and Y fixed → net exports rise",
+      "type": "mc",
+      "difficulty": 3,
+      "trap": "direction",
+      "source": "cfai",
+      "stem": "After a sharp fall in house prices, households raise the fraction of disposable income they save. If output and investment spending are unchanged, the most likely result is:",
+      "choices": {
+        "A": "a smaller government deficit.",
+        "B": "lower net exports and a capital inflow.",
+        "C": "higher net exports and a capital outflow."
+      },
+      "answer": "C",
+      "explanation": "S = I + (G − T) + (X − M). With I fixed, higher S must be absorbed by a larger fiscal deficit or higher net exports. A smaller deficit goes the wrong way, so net exports rise — and a trade surplus is lent abroad, i.e., a net capital OUTflow. The 'inflow' choice reverses both signs.",
+      "kr": "S↑, I 고정 → (G−T) + (X−M)↑ → 순수출↑. 무역흑자 = 해외에 빌려줌 = 자본 유출. 두 부호 모두 뒤집은 B가 함정."
+    },
+    {
+      "id": "econ-m3-p15",
+      "section": "9",
+      "concept": "Interest rate effect on AD",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "direction",
+      "source": "cfai",
+      "stem": "In explaining the downward slope of aggregate demand, the interest rate effect suggests that a higher price level will:",
+      "choices": {
+        "A": "lower interest rates, raising consumption and investment.",
+        "B": "raise interest rates, lowering consumption and investment.",
+        "C": "leave interest rates unchanged, so aggregate demand rises."
+      },
+      "answer": "B",
+      "explanation": "With a fixed money supply, a higher price level raises the demand for money; the price of money — the interest rate — rises, and higher rates cut investment and loan-financed consumption. This is a movement along AD.",
+      "kr": "P↑ → 화폐수요↑ → (통화량 고정) 금리↑ → 투자·차입소비↓. AD곡선 위 이동."
+    },
+    {
+      "id": "econ-m3-p16",
+      "section": "9",
+      "concept": "Real exchange rate effect on AD",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "direction",
+      "source": "cfai",
+      "stem": "One reason the aggregate demand curve slopes downward is that a LOWER price level means the real exchange rate:",
+      "choices": {
+        "A": "depreciates, making domestic goods cheaper abroad and imports less competitive, so net exports rise.",
+        "B": "appreciates, making domestic goods dearer abroad and imports more competitive, so net exports rise.",
+        "C": "appreciates, making both exports and imports less competitive, so net exports fall."
+      },
+      "answer": "A",
+      "explanation": "Real exchange rate = nominal rate adjusted for price levels. A lower domestic price level makes domestic goods relatively cheaper → the real rate DEPRECIATES → exports rise, imports fall → net exports and output demanded rise. Trace the chain from the stated direction (lower P), not from the higher-P version you memorized.",
+      "kr": "물가 하락 → 실질환율 절하 → 수출↑ 수입↓ → 순수출↑. 외운 'P↑' 체인을 뒤집어 적용하지 말고 주어진 방향에서 다시 추적."
+    },
+    {
+      "id": "econ-m3-p17",
+      "section": "10",
+      "concept": "Natural (full-employment) level of output",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "definition",
+      "source": "cfai",
+      "stem": "The full-employment, or natural, level of output is best described as:",
+      "choices": {
+        "A": "the maximum output obtainable with existing resources.",
+        "B": "the level at which every available worker holds a job matching their skills.",
+        "C": "a level with a modest, stable pool of unemployed workers transitioning between jobs."
+      },
+      "answer": "C",
+      "explanation": "At potential output the economy runs efficiently without bottlenecks: firms have some spare capacity and there is a modest, stable pool of job seekers roughly equal to vacancies (frictional unemployment). It is NOT the maximum possible output and not zero unemployment.",
+      "kr": "자연산출 = 병목 없이 효율적으로 가동, 구직자 ≈ 공석인 소규모 안정 실업 풀 존재. '최대 산출'도 '완전 고용 0% 실업'도 아님."
+    },
+    {
+      "id": "econ-m3-p18",
+      "section": "10",
+      "concept": "Shape of SRAS",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "source": "cfai",
+      "stem": "Over a horizon of one to two years, the aggregate supply curve is best described as:",
+      "choices": {
+        "A": "flat, because output is more flexible than prices in the short run.",
+        "B": "vertical, because wages and other input prices fully adjust to the price level.",
+        "C": "upward sloping, because input prices do not fully adjust to the price level in the short run."
+      },
+      "answer": "C",
+      "explanation": "Long-term contracts and other rigidities keep wages and input costs from fully tracking the price level, so higher output prices raise margins and firms expand output. Flat describes the very short run; vertical describes the long run.",
+      "kr": "1~2년: 임금·투입가격이 물가를 완전히 못 따라감 → 마진 변화로 산출 조절 → 우상향. 수평은 초단기, 수직은 장기."
+    },
+    {
+      "id": "econ-m3-p19",
+      "section": "10",
+      "concept": "Wage indexation and the SRAS slope",
+      "type": "mc",
+      "difficulty": 3,
+      "trap": "mechanism",
+      "source": "cfai",
+      "stem": "If wages were automatically indexed to changes in the price level, the short-run aggregate supply curve would most likely become:",
+      "choices": {
+        "A": "flatter.",
+        "B": "steeper.",
+        "C": "unchanged."
+      },
+      "answer": "B",
+      "explanation": "SRAS slopes up only because costs lag prices and margins widen. Automatic wage adjustment removes most of that margin effect, so firms change output less for a given price change — the curve becomes steeper (closer to the vertical LRAS). 'Unchanged' ignores that the slope IS the degree of cost stickiness.",
+      "kr": "SRAS 기울기 = 비용 경직성의 정도. 임금이 자동 조정되면 마진 효과가 사라져 산출 반응↓ → 더 가파름(LRAS에 가까워짐)."
+    },
+    {
+      "id": "econ-m3-p20",
+      "section": "11",
+      "concept": "Causes of an AD decrease (FX direction)",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "direction",
+      "source": "cfai",
+      "stem": "The least likely cause of a decrease in aggregate demand is:",
+      "choices": {
+        "A": "higher taxes.",
+        "B": "a weak domestic currency.",
+        "C": "a fall in capacity utilization."
+      },
+      "answer": "B",
+      "explanation": "A weak currency makes exports cheaper abroad and imports dearer at home, so net exports and AD RISE — it cannot cause a decrease. Higher taxes cut disposable income (AD left); lower capacity utilization reduces investment (AD left). Translate 'weak currency' into its net-export effect before judging.",
+      "kr": "약한 통화 → 수출↑ 수입↓ → AD 증가. 세금↑와 가동률↓는 AD 감소 요인. 환율은 순수출 효과로 먼저 번역."
+    },
+    {
+      "id": "econ-m3-p21",
+      "section": "12",
+      "concept": "LRAS shifters vs SRAS-only shifters",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "which-curve",
+      "source": "cfai",
+      "stem": "Which of the following is most likely to shift the LONG-RUN aggregate supply curve to the left?",
+      "choices": {
+        "A": "Higher nominal wages.",
+        "B": "A decline in productivity.",
+        "C": "An increase in corporate taxes."
+      },
+      "answer": "B",
+      "explanation": "Productivity is a resource/technology factor: lower output per worker raises unit labor cost AND lowers potential GDP, shifting both SRAS and LRAS left. Nominal wages and business taxes are cost factors that move SRAS only.",
+      "kr": "생산성 하락 = 자원·기술 요인 → SRAS·LRAS 둘 다 왼쪽. 임금·법인세는 비용 요인 → SRAS만."
+    },
+    {
+      "id": "econ-m3-p22",
+      "section": "11",
+      "concept": "Wealth effect on consumption",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "source": "cfai",
+      "stem": "An increase in household wealth will most likely cause an increase in:",
+      "choices": {
+        "A": "household saving.",
+        "B": "investment expenditures.",
+        "C": "consumption expenditures."
+      },
+      "answer": "C",
+      "explanation": "Higher asset values bring households closer to their wealth-accumulation goals, so they save less and spend more out of current income — consumption rises and AD shifts right (roughly 3–7% of the wealth change).",
+      "kr": "자산가치↑ → 저축 목표에 가까워짐 → 저축↓ 소비↑ → AD 오른쪽."
+    },
+    {
+      "id": "econ-m3-p23",
+      "section": "13",
+      "concept": "Both AD and AS increase",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "which-curve",
+      "source": "cfai",
+      "stem": "When both aggregate supply and aggregate demand increase, the most likely outcome is:",
+      "choices": {
+        "A": "a rise in inflation.",
+        "B": "higher employment.",
+        "C": "an increase in nominal GDP that is purely price-driven."
+      },
+      "answer": "B",
+      "explanation": "AD↑ and AS↑ both raise real GDP and lower unemployment, so employment rises unambiguously. The price level is ambiguous: AD↑ pushes it up, AS↑ pushes it down — so inflation is not the 'most likely' outcome.",
+      "kr": "AD↑·AS↑ 모두 실질 GDP↑, 실업↓ → 고용↑는 확실. 물가는 방향이 상쇄되어 불확실."
+    },
+    {
+      "id": "econ-m3-p24",
+      "section": "13",
+      "concept": "What an AD shift cannot cause",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "which-curve",
+      "source": "cfai",
+      "stem": "Which of the following is least likely to be caused by a shift in aggregate demand?",
+      "choices": {
+        "A": "Stagflation.",
+        "B": "A recessionary gap.",
+        "C": "An inflationary gap."
+      },
+      "answer": "A",
+      "explanation": "Stagflation — falling output with rising prices — requires output and prices to move in opposite directions, which only a supply shift (SRAS left) produces. AD shifts move output and prices together: AD↓ → recessionary gap, AD↑ → inflationary gap.",
+      "kr": "스태그플레이션(산출↓ 물가↑)은 반대 방향 → SRAS 이동만 가능. AD 이동은 산출·물가 같은 방향(침체 갭·인플레 갭)."
+    },
+    {
+      "id": "econ-m3-047",
+      "section": "1b",
+      "concept": "Personal disposable income",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Personal disposable income is most accurately defined as:",
+      "choices": {
+        "A": "personal income minus personal taxes.",
+        "B": "national income minus corporate income taxes.",
+        "C": "GDP minus the capital consumption allowance."
+      },
+      "answer": "A",
+      "explanation": "Personal disposable income = personal income − personal taxes; it is what households can spend or save. GDP − CCA gives net domestic product / national income; subtracting corporate taxes is a step from national income toward personal income.",
+      "kr": "개인가처분소득 = 개인소득 − 개인세금. GDP − CCA는 국민소득 단계."
+    },
+    {
+      "id": "econ-m3-048",
+      "section": "1b",
+      "concept": "Capital consumption allowance",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "The capital consumption allowance (CCA) in the national accounts most closely corresponds to:",
+      "choices": {
+        "A": "depreciation — the wear and tear on the capital stock.",
+        "B": "gross private domestic investment.",
+        "C": "indirect business taxes net of subsidies."
+      },
+      "answer": "A",
+      "explanation": "CCA measures the capital used up during the period (depreciation). GDP − CCA = net domestic product; it is also the first deduction on the way from GDP to national income. Gross investment includes replacing this depreciation, which is why GDP is 'gross'.",
+      "kr": "CCA = 감가상각(자본 소모). GDP − CCA = 순국내생산 = 국민소득으로 가는 첫 차감 항목."
+    },
+    {
+      "id": "econ-m3-f13",
+      "section": "1b",
+      "concept": "Income-side chain",
+      "type": "flash",
+      "difficulty": 2,
+      "trap": "definition",
+      "front": "The income-side chain: GDP → national income → personal income → personal disposable income",
+      "back": "GDP − capital consumption allowance (depreciation) [− statistical discrepancy] = national income (compensation + corporate profits + interest + proprietors' income + rent + indirect business taxes less subsidies).\nNational income − indirect business taxes − corporate income taxes − undistributed corporate profits + transfer payments = personal income (proprietors' income STAYS in).\nPersonal income − personal taxes = personal disposable income → consumption + household saving."
     }
   ]
 }

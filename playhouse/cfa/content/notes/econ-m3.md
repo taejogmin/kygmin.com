@@ -63,6 +63,39 @@ Households supply **labor and capital** to firms → firms pay **£100 income** 
 
 ---
 
+## 1b. From GDP to Personal Disposable Income — the Income-Side Chain
+**Exam importance: 🔴 High (calculation + "which item is NOT subtracted?") — ⭐ added after missing official practice Q12; this chain was not in the original note**
+
+GDP can be worked down to what households actually have to spend. Each step subtracts income that does not reach households (or adds income that reaches them without production).
+
+```
+GDP
+ − Capital consumption allowance (CCA = depreciation)        → Net domestic product
+ [− statistical discrepancy]                                 → NATIONAL INCOME
+      = compensation of employees + corporate & government-enterprise profits before tax
+        + interest income + unincorporated business (proprietors') net income + rent
+        + indirect business taxes less subsidies
+ − Indirect business taxes
+ − Corporate income taxes
+ − Undistributed corporate profits (retained earnings)
+ + Transfer payments                                         → PERSONAL INCOME
+ − Personal taxes                                            → PERSONAL DISPOSABLE INCOME
+      = Consumption + Household saving
+```
+
+### The exam patterns 🔴
+| Stem | What to do |
+|---|---|
+| "GDP and national income are closest to…" with a component table | GDP = C + I + G + (X − M); then **national income = GDP − CCA** (the only adjustment the table gives). ⚠️ Imports are *subtracted* — the distractor adds them. |
+| "Which is NOT subtracted from national income to get personal income?" | Subtracted: **indirect business taxes, corporate income taxes, undistributed corporate profits**. NOT subtracted: **unincorporated business (proprietors') income** — it already belongs to households. Transfers are *added*. |
+| "Personal disposable income equals…" | Personal income − personal taxes. |
+
+**Worked example (official practice Q11 logic):** C 15.0, I 4.0, G 3.8, X 1.5, M 1.7, CCA 1.5 → GDP = 15.0 + 4.0 + 3.8 + (1.5 − 1.7) = **22.6**; national income = 22.6 − 1.5 = **21.1**.
+
+**Memory hook:** going from national to personal income, you remove the three things *businesses and government keep* (indirect taxes, corporate taxes, retained profits) and add back the one thing *government gives* (transfers). Proprietors' income never leaves the household.
+
+---
+
 ## 2. GDP: Definition and the Three Inclusion Criteria
 **Exam importance: 🔴 VERY HIGH — a "which item is included in GDP?" question is close to guaranteed**
 
@@ -668,6 +701,18 @@ Cyclical = profits track the cycle; defensive = insensitive
 
 **⭐ Your flagged weak spots (this module so far):**
 - **Exhibit 3 — value-added with PARALLEL inputs (§3):** subtract the sum of ALL inputs feeding a stage (5,000), not the row above; verify Σ value added = final price (18,000); imports REDUCE domestic value added/GDP. Re-do this table from scratch until the 3-step routine is automatic.
+
+**⭐ Official practice problems (2026-10-11): 24 attempted, 10 missed — grouped by error type, not by topic:**
+
+| Error type | Missed | What went wrong → the fix |
+|---|---|---|
+| **Direction / polarity** | Q14, Q16, Q20 | Q14: S↑ with I, Y fixed → net exports must RISE (= capital outflow); Q16: LOWER price level → real FX *depreciates* → NX↑; Q20: a *weak* currency RAISES AD. Fix: write the chain from the direction the stem gives; translate FX into strong/weak first; substitute signs into the identity. |
+| **Which curve? (SRAS vs LRAS, AD vs AS)** | Q19, Q21, Q24 | Q19: indexed wages → SRAS *steeper* (slope = cost stickiness); Q21: LRAS left = *productivity* (resource factor), wages move SRAS only; Q24: stagflation can never come from AD. Fix: cost/price factors → SRAS only; resource/technology → both; output & prices opposite → supply shock. |
+| **Answering the wrong quantity** | Q5 | Asked for value added by the *final step* (5,000 − 2,000 = 3,000), answered the final price. Fix: re-read the stem's last line before choosing — which step, unit, period? Same family as the Exhibit 3 miss. |
+| **Annualizing / compounding** | Q9 | 190 → 212.8 over two years is (1.12)^½ − 1 = 5.8%/yr, not 12%/2 = 6%. Fix: multi-year "annual" = geometric. |
+| **Definition nuance / coverage gap** | Q12, Q17 | Q12: personal income chain was missing from the note (now §1b); Q17: natural output ≠ *maximum* output — it keeps a modest, stable pool of unemployed. Fix: find the one wrong word in each distractor. |
+
+**Part 2 scored 4/10 vs. Part 1 10/14.** The AD/AS section needs a second pass focused on *directions and curve identification*, not on re-reading definitions. The Study Hub's "My error patterns" panel drills exactly these groups.
 
 **⭐ Outstanding practice questions (answer before the next session):**
 - **Q1 (calc, Part 1):** Nominal GDP 4,000 → 4,600; deflator 100 → 110. Real GDP growth is *closest to*: A) 4.5% B) 15.0% C) 5.0%
