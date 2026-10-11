@@ -1,0 +1,401 @@
+{
+  "module": "econ-m2",
+  "questions": [
+    {
+      "id": "econ-m2-001", "section": "2", "concept": "Identify the market structure", "type": "mc", "difficulty": 1, "trap": "definition",
+      "stem": "An industry has a small number of large firms. Before changing its price, each firm carefully considers how its rivals are likely to respond. This market structure is best described as:",
+      "choices": {"A": "monopolistic competition.", "B": "oligopoly.", "C": "perfect competition."},
+      "answer": "B",
+      "explanation": "Few firms plus strategic interdependence (anticipating rivals' retaliation) is the defining feature of oligopoly — the only structure where firms 'play chess' against each other. Monopolistic competition has many firms; perfect competitors ignore rivals entirely.",
+      "kr": "소수 기업 + 경쟁사 반응을 고려(상호의존성) = 과점. 독점적 경쟁은 다수 기업."
+    },
+    {
+      "id": "econ-m2-002", "section": "4", "concept": "Exhibit 1: differentiation column", "type": "mc", "difficulty": 2, "trap": "non-monotonic",
+      "stem": "In the standard characteristics table, which pair of market structures is typically described as selling homogeneous products?",
+      "choices": {"A": "Perfect competition and oligopoly.", "B": "Monopolistic competition and oligopoly.", "C": "Perfect competition and monopolistic competition."},
+      "answer": "A",
+      "explanation": "Differentiation is one of the two non-monotonic columns: perfect competition AND oligopoly are both listed as homogeneous, monopolistic competition is 'differentiated', and monopoly is 'unique'. Examiners pair the two homogeneous structures to trip you.",
+      "kr": "동질적 제품 = 완전경쟁 + 과점. 독점적 경쟁만 '차별화', 독점은 '유일'."
+    },
+    {
+      "id": "econ-m2-003", "section": "4", "concept": "Exhibit 1: non-price competition column", "type": "mc", "difficulty": 2, "trap": "non-monotonic",
+      "stem": "Non-price competition in a monopoly is most likely limited to:",
+      "choices": {"A": "advertising only.", "B": "advertising and product differentiation.", "C": "none — a monopolist has no need for non-price competition."},
+      "answer": "A",
+      "explanation": "The monopolist has nothing to differentiate against, so its non-price competition is advertising only. Perfect competition has none (why advertise a commodity?), and the two middle structures use both advertising and differentiation.",
+      "kr": "독점의 비가격 경쟁 = 광고만. 완전경쟁 = 없음. 중간 둘 = 광고 + 차별화."
+    },
+    {
+      "id": "econ-m2-004", "section": "2.1", "concept": "Zero economic profit ≠ failure", "type": "mc", "difficulty": 1, "trap": "definition",
+      "stem": "In the long run, firms in a perfectly competitive market earn zero economic profit. This most likely means that these firms:",
+      "choices": {"A": "will eventually exit the industry because they earn nothing.", "B": "earn exactly their required (normal) return on capital.", "C": "report zero accounting profit."},
+      "answer": "B",
+      "explanation": "Economic costs include the normal profit — the return required by investors. Zero economic profit therefore means the firm covers all costs including that required return; accounting profit is positive. Perfectly competitive firms are not doomed to extinction.",
+      "kr": "경제적 이윤 0 = 정상이윤(요구수익률)은 벌고 있다는 뜻. 회계이윤은 양수. 망하는 게 아님."
+    },
+    {
+      "id": "econ-m2-005", "section": "3", "concept": "Five factors determining market structure", "type": "mc", "difficulty": 1, "trap": "definition",
+      "stem": "Which of the following is one of the five factors that determine market structure?",
+      "choices": {"A": "The strength of barriers to entry and exit.", "B": "The level of consumer income in the market.", "C": "The number of buyers relative to sellers."},
+      "answer": "A",
+      "explanation": "The five factors (N-D-P-B-N): Number and relative size of firms, Degree of product Differentiation, seller's power over Pricing, strength of Barriers to entry and exit, and degree of Non-price competition. Consumer income and buyer counts are not among them.",
+      "kr": "5요소: 기업 수와 규모 / 제품 차별화 / 가격 결정력 / 진입·퇴출 장벽 / 비가격 경쟁 (N-D-P-B-N)."
+    },
+    {
+      "id": "econ-m2-006", "section": "5", "concept": "Owners vs. consumers", "type": "mc", "difficulty": 1, "trap": "for-whom",
+      "stem": "From the perspective of a firm's owners, the most desirable market structure is most likely:",
+      "choices": {"A": "perfect competition, because it maximizes total output.", "B": "monopoly, because it offers the most control over price and the largest profits.", "C": "monopolistic competition, because differentiation attracts loyal customers."},
+      "answer": "B",
+      "explanation": "'Most desirable' depends on for whom. Owners prefer monopoly/oligopoly (price control, large profits); consumers prefer perfect competition (lowest prices).",
+      "kr": "'누구에게' 바람직한지가 핵심: 소유자 → 독점/과점(가격 통제), 소비자 → 완전경쟁(낮은 가격)."
+    },
+    {
+      "id": "econ-m2-007", "section": "6", "concept": "Innovation trade-off", "type": "mc", "difficulty": 2, "trap": "absolute-claim",
+      "stem": "Which statement about perfect competition and consumer welfare is most accurate?",
+      "choices": {"A": "Perfect competition is unambiguously best for consumers under all circumstances.", "B": "Consumers can benefit from less-than-perfectly-competitive markets because such firms can fund costly innovation.", "C": "Only monopolies can afford research and development."},
+      "answer": "B",
+      "explanation": "Perfect competition delivers the largest quantity at the lowest price, but expensive projects such as clinical trials would bankrupt perfectly competitive firms and are affordable under oligopoly. So consumers can benefit from imperfect competition — a claim that perfect competition is unambiguously best is wrong.",
+      "kr": "완전경쟁은 최대 수량·최저 가격이지만 혁신(임상시험 등) 자금은 과점이 더 잘 댐 → 소비자가 불완전경쟁에서 이득 볼 수 있음."
+    },
+    {
+      "id": "econ-m2-008", "section": "7", "concept": "Porter's five forces", "type": "mc", "difficulty": 1, "trap": "definition",
+      "stem": "Which of the following is NOT one of Porter's five forces?",
+      "choices": {"A": "Threat of substitutes.", "B": "Bargaining power of government regulators.", "C": "Rivalry among existing competitors."},
+      "answer": "B",
+      "explanation": "Porter's five: threat of entry, power of suppliers, power of buyers, threat of substitutes, rivalry among existing competitors — two threats, two powers, one rivalry. Regulation is evaluated separately (especially for monopolies), not as one of the five forces.",
+      "kr": "포터 5 forces: 진입 위협·대체재 위협(2 threats), 공급자·구매자 교섭력(2 powers), 기존 경쟁자 간 경쟁(1 rivalry)."
+    },
+    {
+      "id": "econ-m2-009", "section": "8", "concept": "Perfect competition conditions: barriers", "type": "mc", "difficulty": 2, "trap": "capital-intensive",
+      "stem": "Corn farming for animal feed is capital intensive, yet it is treated as a perfectly competitive market. This is most consistent with the view that:",
+      "choices": {"A": "capital intensity alone does not imply high barriers to entry when land and water are abundant.", "B": "capital-intensive industries are always perfectly competitive.", "C": "the futures market eliminates the need for low barriers to entry."},
+      "answer": "A",
+      "explanation": "Barriers to entry are judged by how surmountable they are. Corn farming requires capital, but with abundant land and water, entry is relatively easy, so barriers are low. 'Capital intensive' is not a synonym for 'high barriers' — a subtle distractor.",
+      "kr": "자본집약적 ≠ 진입장벽 높음. 토지·물이 풍부하면 진입이 쉬워 장벽은 낮다."
+    },
+    {
+      "id": "econ-m2-010", "section": "9", "concept": "Firm vs. market demand curve in perfect competition", "type": "mc", "difficulty": 1, "trap": "which-curve",
+      "stem": "In a perfectly competitive market, the demand curve facing an individual firm is most likely:",
+      "choices": {"A": "downward sloping, reflecting the law of demand.", "B": "horizontal (perfectly elastic) at the market price.", "C": "vertical, because the firm can sell only its capacity output."},
+      "answer": "B",
+      "explanation": "The MARKET demand curve slopes downward, but each firm sells a perfect substitute for its rivals' output, so it can sell any amount at the market price and nothing above it: its demand curve is horizontal, so P = AR = MR. Read whether the stem says 'firm' or 'market'.",
+      "kr": "시장 수요곡선은 우하향, 개별 기업이 직면한 수요곡선은 시장가격에서 수평(완전탄력적) → P = AR = MR."
+    },
+    {
+      "id": "econ-m2-011", "section": "9b", "concept": "MR = P(1 − 1/εp) calculation", "type": "calc", "difficulty": 2, "trap": "formula",
+      "stem": "A firm sells its product at a price of 20. The price elasticity of demand (expressed as a positive magnitude) at that point is 1.25. Marginal revenue is closest to:",
+      "choices": {"A": "4", "B": "16", "C": "20"},
+      "answer": "A",
+      "explanation": "MR = P × [1 − (1/εp)] = 20 × [1 − 1/1.25] = 20 × [1 − 0.8] = 20 × 0.2 = 4. Choice B (20 × 0.8) forgets the '1 −'. Choice C would hold only under perfect competition (εp → ∞).",
+      "kr": "MR = 20 × (1 − 1/1.25) = 20 × 0.2 = 4. 16은 '1 −'를 빠뜨린 값."
+    },
+    {
+      "id": "econ-m2-012", "section": "9b", "concept": "Never operate on the inelastic portion", "type": "mc", "difficulty": 2, "trap": "direction",
+      "stem": "A monopolist discovers that at its current output, the price elasticity of demand is 0.7 (positive magnitude). To increase profit it should most likely:",
+      "choices": {"A": "increase output, because demand is inelastic and buyers cannot escape.", "B": "reduce output, because marginal revenue is negative there.", "C": "leave output unchanged, because profit is maximized where elasticity is below 1."},
+      "answer": "B",
+      "explanation": "With εp < 1, MR = P(1 − 1/εp) < 0: each extra unit REDUCES total revenue while adding cost. Cutting output raises revenue and lowers cost simultaneously, so a profit-maximizer never knowingly operates on the inelastic portion — it prices in the elastic region.",
+      "kr": "εp < 1 → MR < 0. 생산을 줄이면 수입↑ 비용↓. 독점자는 항상 탄력적 구간에서 가격 결정."
+    },
+    {
+      "id": "econ-m2-013", "section": "9b", "concept": "TR maximized where MR = 0", "type": "mc", "difficulty": 2, "trap": "definition",
+      "stem": "Total revenue is maximized at the output level where:",
+      "choices": {"A": "marginal revenue equals marginal cost.", "B": "marginal revenue equals zero, which on a linear demand curve is the unit-elastic midpoint.", "C": "price elasticity of demand is at its maximum."},
+      "answer": "B",
+      "explanation": "While MR > 0 each unit adds to TR; once MR < 0, TR falls. So TR peaks exactly where MR = 0 — the midpoint of a linear demand curve, where demand is unit elastic. MR = MC maximizes PROFIT, not revenue.",
+      "kr": "총수입 최대 = MR = 0 지점 = 직선 수요의 중점 = 단위탄력적. MR = MC는 이윤 최대."
+    },
+    {
+      "id": "econ-m2-014", "section": "9b", "concept": "Sign convention for εp", "type": "mc", "difficulty": 2, "trap": "convention",
+      "stem": "In the Market Structures reading, price elasticity εp is expressed as a positive magnitude. A reported εp of 0.6 most likely implies that demand is:",
+      "choices": {"A": "elastic, and MR is positive.", "B": "inelastic, and MR is negative.", "C": "inelastic, and MR is positive but below price."},
+      "answer": "B",
+      "explanation": "Under the positive-magnitude convention, εp < 1 is inelastic. From MR = P(1 − 1/εp): 1/0.6 = 1.67, so MR = P(1 − 1.67) < 0. Always check which sign convention a question uses before comparing to 1.",
+      "kr": "εp를 양수로 쓰는 관례: 0.6 < 1 → 비탄력적, MR = P(1 − 1.67) < 0. 부호 관례 확인 필수."
+    },
+    {
+      "id": "econ-m2-015", "section": "9b", "concept": "Cross-price elasticity as a competition test", "type": "mc", "difficulty": 2, "trap": "direction",
+      "stem": "A firm's product has many close substitutes, each with a high positive cross-price elasticity relative to the firm's product. The firm's pricing power is most likely:",
+      "choices": {"A": "low.", "B": "high.", "C": "unaffected by the availability of substitutes."},
+      "answer": "A",
+      "explanation": "The more numerous and closer the substitutes, the more easily customers escape a price increase, so pricing power is lower. Cross-price elasticity is the quantitative version of the pricing-power column in the characteristics table.",
+      "kr": "가까운 대체재가 많을수록(교차탄력성 높음) 가격 결정력은 낮다."
+    },
+    {
+      "id": "econ-m2-016", "section": "9c", "concept": "Consumer surplus calculation", "type": "calc", "difficulty": 2, "trap": "half",
+      "stem": "Market demand is given by P = 100 − 2Q. At a market price of 40, consumer surplus is closest to:",
+      "choices": {"A": "900", "B": "1,800", "C": "1,200"},
+      "answer": "A",
+      "explanation": "At P = 40, Q = (100 − 40)/2 = 30. Pmax (price intercept) = 100. CS = ½ × Q × (Pmax − P) = ½ × 30 × 60 = 900. Choice B forgets the ½ (the full rectangle); choice C is total expenditure P × Q = 1,200.",
+      "kr": "Q = 30, Pmax = 100. CS = ½ × 30 × (100 − 40) = 900. 1,800은 ½ 누락, 1,200은 지출액(P×Q)."
+    },
+    {
+      "id": "econ-m2-017", "section": "9c", "concept": "Demand curve as marginal value", "type": "mc", "difficulty": 1, "trap": "definition",
+      "stem": "Which statement about consumer surplus is most accurate?",
+      "choices": {"A": "The demand curve measures the marginal value consumers place on each additional unit, and consumer surplus is the area below it and above the price line.", "B": "Consumer surplus equals total expenditure, P × Q.", "C": "The last unit purchased generates the largest consumer surplus."},
+      "answer": "A",
+      "explanation": "The demand curve is a marginal value (willingness-to-pay) curve. Total value = whole area under demand to Q₁; expenditure = the P₁ × Q₁ rectangle; surplus = value − expenditure = the triangle above the price line. The last unit's value equals the price, so its surplus is zero.",
+      "kr": "수요곡선 = 한계가치(지불의사) 곡선. 소비자잉여 = 수요곡선 아래·가격선 위 삼각형. 마지막 단위의 잉여는 0."
+    },
+    {
+      "id": "econ-m2-018", "section": "9d", "concept": "Equilibrium with inverse-form functions", "type": "calc", "difficulty": 2, "trap": "inverse-vs-direct",
+      "stem": "Market supply is P = −2 + 0.2Q and market demand is P = 25 − 0.5Q. The equilibrium price is closest to:",
+      "choices": {"A": "5.71", "B": "38.57", "C": "27.00"},
+      "answer": "A",
+      "explanation": "Both functions are in inverse (P = …) form, so equate the P expressions: 25 − 0.5Q = −2 + 0.2Q → 27 = 0.7Q → Q* = 38.57. Then P* = 25 − 0.5(38.57) = 5.71. Choice B is the quantity; choice C is the intermediate '27'.",
+      "kr": "역수요·역공급(P = …) 형태 → P식을 등치: 27 = 0.7Q → Q* = 38.57, P* = 5.71."
+    },
+    {
+      "id": "econ-m2-019", "section": "9d", "concept": "Economic vs. accounting profit", "type": "calc", "difficulty": 2, "trap": "opportunity-cost",
+      "stem": "A farmer reports accounting profit of 120,000. She could earn 50,000 working elsewhere, and her land could be leased to a neighbor for 30,000. Her economic profit is closest to:",
+      "choices": {"A": "40,000", "B": "70,000", "C": "120,000"},
+      "answer": "A",
+      "explanation": "Economic profit = accounting profit − unrecorded opportunity costs = 120,000 − 50,000 − 30,000 = 40,000. Both the forgone salary and the forgone lease income are economic costs even though no check is written.",
+      "kr": "경제적 이윤 = 회계이윤 − 기회비용 = 120,000 − 50,000 − 30,000 = 40,000."
+    },
+    {
+      "id": "econ-m2-020", "section": "9d", "concept": "P = AR = MR for a price taker", "type": "mc", "difficulty": 1, "trap": "definition",
+      "stem": "For a firm in a perfectly competitive market, which of the following is most accurate?",
+      "choices": {"A": "Price, average revenue and marginal revenue are all equal and constant across output levels.", "B": "Marginal revenue lies below average revenue because price must fall to sell more.", "C": "Average revenue rises with output as fixed costs are spread."},
+      "answer": "A",
+      "explanation": "The price taker's demand curve is a horizontal line at the market price, so P = AR = MR — one line doing triple duty. MR < AR describes imperfect competition. Average revenue has nothing to do with fixed costs.",
+      "kr": "가격수용자: P = AR = MR (수평선 하나). MR < AR은 불완전경쟁."
+    },
+    {
+      "id": "econ-m2-021", "section": "9d", "concept": "Short-run profit: the A-vs-B trap", "type": "mc", "difficulty": 2, "trap": "min-ATC-vs-profit",
+      "stem": "A perfectly competitive firm chooses its short-run output level where:",
+      "choices": {"A": "price equals average cost.", "B": "marginal revenue (= price) equals marginal cost.", "C": "average cost is at its minimum."},
+      "answer": "B",
+      "explanation": "Output is set where MR = MC (point A on the MC curve). Average cost (point B, directly below A) is only used AFTERWARDS to measure profit: π = (P − AC) × Q. Choosing output at P = AC or at minimum AC are the distractors.",
+      "kr": "산출량은 MR = MC(점 A)에서 결정. AC(점 B)는 이윤 측정용: π = (P − AC) × Q."
+    },
+    {
+      "id": "econ-m2-022", "section": "9d", "concept": "Short-run economic profit calculation", "type": "calc", "difficulty": 1, "trap": "formula",
+      "stem": "A price-taking firm faces a market price of 12. At the output where MR = MC, it produces 100 units and its average total cost is 10. Its short-run economic profit is closest to:",
+      "choices": {"A": "200", "B": "1,200", "C": "1,000"},
+      "answer": "A",
+      "explanation": "Economic profit = (P − AC) × Q = (12 − 10) × 100 = 200. Choice B is total revenue (12 × 100); choice C is total cost (10 × 100).",
+      "kr": "π = (12 − 10) × 100 = 200. 1,200은 TR, 1,000은 TC."
+    },
+    {
+      "id": "econ-m2-023", "section": "9e", "concept": "Long-run entry mechanism", "type": "mc", "difficulty": 2, "trap": "direction",
+      "stem": "If companies earn economic profits in a perfectly competitive market, over the long run the market supply curve will most likely:",
+      "choices": {"A": "shift to the left, as firms restrict output to protect profits.", "B": "shift to the right, as new firms enter and existing firms expand capacity.", "C": "remain unchanged, because individual firms cannot affect the market."},
+      "answer": "B",
+      "explanation": "Economic profit attracts entrants and encourages incumbents to expand, increasing aggregate supply — a RIGHTWARD shift — which lowers price until economic profit is zero. A leftward shift is the mirror-image response to economic losses.",
+      "kr": "경제적 이윤 → 신규 진입 + 기존 기업 확장 → 공급곡선 오른쪽 이동 → 가격 하락. 왼쿽 이동은 손실에 대한 반응."
+    },
+    {
+      "id": "econ-m2-024", "section": "9e", "concept": "Entry: industry vs. incumbent output", "type": "mc", "difficulty": 3, "trap": "direction",
+      "stem": "As new firms enter a perfectly competitive industry in response to economic profits, the most likely outcome is that:",
+      "choices": {"A": "industry output rises while each incumbent firm's output falls.", "B": "both industry output and each incumbent's output rise.", "C": "industry output falls while each incumbent's output rises."},
+      "answer": "A",
+      "explanation": "Entry increases total industry quantity, but the resulting lower price moves each incumbent down its MC curve to a smaller output (e.g., Brown 10 → 8). 'Each firm produces more in the new equilibrium' is a trap.",
+      "kr": "진입으로 산업 전체 수량↑, 가격↓ → 기존 각 기업은 MC곡선을 따라 생산량↓."
+    },
+    {
+      "id": "econ-m2-025", "section": "9e", "concept": "Long-run resting point in PC", "type": "mc", "difficulty": 1, "trap": "definition",
+      "stem": "In long-run equilibrium, a perfectly competitive firm most likely operates where:",
+      "choices": {"A": "P = MC = minimum average cost, earning zero economic profit but a normal return.", "B": "P > minimum average cost, earning a positive economic profit.", "C": "MR = MC but P < average cost, sustaining a loss covered by subsidy."},
+      "answer": "A",
+      "explanation": "Entry continues as long as economic profit exists and stops exactly where P = MC (the MR = MC condition) = minimum AC (TR = TC → zero economic profit). The firm still earns its normal profit, which sits inside economic costs.",
+      "kr": "장기균형: P = MC = 최소 AC → 경제적 이윤 0, 정상이윤은 유지."
+    },
+    {
+      "id": "econ-m2-026", "section": "9f", "concept": "Supply curve exists only in PC", "type": "mc", "difficulty": 2, "trap": "definition",
+      "stem": "Which type of firm has a well-defined supply curve?",
+      "choices": {"A": "A monopolist, whose supply curve is its marginal cost schedule.", "B": "A perfectly competitive firm, whose supply curve is its marginal cost schedule.", "C": "A firm in monopolistic competition, whose supply curve is its average cost schedule."},
+      "answer": "B",
+      "explanation": "Only the price taker maps each market price to an output via MR = P = MC, so its MC schedule IS its supply curve. Monopoly, monopolistic competition and oligopoly have no well-defined supply function — output comes from MR = MC with a downward-sloping demand, not from a price→quantity schedule.",
+      "kr": "공급곡선이 존재하는 건 완전경쟁 기업만(MC곡선). 독점·독점적 경쟁·과점은 공급곡선 없음."
+    },
+    {
+      "id": "econ-m2-027", "section": "9f", "concept": "Sources of monopoly power", "type": "mc", "difficulty": 2, "trap": "most-common",
+      "stem": "The most common source of monopoly power is most likely:",
+      "choices": {"A": "patents and copyrights.", "B": "government authorization of a natural monopoly.", "C": "network effects."},
+      "answer": "B",
+      "explanation": "All five are sources — patents, control of critical resources (De Beers), government authorization/natural monopoly (utilities), brand loyalty (Rolex), network effects (MS Word) — but the curriculum singles out government-controlled authorization of natural monopolies as the most common form. Patents are the likely distractor.",
+      "kr": "가장 흔한 독점 원천 = 정부 인가 자연독점(수도·전기). 특허가 아님."
+    },
+    {
+      "id": "econ-m2-028", "section": "9f", "concept": "Twice-as-steep MR rule", "type": "calc", "difficulty": 2, "trap": "twice-as-steep",
+      "stem": "A monopolist faces market demand QD = 400 − 0.5P. Its marginal revenue function is closest to:",
+      "choices": {"A": "MR = 800 − 4Q", "B": "MR = 800 − 2Q", "C": "MR = 400 − Q"},
+      "answer": "A",
+      "explanation": "Invert demand: P = 800 − 2Q. TR = P × Q = 800Q − 2Q². MR = ΔTR/ΔQ = 800 − 4Q: same intercept as demand, twice the slope. Choice B is the demand (= AR) function itself.",
+      "kr": "P = 800 − 2Q → TR = 800Q − 2Q² → MR = 800 − 4Q (절편 같고 기울기 2배)."
+    },
+    {
+      "id": "econ-m2-029", "section": "9f", "concept": "Monopoly price comes from the demand curve", "type": "calc", "difficulty": 2, "trap": "price-off-demand",
+      "stem": "A monopolist's marginal revenue is MR = 800 − 4Q and its marginal cost is MC = 50 + 6Q. Demand is P = 800 − 2Q. The profit-maximizing price is closest to:",
+      "choices": {"A": "650", "B": "500", "C": "75"},
+      "answer": "A",
+      "explanation": "Step 1: MR = MC → 800 − 4Q = 50 + 6Q → Q* = 75. Step 2: price comes from the DEMAND curve at Q*: P* = 800 − 2(75) = 650. Choice B (500) is the height of the MR = MC intersection — the classic trap. Choice C is the quantity.",
+      "kr": "MR = MC → Q* = 75. 가격은 수요곡선에서: P* = 800 − 2×75 = 650. 500은 MR = MC 교점 높이(함정)."
+    },
+    {
+      "id": "econ-m2-030", "section": "9f", "concept": "Monopoly profit calculation", "type": "calc", "difficulty": 3, "trap": "formula",
+      "stem": "A monopolist faces demand P = 800 − 2Q and total cost TC = 20,000 + 50Q + 3Q². At the profit-maximizing output of 75 units, economic profit is closest to:",
+      "choices": {"A": "8,125", "B": "28,125", "C": "48,750"},
+      "answer": "A",
+      "explanation": "TR = P × Q = 650 × 75 = 48,750. TC = 20,000 + 50(75) + 3(75²) = 20,000 + 3,750 + 16,875 = 40,625. Profit = 48,750 − 40,625 = 8,125. Choice C is total revenue; choice B is what you get if you forget the 20,000 fixed cost (48,750 − 20,625).",
+      "kr": "TR = 650 × 75 = 48,750; TC = 20,000 + 3,750 + 16,875 = 40,625; π = 8,125."
+    },
+    {
+      "id": "econ-m2-031", "section": "9f", "concept": "Elasticity pricing rule", "type": "calc", "difficulty": 2, "trap": "divide-vs-multiply",
+      "stem": "A monopolist's marginal cost is constant at 75 and the price elasticity of demand (positive magnitude) is 1.5. Using the elasticity pricing rule, the profit-maximizing price is closest to:",
+      "choices": {"A": "225", "B": "25", "C": "112.5"},
+      "answer": "A",
+      "explanation": "P × [1 − 1/εp] = MC → P × (1 − 1/1.5) = 75 → P × (1/3) = 75 → P = 225. Choice B multiplies 75 by 1/3 instead of dividing; choice C is 75 × 1.5. As εp → 1 the markup explodes; as εp → ∞, P → MC.",
+      "kr": "P × (1 − 1/1.5) = 75 → P × 1/3 = 75 → P = 225. 곱하지 말고 나눈다."
+    },
+    {
+      "id": "econ-m2-032", "section": "9f", "concept": "Regulated monopoly pricing", "type": "mc", "difficulty": 2, "trap": "definition",
+      "stem": "A regulator of an authorized natural monopoly will most likely base regulated prices on:",
+      "choices": {"A": "long-run marginal cost.", "B": "long-run average cost.", "C": "the price that extracts the entire consumer surplus."},
+      "answer": "B",
+      "explanation": "Pricing at LRAC (where LRAC crosses demand) gives investors exactly a normal return with zero economic profit and no subsidy. Marginal-cost pricing is the competitive solution but produces losses under declining LRAC; first-degree discrimination is the unregulated monopolist's ideal.",
+      "kr": "규제가격 = 장기평균비용(LRAC) → 정상수익률. MC 가격은 손실(보조금 필요), 완전 가격차별은 비규제 독점의 꿈."
+    },
+    {
+      "id": "econ-m2-033", "section": "9f", "concept": "Why P = MC fails for a natural monopoly", "type": "mc", "difficulty": 3, "trap": "mechanism",
+      "stem": "Setting price equal to marginal cost for a natural monopoly with continuously declining long-run average cost most likely results in:",
+      "choices": {"A": "a normal return on capital.", "B": "economic losses, because marginal cost lies below average cost throughout the relevant range.", "C": "economic profits, because output is maximized."},
+      "answer": "B",
+      "explanation": "When AC is continuously declining, MC < AC everywhere in the relevant range. Pricing at MC therefore sets P < AC → losses, which is why marginal-cost pricing requires a subsidy (e.g., Amtrak) and why regulators use average-cost pricing instead.",
+      "kr": "LRAC가 계속 하락하면 MC < AC → P = MC는 손실 → 보조금 필요(Amtrak). 그래서 평균비용 가격 규제."
+    },
+    {
+      "id": "econ-m2-034", "section": "9f", "concept": "Natural monopoly: ordering of solutions", "type": "mc", "difficulty": 2, "trap": "ordering",
+      "stem": "For a natural monopoly, comparing the unregulated monopoly outcome (M), the regulated average-cost outcome (R) and the competitive marginal-cost outcome (C), prices are most likely ordered:",
+      "choices": {"A": "Pᴍ > Pᴿ > P꜀, with Qᴍ < Qᴿ < Q꜀.", "B": "P꜀ > Pᴿ > Pᴍ, with Q꜀ < Qᴿ < Qᴍ.", "C": "Pᴿ > Pᴍ > P꜀, with Qᴿ < Qᴍ < Q꜀."},
+      "answer": "A",
+      "explanation": "The unregulated monopolist charges the highest price and produces the least; the competitive P = MC solution gives the lowest price and largest output; the regulator (P = LRAC) lands in the middle on both price and quantity.",
+      "kr": "Pᴍ > Pᴿ > P꜀, Qᴍ < Qᴿ < Q꜀ — 규제 해법은 가격·수량 모두 중간."
+    },
+    {
+      "id": "econ-m2-035", "section": "9g", "concept": "Classify price discrimination", "type": "mc", "difficulty": 2, "trap": "second-vs-third",
+      "stem": "An airline charges a higher fare for same-day round trips, which are bought mainly by business travelers. This practice is best described as:",
+      "choices": {"A": "first-degree price discrimination.", "B": "second-degree price discrimination.", "C": "third-degree price discrimination."},
+      "answer": "C",
+      "explanation": "The SELLER sorts customers by an observable trait (itinerary pattern that identifies business travelers) before quoting — third degree. Second degree lets customers self-select from a menu (volume discounts, tiers). First degree charges each individual their maximum willingness to pay.",
+      "kr": "판매자가 관측 가능한 특성으로 분류 → 3차. 고객이 메뉴에서 스스로 선택 → 2차. 개인별 최대 지불의사 → 1차."
+    },
+    {
+      "id": "econ-m2-036", "section": "9g", "concept": "First-degree discrimination welfare", "type": "mc", "difficulty": 3, "trap": "absolute-claim",
+      "stem": "Compared with a single-price monopoly, under first-degree price discrimination:",
+      "choices": {"A": "every consumer is worse off.", "B": "some consumers pay less than the single monopoly price and output expands toward the competitive level.", "C": "output falls because the monopolist serves only high-value customers."},
+      "answer": "B",
+      "explanation": "The discriminating monopolist serves every customer whose willingness to pay exceeds MC, so output expands and some buyers pay less than the single monopoly price. What changes is who keeps the surplus — the producer captures all of it. 'All consumers are worse off' is false.",
+      "kr": "1차 가격차별: MR > MC인 모든 고객에게 판매 → 산출량 확대, 일부는 단일 독점가격보다 싸게 구매. 잉여는 모두 생산자가 가져감."
+    },
+    {
+      "id": "econ-m2-037", "section": "9g", "concept": "Two-part tariff", "type": "mc", "difficulty": 2, "trap": "mechanism",
+      "stem": "A café charges a fixed monthly membership fee and then sells lunches to members at half price. The fixed fee most likely serves to:",
+      "choices": {"A": "cover the café's fixed costs only.", "B": "extract the consumer surplus created by the lower per-unit price.", "C": "reduce the quantity of lunches members buy."},
+      "answer": "B",
+      "explanation": "The per-unit discount works the quantity margin (members buy more lunches along their demand curve); the fixed fee is set at the maximum they would pay for that option, harvesting the surplus. The member ends up no better or worse off.",
+      "kr": "단위 할인은 수량을 늘리고, 고정 회비는 그로 인한 소비자잉여를 거둬간다."
+    },
+    {
+      "id": "econ-m2-038", "section": "9h", "concept": "Monopoly long-run profit", "type": "mc", "difficulty": 1, "trap": "definition",
+      "stem": "Compared with a perfectly competitive firm, an unregulated monopoly most likely:",
+      "choices": {"A": "also earns zero economic profit in the long run.", "B": "can earn positive economic profit in the long run because of substantial ongoing barriers to entry.", "C": "earns economic profit only in the short run."},
+      "answer": "B",
+      "explanation": "Perfect competition drives economic profit to zero through entry. Substantial, ONGOING barriers block that mechanism for a monopoly, so economic profit can persist — provided the barriers are maintained (e.g., continuously adding new patents).",
+      "kr": "지속적인 진입장벽이 진입 메커니즘을 막아 비규제 독점은 장기에도 경제적 이윤 가능(장벽 유지가 조건)."
+    },
+    {
+      "id": "econ-m2-039", "section": "9h", "concept": "Long run: all factors including technology", "type": "mc", "difficulty": 2, "trap": "technology-detail",
+      "stem": "In the long run, which of the following is most accurate?",
+      "choices": {"A": "All factors of production are variable, including technology.", "B": "Capital is variable but technology remains fixed.", "C": "Only labor is variable."},
+      "answer": "A",
+      "explanation": "The short run has some factors fixed — generally capital (plant, machinery, technology, land). In the long run ALL factors are variable, and the curriculum explicitly includes technology; distractors exploit that detail.",
+      "kr": "장기 = 모든 생산요소 가변, 기술 포함. 단기 = 자본(기술 포함) 고정."
+    },
+    {
+      "id": "econ-m2-040", "section": "9h", "concept": "Regulated monopoly solutions (S-N-R-F)", "type": "mc", "difficulty": 2, "trap": "matching",
+      "stem": "A government sets a natural monopoly's price equal to marginal cost and covers the resulting shortfall with public funds. This solution is best described as:",
+      "choices": {"A": "franchise bidding.", "B": "marginal-cost pricing with a subsidy, as with Amtrak.", "C": "regulation at long-run average cost."},
+      "answer": "B",
+      "explanation": "The four long-run solutions (S-N-R-F): Subsidize (P = MC plus subsidy — Amtrak), Nationalize (government ownership, common in Europe), Regulate (P = LRAC → normal return), Franchise bidding (competition for the right to serve, targeting P = LRAC — airport retail, stadium concessions).",
+      "kr": "S-N-R-F: 보조금(P = MC, Amtrak) / 국유화 / 규제(P = LRAC) / 프랜차이즈 입찰(P = LRAC 목표)."
+    },
+    {
+      "id": "econ-m2-041", "section": "9h", "concept": "Fair return for a regulated monopoly", "type": "mc", "difficulty": 3, "trap": "direction",
+      "stem": "When a regulator sets the 'fair' return for an authorized monopoly, the appropriate return is most likely:",
+      "choices": {"A": "higher than that of a competitive firm, to compensate for regulatory burden.", "B": "lower than that of a competitive firm, because the monopoly faces no competitors and therefore lower risk.", "C": "equal to the return on the firm's most recent capital investment."},
+      "answer": "B",
+      "explanation": "With no competitors, the regulated monopoly's business risk is lower, so the fair (normal) return should be lower. A practical difficulty is that the regulator struggles to verify the firm's true LRAC, which the firm has an incentive to overstate.",
+      "kr": "경쟁자가 없어 위험이 낮으므로 공정수익률은 더 낮아야 함. 난점: 진짜 LRAC 검증이 어려움."
+    },
+    {
+      "id": "econ-m2-042", "section": "9d", "concept": "One firm moving the price → not PC", "type": "mc", "difficulty": 1, "trap": "definition",
+      "stem": "If a single firm's decision to expand output noticeably lowers the market price, the market is most likely:",
+      "choices": {"A": "perfectly competitive, because price adjusts to clear the market.", "B": "not perfectly competitive, because no individual firm in perfect competition can affect the market price.", "C": "in long-run equilibrium."},
+      "answer": "B",
+      "explanation": "The definitional test: if any one firm could change the equilibrium market price, the market is NOT perfectly competitive. In perfect competition the market price is a horizontal line that each firm simply accepts.",
+      "kr": "한 기업이 시장가격을 움직일 수 있으면 완전경쟁이 아니다 — 정의적 판별."
+    },
+    {
+      "id": "econ-m2-f01", "section": "4", "concept": "Exhibit 1 characteristics table", "type": "flash", "difficulty": 2, "trap": "non-monotonic",
+      "front": "Characteristics table: sellers / differentiation / barriers / pricing power / non-price competition for the four structures",
+      "back": "Perfect competition: many | homogeneous | very low | none | none.\nMonopolistic competition: many | differentiated | low | some | advertising + differentiation.\nOligopoly: few | homogeneous | high | some/considerable | advertising + differentiation.\nMonopoly: one | unique | very high | considerable | advertising only.\nTrap columns: PC and oligopoly are both homogeneous; monopoly advertises only."
+    },
+    {
+      "id": "econ-m2-f02", "section": "9b", "concept": "MR–elasticity formula", "type": "flash", "difficulty": 2, "trap": "formula",
+      "front": "MR as a function of price and elasticity — formula and the four regimes",
+      "back": "MR = P × [1 − (1/εp)]  (εp as a positive magnitude).\nεp → ∞: MR = P (perfect competition). εp > 1: MR > 0. εp = 1: MR = 0 (TR max). εp < 1: MR < 0.\nA profit-maximizer never operates on the inelastic portion."
+    },
+    {
+      "id": "econ-m2-f03", "section": "9c", "concept": "Consumer surplus formula", "type": "flash", "difficulty": 1, "trap": "half",
+      "front": "Consumer surplus with linear demand — formula and common slips",
+      "back": "CS = ½ × Q₁ × (Pmax − P₁), where Pmax is the PRICE (vertical) intercept.\nSlips: using the quantity intercept; forgetting the ½; confusing total value (area under demand), expenditure (P×Q rectangle) and surplus (triangle)."
+    },
+    {
+      "id": "econ-m2-f04", "section": "9f", "concept": "Monopoly four-step profit maximization", "type": "flash", "difficulty": 2, "trap": "price-off-demand",
+      "front": "Monopoly profit maximization — four steps (natural-gas example)",
+      "back": "1) MR = MC → Q*: 800 − 4Q = 50 + 6Q → Q* = 75.\n2) Price off the DEMAND curve (never MR): P* = 800 − 2(75) = 650.\n3) π = TR − TC = 48,750 − 40,625 = 8,125.\n4) Graph: π = (P − AC) × Q.\nMR has the same intercept as linear demand and twice the slope."
+    },
+    {
+      "id": "econ-m2-f05", "section": "9f", "concept": "Elasticity pricing rule", "type": "flash", "difficulty": 2, "trap": "divide-vs-multiply",
+      "front": "Elasticity pricing rule — formula and worked example",
+      "back": "P × [1 − (1/εp)] = MC.\nMC = 75, εp = 1.5 → P × (1/3) = 75 → P = 225 (divide, don't multiply).\nεp near 1 → markup explodes; εp → ∞ → P → MC (competitive result)."
+    },
+    {
+      "id": "econ-m2-f06", "section": "9f", "concept": "Natural monopoly three solutions", "type": "flash", "difficulty": 2, "trap": "ordering",
+      "front": "Natural monopoly (declining LRAC): the three price/output solutions",
+      "back": "1) Unregulated monopoly: LRMC = MR, price off demand → Qᴍ lowest, Pᴍ highest.\n2) Competitive: P = MC → Q꜀ highest, P꜀ lowest, but MC < AC → LOSSES → needs subsidy.\n3) Regulatory: P = LRAC → normal return, zero economic profit, no subsidy.\nPᴍ > Pᴿ > P꜀ and Qᴍ < Qᴿ < Q꜀."
+    },
+    {
+      "id": "econ-m2-f07", "section": "9g", "concept": "Three degrees of price discrimination", "type": "flash", "difficulty": 1, "trap": "second-vs-third",
+      "front": "First-, second- and third-degree price discrimination",
+      "back": "1st: each customer pays their maximum willingness to pay → entire consumer surplus captured (not all consumers worse off; output expands while MR > MC).\n2nd: menu of quantity/quality options → customers SELF-SELECT (volume discounts, tiers, bundles).\n3rd: seller SORTS by observable segment (student pricing, same-day airfares).\nTwo-part tariff: per-unit discount + fixed fee that harvests the surplus."
+    },
+    {
+      "id": "econ-m2-f08", "section": "9h", "concept": "S-N-R-F regulated-monopoly solutions", "type": "flash", "difficulty": 2, "trap": "matching",
+      "front": "Four long-run solutions for regulated (natural) monopolies — S-N-R-F",
+      "back": "Subsidize: P = MC plus subsidy (Amtrak).\nNationalize: government ownership (Europe; price rises politically unpopular).\nRegulate: P = LRAC → normal return (risk lower → fair return lower; true LRAC hard to verify).\nFranchise bidding: competition for the right to serve, targeting P = LRAC (airport retail, stadium concessions)."
+    },
+    {
+      "id": "econ-m2-f09", "section": "9e", "concept": "PC long-run equilibrium", "type": "flash", "difficulty": 1, "trap": "direction",
+      "front": "Perfect competition long run: mechanism and resting point",
+      "back": "Economic profit → entry + capacity expansion → supply shifts RIGHT → price falls (industry Q ↑, each incumbent's Q ↓).\nResting point: P = MC = minimum AC → TR = TC → zero economic profit, but a full NORMAL return.\nFirm's supply curve = its MC schedule (PC only); firm's demand curve = market price (P = AR = MR)."
+    },
+    {
+      "id": "econ-m2-f10", "section": "9d", "concept": "Economic vs. accounting profit", "type": "flash", "difficulty": 1, "trap": "opportunity-cost",
+      "front": "Economic profit vs. accounting profit",
+      "back": "Accounting profit = revenue − explicit payments (workers, vendors, lenders) − historic-cost depreciation.\nEconomic profit = TR − TC where TC includes the normal return on ALL resources (owner's labor, owner's land/capital).\nEconomic profit = accounting profit − unrecorded opportunity costs.\nZero economic profit = owner still earns a normal return."
+    },
+    {
+      "id": "econ-m2-f11", "section": "8", "concept": "Five conditions of perfect competition", "type": "flash", "difficulty": 1, "trap": "definition",
+      "front": "The five conditions of perfect competition (and the canonical example)",
+      "back": "1) Large number of POTENTIAL buyers and sellers. 2) Virtually identical products. 3) Few/easily surmountable barriers to entry and exit. 4) No market-pricing power. 5) No non-price competition.\nCanonical example: corn for animal feed — capital intensive but low barriers (abundant land/water); active futures/spot markets."
+    },
+    {
+      "id": "econ-m2-f12", "section": "3", "concept": "Five factors + Porter's five forces", "type": "flash", "difficulty": 1, "trap": "definition",
+      "front": "Five factors that determine market structure vs. Porter's five forces",
+      "back": "Structure factors (N-D-P-B-N): Number/size of firms, Differentiation, Pricing power, Barriers to entry/exit, Non-price competition.\nPorter: threat of entry, power of suppliers, power of buyers, threat of substitutes, rivalry among existing competitors (two threats, two powers, one rivalry)."
+    }
+  ]
+}

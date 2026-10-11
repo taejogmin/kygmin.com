@@ -26,7 +26,13 @@
 ├── solution-challenge/         #   └ Givplus 이미지 (랜딩·지도·사이트맵·아키텍처 등)
 │
 ├── playhouse/                  # 플레이하우스 허브 — 태그 필터가 달린 전체 목록
-│   └── index.html
+│   ├── index.html
+│   └── cfa/                    # [플레이하우스] CFA 스터디 허브 — 노트·퀴즈·오답노트
+│       ├── index.html          #   단일 파일 앱 (marked 인라인), 데이터는 content/
+│       ├── content/manifest.json       # 모듈 목록 (노트·문제 파일 경로)
+│       ├── content/notes/*.md          # 모듈별 학습 노트 (Markdown)
+│       ├── content/questions/*.json    # 모듈별 문제 은행 (mc/calc/flash, 태그 포함)
+│       └── supabase_schema.sql         # cfa_attempts / cfa_progress 테이블 + RLS
 │
 ├── blueberry/                  # [플레이하우스] 블루베리 스무디 — 한국어 억양 분석기
 │   └── index.html              #   YIN 피치 추출 + 비터비 옥타브 보정, 전부 브라우저 내
@@ -64,6 +70,7 @@
 | `nine-positions/` | 나인 포지션 | 9칸 동시 배치 심리전. |
 | `rps/` | 가위바위보 예측기 | 사람의 패턴을 학습해 다음 수를 예측한다. |
 | `animal/` | 동물 닮은꼴 찾기 | MediaPipe 얼굴 랜드마크 → 동물 12종 거리 점수. |
+| `playhouse/cfa/` | CFA 스터디 허브 | CFA Level I 노트 읽기 + 3지선다/계산/플래시카드 퀴즈 + 오답노트(2회 연속 정답까지 유지) + 모듈·섹션·오류패턴별 약점 분석 + JSON 내보내기. 게스트는 localStorage, 로그인 시 Supabase(`cfa_attempts`, `cfa_progress`)에 동기화. 새 모듈 추가 = `content/notes/*.md` + `content/questions/*.json` + `manifest.json` 한 줄. |
 
 공통 규칙: 서버 없이 브라우저 안에서 전부 돌아간다. 로그인이 필요한 기능(기록 저장·랭킹)은 `auth-widget.js`가 붙여 주는 Supabase 세션을 쓴다.
 
