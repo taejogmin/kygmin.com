@@ -440,7 +440,7 @@ var T = {
     exam:'EXAM', days:'days', examPast:'done', loading:'Loading content…', loadFail:'Could not load the study content. Reload the page.',
     h_overview:'Overview', h_modules:'Modules', h_weak:'Weak spots', h_sync:'Your data',
     attempts:'ANSWERED', accuracy:'ACCURACY', due:'DUE FOR REVIEW', streak:'DAY STREAK', questions:'QUESTIONS', read:'READ',
-    read_btn:'Read', quiz_btn:'Quiz', notes:'notes', qs:'questions', secs:'sections', modules_n:'modules', answered_l:'answered',
+    read_btn:'Read', quiz_btn:'Quiz', notes:'notes', qs:'questions', secs:'sections', modules_n:'modules', answered_l:'answered', src_cfai:'CFA practice (paraphrased)',
     noweak:'No weak spots yet — answer a few questions and the concepts you miss most will show up here.',
     drill:'Drill', drillWeak:'Drill weak spots', misses:'misses', ofN:'of',
     guest:'Guest mode — your progress is kept in this browser only. Sign in (bottom-left chip) to sync across devices.',
@@ -464,7 +464,7 @@ var T = {
     exam:'시험', days:'일', examPast:'종료', loading:'콘텐츠를 불러오는 중…', loadFail:'학습 콘텐츠를 불러오지 못했습니다. 페이지를 새로 고치세요.',
     h_overview:'현황', h_modules:'모듈', h_weak:'약점', h_sync:'내 데이터',
     attempts:'푼 문제', accuracy:'정답률', due:'복습 대기', streak:'연속 학습일', questions:'문제 수', read:'읽음',
-    read_btn:'읽기', quiz_btn:'퀴즈', notes:'노트', qs:'문제', secs:'섹션', modules_n:'모듈', answered_l:'풀이',
+    read_btn:'읽기', quiz_btn:'퀴즈', notes:'노트', qs:'문제', secs:'섹션', modules_n:'모듈', answered_l:'풀이', src_cfai:'CFA 공식 연습문제(재구성)',
     noweak:'아직 약점 데이터가 없습니다. 문제를 몇 개 풀면 자주 틀리는 개념이 여기 표시됩니다.',
     drill:'집중 풀기', drillWeak:'약점 집중 풀기', misses:'오답', ofN:'/',
     guest:'게스트 모드 — 진도가 이 브라우저에만 저장됩니다. 왼쪽 아래 칩에서 로그인하면 기기 간 동기화됩니다.',
@@ -806,7 +806,7 @@ function renderQuestion(el){
   if(!quiz.order){ quiz.order = q.type==='flash' ? null : shuffle(Object.keys(q.choices)); quiz.t0=Date.now(); }
   var h='<div class="panel"><div class="qhead"><div class="qprog">'+esc(t('q_of'))+' '+(quiz.i+1)+' / '+total+' · '+esc(t('m_'+(quiz.mode==='std'?'std':quiz.mode==='new'?'new':quiz.mode==='weak'?'weak':quiz.mode==='review'?'review':'std')))+'</div><button class="btn sm" id="quitQuiz">'+esc(t('quit'))+'</button></div>'
     +'<div class="qbar"><i style="width:'+pct(quiz.i,total)+'%"></i></div>'
-    +'<div><span class="tag">'+esc(m?m.short:q.module)+'</span><span class="tag">§'+esc(q.section)+'</span><span class="tag">'+esc(q.concept)+'</span><span class="tag '+(q.type==='calc'?'a':q.type==='flash'?'g':'')+'">'+esc(t(q.type))+'</span>'+(q.difficulty?'<span class="tag">'+'★'.repeat(q.difficulty)+'</span>':'')+'</div>';
+    +'<div><span class="tag">'+esc(m?m.short:q.module)+'</span><span class="tag">§'+esc(q.section)+'</span><span class="tag">'+esc(q.concept)+'</span><span class="tag '+(q.type==='calc'?'a':q.type==='flash'?'g':'')+'">'+esc(t(q.type))+'</span>'+(q.difficulty?'<span class="tag">'+'★'.repeat(q.difficulty)+'</span>':'')+(q.source==='cfai'?'<span class="tag a">'+esc(t('src_cfai'))+'</span>':'')+'</div>';
   if(q.type==='flash'){
     h+='<div class="flashcard"><span class="side">FRONT</span><div class="front">'+esc(q.front)+'</div>'+(quiz.revealed?'<span class="side" style="margin-top:14px">BACK</span><div class="back">'+esc(q.back)+'</div>':'')+'</div>';
     if(!quiz.revealed) h+='<div class="acts"><button class="btn ink" id="reveal">'+esc(t('showAnswer'))+'</button></div>';
