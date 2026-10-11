@@ -1,0 +1,433 @@
+{
+  "module": "econ-m3",
+  "questions": [
+    {
+      "id": "econ-m3-001", "section": "5", "concept": "Real GDP growth from nominal growth and deflator", "type": "calc", "difficulty": 2, "trap": "formula",
+      "stem": "Nominal GDP rises from 4,000 to 4,600 while the GDP deflator rises from 100 to 110. Real GDP growth is closest to:",
+      "choices": {"A": "4.5%", "B": "15.0%", "C": "5.0%"},
+      "answer": "A",
+      "explanation": "Real GDP = nominal / (deflator/100): year 1 = 4,000/1.00 = 4,000; year 2 = 4,600/1.10 = 4,181.8. Growth = 4,181.8/4,000 − 1 = 4.55%. Equivalently (1 + 0.15)/(1 + 0.10) − 1 = 4.55%. Choice B is nominal growth; choice C is the 15% − 10% approximation, which overstates.",
+      "kr": "실질 GDP = 명목/(디플레이터/100) → 4,000 → 4,181.8, 성장률 4.5%. 15% − 10% = 5%는 근사치(과대)."
+    },
+    {
+      "id": "econ-m3-002", "section": "4", "concept": "GDP inclusion: imputed exceptions", "type": "mc", "difficulty": 1, "trap": "definition",
+      "stem": "Which of the following is most likely included in GDP?",
+      "choices": {"A": "A government unemployment benefit paid to a household.", "B": "The imputed rental value of an owner-occupied home.", "C": "The resale of a three-year-old apartment at a price above its original purchase price."},
+      "answer": "B",
+      "explanation": "Owner-occupied housing is one of the two imputed exceptions (with government services at cost): the owner is treated as paying rent to herself. Transfer payments involve no production, and resales of previously produced assets (including any capital gain) were counted when first built.",
+      "kr": "자가주택의 귀속임대료는 GDP에 포함(귀속 예외). 이전지출과 기존 자산의 재판매(자본이득 포함)는 제외."
+    },
+    {
+      "id": "econ-m3-003", "section": "7", "concept": "S = I + (G − T) + (X − M): solve for trade balance", "type": "calc", "difficulty": 2, "trap": "sign",
+      "stem": "Private saving is 500, investment is 400 and the fiscal deficit is 40. The trade balance is closest to:",
+      "choices": {"A": "+60 (surplus)", "B": "−60 (deficit)", "C": "+140 (surplus)"},
+      "answer": "A",
+      "explanation": "S = I + (G − T) + (X − M) → 500 = 400 + 40 + (X − M) → X − M = +60, a trade surplus. Private saving exceeds the sum of investment and the fiscal deficit, so the excess builds claims on foreigners. Choice C forgets the fiscal deficit; choice B flips the sign.",
+      "kr": "500 = 400 + 40 + (X − M) → X − M = +60 흑자. 부호를 명시적으로 대입할 것."
+    },
+    {
+      "id": "econ-m3-004", "section": "9", "concept": "Price level change = movement along AD", "type": "mc", "difficulty": 2, "trap": "shift-vs-along",
+      "stem": "The price level falls, with everything else initially unchanged. The most likely result is:",
+      "choices": {"A": "a rightward shift of AD as real wealth rises.", "B": "a movement down along the AD curve as lower interest rates stimulate investment.", "C": "a leftward shift of AD as exports become more competitive."},
+      "answer": "B",
+      "explanation": "The price level is the variable on AD's own axis, so a change in it moves the economy ALONG the curve. The wealth, interest-rate and real-exchange-rate effects explain why lower prices raise the quantity of output demanded; they are not shifts. Only non-price factors shift AD.",
+      "kr": "물가 변화는 AD곡선 '위에서의 이동'. 부의 효과·이자율 효과·실질환율 효과는 기울기의 이유이지 이동(shift)이 아님."
+    },
+    {
+      "id": "econ-m3-005", "section": "13", "concept": "Diagnose the shock from P and Y", "type": "mc", "difficulty": 2, "trap": "which-curve",
+      "stem": "Falling real GDP together with a rising price level is most consistent with:",
+      "choices": {"A": "a leftward shift of aggregate demand.", "B": "a leftward shift of short-run aggregate supply.", "C": "a movement along the long-run aggregate supply curve."},
+      "answer": "B",
+      "explanation": "Output and prices moving in OPPOSITE directions identifies a supply shock. SRAS shifting left (e.g., an oil price spike) lowers output and raises prices — stagflation. A fall in AD would lower both output and prices.",
+      "kr": "산출량과 물가가 반대 방향 → 공급 충격. SRAS 왼쪽 이동 = 스태그플레이션. AD 감소면 둘 다 하락."
+    },
+    {
+      "id": "econ-m3-006", "section": "12", "concept": "Currency appreciation: AD left, SRAS right", "type": "mc", "difficulty": 3, "trap": "direction",
+      "stem": "A country's currency appreciates significantly. All else equal, the most likely effect is:",
+      "choices": {"A": "AD shifts right and SRAS shifts left.", "B": "AD shifts left and SRAS shifts right.", "C": "Both AD and SRAS shift left."},
+      "answer": "B",
+      "explanation": "A stronger currency makes exports less competitive and imports cheaper, so net exports fall → AD shifts LEFT. At the same time imported inputs become cheaper, lowering production costs → SRAS shifts RIGHT. One event, two opposite directions — a favorite exam construction.",
+      "kr": "통화 강세: 수출↓ 수입↑ → AD 왼쪽; 수입 원자재 가격↓ → SRAS 오른쪽. 한 사건, 두 방향."
+    },
+    {
+      "id": "econ-m3-007", "section": "2", "concept": "GDP inclusion criteria", "type": "mc", "difficulty": 1, "trap": "definition",
+      "stem": "Which of the following is most likely counted in this year's GDP?",
+      "choices": {"A": "A homeowner repairs her own roof over a weekend.", "B": "A firm purchases a newly built machine for its factory.", "C": "A retiree receives a monthly government pension payment."},
+      "answer": "B",
+      "explanation": "A newly produced capital good bought by a firm is investment (I) and enters GDP. Own-benefit household work is not sold in a market, and a pension is a transfer payment with no production behind it (the consumption it funds enters GDP as C only when spent).",
+      "kr": "새로 생산된 설비 구매 = 투자(I) → 포함. 자가 수리(시장 거래 아님)·연금(이전지출)은 제외."
+    },
+    {
+      "id": "econ-m3-008", "section": "2", "concept": "Intermediate vs. final goods", "type": "mc", "difficulty": 1, "trap": "definition",
+      "stem": "Flour purchased by a bakery to produce bread for sale is best classified as:",
+      "choices": {"A": "a final good, because it has been sold in a market.", "B": "an intermediate good, because it is used to produce another good.", "C": "inventory investment, because the bakery holds it before use."},
+      "answer": "B",
+      "explanation": "A good resold or used as an input to another product is intermediate; its value is already inside the bread's final price, so counting it separately would double-count. The same flour bought by a household for home baking would be a final good. 'Intermediate goods' is not the same thing as 'inventories'.",
+      "kr": "다른 재화 생산에 투입되면 중간재 → 별도 계산 시 이중계산. 가정이 사면 최종재. 중간재 ≠ 재고."
+    },
+    {
+      "id": "econ-m3-009", "section": "3", "concept": "Value added at a stage", "type": "calc", "difficulty": 1, "trap": "formula",
+      "stem": "A farmer sells wheat to a miller for €0.15; the miller sells flour to a baker for €0.46. The miller's value added is closest to:",
+      "choices": {"A": "€0.31", "B": "€0.46", "C": "€0.61"},
+      "answer": "A",
+      "explanation": "Value added = receipts − cost of inputs bought from the prior stage = 0.46 − 0.15 = 0.31. Choice B is the miller's receipts; choice C adds the two receipts, which double-counts the wheat.",
+      "kr": "부가가치 = 매출 − 전 단계 투입비용 = 0.46 − 0.15 = 0.31."
+    },
+    {
+      "id": "econ-m3-010", "section": "3", "concept": "Value added with parallel inputs", "type": "calc", "difficulty": 3, "trap": "parallel-inputs",
+      "stem": "A car manufacturer buys steel (1,000), plastics (3,000) and semiconductors (1,000) from three separate suppliers and sells the assembled car to a dealer for 15,000. The manufacturer's value added is closest to:",
+      "choices": {"A": "10,000", "B": "14,000", "C": "15,000"},
+      "answer": "A",
+      "explanation": "Value added = receipts − cost of ALL inputs purchased = 15,000 − (1,000 + 3,000 + 1,000) = 10,000. The three inputs feed the assembly stage in parallel, so all must be subtracted. Choice B subtracts only the 'row above' (1,000) — the shortcut that works for a single chain but breaks when inputs branch. Always verify: Σ value added must equal the final sale price.",
+      "kr": "병렬 투입은 전부 합산해서 차감: 15,000 − 5,000 = 10,000. '바로 윗줄만 빼기'(14,000)는 함정."
+    },
+    {
+      "id": "econ-m3-011", "section": "3", "concept": "Imported inputs reduce domestic value added", "type": "mc", "difficulty": 2, "trap": "direction",
+      "stem": "In a domestic value-added chain whose final product retails for 18,000, the steel input (1,000) is now imported instead of produced domestically. The contribution of the chain to domestic GDP most likely:",
+      "choices": {"A": "is unchanged at 18,000, because the final price is unchanged.", "B": "falls to 17,000, because value created abroad is excluded.", "C": "rises to 19,000, because imports add to the chain's cost."},
+      "answer": "B",
+      "explanation": "GDP measures production within the economy. The steel's value (1,000) was created abroad, so domestic value added falls to 17,000. In expenditure terms, the import raises M, which subtracts the foreign-created portion the final price would otherwise over-credit.",
+      "kr": "수입된 투입물의 가치는 해외에서 창출 → 국내 부가가치에서 차감: 18,000 − 1,000 = 17,000."
+    },
+    {
+      "id": "econ-m3-012", "section": "4", "concept": "Government services in GDP", "type": "mc", "difficulty": 2, "trap": "definition",
+      "stem": "Government services such as policing and the courts are most likely included in GDP:",
+      "choices": {"A": "at their market value, estimated from comparable private services.", "B": "at cost (the wages paid), with no value added attributed.", "C": "not at all, because they are not sold in a market."},
+      "answer": "B",
+      "explanation": "There is no market price for these services, so they are included at the cost of providing them (wages paid) and no value added is attributed. This is the second imputed exception alongside owner-occupied housing.",
+      "kr": "정부 서비스는 시장가격이 없어 원가(임금)로 포함, 부가가치는 0으로 간주."
+    },
+    {
+      "id": "econ-m3-013", "section": "4", "concept": "Underground economy share of activity", "type": "calc", "difficulty": 2, "trap": "units",
+      "stem": "A country's underground economy is estimated at 60% of its official nominal GDP. The share of total economic activity missed by official GDP statistics is closest to:",
+      "choices": {"A": "37.5%", "B": "60.0%", "C": "40.0%"},
+      "answer": "A",
+      "explanation": "The denominator is TOTAL activity (official + underground): 60/(100 + 60) = 60/160 = 37.5%. Choice B uses official GDP as the denominator, which is how the estimate was quoted, not the share missed.",
+      "kr": "누락 비율 = 60/(100 + 60) = 37.5%. 분모는 공식 + 지하경제 합계."
+    },
+    {
+      "id": "econ-m3-014", "section": "5", "concept": "GDP deflator calculation", "type": "calc", "difficulty": 1, "trap": "formula",
+      "stem": "Nominal GDP is 6,199.3 and real GDP (at base-year prices) is 5,793.8. The GDP deflator is closest to:",
+      "choices": {"A": "107", "B": "93.5", "C": "1.07"},
+      "answer": "A",
+      "explanation": "Deflator = (nominal / real) × 100 = 6,199.3/5,793.8 × 100 = 107. Choice B inverts the ratio; choice C forgets the × 100 convention. The deflator measures pure price change — quantities cancel.",
+      "kr": "디플레이터 = 명목/실질 × 100 = 107. 역수(93.5)·×100 누락(1.07) 주의."
+    },
+    {
+      "id": "econ-m3-015", "section": "5", "concept": "Real GDP from nominal and deflator", "type": "calc", "difficulty": 1, "trap": "formula",
+      "stem": "Nominal GDP is 2,200 and the GDP deflator is 110. Real GDP is closest to:",
+      "choices": {"A": "2,000", "B": "2,420", "C": "2,090"},
+      "answer": "A",
+      "explanation": "Real GDP = nominal / (deflator/100) = 2,200 / 1.10 = 2,000. Choice B multiplies instead of dividing; choice C subtracts 5% instead of dividing by 1.10.",
+      "kr": "실질 GDP = 2,200 / 1.10 = 2,000. 곱하면 안 됨."
+    },
+    {
+      "id": "econ-m3-016", "section": "5", "concept": "Nominal = real × inflation decomposition", "type": "calc", "difficulty": 2, "trap": "formula",
+      "stem": "Real GDP grows 3% and the GDP deflator rises 7%. Nominal GDP growth is closest to:",
+      "choices": {"A": "10.2%", "B": "10.0%", "C": "4.0%"},
+      "answer": "A",
+      "explanation": "(1 + nominal) = (1 + real)(1 + inflation) = 1.03 × 1.07 = 1.1021 → 10.2%. The additive 3% + 7% = 10% is only an approximation; the exact answer includes the cross term. Same decomposition as real vs. nominal returns in Quant Methods.",
+      "kr": "(1.03)(1.07) − 1 = 10.2%. 단순 합(10%)은 근사치."
+    },
+    {
+      "id": "econ-m3-017", "section": "5", "concept": "Real vs. nominal for comparisons", "type": "mc", "difficulty": 1, "trap": "definition",
+      "stem": "To compare economic activity across countries or over time, an analyst should most likely use:",
+      "choices": {"A": "nominal GDP, because it reflects current market prices.", "B": "real GDP, because it strips out price-level changes.", "C": "the GDP deflator, because it measures aggregate output."},
+      "answer": "B",
+      "explanation": "Nominal GDP blends price and quantity changes; higher income driven purely by price rises is not more activity. Real GDP (and real GDP per capita for living standards) isolates output. The deflator is a price index, not an output measure.",
+      "kr": "활동량 비교는 실질 GDP. 명목은 물가 변동이 섞임; 디플레이터는 물가지수."
+    },
+    {
+      "id": "econ-m3-018", "section": "6", "concept": "Classifying expenditure components", "type": "mc", "difficulty": 1, "trap": "definition",
+      "stem": "A manufacturer's inventories of finished goods increase during the year. In the expenditure approach to GDP this is recorded as part of:",
+      "choices": {"A": "consumption (C).", "B": "gross private domestic investment (I).", "C": "government spending (G)."},
+      "answer": "B",
+      "explanation": "I = business spending on capital goods PLUS inventory investment. Inventory changes count even though nothing was sold to a final buyer yet, and they make I the most volatile component of GDP.",
+      "kr": "재고 증가는 투자(I)에 포함. I는 가장 변동성이 큰 구성요소."
+    },
+    {
+      "id": "econ-m3-019", "section": "6", "concept": "Transfer payments and G", "type": "mc", "difficulty": 2, "trap": "definition",
+      "stem": "Which statement about government transfer payments is most accurate?",
+      "choices": {"A": "They are included in G because they are government outlays.", "B": "They are excluded from G; the goods households buy with them enter GDP as C.", "C": "They are included in GDP twice — once as G and once as C."},
+      "answer": "B",
+      "explanation": "G covers government purchases of goods and services (consumption and investment). A transfer is money with no good or service received in return, so it is excluded; when the household spends it, that consumption is in C. Counting it in both places would double-count.",
+      "kr": "이전지출은 G에 미포함(재화·서비스 없음). 가계가 쓰면 C로 포함. 둘 다 세면 이중계산."
+    },
+    {
+      "id": "econ-m3-020", "section": "6", "concept": "Gross vs. net investment", "type": "mc", "difficulty": 1, "trap": "definition",
+      "stem": "The difference between gross investment and net investment is most likely:",
+      "choices": {"A": "inventory investment.", "B": "spending that replaces worn-out capital.", "C": "government investment in infrastructure."},
+      "answer": "B",
+      "explanation": "Gross investment includes the replacement of depreciated (worn-out) capital; net investment is only the addition to productive capacity. Hence 'Gross' Domestic Product. Inventory investment is part of both gross and net.",
+      "kr": "총투자 = 순투자 + 감가상각 대체투자. 그래서 '총(Gross)' 국내생산."
+    },
+    {
+      "id": "econ-m3-021", "section": "6", "concept": "Trade deficit financing", "type": "mc", "difficulty": 2, "trap": "definition",
+      "stem": "A country running a balance-of-trade deficit most likely:",
+      "choices": {"A": "produces more than it spends and lends the difference abroad.", "B": "spends more than it produces and must borrow from the rest of the world.", "C": "has domestic saving that exceeds domestic investment."},
+      "answer": "B",
+      "explanation": "A trade deficit means the economy buys more from abroad than it sells, i.e., it spends more than it produces. Domestic saving is insufficient to fund investment plus the fiscal balance, so the gap is financed by foreign borrowing. One country's deficit is another's surplus — an identity that must hold, though the financing terms may not be attractive.",
+      "kr": "무역적자 = 생산보다 지출이 많음 → 해외 차입으로 조달. 조달 조건이 좋다는 보장은 없음."
+    },
+    {
+      "id": "econ-m3-022", "section": "7", "concept": "Twin deficits direction", "type": "mc", "difficulty": 3, "trap": "sign",
+      "stem": "A government's fiscal deficit widens while private saving and investment (S − I) are unchanged. Using G − T = (S − I) − (X − M), the trade balance most likely:",
+      "choices": {"A": "moves toward surplus.", "B": "moves toward deficit.", "C": "is unaffected, because the identity involves only domestic variables."},
+      "answer": "B",
+      "explanation": "With (S − I) fixed, a larger (G − T) requires a more negative (X − M): the trade deficit widens — the 'twin deficits' logic. Substitute signs explicitly: a trade deficit makes (X − M) negative, and subtracting a negative is what finances the larger fiscal gap.",
+      "kr": "G − T↑, S − I 불변 → (X − M) 더 음수 → 무역적자 확대(쌍둥이 적자). 부호를 직접 대입."
+    },
+    {
+      "id": "econ-m3-023", "section": "8", "concept": "MPC, MPS and APC", "type": "calc", "difficulty": 1, "trap": "avg-vs-marginal",
+      "stem": "A household's disposable income rises by 100 and its consumption rises by 75. Its marginal propensity to save is closest to:",
+      "choices": {"A": "0.25", "B": "0.75", "C": "0.70"},
+      "answer": "A",
+      "explanation": "MPC = ΔC/ΔYd = 75/100 = 0.75, so MPS = 1 − MPC = 0.25. The average propensity to consume (C/Y) is a different, level-based measure — the same marginal-vs-average distinction as MP vs. AP in Module 1.",
+      "kr": "MPC = 0.75 → MPS = 1 − 0.75 = 0.25. APC(C/Y)는 평균 개념으로 별개."
+    },
+    {
+      "id": "econ-m3-024", "section": "8", "concept": "Automatic stabilizers", "type": "mc", "difficulty": 1, "trap": "definition",
+      "stem": "The fact that tax revenues rise and transfer payments fall automatically as income increases is best described as:",
+      "choices": {"A": "discretionary fiscal policy.", "B": "an automatic stabilizer that dampens swings in aggregate output.", "C": "monetary policy transmission."},
+      "answer": "B",
+      "explanation": "Because net taxes t(Y) rise with income, the fiscal balance improves in booms and worsens in slumps with no policy action, mitigating fluctuations. Discretionary policy requires an explicit decision; monetary policy works through the money supply and interest rates.",
+      "kr": "소득에 따라 세수↑ 이전지출↓ → 정책 결정 없이 경기 변동 완화 = 자동안정장치."
+    },
+    {
+      "id": "econ-m3-025", "section": "8", "concept": "Drivers of investment I = I(r, Y)", "type": "mc", "difficulty": 1, "trap": "direction",
+      "stem": "Holding output constant, a rise in the real interest rate most likely causes business investment spending to:",
+      "choices": {"A": "rise, because higher rates signal stronger demand.", "B": "fall, because the cost of financing new capital increases.", "C": "remain unchanged, because investment depends only on expected output."},
+      "answer": "B",
+      "explanation": "I = I(r, Y): investment is decreasing in the real rate (cost of funding) and increasing in output (proxy for the expected profitability of new capital). The real rate is the nominal rate minus expected inflation.",
+      "kr": "투자는 실질이자율에 반비례, 산출량에 비례. 실질이자율 = 명목 − 기대인플레이션."
+    },
+    {
+      "id": "econ-m3-026", "section": "9", "concept": "Why AD slopes downward (not micro logic)", "type": "mc", "difficulty": 2, "trap": "wrong-reason",
+      "stem": "The aggregate demand curve slopes downward most likely because a higher price level:",
+      "choices": {"A": "leads consumers with a given income to substitute toward cheaper goods.", "B": "reduces real wealth, raises interest rates and causes the real exchange rate to appreciate.", "C": "shifts the supply curve to the left."},
+      "answer": "B",
+      "explanation": "The micro 'given income' logic does not apply — income is determined inside the model with the price level. AD slopes down because of three effects of a higher price level: real wealth falls (C↓), money demand rises so interest rates rise (I↓, C↓), and the real exchange rate appreciates (X↓, M↑). All three are movements along AD.",
+      "kr": "미시적 대체 논리는 오답. 부의 효과·이자율 효과·실질환율 효과 세 가지가 AD 우하향의 이유."
+    },
+    {
+      "id": "econ-m3-027", "section": "9", "concept": "Interest rate effect chain", "type": "mc", "difficulty": 2, "trap": "direction",
+      "stem": "With the nominal money supply fixed, a rise in the price level most likely:",
+      "choices": {"A": "lowers money demand and interest rates, stimulating investment.", "B": "raises money demand and interest rates, reducing investment and loan-financed consumption.", "C": "has no effect on interest rates because the money supply is unchanged."},
+      "answer": "B",
+      "explanation": "Higher prices mean transactions need more money; with supply fixed, interest rates must rise to ration it. Higher rates reduce investment and loan-financed consumption. Forgone interest is the opportunity cost of holding more cash.",
+      "kr": "P↑ → 화폐수요↑ → (통화량 고정) → i↑ → I↓, 차입소비↓."
+    },
+    {
+      "id": "econ-m3-028", "section": "10", "concept": "Why SRAS slopes upward", "type": "mc", "difficulty": 2, "trap": "definition",
+      "stem": "The short-run aggregate supply curve slopes upward most likely because:",
+      "choices": {"A": "wages and input prices are sticky, so higher output prices raise margins and encourage more output.", "B": "capital and technology are fixed, so output cannot change.", "C": "firms can only change output by changing prices."},
+      "answer": "A",
+      "explanation": "Annual wage reviews and multi-year contracts mean costs lag output prices; a higher price level widens margins, so firms expand. In the very short run (VSRAS, horizontal) firms flex output without changing prices; in the long run (LRAS, vertical) costs catch up proportionally and output returns to potential.",
+      "kr": "SRAS 우상향 이유 = 임금·투입가격 경직성 → 물가↑ 시 마진↑ → 생산↑. VSRAS 수평, LRAS 수직."
+    },
+    {
+      "id": "econ-m3-029", "section": "10", "concept": "LRAS and potential output", "type": "mc", "difficulty": 2, "trap": "long-run-vs-short-run",
+      "stem": "In the AD/AS model, the long-run aggregate supply curve is vertical because:",
+      "choices": {"A": "all factors including technology are variable in the long run.", "B": "wages and input prices fully adjust to the price level, so output is pinned at potential by the fixed capital stock and labor supply.", "C": "firms refuse to change output when prices change."},
+      "answer": "B",
+      "explanation": "In this model's long run, Y = F(K̄, L̄) = Ȳ: capital (with current technology) and labor are fixed, and wages/prices adjust proportionally, leaving no margin incentive to change output. Note the model-scope trap: Module 2's long run made ALL factors variable including technology; here capital and technology are held fixed.",
+      "kr": "LRAS 수직: 임금·가격이 완전 조정되고 자본·노동이 고정 → Y = F(K̄, L̄) = 잠재산출. M2의 '장기'(기술도 가변)와 범위가 다름."
+    },
+    {
+      "id": "econ-m3-030", "section": "11", "concept": "Exhibit 14: AD shifters", "type": "mc", "difficulty": 1, "trap": "direction",
+      "stem": "Which of the following most likely shifts the aggregate demand curve to the LEFT?",
+      "choices": {"A": "An increase in taxes.", "B": "An increase in stock prices.", "C": "An increase in bank reserves."},
+      "answer": "A",
+      "explanation": "Higher taxes reduce disposable income and corporate profits, lowering C and I (an indirect channel) → AD left. Higher stock prices raise wealth → C↑ → AD right. More bank reserves lower interest rates → I↑ → AD right.",
+      "kr": "세금↑ → 가처분소득·이익↓ → AD 왼쪽. 주가↑, 은행 지준↑은 AD 오른쪽."
+    },
+    {
+      "id": "econ-m3-031", "section": "11", "concept": "Exchange rate quoted as FC per DC", "type": "mc", "difficulty": 3, "trap": "convention",
+      "stem": "The exchange rate, quoted as units of foreign currency per unit of domestic currency, rises. All else equal, aggregate demand most likely shifts:",
+      "choices": {"A": "right, because a higher exchange rate makes exports more attractive.", "B": "left, because the domestic currency has appreciated, reducing net exports.", "C": "right, because imported inputs become cheaper."},
+      "answer": "B",
+      "explanation": "More foreign currency per unit of domestic currency means the domestic currency has STRENGTHENED. Exports become less competitive and imports cheaper, so net exports fall → AD left. Always translate an exchange-rate statement into 'stronger or weaker currency?' first. (Cheaper imported inputs shift SRAS, not AD.)",
+      "kr": "FC/DC 상승 = 자국통화 강세 → 순수출↓ → AD 왼쪽. 수입 원자재 효과는 SRAS 쪽."
+    },
+    {
+      "id": "econ-m3-032", "section": "11", "concept": "Interest rates when AD shifts right", "type": "mc", "difficulty": 3, "trap": "direction",
+      "stem": "Aggregate demand shifts to the right because of a surge in consumer confidence, with the money supply unchanged. Interest rates most likely:",
+      "choices": {"A": "fall, because a rightward AD shift always lowers rates.", "B": "rise, because higher income raises money demand against a fixed money supply.", "C": "remain unchanged, because confidence does not affect financial markets."},
+      "answer": "B",
+      "explanation": "Rates FALL only when the AD shift is caused by a money-supply increase. For every other cause (wealth, confidence, fiscal expansion, exports), higher income raises money demand against a fixed real money supply, so rates rise — equivalently, velocity increases.",
+      "kr": "AD 우측 이동 시 금리: 통화량 증가가 원인이면 하락, 그 외 모든 원인(신뢰·재정·수출 등)이면 화폐수요↑로 상승."
+    },
+    {
+      "id": "econ-m3-033", "section": "11", "concept": "Monetary expansion: short run vs. long run", "type": "mc", "difficulty": 2, "trap": "long-run-vs-short-run",
+      "stem": "Starting from long-run equilibrium, the central bank expands the money supply. The most likely long-run result is:",
+      "choices": {"A": "permanently higher real output at an unchanged price level.", "B": "output back at potential and a higher price level.", "C": "lower output and a higher price level."},
+      "answer": "B",
+      "explanation": "AD shifts right: in the very short run output rises along the horizontal VSRAS with prices unchanged; over a few quarters input prices rise and output slips back; in the long run AS is vertical, so output returns to potential and only the price level is higher — long-run money neutrality.",
+      "kr": "통화 확대: 단기엔 산출↑, 장기엔 산출은 잠재수준으로 복귀하고 물가만 상승(화폐 중립성)."
+    },
+    {
+      "id": "econ-m3-034", "section": "11", "concept": "Central bank tools", "type": "mc", "difficulty": 1, "trap": "direction",
+      "stem": "Which action by a central bank most likely REDUCES the money supply?",
+      "choices": {"A": "Buying government securities in the open market.", "B": "Raising the required reserve ratio.", "C": "Lowering its policy rate target."},
+      "answer": "B",
+      "explanation": "A higher reserve requirement forces banks to hold more reserves against deposits, cutting lending and the money supply. Buying securities injects reserves, and hitting a lower rate target requires adding reserves — both expand money.",
+      "kr": "지준율 인상 → 대출·통화량 감소. 증권 매입, 금리 목표 인하는 통화량 확대."
+    },
+    {
+      "id": "econ-m3-035", "section": "12", "concept": "SRAS-only shifters", "type": "mc", "difficulty": 2, "trap": "which-curve",
+      "stem": "An increase in nominal wages, with productivity unchanged, most likely:",
+      "choices": {"A": "shifts both SRAS and LRAS to the left.", "B": "shifts SRAS to the left and leaves LRAS unchanged.", "C": "shifts LRAS to the left only."},
+      "answer": "B",
+      "explanation": "Wages are a cost factor: higher unit labor cost shifts SRAS left but does not change the economy's resources or technology, so potential GDP (LRAS) is unchanged. Only resource and technology factors (labor, natural resources, physical and human capital, productivity) move both curves.",
+      "kr": "비용 요인(임금·투입가격·세금·보조금·기대·환율)은 SRAS만 이동. 자원·기술 요인만 LRAS도 이동."
+    },
+    {
+      "id": "econ-m3-036", "section": "12", "concept": "Both-curve shifters (potential GDP)", "type": "mc", "difficulty": 2, "trap": "which-curve",
+      "stem": "Which of the following most likely shifts BOTH the short-run and long-run aggregate supply curves to the right?",
+      "choices": {"A": "A rise in expected future prices.", "B": "An increase in the labor force participation rate.", "C": "A production subsidy."},
+      "answer": "B",
+      "explanation": "A larger labor supply raises potential GDP, moving LRAS and SRAS together. Expected future prices and subsidies change margins or unit costs — SRAS-only shifters.",
+      "kr": "노동 공급↑(참가율) → 잠재 GDP↑ → SRAS·LRAS 둘 다 오른쪽. 기대물가·보조금은 SRAS만."
+    },
+    {
+      "id": "econ-m3-037", "section": "12", "concept": "Unit labor cost", "type": "calc", "difficulty": 1, "trap": "formula",
+      "stem": "Nominal wages rise 5% and labor productivity rises 3%. The change in unit labor cost is closest to:",
+      "choices": {"A": "+2%", "B": "+8%", "C": "+5%"},
+      "answer": "A",
+      "explanation": "%Δ unit labor cost ≈ %Δ wages − %Δ productivity = 5% − 3% = +2%. Only the productivity-adjusted wage change creates cost pressure on SRAS; if productivity had also risen 5%, there would be no shift. This is Module 1's SMC = w/MP(L) in growth-rate form.",
+      "kr": "단위노동비용 변화 ≈ 임금 상승률 − 생산성 상승률 = 2%."
+    },
+    {
+      "id": "econ-m3-038", "section": "13", "concept": "Inflationary gap self-correction", "type": "mc", "difficulty": 2, "trap": "direction",
+      "stem": "An economy is operating above potential GDP (an inflationary gap). With no policy action, the most likely self-correcting adjustment is:",
+      "choices": {"A": "SRAS shifts right as firms expand capacity, lowering prices.", "B": "SRAS shifts left as wages and input prices are bid up, returning output to potential at a higher price level.", "C": "AD shifts left as consumers anticipate higher prices."},
+      "answer": "B",
+      "explanation": "Overutilized resources push up wages and input prices, shifting SRAS left until output is back at potential — at a HIGHER price level. The policy alternative is to pull AD back (raise taxes, cut G, drain reserves), which avoids the price rise.",
+      "kr": "인플레이션 갭: 임금·투입가격 상승 → SRAS 왼쪽 → 잠재수준 복귀, 물가는 더 높아짐."
+    },
+    {
+      "id": "econ-m3-039", "section": "13", "concept": "Recessionary gap self-correction", "type": "mc", "difficulty": 2, "trap": "direction",
+      "stem": "In a recessionary gap, the economy's self-correcting mechanism most likely works through:",
+      "choices": {"A": "workers accepting lower nominal wages, shifting SRAS to the right.", "B": "firms raising prices to restore margins, shifting SRAS to the left.", "C": "an automatic rightward shift of AD as prices fall."},
+      "answer": "A",
+      "explanation": "Unemployment leads workers to accept lower nominal wages (each unit of currency buys more at lower prices), lowering costs and shifting SRAS right until output returns to potential. The process takes years, which is why policy (fiscal or monetary stimulus to AD) is often used — though variable lags can end up reinforcing the cycle.",
+      "kr": "경기침체 갭: 임금 하락 → SRAS 오른쪽 → 잠재수준 복귀(수년 소요). 정책은 AD를 밀지만 시차 문제."
+    },
+    {
+      "id": "econ-m3-040", "section": "13", "concept": "Conclusions grid: AS increase", "type": "mc", "difficulty": 1, "trap": "direction",
+      "stem": "A rightward shift of aggregate supply most likely results in:",
+      "choices": {"A": "higher real GDP, lower unemployment and a lower price level.", "B": "higher real GDP, lower unemployment and a higher price level.", "C": "lower real GDP, higher unemployment and a lower price level."},
+      "answer": "A",
+      "explanation": "GDP and unemployment always move in opposite directions; the price level identifies the curve. AS↑: GDP↑, U↓, P↓ — the benign, supply-driven expansion with lower inflation and rates. Choice B describes an AD increase.",
+      "kr": "AS↑: GDP↑ 실업↓ 물가↓. AD↑는 물가↑. 물가 방향이 어느 곡선인지 알려줌."
+    },
+    {
+      "id": "econ-m3-041", "section": "13", "concept": "Stagflation", "type": "mc", "difficulty": 1, "trap": "definition",
+      "stem": "Stagflation — rising unemployment together with rising inflation — is most likely caused by:",
+      "choices": {"A": "a leftward shift of aggregate demand.", "B": "a leftward shift of short-run aggregate supply, such as an oil price shock.", "C": "a rightward shift of long-run aggregate supply."},
+      "answer": "B",
+      "explanation": "SRAS shifting left lowers output (raising unemployment) and raises the price level simultaneously — the 1970s oil shocks. Stimulating AD restores output only at a permanently higher price level, which is the policy dilemma.",
+      "kr": "스태그플레이션 = SRAS 왼쪽 이동(1970년대 오일쇼크). AD 부양은 물가를 영구히 올림."
+    },
+    {
+      "id": "econ-m3-042", "section": "14", "concept": "Investment implications: AD falling", "type": "mc", "difficulty": 2, "trap": "direction",
+      "stem": "An analyst's indicators point to a decline in aggregate demand. The analyst should most likely:",
+      "choices": {"A": "increase exposure to cyclical equities and commodities.", "B": "increase exposure to defensive equities and long-maturity government bonds.", "C": "reduce exposure to fixed income and increase low-credit-quality bonds."},
+      "answer": "B",
+      "explanation": "Falling AD → profits, commodity prices and interest rates fall. Defensives hold up, and long-maturity bonds gain most from falling rates. Cyclicals, commodities, speculative equities and junk bonds suffer. The strategy works best implemented before other participants recognize the shift.",
+      "kr": "AD 감소 → 이익·원자재·금리 하락 → 방어주, 장기 국채 비중↑; 경기민감주·원자재·정크본드 비중↓."
+    },
+    {
+      "id": "econ-m3-043", "section": "14", "concept": "Investment implications: stagflation", "type": "mc", "difficulty": 2, "trap": "definition",
+      "stem": "If aggregate supply is expected to shift to the left (stagflation), the asset class most likely to benefit is:",
+      "choices": {"A": "long-maturity fixed income.", "B": "commodities.", "C": "cyclical equities."},
+      "answer": "B",
+      "explanation": "Rising inflation hurts fixed income (higher nominal rates) and squeezes most equity margins; commodities are the only winner. An AS increase, by contrast, is favorable for almost every asset class except commodities.",
+      "kr": "스태그플레이션에서는 원자재만 유리. 채권(금리↑)·대부분 주식(마진 압박)은 불리."
+    },
+    {
+      "id": "econ-m3-044", "section": "10", "concept": "Recession definition", "type": "mc", "difficulty": 1, "trap": "definition",
+      "stem": "A recession is conventionally defined as:",
+      "choices": {"A": "any quarter in which the unemployment rate rises.", "B": "real GDP declining for at least two consecutive quarters.", "C": "nominal GDP growth below the inflation rate for one year."},
+      "answer": "B",
+      "explanation": "The conventional definition is a decline in real GDP for two or more consecutive quarters. Contractions also show rising unemployment and falling capacity utilization, but those are symptoms, not the definition.",
+      "kr": "경기침체 = 실질 GDP 2분기 연속 감소."
+    },
+    {
+      "id": "econ-m3-045", "section": "11", "concept": "Wealth effect: shift vs. movement along", "type": "mc", "difficulty": 3, "trap": "shift-vs-along",
+      "stem": "Which statement about the wealth effect is most accurate?",
+      "choices": {"A": "A rise in stock prices and a fall in the price level both shift AD to the right.", "B": "A rise in stock prices shifts AD right, whereas a fall in the price level is a movement along AD.", "C": "Both are movements along the AD curve."},
+      "answer": "B",
+      "explanation": "The asset-price wealth effect (stocks, housing) is a SHIFT — a non-price factor changes desired spending at every price level (empirically about 3–7% of the wealth change). The price-level wealth effect — real money balances changing with P — is one of the reasons AD slopes down, i.e., a movement ALONG the curve. Same name, different mechanics.",
+      "kr": "자산가격 부의 효과 = AD 이동(shift). 물가수준 부의 효과 = AD곡선 위 이동. 이름은 같지만 다름."
+    },
+    {
+      "id": "econ-m3-046", "section": "1", "concept": "Operating surplus and income forms", "type": "mc", "difficulty": 1, "trap": "definition",
+      "stem": "Operating surplus, the return on all capital used by a business, equals:",
+      "choices": {"A": "rent + interest + profit.", "B": "compensation of employees + profit.", "C": "profit only."},
+      "answer": "A",
+      "explanation": "The four forms of income are compensation of employees, rent (use of property), interest (lending funds) and profit (use of capital plus financial risk). Operating surplus groups the three capital returns: rent + interest + profit. All income is ultimately attributed to the household sector.",
+      "kr": "영업잉여 = 임대료 + 이자 + 이윤(자본에 대한 보수). 노동 보수는 제외."
+    },
+    {
+      "id": "econ-m3-f01", "section": "5", "concept": "Nominal/real/deflator triangle", "type": "flash", "difficulty": 1, "trap": "formula",
+      "front": "Nominal GDP, real GDP and the GDP deflator — all three rearrangements plus the growth decomposition",
+      "back": "Nominal GDPₜ = Pₜ × Qₜ;  Real GDPₜ = P_base × Qₜ.\nDeflator = (Nominal / Real) × 100;  Real = Nominal / (deflator/100);  Nominal = Real × deflator/100.\n(1 + nominal growth) = (1 + real growth) × (1 + inflation) — additive version is only an approximation.\nUse REAL GDP for activity and cross-country comparison; real GDP per capita ≈ living standard."
+    },
+    {
+      "id": "econ-m3-f02", "section": "2", "concept": "GDP inclusion rules", "type": "flash", "difficulty": 1, "trap": "definition",
+      "front": "The three GDP inclusion criteria, their exclusions, and the two imputed exceptions",
+      "back": "1) Produced this period → excludes resales, transfer payments, capital gains.\n2) Market-valued → excludes own-benefit work (cooking, repairs, commuting), barter, underground economy, pollution byproducts.\n3) Final goods only → excludes intermediates (resold or used as inputs).\nImputed exceptions (included): owner-occupied housing (imputed rent) and government services at cost (no value added)."
+    },
+    {
+      "id": "econ-m3-f03", "section": "6", "concept": "Expenditure components", "type": "flash", "difficulty": 1, "trap": "definition",
+      "front": "GDP = C + I + G + (X − M): what is in each component and the two traps",
+      "back": "C: consumer spending on final goods/services (includes spending funded by transfers).\nI: gross private domestic investment = business capital goods + INVENTORY investment; gross includes replacement of worn-out capital; most volatile component.\nG: government purchases for consumption AND investment — transfers NOT included.\nX − M: net exports; M = the part of C, I, G bought abroad.\nTrade deficit = spending > production → financed by foreign borrowing."
+    },
+    {
+      "id": "econ-m3-f04", "section": "7", "concept": "The fundamental identity", "type": "flash", "difficulty": 2, "trap": "sign",
+      "front": "S = I + (G − T) + (X − M) — derivation sketch, the rearrangement, and the sign trap",
+      "back": "Y = C + S + T and Y = C + I + G + (X − M); cancel C → S = I + (G − T) + (X − M).\nPrivate saving funds investment, the fiscal deficit, and a trade surplus (claims on foreigners).\nRearranged: G − T = (S − I) − (X − M): a fiscal deficit is financed by a private surplus (S > I) and/or a trade deficit (X − M < 0).\nSubstitute signs explicitly — a wider fiscal deficit with S − I fixed → wider trade deficit (twin deficits)."
+    },
+    {
+      "id": "econ-m3-f05", "section": "9", "concept": "Three effects behind AD's slope", "type": "flash", "difficulty": 2, "trap": "wrong-reason",
+      "front": "Why does AD slope downward? (three effects — and why the micro explanation is wrong)",
+      "back": "Not the micro 'given income' logic — income is determined inside the model.\n1) Wealth effect: P↑ → real money wealth↓ → C↓.\n2) Interest rate effect: P↑ → money demand↑ → i↑ → I↓ and loan-financed C↓.\n3) Real exchange rate effect: P↑ → real FX appreciates → X↓, M↑ (reinforced by i↑ attracting foreign funds).\nAll three are movements ALONG AD."
+    },
+    {
+      "id": "econ-m3-f06", "section": "10", "concept": "Three AS curves", "type": "flash", "difficulty": 1, "trap": "definition",
+      "front": "VSRAS, SRAS, LRAS — shape, horizon, reason",
+      "back": "VSRAS: horizontal, months — firms flex output (hours, intensity) without changing prices.\nSRAS: upward sloping, ~1+ years — wages/input prices sticky, so higher output prices raise margins → more output.\nLRAS: vertical at potential output, years — costs catch up proportionally; Y = F(K̄, L̄) = Ȳ, unemployment at its natural rate. Capital and technology FIXED in this model's long run."
+    },
+    {
+      "id": "econ-m3-f07", "section": "11", "concept": "Exhibit 14: AD shifters", "type": "flash", "difficulty": 2, "trap": "direction",
+      "front": "An increase in each factor shifts AD which way? (Exhibit 14) + the interest-rate subtlety",
+      "back": "RIGHT: stock prices, housing prices, consumer confidence, business confidence, capacity utilization (82–85% triggers investment), government spending (direct), bank reserves, global growth.\nLEFT: taxes (indirect), exchange rate quoted as FC per DC (= appreciation).\nRates when AD shifts right: money-supply cause → rates FALL; every other cause → rates RISE (money demand up, velocity up)."
+    },
+    {
+      "id": "econ-m3-f08", "section": "12", "concept": "Exhibit 16: SRAS-only vs. both-curve shifters", "type": "flash", "difficulty": 2, "trap": "which-curve",
+      "front": "Which factors shift SRAS only, and which shift both SRAS and LRAS?",
+      "back": "SRAS ONLY (cost/price factors): nominal wages↑ (left), input prices↑ (left), business taxes↑ (left), subsidies↑ (right), expected future prices↑ (right, modest/temporary), stronger domestic currency (right — cheaper imported inputs).\nBOTH (resource/technology): labor supply, natural resources, physical capital, human capital, productivity & technology.\n%Δ unit labor cost = %Δ wages − %Δ productivity. A PERMANENT relative input-price rise shifts LRAS left too."
+    },
+    {
+      "id": "econ-m3-f09", "section": "13", "concept": "Conclusions grid and the four equilibria", "type": "flash", "difficulty": 1, "trap": "direction",
+      "front": "The conclusions grid (AD/AS shift → GDP, unemployment, prices) and the four equilibrium cases",
+      "back": "AD↑: GDP↑ U↓ P↑ | AD↓: GDP↓ U↑ P↓ | AS↑: GDP↑ U↓ P↓ | AS↓: GDP↓ U↑ P↑.\nGDP and unemployment always opposite; the PRICE LEVEL tells you which curve moved.\n1) Full employment: AD ∩ SRAS on LRAS. 2) Recessionary gap (AD↓): self-correct via lower wages → SRAS right (slow). 3) Inflationary gap (AD↑): input prices bid up → SRAS left → potential at higher P. 4) Stagflation (SRAS↓): Y↓ and P↑; stimulating AD leaves P permanently higher."
+    },
+    {
+      "id": "econ-m3-f10", "section": "14", "concept": "Investment playbook", "type": "flash", "difficulty": 2, "trap": "direction",
+      "front": "Investment implications of each AD/AS scenario",
+      "back": "AD falling: profits, commodities, rates ↓ → defensives, IG/government bonds, LONG-maturity fixed income; cut cyclicals, commodities, speculative equities, junk.\nAD rising: reverse → cyclicals, commodities, junk bonds; cut defensives and long-maturity bonds.\nAS falling (stagflation): only COMMODITIES win; cut fixed income and most equities.\nAS rising: good for almost everything EXCEPT commodities.\nAct before other participants recognize the shift."
+    },
+    {
+      "id": "econ-m3-f11", "section": "8", "concept": "MPC, MPS, APC and automatic stabilizers", "type": "flash", "difficulty": 1, "trap": "avg-vs-marginal",
+      "front": "MPC vs. MPS vs. APC; C, I, G, T behavior; automatic stabilizer",
+      "back": "MPC = ΔC/ΔYd (fraction of an ADDITIONAL unit consumed); MPS = 1 − MPC; APC = C/Y (average). High-APC economies respond more to income-raising policy.\nC = C(Y − T) (+ wealth); I = I(r, Y): ↓ in real rate, ↑ in output; G exogenous; net taxes t(Y) rise with income.\nAutomatic stabilizer: fiscal balance improves in booms and worsens in slumps with no policy action, dampening output swings."
+    },
+    {
+      "id": "econ-m3-f12", "section": "3", "concept": "Value-added routine", "type": "flash", "difficulty": 2, "trap": "parallel-inputs",
+      "front": "The 3-step routine for any value-added table (and the two classic distractors)",
+      "back": "1) Map the structure: which stages feed which; value added = receipts − cost of ALL inputs purchased (sum parallel inputs before subtracting).\n2) Verify: Σ value added = final sale price = GDP contribution.\n3) Scan for 'imported': imported inputs are subtracted from the domestic contribution.\nDistractors: summing all receipts (double counting); subtracting only the row above when inputs branch."
+    }
+  ]
+}

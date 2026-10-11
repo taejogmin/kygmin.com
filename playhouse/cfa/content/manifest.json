@@ -1,8 +1,15 @@
 {
   "version": 1,
-  "exam": { "label": "CFA Level I — February 2027", "defaultDate": "2027-02-15" },
+  "exam": {
+    "label": "CFA Level I — February 2027",
+    "defaultDate": "2027-02-15"
+  },
   "subjects": [
-    { "id": "econ", "name": "Economics", "weight": "6–9%" }
+    {
+      "id": "econ",
+      "name": "Economics",
+      "weight": "6–9%"
+    }
   ],
   "modules": [
     {
@@ -22,6 +29,15 @@
       "short": "Market Structures",
       "notes": "content/notes/econ-m2.md",
       "questions": "content/questions/econ-m2.json"
+    },
+    {
+      "id": "econ-m3",
+      "subject": "econ",
+      "order": 3,
+      "title": "Aggregate Output, Prices, and Economic Growth",
+      "short": "Output, Prices & Growth",
+      "notes": "content/notes/econ-m3.md",
+      "questions": "content/questions/econ-m3.json"
     }
   ]
 }
