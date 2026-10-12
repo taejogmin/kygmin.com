@@ -178,9 +178,13 @@
         "M3 official Q17 (natural output ≠ maximum)",
         "M3 official Q27 (labor productivity is the directly measurable one)",
         "M3 official Q29 (TFP = output for given inputs)",
-        "M2 official Q7 (regulated price = LRAC — repeat miss)"
+        "M2 official Q7 (regulated price = LRAC — repeat miss)",
+        "M4 official Q16 + Q19 (headline vs core swapped twice in one set; third time incl. Ex5 Q7)"
       ],
       "seed": [
+        "econ-m4-f13",
+        "econ-m4-p30",
+        "econ-m4-p27",
         "econ-m2-p07",
         "econ-m3-p27",
         "econ-m3-p29",
@@ -211,9 +215,16 @@
         "M4 Ex5 Q4 ('fixed basket' didn't trigger Laspeyres → overstates)",
         "M4 Ex5 Q6 (stem asked sales AND costs; picked WPI only)",
         "M4 Ex8 Q1 ('rising costs' → pulled demand-pull indicators)",
-        "M4 official Q11 (central bank lets economy self-correct → stagflation; picked the overheating row)"
+        "M4 official Q11 (central bank lets economy self-correct → stagflation; picked the overheating row)",
+        "M4 official Q15 (Laspeyres overstates → highest inflation; picked Paasche)",
+        "M4 official Q18 (quality bias is upward even at constant price; picked 'unaffected')",
+        "M4 official Q20 (two-bullet stem; the second bullet was the literal cost-push definition)"
       ],
       "seed": [
+        "econ-m4-p26",
+        "econ-m4-p29",
+        "econ-m4-p31",
+        "econ-m4-f14",
         "econ-m4-p22",
         "econ-m4-p04",
         "econ-m4-p02",
@@ -246,9 +257,11 @@
         "M4 Ex3 Q1 (imports respond to 'industrial policy' — not in the model)",
         "M4 Ex5 Q7 (headline 'has upward bias' — bias is methodology; headline is noisier)",
         "M4 Ex8 Q6 (Monetarists → 'interest rates'; it's money growth)",
-        "M4 Ex8 Q3 (cost-push when unemployment 'either high or low' — hedge)"
+        "M4 Ex8 Q3 (cost-push when unemployment 'either high or low' — hedge)",
+        "M4 official Q16 ('index of food and energy prices' for policy — not a concept; core inflation)"
       ],
       "seed": [
+        "econ-m4-p27",
         "econ-m4-p01",
         "econ-m4-p03",
         "econ-m4-p07",
@@ -265,16 +278,18 @@
         "kr": "부정 지문 — NOT / EXCEPT / least likely"
       },
       "rule": {
-        "en": "On a NOT stem, mark every option T/F against the curriculum, then pick the F. In a NOT question a TRUE statement is the distractor; 'sounds right' is the trap. (Retest of the same item, reshuffled: correct.)",
-        "kr": "NOT 지문에서는 선지마다 교재 기준 T/F를 표시한 뒤 F를 고른다. NOT 문제에서 '맞는 말'은 오답이다 — 그럴듯하게 들리는 것이 함정. (같은 문항 재시험: 정답.)"
+        "en": "On a NOT stem, mark every option T/F against the curriculum, then pick the F. In a NOT question a TRUE statement is the distractor; 'sounds right' is the trap. Second miss on official Q14 — the routine is not yet automatic: physically write T/F next to each option before choosing.",
+        "kr": "NOT 지문에서는 선지마다 교재 기준 T/F를 표시한 뒤 F를 고른다. NOT 문제에서 '맞는 말'은 오답이다 — 그럴듯하게 들리는 것이 함정. 공식 Q14에서 두 번째 오답 — 아직 자동화되지 않음: 고르기 전에 선지 옆에 T/F를 실제로 적는다."
       },
       "traps": [
         "negation"
       ],
       "evidence": [
-        "M4 Ex7 Q1 (NAIRU 'NOT a problem' — picked a TRUE limitation); Ex8 Q8 retest ✓"
+        "M4 Ex7 Q1 (NAIRU 'NOT a problem' — picked a TRUE limitation); Ex8 Q8 retest ✓",
+        "M4 official Q14 (PPI least likely — picked TRUE 'leads CPI'; false one is 'labor contracts use PPI')"
       ],
       "seed": [
+        "econ-m4-p25",
         "econ-m4-p08",
         "econ-m4-f11"
       ]
@@ -440,6 +455,36 @@
       "qid": "econ-m4-p22",
       "when": "2026-10-12",
       "note": "Official Q11 — stem said 'allow to self-correct', picked the OVERHEATING row (high inflation + fast growth + low UR). Self-correct = STAGFLATION (high inflation + slow growth + high UR). Two-row mapping, wrong row. (truncated rule)"
+    },
+    {
+      "qid": "econ-m4-p25",
+      "when": "2026-10-12",
+      "note": "Official Q14 — least-likely stem, picked a TRUE statement (PPI leads CPI). False one: labor contracts ← CPI, not PPI. Second negation miss. (negation + indexation mapping)"
+    },
+    {
+      "qid": "econ-m4-p26",
+      "when": "2026-10-12",
+      "note": "Official Q15 — picked current basket (Paasche) as highest. Laspeyres overstates → highest (10% > Fisher 8.99% > Paasche 8%). (truncated rule)"
+    },
+    {
+      "qid": "econ-m4-p27",
+      "when": "2026-10-12",
+      "note": "Official Q16 — picked 'index of food and energy prices' for policy. Core inflation. Off-model option built from the definition's words. (off-model)"
+    },
+    {
+      "qid": "econ-m4-p29",
+      "when": "2026-10-12",
+      "note": "Official Q18 — quality ↑, price constant → picked 'unaffected'. Quality bias = upward even with no price change. Repeat of Ex5 Q4 (S-Q-N). (truncated rule)"
+    },
+    {
+      "qid": "econ-m4-p30",
+      "when": "2026-10-12",
+      "note": "Official Q19 — ex food & energy → picked headline. Core. Second headline/core miss in the same set (with Q16); third overall with Ex5 Q7. (definition — repeat)"
+    },
+    {
+      "qid": "econ-m4-p31",
+      "when": "2026-10-12",
+      "note": "Official Q20 — 'wages compel retailers to raise prices' → picked demand-pull. Cost-push. Read the first bullet only. (truncated rule — half the stem)"
     }
   ]
 }

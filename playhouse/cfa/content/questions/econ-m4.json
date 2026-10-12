@@ -993,6 +993,170 @@
       "answer": "C",
       "explanation": "Disinflation = the inflation RATE falls (e.g., 7% → 4%) while staying positive — the price level keeps rising. Choices A and B both describe DEFLATION (falling price level = negative rate). Level vs rate of change.",
       "kr": "디스인플레이션 = 인플레이션'율'이 하락(7% → 4%)하되 양수 유지 — 물가는 계속 상승. A·B는 모두 디플레이션(물가 수준 하락 = 음의 상승률). 수준 vs 변화율."
+    },
+    {
+      "id": "econ-m4-p24",
+      "section": "5",
+      "concept": "CPI — what is shared across countries",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "definition",
+      "source": "cfai",
+      "stem": "Across major economies, the feature national consumer price indexes most likely have in common is:",
+      "choices": {
+        "A": "the geographic coverage of their surveys",
+        "B": "the weights assigned to the goods and services covered",
+        "C": "their use in setting macroeconomic policy"
+      },
+      "answer": "C",
+      "explanation": "Central banks everywhere use a CPI to monitor inflation and judge monetary policy. Coverage differs (US CPI-U is urban-only; China and Germany survey urban + rural) and weights differ sharply (food ≈ 14–15% in Germany/US vs 30–47% in China/India). The shared element is the USE, not the construction.",
+      "kr": "모든 중앙은행이 CPI로 인플레이션을 감시하고 통화정책을 평가. 조사 범위(미국 CPI-U는 도시만)와 가중치(식품 비중 14~47%)는 나라마다 크게 다름. 공통점은 '구성'이 아니라 '용도'."
+    },
+    {
+      "id": "econ-m4-p25",
+      "section": "5",
+      "concept": "PPI — least likely (indexation)",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "negation",
+      "source": "cfai",
+      "stem": "Which statement about the producer price index (PPI) is least likely to be accurate? The PPI:",
+      "choices": {
+        "A": "can influence the future CPI",
+        "B": "has category weights that vary more across countries than CPI weights do",
+        "C": "is used more often than the CPI to adjust labor-contract payments"
+      },
+      "answer": "C",
+      "explanation": "LEAST-likely stem → T/F each option. A is TRUE: producer price rises pass through to consumers, so PPI leads CPI. B is TRUE: cross-country PPI weight differences are 'much more dramatic' (industry specialization). C is FALSE: labor contracts and leases are indexed to the CPI; the PPI (and its sub-indexes) is linked to BUSINESS contracts. In a NOT question the true statements are the distractors.",
+      "kr": "least likely → 선지별 T/F. A 참(생산자 가격이 소비자에게 전가 → PPI가 CPI를 선행). B 참(국가 간 PPI 가중치 차이는 CPI보다 훨씬 큼). C 거짓: 노동계약·임대차는 CPI에 연동, PPI는 '기업 간 계약'에 연동. NOT 문제에서 참인 문장은 오답."
+    },
+    {
+      "id": "econ-m4-p26",
+      "section": "5",
+      "concept": "Which index gives the highest inflation (Laspeyres vs Paasche vs Fisher)",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "truncated-rule",
+      "source": "cfai",
+      "stem": "Base month: 18 liters of milk at 1.00 and 6 liters of juice at 2.00. Next month: 17 liters of milk at 1.00 and 4 liters of juice at 2.50. Over the two months, the highest inflation rate is produced by a price index that uses:",
+      "choices": {
+        "A": "the current consumption basket",
+        "B": "a constant (base) consumption basket",
+        "C": "a basket reflecting consumers' substitutions over time"
+      },
+      "answer": "B",
+      "explanation": "Constant basket = Laspeyres: base cost 18×1 + 6×2 = 30; at new prices 18×1 + 6×2.5 = 33 → 110 → 10%. Current basket = Paasche: (17×1 + 4×2.5)/(17×1 + 4×2) = 27/25 → 108 → 8%. Fisher (substitution-adjusted) = √(110 × 108) = 108.99 → 8.99%. Laspeyres is HIGHEST because the fixed basket ignores the shift away from the good that got dearer (juice) — the substitution bias in action. Rule: Laspeyres overstates → highest; Paasche lowest; Fisher between.",
+      "kr": "고정 바스켓(라스파이레스): 30 → 33 → 10%. 현재 바스켓(파셰): 27/25 → 8%. 피셔(대체 반영) = √(110×108) = 108.99 → 8.99%. 라스파이레스가 가장 높은 이유 = 비싸진 재화(주스)에서 이탈하는 대체를 무시(대체 편의). 규칙: 라스파이레스 과대 → 최고, 파셰 최저, 피셔 중간."
+    },
+    {
+      "id": "econ-m4-p27",
+      "section": "5",
+      "concept": "Policy relies on core inflation",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "off-model",
+      "source": "cfai",
+      "stem": "The inflation measure most likely relied upon when setting public economic policy is:",
+      "choices": {
+        "A": "core inflation",
+        "B": "headline inflation",
+        "C": "an index of food and energy prices"
+      },
+      "answer": "A",
+      "explanation": "Policy makers read the trend through CORE inflation (headline minus food and energy) because it is less volatile and less likely to provoke policy overreactions to short-term swings. Headline is the full but noisy measure. 'An index of food and energy prices' is not a concept the curriculum uses at all — the off-model lure built from the words of the core definition.",
+      "kr": "정책 당국은 '근원' 인플레이션(헤드라인 − 식품·에너지)으로 추세를 읽음 — 변동성이 낮아 단기 변동에 과잉반응할 위험이 적음. 헤드라인은 전체 지표지만 노이즈가 큼. '식품·에너지 지수'는 교재에 없는 개념 — 근원 정의의 단어로 만든 유인 선지."
+    },
+    {
+      "id": "econ-m4-p28",
+      "section": "5",
+      "concept": "Productivity in cost-push",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "mechanism",
+      "source": "cfai",
+      "stem": "In a cost-push inflation setting, the most important role of labor productivity is that:",
+      "choices": {
+        "A": "rising productivity signals a strong economy and therefore an inflationary bias",
+        "B": "the productivity level fixes where unemployment sits relative to its natural rate",
+        "C": "when productivity growth outpaces wage growth, price increases become less likely"
+      },
+      "answer": "C",
+      "explanation": "ULC = W / O: the faster output per hour grows, the further wages can rise without raising cost per unit of output — so productivity growth exceeding wage growth REMOVES cost pressure. Choice A has the sign backwards (productivity is disinflationary); choice B confuses productivity with NAIRU, which depends on the labor force's skill mix.",
+      "kr": "ULC = W / O: 시간당 산출이 빨리 늘수록 단위비용 상승 없이 임금이 더 오를 수 있음 → 생산성 증가율 > 임금 증가율이면 가격 압력 감소. A는 부호 반대(생산성은 디스인플레이션 요인), B는 NAIRU(노동력 숙련 구성)와 혼동."
+    },
+    {
+      "id": "econ-m4-p29",
+      "section": "5",
+      "concept": "Quality bias — price constant, quality up",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "truncated-rule",
+      "source": "cfai",
+      "stem": "A good in a fixed-basket price index improves in quality over time while its price is unchanged. The measured inflation rate is most likely:",
+      "choices": {
+        "A": "unaffected",
+        "B": "biased upward",
+        "C": "biased downward"
+      },
+      "answer": "B",
+      "explanation": "Quality bias: a better product at the same price is a REAL price fall per unit of quality, but the fixed-basket index records no change — so measured inflation is HIGHER than true inflation → biased upward (the index overstates). It would still bias upward if the price had risen. Fix = hedonic adjustment. 'Unaffected' is the lure: no price change ≠ no bias. Trigger word: fixed basket → S-Q-N, all upward.",
+      "kr": "품질 편의: 같은 가격에 더 좋은 제품 = 품질 단위당 실질 가격 하락인데 고정 바스켓 지수는 변화 없음으로 기록 → 측정 인플레이션이 실제보다 높음 → 상향 편의. 가격이 올랐어도 마찬가지. 해결 = 헤도닉 조정. '영향 없음'이 유인: 가격 불변 ≠ 편의 없음. 트리거: fixed basket → S-Q-N 모두 상향."
+    },
+    {
+      "id": "econ-m4-p30",
+      "section": "5",
+      "concept": "Ex food & energy = core",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "source": "cfai",
+      "stem": "A price index that excludes food and energy is most likely used to calculate:",
+      "choices": {
+        "A": "core inflation",
+        "B": "the GDP deflator",
+        "C": "headline inflation"
+      },
+      "answer": "A",
+      "explanation": "Core = all items EXCEPT food and energy; headline = ALL items; GDP deflator = prices of domestic output (not a consumption basket at all). Policy makers use core to read the trend without overreacting to short-term food/energy swings. This is the same fact as the 'policy relies on core' item — missed twice in one set → flashcard until automatic.",
+      "kr": "근원 = 식품·에너지 '제외'; 헤드라인 = 전 품목; GDP 디플레이터 = 국내 산출물 가격(소비 바스켓 아님). 정책 당국은 단기 변동에 과잉반응하지 않으려 근원을 사용. 같은 세트에서 두 번 틀린 사실 → 자동화될 때까지 플래시카드."
+    },
+    {
+      "id": "econ-m4-p31",
+      "section": "5",
+      "concept": "Cost-push vs demand-pull from a two-step story",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "truncated-rule",
+      "source": "cfai",
+      "stem": "An economist expects that falling unemployment will lift home-retailer revenues, and that a tighter labor market will push wages up, forcing those retailers to raise prices. The economist's expectations best describe:",
+      "choices": {
+        "A": "stagflation",
+        "B": "cost-push inflation",
+        "C": "demand-pull inflation"
+      },
+      "answer": "B",
+      "explanation": "Read the WHOLE stem: the mechanism that produces the price rise is 'rising wages compel firms to raise prices' — the literal definition of cost-push. The first clause (unemployment ↓ → revenues ↑) is demand-side scenery that lures you to demand-pull; demand-pull would be 'rising demand raises prices, THEN workers chase wages'. The order of the chain decides: costs → prices = cost-push; demand → prices → wages = demand-pull. Stagflation needs high unemployment, the opposite of the stem.",
+      "kr": "지문 전체를 읽는다: 가격 상승의 메커니즘은 '임금 상승이 기업을 가격 인상으로 몬다' — cost-push의 정의 그대로. 첫 문장(실업↓ → 매출↑)은 수요 쪽 배경일 뿐 demand-pull 유인. 사슬의 순서가 결정: 비용 → 가격 = cost-push; 수요 → 가격 → 임금 = demand-pull. 스태그플레이션은 고실업이 필요(지문과 반대)."
+    },
+    {
+      "id": "econ-m4-f13",
+      "section": "5",
+      "concept": "Headline vs core — one sentence",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "definition",
+      "front": "Headline vs. core inflation — one sentence that resolves every version of the question (missed 3×)",
+      "back": "CORE = HEADLINE MINUS food and energy; policy makers rely on CORE because it is less volatile and avoids overreaction to short-term swings.\n→ 'excludes food & energy' = core. 'used for policy' = core. 'all items' = headline. Headline vs core = more NOISE, never 'bias' (bias comes from the fixed-basket construction and applies to both). 'An index of food and energy prices' is not a curriculum concept."
+    },
+    {
+      "id": "econ-m4-f14",
+      "section": "5",
+      "concept": "L ≥ F ≥ P and indexation",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "truncated-rule",
+      "front": "Which index gives the highest inflation and why; Fisher formula; which index adjusts which contract",
+      "back": "Laspeyres (base basket) OVERSTATES → highest. Paasche (current basket) understates → lowest. Fisher = √(I_L × I_P) → between. Milk/juice example: 10% > 8.99% > 8%. Reason: the fixed basket ignores substitution away from the good that got dearer.\nQuality bias: better product at SAME price → measured inflation biased UPWARD (not 'unaffected').\nIndexation: TIPS ← CPI-U; labor contracts & leases ← CPI; business contracts ← PPI. PPI leads CPI (pass-through) and its weights differ more across countries."
     }
   ]
 }

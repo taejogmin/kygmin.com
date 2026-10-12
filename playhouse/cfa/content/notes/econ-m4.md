@@ -480,8 +480,17 @@ Official Q9/Q10 (sugar/cotton):  Laspeyres 118/99 = 119.19 → 19.2% | Paasche 1
 |---|---|---|
 | **Laspeyres** | **Base** period | Overstates (ignores substitution away from pricier goods) |
 | **Paasche** | **Current** period | Understates (uses the already-substituted basket) |
-| Fisher | Geometric mean of the two | — |
+| **Fisher** | **Geometric mean** of the two: √(I_L × I_P) — "chains" the baskets, reflects substitution | Between |
 ⚠️ The distractor "total spending change" (160/99 = 61.6%) mixes changed quantities AND prices — it is neither index.
+
+> ### ⭐ YOU MISSED OFFICIAL Q15 HERE — "which index gives the HIGHEST inflation?"
+> Milk 18 L @1 → 17 L @1; juice 6 L @2 → 4 L @2.5. You picked **current basket (Paasche)**; correct is **constant basket (Laspeyres)**.
+> ```
+> Laspeyres (base qty):    (18×1 + 6×2.5) / (18×1 + 6×2)  = 33/30  → 110.0 → 10.0%   ← HIGHEST
+> Fisher:                  √(110 × 108)                    = 108.99 →  8.99%
+> Paasche (current qty):   (17×1 + 4×2.5) / (17×1 + 4×2)  = 27/25  → 108.0 →  8.0%   ← lowest
+> ```
+> **Why Laspeyres is always on top:** the fixed basket keeps buying the good that got dearer (juice) as if nothing changed — the substitution bias — so it overstates. Paasche uses the basket *after* consumers fled the dear good → understates. Fisher sits between. **No calculation needed:** "constant basket" = Laspeyres = overstates = highest. *(Truncated-rule miss: you had "Laspeyres overstates" and didn't carry it to "therefore highest".)* Ranking to memorize: **L ≥ F ≥ P.**
 
 **Laspeyres index** = basket composition **held constant** at base period. Most indexes worldwide are Laspeyres because basket survey data arrive **with a lag**; many countries update the basket **every five years**.
 
@@ -493,6 +502,10 @@ Official Q9/Q10 (sugar/cotton):  Laspeyres 118/99 = 119.19 → 19.2% | Paasche 1
 | **New product bias** | New products aren't in the fixed basket | **Upward** | Introduce new products into the basket over time |
 
 > **One-liner:** *a fixed-basket (Laspeyres) index OVERSTATES inflation for three reasons — substitution, quality, new products.* Memory hook: **S-Q-N, all up.** Quality and new-product biases are "relatively easy" to fix; substitution is harder.
+
+> ### ⭐ YOU MISSED OFFICIAL Q18 HERE — quality up, price constant
+> *A good in a fixed basket improves in quality while its price stays the same. Measured inflation is:* — you picked **unaffected**; correct is **biased upward**.
+> A better product at the same price is a **real price fall per unit of quality**; the fixed basket records "no change" → measured inflation is **higher than true** → **upward** bias. "Price didn't change, so nothing happens" is the lure — the bias is about *quality*, not the price move; it would be upward even if the price had risen. Same S-Q-N rule as Ex5 Q4, second time. Trigger: **"fixed basket" → overstates / upward**, whatever the price did.
 
 > ### ⭐ YOU MISSED EXAMPLE 5, Q4 HERE
 > *"A price index based on a fixed basket, in an inflationary environment, will over time:"* — you picked **C (track the actual cost of living quite closely)**; correct is **A (overstate it)**.
@@ -514,7 +527,11 @@ Official Q9/Q10 (sugar/cotton):  Laspeyres 118/99 = 119.19 → 19.2% | Paasche 1
 
 **PPI (producer price index)** 🟡 — price changes experienced by **domestic producers**: fuels, farm products, machinery, chemicals, metals, pulp and paper... grouped by **stage of processing: crude → intermediate → finished**. Because producer price rises **pass through to consumers**, **PPI can influence future CPI** (a leading signal). Cross-country weight differences are **much more dramatic** than for CPI (industry specialization). Sometimes called **WPI**.
 
-**Indexation uses:** **TIPS** principal adjusts to **CPI-U**; labor contracts and commercial leases adjust to CPI; business-contract recurring payments link to **PPI** or its sub-indexes.
+**Indexation uses 🔴 (official Q14 ✗):** **TIPS** principal adjusts to **CPI-U**; **labor contracts and commercial leases adjust to CPI**; **business-contract** recurring payments link to **PPI** or its sub-indexes.
+
+> ### ⭐ YOU MISSED OFFICIAL Q14 HERE — a "least likely" stem (second negation miss)
+> *Which statement about the PPI is LEAST likely?* — you picked **A ("can influence the future CPI")**, which is **TRUE**; correct is **C ("used more than CPI to adjust labor-contract payments")**, which is **FALSE** — labor contracts use the CPI; the PPI is for business contracts. B (weights vary more across countries than CPI) is also TRUE.
+> **Why it matters:** this is the same failure as Ex7 Q1 (NAIRU "NOT"), after a successful retest — the routine held once under low pressure and dropped again. It isn't automatic yet. **Mechanical fix:** on NOT / EXCEPT / least-likely stems, *write* T or F beside each option before choosing. Picking the first true-sounding option is exactly the trap.
 
 > ### ⭐ YOU MISSED EXAMPLE 5, Q6 HERE — and the note was incomplete
 > *"To estimate trends in sales AND production costs of an industry, an analyst would prefer:"* — you picked **A (WPI sub-indexes only)**; correct is **B (sub-indexes of BOTH CPI and WPI)**.
@@ -548,6 +565,11 @@ Official Q9/Q10 (sugar/cotton):  Laspeyres 118/99 = 119.19 → 19.2% | Paasche 1
 > | **Upward bias** | Index **construction** (fixed basket) | Any Laspeyres CPI — headline *and* core alike |
 > | **Short-term noise** | **Composition** (food & energy included) | Headline, not core |
 
+> ### ⭐ REPEAT MISS — OFFICIAL Q16 AND Q19 (headline vs. core, third time)
+> Q16 *"inflation rate relied on for public policy"* — you picked **"index of food and energy prices"**; correct is **core**. Q19 *"index that excludes food and energy is used to calculate"* — you picked **headline**; correct is **core**.
+>
+> This is the same fact missed three times now (Ex5 Q7, Q16, Q19), each time from a different angle, so it is not a reading slip — the pair is not stored. **Store it as one sentence:** *"Core = headline MINUS food and energy; policy makers use CORE because it's less volatile."* Then every version resolves: ex-food-and-energy → core; policy → core; headline → noisier; "index of food and energy" → not a thing (an **off-model** option built from the definition's own words). **Flashcard until automatic** (`econ-m4-f13`).
+
 **Other uses of price indexes:** deflating nominal GDP → real growth (the **GDP deflator**, 🔗 M3 §5); **sub-indexes** for industry- or company-specific analysis — CPI sub-indexes for an industry's *output prices*, PPI/WPI sub-indexes for its *input costs*.
 
 ### Explaining inflation — the two types 🔴
@@ -568,6 +590,11 @@ Official Q9/Q10 (sugar/cotton):  Laspeyres 118/99 = 119.19 → 19.2% | Paasche 1
 > *"To examine inflationary pressure caused by RISING COSTS, an analyst gathers data on:"* — you picked **A (money supply and nominal GDP growth)**; correct is **B (unemployment rate, NAIRU, productivity growth)**.
 >
 > "Rising costs" = **cost-push** = **labor-market data**. Money supply vs. nominal GDP is the **demand-pull / Monetarist** indicator. The two indicator sets are not interchangeable — the stem names the type, and the type picks the data. **Truncated-rule miss:** you knew both indicator sets but didn't map the stem's "rising costs" to cost-push first. **Fix:** on any "which data?" question, first label the stem's inflation type (cost-push / demand-pull / expectations), then pull that row of the table above.
+
+> ### ⭐ YOU MISSED OFFICIAL Q20 HERE — a two-bullet stem
+> *An economist expects (1) falling unemployment → higher retailer revenues; (2) a tighter labor market → wages ↑ → retailers forced to raise prices. Which inflation type?* — you picked **demand-pull**; correct is **cost-push**.
+>
+> The second bullet is the cost-push definition verbatim: *rising costs (usually wages) compel businesses to raise prices.* The first bullet is demand-side scenery and is the lure. **The order of the chain decides the type:** `costs → prices` = cost-push; `demand → prices → wages chase` = demand-pull. Both start from a tight economy — that's why the curriculum says they share a root cause — so "strong demand is mentioned" never settles it. *(Truncated-rule miss: read half the stem. Rule 3 of the routine — two objects in the stem → the answer must account for both.)*
 
 **Worked diagnosis (Example 8 Q2 — you got this right):** wage growth 3.4% but **ULC growth −0.25%** → productivity is outrunning wages → **no cost-push**. **Money supply 6.7% vs. nominal GDP 3.4%** → money outpacing the economy → **demand-pull** ("bottlenecks in increasing supply to satisfy demand"). TIPS-implied 2.2% → modest, **not** expectations-driven. Reading the table row by row against the indicator map is the whole method.
 
@@ -917,16 +944,16 @@ EXPECTATIONS: embedded → self-sustaining → persists after cause gone
 | Measurement differences; ILO; working-age-pop approach biases | Concept | 🟢 Low-Med |
 | Structural productivity = potential GDP/decades, not cyclical | Concept | 🟢 Low |
 | **— INFLATION —** | | |
-| Price index from a basket (Laspeyres, base quantities) + inflation rate | **Calc** | 🔴 Very high |
-| Three fixed-basket biases, all UPWARD, and their fixes ("fixed basket" → overstates) | Concept | 🔴 Very high ⭐ *your miss* |
+| Price index from a basket: Laspeyres (base qty) ✓, Paasche (current qty) ✓, Fisher = √(L×P); which is highest → Laspeyres | **Calc** | 🔴 Very high ⭐ *official Q15 miss (ranking)* |
+| Three fixed-basket biases, all UPWARD, and their fixes ("fixed basket" → overstates, even at constant price) | Concept | 🔴 Very high ⭐ *missed 2× (Ex5 Q4, official Q18)* |
 | Disinflation vs. deflation (rate falls vs. level falls) | Concept | 🔴 Very high ✓ |
-| Headline vs. core: headline = more short-term NOISE, not "bias" | Concept | 🔴 Very high ⭐ *your miss* |
+| Headline vs. core: core = headline minus food & energy; policy uses core; headline = more NOISE, not "bias" | Concept | 🔴 Very high ⭐ *missed 3× (Ex5 Q7, official Q16, Q19)* |
 | Industry analysis: CPI sub-index for output/sales, WPI/PPI sub-index for inputs/costs — both | Concept | 🔴 High ⭐ *your miss* |
 | GDP deflator (not CPI/PCE) to deflate nominal growth | Concept | 🔴 High ✓ |
 | Deflation mechanism: revenues ↓ + real debt ↑ → firms cut I and hiring | Concept | 🟡 Medium ✓ |
 | Stagflation needs inflation + unemployment; not from the rate alone | Concept | 🟡 Medium ✓ |
 | TIPS breakeven: nominal yield − inflation-linked yield | **Calc** | 🔴 High |
-| Cost-push vs. demand-pull; shared root cause (excess demand) | Concept | 🔴 High |
+| Cost-push vs. demand-pull from a scenario: costs → prices = cost-push; demand → prices → wages = demand-pull | Concept | 🔴 High ⭐ *official Q20 miss* |
 | Indicator map: which data for cost-push vs. demand-pull vs. expectations | Concept | 🔴 Very high ⭐ *your miss* |
 | Diagnose inflation type from a data table (ULC, money vs. GDP, TIPS) | Concept/**calc** | 🔴 Very high ✓ |
 | Cost-push occurs when unemployment is LOW (below NAIRU) | Concept | 🔴 High ⭐ *your miss (hedge option)* |
@@ -950,7 +977,7 @@ EXPECTATIONS: embedded → self-sustaining → persists after cause gone
 | Overheating vs. stagflation policy responses | Concept | 🟡 Medium |
 | HICP/ECB/Eurostat; RBI uses WPI (food weight, no markups) | Concept | 🟢 Low |
 | Exhibit 4 weight patterns (food higher in developing economies) | Concept | 🟢 Low |
-| Indexation: TIPS ← CPI-U, contracts ← CPI, business ← PPI | Concept | 🟢 Low |
+| Indexation: TIPS ← CPI-U, labor contracts/leases ← CPI, business contracts ← PPI | Concept | 🟡 Medium ⭐ *official Q14 miss (least-likely stem)* |
 
 **⭐ Practice questions Q1–Q15 → now in the Study Hub question bank (Quiz → Business Cycles, ids econ-m4-q01…q15), with explanations.**
 
@@ -994,7 +1021,7 @@ EXPECTATIONS: embedded → self-sustaining → persists after cause gone
 11. Unemployment lag + early-signal ordering; housing credit-cycle sequence
 12. Index institutions (PCE/CPI-U/HICP/WPI/PPI), expectations, framing, saving rate, price–wage spiral
 
-## 8. Official practice problems — log (CFA Institute sets, paraphrased in the Study Hub as `econ-m4-p12…p23`)
+## 8. Official practice problems — log (CFA Institute sets, paraphrased in the Study Hub as `econ-m4-p12…p31`)
 
 **Set 1 (2026-10-12): 8 / 8 ✓** — no misses. Topics: imports fall on *persistent* depreciation (§3); UR↓ + PR↓ = discouraged workers (§4); frictional = job lined up but not started (§4, gap now added); discouraged-worker definition (§4); who is harmed by inflation = fixed annuity (§5, gap now added); disinflation (§5); deflation ↔ contraction (§5); hyperinflation *least likely* → velocity falls is the false one (§5 — the NOT routine held).
 
@@ -1008,6 +1035,11 @@ EXPECTATIONS: embedded → self-sustaining → persists after cause gone
 
 **Set 2 (2026-10-12, Exhibit 1 vignette + 3 items): 3 / 4** — Laspeyres 19.2% ✓, **Paasche 115.9 ✓** (now in §5), disinflation ✓; **Q11 ✗** self-correct = stagflation, picked overheating (`econ-m4-p22`, pattern 7).
 
-**Running tally — Economics official practice: 42 / 63 (67%)** — M1 10/14 · M2 4/7 · M3 17/30 · **M4 11/12**. Target ≈ 70%.
+**Set 3 (2026-10-12, Q13–Q20): 2 / 8** — CPI shared use ✓, productivity in cost-push ✓; **six misses, all in §5 inflation:** Q14 PPI least-likely (negation, 2nd), Q15 highest index = Laspeyres (truncated), Q16 policy → core (off-model), Q18 quality bias upward (truncated, repeat of Ex5 Q4), Q19 ex-food-energy → core (definition, repeat), Q20 wages→prices = cost-push (truncated, half the stem). Items `econ-m4-p24…p31`.
+
+**Module 4 official total: 13 / 20 (65%)** — sets 8/8 · 3/4 · 2/8. Non-inflation items 10/11; **inflation items 3/9.**
+**Running tally — Economics official practice: 44 / 71 (62%)** — M1 10/14 · M2 4/7 · M3 17/30 · M4 13/20. Target ≈ 70%.
+
+**What set 3 says:** the misses are not spread across the module — they sit in one place, §5 price indexes and inflation types, and three of them are repeats of curriculum-example misses (headline/core ×2, quality bias). Repeats mean the fact wasn't stored, not that the routine slipped. **Action:** re-read §5 "Three biases" through "Headline vs. core" and "Explaining inflation" once, then run the §5 section quiz until the official items are mastered (2 consecutive correct). Flashcards `econ-m4-f09`, `f11`, `f13` daily until then.
 
 > **Note status: COMPLETE** — §4.01 introduction, §4.02 consumer behavior, §4.03 housing, §4.04 external trade, §4.05 unemployment, §4.06 inflation. Curriculum-example tally: **15 / 26** (all curriculum examples done). Practice set Q1–Q15 → Study Hub question bank.
