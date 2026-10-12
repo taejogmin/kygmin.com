@@ -417,6 +417,11 @@ UPSWING:   productivity ↑ (underemployed workers reused)
 | High inflation + **fast growth + low unemployment** | **Overheating** | Policy moves to cool it down |
 | High inflation + **high unemployment + slowdown** | **Stagflation** (stagnation + inflation) | **Left to correct itself** — no short-term policy deemed effective (🔗 M3 §13 Case 4) |
 
+> ### ⭐ YOU MISSED OFFICIAL Q11 HERE
+> *"A central bank will most likely allow the economy to self-correct in periods of:"* — you picked **A (high inflation, fast growth, low unemployment)**; correct is **C (high inflation, slow growth, high unemployment)**.
+>
+> You picked the **overheating** row for a stem that describes the **stagflation** row. The table has two rows and they map to opposite responses: **overheating → policy acts (cools it)**; **stagflation → policy waits (self-correct)**, because tightening deepens the slump and easing feeds the inflation. **Why the trap works:** both rows start with "high inflation", so the first phrase of every option looks the same — the discriminator is the growth/unemployment half. *(Truncated-rule miss: read half the row.)* **Fix:** on any "policy response" stem, label it first — *act* or *wait*? — then find the row whose growth AND unemployment match. Low inflation + slow growth + high unemployment (option B) is an ordinary recession → easing, so also "act".
+
 ### Deflation, hyperinflation, disinflation 🔴 definition trap
 | Term | Definition | Price level | Inflation rate |
 |---|---|---|---|
@@ -463,7 +468,20 @@ SAME basket at Feb prices:   (50 × 4) + (70 × 4.5) = ¥515     ← hold Jan QU
 Price index (base = 100):  515 / 458 × 100 = 112.45
 Inflation rate:            112.45 / 100 − 1 = 12.45%
 ```
-⚠️ **The quantity trap:** the index uses **base-period quantities** with **current prices**. Using Feb quantities (70 kg, 60 L) in both periods gives a different number (≈116.0) — that's a Paasche index, not what the curriculum computes. Read which quantities are held fixed. (🔗 M3 §5: the GDP deflator is the reverse — *current* quantities at base prices. Don't cross the two.)
+⚠️ **The quantity trap:** the Laspeyres index uses **base-period quantities** with **current prices**. Read which quantities are held fixed. (🔗 M3 §5: the GDP deflator is the reverse — *current* quantities at base prices. Don't cross the two.)
+
+**Paasche index 🔴 — the official set asks for it directly (Q10 ✓):** uses the **CURRENT basket** at both periods' prices.
+```
+Paasche_t = Σ(q_CURRENT × p_t) / Σ(q_CURRENT × p_base) × 100
+Exhibit 3 with Feb quantities (70 kg, 60 L):  (70×4 + 60×4.5) / (70×3 + 60×4.4) = 550/474 × 100 = 116.0
+Official Q9/Q10 (sugar/cotton):  Laspeyres 118/99 = 119.19 → 19.2% | Paasche 160/138 = 115.9
+```
+| Index | Quantities held fixed | Typical bias |
+|---|---|---|
+| **Laspeyres** | **Base** period | Overstates (ignores substitution away from pricier goods) |
+| **Paasche** | **Current** period | Understates (uses the already-substituted basket) |
+| Fisher | Geometric mean of the two | — |
+⚠️ The distractor "total spending change" (160/99 = 61.6%) mixes changed quantities AND prices — it is neither index.
 
 **Laspeyres index** = basket composition **held constant** at base period. Most indexes worldwide are Laspeyres because basket survey data arrive **with a lag**; many countries update the basket **every five years**.
 
@@ -976,7 +994,7 @@ EXPECTATIONS: embedded → self-sustaining → persists after cause gone
 11. Unemployment lag + early-signal ordering; housing credit-cycle sequence
 12. Index institutions (PCE/CPI-U/HICP/WPI/PPI), expectations, framing, saving rate, price–wage spiral
 
-## 8. Official practice problems — log (CFA Institute set, paraphrased in the Study Hub as `econ-m4-p12…p19`)
+## 8. Official practice problems — log (CFA Institute sets, paraphrased in the Study Hub as `econ-m4-p12…p23`)
 
 **Set 1 (2026-10-12): 8 / 8 ✓** — no misses. Topics: imports fall on *persistent* depreciation (§3); UR↓ + PR↓ = discouraged workers (§4); frictional = job lined up but not started (§4, gap now added); discouraged-worker definition (§4); who is harmed by inflation = fixed annuity (§5, gap now added); disinflation (§5); deflation ↔ contraction (§5); hyperinflation *least likely* → velocity falls is the false one (§5 — the NOT routine held).
 
@@ -988,6 +1006,8 @@ EXPECTATIONS: embedded → self-sustaining → persists after cause gone
 | Fixed annuity hurt by inflation | mechanism, not in note before | ✓ |
 | Hyperinflation "least likely" | stem negation (pattern 9) | ✓ |
 
-**Running tally — Economics official practice: 39 / 59 (66%)** — M1 10/14 · M2 4/7 · M3 17/30 · **M4 8/8**. Target ≈ 70%.
+**Set 2 (2026-10-12, Exhibit 1 vignette + 3 items): 3 / 4** — Laspeyres 19.2% ✓, **Paasche 115.9 ✓** (now in §5), disinflation ✓; **Q11 ✗** self-correct = stagflation, picked overheating (`econ-m4-p22`, pattern 7).
+
+**Running tally — Economics official practice: 42 / 63 (67%)** — M1 10/14 · M2 4/7 · M3 17/30 · **M4 11/12**. Target ≈ 70%.
 
 > **Note status: COMPLETE** — §4.01 introduction, §4.02 consumer behavior, §4.03 housing, §4.04 external trade, §4.05 unemployment, §4.06 inflation. Curriculum-example tally: **15 / 26** (all curriculum examples done). Practice set Q1–Q15 → Study Hub question bank.

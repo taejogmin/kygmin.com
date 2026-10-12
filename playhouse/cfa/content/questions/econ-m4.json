@@ -921,6 +921,78 @@
       "answer": "A",
       "explanation": "LEAST-likely stem → mark each option T/F. Money-supply expansion is the CAUSE (T); social unrest / political risk is a documented consequence in developing economies (T). Velocity RISES in hyperinflation — people rush to convert cash into real goods, so money changes hands faster — so a decline in velocity is the F and the answer.",
       "kr": "least likely 지문 → 선지별 T/F. 통화 공급 급증은 원인(T); 사회 불안·정치적 위험은 결과(T). 초인플레이션에서는 사람들이 현금을 실물로 바꾸려 해 유통속도가 '상승' → 유통속도 하락이 F = 정답."
+    },
+    {
+      "id": "econ-m4-p20",
+      "section": "5",
+      "concept": "Laspeyres index from a two-month basket",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "which-quantity",
+      "source": "cfai",
+      "stem": "Base month: 70 kg of sugar at 0.90 and 60 kg of cotton at 0.60. Next month: 120 kg of sugar at 1.00 and 50 kg of cotton at 0.80. With the base-month index set at 100, the inflation rate implied by a Laspeyres index for the next month is closest to:",
+      "choices": {
+        "A": "19.2%",
+        "B": "36.4%",
+        "C": "61.6%"
+      },
+      "answer": "A",
+      "explanation": "Laspeyres holds BASE quantities (70, 60) fixed. Base bundle = 70×0.90 + 60×0.60 = 99. Same bundle at new prices = 70×1.00 + 60×0.80 = 118. Index = 118/99 × 100 = 119.19 → inflation 19.2%. Choice C (61.6%) is the change in total SPENDING (160/99) — quantities and prices both changed; choice B mixes new quantities into the base cost. Read which quantities are held fixed.",
+      "kr": "라스파이레스 = 기준기 수량(70, 60) 고정. 기준 바스켓 99, 신가격 적용 118 → 지수 119.19 → 19.2%. C(61.6%)는 수량·가격이 모두 바뀐 총지출 변화(160/99); B는 기준 비용에 새 수량을 섞은 값."
+    },
+    {
+      "id": "econ-m4-p21",
+      "section": "5",
+      "concept": "Paasche index",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "which-quantity",
+      "source": "cfai",
+      "stem": "Base month: 70 kg of sugar at 0.90 and 60 kg of cotton at 0.60. Next month: 120 kg of sugar at 1.00 and 50 kg of cotton at 0.80. The Paasche index for the next month (base = 100) is closest to:",
+      "choices": {
+        "A": "116",
+        "B": "148",
+        "C": "160"
+      },
+      "answer": "A",
+      "explanation": "Paasche uses the CURRENT basket (120, 50) at both periods' prices: (120×1.00 + 50×0.80) / (120×0.90 + 50×0.60) = 160/138 × 100 = 115.9. Choice C (160) is just current spending with no base-cost denominator; choice B (148 ≈ 160/108) uses a wrong base. Laspeyres = base quantities; Paasche = current quantities (the GDP-deflator convention).",
+      "kr": "파셰 = '현재' 수량(120, 50)을 양 기간 가격에 적용: 160/138 × 100 = 115.9. C(160)는 분모 없는 현재 지출; B는 잘못된 기준 비용. 라스파이레스 = 기준 수량, 파셰 = 현재 수량(GDP 디플레이터 방식)."
+    },
+    {
+      "id": "econ-m4-p22",
+      "section": "5",
+      "concept": "Stagflation → left to self-correct",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "truncated-rule",
+      "source": "cfai",
+      "stem": "A central bank is most likely to let the economy correct itself, rather than intervene, during a period of:",
+      "choices": {
+        "A": "high inflation, fast growth and low unemployment",
+        "B": "low inflation, slow growth and high unemployment",
+        "C": "high inflation, slow growth and high unemployment"
+      },
+      "answer": "C",
+      "explanation": "High inflation + slow growth + high unemployment = STAGFLATION, which is left to self-correct because no short-term policy is thought effective (tightening worsens the slump; easing worsens inflation). Choice A is OVERHEATING, where policy moves to cool the economy — the other row of the same table. Choice B is an ordinary recession, where easing is the standard response. Two-row mapping: overheating → act; stagflation → wait.",
+      "kr": "고인플레 + 저성장 + 고실업 = 스태그플레이션 → 단기 정책이 효과 없다고 보아 자율 조정에 맡김(긴축은 침체 악화, 완화는 인플레 악화). A는 과열 → 정책으로 식힘. B는 일반 침체 → 완화 정책. 두 행의 매핑: 과열 → 개입, 스태그플레이션 → 방치."
+    },
+    {
+      "id": "econ-m4-p23",
+      "section": "5",
+      "concept": "Disinflation best described",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "source": "cfai",
+      "stem": "Disinflation is best described as:",
+      "choices": {
+        "A": "a decline in the price level",
+        "B": "a negative inflation rate",
+        "C": "a decline in the inflation rate"
+      },
+      "answer": "C",
+      "explanation": "Disinflation = the inflation RATE falls (e.g., 7% → 4%) while staying positive — the price level keeps rising. Choices A and B both describe DEFLATION (falling price level = negative rate). Level vs rate of change.",
+      "kr": "디스인플레이션 = 인플레이션'율'이 하락(7% → 4%)하되 양수 유지 — 물가는 계속 상승. A·B는 모두 디플레이션(물가 수준 하락 = 음의 상승률). 수준 vs 변화율."
     }
   ]
 }

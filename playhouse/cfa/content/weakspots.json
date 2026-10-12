@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-11",
+  "updated": "2026-10-12",
   "patterns": [
     {
       "id": "polarity",
@@ -210,9 +210,11 @@
         "M4 Ex1 Q2 (permanent income → services, not saving rate)",
         "M4 Ex5 Q4 ('fixed basket' didn't trigger Laspeyres → overstates)",
         "M4 Ex5 Q6 (stem asked sales AND costs; picked WPI only)",
-        "M4 Ex8 Q1 ('rising costs' → pulled demand-pull indicators)"
+        "M4 Ex8 Q1 ('rising costs' → pulled demand-pull indicators)",
+        "M4 official Q11 (central bank lets economy self-correct → stagflation; picked the overheating row)"
       ],
       "seed": [
+        "econ-m4-p22",
         "econ-m4-p04",
         "econ-m4-p02",
         "econ-m4-p05",
@@ -433,6 +435,11 @@
       "qid": "econ-m4-p11",
       "when": "2026-10-11",
       "note": "Ex8 Q6 — picked 'interest rates'. Monetarists → money growth. (off-model)"
+    },
+    {
+      "qid": "econ-m4-p22",
+      "when": "2026-10-12",
+      "note": "Official Q11 — stem said 'allow to self-correct', picked the OVERHEATING row (high inflation + fast growth + low UR). Self-correct = STAGFLATION (high inflation + slow growth + high UR). Two-row mapping, wrong row. (truncated rule)"
     }
   ]
 }
