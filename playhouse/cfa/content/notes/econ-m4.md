@@ -327,6 +327,8 @@ Very low unemployment (overheated economy)
 | **Voluntarily unemployed** | Voluntarily outside the labor force — refuses an available vacancy below their wage threshold; early retirees | **NO** | No |
 | Retirees, children, stay-at-home parents, full-time students | Neither employed nor seeking | No | No |
 
+⚠️ **Frictional includes "job lined up, not yet started"** (official Q3 ✓): a manager who resigned today to start at a rival in six months is **frictionally unemployed** at survey time — not working, between jobs, transitory. Having a job waiting doesn't change the category. Not *voluntarily* unemployed (that's choosing to stay outside the labor force) and not underemployed (that needs a job).
+
 ⚠️ **Hidden unemployment** = discouraged workers + the underemployed. Neither appears in the official unemployment rate — one is outside the labor force, the other is counted as *employed*.
 ⚠️ **Underemployment is hard to classify:** the lawyer may simply *prefer* the bookstore — which is why the statistic is criticized but not adjusted.
 
@@ -436,6 +438,7 @@ Deflation → value of money ↑ → debt contracts are FIXED nominal amounts
   → cash-short firms cut spending, investment, workforce SHARPLY
   → less spending + high unemployment → contraction deepens
 ```
+- 🔴 **Who gets hurt (official Q5 ✓):** inflation erodes the purchasing power of **fixed nominal amounts** — retirees on a **fixed annuity**, lenders, fixed-coupon bondholders. **Protected:** fixed-rate borrowers (repay with cheaper money) and workers with **escalator clauses** (wages indexed to CPI). Deflation is the mirror image — it hurts borrowers.
 - Hence the **~2% preferred inflation rate** consensus for developed economies — a buffer from deflation.
 - Episodes: US Great Depression; briefly after the 2008–09 crisis; **Japan since the late 1990s** (several episodes).
 
@@ -972,5 +975,19 @@ EXPECTATIONS: embedded → self-sustaining → persists after cause gone
 10. **Three-way income mapping** ⭐ and **trade asymmetry** ⭐ — your missed items
 11. Unemployment lag + early-signal ordering; housing credit-cycle sequence
 12. Index institutions (PCE/CPI-U/HICP/WPI/PPI), expectations, framing, saving rate, price–wage spiral
+
+## 8. Official practice problems — log (CFA Institute set, paraphrased in the Study Hub as `econ-m4-p12…p19`)
+
+**Set 1 (2026-10-12): 8 / 8 ✓** — no misses. Topics: imports fall on *persistent* depreciation (§3); UR↓ + PR↓ = discouraged workers (§4); frictional = job lined up but not started (§4, gap now added); discouraged-worker definition (§4); who is harmed by inflation = fixed annuity (§5, gap now added); disinflation (§5); deflation ↔ contraction (§5); hyperinflation *least likely* → velocity falls is the false one (§5 — the NOT routine held).
+
+| What the set tested | Pattern it probes | Result |
+|---|---|---|
+| Persistent depreciation → imports ↓ | polarity + persistence (pattern 1) | ✓ |
+| UR and PR both fall | discouraged-worker polarity (pattern 1) | ✓ |
+| Treasury manager → frictional | definition nuance (pattern 6) | ✓ |
+| Fixed annuity hurt by inflation | mechanism, not in note before | ✓ |
+| Hyperinflation "least likely" | stem negation (pattern 9) | ✓ |
+
+**Running tally — Economics official practice: 39 / 59 (66%)** — M1 10/14 · M2 4/7 · M3 17/30 · **M4 8/8**. Target ≈ 70%.
 
 > **Note status: COMPLETE** — §4.01 introduction, §4.02 consumer behavior, §4.03 housing, §4.04 external trade, §4.05 unemployment, §4.06 inflation. Curriculum-example tally: **15 / 26** (all curriculum examples done). Practice set Q1–Q15 → Study Hub question bank.
