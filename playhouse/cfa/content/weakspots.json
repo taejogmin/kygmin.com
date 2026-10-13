@@ -191,9 +191,11 @@
         "M3 official Q29 (TFP = output for given inputs)",
         "M2 official Q7 (regulated price = LRAC — repeat miss)",
         "M4 official Q16 + Q19 (headline vs core swapped twice in one set; third time incl. Ex5 Q7)",
-        "FSA M1 official Q4 (going concern vs accrual — the two assumptions swapped)"
+        "FSA M1 official Q4 (going concern vs accrual — the two assumptions swapped)",
+        "FSA M1 official Q5 (accrual definition → picked relevance, which isn't an assumption at all)"
       ],
       "seed": [
+        "fsa-m1-p05",
         "fsa-m1-p04",
         "econ-m4-f13",
         "econ-m4-p30",
@@ -642,6 +644,11 @@
       "qid": "fsa-m1-p04",
       "when": "2026-10-13",
       "note": "FSA M1 official Q4 — 'continue for the foreseeable future' = GOING CONCERN; picked accrual basis. The two assumptions swapped. (definition)"
+    },
+    {
+      "qid": "fsa-m1-p05",
+      "when": "2026-10-13",
+      "note": "FSA M1 official Q5 — 'recognized when they occur, not when cash flows' = ACCRUAL; picked relevance (a characteristic, not an assumption). Right after swapping the two assumptions in Q4. (definition / category)"
     }
   ]
 }

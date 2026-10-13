@@ -897,6 +897,42 @@
       "answer": "C",
       "explanation": "The framework's two underlying assumptions: ACCRUAL basis (transactions recorded in the period they occur, not when cash moves) and GOING CONCERN (the entity continues for the foreseeable future; one planning to liquidate or materially curtail needs different information). Comparability is an enhancing characteristic, not an assumption.",
       "kr": "개념체계의 두 기본 가정: 발생기준(현금 이동이 아니라 발생 기간에 기록)과 계속기업(예측 가능한 미래에 계속 영업; 청산·대폭 축소 예정이면 다른 정보 필요). 비교가능성은 보강적 특성이지 가정이 아님."
+    },
+    {
+      "id": "fsa-m1-p05",
+      "section": "4",
+      "concept": "Accrual basis definition",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "confusion",
+      "source": "cfai",
+      "stem": "The assumption that the effects of transactions and other events are recognized when they occur, not when the cash flows occur, is called:",
+      "choices": {
+        "A": "relevance",
+        "B": "accrual basis",
+        "C": "going concern"
+      },
+      "answer": "B",
+      "explanation": "Keyword TIMING ('when they occur, not when cash flows') → ACCRUAL basis: effects recorded in the periods to which they relate. Going concern = CONTINUITY. Relevance is a fundamental qualitative CHARACTERISTIC, not an assumption — the stem says 'assumption', so only two options are even in the right box.",
+      "kr": "키워드 '시점'(현금 흐름이 아니라 발생할 때) → 발생기준: 해당 기간에 효과를 기록. 계속기업 = '지속성'. 목적적합성은 근본적 질적 '특성'이지 가정이 아님 — 지문이 '가정'이라 했으니 범주상 후보는 두 개뿐."
+    },
+    {
+      "id": "fsa-m1-p06",
+      "section": "3",
+      "concept": "Neutrality → faithful representation",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "truncated-rule",
+      "source": "cfai",
+      "stem": "Neutrality of information in the financial statements most closely contributes to which qualitative characteristic?",
+      "choices": {
+        "A": "Relevance",
+        "B": "Understandability",
+        "C": "Faithful representation"
+      },
+      "answer": "C",
+      "explanation": "Faithful representation = complete + NEUTRAL + free from error (C-N-F). Relevance = predictive/confirmatory value + materiality. Understandability is an enhancing characteristic.",
+      "kr": "충실한 표현 = 완전성 + '중립성' + 오류 없음(C-N-F). 목적적합성 = 예측가치/확인가치 + 중요성. 이해가능성은 보강적 특성."
     }
   ]
 }
