@@ -450,4 +450,10 @@ IDENTITY SIGNS ⭐ (missed in M3, M6, M7×2):  X − M = (S − I) + (T − G)
 8. **Hedged return calc** (F/S)(1 + i_f) − 1
 9. Elasticity drivers; capital-account corollary; market facts
 
-> **Note status: COMPLETE** — §7.01 introduction through §7.04 absorption approach (the reading's final section in the current curriculum). Curriculum-example tally: **4 / 11** (Example 1: 1/5; Example 2: 3/6). Practice questions Q1–Q15 (+Q13b) → Study Hub question bank (`econ-m7-q01…q16`). Official practice problems: not yet attempted.
+## 6. Official practice problems — log (paraphrased in the Study Hub as `econ-m7-p08…p10`)
+
+**Set 1 (2026-10-13, Q1–Q3): 3 / 3** — receivable in 100 days → forward (the hedge routine, applied correctly: long EUR → sell EUR forward) ✓; devaluation benefits the most elastic exporter (luxury cars) ✓; appreciation can only cut a surplus if capital flows shift toward the domestic market (the capital-account corollary) ✓. Note: Q3's option A ("investment must decline relative to saving") is the identity-sign lure from Example 2 — not taken this time.
+
+**Economics official practice — FINAL: 60 / 93 (65%)** — M1 10/14 · M2 4/7 · M3 17/30 · M4 13/20 · M5 6/9 · M6 7/10 · M7 3/3. Target was ≈ 70%; the gap sits almost entirely in M4 §5 inflation (3/9) and M3 Part 2 AD/AS (4/11).
+
+> **Note status: COMPLETE** — §7.01 introduction through §7.04 absorption approach (the reading's final section in the current curriculum). Curriculum-example tally: **4 / 11** (Example 1: 1/5; Example 2: 3/6). Official practice set 1: **3 / 3**. Practice questions Q1–Q15 (+Q13b) → Study Hub question bank (`econ-m7-q01…q16`).
