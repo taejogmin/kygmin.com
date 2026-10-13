@@ -8,7 +8,14 @@
     {
       "id": "econ",
       "name": "Economics",
-      "weight": "6–9%"
+      "weight": "6–9%",
+      "short": "Economics"
+    },
+    {
+      "id": "fsa",
+      "name": "Financial Statement Analysis",
+      "short": "FSA",
+      "weight": "11–14%"
     }
   ],
   "modules": [
@@ -74,6 +81,15 @@
       "short": "Exchange Rates",
       "notes": "content/notes/econ-m7.md",
       "questions": "content/questions/econ-m7.json"
+    },
+    {
+      "id": "fsa-m1",
+      "subject": "fsa",
+      "order": 1,
+      "title": "Introduction to Financial Reporting",
+      "short": "Intro to Financial Reporting",
+      "notes": "content/notes/fsa-m1.md",
+      "questions": "content/questions/fsa-m1.json"
     }
   ]
 }

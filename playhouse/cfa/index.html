@@ -153,6 +153,17 @@ label.opt input{display:none;}
 .docpick .btn .mn{font-family:var(--mono);font-size:10px;color:#6B6B67;margin-right:7px;}
 .docpick .btn.ink .mn{color:#C9CFC9;}
 .subjpick{margin-bottom:8px;}
+.subjtabs{display:flex;flex-wrap:wrap;border-bottom:3px solid var(--ink);margin-bottom:14px;}
+.subjtab{all:unset;box-sizing:border-box;cursor:pointer;display:inline-flex;align-items:baseline;gap:10px;padding:11px 18px 10px;margin-right:-3px;border:3px solid var(--ink);border-bottom:none;background:var(--paper);font-family:var(--arch);font-weight:900;font-size:14.5px;text-transform:uppercase;letter-spacing:-.2px;color:var(--ink);}
+.subjtab:hover{background:#fff;}
+.subjtab.on{background:var(--ink);color:#fff;}
+.subjtab .w{font-family:var(--mono);font-size:10.5px;font-weight:600;text-transform:none;letter-spacing:.4px;color:var(--green-deep);}
+.subjtab.on .w{color:var(--green);}
+.subjtab .ct{font-family:var(--mono);font-size:10.5px;font-weight:500;text-transform:none;color:#6B6B67;}
+.subjtab.on .ct{color:#C9CFC9;}
+.subjtab:focus-visible{outline:3px solid var(--green);outline-offset:-7px;}
+.subjtab .sn-s{display:none;}
+@media(max-width:560px){ .subjtab{padding:9px 12px 8px;font-size:13px;gap:8px;} .subjtab .sn-l,.subjtab .ct{display:none;} .subjtab .sn-s{display:inline;} }
 .subjgroup{margin-bottom:6px;}
 label.opt.subj{border-width:3px;font-weight:600;}
 @media(max-width:700px){
@@ -323,7 +334,7 @@ h1 .box .scr{color:var(--paper);}
 <footer>
   <div class="foot-inner">
     <span>&copy; KYGMIN.COM</span>
-    <span class="tx" data-en="CFA STUDY HUB &middot; v1.6 &middot; SIGN IN TO SYNC ACROSS DEVICES" data-kr="CFA STUDY HUB &middot; v1.6 &middot; 로그인하면 기기 간 동기화">CFA STUDY HUB &middot; v1.6 &middot; SIGN IN TO SYNC ACROSS DEVICES</span>
+    <span class="tx" data-en="CFA STUDY HUB &middot; v1.7 &middot; SIGN IN TO SYNC ACROSS DEVICES" data-kr="CFA STUDY HUB &middot; v1.7 &middot; 로그인하면 기기 간 동기화">CFA STUDY HUB &middot; v1.7 &middot; SIGN IN TO SYNC ACROSS DEVICES</span>
     <a class="tx" href="/privacy.html" data-en="PRIVACY POLICY" data-kr="개인정보처리방침">PRIVACY POLICY</a>
   </div>
 </footer>
@@ -455,7 +466,7 @@ var T = {
     drill:'Drill', drillWeak:'Drill weak spots', misses:'misses', ofN:'of',
     guest:'Guest mode — your progress is kept in this browser only. Sign in (bottom-left chip) to sync across devices.',
     acct:'Signed in — progress syncs to your account.', syncing:'Syncing…', syncFail:'Sync failed — working from local data. Will retry on next action.',
-    pick_module:'Module', search_ph:'Search this note…', toc:'Contents', markRead:'Mark as read', readDone:'Read ✓', quizSec:'Quiz this section', noQ:'no questions yet',
+    pick_module:'Module', search_ph:'Search this note…', mods:'modules', mod1:'module', toc:'Contents', markRead:'Mark as read', readDone:'Read ✓', quizSec:'Quiz this section', noQ:'no questions yet',
     setup:'Set up a quiz', modules:'Modules', types:'Question types', count:'How many', mode:'Mode',
     mc:'Multiple choice', calc:'Calculations', flash:'Flashcards', all:'All',
     m_std:'Standard', m_weak:'Weak spots', m_review:'Review due', m_new:'Unseen first', start:'Start', nothing:'Nothing matches that set-up — pick more modules or types.',
@@ -479,7 +490,7 @@ var T = {
     drill:'집중 풀기', drillWeak:'약점 집중 풀기', misses:'오답', ofN:'/',
     guest:'게스트 모드 — 진도가 이 브라우저에만 저장됩니다. 왼쪽 아래 칩에서 로그인하면 기기 간 동기화됩니다.',
     acct:'로그인됨 — 진도가 계정에 동기화됩니다.', syncing:'동기화 중…', syncFail:'동기화 실패 — 로컬 데이터로 동작 중. 다음 동작에서 재시도합니다.',
-    pick_module:'모듈', search_ph:'이 노트에서 검색…', toc:'목차', markRead:'읽음 표시', readDone:'읽음 ✓', quizSec:'이 섹션 문제 풀기', noQ:'문제 없음',
+    pick_module:'모듈', search_ph:'이 노트에서 검색…', mods:'개 모듈', mod1:'개 모듈', toc:'목차', markRead:'읽음 표시', readDone:'읽음 ✓', quizSec:'이 섹션 문제 풀기', noQ:'문제 없음',
     setup:'퀴즈 설정', modules:'모듈', types:'문제 유형', count:'문제 수', mode:'모드',
     mc:'선다형', calc:'계산 문제', flash:'플래시카드', all:'전체',
     m_std:'기본', m_weak:'약점 우선', m_review:'복습 대기', m_new:'안 푼 문제 우선', start:'시작', nothing:'조건에 맞는 문제가 없습니다. 모듈이나 유형을 더 선택하세요.',
@@ -517,6 +528,9 @@ var MANIFEST=null, WEAK=null, MODULES=[], QBYID={}, QLIST=[], NOTES={}, SECTIONS
 var STORE = { owner:'guest', attempts:[], progress:{ read:{}, settings:{} } };
 var AUTH = { user:null, client:null, ready:false }, lastUserId=null, syncState='local', syncMsg=null;
 var view='home', studyModule=null, quiz=null, clearArmed=false;
+var LASTMOD=(function(){ try{ return JSON.parse(localStorage.getItem('cfa_lastmod')||'{}')||{}; }catch(e){ return {}; } })();
+function rememberMod(id){ var m=modById(id); if(!m) return; LASTMOD[m.subject]=id; LASTMOD._last=id; try{ localStorage.setItem('cfa_lastmod', JSON.stringify(LASTMOD)); }catch(e){} }
+function subjEntry(sid){ var id=LASTMOD[sid], m=id&&modById(id); return (m&&m.subject===sid)?id:((modulesOf(sid)[0]||{}).id); }
 
 /* ── local storage ──────────────────────────────────────────────────── */
 function loadLocal(){
@@ -603,7 +617,7 @@ function fetchJSON(u){ return fetch(u,{cache:'no-cache'}).then(function(r){ if(!
 function fetchText(u){ return fetch(u,{cache:'no-cache'}).then(function(r){ if(!r.ok) throw new Error(u); return r.text(); }); }
 function loadContent(){
   return fetchJSON('content/manifest.json').then(function(m){
-    MANIFEST=m; MODULES=m.modules.slice().sort(function(a,b){ return a.order-b.order; });
+    MANIFEST=m; var sidx={}; (m.subjects||[]).forEach(function(sj,i){ sidx[sj.id]=i; }); MODULES=m.modules.slice().sort(function(a,b){ return ((sidx[a.subject]||0)-(sidx[b.subject]||0)) || (a.order-b.order); });
     var weakP=fetchJSON('content/weakspots.json').then(function(w){ WEAK=w; }, function(){ WEAK=null; });
     return Promise.all([weakP].concat(MODULES.map(function(mod){
       return Promise.all([fetchText(mod.notes), fetchJSON(mod.questions)]).then(function(r){
@@ -731,10 +745,13 @@ function renderHome(){
 
 /* ── STUDY ──────────────────────────────────────────────────────────── */
 function renderStudy(){
-  var el=$('view-study'); if(!studyModule) studyModule=MODULES[0].id; var m=modById(studyModule);
+  var el=$('view-study'); if(!studyModule||!modById(studyModule)) studyModule=(LASTMOD._last&&modById(LASTMOD._last))?LASTMOD._last:MODULES[0].id; var m=modById(studyModule); rememberMod(studyModule);
   var html='';
-  if(SUBJECTS().length>1){ html+='<div class="docpick subjpick">'; SUBJECTS().forEach(function(sj){ if(!modulesOf(sj.id).length) return; html+='<button class="btn sm'+(sj.id===m.subject?' ink':'')+'" data-studysubj="'+esc(sj.id)+'">'+esc(sj.name)+'</button>'; }); html+='</div>'; }
-  html+='<div class="docpick">'; modulesOf(m.subject).forEach(function(x){ html+='<button class="btn sm'+(x.id===studyModule?' ink':'')+'" data-study="'+x.id+'"><span class="mn">M'+x.order+'</span>'+esc(x.short)+'</button>'; }); html+='</div>';
+  var subs=SUBJECTS().filter(function(sj){ return modulesOf(sj.id).length; });
+  if(subs.length>1){ html+='<nav class="subjtabs" role="tablist" aria-label="Subjects">'; subs.forEach(function(sj){ var on=sj.id===m.subject, n=modulesOf(sj.id).length;
+      html+='<button class="subjtab'+(on?' on':'')+'" role="tab" aria-selected="'+on+'" data-studysubj="'+esc(sj.id)+'"><span class="sn-l">'+esc(sj.name)+'</span><span class="sn-s">'+esc(sj.short||sj.name)+'</span>'+(sj.weight?'<span class="w">'+esc(sj.weight)+'</span>':'')+'<span class="ct">'+n+' '+esc(t(n===1?'mod1':'mods'))+'</span></button>'; });
+    html+='</nav>'; }
+  html+='<div class="docpick modpick">'; modulesOf(m.subject).forEach(function(x){ html+='<button class="btn sm'+(x.id===studyModule?' ink':'')+'" data-study="'+x.id+'"><span class="mn">M'+x.order+'</span>'+esc(x.short)+'</button>'; }); html+='</div>';
   html+='<div class="study"><aside class="toc"><div class="search"><input type="search" id="noteSearch" placeholder="'+esc(t('search_ph'))+'" aria-label="search" /></div><h3>'+esc(t('toc'))+'</h3><div id="tocList"></div></aside>'
     +'<article class="doc" id="doc"></article></div>';
   el.innerHTML=html;
@@ -949,7 +966,7 @@ document.addEventListener('click', function(e){
   if((b=e.target.closest('[data-go]'))){ quiz=null; setView(b.dataset.go); return; }
   if((b=e.target.closest('[data-read]'))){ studyModule=b.dataset.read; setView('study'); return; }
   if((b=e.target.closest('[data-study]'))){ studyModule=b.dataset.study; renderStudy(); return; }
-  if((b=e.target.closest('[data-studysubj]'))){ var fm=modulesOf(b.dataset.studysubj)[0]; if(fm){ studyModule=fm.id; renderStudy(); } return; }
+  if((b=e.target.closest('[data-studysubj]'))){ var fm=subjEntry(b.dataset.studysubj); if(fm){ studyModule=fm; renderStudy(); } return; }
   if((b=e.target.closest('[data-collapse]'))){ toggleCollapse(b.dataset.collapse); return; }
   if((b=e.target.closest('[data-quizmod]'))){ SETUP.modules={}; SETUP.modules[b.dataset.quizmod]=true; SETUP.mode='std'; startQuiz(buildPool(),'std'); return; }
   if((b=e.target.closest('[data-quizsec]'))){ var qs=shuffle(questionsFor(studyModule, b.dataset.quizsec).filter(function(q){ return q.type!=='flash'; })); startQuiz(qs,'section'); return; }

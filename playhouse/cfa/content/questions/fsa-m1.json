@@ -1,0 +1,830 @@
+{
+  "module": "fsa-m1",
+  "questions": [
+    {
+      "id": "fsa-m1-q01",
+      "section": "1",
+      "concept": "Objective of financial reporting",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "According to the IASB Conceptual Framework, the objective of financial reporting is best described as providing information useful to:",
+      "choices": {
+        "A": "tax authorities in assessing liabilities",
+        "B": "users in making decisions about providing resources to the entity",
+        "C": "management in valuing the company's assets"
+      },
+      "answer": "B",
+      "explanation": "The objective: financial information useful to users in making decisions about PROVIDING RESOURCES to the entity (equity, debt, loans, credit) and in influencing management's actions. The named users are resource providers — investors, lenders, other creditors — not tax authorities or management.",
+      "kr": "목적: 기업에 '자원을 제공'하는 결정(지분·채무·대출·신용)과 경영진 행동에 영향을 주는 데 유용한 정보. 대상은 자원 제공자(투자자·대여자·채권자)이지 세무당국이나 경영진이 아님."
+    },
+    {
+      "id": "fsa-m1-q02",
+      "section": "1",
+      "concept": "Standards limit the range",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "absolute-claim",
+      "stem": "Financial reporting standards most likely:",
+      "choices": {
+        "A": "eliminate the need for judgment in preparing statements",
+        "B": "ensure a single correct answer for reflecting economic activity",
+        "C": "limit the range of acceptable answers to increase consistency"
+      },
+      "answer": "C",
+      "explanation": "Uncertainty requires accruals and estimates, which require judgment; there 'usually will be no single correct answer'. Standards LIMIT THE RANGE of acceptable answers to increase consistency. A and B are absolute claims the curriculum explicitly rejects.",
+      "kr": "불확실성 → 발생주의·추정 → 판단 필요; '보통 단 하나의 정답은 없음'. 기준은 허용 가능한 답의 '범위를 제한'해 일관성을 높임. A·B는 교재가 명시적으로 부정하는 절대적 주장."
+    },
+    {
+      "id": "fsa-m1-q03",
+      "section": "1",
+      "concept": "Not designed solely for valuation",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Financial reports are best described as:",
+      "choices": {
+        "A": "designed primarily for asset valuation",
+        "B": "important inputs to valuation but not designed solely for it",
+        "C": "designed for regulators rather than investors"
+      },
+      "answer": "B",
+      "explanation": "Reports serve many users (investors, creditors, employees, customers, others), so they are NOT designed solely for asset valuation — but they provide important INPUTS into valuing a company or its securities.",
+      "kr": "보고서는 여러 이용자(투자자·채권자·직원·고객 등)를 위한 것이라 자산 평가만을 위해 설계되지 '않음' — 다만 기업·증권 가치평가의 중요한 '입력값'을 제공."
+    },
+    {
+      "id": "fsa-m1-q04",
+      "section": "1",
+      "concept": "Convergence drivers",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "The impetus for stronger coordination among major standard-setting bodies came most directly from:",
+      "choices": {
+        "A": "tax harmonization and trade agreements",
+        "B": "globalization of capital flows and accounting scandals",
+        "C": "the shift from principles-based to rules-based standards"
+      },
+      "answer": "B",
+      "explanation": "Globalization of capital flows plus accounting scandals created demand for uniform, high-quality global standards → stronger coordination among the major standard-setters. There was no general shift from principles- to rules-based standards.",
+      "kr": "자본 흐름의 세계화 + 회계 스캔들 → 통일된 고품질 글로벌 기준 수요 → 주요 기준제정기구 간 협력 강화. 원칙중심 → 규칙중심으로의 전반적 이동은 없었음."
+    },
+    {
+      "id": "fsa-m1-q05",
+      "section": "2",
+      "concept": "Role of regulators",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "confusion",
+      "stem": "Which of the following best describes the role of regulatory authorities such as the SEC?",
+      "choices": {
+        "A": "They set financial reporting standards as private-sector bodies",
+        "B": "They recognize and enforce standards and retain legal authority to establish them",
+        "C": "They appoint the members of the IASB"
+      },
+      "answer": "B",
+      "explanation": "Regulators are GOVERNMENT bodies with legal authority: they recognize and enforce standards and retain the authority to establish them (and can overrule the setters). Setting standards as private bodies is the IASB/FASB role; IASB members are appointed by the IFRS Foundation Trustees.",
+      "kr": "규제기관 = '정부' 기관, 법적 권한: 기준을 인정·집행하고 제정 권한도 보유(기준제정기구를 뒤집을 수 있음). 민간기구로서 기준 제정은 IASB/FASB의 역할; IASB 위원은 IFRS 재단 이사회가 임명."
+    },
+    {
+      "id": "fsa-m1-q06",
+      "section": "2",
+      "concept": "Source of setter authority",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "confusion",
+      "stem": "The authority of a private-sector standard-setting body such as the IASB derives most directly from:",
+      "choices": {
+        "A": "its members' professional expertise",
+        "B": "recognition of its standards by regulatory authorities",
+        "C": "the IFRS Foundation's monitoring board"
+      },
+      "answer": "B",
+      "explanation": "'Without the recognition of the standards by the regulatory authorities, the private sector standard-setting bodies would have no authority.' IFRS are authoritative to the extent they are recognized and adopted by regulators. Expertise is how members are chosen, not where authority comes from.",
+      "kr": "'규제기관의 인정이 없으면 민간 기준제정기구는 아무런 권한이 없다.' IFRS는 규제기관이 인정·채택하는 범위 내에서만 권위를 가짐. 전문성은 위원 선발 기준이지 권한의 원천이 아님."
+    },
+    {
+      "id": "fsa-m1-q07",
+      "section": "2",
+      "concept": "IASB structure",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "definition",
+      "stem": "The members of the IASB are appointed by:",
+      "choices": {
+        "A": "the IFRS Foundation Trustees",
+        "B": "the monitoring board",
+        "C": "IOSCO"
+      },
+      "answer": "A",
+      "explanation": "Layers: monitoring board (public authorities — EC, IOSCO, Japan FSA, US SEC) holds the Trustees accountable → IFRS Foundation Trustees appoint the IASB members. IOSCO sits on the monitoring board; it does not appoint.",
+      "kr": "구조: 모니터링 보드(공공기관 — EC, IOSCO, 일본 FSA, 미국 SEC)가 이사회를 감독 → IFRS 재단 이사회(Trustees)가 IASB 위원을 임명. IOSCO는 모니터링 보드 구성원일 뿐 임명하지 않음."
+    },
+    {
+      "id": "fsa-m1-q08",
+      "section": "2",
+      "concept": "FASB Codification",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "The FASB Accounting Standards Codification is best described as:",
+      "choices": {
+        "A": "the source of authoritative US GAAP for non-governmental entities",
+        "B": "the complete set of SEC regulations and guidance",
+        "C": "the US equivalent of the IFRS Conceptual Framework"
+      },
+      "answer": "A",
+      "explanation": "The Codification, organized by topic, is the source of authoritative US GAAP for non-governmental entities. Only CERTAIN PORTIONS — not all — of SEC guidance are included for reference.",
+      "kr": "주제별로 정리된 코디피케이션은 비정부기관에 대한 권위 있는 US GAAP의 원천. SEC 지침은 '일부만' 참고용으로 포함 — 전부가 아님."
+    },
+    {
+      "id": "fsa-m1-q09",
+      "section": "2",
+      "concept": "SEC override",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "With respect to US GAAP, the SEC most likely:",
+      "choices": {
+        "A": "has no authority to establish accounting standards",
+        "B": "retains the authority to establish standards but has rarely overruled the FASB",
+        "C": "delegates all authority to the Financial Accounting Foundation"
+      },
+      "answer": "B",
+      "explanation": "The SEC recognizes FASB standards as authoritative but RETAINS the authority to establish accounting standards and reporting requirements; it has rarely overruled the FASB and issues guidance such as Staff Accounting Bulletins.",
+      "kr": "SEC는 FASB 기준을 권위 있는 것으로 인정하지만 기준 제정 권한을 '보유'; FASB를 뒤집은 적은 드물며 Staff Accounting Bulletins 같은 지침을 발행."
+    },
+    {
+      "id": "fsa-m1-q10",
+      "section": "3",
+      "concept": "Fundamental characteristic",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "truncated-rule",
+      "stem": "Which of the following is a fundamental qualitative characteristic under the IFRS Conceptual Framework?",
+      "choices": {
+        "A": "Comparability",
+        "B": "Faithful representation",
+        "C": "Timeliness"
+      },
+      "answer": "B",
+      "explanation": "Two fundamental: RELEVANCE and FAITHFUL REPRESENTATION. Four enhancing: comparability, verifiability, timeliness, understandability (C-V-T-U). Comparability and timeliness are enhancing.",
+      "kr": "근본적 특성 2개: 목적적합성, 충실한 표현. 보강적 특성 4개: 비교가능성, 검증가능성, 적시성, 이해가능성(C-V-T-U). 비교가능성·적시성은 보강적."
+    },
+    {
+      "id": "fsa-m1-q11",
+      "section": "3",
+      "concept": "Identify: verifiability",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "'Different knowledgeable and independent observers would agree that the information faithfully represents the phenomenon' best describes:",
+      "choices": {
+        "A": "neutrality",
+        "B": "verifiability",
+        "C": "comparability"
+      },
+      "answer": "B",
+      "explanation": "That is the definition of VERIFIABILITY (enhancing). Neutrality (part of faithful representation) = without bias; comparability = identify similarities and differences across time and entities.",
+      "kr": "이는 '검증가능성'(보강적)의 정의. 중립성(충실한 표현의 하위요소) = 편향 없음; 비교가능성 = 기간·기업 간 유사점과 차이 식별."
+    },
+    {
+      "id": "fsa-m1-q12",
+      "section": "3",
+      "concept": "Materiality placement",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "truncated-rule",
+      "stem": "Materiality is discussed within the context of:",
+      "choices": {
+        "A": "relevance",
+        "B": "faithful representation",
+        "C": "understandability"
+      },
+      "answer": "A",
+      "explanation": "Materiality sits INSIDE relevance: information is material if its omission or misstatement could influence users' decisions (nature and/or magnitude). It is not a separate characteristic and not part of faithful representation (complete, neutral, free from error).",
+      "kr": "중요성은 목적적합성 '안에' 있음: 누락·왜곡이 이용자 결정에 영향을 줄 수 있으면 중요(성격 및/또는 규모). 별도 특성도, 충실한 표현(완전성·중립성·오류 없음)의 일부도 아님."
+    },
+    {
+      "id": "fsa-m1-q13",
+      "section": "3",
+      "concept": "Pervasive constraint",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "off-model",
+      "stem": "The pervasive constraint on useful financial reporting identified in the Conceptual Framework is:",
+      "choices": {
+        "A": "materiality",
+        "B": "cost",
+        "C": "verifiability"
+      },
+      "answer": "B",
+      "explanation": "COST is the one pervasive constraint named — benefits should exceed the costs of providing and using information. Materiality is part of relevance; verifiability is an enhancing characteristic.",
+      "kr": "명시된 유일한 포괄적 제약은 '원가' — 정보 제공·이용의 효익이 원가를 초과해야. 중요성은 목적적합성의 일부, 검증가능성은 보강적 특성."
+    },
+    {
+      "id": "fsa-m1-q14",
+      "section": "3",
+      "concept": "Bad-debt trade-off",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "mechanism",
+      "stem": "Recording an estimated bad-debt expense at the time of a credit sale most likely sacrifices:",
+      "choices": {
+        "A": "relevance",
+        "B": "verifiability",
+        "C": "timeliness"
+      },
+      "answer": "B",
+      "explanation": "The estimate is relevant, faithful, timely and understandable — but actual bad debts aren't known until later, so the figure cannot yet be verified by independent observers. Lesson: not all characteristics can be met at once.",
+      "kr": "추정치는 목적적합·충실·적시·이해 가능 — 그러나 실제 대손은 나중에야 알 수 있어 독립적 관찰자가 아직 검증할 수 없음. 교훈: 모든 특성을 동시에 충족할 수는 없음."
+    },
+    {
+      "id": "fsa-m1-q15",
+      "section": "3",
+      "concept": "Understandability — don't exclude",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Under the Conceptual Framework, useful information that is difficult to understand should most likely be:",
+      "choices": {
+        "A": "excluded from the statements",
+        "B": "included, since users may seek assistance",
+        "C": "simplified until no assistance is needed"
+      },
+      "answer": "B",
+      "explanation": "Understandability assumes users with reasonable business knowledge who study diligently; useful information should NOT be excluded just because it's complex — users may need to seek help.",
+      "kr": "이해가능성은 합리적 지식을 갖고 성실히 검토하는 이용자를 가정; 유용한 정보는 복잡하다는 이유로 제외해서는 '안 됨' — 이용자가 도움을 받을 수 있음."
+    },
+    {
+      "id": "fsa-m1-q16",
+      "section": "4",
+      "concept": "Share issue is not income",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "truncated-rule",
+      "stem": "A company issues new shares for cash. Under the Conceptual Framework this transaction is most likely:",
+      "choices": {
+        "A": "income, since assets and equity increase",
+        "B": "not income, since it is a contribution from equity holders",
+        "C": "a gain from non-operating activities"
+      },
+      "answer": "B",
+      "explanation": "Income = increases in assets/decreases in liabilities that raise equity OTHER THAN contributions from equity holders. A share issue raises assets and equity but is an owner contribution, so it is excluded. Dropping the exclusion clause is the trap.",
+      "kr": "수익 = 자산 증가/부채 감소로 자본이 늘어나는 것 — 단 '지분 보유자의 출자는 제외'. 유상증자는 자산·자본을 늘리지만 소유주 출자라 제외. 제외 조항을 빠뜨리는 것이 함정."
+    },
+    {
+      "id": "fsa-m1-q17",
+      "section": "4",
+      "concept": "Income = revenue + gains",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "off-model",
+      "stem": "Under the Conceptual Framework, income most likely:",
+      "choices": {
+        "A": "includes revenues but excludes gains",
+        "B": "includes both revenues and gains",
+        "C": "is the same as revenue from ordinary activities"
+      },
+      "answer": "B",
+      "explanation": "Income is the broader element: REVENUES (ordinary activities) + GAINS (ordinary or other activities). Likewise expenses include losses. Income ≠ revenue.",
+      "kr": "수익(income)은 더 넓은 요소: 영업수익(revenue, 통상활동) + 차익(gains). 비용도 손실을 포함. income ≠ revenue."
+    },
+    {
+      "id": "fsa-m1-q18",
+      "section": "4",
+      "concept": "Accrual assumption",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Recognizing revenue when performance obligations are satisfied, regardless of when cash is received, reflects the assumption of:",
+      "choices": {
+        "A": "going concern",
+        "B": "accrual accounting",
+        "C": "historical cost"
+      },
+      "answer": "B",
+      "explanation": "Accrual accounting: transactions are recorded in the period they occur, not when cash moves; revenue when earned (performance obligations satisfied). Going concern = continues for the foreseeable future; historical cost is a measurement basis, not an assumption.",
+      "kr": "발생주의: 현금 이동이 아니라 발생 기간에 기록; 수익은 수행의무 이행 시. 계속기업 = 예측 가능한 미래에 존속; 역사적 원가는 측정기준이지 가정이 아님."
+    },
+    {
+      "id": "fsa-m1-q19",
+      "section": "4",
+      "concept": "Current cost = buy side",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "confusion",
+      "stem": "The amount of cash that would have to be paid today to buy an equivalent asset is the asset's:",
+      "choices": {
+        "A": "realizable value",
+        "B": "current cost",
+        "C": "fair value"
+      },
+      "answer": "B",
+      "explanation": "CURRENT COST = replacement cost, the BUY (entry) side. Realizable value = cash from SELLING in an orderly disposal; fair value = an EXIT price between market participants. Direction is the discriminator.",
+      "kr": "현행원가 = 대체원가, '구입'(진입) 측. 실현가능가치 = 정상적 처분으로 '판매'해 얻는 현금; 공정가치 = 시장참여자 간 '유출' 가격. 방향이 판별 기준."
+    },
+    {
+      "id": "fsa-m1-q20",
+      "section": "4",
+      "concept": "Fair value = exit price",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Which measurement basis for an asset is defined as an exit price in an orderly transaction between market participants at the measurement date?",
+      "choices": {
+        "A": "Current cost",
+        "B": "Present value",
+        "C": "Fair value"
+      },
+      "answer": "C",
+      "explanation": "FAIR VALUE = the price received to sell an asset (or paid to transfer a liability) in an orderly transaction between market participants at the measurement date — an EXIT price. Current cost is an entry price; PV discounts the entity's own expected cash flows.",
+      "kr": "공정가치 = 측정일에 시장참여자 간 정상거래에서 자산을 팔아 받는(부채 이전 시 지급하는) 가격 — '유출' 가격. 현행원가는 진입 가격; 현재가치는 기업 자신의 기대현금흐름을 할인."
+    },
+    {
+      "id": "fsa-m1-q21",
+      "section": "4",
+      "concept": "Settlement value — undiscounted",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "confusion",
+      "stem": "Which basis measures a liability at the undiscounted amount expected to be paid in the normal course of business?",
+      "choices": {
+        "A": "Present value",
+        "B": "Settlement value",
+        "C": "Fair value"
+      },
+      "answer": "B",
+      "explanation": "SETTLEMENT VALUE = undiscounted cash expected to settle the liability in the normal course. Only PRESENT VALUE discounts. Fair value is the price to transfer the liability to a market participant.",
+      "kr": "결제가치 = 정상적 영업과정에서 부채를 상환하는 데 예상되는 '할인하지 않은' 현금. '현재가치'만 할인. 공정가치는 부채를 시장참여자에게 이전하는 가격."
+    },
+    {
+      "id": "fsa-m1-q22",
+      "section": "4",
+      "concept": "Recognition criteria",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "truncated-rule",
+      "stem": "An item is recognized in the financial statements if it meets the definition of an element and:",
+      "choices": {
+        "A": "can be measured at historical cost",
+        "B": "results in relevant information and a faithful representation",
+        "C": "is material in magnitude"
+      },
+      "answer": "B",
+      "explanation": "Two tests, both required: (1) meets an element definition; (2) recognition yields BOTH relevant information AND a faithful representation — the two fundamental characteristics applied as a recognition test.",
+      "kr": "두 요건 모두 필요: (1) 요소의 정의 충족; (2) 인식 시 목적적합한 정보 '와' 충실한 표현을 모두 제공 — 두 근본적 특성을 인식 기준으로 적용."
+    },
+    {
+      "id": "fsa-m1-q23",
+      "section": "5",
+      "concept": "Complete set — least likely",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "negation",
+      "stem": "Which of the following is least likely part of a complete set of financial statements under IFRS?",
+      "choices": {
+        "A": "The notes",
+        "B": "The management discussion and analysis",
+        "C": "The statement of changes in equity"
+      },
+      "answer": "B",
+      "explanation": "LEAST-likely stem → T/F each. The notes are 'an integral part' of the complete set (T); the statement of changes in equity is one of the four statements (T). MD&A is SUPPLEMENTARY information in the financial report, not part of the statements (F → answer).",
+      "kr": "least likely → 선지별 T/F. 주석은 전체 재무제표의 '필수적 일부'(T); 자본변동표는 4개 재무제표 중 하나(T). MD&A는 재무보고서의 '보충' 정보이지 재무제표가 아님(F → 정답)."
+    },
+    {
+      "id": "fsa-m1-q24",
+      "section": "5",
+      "concept": "Point in time",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Which statement reports a company's position at a point in time?",
+      "choices": {
+        "A": "The statement of cash flows",
+        "B": "The balance sheet",
+        "C": "The statement of comprehensive income"
+      },
+      "answer": "B",
+      "explanation": "Only the BALANCE SHEET is a snapshot at a point in time; the comprehensive income, changes in equity and cash flow statements cover a period.",
+      "kr": "'재무상태표'만 특정 시점의 스냅샷; 포괄손익계산서·자본변동표·현금흐름표는 기간을 다룸."
+    },
+    {
+      "id": "fsa-m1-q25",
+      "section": "5",
+      "concept": "Audit opinion scope",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "absolute-claim",
+      "stem": "The external auditor's opinion most likely addresses whether the financial statements:",
+      "choices": {
+        "A": "are free of all error",
+        "B": "present fairly in accordance with applicable accounting standards",
+        "C": "reflect the fair value of the company"
+      },
+      "answer": "B",
+      "explanation": "The opinion is whether the statements PRESENT FAIRLY the company's performance and position in accordance with a specified set of accounting standards — not a guarantee of accuracy and not a valuation.",
+      "kr": "감사의견은 재무제표가 특정 회계기준에 따라 성과와 재무상태를 '공정하게 표시'하는지 여부 — 정확성 보증도, 가치평가도 아님."
+    },
+    {
+      "id": "fsa-m1-q26",
+      "section": "5",
+      "concept": "Consolidated basis",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Consolidated financial statements include the account balances of:",
+      "choices": {
+        "A": "all companies in which the parent holds shares",
+        "B": "subsidiaries under the control of the parent",
+        "C": "the parent company only"
+      },
+      "answer": "B",
+      "explanation": "Consolidation includes subsidiaries UNDER THE CONTROL of the parent. Holding some shares without control does not bring a company into consolidation.",
+      "kr": "연결재무제표는 모회사가 '지배'하는 종속회사를 포함. 지배 없이 일부 지분만 보유하면 연결 대상이 아님."
+    },
+    {
+      "id": "fsa-m1-q27",
+      "section": "5",
+      "concept": "Auditor's report — internal controls",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "truncated-rule",
+      "stem": "In addition to compliance with accounting standards, the external auditor's report typically provides assurance regarding:",
+      "choices": {
+        "A": "the accuracy of management's forecasts",
+        "B": "the functioning of internal controls over financial reporting",
+        "C": "the company's governance structure"
+      },
+      "answer": "B",
+      "explanation": "The auditor's report has TWO assurance components: compliance with applicable standards AND that internal controls over financial reporting are functioning. Governance structure is in the governance report.",
+      "kr": "감사보고서의 확신은 '두 가지': 회계기준 준수 '그리고' 재무보고 내부통제의 작동. 지배구조는 지배구조 보고서의 내용."
+    },
+    {
+      "id": "fsa-m1-q28",
+      "section": "6",
+      "concept": "Accounting equation — solve L",
+      "type": "calc",
+      "difficulty": 1,
+      "trap": "formula",
+      "stem": "A company reports total assets of 850 and owners' equity of 320. Its total liabilities are closest to:",
+      "choices": {
+        "A": "530",
+        "B": "1,170",
+        "C": "320"
+      },
+      "answer": "A",
+      "explanation": "A = L + E → L = A − E = 850 − 320 = 530. Choice B adds the two; choice C repeats equity.",
+      "kr": "A = L + E → L = 850 − 320 = 530. B는 더한 값, C는 자본을 반복."
+    },
+    {
+      "id": "fsa-m1-q29",
+      "section": "6",
+      "concept": "Accounting equation — solve A",
+      "type": "calc",
+      "difficulty": 1,
+      "trap": "formula",
+      "stem": "A company has liabilities of 410 and owners' equity of 190. Total assets are closest to:",
+      "choices": {
+        "A": "220",
+        "B": "600",
+        "C": "410"
+      },
+      "answer": "B",
+      "explanation": "A = L + E = 410 + 190 = 600. Choice A subtracts.",
+      "kr": "A = L + E = 410 + 190 = 600. A는 뺀 값."
+    },
+    {
+      "id": "fsa-m1-q30",
+      "section": "6",
+      "concept": "Book value",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "off-model",
+      "stem": "The 'book value' of a company is best described as:",
+      "choices": {
+        "A": "total assets",
+        "B": "owners' equity",
+        "C": "the market value of its shares"
+      },
+      "answer": "B",
+      "explanation": "Book value = owners' equity = net assets = assets − liabilities, the residual claim. Not total assets, not market value.",
+      "kr": "장부가치 = 자기자본 = 순자산 = 자산 − 부채(잔여청구권). 총자산도 시장가치도 아님."
+    },
+    {
+      "id": "fsa-m1-q31",
+      "section": "6",
+      "concept": "IFRS requires classification",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "confusion",
+      "stem": "IFRS requires that the balance sheet:",
+      "choices": {
+        "A": "present assets in order from most liquid to least liquid",
+        "B": "show current and non-current assets and liabilities as separate classifications",
+        "C": "present equity before liabilities"
+      },
+      "answer": "B",
+      "explanation": "IFRS requires the current/non-current CLASSIFICATION but does not prescribe an ORDER — order is largely tradition (Germany least→most liquid with equity first; US/Australia/Canada most→least liquid with cash first).",
+      "kr": "IFRS는 유동/비유동 '구분'을 요구하지만 '순서'는 규정하지 않음 — 순서는 관행(독일: 유동성 낮은→높은 순, 자본 먼저; 미국·호주·캐나다: 높은→낮은 순, 현금 먼저)."
+    },
+    {
+      "id": "fsa-m1-q32",
+      "section": "6",
+      "concept": "Ordering conventions",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Presenting cash as the first asset and equity after liabilities is the typical order in:",
+      "choices": {
+        "A": "Germany",
+        "B": "the United States, Australia, and Canada",
+        "C": "all IFRS reporters"
+      },
+      "answer": "B",
+      "explanation": "Most liquid → least liquid (cash first, equity last) is the US/Australia/Canada convention. Volkswagen (Germany) uses least → most liquid with equity before liabilities. IFRS prescribes no order.",
+      "kr": "유동성 높은 → 낮은 순(현금 먼저, 자본 마지막)은 미국·호주·캐나다 관행. 폭스바겐(독일)은 낮은 → 높은 순, 자본이 부채 앞. IFRS는 순서를 규정하지 않음."
+    },
+    {
+      "id": "fsa-m1-q33",
+      "section": "6",
+      "concept": "Reading VW's balance sheet",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "asked-quantity",
+      "stem": "In Volkswagen's balance sheet, total liabilities are not reported as a single line. An analyst should:",
+      "choices": {
+        "A": "treat total liabilities as equal to total equity",
+        "B": "sum the non-current and current liability subtotals",
+        "C": "subtract current assets from total assets"
+      },
+      "answer": "B",
+      "explanation": "Add the subtotals: 152,726 + 160,389 = 313,115 ≈ €313bn; check 422 = 313 + 109. Also read the column headers — VW puts the most recent year on the left.",
+      "kr": "소계를 더함: 152,726 + 160,389 ≈ €313bn; 422 = 313 + 109로 검증. 열 머리글도 확인 — VW는 최근 연도가 왼쪽."
+    },
+    {
+      "id": "fsa-m1-q34",
+      "section": "7",
+      "concept": "Operating profit = EBIT",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Operating profit is best described as the result of the company's usual business activities:",
+      "choices": {
+        "A": "after interest but before taxes",
+        "B": "before deducting interest expense or taxes",
+        "C": "after taxes but before minority interests"
+      },
+      "answer": "B",
+      "explanation": "Operating profit (operating income/result) = results of usual business activities BEFORE interest and taxes — hence EBIT. After interest but before tax is EBT; after tax is net income.",
+      "kr": "영업이익 = 통상 영업활동의 결과로 이자·세금 '차감 전' — 그래서 EBIT. 이자 후·세전은 EBT, 세후는 순이익."
+    },
+    {
+      "id": "fsa-m1-q35",
+      "section": "7",
+      "concept": "Consolidation at 100%",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "which-quantity",
+      "stem": "A parent owns 80% of a subsidiary's voting shares. On the consolidated income statement, the subsidiary's revenue is most likely included at:",
+      "choices": {
+        "A": "80% of the subsidiary's revenue",
+        "B": "100% of the subsidiary's revenue, with 20% of net income allocated to non-controlling interests",
+        "C": "50% of the subsidiary's revenue"
+      },
+      "answer": "B",
+      "explanation": "Consolidation includes the ENTIRE amount of each line (control presumed > 50% voting). The ownership split appears only in the attribution at the bottom: 20% of net income to non-controlling interests.",
+      "kr": "연결은 각 항목의 '전액'을 포함(의결권 50% 초과 시 지배 추정). 지분 비율은 맨 아래 귀속에서만 반영: 순이익의 20%를 비지배지분에 배분."
+    },
+    {
+      "id": "fsa-m1-q36",
+      "section": "7",
+      "concept": "Basic EPS calc",
+      "type": "calc",
+      "difficulty": 1,
+      "trap": "formula",
+      "stem": "Net income attributable to common shareholders is 900 million and the weighted-average number of common shares outstanding is 300 million. Basic EPS is closest to:",
+      "choices": {
+        "A": "3.00",
+        "B": "0.33",
+        "C": "2.70"
+      },
+      "answer": "A",
+      "explanation": "Basic EPS = NI to common ÷ WEIGHTED-AVERAGE common shares = 900 / 300 = 3.00. Choice B inverts the ratio.",
+      "kr": "기본 EPS = 보통주 귀속 순이익 ÷ '가중평균' 보통주식수 = 900/300 = 3.00. B는 역수."
+    },
+    {
+      "id": "fsa-m1-q37",
+      "section": "7",
+      "concept": "Diluted EPS",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Diluted EPS differs from basic EPS most likely because it:",
+      "choices": {
+        "A": "uses year-end rather than weighted-average shares",
+        "B": "assumes potentially dilutive claims such as options and convertibles are exercised",
+        "C": "excludes income attributable to preferred shareholders"
+      },
+      "answer": "B",
+      "explanation": "Diluted EPS uses the shares that would HYPOTHETICALLY be outstanding if options and convertibles were exercised/converted, with the numerator adjusted accordingly. Both measures use weighted-average shares; both use income attributable to common.",
+      "kr": "희석 EPS는 옵션·전환사채가 행사/전환된다고 '가정'한 주식수를 사용하고 분자도 조정. 두 지표 모두 가중평균 주식수와 보통주 귀속 이익을 사용."
+    },
+    {
+      "id": "fsa-m1-q38",
+      "section": "7",
+      "concept": "Comprehensive income calc",
+      "type": "calc",
+      "difficulty": 1,
+      "trap": "sign",
+      "stem": "Net income is 500 and other comprehensive income is −40. Total comprehensive income is closest to:",
+      "choices": {
+        "A": "540",
+        "B": "460",
+        "C": "500"
+      },
+      "answer": "B",
+      "explanation": "Total comprehensive income = NI + OCI = 500 + (−40) = 460. Choice A drops the sign of OCI; choice C ignores OCI.",
+      "kr": "총포괄이익 = 순이익 + 기타포괄이익 = 500 − 40 = 460. A는 OCI 부호 누락, C는 OCI 무시."
+    },
+    {
+      "id": "fsa-m1-q39",
+      "section": "7",
+      "concept": "What goes in OCI",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Which of the following is most likely reported in other comprehensive income rather than net income?",
+      "choices": {
+        "A": "Cost of sales",
+        "B": "Unrealized currency translation gains on foreign operations",
+        "C": "Income tax expense"
+      },
+      "answer": "B",
+      "explanation": "Unrealized currency translation gains/losses are the curriculum's named OCI example (an item that may be reclassified to profit or loss later). Cost of sales and income tax expense are income-statement items.",
+      "kr": "미실현 외화환산손익은 교재가 명시한 OCI 예시(나중에 당기손익으로 재분류될 수 있는 항목). 매출원가·법인세비용은 손익계산서 항목."
+    },
+    {
+      "id": "fsa-m1-q40",
+      "section": "7",
+      "concept": "Comprehensive income definition",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "truncated-rule",
+      "stem": "Comprehensive income includes all changes in owners' equity except those resulting from:",
+      "choices": {
+        "A": "foreign currency translation",
+        "B": "transactions with shareowners",
+        "C": "pension plan remeasurements"
+      },
+      "answer": "B",
+      "explanation": "Comprehensive income = all items affecting owners' equity EXCEPT transactions with shareowners (issuance, buybacks, dividends). FX translation and pension remeasurements are both OCI components, so they are INCLUDED.",
+      "kr": "포괄이익 = 주주와의 거래(발행·자사주·배당)를 '제외한' 모든 자본 변동. 외화환산과 연금 재측정은 OCI 구성요소라 '포함'."
+    },
+    {
+      "id": "fsa-m1-q41",
+      "section": "8",
+      "concept": "Equity roll-forward",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "truncated-rule",
+      "stem": "Beginning equity 500; net income 80; other comprehensive income −10; dividends paid 30; new shares issued 50. Ending equity is closest to:",
+      "choices": {
+        "A": "600",
+        "B": "590",
+        "C": "550"
+      },
+      "answer": "B",
+      "explanation": "End = Begin + NI + OCI + issuance − dividends = 500 + 80 − 10 + 50 − 30 = 590. Choice A ignores OCI (600); choice C ignores the share issue. All four terms enter — comprehensive income, not net income alone.",
+      "kr": "기말 = 기초 + 순이익 + OCI + 발행 − 배당 = 500 + 80 − 10 + 50 − 30 = 590. A는 OCI 무시, C는 신주발행 무시. 네 항목 모두 반영 — 순이익만이 아니라 포괄이익."
+    },
+    {
+      "id": "fsa-m1-q42",
+      "section": "8",
+      "concept": "Classify: factory purchase",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "The purchase of a new factory is most likely classified in the cash flow statement as:",
+      "choices": {
+        "A": "an operating activity",
+        "B": "an investing activity",
+        "C": "a financing activity"
+      },
+      "answer": "B",
+      "explanation": "Investing = acquisition and disposal of LONG-TERM assets (property, equipment, subsidiaries, equity investments).",
+      "kr": "투자활동 = '장기'자산(유형자산·설비·종속회사·지분투자)의 취득과 처분."
+    },
+    {
+      "id": "fsa-m1-q43",
+      "section": "8",
+      "concept": "Classify: bond repayment",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Repayment of a bond is most likely classified as:",
+      "choices": {
+        "A": "an operating activity",
+        "B": "an investing activity",
+        "C": "a financing activity"
+      },
+      "answer": "C",
+      "explanation": "Financing = obtaining or repaying CAPITAL used in the business — bonds issued/repaid, capital contributions, dividends paid.",
+      "kr": "재무활동 = 사업에 쓰이는 '자본'의 조달·상환 — 사채 발행/상환, 출자, 배당 지급."
+    },
+    {
+      "id": "fsa-m1-q44",
+      "section": "8",
+      "concept": "Net change in cash — four terms",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "truncated-rule",
+      "stem": "CFO = 300, CFI = −450, CFF = 200, effect of exchange rates on cash = −20. The net change in cash is closest to:",
+      "choices": {
+        "A": "+50",
+        "B": "+30",
+        "C": "−170"
+      },
+      "answer": "B",
+      "explanation": "Net change in cash = CFO + CFI + CFF + FX effect = 300 − 450 + 200 − 20 = +30. Choice A (+50) stops at the three categories and misses the FX line — the fourth term.",
+      "kr": "현금 순변동 = CFO + CFI + CFF + 환율효과 = 300 − 450 + 200 − 20 = +30. A(+50)는 세 활동만 더하고 환율효과(네 번째 항)를 누락."
+    },
+    {
+      "id": "fsa-m1-q45",
+      "section": "8",
+      "concept": "Indirect method",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "The method of presenting cash from operating activities that starts with profit and adjusts for non-cash items is the:",
+      "choices": {
+        "A": "direct method, used by most companies",
+        "B": "indirect method, used by most companies",
+        "C": "indirect method, used by very few companies"
+      },
+      "answer": "B",
+      "explanation": "INDIRECT: start with profit, adjust for non-cash items, accruals/deferrals and investing/financing items — used by almost all companies. DIRECT: gross receipts and payments — used by very few.",
+      "kr": "간접법: 이익에서 시작해 비현금 항목·발생/이연·투자/재무 항목을 조정 — 거의 모든 기업이 사용. 직접법: 총현금수취·지급 — 극소수만 사용."
+    },
+    {
+      "id": "fsa-m1-f01",
+      "section": "3",
+      "concept": "Qualitative characteristics",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "truncated-rule",
+      "front": "The IFRS qualitative characteristics: the 2 fundamental (with sub-parts) and the 4 enhancing; the pervasive constraint; the bad-debt trade-off",
+      "back": "FUNDAMENTAL: RELEVANCE — predictive and/or confirmatory value; MATERIALITY sits inside relevance (omission/misstatement could influence decisions; nature and/or magnitude). FAITHFUL REPRESENTATION ('reliability') — complete, neutral, free from error (process, not perfect accuracy).\nENHANCING (C-V-T-U): comparability, verifiability (independent observers agree), timeliness (before the decision), understandability (don't exclude difficult info). No priority among enhancing.\nPervasive constraint = COST (benefits > costs). Limitation: non-quantifiables omitted.\nBad-debt estimate: relevant, faithful, timely, understandable — sacrifices VERIFIABILITY."
+    },
+    {
+      "id": "fsa-m1-f02",
+      "section": "4",
+      "concept": "Measurement bases",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "confusion",
+      "front": "The six measurement bases — asset version and liability version of each; the buy/sell and discounted/undiscounted discriminators",
+      "back": "HISTORICAL COST: paid incl. acquisition costs (transport, tax) / proceeds received.\nAMORTISED COST: historical adjusted for depreciation, amortisation, depletion, impairment.\nCURRENT COST: replacement cost — BUY today / UNDISCOUNTED settle today.\nREALIZABLE (SETTLEMENT) VALUE: SELL in orderly disposal / UNDISCOUNTED pay in normal course.\nPRESENT VALUE: DISCOUNTED inflows / DISCOUNTED outflows.\nFAIR VALUE: EXIT price, orderly transaction, market participants, measurement date.\nCurrent cost = buy side; realizable = sell side; only PV discounts."
+    },
+    {
+      "id": "fsa-m1-f03",
+      "section": "4",
+      "concept": "Elements, assumptions, recognition",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "truncated-rule",
+      "front": "The five elements with their exclusion clauses, the two assumptions, and the two recognition tests",
+      "back": "ASSET: present resource CONTROLLED from past events. LIABILITY: present OBLIGATION to transfer a resource, no practical ability to avoid. EQUITY: assets − liabilities (residual).\nINCOME: asset ↑ / liability ↓ raising equity, EXCLUDING owner contributions = REVENUE + GAINS. EXPENSES: the reverse, EXCLUDING owner distributions, incl. LOSSES. (Share issue ≠ income; dividend ≠ expense.)\nAssumptions: ACCRUAL (period of occurrence; revenue when performance obligations satisfied) and GOING CONCERN.\nRecognition: meets an element definition AND yields relevant info + faithful representation."
+    },
+    {
+      "id": "fsa-m1-f04",
+      "section": "2",
+      "concept": "Setters vs regulators",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "confusion",
+      "front": "Standard-setters vs regulators; IASB and FASB structure; where US GAAP lives",
+      "back": "SETTERS (IASB, FASB): private, self-regulated; SET standards; authority only via regulator recognition. REGULATORS (SEC, Singapore ACRA, Brazil SEC): government; RECOGNIZE and ENFORCE; legal authority; can overrule setters (SEC rarely does).\nIASB: monitoring board (EC, IOSCO, Japan FSA, US SEC) → IFRS Foundation Trustees → appoint IASB members. Process: agenda → advice → exposure draft → standard. Foundation objectives: single high-quality set; transparent, comparable, decision-useful; convergence.\nFASB: overseen by the Financial Accounting Foundation; output = Accounting Standards Codification (authoritative US GAAP for non-governmental entities); SEC guidance only partly included; SEC issues Staff Accounting Bulletins."
+    },
+    {
+      "id": "fsa-m1-f05",
+      "section": "7",
+      "concept": "Statements, IS chain, EPS, OCI",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "formula",
+      "front": "The complete set of statements; the income-statement subtotal chain; basic vs diluted EPS; comprehensive income and OCI",
+      "back": "Complete set: balance sheet (point in time) | comprehensive income (1 or 2 statements) | changes in equity | cash flows | + NOTES (integral). MD&A is supplementary.\nChain: revenue − COGS = GROSS PROFIT − operating costs = OPERATING PROFIT (EBIT) ± financial items = EBT − tax = NET INCOME → NCI + parent. Consolidation: 100% of lines, control presumed > 50%.\nBASIC EPS = common NI ÷ WEIGHTED-AVERAGE common shares (VW 6.8bn ÷ 0.295bn = €22.63). DILUTED = adjusted NI ÷ shares incl. hypothetical options/convertibles.\nComprehensive income = all equity changes EXCEPT owner transactions = NI + OCI (VW 11,638 + 2,305 = 13,943). OCI not reclassified: pension remeasurements; may be reclassified: FX translation, cash flow hedges."
+    },
+    {
+      "id": "fsa-m1-f06",
+      "section": "8",
+      "concept": "Roll-forward and cash flows",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "truncated-rule",
+      "front": "The equity roll-forward, the three cash-flow categories, the four-term cash reconciliation, and indirect vs direct",
+      "back": "Ending equity = Begin + NI + OCI + issuance − dividends − buybacks (VW 92,910 + 13,943 + 3,481 − 1,332 + 75 = 109,077).\nOPERATING: transactions determining net income. INVESTING: acquire/dispose long-term assets. FINANCING: obtain/repay capital (bonds, contributions, dividends paid). IFRS more flexible than US GAAP on interest/dividend classification.\nNet change in cash = CFO + CFI + CFF + FX EFFECT (VW −1,185 − 16,508 + 17,625 − 727 = −796).\nINDIRECT (start with profit, adjust) — almost all companies; DIRECT (gross receipts/payments) — very few. Ideal for an established firm: CFO is the primary source of cash. Financial flexibility = ability to react to adversity and opportunity."
+    }
+  ]
+}
