@@ -238,6 +238,10 @@ Country opens to trade
 ```
 ⚠️ **Polarity item:** opening to trade is **favorable to the abundant factor, negative for the scarce factor.** A labor-abundant country's workers gain; its capital owners lose. Distractors flip it. 🔗 M1 §9.1: derived demand for factors.
 
+> ### ⭐ YOU MISSED OFFICIAL Q6 HERE
+> *"According to the H–O model, when trade opens:"* — you picked **"the scarce factor gains relative to the abundant factor"**; correct is **the abundant factor gains**.
+> The chain is three links and the first one decides it: **the export good uses the abundant factor intensively** → trade raises export output → derived demand for the abundant factor rises → it gains. "Scarce" sounds like it should command a premium — that's intuition, not the model. The curriculum adds a detail worth keeping: this redistribution happens **within each country**, not just between them (option C's lure). *(Polarity miss — build from "export good = abundant factor", never from who sounds scarce.)*
+
 ### Endowments change → trade patterns change 🟡
 - **Japan 1967:** comparative advantage in **unskilled-labor-intensive** goods (textiles, apparel, leather). **By 1980** (Meier 1998): greatly increased **skilled labor** → advantage in **skill-intensive** products, especially **non-electrical machinery**. Endowment shifts create investment opportunities (🔗 §3 "comparative advantage changes over time").
 
@@ -297,6 +301,10 @@ Each date, each country: one debit, one credit, equal amounts. The import itself
 2. **Sales and purchases of non-produced, non-financial assets** — **rights to natural resources**; intangibles: **patents, copyrights, trademarks, franchises, leases**.
 
 ⚠️ Patent trap: **fees** from patents (licensing income) → **current account, services**. **Sale of the patent itself** → **capital account**. Flow vs. asset.
+
+> ### ⭐ YOU MISSED OFFICIAL Q8 HERE — the patent trap, as written above
+> *"Patent fees and legal services are recorded in:"* — you picked **financial account**; correct is **current account** (services sub-account).
+> Both items are **services** — a flow of value for work done, not an investment and not an asset sale. The financial account is for **investment flows** only (securities, direct investment, reserves). Decision routine for any BOP item: (1) is it a **good/service/income/transfer** → current; (2) is it the **sale of a non-produced asset or a capital transfer** → capital; (3) is it an **investment position changing** → financial. *(Truncated-rule miss — the rule was in the note two lines up; "patent" pulled toward "asset" without checking fee vs. sale.)* Official Q7 (mineral rights → capital ✓) shows the asset side was stored; the flow side wasn't.
 
 #### Financial account — two sub-accounts 🔴
 1. **The country's assets abroad** — split into **official reserve assets, government assets, private assets**: gold, foreign currencies, foreign securities, the government's **reserve position in the IMF**, **direct foreign investment**, claims reported by resident banks.
@@ -399,6 +407,10 @@ Substitute every sign explicitly — never from intuition.
 | **Strong INVESTMENT (I)** | **Improves** — productive resources expand, so the ability to repay rises |
 
 > **One-liner:** *a deficit financing investment builds the means to repay; a deficit financing consumption does not.* The India rail case is the "good" kind.
+
+> ### ⭐ YOU MISSED OFFICIAL Q10 HERE — "least alarming"
+> *"Which chronic deficit condition is LEAST alarming to creditors?"* — you picked **high consumption**; correct is **high private investment**.
+> Least alarming = the one that **improves** the ability to repay = investment. The quality table above says it directly; the stem's **least** inverted the question and you answered "which is alarming?". Third negation miss (M4 Ex7 Q1, M4 official Q14, now this). The T/F routine applies to *least* as much as to *NOT*: mark each option alarming / not alarming, then pick the odd one out.
 
 ### Deficits, interest rates, and the currency — the two horizons 🔴 POLARITY
 ```
@@ -506,15 +518,15 @@ TWO HORIZONS: SR deficit + high rates → capital inflows → APPRECIATION;
 | Ricardian (technology, labor) vs. H–O (endowments, capital + labor) | Concept | 🔴 High |
 | Range of world prices for mutual gain; distance rule | **Calc**/concept | 🔴 High |
 | Comparative advantage without absolute advantage → still gains | Concept | 🔴 High |
-| H–O: abundant factor gains, scarce factor loses | Concept | 🔴 High |
+| H–O: abundant factor gains, scarce factor loses — within each country | Concept | 🔴 High ⭐ *official Q6 miss* |
 | BOP debit vs. credit (imports = debit; exports = credit) | Concept | 🔴 High |
 | Terms of trade formula and direction | **Calc**/concept | 🔴 High |
 | GDP vs. GNP inclusion rules | Concept | 🔴 High |
 | FDI vs. FPI | Concept | 🔴 High |
 | Sources of CA deficit/surplus (low saving, high I, govt deficit) | Concept | 🔴 High |
 | Two horizons: SR appreciation vs. LR depreciation under a persistent deficit | Concept | 🟡 Medium-High |
-| Deficit quality: consumption-driven vs. investment-driven | Concept | 🟡 Medium |
-| Income on foreign investment → current account; patent fees vs. sales | Concept | 🟡 Medium |
+| Deficit quality: consumption-driven vs. investment-driven ("least alarming" = investment) | Concept | 🟡 Medium ⭐ *official Q10 miss (least stem)* |
+| Income on foreign investment → current account; patent FEES (current) vs. patent SALE (capital) | Concept | 🟡 Medium ⭐ *official Q8 miss* |
 | Trade surplus = net lender; deficit = net borrower | Concept | 🟡 Medium |
 | Open vs. closed economy: saving can fund foreign investment; I not constrained by domestic saving | Concept | 🟡 Medium |
 | Inter-temporal trade definition | Concept | 🟡 Medium |
@@ -539,4 +551,21 @@ TWO HORIZONS: SR deficit + high rates → capital inflows → APPRECIATION;
 7. Deficit quality; two horizons; inter-temporal trade; open-vs-closed saving
 8. Patterns and trends; vocabulary; model caveats
 
-> **Note status: COMPLETE** — §6.01 introduction through §6.07 national accounts and BOP (the reading's final section). Curriculum examples: Example 1 (absolute/comparative advantage) worked in §3; no scored quiz sets in this reading. Practice questions Q1–Q20 → Study Hub question bank (`econ-m6-q01…q20`). Official practice problems: not yet attempted.
+## 9. Official practice problems — log (paraphrased in the Study Hub as `econ-m6-p01…p10`)
+
+**Set 1 (2026-10-13, Q1–Q10): 7 / 10** — comparative-advantage definition ✓, Mexico/Brazil OC 1/3 ✓, three-country bananas (lowest OC = Mexico) ✓, Ricardian distance rule ✓, H–O export prediction ✓, mineral rights → capital ✓, CA deficit source = low saving ✓. **Misses:** Q6 H–O redistribution (polarity flip), Q8 patent fees + legal services → current (truncated rule, the note's own trap), Q10 "least alarming" = investment (negation, third time).
+
+| What the set tested | Pattern | Result |
+|---|---|---|
+| OC ratios: which good, which direction, lowest wins (×3) | wrong quantity | ✓✓✓ |
+| Distance rule; H–O export side | polarity | ✓✓ |
+| H–O redistribution: abundant factor gains | polarity | ✗ |
+| BOP classification: asset sale → capital; service fee → current | truncated rule | ✓ / ✗ |
+| CA identity sources | polarity | ✓ |
+| Deficit quality under a "least" stem | negation | ✗ |
+
+**Running tally — Economics official practice: 57 / 90 (63%)** — M1 10/14 · M2 4/7 · M3 17/30 · M4 13/20 · M5 6/9 · **M6 7/10**. Target ≈ 70%.
+
+**Read for next time:** the calculation routine is solid — all three OC questions right, including the two designed to lure with absolute advantage. The three misses are three known patterns, one each: a direction flip where intuition ("scarce = valuable") beat the chain; a rule applied on one side (asset) but not the other (flow); and a *least* stem answered as a *most*. None is a coverage gap.
+
+> **Note status: COMPLETE** — §6.01 introduction through §6.07 national accounts and BOP (the reading's final section). Curriculum examples: Example 1 worked in §3; no scored quiz sets in this reading. Practice questions Q1–Q20 → Study Hub question bank (`econ-m6-q01…q20`). Official practice set 1: **7 / 10**.

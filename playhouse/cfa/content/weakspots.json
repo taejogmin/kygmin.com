@@ -24,9 +24,11 @@
         "M3 official Q16 (lower P → real FX depreciates)",
         "M3 official Q20 (weak currency raises AD)",
         "M2 official Q6 now correct on retry (supply shifts right)",
-        "M5 Ex4 Q3 (money supply ↑ → rates ↓; first direction miss since M3)"
+        "M5 Ex4 Q3 (money supply ↑ → rates ↓; first direction miss since M3)",
+        "M6 official Q6 (H–O: abundant factor gains, scarce loses — picked the flip)"
       ],
       "seed": [
+        "econ-m6-p06",
         "econ-m5-p02",
         "econ-m5-f05",
         "econ-m3-p14",
@@ -223,9 +225,11 @@
         "M4 official Q18 (quality bias is upward even at constant price; picked 'unaffected')",
         "M4 official Q20 (two-bullet stem; the second bullet was the literal cost-push definition)",
         "M5 Ex3 Q1 (transactions motive — label swap among the three money-demand definitions)",
-        "M5 official Q2 (money-demand motives — second label swap; precautionary ∝ GDP)"
+        "M5 official Q2 (money-demand motives — second label swap; precautionary ∝ GDP)",
+        "M6 official Q8 (patent FEES + legal services → current account services; picked financial)"
       ],
       "seed": [
+        "econ-m6-p08",
         "econ-m5-p04",
         "econ-m5-p01",
         "econ-m4-p26",
@@ -299,9 +303,11 @@
       ],
       "evidence": [
         "M4 Ex7 Q1 (NAIRU 'NOT a problem' — picked a TRUE limitation); Ex8 Q8 retest ✓",
-        "M4 official Q14 (PPI least likely — picked TRUE 'leads CPI'; false one is 'labor contracts use PPI')"
+        "M4 official Q14 (PPI least likely — picked TRUE 'leads CPI'; false one is 'labor contracts use PPI')",
+        "M6 official Q10 ('least alarming' deficit condition → investment; picked consumption) — third negation miss"
       ],
       "seed": [
+        "econ-m6-p10",
         "econ-m4-p25",
         "econ-m4-p08",
         "econ-m4-f11"
@@ -523,6 +529,21 @@
       "qid": "econ-m5-p09",
       "when": "2026-10-13",
       "note": "M5 official Q7 — 'real rate stable' is the FISHER effect; picked money neutrality (adjacent concept). (off-model)"
+    },
+    {
+      "qid": "econ-m6-p06",
+      "when": "2026-10-13",
+      "note": "M6 official Q6 — picked 'scarce factor gains'. H–O: export good uses the ABUNDANT factor → abundant factor gains, scarce loses. (polarity)"
+    },
+    {
+      "qid": "econ-m6-p08",
+      "when": "2026-10-13",
+      "note": "M6 official Q8 — patent fees + legal services → picked financial account. Services → CURRENT account; only the patent SALE is capital. The note's own patent trap. (truncated rule)"
+    },
+    {
+      "qid": "econ-m6-p10",
+      "when": "2026-10-13",
+      "note": "M6 official Q10 — 'least alarming' deficit condition: picked high consumption. Investment-financed deficit improves repayment capacity → least alarming. Third negation miss. (negation + quality rule)"
     }
   ]
 }

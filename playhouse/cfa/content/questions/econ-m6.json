@@ -594,6 +594,186 @@
       "trap": "sign",
       "front": "CA identity derivation, sign rules, sources of deficit, offset rule, deficit quality, two horizons",
       "back": "Y = C + I + G + X − M; CA = X − M = Y − (C + I + G). Yᵈ = Y + R − T = C + Sₚ → CA = Sₚ − I + (T − G − R); S_g = T − G − R.\nSₚ + S_g = I + CA (open economy: saving funds domestic OR foreign investment; I can rise via foreign borrowing without more saving). Sₚ = I + CA − S_g.\nCA = Sₚ + S_g − I: government DEFICIT = NEGATIVE S_g; I is SUBTRACTED. Sₚ 400, deficit 50, I 380 → CA −30.\nDeficit ← low Sₚ, high I, government deficit. CA deficit MUST be offset by a capital + financial account SURPLUS. Deficit = net borrower; inter-temporal trade = import present consumption, export future.\nQuality: consumption-financed deficit → repay capacity unchanged; investment-financed → improves. Horizons: SR deficit + high rates → APPRECIATION; LR persistent deficit → risk premiums → DEPRECIATION."
+    },
+    {
+      "id": "econ-m6-p01",
+      "section": "3",
+      "concept": "Comparative advantage definition",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "source": "cfai",
+      "stem": "A country has a comparative advantage in producing a good when:",
+      "choices": {
+        "A": "it can produce the good at a lower cost than its trading partner",
+        "B": "its opportunity cost of producing the good is lower than its trading partner's",
+        "C": "its opportunity cost of producing the good is higher than its trading partner's"
+      },
+      "answer": "B",
+      "explanation": "Comparative advantage = LOWER opportunity cost. 'Lower cost / fewer resources' (A) is ABSOLUTE advantage; C has the direction backwards.",
+      "kr": "비교우위 = 기회비용이 '더 낮음'. '더 낮은 비용/더 적은 자원'(A)은 절대우위; C는 방향 반대."
+    },
+    {
+      "id": "econ-m6-p02",
+      "section": "3",
+      "concept": "Comparative advantage + the relevant OC",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "which-quantity",
+      "source": "cfai",
+      "stem": "Output per worker-day: Mexico 20 flashlights or 60 vegetables; Brazil 40 flashlights or 80 vegetables. Mexico exports vegetables and imports flashlights. Which country has the comparative advantage in vegetables, and what is the relevant opportunity cost?",
+      "choices": {
+        "A": "Brazil: 2 vegetables per flashlight",
+        "B": "Mexico: 1.5 vegetables per flashlight",
+        "C": "Mexico: 1/3 flashlight per vegetable"
+      },
+      "answer": "C",
+      "explanation": "The relevant OC is the cost of the good in question — a VEGETABLE — measured in flashlights given up: Mexico 20/60 = 1/3; Brazil 40/80 = 1/2. Mexico's is lower → comparative advantage in vegetables, even though Brazil has ABSOLUTE advantage in both. Choice B is the inverted ratio for the wrong good (Brazil's OC of a flashlight is 2 vegetables); the thing given up goes on top.",
+      "kr": "묻는 재화(채소) 1단위의 기회비용을 포기하는 플래시라이트로: 멕시코 20/60 = 1/3, 브라질 40/80 = 1/2. 멕시코가 낮음 → 채소 비교우위(브라질은 두 재화 모두 절대우위인데도). B는 엉뚱한 재화의 역수. 포기하는 것이 분자."
+    },
+    {
+      "id": "econ-m6-p03",
+      "section": "3",
+      "concept": "Greatest comparative advantage among three",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "which-quantity",
+      "source": "cfai",
+      "stem": "Output per worker-day — Mexico: 20 bananas or 40 pencils; Brazil: 30 bananas or 90 pencils; Canada: 40 bananas or 160 pencils. Which country has the greatest comparative advantage in bananas?",
+      "choices": {
+        "A": "Canada",
+        "B": "Brazil",
+        "C": "Mexico"
+      },
+      "answer": "C",
+      "explanation": "OC of one banana in pencils: Mexico 40/20 = 2; Brazil 90/30 = 3; Canada 160/40 = 4. The LOWEST opportunity cost wins → Mexico, despite having the lowest absolute output of both goods. Canada's absolute advantage in both is the lure.",
+      "kr": "바나나 1개의 기회비용(연필): 멕시코 2, 브라질 3, 캐나다 4. 가장 '낮은' 기회비용이 승 → 멕시코(두 재화 모두 절대 생산량이 가장 낮은데도). 캐나다의 절대우위가 유인."
+    },
+    {
+      "id": "econ-m6-p04",
+      "section": "3",
+      "concept": "Distance rule (Ricardian)",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "direction",
+      "source": "cfai",
+      "stem": "In the Ricardian model, a country captures more of the gains from trade when:",
+      "choices": {
+        "A": "it produces every good while its partner specializes in one",
+        "B": "the terms of trade are closer to its own autarkic prices than to its partner's",
+        "C": "the terms of trade are closer to its partner's autarkic prices than to its own"
+      },
+      "answer": "C",
+      "explanation": "A country gains when trade moves relative prices AWAY from its autarkic prices; if the terms of trade equal its own autarkic prices it consumes the same basket as before and gains nothing — the partner captures everything. So the further the terms of trade sit from your autarkic price (i.e., closer to the partner's), the more you gain.",
+      "kr": "무역으로 상대가격이 자국의 자급자족 가격에서 '멀어질수록' 이득; 교역조건이 자국 자급자족 가격과 같으면 이전과 같은 바구니를 소비해 이득 0 — 상대국이 전부 가져감. 교역조건이 자국 가격에서 멀수록(= 상대국 가격에 가까울수록) 이득 큼."
+    },
+    {
+      "id": "econ-m6-p05",
+      "section": "4",
+      "concept": "H–O export prediction",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "direction",
+      "source": "cfai",
+      "stem": "Germany has far more capital per worker than Portugal. Machine tools are capital-intensive; winemaking is labor-intensive. According to the Heckscher–Ohlin model, when trade opens:",
+      "choices": {
+        "A": "Germany exports machine tools and Portugal exports wine",
+        "B": "Germany exports wine and Portugal exports machine tools",
+        "C": "Germany produces only machine tools and Portugal produces only wine"
+      },
+      "answer": "A",
+      "explanation": "H–O: a country exports the good intensive in its relatively abundant factor. Germany is capital-abundant → machine tools; Portugal is labor-abundant → wine. 'Produces only' overstates it — H–O predicts export patterns, not complete specialization.",
+      "kr": "H–O: 상대적으로 풍부한 요소를 집약적으로 쓰는 재화를 수출. 독일은 자본풍부 → 공작기계; 포르투갈은 노동풍부 → 와인. '~만 생산'은 과장 — H–O는 수출 패턴을 예측하지 완전특화를 말하지 않음."
+    },
+    {
+      "id": "econ-m6-p06",
+      "section": "4",
+      "concept": "H–O redistribution — abundant factor gains",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "direction",
+      "source": "cfai",
+      "stem": "According to the Heckscher–Ohlin model, when a country opens to trade:",
+      "choices": {
+        "A": "the scarce factor gains relative to the abundant factor in each country",
+        "B": "the abundant factor gains relative to the scarce factor in each country",
+        "C": "income is redistributed between countries but not within each country"
+      },
+      "answer": "B",
+      "explanation": "Trade raises output of the export good (which uses the ABUNDANT factor intensively) and lowers output of the import good (which uses the SCARCE factor) → derived demand shifts toward the abundant factor → the abundant factor gains, the scarce factor loses, WITHIN each country. Chain it from 'export good uses the abundant factor' — never from intuition about who is scarce.",
+      "kr": "무역은 수출재(풍부한 요소 집약) 생산↑, 수입재(희소 요소 집약) 생산↓ → 파생수요가 풍부한 요소로 이동 → '풍부한' 요소 이득, 희소 요소 손해, 각국 '내부'에서. '수출재는 풍부한 요소를 쓴다'에서 사슬을 시작할 것."
+    },
+    {
+      "id": "econ-m6-p07",
+      "section": "5",
+      "concept": "Mineral rights → capital account",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "truncated-rule",
+      "source": "cfai",
+      "stem": "The sale of mineral rights to a foreign buyer is most likely recorded in which balance-of-payments component?",
+      "choices": {
+        "A": "Capital account",
+        "B": "Current account",
+        "C": "Financial account"
+      },
+      "answer": "A",
+      "explanation": "The capital account covers capital transfers and the sale/purchase of non-produced, non-financial assets — rights to natural resources and intangibles (patents, trademarks, franchises). Mineral rights are exactly that.",
+      "kr": "자본계정 = 자본이전 + 비생산·비금융자산(자원 권리, 특허·상표·프랜차이즈 등 무형자산)의 매매. 광물 채굴권이 바로 그것."
+    },
+    {
+      "id": "econ-m6-p08",
+      "section": "5",
+      "concept": "Patent fees and legal services → current account",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "truncated-rule",
+      "source": "cfai",
+      "stem": "Patent licensing fees and legal services provided to foreigners are most likely recorded in which balance-of-payments component?",
+      "choices": {
+        "A": "Capital account",
+        "B": "Current account",
+        "C": "Financial account"
+      },
+      "answer": "B",
+      "explanation": "Both are SERVICES → the services sub-account of the CURRENT account (which measures flows of goods and services, including income on foreign investment). Patent FEES are a flow; only the outright SALE of the patent goes to the capital account; the financial account is for investment flows (securities, direct investment, reserves). Flow vs. asset.",
+      "kr": "둘 다 '서비스' → 경상수지의 서비스 항목(경상수지 = 재화·서비스 흐름 + 해외투자 소득). 특허 '수수료'는 흐름; 특허 '매각'만 자본계정; 금융계정은 투자 흐름(증권·직접투자·준비자산). 흐름 vs 자산."
+    },
+    {
+      "id": "econ-m6-p09",
+      "section": "6",
+      "concept": "Sources of a CA deficit",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "direction",
+      "source": "cfai",
+      "stem": "Which of the following most likely contributes to a current-account deficit?",
+      "choices": {
+        "A": "High taxes",
+        "B": "Low private saving",
+        "C": "Low private investment"
+      },
+      "answer": "B",
+      "explanation": "CA = Sₚ + S_g − I. A deficit results from LOW private saving, HIGH investment, or a government deficit. High taxes raise government saving (CA ↑); low investment raises CA. Only low private saving pushes CA down.",
+      "kr": "CA = Sₚ + S_g − I. 적자는 '낮은' 민간저축, '높은' 투자, 재정적자에서. 높은 세금은 정부저축↑(CA↑); 낮은 투자는 CA↑. 낮은 민간저축만이 CA를 낮춤."
+    },
+    {
+      "id": "econ-m6-p10",
+      "section": "6",
+      "concept": "Deficit quality — least alarming",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "negation",
+      "source": "cfai",
+      "stem": "Which chronic current-account-deficit condition is least alarming to the deficit country's creditors?",
+      "choices": {
+        "A": "High consumption",
+        "B": "High private investment",
+        "C": "High government spending"
+      },
+      "answer": "B",
+      "explanation": "LEAST alarming = the one that IMPROVES the capacity to repay. Of the deficit sources (low private saving / high consumption, high investment, government deficit), only investment adds productive resources and therefore future repayment ability. Consumption- and government-spending-driven deficits leave repayment capacity unchanged. Read the negation, then apply the quality rule.",
+      "kr": "'가장 덜' 우려스러운 것 = 상환능력을 '개선'하는 것. 적자 원인(낮은 민간저축/높은 소비, 높은 투자, 재정적자) 중 투자만이 생산자원을 늘려 미래 상환능력을 높임. 소비·정부지출발 적자는 상환능력 불변. 부정 지문을 먼저 읽고 품질 규칙을 적용."
     }
   ]
 }
