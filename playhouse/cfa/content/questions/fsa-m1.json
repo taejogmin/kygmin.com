@@ -1005,6 +1005,42 @@
       "answer": "A",
       "explanation": "Financial position (balance sheet) = assets, liabilities, EQUITY. Income and expenses measure performance.",
       "kr": "재무상태(재무상태표) = 자산·부채·'자본'. 수익과 비용은 성과 측정."
+    },
+    {
+      "id": "fsa-m1-p11",
+      "section": "1",
+      "concept": "Role of financial reporting",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "confusion",
+      "source": "cfai",
+      "stem": "Providing information about the performance and financial position of companies so that users can make economic decisions best describes the role of:",
+      "choices": {
+        "A": "auditing",
+        "B": "financial reporting",
+        "C": "financial statement analysis"
+      },
+      "answer": "B",
+      "explanation": "Financial REPORTING provides the information; financial statement ANALYSIS evaluates the reports to support decisions; AUDITING gives an opinion on whether the statements present fairly under the standards.",
+      "kr": "재무'보고'는 정보를 제공; 재무제표 '분석'은 보고서를 평가해 의사결정을 지원; '감사'는 재무제표가 기준에 따라 공정하게 표시되는지 의견을 표명."
+    },
+    {
+      "id": "fsa-m1-p12",
+      "section": "6",
+      "concept": "Position → balance sheet",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "source": "cfai",
+      "stem": "A company's financial position would best be evaluated using the:",
+      "choices": {
+        "A": "balance sheet",
+        "B": "income statement",
+        "C": "statement of cash flows"
+      },
+      "answer": "A",
+      "explanation": "The balance sheet (statement of financial position) shows position at a specified date. The income statement and statement of cash flows present different aspects of performance over the period.",
+      "kr": "재무상태표가 특정 시점의 재무상태를 보여줌. 손익계산서와 현금흐름표는 기간 동안의 성과의 서로 다른 측면."
     }
   ]
 }
