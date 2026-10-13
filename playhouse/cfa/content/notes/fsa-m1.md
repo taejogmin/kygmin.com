@@ -833,6 +833,33 @@ Two perspectives: IS = when earned/incurred; CFS = cash-generating
 
 ## 11. Official practice problems — log (paraphrased in the Study Hub as `fsa-m1-p01…`)
 
-**Set 1, in progress (2026-10-13): 1 / 4** — Q1 objective NOT about users ✓ · Q2 NOT-enhancing = accuracy ✗ (picked timeliness — negation + off-model) · Q3 NOT a constraint = understandability ✗ (picked balancing — negation, wrong-category answer) · Q4 going concern ✗ (picked accrual — the two assumptions swapped) · Q5 accrual basis ✗ (picked relevance — a characteristic, not an assumption) · Q6 neutrality → faithful representation ✓ · Q7 historical cost ✗ (picked realizable) · Q8 realizable value ✗ (picked PV) · Q9 performance element = expenses ✗ (picked assets) · Q10 position element = equity ✓ · Q11 role of financial reporting ✓ · Q12 position → balance sheet ✓ · Q13 profitability → income statement ✓ · Q14 residual claim → balance sheet ✗ (picked cash flow statement) · Q15 profitability → income statement ✓ · Q16 income statement → results of business activities ✓. **Running 8 / 16.** *Remaining questions to follow.*
+**Set 1 (2026-10-13, Q1–Q16): 8 / 16 (50%)** — items `fsa-m1-p01…p16`.
 
-> **Note status: COMPLETE** — §1.01 introduction through §1.09 statement of changes in equity and cash flow statement (the reading's final section). Curriculum examples: Example 1 (balancing characteristics) worked in §3; no scored quiz sets in this reading. Practice questions Q1–Q45 → Study Hub question bank (Financial Statement Analysis → M1, `fsa-m1-q01…q45`). Official practice problems: not yet attempted.
+| Q | Topic | Result | Miss type |
+|---|---|---|---|
+| 1 | Objective — NOT about users | ✓ | |
+| 2 | NOT an enhancing characteristic → accuracy | ✗ picked timeliness | negation + off-model ("accuracy" isn't a framework term) |
+| 3 | NOT a constraint → understandability | ✗ picked balancing | negation; answer was in the wrong category |
+| 4 | Continue for foreseeable future → going concern | ✗ picked accrual | the two assumptions swapped |
+| 5 | Recognized when they occur, not when cash flows → accrual | ✗ picked relevance | a characteristic, not an assumption |
+| 6 | Neutrality → faithful representation | ✓ | |
+| 7 | Paid at time of acquisition → historical cost | ✗ picked realizable | measurement-basis swap |
+| 8 | Received in orderly disposal → realizable value | ✗ picked PV | measurement-basis swap |
+| 9 | Performance element → expenses | ✗ picked assets | position vs performance group |
+| 10 | Position element → equity | ✓ | |
+| 11 | Role of financial reporting | ✓ | |
+| 12 | Position → balance sheet | ✓ | |
+| 13 | Profitability → income statement | ✓ | |
+| 14 | Residual claim → balance sheet | ✗ picked cash flow statement | equity hidden behind its definition |
+| 15 | Profitability over a period → income statement | ✓ | |
+| 16 | Income statement → results of business activities | ✓ | |
+
+**By section:** framework vocabulary (§3–4: characteristics, constraints, assumptions, measurement bases, elements) **2 / 9**; statements and roles (§1, §5–7) **6 / 7**.
+
+**What this set says:** every miss is a framework *label* — none is reasoning or arithmetic. Five of the eight would have been eliminated by sorting each option into its category before reading it closely (characteristic / constraint / assumption / measurement basis / position vs performance element); the other three are definition swaps inside a single category (the two assumptions; historical vs realizable). This is a **memorization** deficit, which is the fastest kind to close: the lists are short and closed. Two NOT stems both missed — negation is now 5 misses across Economics and FSA.
+
+**Before the next FSA reading:** flashcards **f01 (characteristics), f02 (measurement bases), f03 (elements & assumptions)** until each reproduces from memory, then clear the 8 items from Review (2 correct in a row each). The decision tables in §3–§4 miss boxes are the self-test.
+
+**FSA official practice running tally: 8 / 16 (50%)** — target 75%.
+
+> **Note status: COMPLETE** — §1.01 introduction through §1.09 statement of changes in equity and cash flow statement (the reading's final section). Curriculum examples: Example 1 (balancing characteristics) worked in §3; no scored quiz sets in this reading. Practice questions Q1–Q45 → Study Hub question bank (Financial Statement Analysis → M1, `fsa-m1-q01…q45`). Official practice set 1: **8 / 16**.
