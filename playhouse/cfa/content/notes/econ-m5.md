@@ -203,6 +203,10 @@ M ↑ , V̄ , Ȳ   →   P ↑   (proportionally)
 > C is the **speculative** motive's definition, verbatim. A is the **precautionary** motive ("buffer against unforeseen events"). The three options were the three motives' definitions, and the question asked you to attach one label to its definition — a **label swap**. Each distractor is a true definition of a *different* motive.
 > **Fix — anchor each motive to its one keyword:** **transactions = purchases**; **precautionary = unforeseen / buffer**; **speculative = other assets' risk & return**. When a question names a motive, locate that keyword in the options before anything else. (This was a truncated-rule miss: the three-way mapping was in the note, but under the stem it collapsed to "the complicated-sounding one.")
 
+> ### ⭐ REPEAT MISS — OFFICIAL Q2 (motives, second label swap)
+> *"Which is the most accurate statement regarding the demand for money?"* — you picked **"transactions demand is inversely related to returns on bonds"**; correct is **"precautionary demand is directly related to GDP."**
+> Bond returns drive the **speculative** motive, not transactions. Same failure as Ex3 Q1 from the other side: there, a definition was attached to the wrong label; here, a driver was. **Store the table as three pairs, not prose:** `transactions → GDP` · `precautionary → GDP (buffer)` · `speculative → other assets: return ↑ → less money, risk ↑ → more money`. On any motive question, check the **keyword** (purchases / unforeseen / other assets) *before* reading the direction word — the direction is only meaningful once the motive is right. Flashcard `econ-m5-f05`.
+
 - **Equilibrium logic for speculative balances:** individuals raise money holdings relative to riskier assets until the **marginal benefit of a lower-risk portfolio = the marginal cost of giving up a unit of expected return.**
 
 ✓ **Example 3 Q2:** speculative demand **rises as expected returns on other assets fall** — the opportunity cost of holding money falls. You got this (the polarity side of the same mapping). ✓ **Q3:** broad money encompasses narrow money plus the entire range of liquid assets usable for purchases — "wider range of *goods*" is the distractor (it's a wider range of *assets*, not purchases).
@@ -243,6 +247,13 @@ I₂ |············\·· ← excess DEMAND for money (M₂ − M₀) 
 > **The chain, from the paragraph directly above:** MS shifts right → more money, less valuable → **its price (the interest rate) falls**. That's the entire question. B is the polarity flip. C is wrong on two counts: (1) the *equilibrium quantity* of money held **rises** — it's now M₂, not M₀; the extra money has to be held by someone; (2) it confuses a shift in supply with a change in demand — MD didn't move, the economy slides *down along* MD to the new, lower rate. 🔗 M1 §2: movement along vs. shift, the oldest rule in the notes.
 > **Why you missed it:** C sounds sophisticated and "equilibrium" sounds like the right register — an off-model lure dressed as the subtle answer. But **the first-order effect of a supply increase in any market is a lower price**, and in the money market the price is the interest rate. Rule for this section: *money supply ↑ → interest rate ↓ → price level ↑*; *money supply ↓ → the reverse*. Trace it in one line before reading the options.
 
+### The fundamental assumption behind monetary policy 🔴 (official Q5 ✗ — was a note gap)
+**Money is NOT neutral in the short run.** If it were, a change in the money supply would move only the price level and monetary policy could not influence real output or employment at all. Neutrality is a **long-run** proposition (official Q4 ✓); short-run non-neutrality is what gives the central bank its lever. 🔗 M3 §11: money expansion raises output in the short run, only prices in the long run — the same split.
+
+> ### ⭐ YOU MISSED OFFICIAL Q5 HERE
+> *"A fundamental assumption when monetary policy is used to influence the economy:"* — you picked **"financial markets are efficient"**; correct is **"money is not neutral in the short run."**
+> "Efficient markets" is portfolio-theory vocabulary — it appears nowhere in this reading. **Off-model miss**, and also a coverage gap: the note stated neutrality but never drew the contrapositive (*policy works ⇔ short-run non-neutrality*). Now it does. "Official rates don't affect exchange rates" is simply false.
+
 ### Why it's "more complex in practice" — the real-resources argument 🟡
 - The initial money increase creates **excess cash**; people lend it (buying bonds), deposit it, or **spend it on goods and services**.
 - But the economy's **capacity to produce** depends on **real things** — natural resources, capital, labour (factors supplied by households). **More money does not change the availability of real things.**
@@ -262,6 +273,10 @@ R_real = required real rate of interest
 **Worked (verified):** real 2% + expected inflation 3% → nominal 5%. Nominal 6.5% with real 2.5% → expected inflation 4%.
 
 - **Neutrality implication:** over the long term, the money supply / its growth rate **does not affect R_real** but **does affect inflation and inflation expectations** → and hence R_nom.
+
+> ### ⭐ YOU MISSED OFFICIAL Q7 HERE — "stable real rate" belongs to Fisher
+> *"The proposition that the real interest rate is relatively stable is most closely associated with:"* — you picked **money neutrality**; correct is **the Fisher effect**.
+> The Fisher effect *is* that proposition — the first sentence of this subsection. Neutrality and the quantity theory are the backdrop (money moves prices, not real things), which is why they feel related; but the exam asks which concept **owns** the statement. **Off-model (adjacent-concept) miss**, the same shape as M4 "Monetarists → interest rates". Ownership map: **real rate stable / nominal tracks expected inflation → Fisher**; **money affects only P in the long run → neutrality**; **MV = PY, spending ∝ M → quantity theory**; **control inflation via money growth → Monetarists**.
 - 🔗 QM: the same relation used for real vs. nominal returns; 🔗 M4 §5: the TIPS breakeven (nominal − linked yield ≈ πᵉ) is Equation 3 read off market prices.
 - ⚠️ **"Expected" inflation, not realized** — the exam will offer realized inflation as a distractor. And it is the *nominal* rate that moves with inflation expectations; the *real* rate is the stable anchor.
 - ✓ **The fuller decomposition (Example 4 Q2 — you got this):** investors demand **a real rate + compensation for expected inflation + a risk premium for uncertainty**. Equation 3 is the risk-free version; "real rate plus inflation *only*" and "real rate plus risk premium *only*" are both the truncated-rule distractors. The question's "and compensation for both" was the correct "both" — the curriculum names all three.
@@ -329,5 +344,22 @@ The consensus of the last two to three decades: **unanticipated and high inflati
 **⭐ Running weak spots (this module):**
 - **Ex3 Q1 — transactions motive (§2):** picked the speculative definition. Keyword anchors: transactions = *purchases*; precautionary = *unforeseen*; speculative = *other assets*. *(truncated rule / label swap)*
 - **Ex4 Q3 — money supply ↑ → rates ↓ (§2):** picked "reduces equilibrium money held" — wrong direction (equilibrium quantity rises to M₂) and a shift/movement confusion. First direction miss since M3. Rule: *M ↑ → i ↓ → P ↑*, traced before reading options. *(off-model lure + polarity)*
+
+## 4. Official practice problems — log (paraphrased in the Study Hub as `econ-m5-p03…p11`)
+
+**Set 1 (2026-10-13, Q1–Q9): 6 / 9** — multiplier direction ✓, excess supply at I₁ ✓, neutrality = long run ✓, Monetarists ✓, Fisher equation ✓, unanticipated inflation ✓. **Misses, all §2:** Q2 motive label swap (precautionary ∝ GDP — repeat of Ex3 Q1), Q5 fundamental assumption = short-run non-neutrality (gap, now added), Q7 stable real rate = Fisher (adjacent-concept lure).
+
+| What the set tested | Pattern | Result |
+|---|---|---|
+| Multiplier ↔ reserve requirement (inverse) | polarity | ✓ |
+| Money-market diagram: excess supply at I₁ | polarity | ✓ |
+| Neutrality is long-run; policy assumes short-run non-neutrality | long-run vs short-run | ✓ / ✗ (gap) |
+| Motive → driver mapping | truncated rule (repeat) | ✗ |
+| Which concept owns "stable real rate" | off-model / adjacent concept | ✗ |
+| Costs: unanticipated > anticipated; very low > moderate | definition | ✓ |
+
+**Module 5 so far: curriculum examples 9/11 · official 6/9.** Economics official practice running tally: **50 / 80 (62.5%)** — M1 10/14 · M2 4/7 · M3 17/30 · M4 13/20 · M5 6/9. Target ≈ 70%.
+
+**Read for next time:** the three §2 misses share one shape — a concept had a *neighbour* (speculative ↔ transactions, neutrality ↔ Fisher, efficiency ↔ non-neutrality) and the neighbour won. The §2 ownership map above and the three motive pairs are the fix; both are now flashcards (`f04`, `f05`).
 
 **⭐ Practice questions Q1–Q11 → in the Study Hub question bank (Quiz → Monetary & Fiscal Policy, ids `econ-m5-q01…q11`), with explanations.**

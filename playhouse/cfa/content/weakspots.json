@@ -222,9 +222,11 @@
         "M4 official Q15 (Laspeyres overstates → highest inflation; picked Paasche)",
         "M4 official Q18 (quality bias is upward even at constant price; picked 'unaffected')",
         "M4 official Q20 (two-bullet stem; the second bullet was the literal cost-push definition)",
-        "M5 Ex3 Q1 (transactions motive — label swap among the three money-demand definitions)"
+        "M5 Ex3 Q1 (transactions motive — label swap among the three money-demand definitions)",
+        "M5 official Q2 (money-demand motives — second label swap; precautionary ∝ GDP)"
       ],
       "seed": [
+        "econ-m5-p04",
         "econ-m5-p01",
         "econ-m4-p26",
         "econ-m4-p29",
@@ -264,9 +266,13 @@
         "M4 Ex8 Q6 (Monetarists → 'interest rates'; it's money growth)",
         "M4 Ex8 Q3 (cost-push when unemployment 'either high or low' — hedge)",
         "M4 official Q16 ('index of food and energy prices' for policy — not a concept; core inflation)",
-        "M5 Ex4 Q3 (money supply ↑ → 'reduces equilibrium money held' — sophisticated-sounding lure; answer is rates ↓)"
+        "M5 Ex4 Q3 (money supply ↑ → 'reduces equilibrium money held' — sophisticated-sounding lure; answer is rates ↓)",
+        "M5 official Q5 ('efficient markets' as the assumption behind monetary policy — not in the reading; it's short-run non-neutrality)",
+        "M5 official Q7 (stable real rate → picked money neutrality; it's the Fisher effect)"
       ],
       "seed": [
+        "econ-m5-p07",
+        "econ-m5-p09",
         "econ-m5-p02",
         "econ-m4-p27",
         "econ-m4-p01",
@@ -502,6 +508,21 @@
       "qid": "econ-m5-p02",
       "when": "2026-10-13",
       "note": "M5 Ex4 Q3 — money supply ↑: picked 'reduces equilibrium money held'. M ↑ → i ↓ → P ↑; equilibrium money held RISES, movement along MD. First direction miss since M3. (off-model + polarity)"
+    },
+    {
+      "qid": "econ-m5-p04",
+      "when": "2026-10-13",
+      "note": "M5 official Q2 — picked 'transactions demand inversely related to bond returns' (that's speculative). Precautionary ∝ GDP. Second motive label swap (after Ex3 Q1). (truncated rule — repeat)"
+    },
+    {
+      "qid": "econ-m5-p07",
+      "when": "2026-10-13",
+      "note": "M5 official Q5 — fundamental assumption of monetary policy = money NOT neutral in the short run; picked 'efficient markets' (not in the reading). Note gap, now added. (off-model)"
+    },
+    {
+      "qid": "econ-m5-p09",
+      "when": "2026-10-13",
+      "note": "M5 official Q7 — 'real rate stable' is the FISHER effect; picked money neutrality (adjacent concept). (off-model)"
     }
   ]
 }
