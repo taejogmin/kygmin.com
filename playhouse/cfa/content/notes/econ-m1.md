@@ -179,19 +179,19 @@ Elasticity fixes this by using **ratios of percentage changes**, which are unit-
 
 ### The formula
 
-```
-         %ΔQdx
-Edpx = ─────────                                      (Equation 5)
-         %ΔPx
-```
+$$
+E^{d}_{P_x} \;=\; \frac{\%\Delta Q_{dx}}{\%\Delta P_x} \tag{5}
+$$
 
 Expanding it (a percentage change in x is just Δx divided by the level of x):
 
-```
-         %ΔQdx     (ΔQdx / Qdx)     ⎛ ΔQdx ⎞   ⎛  Px  ⎞
-Edpx = ───────── = ────────────── = ⎜──────⎟ × ⎜──────⎟   (Equation 6)
-         %ΔPx      (ΔPx  / Px )     ⎝ ΔPx  ⎠   ⎝ Qdx  ⎠
-```
+$$
+\begin{aligned}
+E^{d}_{P_x} &= \frac{\%\Delta Q_{dx}}{\%\Delta P_x}
+ = \frac{\Delta Q_{dx}\,/\,Q_{dx}}{\Delta P_x\,/\,P_x} \\[6pt]
+&= \left(\frac{\Delta Q_{dx}}{\Delta P_x}\right) \times \left(\frac{P_x}{Q_{dx}}\right)
+\end{aligned} \tag{6}
+$$
 
 **This is the version you use on the exam.** Two pieces:
 - **(ΔQdx/ΔPx)** = the **coefficient on Px** in the demand function (when demand is linear, this equals the slope coefficient — here, −6.39)
@@ -339,11 +339,12 @@ Faced with the same percentage price increase, consumers will give up a **discre
 
 > **The structural insight:** this expression is *identical in structure* to own-price elasticity. All elasticity measures share the same general structure — the only thing that changes is the **independent variable of interest**. Learn one, you have them all.
 
-```
-        %ΔQdx     ⎛ ΔQdx ⎞   ⎛  I  ⎞
-EdI = ────────  = ⎜──────⎟ × ⎜─────⎟             (Equation 7)
-         %ΔI      ⎝  ΔI  ⎠   ⎝ Qdx ⎠
-```
+$$
+\begin{aligned}
+E^{d}_{I} &= \frac{\%\Delta Q_{dx}}{\%\Delta I} \\[6pt]
+&= \left(\frac{\Delta Q_{dx}}{\Delta I}\right) \times \left(\frac{I}{Q_{dx}}\right)
+\end{aligned} \tag{7}
+$$
 
 Same mechanics: **(ΔQdx/ΔI)** is the **coefficient on income** in the demand function; multiply by the point values **I/Qdx**.
 
@@ -374,11 +375,12 @@ When plotting the demand curve, income is held constant. If income *changes*, th
 
 Measures how sensitive demand for good X is to a change in the price of *another* good Y, holding all else constant. Note how similar it is to own-price elasticity — **the only difference is that the subscript on P is now y.**
 
-```
-         %ΔQdx     ⎛ ΔQdx ⎞   ⎛ Py  ⎞
-EdPy = ────────  = ⎜──────⎟ × ⎜─────⎟            (Equation 8)
-         %ΔPy      ⎝ ΔPy  ⎠   ⎝ Qdx ⎠
-```
+$$
+\begin{aligned}
+E^{d}_{P_y} &= \frac{\%\Delta Q_{dx}}{\%\Delta P_y} \\[6pt]
+&= \left(\frac{\Delta Q_{dx}}{\Delta P_y}\right) \times \left(\frac{P_y}{Q_{dx}}\right)
+\end{aligned} \tag{8}
+$$
 
 ### The sign tells you the relationship — memorize this 🔴
 
@@ -772,11 +774,12 @@ Start from TR = (P)(Q) and MR = ΔTR/ΔQ. The change in total revenue is:
 
 Divide by ΔQ:
 
-```
-        (P)(ΔQ)   (Q)(ΔP)              ⎛ ΔP ⎞
-MR =  ────────── + ────────  =  P  +  Q⎜────⎟
-          ΔQ         ΔQ                ⎝ ΔQ ⎠
-```
+$$
+\begin{aligned}
+MR &= \frac{P\,\Delta Q}{\Delta Q} + \frac{Q\,\Delta P}{\Delta Q} \\[6pt]
+&= P + Q\left(\frac{\Delta P}{\Delta Q}\right)
+\end{aligned}
+$$
 
 **MR = price plus an "adjustment" equal to quantity × the slope of the demand curve** (recall ΔP/ΔQ *is* the slope of the demand curve).
 

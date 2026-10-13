@@ -206,15 +206,15 @@ Peru: 60/160 ≈ 37.5% missed
 ```
 Nominal GDPₜ = Pₜ × Qₜ        [current prices × current quantities]
 Real GDPₜ    = P_B × Qₜ       [BASE-year prices × current quantities]
-
-GDP deflator = Value of current-year output at CURRENT prices  × 100
-               ────────────────────────────────────────────────
-               Value of current-year output at BASE-year prices
-
-             = (Nominal GDP / Real GDP) × 100
-
-Real GDP     = Nominal GDP / (deflator/100)
 ```
+
+$$
+\begin{gathered}
+\text{GDP deflator} = \frac{\text{Nominal GDP}}{\text{Real GDP}} \times 100 \\[10pt]
+= \frac{\begin{array}{c}\text{current-year output}\\ \text{at CURRENT prices}\end{array}}{\begin{array}{c}\text{current-year output}\\ \text{at BASE-year prices}\end{array}} \times 100 \\[14pt]
+\text{Real GDP} = \frac{\text{Nominal GDP}}{\text{deflator}\,/\,100}
+\end{gathered}
+$$
 
 The deflator broadly measures **aggregate price changes across the whole economy** → changes in the deflator gauge **inflation**.
 

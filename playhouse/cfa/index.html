@@ -153,6 +153,12 @@ label.opt input{display:none;}
 .docpick .btn .mn{font-family:var(--mono);font-size:10px;color:#6B6B67;margin-right:7px;}
 .docpick .btn.ink .mn{color:#C9CFC9;}
 .subjpick{margin-bottom:8px;}
+.mathx{margin:14px 0 18px;padding:14px 16px;border-left:6px solid var(--green);background:#F3F6F2;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;}
+.mathx pre{margin:0;border:none;background:none;padding:0;}
+.mathx .katex-display{margin:0;}
+.mathx .mcap{font-family:var(--mono);font-size:10.5px;letter-spacing:.4px;color:#6B6B67;text-align:right;margin-top:6px;}
+.mathx .katex{font-size:1.18em;}
+@media(max-width:560px){ .mathx{padding:12px 8px;} .mathx .katex{font-size:.98em;} }
 .subjtabs{position:static;z-index:auto;display:flex;flex-wrap:wrap;border-bottom:3px solid var(--ink);margin-bottom:14px;background:none;}
 .subjtab{all:unset;box-sizing:border-box;cursor:pointer;display:inline-flex;align-items:baseline;gap:10px;padding:11px 18px 10px;margin-right:-3px;border:3px solid var(--ink);border-bottom:none;background:var(--paper);font-family:var(--arch);font-weight:900;font-size:14.5px;text-transform:uppercase;letter-spacing:-.2px;color:var(--ink);}
 .subjtab:hover{background:#fff;}
@@ -758,13 +764,34 @@ function renderStudy(){
   renderDoc(m);
   $('noteSearch').addEventListener('input', function(){ filterToc(this.value.trim().toLowerCase()); });
 }
+var KATEX_P=null;
+function loadKatex(){
+  if(window.katex) return Promise.resolve();
+  if(KATEX_P) return KATEX_P;
+  KATEX_P=new Promise(function(res,rej){
+    var l=document.createElement('link'); l.rel='stylesheet'; l.href='vendor/katex/katex.min.css'; document.head.appendChild(l);
+    var sc=document.createElement('script'); sc.src='vendor/katex/katex.min.js'; sc.onload=function(){ res(); }; sc.onerror=function(){ KATEX_P=null; rej(); }; document.head.appendChild(sc);
+  });
+  return KATEX_P;
+}
 var SEC_RE_H=/^(\d+[a-z]?(?:\.\d+)?)\.?\s+/;
 function renderDoc(m){
   var doc=$('doc'); var md=NOTES[m.id];
   var html;
+  // Display math: $$ … $$ blocks (each $$ on its own line) are lifted out before markdown, typeset with KaTeX after.
+  var MATHQ=[];
+  md = md.replace(/^\$\$[ \t]*\n([\s\S]*?)\n\$\$[ \t]*$/gm, function(_, tex){ MATHQ.push(tex); return '\n<div class="mathx" data-mi="'+(MATHQ.length-1)+'"></div>\n'; });
   try{ html = marked.parse(md, { gfm:true, breaks:false, mangle:false, headerIds:false }); }
   catch(e){ html='<p>'+esc(t('loadFail'))+'</p>'; }
   doc.innerHTML=html;
+  if(MATHQ.length){
+    var mels=doc.querySelectorAll('.mathx');
+    Array.prototype.forEach.call(mels, function(el){ el.innerHTML='<pre><code>'+esc(MATHQ[+el.dataset.mi])+'</code></pre>'; });
+    loadKatex().then(function(){ Array.prototype.forEach.call(mels, function(el){ var tex=MATHQ[+el.dataset.mi], cap='';
+        tex=tex.replace(/\\tag\{([^}]*)\}/, function(_, n){ cap=n; return ''; });
+        try{ var box=document.createElement('div'); window.katex.render(tex, box, { displayMode:true, throwOnError:false, strict:false }); el.innerHTML=''; el.appendChild(box);
+          if(cap){ var c=document.createElement('div'); c.className='mcap'; c.textContent='Equation '+cap; el.appendChild(c); } }catch(e){} }); }, function(){});
+  }
   // remove h1s (hero already names the module), wrap tables, id the headings, inject section tools
   Array.prototype.forEach.call(doc.querySelectorAll('h1'), function(h){ h.remove(); });
   Array.prototype.forEach.call(doc.querySelectorAll('table'), function(tb){ var w=document.createElement('div'); w.className='tw'; tb.parentNode.insertBefore(w,tb); w.appendChild(tb); });

@@ -513,19 +513,20 @@ Sales revenue                                  230,682
 **Two things the analyst notices (quotable):** profit rose substantially in 2017 mainly from **higher sales and lower other operating expenses** — and the **footnotes** reveal the latter was largely **€4bn less in litigation expense**. The lesson: the number on the face needs the notes to interpret.
 
 ### Earnings per share 🔴 FORMULA
-```
-EPS  =  Net income attributable to the class of shareholders
-        ─────────────────────────────────────────────────────
-        Relevant number of shares outstanding during the period
+$$
+\text{EPS} = \frac{\begin{array}{c}\text{Net income attributable}\\ \text{to the class of shareholders}\end{array}}{\begin{array}{c}\text{Relevant number of shares}\\ \text{outstanding during the period}\end{array}}
+$$
 
-BASIC EPS:    profit attributable to COMMON shareholders
-              ÷ WEIGHTED-AVERAGE common (ordinary) shares ACTUALLY outstanding
+$$
+\begin{gathered}
+\textbf{Basic EPS} \\[4pt]
+= \frac{\begin{array}{c}\text{Profit attributable to}\\ \text{COMMON shareholders}\end{array}}{\begin{array}{c}\text{WEIGHTED-AVERAGE common}\\ \text{shares ACTUALLY outstanding}\end{array}} \\[18pt]
+\textbf{Diluted EPS} \\[4pt]
+= \frac{\begin{array}{c}\text{ADJUSTED profit attributable}\\ \text{to common shareholders}\end{array}}{\text{DILUTED shares}}
+\end{gathered}
+$$
 
-DILUTED EPS:  appropriately ADJUSTED profit attributable to common shareholders
-              ÷ DILUTED SHARES = shares that would HYPOTHETICALLY be outstanding if
-                potentially dilutive claims (stock OPTIONS, CONVERTIBLE BONDS) were
-                exercised or converted
-```
+**Diluted shares** = the shares that would *hypothetically* be outstanding if potentially dilutive claims (**stock options, convertible bonds**) were exercised or converted.
 - Both basic and diluted are presented **on the face** of the income statement.
 - **VW worked example (from the notes):** €11.4bn attributable to VW shareholders, of which **€6.8bn to ordinary shareholders** (the balance to preferred) ÷ **0.295bn weighted-average ordinary shares = €22.63 basic EPS**. VW also reports EPS for its preferred shares — **not required**; the requirement is for common.
 
