@@ -153,7 +153,7 @@ label.opt input{display:none;}
 .docpick .btn .mn{font-family:var(--mono);font-size:10px;color:#6B6B67;margin-right:7px;}
 .docpick .btn.ink .mn{color:#C9CFC9;}
 .subjpick{margin-bottom:8px;}
-.subjtabs{display:flex;flex-wrap:wrap;border-bottom:3px solid var(--ink);margin-bottom:14px;}
+.subjtabs{position:static;z-index:auto;display:flex;flex-wrap:wrap;border-bottom:3px solid var(--ink);margin-bottom:14px;background:none;}
 .subjtab{all:unset;box-sizing:border-box;cursor:pointer;display:inline-flex;align-items:baseline;gap:10px;padding:11px 18px 10px;margin-right:-3px;border:3px solid var(--ink);border-bottom:none;background:var(--paper);font-family:var(--arch);font-weight:900;font-size:14.5px;text-transform:uppercase;letter-spacing:-.2px;color:var(--ink);}
 .subjtab:hover{background:#fff;}
 .subjtab.on{background:var(--ink);color:#fff;}
@@ -748,9 +748,9 @@ function renderStudy(){
   var el=$('view-study'); if(!studyModule||!modById(studyModule)) studyModule=(LASTMOD._last&&modById(LASTMOD._last))?LASTMOD._last:MODULES[0].id; var m=modById(studyModule); rememberMod(studyModule);
   var html='';
   var subs=SUBJECTS().filter(function(sj){ return modulesOf(sj.id).length; });
-  if(subs.length>1){ html+='<nav class="subjtabs" role="tablist" aria-label="Subjects">'; subs.forEach(function(sj){ var on=sj.id===m.subject, n=modulesOf(sj.id).length;
+  if(subs.length>1){ html+='<div class="subjtabs" role="tablist" aria-label="Subjects">'; subs.forEach(function(sj){ var on=sj.id===m.subject, n=modulesOf(sj.id).length;
       html+='<button class="subjtab'+(on?' on':'')+'" role="tab" aria-selected="'+on+'" data-studysubj="'+esc(sj.id)+'"><span class="sn-l">'+esc(sj.name)+'</span><span class="sn-s">'+esc(sj.short||sj.name)+'</span>'+(sj.weight?'<span class="w">'+esc(sj.weight)+'</span>':'')+'<span class="ct">'+n+' '+esc(t(n===1?'mod1':'mods'))+'</span></button>'; });
-    html+='</nav>'; }
+    html+='</div>'; }
   html+='<div class="docpick modpick">'; modulesOf(m.subject).forEach(function(x){ html+='<button class="btn sm'+(x.id===studyModule?' ink':'')+'" data-study="'+x.id+'"><span class="mn">M'+x.order+'</span>'+esc(x.short)+'</button>'; }); html+='</div>';
   html+='<div class="study"><aside class="toc"><div class="search"><input type="search" id="noteSearch" placeholder="'+esc(t('search_ph'))+'" aria-label="search" /></div><h3>'+esc(t('toc'))+'</h3><div id="tocList"></div></aside>'
     +'<article class="doc" id="doc"></article></div>';
