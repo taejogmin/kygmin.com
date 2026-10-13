@@ -297,6 +297,19 @@ These two assumptions **determine how elements are recognized and measured** —
 4. **Historical cost includes acquisition costs** (transport, tax) — not just the invoice price.
 5. **Amortised cost** is the only basis defined as *historical cost adjusted* — it has no separate liability version in the list.
 
+> ### ⭐ YOU MISSED OFFICIAL Q7 AND Q8 HERE — back-to-back measurement-basis swaps
+> **Q7** *"cash paid … to acquire them at the time of acquisition"* — you picked **realizable value**; correct is **historical cost**.
+> **Q8** *"amount that would be received in an orderly disposal"* — you picked **present value**; correct is **realizable value**.
+> Realizable value was chosen for the wrong stem and passed over on its own — that's the signature of six similar-sounding names that aren't yet tied to their definitions. **Fix: two questions on every stem, then look up the row.**
+> | Ask | Answer → basis |
+> |---|---|
+> | **When?** at acquisition (past) | → **Historical cost** (or amortised cost if adjusted since) |
+> | **When?** today — and **pay to buy** it | → **Current cost** (replacement) |
+> | **When?** today — and **receive by selling** it (orderly) | → **Realizable value** |
+> | Future cash flows **discounted**? | → **Present value** |
+> | **Exit price between market participants** at measurement date? | → **Fair value** |
+> Q7's stem had *paid* + *at the time of acquisition* → past, pay → historical. Q8's had *received* + *orderly disposal* → today, sell → realizable. Flashcard **f02** daily until the table reproduces from memory.
+
 ---
 
 ## 5. Major Financial Statements (§1.06)
@@ -813,6 +826,6 @@ Two perspectives: IS = when earned/incurred; CFS = cash-generating
 
 ## 11. Official practice problems — log (paraphrased in the Study Hub as `fsa-m1-p01…`)
 
-**Set 1, in progress (2026-10-13): 1 / 4** — Q1 objective NOT about users ✓ · Q2 NOT-enhancing = accuracy ✗ (picked timeliness — negation + off-model) · Q3 NOT a constraint = understandability ✗ (picked balancing — negation, wrong-category answer) · Q4 going concern ✗ (picked accrual — the two assumptions swapped) · Q5 accrual basis ✗ (picked relevance — a characteristic, not an assumption) · Q6 neutrality → faithful representation ✓. **Running 2 / 6.** *Remaining questions to follow.*
+**Set 1, in progress (2026-10-13): 1 / 4** — Q1 objective NOT about users ✓ · Q2 NOT-enhancing = accuracy ✗ (picked timeliness — negation + off-model) · Q3 NOT a constraint = understandability ✗ (picked balancing — negation, wrong-category answer) · Q4 going concern ✗ (picked accrual — the two assumptions swapped) · Q5 accrual basis ✗ (picked relevance — a characteristic, not an assumption) · Q6 neutrality → faithful representation ✓ · Q7 historical cost ✗ (picked realizable) · Q8 realizable value ✗ (picked PV). **Running 2 / 8.** *Remaining questions to follow.*
 
 > **Note status: COMPLETE** — §1.01 introduction through §1.09 statement of changes in equity and cash flow statement (the reading's final section). Curriculum examples: Example 1 (balancing characteristics) worked in §3; no scored quiz sets in this reading. Practice questions Q1–Q45 → Study Hub question bank (Financial Statement Analysis → M1, `fsa-m1-q01…q45`). Official practice problems: not yet attempted.

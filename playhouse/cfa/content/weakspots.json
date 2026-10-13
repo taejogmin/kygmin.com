@@ -192,9 +192,16 @@
         "M2 official Q7 (regulated price = LRAC — repeat miss)",
         "M4 official Q16 + Q19 (headline vs core swapped twice in one set; third time incl. Ex5 Q7)",
         "FSA M1 official Q4 (going concern vs accrual — the two assumptions swapped)",
-        "FSA M1 official Q5 (accrual definition → picked relevance, which isn't an assumption at all)"
+        "FSA M1 official Q5 (accrual definition → picked relevance, which isn't an assumption at all)",
+        "FSA M1 official Q7 + Q8 (measurement bases: picked realizable for 'paid at acquisition', then avoided it for 'received in orderly disposal')"
       ],
       "seed": [
+        "fsa-m1-p07",
+        "fsa-m1-p08",
+        "fsa-m1-f02",
+        "fsa-m1-q19",
+        "fsa-m1-q20",
+        "fsa-m1-q21",
         "fsa-m1-p05",
         "fsa-m1-p04",
         "econ-m4-f13",
@@ -649,6 +656,16 @@
       "qid": "fsa-m1-p05",
       "when": "2026-10-13",
       "note": "FSA M1 official Q5 — 'recognized when they occur, not when cash flows' = ACCRUAL; picked relevance (a characteristic, not an assumption). Right after swapping the two assumptions in Q4. (definition / category)"
+    },
+    {
+      "qid": "fsa-m1-p07",
+      "when": "2026-10-13",
+      "note": "FSA M1 official Q7 — 'paid at the time of acquisition' = HISTORICAL cost; picked realizable value. (measurement-basis swap)"
+    },
+    {
+      "qid": "fsa-m1-p08",
+      "when": "2026-10-13",
+      "note": "FSA M1 official Q8 — 'received in an orderly disposal' = REALIZABLE value; picked present value. Realizable was picked on Q7 (wrong) and avoided on Q8 (right) — the six bases are not yet stored. (measurement-basis swap)"
     }
   ]
 }

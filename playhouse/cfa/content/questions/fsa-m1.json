@@ -933,6 +933,42 @@
       "answer": "C",
       "explanation": "Faithful representation = complete + NEUTRAL + free from error (C-N-F). Relevance = predictive/confirmatory value + materiality. Understandability is an enhancing characteristic.",
       "kr": "충실한 표현 = 완전성 + '중립성' + 오류 없음(C-N-F). 목적적합성 = 예측가치/확인가치 + 중요성. 이해가능성은 보강적 특성."
+    },
+    {
+      "id": "fsa-m1-p07",
+      "section": "4",
+      "concept": "Historical cost definition",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "confusion",
+      "source": "cfai",
+      "stem": "Valuing assets at the amount of cash or equivalents paid, or the fair value of the consideration given, to acquire them at the time of acquisition most closely describes which measurement basis?",
+      "choices": {
+        "A": "Current cost",
+        "B": "Historical cost",
+        "C": "Realizable value"
+      },
+      "answer": "B",
+      "explanation": "Keywords: PAID + AT THE TIME OF ACQUISITION → HISTORICAL cost (past, entry side; includes acquisition costs; if not cash, fair value of what was given). Current cost = what you'd pay to buy it TODAY. Realizable value = what you'd RECEIVE by selling it. Read two things from the stem: when (then vs today) and which side (pay vs receive).",
+      "kr": "키워드: '지급' + '취득 시점' → 역사적 원가(과거, 구입 측; 부대비용 포함; 현금이 아니면 지급한 대가의 공정가치). 현행원가 = '오늘' 구입한다면 지급할 금액. 실현가능가치 = 팔아서 '받을' 금액. 지문에서 두 가지를 읽는다: 언제(그때 vs 오늘), 어느 쪽(지급 vs 수취)."
+    },
+    {
+      "id": "fsa-m1-p08",
+      "section": "4",
+      "concept": "Realizable value definition",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "confusion",
+      "source": "cfai",
+      "stem": "The valuation technique under which assets are recorded at the amount that would be received in an orderly disposal is:",
+      "choices": {
+        "A": "current cost",
+        "B": "present value",
+        "C": "realizable value"
+      },
+      "answer": "C",
+      "explanation": "Keywords: RECEIVED + ORDERLY DISPOSAL → REALIZABLE value (today, sell side, undiscounted). Present value DISCOUNTS future cash inflows from using the asset in the normal course; current cost is what you'd PAY to buy it today.",
+      "kr": "키워드: '수취' + '정상적 처분' → 실현가능가치(오늘, 판매 측, 할인 없음). 현재가치는 정상 영업에서 자산이 창출할 미래 현금유입을 '할인'; 현행원가는 오늘 구입 시 '지급'할 금액."
     }
   ]
 }
