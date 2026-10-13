@@ -281,9 +281,11 @@
         "M5 Ex4 Q3 (money supply ↑ → 'reduces equilibrium money held' — sophisticated-sounding lure; answer is rates ↓)",
         "M5 official Q5 ('efficient markets' as the assumption behind monetary policy — not in the reading; it's short-run non-neutrality)",
         "M5 official Q7 (stable real rate → picked money neutrality; it's the Fisher effect)",
-        "M7 Ex2 Q2 (what makes Marshall–Lerner more likely to hold = higher elasticities; picked lower ε_M + higher ω_M)"
+        "M7 Ex2 Q2 (what makes Marshall–Lerner more likely to hold = higher elasticities; picked lower ε_M + higher ω_M)",
+        "FSA M1 official Q2 ('accuracy' sounds like a qualitative characteristic; the framework says faithful representation)"
       ],
       "seed": [
+        "fsa-m1-p02",
         "econ-m7-p05",
         "econ-m5-p07",
         "econ-m5-p09",
@@ -314,9 +316,11 @@
       "evidence": [
         "M4 Ex7 Q1 (NAIRU 'NOT a problem' — picked a TRUE limitation); Ex8 Q8 retest ✓",
         "M4 official Q14 (PPI least likely — picked TRUE 'leads CPI'; false one is 'labor contracts use PPI')",
-        "M6 official Q10 ('least alarming' deficit condition → investment; picked consumption) — third negation miss"
+        "M6 official Q10 ('least alarming' deficit condition → investment; picked consumption) — third negation miss",
+        "FSA M1 official Q2 (NOT enhancing → picked timeliness, a true one; 'accuracy' isn't in the framework) — fourth negation miss, first in FSA"
       ],
       "seed": [
+        "fsa-m1-p02",
         "econ-m6-p10",
         "econ-m4-p25",
         "econ-m4-p08",
@@ -619,6 +623,11 @@
       "qid": "econ-m7-p07",
       "when": "2026-10-13",
       "note": "M7 Ex2 Q6 — surplus to zero → S ↓; picked I ↓ (grows it). Same identity, two questions apart. (polarity — identity signs)"
+    },
+    {
+      "qid": "fsa-m1-p02",
+      "when": "2026-10-13",
+      "note": "FSA M1 official Q2 — NOT an enhancing characteristic: picked timeliness (a TRUE enhancing one). Answer 'accuracy' — not a curriculum term at all. Fourth negation miss; first in FSA. (negation + off-model)"
     }
   ]
 }

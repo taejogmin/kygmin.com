@@ -211,6 +211,10 @@ Sets out the concepts underlying preparation and presentation of statements for 
 
 **Memory hook: C-V-T-U** ("see-view-the-user"). Fundamental vs. enhancing is the first thing the exam asks — **relevance and faithful representation are fundamental; the other four enhance.**
 
+> ### ⭐ YOU MISSED OFFICIAL Q2 HERE — "NOT an enhancing characteristic"
+> Options: accuracy / timeliness / comparability. You picked **timeliness**; correct is **accuracy**.
+> Timeliness and comparability are both on the C-V-T-U list — **true** enhancing characteristics, so in a NOT question they are the distractors. "Accuracy" isn't a characteristic at all: the framework's word is **faithful representation** (fundamental), and its "free from error" sub-part explicitly does **not** mean perfectly accurate. Two traps stacked: the **negation** (fourth NOT/least miss across subjects) and an **off-model** word that sounds like it belongs. **Routine:** write C-V-T-U, tick each option against it, pick the one that isn't there.
+
 ### Constraints and limitations 🔴
 | Item | Statement |
 |---|---|
@@ -797,5 +801,9 @@ Two perspectives: IS = when earned/incurred; CFS = cash-generating
 8. **Equity roll-forward** with all four terms
 9. Complete set of statements, audit scope, consolidation facts, supplementary reports
 10. Objective wording, framework users, convergence story, analyst sources
+
+## 11. Official practice problems — log (paraphrased in the Study Hub as `fsa-m1-p01…`)
+
+**Set 1, part 1 (2026-10-13, Q1–Q2): 1 / 2** — objective NOT about users ✓; NOT-enhancing = accuracy ✗ (picked timeliness; negation + off-model). *Remaining questions to follow.*
 
 > **Note status: COMPLETE** — §1.01 introduction through §1.09 statement of changes in equity and cash flow statement (the reading's final section). Curriculum examples: Example 1 (balancing characteristics) worked in §3; no scored quiz sets in this reading. Practice questions Q1–Q45 → Study Hub question bank (Financial Statement Analysis → M1, `fsa-m1-q01…q45`). Official practice problems: not yet attempted.

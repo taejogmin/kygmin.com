@@ -825,6 +825,42 @@
       "trap": "truncated-rule",
       "front": "The equity roll-forward, the three cash-flow categories, the four-term cash reconciliation, and indirect vs direct",
       "back": "Ending equity = Begin + NI + OCI + issuance − dividends − buybacks (VW 92,910 + 13,943 + 3,481 − 1,332 + 75 = 109,077).\nOPERATING: transactions determining net income. INVESTING: acquire/dispose long-term assets. FINANCING: obtain/repay capital (bonds, contributions, dividends paid). IFRS more flexible than US GAAP on interest/dividend classification.\nNet change in cash = CFO + CFI + CFF + FX EFFECT (VW −1,185 − 16,508 + 17,625 − 727 = −796).\nINDIRECT (start with profit, adjust) — almost all companies; DIRECT (gross receipts/payments) — very few. Ideal for an established firm: CFO is the primary source of cash. Financial flexibility = ability to react to adversity and opportunity."
+    },
+    {
+      "id": "fsa-m1-p01",
+      "section": "1",
+      "concept": "Objective of statements — NOT",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "negation",
+      "source": "cfai",
+      "stem": "Which of the following is most likely NOT an objective of financial statements?",
+      "choices": {
+        "A": "To provide information about the performance of an entity",
+        "B": "To provide information about the financial position of an entity",
+        "C": "To provide information about the users of an entity's financial statements"
+      },
+      "answer": "C",
+      "explanation": "NOT stem → T/F each. Statements provide information about the entity's financial position (T), performance (T) and changes in position TO users — they do not provide information ABOUT users (F → answer).",
+      "kr": "NOT 지문 → 선지별 T/F. 재무제표는 기업의 재무상태(T)·성과(T)·재무상태 변동에 관한 정보를 이용자'에게' 제공 — 이용자'에 관한' 정보는 제공하지 않음(F → 정답)."
+    },
+    {
+      "id": "fsa-m1-p02",
+      "section": "3",
+      "concept": "Enhancing characteristics — NOT",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "negation",
+      "source": "cfai",
+      "stem": "According to the Conceptual Framework for Financial Reporting, which of the following is NOT an enhancing qualitative characteristic?",
+      "choices": {
+        "A": "Accuracy",
+        "B": "Timeliness",
+        "C": "Comparability"
+      },
+      "answer": "A",
+      "explanation": "NOT stem → check each against the list. Enhancing = C-V-T-U: comparability (T), verifiability, timeliness (T), understandability. 'Accuracy' is not a characteristic at all — the curriculum's term is FAITHFUL REPRESENTATION (a fundamental characteristic), whose 'free from error' explicitly does not mean perfectly accurate. Two traps stacked: a NOT stem, and an off-model word that sounds like it belongs.",
+      "kr": "NOT 지문 → 목록과 대조. 보강적 특성 = C-V-T-U: 비교가능성(T), 검증가능성, 적시성(T), 이해가능성. '정확성'은 특성 자체가 아님 — 교재 용어는 '충실한 표현'(근본적 특성)이고, 그 '오류 없음'은 완벽한 정확성을 뜻하지 않음. 함정 두 개: NOT 지문 + 그럴듯한 교재 밖 단어."
     }
   ]
 }
