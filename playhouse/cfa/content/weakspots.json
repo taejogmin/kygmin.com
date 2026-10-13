@@ -193,9 +193,11 @@
         "M4 official Q16 + Q19 (headline vs core swapped twice in one set; third time incl. Ex5 Q7)",
         "FSA M1 official Q4 (going concern vs accrual — the two assumptions swapped)",
         "FSA M1 official Q5 (accrual definition → picked relevance, which isn't an assumption at all)",
-        "FSA M1 official Q7 + Q8 (measurement bases: picked realizable for 'paid at acquisition', then avoided it for 'received in orderly disposal')"
+        "FSA M1 official Q7 + Q8 (measurement bases: picked realizable for 'paid at acquisition', then avoided it for 'received in orderly disposal')",
+        "FSA M1 official Q9 (performance element → picked assets; position = A/L/E, performance = income/expenses)"
       ],
       "seed": [
+        "fsa-m1-p09",
         "fsa-m1-p07",
         "fsa-m1-p08",
         "fsa-m1-f02",
@@ -666,6 +668,11 @@
       "qid": "fsa-m1-p08",
       "when": "2026-10-13",
       "note": "FSA M1 official Q8 — 'received in an orderly disposal' = REALIZABLE value; picked present value. Realizable was picked on Q7 (wrong) and avoided on Q8 (right) — the six bases are not yet stored. (measurement-basis swap)"
+    },
+    {
+      "qid": "fsa-m1-p09",
+      "when": "2026-10-13",
+      "note": "FSA M1 official Q9 — performance element = EXPENSES; picked assets (a position element). Q10 (position → equity) right. 3 + 2 split not yet automatic. (category)"
     }
   ]
 }

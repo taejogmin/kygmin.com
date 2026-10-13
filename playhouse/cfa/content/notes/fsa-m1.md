@@ -260,6 +260,10 @@ Statements group transactions into **elements** by economic characteristic.
 2. **The exclusion clauses matter.** A share issue raises assets and equity but is **not income** (contribution from owners); a dividend lowers them but is **not an expense** (distribution to owners). Distractors drop these clauses.
 3. **"Past events" and "present"** appear in both the asset and liability definitions — a *future* commitment with no past event is not yet a liability.
 
+> ### ⭐ OFFICIAL Q9 ✗ / Q10 ✓ — the 3 + 2 split
+> Q9 *"most closely related to measurement of **performance**"* — you picked **assets**; correct is **expenses**. Q10 (*financial position* → **equity**) you got right.
+> Anchor by statement: **balance sheet = position = A, L, E (three)**; **income statement = performance = income, expenses (two)**. If the stem says *performance*, any balance-sheet item is out immediately — the same category sort as the characteristics/constraints/assumptions misses.
+
 ### The two underlying assumptions 🔴
 | Assumption | Statement | Illustration |
 |---|---|---|
@@ -826,6 +830,6 @@ Two perspectives: IS = when earned/incurred; CFS = cash-generating
 
 ## 11. Official practice problems — log (paraphrased in the Study Hub as `fsa-m1-p01…`)
 
-**Set 1, in progress (2026-10-13): 1 / 4** — Q1 objective NOT about users ✓ · Q2 NOT-enhancing = accuracy ✗ (picked timeliness — negation + off-model) · Q3 NOT a constraint = understandability ✗ (picked balancing — negation, wrong-category answer) · Q4 going concern ✗ (picked accrual — the two assumptions swapped) · Q5 accrual basis ✗ (picked relevance — a characteristic, not an assumption) · Q6 neutrality → faithful representation ✓ · Q7 historical cost ✗ (picked realizable) · Q8 realizable value ✗ (picked PV). **Running 2 / 8.** *Remaining questions to follow.*
+**Set 1, in progress (2026-10-13): 1 / 4** — Q1 objective NOT about users ✓ · Q2 NOT-enhancing = accuracy ✗ (picked timeliness — negation + off-model) · Q3 NOT a constraint = understandability ✗ (picked balancing — negation, wrong-category answer) · Q4 going concern ✗ (picked accrual — the two assumptions swapped) · Q5 accrual basis ✗ (picked relevance — a characteristic, not an assumption) · Q6 neutrality → faithful representation ✓ · Q7 historical cost ✗ (picked realizable) · Q8 realizable value ✗ (picked PV) · Q9 performance element = expenses ✗ (picked assets) · Q10 position element = equity ✓. **Running 3 / 10.** *Remaining questions to follow.*
 
 > **Note status: COMPLETE** — §1.01 introduction through §1.09 statement of changes in equity and cash flow statement (the reading's final section). Curriculum examples: Example 1 (balancing characteristics) worked in §3; no scored quiz sets in this reading. Practice questions Q1–Q45 → Study Hub question bank (Financial Statement Analysis → M1, `fsa-m1-q01…q45`). Official practice problems: not yet attempted.

@@ -969,6 +969,42 @@
       "answer": "C",
       "explanation": "Keywords: RECEIVED + ORDERLY DISPOSAL → REALIZABLE value (today, sell side, undiscounted). Present value DISCOUNTS future cash inflows from using the asset in the normal course; current cost is what you'd PAY to buy it today.",
       "kr": "키워드: '수취' + '정상적 처분' → 실현가능가치(오늘, 판매 측, 할인 없음). 현재가치는 정상 영업에서 자산이 창출할 미래 현금유입을 '할인'; 현행원가는 오늘 구입 시 '지급'할 금액."
+    },
+    {
+      "id": "fsa-m1-p09",
+      "section": "4",
+      "concept": "Performance elements",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "confusion",
+      "source": "cfai",
+      "stem": "Which element of financial statements is most closely related to the measurement of performance?",
+      "choices": {
+        "A": "Assets",
+        "B": "Expenses",
+        "C": "Liabilities"
+      },
+      "answer": "B",
+      "explanation": "Two groups: POSITION elements (balance sheet, point in time) = assets, liabilities, equity; PERFORMANCE elements (income statement, over a period) = income and EXPENSES. Assets and liabilities are both position elements.",
+      "kr": "두 그룹: '재무상태' 요소(재무상태표, 시점) = 자산·부채·자본; '성과' 요소(손익계산서, 기간) = 수익·'비용'. 자산과 부채는 모두 재무상태 요소."
+    },
+    {
+      "id": "fsa-m1-p10",
+      "section": "4",
+      "concept": "Position elements",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "confusion",
+      "source": "cfai",
+      "stem": "Which element of financial statements is most closely related to the measurement of financial position?",
+      "choices": {
+        "A": "Equity",
+        "B": "Income",
+        "C": "Expenses"
+      },
+      "answer": "A",
+      "explanation": "Financial position (balance sheet) = assets, liabilities, EQUITY. Income and expenses measure performance.",
+      "kr": "재무상태(재무상태표) = 자산·부채·'자본'. 수익과 비용은 성과 측정."
     }
   ]
 }
