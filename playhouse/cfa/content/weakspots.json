@@ -246,9 +246,11 @@
         "M5 Ex3 Q1 (transactions motive — label swap among the three money-demand definitions)",
         "M5 official Q2 (money-demand motives — second label swap; precautionary ∝ GDP)",
         "M6 official Q8 (patent FEES + legal services → current account services; picked financial)",
-        "M7 Ex1 Q3 (hedged zero held to maturity = risk free; dropped the clause that switches rate risk off)"
+        "M7 Ex1 Q3 (hedged zero held to maturity = risk free; dropped the clause that switches rate risk off)",
+        "FSA M1 official Q14 ('residual claim' → equity → balance sheet; skipped the translation step)"
       ],
       "seed": [
+        "fsa-m1-p14",
         "econ-m7-p03",
         "econ-m6-p08",
         "econ-m5-p04",
@@ -673,6 +675,11 @@
       "qid": "fsa-m1-p09",
       "when": "2026-10-13",
       "note": "FSA M1 official Q9 — performance element = EXPENSES; picked assets (a position element). Q10 (position → equity) right. 3 + 2 split not yet automatic. (category)"
+    },
+    {
+      "qid": "fsa-m1-p14",
+      "when": "2026-10-13",
+      "note": "FSA M1 official Q14 — 'residual claim on assets' = equity → BALANCE SHEET; picked cash flow statement. Translate the phrase to its element first, then the element to its statement. (definition / two-step)"
     }
   ]
 }

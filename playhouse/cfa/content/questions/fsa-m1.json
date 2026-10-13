@@ -1041,6 +1041,42 @@
       "answer": "A",
       "explanation": "The balance sheet (statement of financial position) shows position at a specified date. The income statement and statement of cash flows present different aspects of performance over the period.",
       "kr": "재무상태표가 특정 시점의 재무상태를 보여줌. 손익계산서와 현금흐름표는 기간 동안의 성과의 서로 다른 측면."
+    },
+    {
+      "id": "fsa-m1-p13",
+      "section": "7",
+      "concept": "Profitability → income statement",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "source": "cfai",
+      "stem": "A company's profitability for a period would best be evaluated using the:",
+      "choices": {
+        "A": "balance sheet",
+        "B": "income statement",
+        "C": "statement of cash flows"
+      },
+      "answer": "B",
+      "explanation": "Profitability is the performance aspect measured by the INCOME statement. The balance sheet shows position; the cash flow statement presents a different aspect of performance (cash generation).",
+      "kr": "수익성은 '손익계산서'가 측정하는 성과 측면. 재무상태표는 재무상태; 현금흐름표는 성과의 다른 측면(현금 창출)."
+    },
+    {
+      "id": "fsa-m1-p14",
+      "section": "6",
+      "concept": "Residual claim → balance sheet",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "source": "cfai",
+      "stem": "The financial statement that presents a shareholder's residual claim on assets is the:",
+      "choices": {
+        "A": "balance sheet",
+        "B": "income statement",
+        "C": "cash flow statement"
+      },
+      "answer": "A",
+      "explanation": "Residual claim on assets = assets − liabilities = OWNERS' EQUITY, which is a balance-sheet item (A = L + E). The income statement and cash flow statement report flows over a period, not claims at a point in time.",
+      "kr": "자산에 대한 잔여청구권 = 자산 − 부채 = '자기자본' → 재무상태표 항목(A = L + E). 손익계산서·현금흐름표는 기간의 흐름이지 특정 시점의 청구권이 아님."
     }
   ]
 }
