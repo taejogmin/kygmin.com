@@ -1,8 +1,8 @@
 # CFA Level I — Economics
 # Module 5: Monetary and Fiscal Policy
-## §5.01 Introduction + §5.02 Money + §5.03 Quantity Theory, Money Market, Fisher + §5.04 Costs of Inflation (Deduplicated vs. Modules 1–4)
+## Complete — §5.01 Introduction through §5.04 Costs of Inflation (Deduplicated vs. Modules 1–4)
 
-> **Big picture:** Economics is ~6–9% of the Level I exam, and this reading is one of its two heaviest (with AD/AS). It carries two guaranteed calculations — the **money multiplier** and the **fiscal multiplier** — plus a dense definitional core (functions of money, central bank roles, policy tools, lags, the monetary–fiscal interaction grid). After Module 4's results (zero polarity misses, eleven concept-matching misses), the risk here is **definition precision**: this reading is full of "tool vs. goal" and "use vs. definition" distractors. **This note covers §5.01–5.04 so far**; sections are appended as uploaded.
+> **Big picture:** Economics is ~6–9% of the Level I exam. In the current curriculum this reading is the *money* half of monetary economics: the **money multiplier**, **MV = PY**, and the **Fisher equation** are its three guaranteed formula items, surrounded by a definitional core (functions and definitions of money, the three money-demand motives, the money-market diagram, expected vs. unexpected inflation). Central bank operations and fiscal policy mechanics are not in this reading. Risk profile: the definition sections are "tool vs. definition" territory (handled cleanly); **§5.03 is where every miss so far has landed** — a sophisticated-sounding or adjacent option beating the first-order result (curriculum examples 2 misses, official set 3 misses, all in §2 of this note).
 
 **Importance legend:**
 - 🔴 **High** — appears on nearly every exam
@@ -59,7 +59,7 @@
 ### Why it's hard 🟡
 1. Economies are buffeted by **shocks** (e.g., oil price jumps — 🔗 M3 §13 stagflation).
 2. Some economists believe **natural cycles** exist regardless of policy.
-3. History has plenty of cases where policy — monetary, fiscal, or both — **exacerbated an expansion** that ended in damage to the real economy, financial markets, and investors. (Policy can be pro-cyclical by mistake — 🔗 M3 §13's variable-lag warning; the lags section ahead formalizes this.)
+3. History has plenty of cases where policy — monetary, fiscal, or both — **exacerbated an expansion** that ended in damage to the real economy, financial markets, and investors. (Policy can be pro-cyclical by mistake — 🔗 M3 §13's variable-lag warning.)
 
 ### Roadmap of the reading
 The reading focuses on the relationship between **money, interest rates, and inflation**. Order: functions and role of **money** → the special role of **central banks** → how monetary and fiscal policy are implemented → their effects on interest rates and inflation.
@@ -339,13 +339,118 @@ The consensus of the last two to three decades: **unanticipated and high inflati
 
 ---
 
-> **Note status:** §5.01–5.04. Quick-reference sheet, exam table, and study priorities get built as sections are uploaded. Curriculum-example tally: **9 / 11**.
+## 4. Quick-Reference Sheet
 
-**⭐ Running weak spots (this module):**
-- **Ex3 Q1 — transactions motive (§2):** picked the speculative definition. Keyword anchors: transactions = *purchases*; precautionary = *unforeseen*; speculative = *other assets*. *(truncated rule / label swap)*
-- **Ex4 Q3 — money supply ↑ → rates ↓ (§2):** picked "reduces equilibrium money held" — wrong direction (equilibrium quantity rises to M₂) and a shift/movement confusion. First direction miss since M3. Rule: *M ↑ → i ↓ → P ↑*, traced before reading options. *(off-model lure + polarity)*
+```
+── DEFINITIONS (§5.01) ──
+Monetary policy = CENTRAL BANK → quantity of MONEY AND CREDIT
+Fiscal policy   = GOVERNMENT → TAXATION AND SPENDING (+ can redistribute)
+Goal of both: stable positive growth, stable low inflation; dampen the cycle
+Definition traps: a TOOL (money targets), a USE (redistribution), an
+  OBJECTIVE (balanced budget), or the wrong ACTOR → all distractors
+Governments matter: large employer/spender + largest borrower
 
-## 4. Official practice problems — log (paraphrased in the Study Hub as `econ-m5-p03…p11`)
+── MONEY (§5.02) ──
+Barter problems: double coincidence | indivisibility | not all goods
+  tradable | no common measure of value
+Money = generally accepted MEDIUM OF EXCHANGE
+Five qualities (A-K-D-W-C): acceptable | known value | divisible |
+  high value-to-WEIGHT | hard to counterfeit
+Three functions: medium of exchange | store of wealth (needs BELIEF
+  others will value it) | unit of account / measure of value
+Goldsmiths → receipts → promissory notes → banks lend idle gold → money
+Fractional reserve: lend on assumption not all withdraw at once
+  Money created = deposit / reserve req   (€100 / 0.10 = €1,000 TOTAL)
+  Money multiplier = 1 / reserve req      (smaller r → bigger multiplier) ✓
+  ⭐ "money created" = the TOTAL incl. original (£100 @ 5% → £2,000);
+     deposit-minus-original is the distractor
+Narrow = notes/coins + very liquid deposits | Broad = narrow + all
+  liquid assets usable for purchases; CREDIT CARDS ≠ money (deferred)
+
+── QUANTITY THEORY & FISHER (§5.03) ──
+M × V = P × Y  (identity; theory assumes V ≈ constant)
+Neutrality: M ↑ → Y, V unchanged → P ↑ proportionally — LONG RUN ✓
+  (conditional: P ↑ "as long as V doesn't fall enough / Y unchanged")
+  ⭐ Monetary policy ASSUMES money is NOT neutral in the SHORT RUN
+Monetarists: money growth → inflation ✓; curriculum caveat: causality
+  may run activity → money
+MONEY DEMAND (three pairs ⭐ missed twice): transactions → PURCHASES (∝ GDP)
+  | precautionary → UNFORESEEN buffer (∝ GDP)
+  | speculative → OTHER ASSETS: ↓ as their expected return ↑,
+    ↑ as their perceived risk ↑
+MONEY MARKET: MS vertical (fixed nominal M); MD down (speculative ↓ as i ↑)
+  price of money = nominal interest rate; I₀ = no excess balances
+  i > I₀ (I₁): excess money SUPPLY → BUY bonds → bond P ↑ → i ↓ ✓
+  i < I₀ (I₂): excess demand → SELL bonds → bond P ↓ → i ↑
+  ⭐ M ↑ → MS right → i ↓ (and P ↑); equilibrium money HELD rises
+Real-resources: more money ≠ more labour/capital → LR effect on P only
+FISHER: R_nom = R_real + πᵉ  (EXPECTED inflation; real rate is stable) ✓
+  ⭐ "real rate is stable" is FISHER's proposition (not neutrality)
+  full version adds a RISK PREMIUM for uncertainty
+  TIPS breakeven = nominal − linked yield ≈ πᵉ
+OWNERSHIP MAP ⭐: stable real rate → Fisher | money → only P in LR →
+  neutrality | MV = PY, spending ∝ M → quantity theory | control
+  inflation via money growth → Monetarists
+
+── COSTS OF INFLATION (§5.04) ──
+Expected = anticipated level | Unexpected = the SURPRISE (above or below)
+Indexed world → indifferent; predictable → self-fulfilling; high AND
+  unpredictable → costly (1970s–80s)
+UNEXPECTED is costly: anticipated inflation is priced into wages/contracts
+  Inflation > expected → BORROWERS win (real debt ↓)
+  Inflation < expected → LENDERS win (real payment ↑)
+  Volatile inflation → lenders demand premium → borrowing cost ↑ → I ↓
+TV manufacturer: general +10% read as relative signal → overexpand →
+  bust. Unanticipated inflation REDUCES INFORMATION CONTENT OF PRICES
+  → can exacerbate or cause booms/busts
+Consensus: unanticipated/high inflation hits employment, investment,
+  profits → controlling inflation = main macro goal
+Central banks worry most about UNANTICIPATED (moderate) inflation;
+  very low anticipated inflation costs more than moderate ✓
+```
+
+---
+
+## 5. How This Module Shows Up on the Exam
+
+| Topic | Style | Likelihood |
+|---|---|---|
+| Money multiplier / total money created from a deposit | **Calc** | 🔴 Very high ✓ |
+| Reserve requirement ↔ multiplier direction (inverse) | Concept | 🔴 High ✓ |
+| M × V = P × Y — solve for a variable, or the neutrality implication | **Calc**/concept | 🔴 Very high ✓ |
+| Neutrality is LONG-run; monetary policy assumes SHORT-run non-neutrality | Concept | 🔴 High ✓ / ⭐ *official Q5 miss* |
+| Fisher: R_nom = R_real + πᵉ (solve for any term; equation form) | **Calc** | 🔴 Very high ✓✓ |
+| Which concept owns "real rate is stable" → Fisher | Concept | 🟡 Medium ⭐ *official Q7 miss* |
+| Money supply ↑ → nominal rates ↓ (money-market shift) | Concept | 🔴 Very high ⭐ *your miss* |
+| Money-market diagram: excess supply above I₀, excess demand below | Concept | 🔴 High ✓ |
+| Three money-demand motives — label ↔ definition ↔ driver | Concept | 🔴 High ⭐ *missed twice (Ex3 Q1, official Q2)* ✓ *(speculative polarity)* |
+| Unexpected inflation: borrower/lender transfer direction; unanticipated > anticipated cost | Concept | 🔴 High ✓ |
+| Three functions of money (all three, not "only") | Concept | 🔴 High ✓ |
+| Monetary vs. fiscal policy definitions vs. tool/use distractors | Concept | 🔴 High ✓✓ |
+| Monetarist causality (money → inflation) + reverse-causality caveat | Concept | 🟡 Medium ✓ |
+| Narrow vs. broad money; credit cards not money | Concept | 🟡 Medium ✓ |
+| Qualities money must have (divisible, high value-to-weight, etc.) | Concept | 🟡 Medium ✓ |
+| Nominal rate = real + expected inflation + risk premium (all three) | Concept | 🟡 Medium ✓ |
+| Quantity equation conditional on V and Y | Concept | 🟡 Medium ✓ |
+| Unanticipated inflation reduces information content of prices | Concept | 🟡 Medium |
+| Money-market adjustment via bond buying/selling | Concept | 🟡 Medium |
+| Expected vs. unexpected inflation definitions; three-world experiment | Concept | 🟢 Low-Med |
+| Barter-economy problems; promissory-note history | Concept | 🟢 Low |
+
+**Study priority order:**
+1. **Money multiplier** — 1/r, deposit/r = total; "created" includes the original deposit
+2. **MV = PY + neutrality** — identity vs. theory; the conditional phrasing; long-run only, policy needs short-run non-neutrality
+3. **Fisher equation** — expected inflation; real rate stable (Fisher's own claim); full version adds risk premium
+4. **Money market** ⭐ — MS vertical, MD down; M ↑ → i ↓; adjustment via bonds (inverse price/rate)
+5. **Three money-demand motives** ⭐⭐ — three pairs + the speculative polarity; missed twice
+6. **§2 ownership map** ⭐ — Fisher / neutrality / quantity theory / Monetarists each own one statement
+7. **Unexpected inflation** — borrower/lender direction; information-content argument
+8. **Definitions** — monetary vs. fiscal; three functions; narrow vs. broad; five qualities
+9. Barter, promissory notes, Monetarist caveats, three-world experiment
+
+---
+
+## 6. Official practice problems — log (paraphrased in the Study Hub as `econ-m5-p03…p11`)
 
 **Set 1 (2026-10-13, Q1–Q9): 6 / 9** — multiplier direction ✓, excess supply at I₁ ✓, neutrality = long run ✓, Monetarists ✓, Fisher equation ✓, unanticipated inflation ✓. **Misses, all §2:** Q2 motive label swap (precautionary ∝ GDP — repeat of Ex3 Q1), Q5 fundamental assumption = short-run non-neutrality (gap, now added), Q7 stable real rate = Fisher (adjacent-concept lure).
 
@@ -362,4 +467,10 @@ The consensus of the last two to three decades: **unanticipated and high inflati
 
 **Read for next time:** the three §2 misses share one shape — a concept had a *neighbour* (speculative ↔ transactions, neutrality ↔ Fisher, efficiency ↔ non-neutrality) and the neighbour won. The §2 ownership map above and the three motive pairs are the fix; both are now flashcards (`f04`, `f05`).
 
-**⭐ Practice questions Q1–Q11 → in the Study Hub question bank (Quiz → Monetary & Fiscal Policy, ids `econ-m5-q01…q11`), with explanations.**
+**⭐ Flagged weak spots (final):**
+- **Ex3 Q1 + official Q2 — money-demand motives (§2):** label swap twice (definition, then driver). Store as three pairs: transactions → GDP; precautionary → GDP; speculative → other assets' return (−) / risk (+). *(truncated rule)*
+- **Ex4 Q3 — money supply ↑ → rates ↓ (§2):** chose "equilibrium money held falls" — wrong direction (it rises to M₂) and shift/movement confusion. First polarity miss since M3. Trace *M ↑ → i ↓ → P ↑* before reading options. *(off-model lure + polarity)*
+- **Official Q5 + Q7 — concept ownership (§2):** "efficient markets" for the assumption behind monetary policy (it's short-run non-neutrality); "neutrality" for the stable real rate (it's Fisher). Adjacent concept ≠ named concept. *(off-model)*
+- **Module pattern:** curriculum examples 9/11, official 6/9 — all five misses in §5.03. Definition sections (§5.01, §5.02, §5.04) are clean. The miss zone is one section: the money market and the concepts around it, where a neighbouring concept beats the named one.
+
+> **Note status: COMPLETE** — §5.01 introduction, §5.02 money, §5.03 quantity theory / money market / Fisher, §5.04 costs of inflation (the reading ends here in the current curriculum). Curriculum-example tally: **9 / 11**. Official practice set 1: **6 / 9**. Practice questions Q1–Q11 → Study Hub question bank (`econ-m5-q01…q11`).
