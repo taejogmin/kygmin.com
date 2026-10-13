@@ -1077,6 +1077,42 @@
       "answer": "A",
       "explanation": "Residual claim on assets = assets − liabilities = OWNERS' EQUITY, which is a balance-sheet item (A = L + E). The income statement and cash flow statement report flows over a period, not claims at a point in time.",
       "kr": "자산에 대한 잔여청구권 = 자산 − 부채 = '자기자본' → 재무상태표 항목(A = L + E). 손익계산서·현금흐름표는 기간의 흐름이지 특정 시점의 청구권이 아님."
+    },
+    {
+      "id": "fsa-m1-p15",
+      "section": "7",
+      "concept": "Profitability over a period",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "source": "cfai",
+      "stem": "A company's profitability over a period of time is best evaluated using the:",
+      "choices": {
+        "A": "balance sheet",
+        "B": "income statement",
+        "C": "cash flow statement"
+      },
+      "answer": "B",
+      "explanation": "The income statement reports the financial results of business activities over a period — revenue generated and the expenses incurred to generate it.",
+      "kr": "손익계산서는 기간 동안의 영업활동 결과 — 창출된 수익과 이를 위해 발생한 비용 — 를 보고."
+    },
+    {
+      "id": "fsa-m1-p16",
+      "section": "7",
+      "concept": "What the income statement evaluates",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "source": "cfai",
+      "stem": "The income statement is best used to evaluate a company's:",
+      "choices": {
+        "A": "financial position",
+        "B": "sources of cash flow",
+        "C": "financial results from business activities"
+      },
+      "answer": "C",
+      "explanation": "Income statement → financial results (profitability) over a period. Financial position → balance sheet. Sources of cash flow → cash flow statement.",
+      "kr": "손익계산서 → 기간의 재무성과(수익성). 재무상태 → 재무상태표. 현금흐름의 원천 → 현금흐름표."
     }
   ]
 }
