@@ -56,6 +56,15 @@
       "short": "Monetary & Fiscal Policy",
       "notes": "content/notes/econ-m5.md",
       "questions": "content/questions/econ-m5.json"
+    },
+    {
+      "id": "econ-m6",
+      "subject": "econ",
+      "order": 6,
+      "title": "International Trade and Capital Flows",
+      "short": "Trade & Capital Flows",
+      "notes": "content/notes/econ-m6.md",
+      "questions": "content/questions/econ-m6.json"
     }
   ]
 }

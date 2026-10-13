@@ -1,0 +1,599 @@
+{
+  "module": "econ-m6",
+  "questions": [
+    {
+      "id": "econ-m6-q01",
+      "section": "1",
+      "concept": "GDP vs GNP",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Profits earned by a foreign-owned factory operating inside Country A are most likely included in:",
+      "choices": {
+        "A": "Country A's GNP but not its GDP",
+        "B": "Country A's GDP but not its GNP",
+        "C": "both Country A's GDP and GNP"
+      },
+      "answer": "B",
+      "explanation": "GDP counts production by factors LOCATED within the country (where); GNP counts production by factors supplied by the country's CITIZENS (who). A foreign-owned factory inside A is in A's GDP (it's within the borders) but belongs to foreigners, so it is in the foreign country's GNP, not A's.",
+      "kr": "GDP = 국내에 '위치한' 생산요소의 생산(어디서); GNP = 자국 '국민'이 공급한 요소의 생산(누가). A국 안의 외국인 소유 공장은 A의 GDP에는 포함되지만 외국인 소유라 A의 GNP가 아닌 외국의 GNP."
+    },
+    {
+      "id": "econ-m6-q02",
+      "section": "1",
+      "concept": "Terms of trade direction",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "direction",
+      "stem": "A country's export price index rises 5% while its import price index rises 8%. Its terms of trade have most likely:",
+      "choices": {
+        "A": "improved",
+        "B": "deteriorated",
+        "C": "stayed unchanged"
+      },
+      "answer": "B",
+      "explanation": "Terms of trade = P_exports / P_imports. Export prices rose LESS than import prices, so the ratio FELL → terms of trade deteriorated: a unit of exports now buys fewer imports. Improvement requires the ratio to rise.",
+      "kr": "교역조건 = 수출가격/수입가격. 수출가격이 수입가격보다 덜 올라 비율 하락 → 악화: 수출 1단위로 살 수 있는 수입량 감소. 개선 = 비율 상승."
+    },
+    {
+      "id": "econ-m6-q03",
+      "section": "1",
+      "concept": "Trade surplus = lender",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "direction",
+      "stem": "A country running a trade surplus is most likely:",
+      "choices": {
+        "A": "borrowing from foreigners",
+        "B": "lending to foreigners or buying foreign assets",
+        "C": "selling domestic assets to foreigners"
+      },
+      "answer": "B",
+      "explanation": "X > M → the country earns more abroad than it spends → it lends to foreigners or acquires foreign assets (capital flows OUT). A deficit country borrows / sells assets to foreigners (capital flows IN). Surplus = net lender; deficit = net borrower.",
+      "kr": "X > M → 해외에서 번 돈 > 쓴 돈 → 외국에 대출하거나 외국 자산 매입(자본 유출). 적자국은 차입/자산 매각(자본 유입). 흑자 = 순대출국, 적자 = 순차입국."
+    },
+    {
+      "id": "econ-m6-q04",
+      "section": "2",
+      "concept": "FDI vs FPI",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "A pension fund in Country A buys government bonds issued by Country B. This is best described as:",
+      "choices": {
+        "A": "foreign direct investment",
+        "B": "foreign portfolio investment",
+        "C": "intra-firm trade"
+      },
+      "answer": "B",
+      "explanation": "FPI = shorter-term investment in foreign FINANCIAL instruments (stocks, government bonds) by individuals, firms or institutional investors. FDI = a firm investing in PRODUCTIVE assets abroad (a plant). Direct = productive assets; Portfolio = paper.",
+      "kr": "FPI = 개인·기업·기관투자자의 외국 '금융상품'(주식·국채) 단기 투자. FDI = 기업이 해외 '생산자산'(공장)에 투자. Direct = 생산자산, Portfolio = 증권."
+    },
+    {
+      "id": "econ-m6-q05",
+      "section": "2",
+      "concept": "FDI firm = MNC",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "A firm from the source country builds a manufacturing plant in a host country. The firm is most likely now classified as:",
+      "choices": {
+        "A": "a portfolio investor",
+        "B": "a multinational corporation",
+        "C": "an autarkic producer"
+      },
+      "answer": "B",
+      "explanation": "Building productive assets abroad is FDI, and a firm that operates in or has subsidiaries in more than one country is by definition a multinational corporation. A portfolio investor buys financial instruments; autarky means no trade at all.",
+      "kr": "해외에 생산자산을 짓는 것 = FDI, 둘 이상의 나라에서 운영하거나 자회사를 둔 기업 = 정의상 다국적기업(MNC). 포트폴리오 투자자는 금융상품 매수; 자급자족(autarky)은 무역 자체가 없음."
+    },
+    {
+      "id": "econ-m6-q06",
+      "section": "3",
+      "concept": "Comparative advantage from an output table",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "which-quantity",
+      "stem": "Output per worker per day: Country A — 30 wheat or 10 steel; Country B — 20 wheat or 5 steel. Which statement is most accurate?",
+      "choices": {
+        "A": "A has comparative advantage in both goods",
+        "B": "A has comparative advantage in steel; B in wheat",
+        "C": "A has comparative advantage in wheat; B in steel"
+      },
+      "answer": "B",
+      "explanation": "OC of 1 steel (in wheat): A = 30/10 = 3; B = 20/5 = 4 → A is the lower-cost steel maker. OC of 1 wheat (in steel): A = 10/30 = 1/3; B = 5/20 = 1/4 → B is the lower-cost wheat maker. A has ABSOLUTE advantage in both (30 > 20, 10 > 5) but comparative advantage in only one — no country can have comparative advantage in both goods. Thing given up on top; lower number wins.",
+      "kr": "철강 1단위의 기회비용(밀): A = 30/10 = 3, B = 20/5 = 4 → A가 더 낮음. 밀 1단위의 기회비용(철강): A = 1/3, B = 1/4 → B가 더 낮음. A는 두 재화 모두 '절대'우위지만 '비교'우위는 하나뿐 — 양쪽 모두 비교우위는 불가능. 포기하는 것이 분자, 낮은 쪽이 승."
+    },
+    {
+      "id": "econ-m6-q07",
+      "section": "3",
+      "concept": "Opportunity-cost ratio",
+      "type": "calc",
+      "difficulty": 1,
+      "trap": "which-quantity",
+      "stem": "Using the data above (Country B: 20 wheat or 5 steel per worker-day), the opportunity cost of one unit of steel in Country B is closest to:",
+      "choices": {
+        "A": "0.25 wheat",
+        "B": "3 wheat",
+        "C": "4 wheat"
+      },
+      "answer": "C",
+      "explanation": "OC of 1 steel = wheat given up / steel gained = 20/5 = 4 wheat. Choice A (0.25) is the inverted ratio (the OC of one wheat in steel); choice B (3) is Country A's figure. The thing given up goes on top.",
+      "kr": "철강 1단위 기회비용 = 포기한 밀/얻은 철강 = 20/5 = 4. A(0.25)는 역수(밀 1단위의 기회비용), B(3)는 A국의 수치. 포기하는 재화가 분자."
+    },
+    {
+      "id": "econ-m6-q08",
+      "section": "3",
+      "concept": "Range of world prices",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "which-quantity",
+      "stem": "Using the same data (OC of steel: A = 3 wheat, B = 4 wheat), both countries gain from trading steel for wheat at a world price (wheat per unit of steel) of:",
+      "choices": {
+        "A": "2",
+        "B": "3.5",
+        "C": "5"
+      },
+      "answer": "B",
+      "explanation": "Mutual gain requires the world price to lie BETWEEN the two autarkic prices, 3 and 4 wheat per steel: A (the steel exporter) must receive more than its cost of 3; B (the importer) must pay less than its own cost of 4. 3.5 qualifies; 2 would make A lose, 5 would make B lose.",
+      "kr": "상호 이득은 세계가격이 두 자급자족 가격(3과 4) '사이'에 있어야 함: 철강 수출국 A는 자국 비용 3보다 많이 받아야, 수입국 B는 자국 비용 4보다 적게 내야 함. 3.5 충족; 2는 A 손해, 5는 B 손해."
+    },
+    {
+      "id": "econ-m6-q09",
+      "section": "3",
+      "concept": "Distance rule",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "direction",
+      "stem": "With autarkic prices of 2 and 8 yards of cloth per machine in the UK and India respectively, a world price of 7.5 yards per machine most likely benefits:",
+      "choices": {
+        "A": "the UK more than India",
+        "B": "India more than the UK",
+        "C": "both equally"
+      },
+      "answer": "A",
+      "explanation": "The further the world price is from a country's OWN autarkic price, the more that country gains. 7.5 is far from the UK's 2 (UK sells machines for 5.5 yards more than at home) and close to India's 8 (India saves only 0.5 yard per machine). The UK gains most.",
+      "kr": "세계가격이 자국의 자급자족 가격에서 멀수록 이득이 큼. 7.5는 영국의 2에서 멀고(기계당 5.5야드 더 받음) 인도의 8에 가까움(기계당 0.5야드만 절약). 영국이 더 이득."
+    },
+    {
+      "id": "econ-m6-q10",
+      "section": "4",
+      "concept": "Ricardian model ID",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "A trade model in which comparative advantage arises from differences in technology, with labor as the only variable factor, is best described as the:",
+      "choices": {
+        "A": "Ricardian model",
+        "B": "Heckscher–Ohlin model",
+        "C": "factor-proportions theory"
+      },
+      "answer": "A",
+      "explanation": "Ricardian = labor only; advantage from differences in labor productivity, i.e., TECHNOLOGY. Heckscher–Ohlin (also called factor-proportions theory — B and C are the same model) = capital AND labor; advantage from relative factor ENDOWMENTS.",
+      "kr": "리카도 = 노동만; 노동생산성 차이 = '기술' 차이에서 비교우위. 헥셔–올린(= 요소비율이론, B와 C는 같은 모형) = 자본+노동; 상대적 '요소부존' 차이에서 비교우위."
+    },
+    {
+      "id": "econ-m6-q11",
+      "section": "4",
+      "concept": "H–O prediction",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "direction",
+      "stem": "Country X has a higher capital-to-labor endowment ratio than Country Y. According to the Heckscher–Ohlin model, Country X will most likely:",
+      "choices": {
+        "A": "export labor-intensive goods",
+        "B": "export capital-intensive goods",
+        "C": "specialize completely in both goods"
+      },
+      "answer": "B",
+      "explanation": "A higher K/L RATIO than the partner makes X capital-abundant → it exports the good intensive in its abundant factor (capital-intensive goods) and imports labor-intensive goods. Complete specialization in both goods is meaningless; it's the ratio, not the absolute amount, that decides.",
+      "kr": "상대국보다 K/L '비율'이 높으면 자본풍부국 → 풍부한 요소를 집약적으로 쓰는 재화(자본집약재)를 수출, 노동집약재를 수입. 두 재화 모두 완전특화는 성립 불가; 절대량이 아니라 비율이 기준."
+    },
+    {
+      "id": "econ-m6-q12",
+      "section": "4",
+      "concept": "H–O redistribution polarity",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "direction",
+      "stem": "A labor-abundant country opens to trade. According to the Heckscher–Ohlin model, the most likely result is that:",
+      "choices": {
+        "A": "owners of capital gain and workers lose",
+        "B": "workers gain and owners of capital lose",
+        "C": "both factors gain equally"
+      },
+      "answer": "B",
+      "explanation": "Opening to trade raises the price of the export good (labor-intensive) and lowers the price of the import good → derived demand for labor rises and for capital falls → the ABUNDANT factor (labor) gains, the SCARCE factor (capital) loses. Two factors is why H–O can speak about redistribution at all.",
+      "kr": "무역 개방 → 수출재(노동집약) 가격↑, 수입재 가격↓ → 노동에 대한 파생수요↑, 자본↓ → '풍부한' 요소(노동)가 이득, '희소한' 요소(자본)가 손해. 요소가 둘이기에 H–O가 재분배를 말할 수 있음."
+    },
+    {
+      "id": "econ-m6-q13",
+      "section": "5",
+      "concept": "BOP classification — income",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "truncated-rule",
+      "stem": "Interest received by a domestic investor on a foreign government bond is most likely recorded in the:",
+      "choices": {
+        "A": "financial account",
+        "B": "current account",
+        "C": "capital account"
+      },
+      "answer": "B",
+      "explanation": "INCOME from ownership of foreign assets (dividends, interest) belongs to the CURRENT account's income-receipts sub-account — it is compensation for the service the investment provides. The purchase of the bond itself was a financial-account transaction. Investment → financial; income from it → current.",
+      "kr": "해외 자산 보유에서 나오는 '소득'(배당·이자)은 경상수지의 소득수지 — 투자가 제공하는 서비스의 대가. 채권 '매입' 자체는 금융계정. 투자 → 금융계정, 그 소득 → 경상수지."
+    },
+    {
+      "id": "econ-m6-q14",
+      "section": "5",
+      "concept": "BOP classification — patent sale",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "truncated-rule",
+      "stem": "A domestic company sells a patent outright to a foreign firm. The transaction is most likely recorded in the:",
+      "choices": {
+        "A": "current account, services",
+        "B": "capital account",
+        "C": "financial account"
+      },
+      "answer": "B",
+      "explanation": "Sale of a non-produced, non-financial asset (patents, copyrights, trademarks, franchises, resource rights) → CAPITAL account. Licensing FEES from a patent would be current-account services. Flow (fee) → current; asset (sale) → capital.",
+      "kr": "비생산·비금융자산(특허·저작권·상표·프랜차이즈·자원권리)의 매각 → 자본계정. 특허 사용료(fee)라면 경상수지 서비스. 흐름(수수료) → 경상, 자산(매각) → 자본."
+    },
+    {
+      "id": "econ-m6-q15",
+      "section": "5",
+      "concept": "BOP debit/credit convention",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "direction",
+      "stem": "In a country's balance of payments, the value of goods imported is most likely recorded as a:",
+      "choices": {
+        "A": "credit, because it increases liabilities",
+        "B": "debit, because it increases assets",
+        "C": "credit, because it decreases assets"
+      },
+      "answer": "B",
+      "explanation": "Reason from the balance sheet, not from 'good vs. bad': DEBIT = increase in assets or decrease in liabilities; CREDIT = decrease in assets or increase in liabilities. Importing goods = acquiring real assets → DEBIT. The matching credit is the payment made (financial assets ↓) or the liability to the foreign seller (liabilities ↑). Exports are credits.",
+      "kr": "'좋다/나쁘다'가 아니라 대차대조표로: 차변 = 자산 증가 또는 부채 감소; 대변 = 자산 감소 또는 부채 증가. 수입 = 실물자산 취득 → 차변. 상대 대변은 지급(금융자산↓) 또는 외국 판매자에 대한 부채(↑). 수출은 대변."
+    },
+    {
+      "id": "econ-m6-q16",
+      "section": "5",
+      "concept": "Why BOP rarely nets to zero",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "The net balance of all BOP entries is rarely exactly zero in practice most likely because:",
+      "choices": {
+        "A": "the current account always runs a deficit",
+        "B": "data are derived from different sources",
+        "C": "the capital account is excluded from the total"
+      },
+      "answer": "B",
+      "explanation": "Double entry means debits should equal credits in principle, but the entries come from different data sources, leaving a statistical discrepancy. Nothing structural is excluded, and current accounts can be in surplus.",
+      "kr": "복식부기상 차변 = 대변이어야 하지만 항목들이 서로 다른 자료원에서 나와 통계적 불일치가 남음. 구조적으로 제외된 계정은 없고 경상수지는 흑자일 수도 있음."
+    },
+    {
+      "id": "econ-m6-q17",
+      "section": "6",
+      "concept": "CA = Sp + Sg − I — solve for Sg",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "sign",
+      "stem": "Private saving 500, investment 520, current-account balance −60. Government saving is closest to:",
+      "choices": {
+        "A": "−40",
+        "B": "+40",
+        "C": "−80"
+      },
+      "answer": "A",
+      "explanation": "CA = Sₚ + S_g − I → −60 = 500 + S_g − 520 → S_g = −60 − 500 + 520 = −40, i.e., a government deficit of 40. Choice B drops the sign of the CA; choice C adds I instead of subtracting it. Substitute every sign explicitly.",
+      "kr": "CA = Sₚ + S_g − I → −60 = 500 + S_g − 520 → S_g = −40, 즉 재정적자 40. B는 CA의 부호 누락, C는 I를 빼는 대신 더함. 모든 부호를 명시적으로 대입."
+    },
+    {
+      "id": "econ-m6-q18",
+      "section": "6",
+      "concept": "BOP offset rule",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "direction",
+      "stem": "A country runs a current-account deficit. Its combined capital and financial accounts most likely show:",
+      "choices": {
+        "A": "a deficit of the same size",
+        "B": "a surplus of the same size",
+        "C": "a zero balance"
+      },
+      "answer": "B",
+      "explanation": "The BOP must balance: a current-account deficit is offset by an equal SURPLUS in the capital + financial accounts — foreign money flowing in (FDI, loans, asset sales to foreigners) finances the deficit. A CA surplus pairs with a capital/financial deficit (money flowing out).",
+      "kr": "국제수지는 균형: 경상수지 적자는 자본+금융계정의 같은 크기 '흑자'로 상쇄 — 외국 자금 유입(FDI, 차입, 외국인에게 자산 매각)이 적자를 조달. 경상 흑자는 자본/금융 적자(자금 유출)와 짝."
+    },
+    {
+      "id": "econ-m6-q19",
+      "section": "6",
+      "concept": "Deficit quality",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "mechanism",
+      "stem": "A current-account deficit most likely leaves a country's future capacity to repay unchanged when it primarily reflects:",
+      "choices": {
+        "A": "strong business investment",
+        "B": "high private and government consumption",
+        "C": "imports of capital goods"
+      },
+      "answer": "B",
+      "explanation": "A deficit that finances CONSUMPTION adds nothing productive, so the capacity to repay is unchanged. A deficit that finances INVESTMENT (including imported capital goods — the India high-speed-rail case) expands productive resources and IMPROVES the capacity to repay.",
+      "kr": "'소비'를 조달하는 적자는 생산적인 것을 더하지 않아 상환능력 불변. '투자'(수입 자본재 포함 — 인도 고속철 사례)를 조달하는 적자는 생산자원을 늘려 상환능력 '개선'."
+    },
+    {
+      "id": "econ-m6-q20",
+      "section": "6",
+      "concept": "Two horizons — persistent deficit",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "long-run-vs-short-run",
+      "stem": "A persistent current-account deficit is most likely, in the long run, to be associated with:",
+      "choices": {
+        "A": "an appreciating currency as capital inflows continue",
+        "B": "a depreciating currency as foreign investors require rising risk premiums",
+        "C": "falling domestic interest rates"
+      },
+      "answer": "B",
+      "explanation": "Horizon flips the direction. SHORT run: a deficit from a strong economy → high rates → capital inflows → APPRECIATION (choice A is the short-run story). LONG run: a persistent deficit → ever-larger foreign claims → investors demand rising risk premiums → DEPRECIATION. 'Persistent' and 'long run' point to B.",
+      "kr": "시계(horizon)가 방향을 뒤집음. 단기: 호황발 적자 → 고금리 → 자본 유입 → 통화 '강세'(A는 단기 이야기). 장기: 지속적 적자 → 외국의 청구권 누적 → 위험 프리미엄 상승 요구 → 통화 '약세'. '지속적'·'장기' → B."
+    },
+    {
+      "id": "econ-m6-m01",
+      "section": "3",
+      "concept": "Comparative advantage without absolute advantage",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "absolute-claim",
+      "stem": "Country P has an absolute advantage over Country Q in producing both goods. Which statement is most accurate?",
+      "choices": {
+        "A": "Country Q cannot gain from trade with P",
+        "B": "Country Q still has a comparative advantage in one good and gains from exporting it",
+        "C": "Country P has a comparative advantage in both goods"
+      },
+      "answer": "B",
+      "explanation": "Ricardo's point: comparative advantage depends on opportunity-cost RATIOS, and no country can have the lower ratio in both goods. Q is the lower-opportunity-cost producer of one good and gains by exporting it. Absolute advantage in both is compatible with comparative advantage in only one.",
+      "kr": "리카도의 핵심: 비교우위는 기회비용 '비율'로 결정되고, 두 재화 모두에서 더 낮은 비율을 가질 수는 없음. Q는 한 재화에서 기회비용이 낮아 그것을 수출하면 이득. 두 재화 절대우위와 한 재화 비교우위는 양립."
+    },
+    {
+      "id": "econ-m6-m02",
+      "section": "3",
+      "concept": "Absolute vs comparative — pens and pencils",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "which-quantity",
+      "stem": "Per worker per day Brazil makes 20 pens or 40 pencils; Vietnam makes 10 pens or 60 pencils. Vietnam most likely has:",
+      "choices": {
+        "A": "an absolute and a comparative advantage in pencils",
+        "B": "a comparative advantage in pens",
+        "C": "an absolute advantage in both goods"
+      },
+      "answer": "A",
+      "explanation": "Absolute: Vietnam 60 > 40 pencils (yes); 10 < 20 pens (no). Comparative: OC of a pencil = pens/pencils → Brazil 20/40 = 1/2, Vietnam 10/60 = 1/6 → Vietnam lower → comparative advantage in pencils. OC of a pen → Brazil 2, Vietnam 6 → Brazil in pens.",
+      "kr": "절대우위: 베트남 연필 60 > 40(있음), 펜 10 < 20(없음). 비교우위: 연필 1개 기회비용 = 펜/연필 → 브라질 1/2, 베트남 1/6 → 베트남 낮음 → 연필 비교우위. 펜 기회비용 → 브라질 2, 베트남 6 → 브라질 펜."
+    },
+    {
+      "id": "econ-m6-m03",
+      "section": "4",
+      "concept": "Ricardian specialization and size",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "definition",
+      "stem": "In a two-country Ricardian model, the most likely pattern of specialization is that:",
+      "choices": {
+        "A": "both countries specialize completely",
+        "B": "the smaller country may specialize completely while the larger country remains incompletely specialized",
+        "C": "the larger country specializes completely while the smaller country produces both goods"
+      },
+      "answer": "B",
+      "explanation": "The smaller country can devote all its labor to its comparative-advantage good but still cannot satisfy total world demand, so the larger country keeps producing (and consuming) some of the other good — incomplete specialization.",
+      "kr": "작은 나라는 비교우위 재화에 노동을 전부 투입해도 세계 수요를 다 못 채우므로, 큰 나라는 다른 재화도 일부 계속 생산·소비 → 불완전 특화."
+    },
+    {
+      "id": "econ-m6-m04",
+      "section": "4",
+      "concept": "Models complementary",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "absolute-claim",
+      "stem": "Regarding the Ricardian and Heckscher–Ohlin models, the curriculum most likely concludes that:",
+      "choices": {
+        "A": "the Heckscher–Ohlin model has replaced the Ricardian model",
+        "B": "technology differences and factor-endowment differences are complementary sources of trade",
+        "C": "only factor endowments explain observed trade patterns"
+      },
+      "answer": "B",
+      "explanation": "Both drivers matter and are complementary, not mutually exclusive; tastes and preferences also affect trade patterns. Options claiming one model replaces or disproves the other are the standard absolute-claim distractors.",
+      "kr": "두 요인 모두 중요하며 상호보완적, 배타적이지 않음; 기호·선호도 무역 패턴에 영향. 한 모형이 다른 모형을 대체·반증한다는 선지는 전형적 절대적 주장 오답."
+    },
+    {
+      "id": "econ-m6-m05",
+      "section": "5",
+      "concept": "Remittances → current account",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "truncated-rule",
+      "stem": "Money sent home by migrant workers to their families abroad is most likely recorded in the:",
+      "choices": {
+        "A": "current account, unilateral transfers",
+        "B": "capital account, capital transfers",
+        "C": "financial account"
+      },
+      "answer": "A",
+      "explanation": "Worker remittances, foreign aid and gifts are one-way (unilateral) transfers → the current account's fourth sub-account. Capital transfers (capital account) are items like debt forgiveness and the assets migrants carry when they move — not ongoing remittances.",
+      "kr": "근로자 송금·원조·증여는 일방적(무상) 이전 → 경상수지의 네 번째 하위항목. 자본이전(자본계정)은 채무 탕감, 이주민이 이동 시 가져가는 자산 등 — 계속되는 송금이 아님."
+    },
+    {
+      "id": "econ-m6-m06",
+      "section": "5",
+      "concept": "Official reserves → financial account",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "truncated-rule",
+      "stem": "A central bank's purchase of foreign-currency reserves is most likely recorded in the:",
+      "choices": {
+        "A": "current account",
+        "B": "capital account",
+        "C": "financial account, as official reserve assets abroad"
+      },
+      "answer": "C",
+      "explanation": "The financial account records investment flows, split into the country's assets abroad (official reserve assets, government assets, private assets — gold, foreign currencies, foreign securities, IMF reserve position, FDI) and foreign-owned assets at home. Reserves are official assets abroad.",
+      "kr": "금융계정은 투자 흐름을 기록: 해외 자국 자산(공적 준비자산·정부자산·민간자산 — 금·외화·외국증권·IMF 포지션·FDI)과 국내 외국인 소유 자산. 준비자산은 해외 공적 자산."
+    },
+    {
+      "id": "econ-m6-m07",
+      "section": "6",
+      "concept": "CA = Sp + Sg − I — compute CA",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "sign",
+      "stem": "Private saving 400, government budget deficit 50, investment 380. The current-account balance is closest to:",
+      "choices": {
+        "A": "+70",
+        "B": "−30",
+        "C": "+30"
+      },
+      "answer": "B",
+      "explanation": "Government deficit of 50 → S_g = −50. CA = Sₚ + S_g − I = 400 − 50 − 380 = −30, a deficit. Choice A treats the deficit as +50; choice C flips the final sign. A deficit enters as negative government saving; investment is subtracted.",
+      "kr": "재정적자 50 → S_g = −50. CA = 400 − 50 − 380 = −30(적자). A는 적자를 +50으로 넣음, C는 최종 부호를 뒤집음. 재정적자는 음의 정부저축, 투자는 차감."
+    },
+    {
+      "id": "econ-m6-m08",
+      "section": "6",
+      "concept": "Sources of a CA deficit",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "direction",
+      "stem": "Holding other things constant, a current-account deficit is most likely to widen when:",
+      "choices": {
+        "A": "private saving rises",
+        "B": "domestic investment rises",
+        "C": "the government moves from deficit to surplus"
+      },
+      "answer": "B",
+      "explanation": "CA = Sₚ + S_g − I. Higher I is subtracted → CA falls (deficit widens). Higher private saving and a government surplus both RAISE CA. Deficit sources: low private saving, high investment, government deficit.",
+      "kr": "CA = Sₚ + S_g − I. 투자 증가는 차감 → CA 하락(적자 확대). 민간저축 증가와 재정흑자는 CA를 '올림'. 적자 원인: 낮은 민간저축, 높은 투자, 재정적자."
+    },
+    {
+      "id": "econ-m6-m09",
+      "section": "6",
+      "concept": "Inter-temporal trade",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "A country running a current-account deficit is, in the language of inter-temporal trade, most likely:",
+      "choices": {
+        "A": "importing present consumption and exporting future consumption",
+        "B": "exporting present consumption and importing future consumption",
+        "C": "neither, since capital flows are not trade"
+      },
+      "answer": "A",
+      "explanation": "International borrowing is trade across time: a deficit country consumes more than it produces now (imports present consumption) and must repay later (exports future consumption). A surplus country is the mirror image.",
+      "kr": "국제 차입은 시간을 가로지르는 무역: 적자국은 지금 생산보다 많이 소비(현재 소비 수입)하고 나중에 상환(미래 소비 수출). 흑자국은 그 반대."
+    },
+    {
+      "id": "econ-m6-m10",
+      "section": "6",
+      "concept": "Open economy — I not constrained by saving",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "mechanism",
+      "stem": "Compared with a closed economy, an open economy can most likely:",
+      "choices": {
+        "A": "raise domestic investment without raising domestic saving, by running a current-account deficit",
+        "B": "invest only what it saves domestically",
+        "C": "run a current-account surplus without acquiring foreign assets"
+      },
+      "answer": "A",
+      "explanation": "Sₚ + S_g = I + CA. In a closed economy saving can only fund domestic I. In an open economy, saving can also fund foreign investment (CA surplus), and a country with good opportunities can raise I by borrowing abroad — a lower CA — without raising saving (the India rail example). A CA surplus IS the acquisition of foreign assets.",
+      "kr": "Sₚ + S_g = I + CA. 폐쇄경제에서는 저축이 국내 투자만 조달. 개방경제에서는 저축이 해외 투자(경상흑자)도 조달하고, 투자 기회가 좋은 나라는 해외 차입(CA 하락)으로 저축을 늘리지 않고도 I를 늘릴 수 있음(인도 고속철). 경상흑자 자체가 외국 자산 취득."
+    },
+    {
+      "id": "econ-m6-m11",
+      "section": "1",
+      "concept": "GDP vs GNP — citizens abroad",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Income earned by a country's citizens working abroad is most likely included in that country's:",
+      "choices": {
+        "A": "GDP but not GNP",
+        "B": "GNP but not GDP",
+        "C": "neither GDP nor GNP"
+      },
+      "answer": "B",
+      "explanation": "GNP counts production by factors supplied by the country's citizens wherever located (who); GDP counts production located within the borders (where). Citizens abroad → home-country GNP, host-country GDP.",
+      "kr": "GNP는 자국민이 공급한 요소의 생산을 어디서든 포함(누가); GDP는 국경 안의 생산(어디서). 해외 자국민 → 모국 GNP, 체류국 GDP."
+    },
+    {
+      "id": "econ-m6-m12",
+      "section": "5",
+      "concept": "Patent fees → current account",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "truncated-rule",
+      "stem": "Royalty fees a domestic software firm receives from foreign licensees of its patents are most likely recorded in the:",
+      "choices": {
+        "A": "current account, services",
+        "B": "capital account, non-produced non-financial assets",
+        "C": "financial account"
+      },
+      "answer": "A",
+      "explanation": "FEES from patents and copyrights are services income → current account. Only the outright SALE of the patent goes to the capital account. Flow vs. asset.",
+      "kr": "특허·저작권 '수수료'는 서비스 수입 → 경상수지. 특허 자체의 '매각'만 자본계정. 흐름 vs 자산."
+    },
+    {
+      "id": "econ-m6-f01",
+      "section": "1",
+      "concept": "Terminology pairs",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "definition",
+      "front": "GDP vs GNP; trade surplus/deficit and the lending direction; terms of trade formula and direction",
+      "back": "GDP = production WITHIN the borders (includes foreigners inside) — D = where. GNP = production BY CITIZENS wherever located — N = who.\nX > M surplus → net LENDER (buys foreign assets, capital flows out). X < M deficit → net BORROWER (sells assets to foreigners, capital flows in).\nTerms of trade = P_exports / P_imports (price indexes). Ratio RISES = IMPROVES (a unit of exports buys more imports).\nAutarky = no trade; autarkic price vs world price; free trade = no government restrictions."
+    },
+    {
+      "id": "econ-m6-f02",
+      "section": "3",
+      "concept": "Comparative-advantage routine",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "which-quantity",
+      "front": "The opportunity-cost routine, the three traps, the world-price range, and the distance rule",
+      "back": "OC of 1 unit of A = (output of B) / (output of A) — the thing GIVEN UP goes on top; the other good is the reciprocal; LOWER number wins comparative advantage. Absolute advantage = more output per worker (read the table).\nTraps: inverted ratio; picking the higher number; reading absolute as comparative. A country can have absolute advantage in both goods but comparative advantage in only one; a country with no absolute advantage still gains.\nUK 4 machines/8 cloth, India 2/16 → OC machine UK 2, India 8 → UK machines; OC cloth UK 1/2, India 1/8 → India cloth.\nBoth gain if world price is BETWEEN the autarkic prices (2–8). Distance rule: the further the world price from YOUR autarkic price, the MORE you gain (price 7 → UK gains 5; price 3 → UK gains 1)."
+    },
+    {
+      "id": "econ-m6-f03",
+      "section": "4",
+      "concept": "Ricardian vs H–O",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "definition",
+      "front": "Ricardian vs Heckscher–Ohlin — factors, source of advantage, export prediction, redistribution",
+      "back": "RICARDIAN: labor only; advantage from labor productivity = TECHNOLOGY differences; export the lower-opportunity-cost good; smaller country may specialize completely, larger incompletely.\nH–O (factor-proportions): capital AND labor; advantage from relative FACTOR ENDOWMENTS (K/L ratio vs partner); same technology across countries; export the good intensive in the ABUNDANT factor (China/India textiles; Canada paper).\nH–O redistribution: export price ↑, import price ↓ → derived demand → ABUNDANT factor GAINS, SCARCE factor LOSES.\nComplementary, not mutually exclusive; tastes also matter."
+    },
+    {
+      "id": "econ-m6-f04",
+      "section": "5",
+      "concept": "BOP accounts and sub-accounts",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "truncated-rule",
+      "front": "The three BOP accounts with every sub-account, plus the debit/credit convention",
+      "back": "CURRENT (goods & services): (1) merchandise trade, (2) services — incl. patent/copyright FEES, (3) income receipts — dividends, interest; income on foreign investment is CURRENT, (4) unilateral transfers — remittances, aid, gifts.\nCAPITAL (transfers of capital): (1) capital transfers — debt forgiveness, migrants' transfers, (2) non-produced non-financial assets — resource rights, patents/trademarks SOLD.\nFINANCIAL (investment flows): (1) assets abroad — official reserves, government, private (gold, FX, securities, IMF position, FDI), (2) foreign-owned assets at home — official, other (bonds, equities, direct investment).\nDEBIT = asset ↑ or liability ↓ (imports, buying foreign assets). CREDIT = asset ↓ or liability ↑ (exports, payments made, debt owed to foreigners ↑). Nets to ~0 in theory; discrepancy from different data sources."
+    },
+    {
+      "id": "econ-m6-f05",
+      "section": "6",
+      "concept": "Current-account identity",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "sign",
+      "front": "CA identity derivation, sign rules, sources of deficit, offset rule, deficit quality, two horizons",
+      "back": "Y = C + I + G + X − M; CA = X − M = Y − (C + I + G). Yᵈ = Y + R − T = C + Sₚ → CA = Sₚ − I + (T − G − R); S_g = T − G − R.\nSₚ + S_g = I + CA (open economy: saving funds domestic OR foreign investment; I can rise via foreign borrowing without more saving). Sₚ = I + CA − S_g.\nCA = Sₚ + S_g − I: government DEFICIT = NEGATIVE S_g; I is SUBTRACTED. Sₚ 400, deficit 50, I 380 → CA −30.\nDeficit ← low Sₚ, high I, government deficit. CA deficit MUST be offset by a capital + financial account SURPLUS. Deficit = net borrower; inter-temporal trade = import present consumption, export future.\nQuality: consumption-financed deficit → repay capacity unchanged; investment-financed → improves. Horizons: SR deficit + high rates → APPRECIATION; LR persistent deficit → risk premiums → DEPRECIATION."
+    }
+  ]
+}
