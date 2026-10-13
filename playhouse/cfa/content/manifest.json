@@ -65,6 +65,15 @@
       "short": "Trade & Capital Flows",
       "notes": "content/notes/econ-m6.md",
       "questions": "content/questions/econ-m6.json"
+    },
+    {
+      "id": "econ-m7",
+      "subject": "econ",
+      "order": 7,
+      "title": "Currency Exchange Rates",
+      "short": "Exchange Rates",
+      "notes": "content/notes/econ-m7.md",
+      "questions": "content/questions/econ-m7.json"
     }
   ]
 }
