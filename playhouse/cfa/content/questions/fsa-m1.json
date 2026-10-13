@@ -861,6 +861,42 @@
       "answer": "A",
       "explanation": "NOT stem → check each against the list. Enhancing = C-V-T-U: comparability (T), verifiability, timeliness (T), understandability. 'Accuracy' is not a characteristic at all — the curriculum's term is FAITHFUL REPRESENTATION (a fundamental characteristic), whose 'free from error' explicitly does not mean perfectly accurate. Two traps stacked: a NOT stem, and an off-model word that sounds like it belongs.",
       "kr": "NOT 지문 → 목록과 대조. 보강적 특성 = C-V-T-U: 비교가능성(T), 검증가능성, 적시성(T), 이해가능성. '정확성'은 특성 자체가 아님 — 교재 용어는 '충실한 표현'(근본적 특성)이고, 그 '오류 없음'은 완벽한 정확성을 뜻하지 않음. 함정 두 개: NOT 지문 + 그럴듯한 교재 밖 단어."
+    },
+    {
+      "id": "fsa-m1-p03",
+      "section": "3",
+      "concept": "Constraints — NOT",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "negation",
+      "source": "cfai",
+      "stem": "Which of the following is NOT a constraint on the financial statements according to the Conceptual Framework?",
+      "choices": {
+        "A": "Understandability",
+        "B": "Benefit versus cost",
+        "C": "Balancing of qualitative characteristics"
+      },
+      "answer": "A",
+      "explanation": "NOT stem → T/F each against the constraints list: (1) trade-offs/BALANCING among the qualitative characteristics (T), (2) the pervasive constraint — BENEFITS vs. COSTS (T), (3) non-quantifiable information is omitted. Understandability is an ENHANCING qualitative characteristic, not a constraint (F → answer). Category check first: is the option a characteristic or a constraint?",
+      "kr": "NOT 지문 → 제약 목록과 대조: (1) 질적 특성 간 '균형'(T), (2) 포괄적 제약 — 효익 대 원가(T), (3) 계량화 불가 정보 누락. 이해가능성은 '보강적 질적 특성'이지 제약이 아님(F → 정답). 먼저 범주 확인: 이 선지는 특성인가 제약인가?"
+    },
+    {
+      "id": "fsa-m1-p04",
+      "section": "4",
+      "concept": "Going concern definition",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "confusion",
+      "source": "cfai",
+      "stem": "The assumption that an entity will continue to operate for the foreseeable future is called:",
+      "choices": {
+        "A": "accrual basis",
+        "B": "comparability",
+        "C": "going concern"
+      },
+      "answer": "C",
+      "explanation": "The framework's two underlying assumptions: ACCRUAL basis (transactions recorded in the period they occur, not when cash moves) and GOING CONCERN (the entity continues for the foreseeable future; one planning to liquidate or materially curtail needs different information). Comparability is an enhancing characteristic, not an assumption.",
+      "kr": "개념체계의 두 기본 가정: 발생기준(현금 이동이 아니라 발생 기간에 기록)과 계속기업(예측 가능한 미래에 계속 영업; 청산·대폭 축소 예정이면 다른 정보 필요). 비교가능성은 보강적 특성이지 가정이 아님."
     }
   ]
 }

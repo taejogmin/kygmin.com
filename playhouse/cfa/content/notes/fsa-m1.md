@@ -224,6 +224,10 @@ Sets out the concepts underlying preparation and presentation of statements for 
 
 ⚠️ "Cost" is the one **pervasive constraint** named — an option offering "materiality" or "timeliness" as the constraint is wrong.
 
+> ### ⭐ YOU MISSED OFFICIAL Q3 HERE — "NOT a constraint"
+> Options: understandability / benefit versus cost / balancing of qualitative characteristics. You picked **balancing**; correct is **understandability**.
+> Balancing (trade-offs among characteristics) and benefit-vs-cost are **both on the constraints list** — true, so they're the distractors in a NOT question. Understandability belongs to a different list entirely: it's one of the four **enhancing characteristics**. **Second NOT miss in a row** — and the same shape as Q2: the correct answer was the option from the *wrong category*. **Routine for this reading:** before T/F, sort each option into its box — *characteristic (fundamental / enhancing)*, *constraint*, *assumption*, *element*, *measurement basis*. In a NOT question the answer is usually the one in the wrong box.
+
 ### ⭐ Example 1 — balancing characteristics (the bad-debt case) 🔴
 Recording a credit sale requires simultaneously estimating **bad-debt expense**:
 - Including it → **faithful representation** ✓ (represents the economic event) + **relevance** ✓ (net profit for the period) + **timely** ✓ + **understandable** ✓
@@ -263,6 +267,9 @@ Statements group transactions into **elements** by economic characteristic.
 | **Going concern** | The company **will continue in business for the foreseeable future** | Inventory valued as sold over a **normal period** vs. forced sale in a day — very different numbers. An entity intending to **liquidate or materially curtail** needs **different information** for fair presentation |
 
 These two assumptions **determine how elements are recognized and measured** — they sit underneath the next two subsections.
+
+> ### ⭐ YOU MISSED OFFICIAL Q4 HERE — the two assumptions swapped
+> *"Continue to operate for the foreseeable future"* — you picked **accrual basis**; correct is **going concern**. Anchor each to its one keyword: **accrual = TIMING** (period it happens, not when cash moves); **going concern = CONTINUITY** (foreseeable future; liquidation needs different numbers). The stem's keyword was *continue* → continuity → going concern.
 
 ### Recognition 🔴
 - **Recognition** = an item is **included in the balance sheet or income statement**.
@@ -804,6 +811,6 @@ Two perspectives: IS = when earned/incurred; CFS = cash-generating
 
 ## 11. Official practice problems — log (paraphrased in the Study Hub as `fsa-m1-p01…`)
 
-**Set 1, part 1 (2026-10-13, Q1–Q2): 1 / 2** — objective NOT about users ✓; NOT-enhancing = accuracy ✗ (picked timeliness; negation + off-model). *Remaining questions to follow.*
+**Set 1, in progress (2026-10-13): 1 / 4** — Q1 objective NOT about users ✓ · Q2 NOT-enhancing = accuracy ✗ (picked timeliness — negation + off-model) · Q3 NOT a constraint = understandability ✗ (picked balancing — negation, wrong-category answer) · Q4 going concern ✗ (picked accrual — the two assumptions swapped). *Remaining questions to follow.*
 
 > **Note status: COMPLETE** — §1.01 introduction through §1.09 statement of changes in equity and cash flow statement (the reading's final section). Curriculum examples: Example 1 (balancing characteristics) worked in §3; no scored quiz sets in this reading. Practice questions Q1–Q45 → Study Hub question bank (Financial Statement Analysis → M1, `fsa-m1-q01…q45`). Official practice problems: not yet attempted.

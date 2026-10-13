@@ -190,9 +190,11 @@
         "M3 official Q27 (labor productivity is the directly measurable one)",
         "M3 official Q29 (TFP = output for given inputs)",
         "M2 official Q7 (regulated price = LRAC — repeat miss)",
-        "M4 official Q16 + Q19 (headline vs core swapped twice in one set; third time incl. Ex5 Q7)"
+        "M4 official Q16 + Q19 (headline vs core swapped twice in one set; third time incl. Ex5 Q7)",
+        "FSA M1 official Q4 (going concern vs accrual — the two assumptions swapped)"
       ],
       "seed": [
+        "fsa-m1-p04",
         "econ-m4-f13",
         "econ-m4-p30",
         "econ-m4-p27",
@@ -317,9 +319,11 @@
         "M4 Ex7 Q1 (NAIRU 'NOT a problem' — picked a TRUE limitation); Ex8 Q8 retest ✓",
         "M4 official Q14 (PPI least likely — picked TRUE 'leads CPI'; false one is 'labor contracts use PPI')",
         "M6 official Q10 ('least alarming' deficit condition → investment; picked consumption) — third negation miss",
-        "FSA M1 official Q2 (NOT enhancing → picked timeliness, a true one; 'accuracy' isn't in the framework) — fourth negation miss, first in FSA"
+        "FSA M1 official Q2 (NOT enhancing → picked timeliness, a true one; 'accuracy' isn't in the framework) — fourth negation miss, first in FSA",
+        "FSA M1 official Q3 (NOT a constraint → picked balancing, a true one; understandability is a characteristic) — two NOT misses in a row"
       ],
       "seed": [
+        "fsa-m1-p03",
         "fsa-m1-p02",
         "econ-m6-p10",
         "econ-m4-p25",
@@ -628,6 +632,16 @@
       "qid": "fsa-m1-p02",
       "when": "2026-10-13",
       "note": "FSA M1 official Q2 — NOT an enhancing characteristic: picked timeliness (a TRUE enhancing one). Answer 'accuracy' — not a curriculum term at all. Fourth negation miss; first in FSA. (negation + off-model)"
+    },
+    {
+      "qid": "fsa-m1-p03",
+      "when": "2026-10-13",
+      "note": "FSA M1 official Q3 — NOT a constraint: picked 'balancing of characteristics' (a TRUE constraint). Understandability is an enhancing characteristic, not a constraint. Fifth negation miss, second in a row. (negation + category)"
+    },
+    {
+      "qid": "fsa-m1-p04",
+      "when": "2026-10-13",
+      "note": "FSA M1 official Q4 — 'continue for the foreseeable future' = GOING CONCERN; picked accrual basis. The two assumptions swapped. (definition)"
     }
   ]
 }
