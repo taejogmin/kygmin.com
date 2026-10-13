@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-12",
+  "updated": "2026-10-13",
   "patterns": [
     {
       "id": "polarity",
@@ -23,9 +23,12 @@
         "M3 official Q14 (saving ↑ → net exports ↑)",
         "M3 official Q16 (lower P → real FX depreciates)",
         "M3 official Q20 (weak currency raises AD)",
-        "M2 official Q6 now correct on retry (supply shifts right)"
+        "M2 official Q6 now correct on retry (supply shifts right)",
+        "M5 Ex4 Q3 (money supply ↑ → rates ↓; first direction miss since M3)"
       ],
       "seed": [
+        "econ-m5-p02",
+        "econ-m5-f05",
         "econ-m3-p14",
         "econ-m3-p16",
         "econ-m3-p20",
@@ -218,9 +221,11 @@
         "M4 official Q11 (central bank lets economy self-correct → stagflation; picked the overheating row)",
         "M4 official Q15 (Laspeyres overstates → highest inflation; picked Paasche)",
         "M4 official Q18 (quality bias is upward even at constant price; picked 'unaffected')",
-        "M4 official Q20 (two-bullet stem; the second bullet was the literal cost-push definition)"
+        "M4 official Q20 (two-bullet stem; the second bullet was the literal cost-push definition)",
+        "M5 Ex3 Q1 (transactions motive — label swap among the three money-demand definitions)"
       ],
       "seed": [
+        "econ-m5-p01",
         "econ-m4-p26",
         "econ-m4-p29",
         "econ-m4-p31",
@@ -258,9 +263,11 @@
         "M4 Ex5 Q7 (headline 'has upward bias' — bias is methodology; headline is noisier)",
         "M4 Ex8 Q6 (Monetarists → 'interest rates'; it's money growth)",
         "M4 Ex8 Q3 (cost-push when unemployment 'either high or low' — hedge)",
-        "M4 official Q16 ('index of food and energy prices' for policy — not a concept; core inflation)"
+        "M4 official Q16 ('index of food and energy prices' for policy — not a concept; core inflation)",
+        "M5 Ex4 Q3 (money supply ↑ → 'reduces equilibrium money held' — sophisticated-sounding lure; answer is rates ↓)"
       ],
       "seed": [
+        "econ-m5-p02",
         "econ-m4-p27",
         "econ-m4-p01",
         "econ-m4-p03",
@@ -485,6 +492,16 @@
       "qid": "econ-m4-p31",
       "when": "2026-10-12",
       "note": "Official Q20 — 'wages compel retailers to raise prices' → picked demand-pull. Cost-push. Read the first bullet only. (truncated rule — half the stem)"
+    },
+    {
+      "qid": "econ-m5-p01",
+      "when": "2026-10-13",
+      "note": "M5 Ex3 Q1 — transactions motive: picked the speculative definition. Keywords: transactions = purchases; precautionary = unforeseen; speculative = other assets. (truncated rule / label swap)"
+    },
+    {
+      "qid": "econ-m5-p02",
+      "when": "2026-10-13",
+      "note": "M5 Ex4 Q3 — money supply ↑: picked 'reduces equilibrium money held'. M ↑ → i ↓ → P ↑; equilibrium money held RISES, movement along MD. First direction miss since M3. (off-model + polarity)"
     }
   ]
 }

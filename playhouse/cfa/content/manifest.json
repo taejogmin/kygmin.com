@@ -47,6 +47,15 @@
       "short": "Business Cycles",
       "notes": "content/notes/econ-m4.md",
       "questions": "content/questions/econ-m4.json"
+    },
+    {
+      "id": "econ-m5",
+      "subject": "econ",
+      "order": 5,
+      "title": "Monetary and Fiscal Policy",
+      "short": "Monetary & Fiscal Policy",
+      "notes": "content/notes/econ-m5.md",
+      "questions": "content/questions/econ-m5.json"
     }
   ]
 }
