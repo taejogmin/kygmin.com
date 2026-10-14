@@ -78,6 +78,11 @@ Sources and uses of cash help users evaluate **liquidity, solvency, and financia
 - **Trading securities → operating; held as investments → investing.**
 - **Trade credit (A/P) is operating.** A bank loan — even a short-term note — is financing.
 
+> ### ⭐ YOU MISSED OFFICIAL Q1 AND Q2 HERE — the three activities themselves
+> **Q1:** "the three classifications" → you picked **inflows / outflows / net flows**; correct is **operating / investing / financing**. Inflow vs outflow is the *direction* inside each activity, not the classification.
+> **Q2:** sale of a **building** for cash → you picked **operating**; correct is **investing**. A building is a long-term asset; buying or selling long-term assets is investing, whatever the cash is later used for.
+> **Fix — one question per item:** *Is this the day-to-day business (O), the long-lived stuff (I), or the capital providers (F)?* Ask it before reading options.
+
 ### Example 1 — net cash flow from investing ⭐ MISSED
 | Item | Amount | Section |
 |---|---|---|
@@ -136,6 +141,10 @@ Issue a **£30,000 180-day note** → pay for **inventory**; issue **£110,000 l
 - **Not in the cash flow statement**, but significant ones **must be disclosed** in a **note or supplementary schedule**.
 
 ⚠️ "A conversion of debt to equity is a financing inflow and outflow" ✗ — it's not in the statement at all.
+
+> ### ⭐ YOU MISSED OFFICIAL Q4 HERE — the exact swap flagged on the line above
+> Convertible bond → common stock: you picked **"a financing cash outflow and inflow"**; correct is **"reported as supplementary information."**
+> It *feels* like a financing event — debt goes down, equity goes up — but **no cash moves**, so it can't be in any section. **Test:** *did cash change hands?* No → not in the statement → disclosed in a note/schedule.
 
 ### Classification drill 🔴
 | Stem item | Section |
@@ -529,6 +538,17 @@ Non-cash GAIN → subtract
 |---|---|---|---|---|
 | Ex 1 | Net cash from investing | (150,000) | **(80,000)** | asked-quantity (loss treated as cash) |
 | Ex 2 | Operating vs financing (note + inventory) | operating −30,000 | ✅ | — |
+
+**Official practice set (`fsa-m4-p03…`):**
+
+| # | Topic | Your answer | Correct | Pattern |
+|---|---|---|---|---|
+| Q1 | The three activities | inflows / outflows / net | **operating / investing / financing** | definition (direction ≠ classification) |
+| Q2 | Sale of a building | operating | **investing** | confusion (long-term asset → investing) |
+| Q3 | Trading vs investment securities | only trading is operating | ✅ | — |
+| Q4 | Bond conversion | financing out + in | **supplementary disclosure** | off-model (no cash moved) |
+
+**Running tally: 1 / 4.**
 
 **Tally: 1 / 2.** Practice questions Q1–Q46 → Study Hub (Financial Statement Analysis → M4, `fsa-m4-q01…`).
 

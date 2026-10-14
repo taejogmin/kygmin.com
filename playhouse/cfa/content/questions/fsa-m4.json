@@ -820,6 +820,78 @@
       "kr": "재고 지급 → 영업 −40,000. 어음(+40,000)·장기차입(+90,000) → 재무. 설비 → 투자. 단기 어음도 재무."
     },
     {
+      "id": "fsa-m4-p03",
+      "section": "1",
+      "concept": "Official Q1 — the three activities",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "source": "cfai",
+      "stem": "The three categories of activities in a cash flow statement are:",
+      "choices": {
+        "A": "inflows, outflows, and net flows",
+        "B": "operating, investing, and financing",
+        "C": "revenues, expenses, and net income"
+      },
+      "answer": "B",
+      "explanation": "Cash flows are classified by ACTIVITY: operating, investing, financing. Inflows/outflows are directions within each activity; revenues/expenses/NI are income-statement elements.",
+      "kr": "현금흐름은 '활동'별 분류: 영업·투자·재무. 유입/유출은 각 활동 안의 방향, 수익·비용·순이익은 손익계산서 요소."
+    },
+    {
+      "id": "fsa-m4-p04",
+      "section": "1",
+      "concept": "Official Q2 — sale of a building",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "confusion",
+      "source": "cfai",
+      "stem": "Cash received from selling a building is classified as:",
+      "choices": {
+        "A": "operating",
+        "B": "investing",
+        "C": "financing"
+      },
+      "answer": "B",
+      "explanation": "A building is a long-term asset; buying or selling long-term assets is INVESTING. Operating = day-to-day revenue activities (selling inventory, services).",
+      "kr": "건물 = 장기자산; 장기자산 매입·매각 = '투자'. 영업 = 일상적 수익 활동(재고 판매·용역)."
+    },
+    {
+      "id": "fsa-m4-p05",
+      "section": "1",
+      "concept": "Official Q3 — trading vs investment securities",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "confusion",
+      "source": "cfai",
+      "stem": "For a manufacturer, where are (1) purchases of securities held for trading and (2) purchases of securities held for investment reported?",
+      "choices": {
+        "A": "Both in investing",
+        "B": "Only item 1 is operating",
+        "C": "Only item 2 is operating"
+      },
+      "answer": "B",
+      "explanation": "Trading securities → OPERATING for any company; securities held as investments → INVESTING.",
+      "kr": "단기매매 증권 → 모든 회사에서 '영업', 투자 목적 증권 → '투자'."
+    },
+    {
+      "id": "fsa-m4-p06",
+      "section": "1",
+      "concept": "Official Q4 — bond conversion",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "off-model",
+      "source": "cfai",
+      "stem": "A $2 million convertible bond is converted into $2 million of common stock. This is most likely:",
+      "choices": {
+        "A": "reported as a $2 million investing inflow and outflow",
+        "B": "reported as a $2 million financing outflow and inflow",
+        "C": "disclosed as supplementary information to the cash flow statement"
+      },
+      "answer": "C",
+      "explanation": "No cash changes hands → NOT in the investing or financing sections. Significant non-cash transactions are disclosed as supplementary information (a note or schedule). B is the planted lure: it sounds like a financing event, but there is no cash.",
+      "kr": "현금 이동 없음 → 투자·재무 부분에 없음. 중요한 비현금 거래는 보충 정보(주석·명세)로 공시. B는 함정: 재무 거래처럼 보이지만 현금이 없음."
+    },
+    {
       "id": "fsa-m4-f01",
       "section": "1",
       "concept": "Classification",
