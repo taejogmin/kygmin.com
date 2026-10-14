@@ -121,6 +121,12 @@ $$
 
 ⚠️ "Single-step" does **not** mean no subtotals at all — Danone shows operating income, income before tax, etc. It means **no gross profit line**.
 
+> ### ⭐ YOU MISSED OFFICIAL Q3 HERE — gross profit
+> Revenue 4.0m, COGS 3.0m, other operating expenses 0.5m, interest 0.1m, tax 0.12m → you picked **$500,000**; correct is **$1,000,000**.
+> **Gross profit = revenue − COGS = 4.0 − 3.0 = 1.0m** — the *first* subtotal. $500k also took off the operating expenses: that's **operating profit**.
+> **Wrong-quantity miss:** the stem lists every expense, so the trap is to keep subtracting. **Fix:** name the subtotal first, then use only the lines above it:
+> gross = revenue − COGS → operating = gross − opex → EBT = operating − interest → NI = EBT − tax.
+
 ### Operating profit — and why it is NOT always EBIT 🔴
 - **Operating profit (= operating income)** = gross profit − operating expenses (selling, general, administrative, R&D).
 - Reflects profits from business activities **before taxes** and, **for non-financial companies, before interest expense**.
@@ -467,6 +473,10 @@ A and B each have **$10m sales**; C has **$2m**.
 2. **C is more profitable than B** (20% vs 15%) despite smaller dollar profit ($0.4m vs $1.5m): **$5 more operating profit per $100 of sales.** ⚠️ Trap: picking B for the larger dollar profit.
 3. **Strategy shows in the structure:** A spends heavily on R&D and advertising → **premium, better-branded products**; B competes on **price**.
 
+> ### ⭐ YOU MISSED OFFICIAL Q4 HERE — "fails to help identify strategies"
+> You picked **"standardizes each line but fails to help identify differences in strategy"**; correct is **"allows cross-sectional analysis by removing the effect of size."**
+> The first half of your option was true; the **second half contradicts reading 3 above** — standardization is exactly what *reveals* strategy (A's 70% gross margin + 40% R&D/advertising vs B's 25%). **Fix for two-clause options:** test each clause separately; one false clause kills the option. (Option A was also wrong: the base is **revenue**, not net income.)
+
 ### The tax exception 🔴
 
 $$
@@ -523,6 +533,11 @@ $$
 | **P** | **Certain defined-benefit pension costs** not recognized in the current period |
 
 **IFRS-only:** **revaluation-model** changes go to OCI; some OCI items **cannot be reclassified** to profit or loss; present will/won't-reclassify separately.
+
+> ### ⭐ YOU MISSED OFFICIAL Q6 HERE — which item is OCI
+> You picked **"a realized gain on a derivative not accounted for as a hedge"**; correct is **"a foreign currency translation adjustment"** (the F in F-H-S-P).
+> The H item needs **both** qualifiers: **unrealized** AND **accounted for as a hedge**. Your option failed both — *realized* gains are never OCI, and a derivative *not* designated as a hedge goes through net income. (The other distractor, an unrealized gain on a **trading** security, also goes to net income.)
+> **Truncated-rule miss:** "derivative" matched the H in F-H-S-P and the qualifiers were dropped. **Fix:** read every adjective in an OCI option — *unrealized? hedge? available-for-sale/FVOCI?* If any is missing or reversed → net income.
 
 ### The securities-classification grid 🔴
 **Held-to-maturity debt** → **amortised cost** → **no unrealized gain reported anywhere.**
@@ -680,6 +695,19 @@ Comp. EPS = EPS + OCI/shares
 | Ex 3 Q1 | OCI back-solve | €7m | **€10m** | truncated-rule (dividend dropped) |
 | Ex 3 Q2 | OCI definition | non-ordinary activities | **raises equity, not in NI** | off-model (adjacent axis) |
 
-**Tally: 0 / 2.** Practice questions Q1–Q46 → Study Hub (Financial Statement Analysis → M2, `fsa-m2-q01…`).
+**Official practice set 1 (`fsa-m2-p03…p08`): 3 / 6**
+
+| # | Topic | Your answer | Correct | Pattern |
+|---|---|---|---|---|
+| Q1 | Expenses by nature or function (IAS 1) | either | ✅ | — |
+| Q2 | Function example = COGS | COGS | ✅ | — |
+| Q3 | Gross profit | $500k (= operating profit) | **$1,000,000** | asked-quantity (kept subtracting) |
+| Q4 | Common-size statement | "fails to reveal strategy" | **removes size → cross-sectional** | definition (two-clause option, 2nd clause false) |
+| Q5 | OCI from components (5 − 3 + 2) | $4m OCI | ✅ | — |
+| Q6 | Which item is OCI | realized non-hedge derivative gain | **FX translation** | truncated-rule (dropped "unrealized" + "hedge") |
+
+None of the three misses was arithmetic: one stopped at the wrong subtotal, one accepted a half-true option, one matched a keyword ("derivative") without its qualifiers.
+
+**Curriculum examples: 0 / 2. Official set 1: 3 / 6.** Practice questions Q1–Q46 → Study Hub (Financial Statement Analysis → M2, `fsa-m2-q01…`).
 
 > **Note status: COMPLETE** — §2.01 through §2.08.

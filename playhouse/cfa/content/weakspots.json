@@ -102,9 +102,13 @@
       "evidence": [
         "M3 Exhibit 3 (parallel inputs)",
         "M3 official Q5 (value added of final step = 3,000, not 5,000)",
-        "M2 official Q4 (picked AC $70; the pricing rule P[1 − 1/ε] = MC gives $120)"
+        "M2 official Q4 (picked AC $70; the pricing rule P[1 − 1/ε] = MC gives $120)",
+        "FSA M2 official Q3 (gross profit: kept subtracting operating expenses → picked operating profit $500k instead of $1.0m)"
       ],
       "seed": [
+        "fsa-m2-p05",
+        "fsa-m2-q35",
+        "fsa-m2-q04",
         "econ-m2-p04",
         "econ-m3-p05",
         "econ-m3-010",
@@ -178,8 +182,8 @@
         "kr": "정의의 한 단어 함정 · 범위 공백"
       },
       "rule": {
-        "en": "For 'best describes' stems, find the single wrong word in each distractor (maximum vs. natural, verifiable, resalable). Natural output is NOT the maximum — it has a modest, stable pool of unemployed. If a topic feels unfamiliar (personal income chain), flag it as a note gap rather than guessing. Part 3 growth terms: labor productivity (output/hour, measurable) vs TFP (residual, inferred) vs potential GDP (estimated).",
-        "kr": "'best describes' 문제는 각 오답 선지에서 틀린 단어 하나를 찾는다(maximum vs natural, verifiable, resalable). 자연산출은 '최대'가 아니라 소규모 안정적 실업 풀이 있는 수준. 낯선 주제(개인소득 체인)는 찍지 말고 노트 공백으로 표시. Part 3 성장 용어: 노동생산성(시간당 산출, 측정 가능) vs TFP(잔차, 추정) vs 잠재 GDP(추정치)."
+        "en": "For 'best describes' stems, find the single wrong word in each distractor (maximum vs. natural, verifiable, resalable). Natural output is NOT the maximum — it has a modest, stable pool of unemployed. If a topic feels unfamiliar (personal income chain), flag it as a note gap rather than guessing. Part 3 growth terms: labor productivity (output/hour, measurable) vs TFP (residual, inferred) vs potential GDP (estimated). Two-clause options ('X but Y'): test each clause separately — one false clause kills the option.",
+        "kr": "'best describes' 문제는 각 오답 선지에서 틀린 단어 하나를 찾는다(maximum vs natural, verifiable, resalable). 자연산출은 '최대'가 아니라 소규모 안정적 실업 풀이 있는 수준. 낯선 주제(개인소득 체인)는 찍지 말고 노트 공백으로 표시. Part 3 성장 용어: 노동생산성(시간당 산출, 측정 가능) vs TFP(잔차, 추정) vs 잠재 GDP(추정치). 두 절로 된 선지('X이지만 Y'): 절마다 따로 판정 — 한 절이라도 거짓이면 오답."
       },
       "traps": [
         "definition"
@@ -194,9 +198,12 @@
         "FSA M1 official Q4 (going concern vs accrual — the two assumptions swapped)",
         "FSA M1 official Q5 (accrual definition → picked relevance, which isn't an assumption at all)",
         "FSA M1 official Q7 + Q8 (measurement bases: picked realizable for 'paid at acquisition', then avoided it for 'received in orderly disposal')",
-        "FSA M1 official Q9 (performance element → picked assets; position = A/L/E, performance = income/expenses)"
+        "FSA M1 official Q9 (performance element → picked assets; position = A/L/E, performance = income/expenses)",
+        "FSA M2 official Q4 (common-size: accepted 'standardizes but fails to reveal strategy' — second clause false)"
       ],
       "seed": [
+        "fsa-m2-p06",
+        "fsa-m2-q39",
         "fsa-m1-p09",
         "fsa-m1-p07",
         "fsa-m1-p08",
@@ -248,9 +255,12 @@
         "M6 official Q8 (patent FEES + legal services → current account services; picked financial)",
         "M7 Ex1 Q3 (hedged zero held to maturity = risk free; dropped the clause that switches rate risk off)",
         "FSA M1 official Q14 ('residual claim' → equity → balance sheet; skipped the translation step)",
-        "FSA M2 Ex3 Q1 (OCI back-solve: dropped the dividend → €7m vs €10m; third module in a row a multi-term identity lost a term)"
+        "FSA M2 Ex3 Q1 (OCI back-solve: dropped the dividend → €7m vs €10m; third module in a row a multi-term identity lost a term)",
+        "FSA M2 official Q6 ('derivative' matched the H in F-H-S-P; dropped 'unrealized' + 'accounted for as a hedge' → picked a realized non-hedge gain)"
       ],
       "seed": [
+        "fsa-m2-p08",
+        "fsa-m2-q50",
         "fsa-m2-p01",
         "fsa-m2-q40",
         "fsa-m2-q47",
@@ -697,6 +707,21 @@
       "qid": "fsa-m2-p02",
       "when": "2026-10-14",
       "note": "FSA M2 Example 3 Q2 — OCI definition: picked 'outside ordinary activities' (that describes gains, which are IN net income); correct 'raises equity, not in net income'. (off-model / adjacent axis)"
+    },
+    {
+      "qid": "fsa-m2-p05",
+      "when": "2026-10-14",
+      "note": "FSA M2 official Q3 — gross profit = revenue − COGS = 1.0m; picked 500k (subtracted opex too = operating profit). (asked quantity)"
+    },
+    {
+      "qid": "fsa-m2-p06",
+      "when": "2026-10-14",
+      "note": "FSA M2 official Q4 — common-size removes size → cross-sectional; picked 'standardizes but fails to reveal strategy' (2nd clause contradicts Exhibit 7). (two-clause option)"
+    },
+    {
+      "qid": "fsa-m2-p08",
+      "when": "2026-10-14",
+      "note": "FSA M2 official Q6 — OCI item = FX translation; picked realized gain on a non-hedge derivative (both qualifiers fail). (truncated rule)"
     }
   ]
 }

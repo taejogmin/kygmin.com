@@ -922,6 +922,114 @@
       "kr": "OCI는 '보고 위치'로 정의: 자본은 늘리지만 순이익을 거치지 않음. '통상활동 밖'은 차손익(순이익에 포함)의 설명, '현금 미실현'은 발생주의 일반. 둘 다 보고 위치를 말하지 않음."
     },
     {
+      "id": "fsa-m2-p03",
+      "section": "1",
+      "concept": "Official Q1 — nature or function",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "source": "cfai",
+      "stem": "Under IAS 1, expenses on the income statement can be grouped:",
+      "choices": {
+        "A": "by nature only",
+        "B": "by function only",
+        "C": "by either nature or function"
+      },
+      "answer": "C",
+      "explanation": "IAS 1 allows expenses to be presented by NATURE (what they are) or by FUNCTION (what they are for). Either is acceptable.",
+      "kr": "IAS 1은 성격별 또는 기능별 표시 모두 허용."
+    },
+    {
+      "id": "fsa-m2-p04",
+      "section": "1",
+      "concept": "Official Q2 — function example",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "source": "cfai",
+      "stem": "Which of the following is an expense classified by function?",
+      "choices": {
+        "A": "Income tax expense",
+        "B": "Interest expense",
+        "C": "Cost of goods sold"
+      },
+      "answer": "C",
+      "explanation": "Cost of goods sold groups costs by what they are FOR (producing the goods sold) — a functional classification. Tax and interest expense describe the nature of the cost.",
+      "kr": "매출원가는 '무엇을 위한' 비용인지로 묶음 → 기능별. 법인세·이자비용은 성격별."
+    },
+    {
+      "id": "fsa-m2-p05",
+      "section": "1",
+      "concept": "Official Q3 — gross profit",
+      "type": "calc",
+      "difficulty": 1,
+      "trap": "asked-quantity",
+      "source": "cfai",
+      "stem": "A manufacturer reports revenue $5.0m, cost of goods sold $3.5m, other operating expenses $0.8m, interest expense $0.2m and tax expense $0.15m. Gross profit is:",
+      "choices": {
+        "A": "$0.35m",
+        "B": "$0.70m",
+        "C": "$1.50m"
+      },
+      "answer": "C",
+      "explanation": "Gross profit = revenue − COGS = 5.0 − 3.5 = $1.5m — the FIRST subtotal. Choice B (0.70) subtracts operating expenses too: that is OPERATING profit. Choice A goes all the way to net income. Name the subtotal, then stop subtracting.",
+      "kr": "매출총이익 = 매출 − 매출원가 = 1.5m — '첫 번째' 소계. B(0.70)는 영업비용까지 뺀 영업이익, A는 순이익. 소계 이름을 정하고 거기서 멈추기."
+    },
+    {
+      "id": "fsa-m2-p06",
+      "section": "6",
+      "concept": "Official Q4 — what common-size does",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "definition",
+      "source": "cfai",
+      "stem": "Which statement about a common-size income statement is most accurate? It:",
+      "choices": {
+        "A": "expresses each line item as a percentage of net income",
+        "B": "removes the effect of size, enabling cross-sectional comparison",
+        "C": "standardizes each line but does not help reveal differences in strategy"
+      },
+      "answer": "B",
+      "explanation": "Every line is a % of REVENUE (not net income), which removes size and supports time-series and cross-sectional analysis. The standardization is exactly what REVEALS strategy differences (A's 70% gross margin + R&D/advertising vs B's 25% price competition) — so C's second clause is false.",
+      "kr": "모든 항목을 '매출' 대비 %로(순이익 X) → 규모 제거 → 시계열·횡단면 비교. 표준화 덕분에 '전략 차이'가 드러남(A의 70% 매출총이익 + R&D/광고 vs B의 저가) → C의 후반부가 거짓."
+    },
+    {
+      "id": "fsa-m2-p07",
+      "section": "7",
+      "concept": "Official Q5 — OCI from components",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "sign",
+      "source": "cfai",
+      "stem": "Beginning equity 300; ending equity 314; net income 12; dividends 2; unrealized gain on AFS securities 6; unrealized loss on hedging derivatives 4; FX translation gain 2. Which is correct?",
+      "choices": {
+        "A": "Comprehensive income is 14",
+        "B": "OCI is 4",
+        "C": "Hedging derivatives increased comprehensive income"
+      },
+      "answer": "B",
+      "explanation": "OCI = 6 − 4 + 2 = 4 (the hedge item is a LOSS, so it reduces OCI — C is false). Cross-check with the roll-forward: comprehensive income = (314 − 300) + 2 dividends = 16 = NI 12 + OCI 4. Choice A (14) is the raw change in equity — it forgets to add back the dividend.",
+      "kr": "OCI = 6 − 4 + 2 = 4(위험회피 항목은 '손실' → OCI 감소, C 거짓). 검산: 포괄이익 = (314 − 300) + 배당 2 = 16 = 순이익 12 + OCI 4. A(14)는 자본 변동만 — 배당을 더하지 않음."
+    },
+    {
+      "id": "fsa-m2-p08",
+      "section": "7",
+      "concept": "Official Q6 — which item is OCI",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "truncated-rule",
+      "source": "cfai",
+      "stem": "Which item is most likely reported in other comprehensive income?",
+      "choices": {
+        "A": "A translation adjustment from consolidating a foreign subsidiary",
+        "B": "An unrealized gain on a trading security",
+        "C": "A realized gain on a derivative not designated as a hedge"
+      },
+      "answer": "A",
+      "explanation": "F-H-S-P: FX translation is OCI. Trading securities → net income. A derivative NOT accounted for as a hedge → net income; and a REALIZED gain is never OCI. The hedge type in OCI needs both qualifiers: unrealized AND accounted for as a hedge.",
+      "kr": "F-H-S-P: 외화환산 = OCI. 단기매매 증권 → 순이익. 위험회피로 회계처리하지 '않은' 파생 → 순이익, '실현'이익은 OCI가 될 수 없음. OCI의 H는 '미실현' + '위험회피 회계' 두 조건 모두 필요."
+    },
+    {
       "id": "fsa-m2-f01",
       "section": "2",
       "concept": "Five-step model + definitions",
