@@ -108,6 +108,15 @@
       "short": "Balance Sheets",
       "notes": "content/notes/fsa-m3.md",
       "questions": "content/questions/fsa-m3.json"
+    },
+    {
+      "id": "fsa-m4",
+      "subject": "fsa",
+      "order": 4,
+      "title": "Analyzing Statements of Cash Flows I",
+      "short": "Cash Flows I",
+      "notes": "content/notes/fsa-m4.md",
+      "questions": "content/questions/fsa-m4.json"
     }
   ]
 }

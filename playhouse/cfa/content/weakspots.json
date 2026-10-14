@@ -49,7 +49,10 @@
         "econ-m1-010",
         "econ-m2-023",
         "fsa-m3-q42",
-        "fsa-m3-q18"
+        "fsa-m3-q18",
+        "fsa-m4-q34",
+        "fsa-m4-q43",
+        "fsa-m4-q41"
       ]
     },
     {
@@ -93,8 +96,8 @@
         "kr": "묻는 양과 다른 숫자 · 주어진 숫자 집기"
       },
       "rule": {
-        "en": "Before choosing, re-read the stem's last line: which stage, which unit, which period, average or marginal, price or quantity? Value added at a step = receipts − ALL purchased inputs; the final price is the whole chain's contribution, not the last step's. If a stem hands you two cost figures and an elasticity, the answer is almost never one of the given figures — apply the rule. Multi-variable demand function: ALWAYS compute Q with every variable plugged in before any elasticity; then use the coefficient of the variable the question names.",
-        "kr": "답 고르기 전에 문제의 마지막 줄을 다시 읽는다: 어느 단계·단위·기간, 평균인지 한계인지, 가격인지 수량인지. 단계별 부가가치 = 매출 − 구입 투입 전부; 최종가격은 체인 전체 기여분이지 마지막 단계가 아님. 비용 숫자 두 개와 탄력성이 주어지면 답은 거의 주어진 숫자가 아님 — 규칙을 적용할 것. 다변수 수요함수: 탄력성 전에 모든 변수를 넣어 Q부터 계산, 그 다음 문제가 지목한 변수의 계수 × (그 변수/Q)."
+        "en": "Before choosing, re-read the stem's last line: which stage, which unit, which period, average or marginal, price or quantity? Value added at a step = receipts − ALL purchased inputs; the final price is the whole chain's contribution, not the last step's. If a stem hands you two cost figures and an elasticity, the answer is almost never one of the given figures — apply the rule. Multi-variable demand function: ALWAYS compute Q with every variable plugged in before any elasticity; then use the coefficient of the variable the question names. Cash-flow lists (FSA M4): STRIKE every non-cash line (gains, losses, equity-method income, depreciation) before labelling O / I / F.",
+        "kr": "답 고르기 전에 문제의 마지막 줄을 다시 읽는다: 어느 단계·단위·기간, 평균인지 한계인지, 가격인지 수량인지. 단계별 부가가치 = 매출 − 구입 투입 전부; 최종가격은 체인 전체 기여분이지 마지막 단계가 아님. 비용 숫자 두 개와 탄력성이 주어지면 답은 거의 주어진 숫자가 아님 — 규칙을 적용할 것. 다변수 수요함수: 탄력성 전에 모든 변수를 넣어 Q부터 계산, 그 다음 문제가 지목한 변수의 계수 × (그 변수/Q). 현금흐름 목록(FSA M4): O/I/F 분류 전에 비현금 항목(처분손익·지분법이익·감가상각)부터 지우기."
       },
       "traps": [
         "asked-quantity",
@@ -108,9 +111,14 @@
         "M3 Exhibit 3 (parallel inputs)",
         "M3 official Q5 (value added of final step = 3,000, not 5,000)",
         "M2 official Q4 (picked AC $70; the pricing rule P[1 − 1/ε] = MC gives $120)",
-        "FSA M2 official Q3 (gross profit: kept subtracting operating expenses → picked operating profit $500k instead of $1.0m)"
+        "FSA M2 official Q3 (gross profit: kept subtracting operating expenses → picked operating profit $500k instead of $1.0m)",
+        "FSA M4 Ex1 (net cash from investing: subtracted the LOSS on sale → (150,000) vs (80,000); the cash is the proceeds)"
       ],
       "seed": [
+        "fsa-m4-p01",
+        "fsa-m4-q05",
+        "fsa-m4-q45",
+        "fsa-m4-q21",
         "fsa-m2-p05",
         "fsa-m2-q35",
         "fsa-m2-q04",
@@ -772,6 +780,11 @@
       "qid": "fsa-m3-p14",
       "when": "2026-10-14",
       "note": "FSA M3 official Q14 — retained earnings is EQUITY; picked assets ('kept earnings = money'). Third FSA element-category miss. (definition)"
+    },
+    {
+      "qid": "fsa-m4-p01",
+      "when": "2026-10-14",
+      "note": "FSA M4 Example 1 — net cash from investing = −200,000 + 120,000 = (80,000); picked (150,000) by subtracting the 70,000 loss on sale. Strike non-cash lines first. (asked quantity)"
     }
   ]
 }

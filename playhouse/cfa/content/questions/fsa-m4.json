@@ -1,0 +1,873 @@
+{
+  "module": "fsa-m4",
+  "questions": [
+    {
+      "id": "fsa-m4-q01",
+      "section": "0",
+      "concept": "Cash vs accrual",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "The cash flow statement differs from the income statement most in that it:",
+      "choices": {
+        "A": "reports revenue when earned",
+        "B": "reports cash receipts when collected rather than when revenue is earned",
+        "C": "is prepared on the accrual basis"
+      },
+      "answer": "B",
+      "explanation": "Cash flow statement = cash basis (receipts when collected); income statement = accrual basis (revenue when earned).",
+      "kr": "현금흐름표 = 현금주의(회수 시점), 손익계산서 = 발생주의(획득 시점)."
+    },
+    {
+      "id": "fsa-m4-q02",
+      "section": "0",
+      "concept": "NI ↔ CFO reconciliation",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "The reconciliation between reported income and operating cash flow is most useful for assessing:",
+      "choices": {
+        "A": "the market value of equity",
+        "B": "when, whether, and how the company generates cash from operations",
+        "C": "the company's tax rate"
+      },
+      "answer": "B",
+      "explanation": "The reconciliation shows when, whether, and how operations turn into cash.",
+      "kr": "순이익↔영업현금흐름 조정은 영업이 '언제, 실제로, 어떻게' 현금이 되는지 보여줌."
+    },
+    {
+      "id": "fsa-m4-q03",
+      "section": "0",
+      "concept": "Sustainable source",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Which source of cash can, in theory, continue indefinitely?",
+      "choices": {
+        "A": "Selling assets",
+        "B": "Issuing debt",
+        "C": "Operating activities"
+      },
+      "answer": "C",
+      "explanation": "Operations can continue indefinitely; asset sales last while assets last; debt lasts while lenders lend.",
+      "kr": "영업은 이론상 무한, 자산 매각은 팔 자산이 있는 동안, 차입은 대출해 주는 동안만."
+    },
+    {
+      "id": "fsa-m4-q04",
+      "section": "0",
+      "concept": "All-credit-sales company",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "A company reports healthy sales and significant net income but collects none of its receivables. It most likely:",
+      "choices": {
+        "A": "reports strong operating cash flow",
+        "B": "has zero cash inflow and may not survive",
+        "C": "uses the direct method"
+      },
+      "answer": "B",
+      "explanation": "The curriculum's illustration: accrual income with zero collections → zero cash inflow → may not survive. Income is important; cash flow is also essential.",
+      "kr": "교재 예시: 발생주의 이익은 있지만 회수 0 → 현금 유입 0 → 생존 불가. 이익도 중요, 현금흐름도 필수."
+    },
+    {
+      "id": "fsa-m4-q05",
+      "section": "1",
+      "concept": "Net investing — strike non-cash",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "asked-quantity",
+      "stem": "Under US GAAP: purchase of a building 500,000; proceeds from sale of machinery 60,000; gain on sale of machinery 15,000; dividends received 8,000; repayment of bonds 100,000. Net cash from investing is closest to:",
+      "choices": {
+        "A": "(440,000)",
+        "B": "(425,000)",
+        "C": "(432,000)"
+      },
+      "answer": "A",
+      "explanation": "Strike non-cash: the GAIN (15,000). Label: dividends received → operating (US GAAP); bond repayment → financing. Investing = −500,000 + 60,000 = −440,000. B adds the gain back in (−500,000 + 60,000 + 15,000); C puts dividends received in investing (an IFRS choice, not US GAAP).",
+      "kr": "비현금 제거: 처분'이익' 15,000. 분류: 배당 수취 → 영업(US GAAP), 사채 상환 → 재무. 투자 = −500,000 + 60,000 = −440,000. B는 이익을 더함, C는 배당 수취를 투자로(IFRS 선택지)."
+    },
+    {
+      "id": "fsa-m4-q06",
+      "section": "1",
+      "concept": "Trade credit = operating",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "confusion",
+      "stem": "A company finances inventory purchases by delaying payment to suppliers. The resulting increase in accounts payable is classified as:",
+      "choices": {
+        "A": "a financing inflow",
+        "B": "an operating item",
+        "C": "an investing inflow"
+      },
+      "answer": "B",
+      "explanation": "Indirect borrowing through accounts payable is OPERATING, not financing. Only borrowing from creditors (banks, bondholders, notes) is financing.",
+      "kr": "매입채무를 통한 간접 차입은 '영업'. 은행·사채·어음 차입만 재무."
+    },
+    {
+      "id": "fsa-m4-q07",
+      "section": "1",
+      "concept": "Trading securities",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "confusion",
+      "stem": "A manufacturer buys and sells equity securities held for trading. Those cash flows are classified as:",
+      "choices": {
+        "A": "investing, since securities are investments",
+        "B": "operating, regardless of the company's primary business",
+        "C": "financing"
+      },
+      "answer": "B",
+      "explanation": "Dealing/trading securities → operating for ANY company. Securities held as investments (not trading) → investing.",
+      "kr": "단기매매 증권은 '모든' 회사에서 영업. 투자 목적 보유 증권은 투자."
+    },
+    {
+      "id": "fsa-m4-q08",
+      "section": "1",
+      "concept": "IFRS interest paid",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "truncated-rule",
+      "stem": "Under IFRS, interest paid may be classified as:",
+      "choices": {
+        "A": "operating or investing",
+        "B": "operating or financing",
+        "C": "financing only"
+      },
+      "answer": "B",
+      "explanation": "IFRS: PAID items → operating or financing (cost of capital); RECEIVED items → operating or investing.",
+      "kr": "IFRS: '지급' → 영업 또는 재무(자본 비용), '수취' → 영업 또는 투자."
+    },
+    {
+      "id": "fsa-m4-q09",
+      "section": "1",
+      "concept": "US GAAP — not operating",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "negation",
+      "stem": "Under US GAAP, which is NOT classified as an operating cash flow?",
+      "choices": {
+        "A": "Interest paid",
+        "B": "Dividends received",
+        "C": "Dividends paid"
+      },
+      "answer": "C",
+      "explanation": "NOT stem → T/F each. Interest paid: operating (T). Dividends received: operating (T). Dividends paid: FINANCING — the one US GAAP exception (answer).",
+      "kr": "NOT 지문 → T/F. 이자 지급: 영업(T). 배당 수취: 영업(T). 배당 지급: '재무' — US GAAP 유일한 예외(정답)."
+    },
+    {
+      "id": "fsa-m4-q10",
+      "section": "1",
+      "concept": "Bond conversion — non-cash",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "off-model",
+      "stem": "A company issues common stock to settle a convertible bond. In the cash flow statement this is most likely:",
+      "choices": {
+        "A": "a financing inflow and a financing outflow of equal amounts",
+        "B": "excluded from the statement and disclosed in a note or supplementary schedule",
+        "C": "an investing outflow"
+      },
+      "answer": "B",
+      "explanation": "No cash moves → not in the statement. Significant non-cash investing/financing transactions are DISCLOSED in a note or supplementary schedule.",
+      "kr": "현금 이동 없음 → 현금흐름표 제외. 중요한 비현금 투자·재무 거래는 주석이나 보충 명세에 '공시'."
+    },
+    {
+      "id": "fsa-m4-q11",
+      "section": "1",
+      "concept": "Note → wages",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "truncated-rule",
+      "stem": "Under US GAAP, a company issues a 90-day note for 50,000 and uses the cash to pay wages. Cash flow from operations:",
+      "choices": {
+        "A": "is unchanged",
+        "B": "decreases by 50,000",
+        "C": "increases by 50,000"
+      },
+      "answer": "B",
+      "explanation": "Two legs: note issued → FINANCING +50,000; wages paid → OPERATING −50,000. A short-term note is still financing.",
+      "kr": "두 거래: 어음 발행 → '재무' +50,000, 임금 지급 → '영업' −50,000. 단기 어음도 재무."
+    },
+    {
+      "id": "fsa-m4-q12",
+      "section": "1",
+      "concept": "IFRS conditions",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "truncated-rule",
+      "stem": "Under IFRS, a company that classifies dividends paid as operating must:",
+      "choices": {
+        "A": "obtain auditor approval",
+        "B": "apply the classification consistently and disclose the amount separately",
+        "C": "reclassify it as financing the following year"
+      },
+      "answer": "B",
+      "explanation": "IFRS choices require consistency year to year and separate disclosure of interest and dividends received and paid.",
+      "kr": "IFRS 선택 시 매년 일관 적용 + 이자·배당 수취/지급액 별도 공시."
+    },
+    {
+      "id": "fsa-m4-q13",
+      "section": "2",
+      "concept": "Same CFO",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Compared with the indirect method, the direct method most likely results in:",
+      "choices": {
+        "A": "a higher operating cash flow",
+        "B": "the same operating cash flow",
+        "C": "a different presentation of investing activities"
+      },
+      "answer": "B",
+      "explanation": "CFO amount is identical; only the operating section's format differs. Investing and financing are presented the same.",
+      "kr": "영업현금흐름 금액 동일, 영업 부분 형식만 다름. 투자·재무 표시 동일."
+    },
+    {
+      "id": "fsa-m4-q14",
+      "section": "2",
+      "concept": "What indirect shows",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "confusion",
+      "stem": "The indirect method best shows:",
+      "choices": {
+        "A": "the specific sources of operating cash receipts",
+        "B": "the reasons for differences between net income and operating cash flow",
+        "C": "gross cash paid to suppliers"
+      },
+      "answer": "B",
+      "explanation": "Indirect: reasons NI ≠ CFO (and mirrors forecasting). A and C describe the DIRECT method.",
+      "kr": "간접법: 순이익 ≠ 영업현금흐름의 이유(예측 방식과 유사). A·C는 직접법."
+    },
+    {
+      "id": "fsa-m4-q15",
+      "section": "2",
+      "concept": "US GAAP direct → reconciliation",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "truncated-rule",
+      "stem": "Under US GAAP, a company using the direct method must also:",
+      "choices": {
+        "A": "present a reconciliation of net income to cash flow from operations",
+        "B": "restate prior years using the indirect method",
+        "C": "disclose direct-format cash flows in the notes"
+      },
+      "answer": "A",
+      "explanation": "Direct filers under US GAAP must also present the NI → CFO reconciliation (= the indirect method).",
+      "kr": "US GAAP 직접법 사용 시 순이익 → 영업현금흐름 조정표(간접법)도 제시."
+    },
+    {
+      "id": "fsa-m4-q16",
+      "section": "2",
+      "concept": "Who prefers direct",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "confusion",
+      "stem": "Analysts and commercial lenders generally prefer the direct method because it:",
+      "choices": {
+        "A": "is easier and less costly to prepare",
+        "B": "provides receipts and payments information useful for assessing capacity to repay",
+        "C": "is required by IFRS"
+      },
+      "answer": "B",
+      "explanation": "Direct gives specific sources and uses of operating cash — useful for financing needs and repayment capacity. A is the PREPARERS' argument for indirect; C is false.",
+      "kr": "직접법은 영업현금의 구체적 원천·사용을 보여 상환능력 평가에 유용. A는 작성자의 간접법 선호 이유, C는 거짓."
+    },
+    {
+      "id": "fsa-m4-q17",
+      "section": "2",
+      "concept": "Encourage vs require",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "IFRS and US GAAP most accurately:",
+      "choices": {
+        "A": "require the direct method",
+        "B": "encourage the direct method but permit either",
+        "C": "require the indirect method"
+      },
+      "answer": "B",
+      "explanation": "Both ENCOURAGE direct, PERMIT either; most companies use indirect.",
+      "kr": "둘 다 직접법 '권장', 둘 다 '허용'; 대부분 간접법 사용."
+    },
+    {
+      "id": "fsa-m4-q18",
+      "section": "2",
+      "concept": "Adjustment types — except",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "negation",
+      "stem": "The indirect method adjusts net income for all of the following EXCEPT:",
+      "choices": {
+        "A": "non-cash items",
+        "B": "net changes in operating accruals",
+        "C": "proceeds from issuing long-term debt"
+      },
+      "answer": "C",
+      "explanation": "EXCEPT → T/F. Three adjustment types: non-cash items (T), non-operating items, changes in operating accruals (T). Debt proceeds are a FINANCING cash flow, not an adjustment to NI (answer).",
+      "kr": "EXCEPT → T/F. 조정 3종: 비현금 항목(T), 비영업 항목, 영업 발생액 변동(T). 차입금은 재무 현금흐름이지 순이익 조정이 아님(정답)."
+    },
+    {
+      "id": "fsa-m4-q19",
+      "section": "3",
+      "concept": "Tax expense vs paid",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "asked-quantity",
+      "stem": "Unilever adds back €1,667m of taxation and later deducts €2,164m of income tax paid. Its 2017 cash outflow for taxes is:",
+      "choices": {
+        "A": "€1,667m",
+        "B": "€2,164m",
+        "C": "€497m"
+      },
+      "answer": "B",
+      "explanation": "Tax EXPENSE (1,667) is added back; the CASH paid (2,164) is deducted. The cash outflow is 2,164. C is the difference.",
+      "kr": "법인세'비용' 1,667은 가산, '현금' 지급 2,164는 차감. 현금 유출은 2,164."
+    },
+    {
+      "id": "fsa-m4-q20",
+      "section": "3",
+      "concept": "JV income",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "definition",
+      "stem": "In an indirect-method statement, an investor's share of a joint venture's profit is:",
+      "choices": {
+        "A": "added back to net income",
+        "B": "deducted from net income, with cash dividends from the JV reported separately",
+        "C": "reported as an investing inflow at the same amount"
+      },
+      "answer": "B",
+      "explanation": "Equity-method income is in NI but isn't cash → deducted. Cash dividends from the JV are reported separately (Unilever: investing).",
+      "kr": "지분법 이익은 순이익에 포함되지만 현금 아님 → 차감. JV로부터의 현금 배당은 별도(Unilever: 투자)."
+    },
+    {
+      "id": "fsa-m4-q21",
+      "section": "3",
+      "concept": "Gain on disposal",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "asked-quantity",
+      "stem": "A company reports a €300m gain on disposal of PP&E with proceeds of €500m. Under the indirect method the gain is:",
+      "choices": {
+        "A": "added in operating; €500m in investing",
+        "B": "deducted in operating; €500m in investing",
+        "C": "deducted in operating; €200m in investing"
+      },
+      "answer": "B",
+      "explanation": "Gain raised NI but isn't operating cash → deduct. The full PROCEEDS (500) go in investing. C reports the carrying value, not the cash.",
+      "kr": "처분이익은 순이익을 늘렸지만 영업현금 아님 → 차감. 처분대가 '전액'(500)이 투자. C는 장부가를 기록."
+    },
+    {
+      "id": "fsa-m4-q22",
+      "section": "3",
+      "concept": "CFO > NI",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Unilever's operating cash flow exceeded net profit each year most likely because of:",
+      "choices": {
+        "A": "the add-back of depreciation",
+        "B": "increases in short-term borrowings",
+        "C": "share repurchases"
+      },
+      "answer": "A",
+      "explanation": "Depreciation (≈ €1.5bn) is a non-cash expense added back. Borrowings and buybacks are financing — they don't touch CFO.",
+      "kr": "감가상각(약 15억 유로)은 비현금비용으로 가산. 차입·자사주는 재무 — 영업현금흐름 무관."
+    },
+    {
+      "id": "fsa-m4-q23",
+      "section": "3",
+      "concept": "US GAAP would lower CFO",
+      "type": "mc",
+      "difficulty": 3,
+      "trap": "direction",
+      "stem": "If Unilever reported under US GAAP instead of IFRS, its net cash from operating activities would most likely be:",
+      "choices": {
+        "A": "higher, because interest paid would move to financing",
+        "B": "lower, because interest paid (€470m) and interest received (€154m) would both be in operating",
+        "C": "unchanged"
+      },
+      "answer": "B",
+      "explanation": "US GAAP: interest paid and received are both operating. Unilever paid 470 and received 154 → operating would fall by net 316.",
+      "kr": "US GAAP: 이자 지급·수취 모두 영업. 지급 470, 수취 154 → 영업이 순 316 감소."
+    },
+    {
+      "id": "fsa-m4-q24",
+      "section": "3",
+      "concept": "Ending cash with FX",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "truncated-rule",
+      "stem": "Unilever 2017: CFO 7,292; investing (5,879); financing (1,433); beginning cash 3,198; FX effect (9). Ending cash is closest to:",
+      "choices": {
+        "A": "3,178",
+        "B": "3,169",
+        "C": "3,189"
+      },
+      "answer": "B",
+      "explanation": "Net from activities = 7,292 − 5,879 − 1,433 = −20. End = 3,198 − 20 − 9 = 3,169. A (3,178) ignores the FX line; C (3,189) ignores the activities. FX is a separate reconciling item — include it.",
+      "kr": "활동 합계 = −20. 기말 = 3,198 − 20 − 9 = 3,169. FX 효과는 별도 조정 항목으로 반드시 포함."
+    },
+    {
+      "id": "fsa-m4-q25",
+      "section": "3",
+      "concept": "Buyback funding",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Unilever's ~€5bn share repurchase in 2017 was funded in part by:",
+      "choices": {
+        "A": "disposals of PP&E",
+        "B": "increased borrowing",
+        "C": "a decrease in dividends"
+      },
+      "answer": "B",
+      "explanation": "Short-term borrowing (+2,695) and additional financial liabilities (+8,851) exceeded repayments (2,604) — buybacks were partly debt-funded.",
+      "kr": "단기차입(+2,695)과 추가 금융부채(+8,851)가 상환(2,604)을 초과 — 자사주는 일부 차입으로 조달."
+    },
+    {
+      "id": "fsa-m4-q26",
+      "section": "4",
+      "concept": "Recognize direct",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "An operating section that begins with 'cash received from customers' and has no depreciation line is most likely prepared using:",
+      "choices": {
+        "A": "the indirect method",
+        "B": "the direct method",
+        "C": "US GAAP only"
+      },
+      "answer": "B",
+      "explanation": "Cash received/paid lines and no add-backs → DIRECT. Depreciation in the operating section → indirect.",
+      "kr": "현금 수취/지급 항목, 가산 조정 없음 → '직접법'. 영업 부분에 감가상각이 있으면 간접법."
+    },
+    {
+      "id": "fsa-m4-q27",
+      "section": "4",
+      "concept": "IFRS choices compliant",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Telefónica reports net interest paid in operating; Unilever reports interest paid in financing. Both are:",
+      "choices": {
+        "A": "non-compliant with IFRS",
+        "B": "permitted under IFRS",
+        "C": "required to restate under US GAAP rules"
+      },
+      "answer": "B",
+      "explanation": "IFRS permits interest paid in operating OR financing — both comply; cross-company CFO comparisons need adjusting.",
+      "kr": "IFRS는 이자 지급을 영업 '또는' 재무로 허용 — 둘 다 적법. 회사 간 비교 시 조정 필요."
+    },
+    {
+      "id": "fsa-m4-q28",
+      "section": "4",
+      "concept": "Excluding FX",
+      "type": "calc",
+      "difficulty": 1,
+      "trap": "asked-quantity",
+      "stem": "Telefónica 2017: CFO 13,796; investing (10,245); financing (1,752). Net cash from the three activities, excluding exchange-rate effects, is closest to:",
+      "choices": {
+        "A": "1,456",
+        "B": "1,799",
+        "C": "1,797"
+      },
+      "answer": "B",
+      "explanation": "13,796 − 10,245 − 1,752 = 1,799. 1,456 includes the FX and consolidation effects — not what was asked.",
+      "kr": "13,796 − 10,245 − 1,752 = 1,799. 1,456은 환율·연결 효과 포함 — 묻는 값 아님."
+    },
+    {
+      "id": "fsa-m4-q29",
+      "section": "4",
+      "concept": "Largest investing use",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Telefónica's largest investing expenditure in each of 2015–2017 was:",
+      "choices": {
+        "A": "acquisitions of companies",
+        "B": "payments for PP&E and intangible assets",
+        "C": "payments on financial investments"
+      },
+      "answer": "B",
+      "explanation": "PP&E and intangibles (≈ €9–10bn/yr) — a capital-intensive telecom network. Acquisitions were large only in 2015 (~€3.2bn).",
+      "kr": "유형·무형자산(연 90~100억 유로) — 자본집약 통신망. 인수는 2015년만 큼(약 32억)."
+    },
+    {
+      "id": "fsa-m4-q30",
+      "section": "4",
+      "concept": "Equity raised, financing negative",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "definition",
+      "stem": "In 2015 Telefónica issued €4.2bn of equity yet reported negative financing cash flow, most likely because:",
+      "choices": {
+        "A": "it paid no dividends",
+        "B": "debt repayments significantly exceeded new borrowing",
+        "C": "the equity issue was non-cash"
+      },
+      "answer": "B",
+      "explanation": "Repayments (3,805 + 9,858 = 13,663) exceeded new debt (1,602 + 8,784 = 10,386), plus dividends of 2,775.",
+      "kr": "상환(13,663)이 신규 차입(10,386)을 크게 초과 + 배당 2,775."
+    },
+    {
+      "id": "fsa-m4-q31",
+      "section": "5",
+      "concept": "Tech Data requirement",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "truncated-rule",
+      "stem": "Tech Data uses the direct method under US GAAP. It must therefore also present:",
+      "choices": {
+        "A": "a reconciliation of net income to net cash from operating activities",
+        "B": "a direct-format investing section",
+        "C": "nothing further"
+      },
+      "answer": "A",
+      "explanation": "US GAAP direct → must add the NI → CFO reconciliation.",
+      "kr": "US GAAP 직접법 → 순이익 → 영업현금흐름 조정표 추가 필요."
+    },
+    {
+      "id": "fsa-m4-q32",
+      "section": "5",
+      "concept": "AR increase",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "direction",
+      "stem": "In an indirect-method reconciliation, an increase in accounts receivable of 500 is:",
+      "choices": {
+        "A": "added to net income",
+        "B": "subtracted from net income",
+        "C": "reported in investing"
+      },
+      "answer": "B",
+      "explanation": "Operating ASSET ↑ → SUBTRACT (sales booked but cash not collected). Assets opposite.",
+      "kr": "영업'자산' ↑ → '차감'(매출 인식했으나 미회수). 자산은 반대 방향."
+    },
+    {
+      "id": "fsa-m4-q33",
+      "section": "5",
+      "concept": "AP increase",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "direction",
+      "stem": "An increase in accounts payable of 1,700 is, in the NI → CFO reconciliation:",
+      "choices": {
+        "A": "subtracted",
+        "B": "added",
+        "C": "reported in financing"
+      },
+      "answer": "B",
+      "explanation": "Operating LIABILITY ↑ → ADD (expense booked, cash not yet paid). Liabilities same.",
+      "kr": "영업'부채' ↑ → '가산'(비용 인식, 현금 미지급). 부채는 같은 방향."
+    },
+    {
+      "id": "fsa-m4-q34",
+      "section": "5",
+      "concept": "CFO calc",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "direction",
+      "stem": "Net income 200; depreciation 50; increase in inventory 80; decrease in accounts receivable 30; increase in accrued liabilities 20. CFO is closest to:",
+      "choices": {
+        "A": "220",
+        "B": "160",
+        "C": "380"
+      },
+      "answer": "A",
+      "explanation": "200 + 50 − 80 (asset ↑) + 30 (asset ↓) + 20 (liability ↑) = 220. B flips the receivables sign; C adds everything.",
+      "kr": "200 + 50 − 80(자산 ↑) + 30(자산 ↓) + 20(부채 ↑) = 220. B는 매출채권 부호 반대, C는 모두 더함."
+    },
+    {
+      "id": "fsa-m4-q35",
+      "section": "5",
+      "concept": "Bad-debt provision",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "direction",
+      "stem": "The provision for losses on receivables in an indirect-method reconciliation is:",
+      "choices": {
+        "A": "subtracted, because it reduces receivables",
+        "B": "added back, because it is a non-cash expense",
+        "C": "reported in investing"
+      },
+      "answer": "B",
+      "explanation": "Bad-debt expense lowered NI with no cash outflow → add back.",
+      "kr": "대손상각비는 현금 유출 없이 순이익 감소 → 가산."
+    },
+    {
+      "id": "fsa-m4-q36",
+      "section": "5",
+      "concept": "US GAAP interest",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "truncated-rule",
+      "stem": "Under US GAAP, Tech Data's net interest paid is reported in:",
+      "choices": {
+        "A": "operating activities",
+        "B": "financing activities",
+        "C": "investing activities, if the company chooses"
+      },
+      "answer": "A",
+      "explanation": "US GAAP has no choice: interest paid is operating.",
+      "kr": "US GAAP는 선택 없음: 이자 지급 = 영업."
+    },
+    {
+      "id": "fsa-m4-q37",
+      "section": "5",
+      "concept": "Why CFO didn't cover investing",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Tech Data's CFO did not cover investing in fiscal 2018 most likely because of:",
+      "choices": {
+        "A": "a large increase in property capex",
+        "B": "a major business acquisition",
+        "C": "repayment of long-term debt"
+      },
+      "answer": "B",
+      "explanation": "$2.25bn acquisition vs CFO $1.1bn. Debt repayment is financing, not investing.",
+      "kr": "22.5억 달러 인수 vs 영업현금 11억. 부채 상환은 재무."
+    },
+    {
+      "id": "fsa-m4-q38",
+      "section": "5",
+      "concept": "AP-driven CFO",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "definition",
+      "stem": "A company's CFO rises sharply while net income falls; the reconciliation shows a very large increase in accounts payable. This most likely suggests:",
+      "choices": {
+        "A": "the CFO increase may not be sustainable",
+        "B": "earnings quality has improved",
+        "C": "receivables collection has improved"
+      },
+      "answer": "A",
+      "explanation": "Delaying supplier payments brings cash in only temporarily — suppliers must eventually be paid. Payables-driven CFO is lower quality.",
+      "kr": "공급자 지급 지연은 일시적 현금 — 결국 지급해야 함. 매입채무 주도의 영업현금흐름은 질이 낮음."
+    },
+    {
+      "id": "fsa-m4-q39",
+      "section": "6",
+      "concept": "US GAAP indirect disclosure",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "truncated-rule",
+      "stem": "A US GAAP company using the indirect method must separately disclose:",
+      "choices": {
+        "A": "cash received from customers",
+        "B": "cash paid for interest and income taxes",
+        "C": "a reconciliation of net income to CFO"
+      },
+      "answer": "B",
+      "explanation": "Indirect → disclose interest and taxes paid. C is the requirement for DIRECT filers (and indirect already IS that reconciliation).",
+      "kr": "간접법 → 이자·법인세 지급액 공시. C는 '직접법' 사용 시 요건."
+    },
+    {
+      "id": "fsa-m4-q40",
+      "section": "6",
+      "concept": "Mirror pair",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "confusion",
+      "stem": "Under US GAAP, which pairing of method and additional disclosure is correct?",
+      "choices": {
+        "A": "Direct — interest and taxes paid; indirect — NI-to-CFO reconciliation",
+        "B": "Direct — NI-to-CFO reconciliation; indirect — interest and taxes paid",
+        "C": "Both — direct-format receipts and payments"
+      },
+      "answer": "B",
+      "explanation": "Each method supplies what the other shows: direct adds the reconciliation; indirect adds interest and taxes paid. A is the swap.",
+      "kr": "각 방법은 다른 방법이 보여주는 것을 보충: 직접법 → 조정표, 간접법 → 이자·세금 지급액. A는 뒤바뀜."
+    },
+    {
+      "id": "fsa-m4-q41",
+      "section": "6",
+      "concept": "Read the printed sign",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "direction",
+      "stem": "Walmart's FY2017 reconciliation shows 'Inventories +1,021'. This means inventories:",
+      "choices": {
+        "A": "increased by 1,021",
+        "B": "decreased by 1,021",
+        "C": "were written down by 1,021"
+      },
+      "answer": "B",
+      "explanation": "A positive adjustment on an ASSET line means the asset FELL (cash released). Assets opposite.",
+      "kr": "'자산' 항목의 + 조정 = 자산이 '감소'(현금 회수). 자산은 반대 방향."
+    },
+    {
+      "id": "fsa-m4-q42",
+      "section": "6",
+      "concept": "Debt extinguishment loss",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "asked-quantity",
+      "stem": "Walmart reports a $3,136m loss on extinguishment of debt. In the cash flow statement the loss is:",
+      "choices": {
+        "A": "subtracted in operating; the cash paid is in investing",
+        "B": "added back in operating; the cash paid is in financing",
+        "C": "reported only in financing"
+      },
+      "answer": "B",
+      "explanation": "The loss lowered NI with no operating cash → add back. The cash paid to retire debt is FINANCING. Same structure as Example 1.",
+      "kr": "손실은 영업현금 없이 순이익 감소 → 가산. 부채 상환 현금은 '재무'. Example 1과 같은 구조."
+    },
+    {
+      "id": "fsa-m4-q43",
+      "section": "6",
+      "concept": "CFO calc with gain",
+      "type": "calc",
+      "difficulty": 3,
+      "trap": "direction",
+      "stem": "Net income 1,000; depreciation 400; gain on sale of equipment 60; increase in receivables 120; decrease in inventory 50; decrease in accounts payable 90; increase in accrued taxes 30. CFO is closest to:",
+      "choices": {
+        "A": "1,210",
+        "B": "1,330",
+        "C": "1,390"
+      },
+      "answer": "A",
+      "explanation": "1,000 + 400 − 60 (gain) − 120 (asset ↑) + 50 (asset ↓) − 90 (liability ↓) + 30 (liability ↑) = 1,210.",
+      "kr": "1,000 + 400 − 60(이익) − 120(자산 ↑) + 50(자산 ↓) − 90(부채 ↓) + 30(부채 ↑) = 1,210."
+    },
+    {
+      "id": "fsa-m4-q44",
+      "section": "6",
+      "concept": "Largest adjustment",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "For many companies, including Walmart, the largest adjustment from net income to CFO is most likely:",
+      "choices": {
+        "A": "changes in accounts payable",
+        "B": "depreciation and amortization",
+        "C": "deferred income taxes"
+      },
+      "answer": "B",
+      "explanation": "D&A — Walmart's ≈ $10.5bn, about equal to net income.",
+      "kr": "감가상각비 — Walmart 약 105억 달러, 순이익과 비슷."
+    },
+    {
+      "id": "fsa-m4-q45",
+      "section": "1",
+      "concept": "Net financing — strike non-cash",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "asked-quantity",
+      "stem": "US GAAP: issuance of bonds 500; repayment of bank loan 200; dividends paid 80; interest paid 40; loss on early retirement of debt 15; purchase of treasury stock 60. Net cash from financing is closest to:",
+      "choices": {
+        "A": "160",
+        "B": "120",
+        "C": "145"
+      },
+      "answer": "A",
+      "explanation": "Strike non-cash: the LOSS (15). Label: interest paid → operating (US GAAP). Financing = 500 − 200 − 80 − 60 = 160. B also subtracts interest; C subtracts the loss.",
+      "kr": "비현금 제거: '손실' 15. 분류: 이자 지급 → 영업(US GAAP). 재무 = 500 − 200 − 80 − 60 = 160. B는 이자도 차감, C는 손실 차감."
+    },
+    {
+      "id": "fsa-m4-q46",
+      "section": "3",
+      "concept": "Cross-company adjustment",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Comparing the CFO of an IFRS company that classifies interest paid as financing with a US GAAP company, an analyst should most likely:",
+      "choices": {
+        "A": "make no adjustment",
+        "B": "adjust for the different classification of interest paid",
+        "C": "convert both to the direct method"
+      },
+      "answer": "B",
+      "explanation": "The IFRS company's CFO excludes interest paid; the US GAAP company's includes it — adjust before comparing.",
+      "kr": "IFRS 회사의 영업현금은 이자 지급 제외, US GAAP 회사는 포함 — 비교 전 조정."
+    },
+    {
+      "id": "fsa-m4-p01",
+      "section": "1",
+      "concept": "Ex1 — net investing (loss is not cash)",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "asked-quantity",
+      "source": "cfai",
+      "stem": "A company reports: proceeds from issuing long-term debt 250,000; purchase of equipment (180,000); loss on sale of equipment 50,000; proceeds from sale of equipment 100,000; equity in earnings of an affiliate 12,000. Net cash from investing is closest to:",
+      "choices": {
+        "A": "(130,000)",
+        "B": "(80,000)",
+        "C": "+170,000"
+      },
+      "answer": "B",
+      "explanation": "Strike non-cash: the LOSS and the equity-method earnings. Debt proceeds → financing. Investing = −180,000 + 100,000 = −80,000. A subtracts the loss — the curriculum's planted lure; the cash is the proceeds, all of it.",
+      "kr": "비현금 제거: 처분'손실'과 지분법이익. 차입 → 재무. 투자 = −180,000 + 100,000 = −80,000. A는 손실을 차감 — 교재의 함정. 현금은 처분대가 전액."
+    },
+    {
+      "id": "fsa-m4-p02",
+      "section": "1",
+      "concept": "Ex2 — note pays inventory",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "truncated-rule",
+      "source": "cfai",
+      "stem": "Under IFRS, a company issues a 120-day note for 40,000 to pay for inventory and issues long-term debt of 90,000 to pay for equipment. Operating cash flow:",
+      "choices": {
+        "A": "increases by 40,000",
+        "B": "decreases by 40,000",
+        "C": "decreases by 130,000"
+      },
+      "answer": "B",
+      "explanation": "Inventory payment → operating −40,000. Note (+40,000) and long-term debt (+90,000) → financing. Equipment → investing. Short-term notes are financing, not operating.",
+      "kr": "재고 지급 → 영업 −40,000. 어음(+40,000)·장기차입(+90,000) → 재무. 설비 → 투자. 단기 어음도 재무."
+    },
+    {
+      "id": "fsa-m4-f01",
+      "section": "1",
+      "concept": "Classification",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "truncated-rule",
+      "front": "The three activities, the boundary cases, and the 'net cash from X' routine",
+      "back": "O = make & sell + residual; trading securities (any company); paying A/P (trade credit is operating).\nI = buy/sell long-term assets + other companies' debt/equity (short or long term), excluding trading securities.\nF = raise/repay capital: stock (common/preferred), bonds, borrowing incl. SHORT-TERM notes; buybacks; repayments.\nNOT CASH: gains, losses, equity-method income, depreciation, impairment.\nRoutine: (1) STRIKE non-cash (2) label O/I/F (3) sum the requested letter. Ex1: −200 + 120 = −80, not −150."
+    },
+    {
+      "id": "fsa-m4-f02",
+      "section": "1",
+      "concept": "Interest/dividend grid",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "truncated-rule",
+      "front": "IFRS vs US GAAP for interest and dividends, received and paid",
+      "back": "Received: IFRS O or I | US GAAP O.\nPaid interest: IFRS O or F | US GAAP O.\nDividends paid: IFRS O or F | US GAAP F.\nLogic: received → alt. investing (return ON investment); paid → alt. financing (cost OF capital).\nIFRS: consistent + disclosed separately. US GAAP: no choice.\nNon-cash transactions (conversions, stock dividends, asset swaps): excluded, disclosed in a note."
+    },
+    {
+      "id": "fsa-m4-f03",
+      "section": "2",
+      "concept": "Direct vs indirect",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "confusion",
+      "front": "Same CFO; what each shows; who prefers which; standards; US GAAP mirror rules",
+      "back": "CFO amount identical; only operating FORMAT differs; investing/financing same.\nDirect: receipts & payments; sources of cash; analysts & lenders.\nIndirect: NI + (non-cash, non-operating, accrual changes); reasons NI ≠ CFO; preparers; nearly universal.\nBoth standards ENCOURAGE direct, PERMIT either.\nUS GAAP: direct → add NI→CFO reconciliation; indirect → disclose interest & taxes paid."
+    },
+    {
+      "id": "fsa-m4-f04",
+      "section": "5",
+      "concept": "Working-capital signs",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "direction",
+      "front": "Signs for operating assets, operating liabilities, non-cash items",
+      "back": "ASSETS OPPOSITE, LIABILITIES SAME.\nOp asset ↑ (AR, inventory, prepaid) → subtract; ↓ → add.\nOp liability ↑ (AP, accrued, taxes payable) → add; ↓ → subtract.\nNon-cash expense or LOSS (depreciation, bad-debt provision, stock comp, loss on disposal/extinguishment) → add back.\nNon-cash GAIN → subtract.\nRead the printed sign: + on an asset line = asset fell."
+    },
+    {
+      "id": "fsa-m4-f05",
+      "section": "3",
+      "concept": "The four companies",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "definition",
+      "front": "Unilever, Telefónica, Tech Data, Walmart — standard, method, interest classification, key lessons",
+      "back": "UNILEVER (IFRS, indirect): tax expense 1,667 added back, tax PAID 2,164 deducted; JV income removed, JV dividends → investing; interest received → I, paid → F. CFO > NI (depreciation). 2017 buyback partly debt-funded.\nTELEFÓNICA (IFRS, direct): net interest in OPERATING; largest investing = PP&E; 2015 equity raised but net debt repaid.\nTECH DATA (US GAAP, direct + reconciliation): AP +1.7bn drives CFO while NI falls; acquisition → CFO < investing FY2018.\nWALMART (US GAAP, indirect + interest/tax paid): D&A largest adjustment; debt-extinguishment loss added back, cash in financing."
+    }
+  ]
+}
