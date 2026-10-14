@@ -1133,6 +1133,60 @@
       "kr": "차감 '자산' 계정은 자산 잔액을 줄임: 대손충당금 → 매출채권 차감. 감가상각'비용'은 손익계정 — 차감자산은 '감가상각누계액'. 매출환입·에누리는 '수익' 차감 계정."
     },
     {
+      "id": "fsa-m3-p10",
+      "section": "4",
+      "concept": "Official Q10 — inventory carrying value",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "source": "cfai",
+      "stem": "The carrying value of inventories most likely reflects:",
+      "choices": {
+        "A": "historical cost",
+        "B": "current value",
+        "C": "the lower of historical cost and net realizable value"
+      },
+      "answer": "C",
+      "explanation": "IFRS: cost unless NRV is lower (lower of cost and NRV). US GAAP: lower of cost and NRV, or lower of cost or market for LIFO/retail.",
+      "kr": "IFRS: 원가, 단 NRV가 낮으면 NRV(저가법). US GAAP: 원가와 NRV 중 낮은 금액, LIFO/소매는 cost or market."
+    },
+    {
+      "id": "fsa-m3-p11",
+      "section": "4",
+      "concept": "Official Q11 — paying rent in advance",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "direction",
+      "source": "cfai",
+      "stem": "When a company prepays rent, its balance sheet most likely shows:",
+      "choices": {
+        "A": "a decrease in assets and in liabilities",
+        "B": "a decrease in assets and in shareholders' equity",
+        "C": "a decrease in one asset and an increase in another"
+      },
+      "answer": "C",
+      "explanation": "Cash ↓ (asset) and prepaid rent ↑ (asset) — an asset swap. No liability is settled (A), and no expense is recognized yet, so equity is unchanged (B). Rent becomes an expense only as the period passes.",
+      "kr": "현금 ↓(자산), 선급임차료 ↑(자산) — 자산 간 교환. 부채 상환 없음(A), 아직 비용 인식 없으므로 자본 불변(B). 기간 경과에 따라 비용화."
+    },
+    {
+      "id": "fsa-m3-p12",
+      "section": "5",
+      "concept": "Official Q12 — accrued expenses",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "source": "cfai",
+      "stem": "Accrued expenses (accrued liabilities) are:",
+      "choices": {
+        "A": "expenses that have been paid",
+        "B": "created when another liability is reduced",
+        "C": "expenses reported on the income statement but not yet paid"
+      },
+      "answer": "C",
+      "explanation": "Accrued = recognized on the income statement, cash not yet paid. Paid-in-advance is a prepaid (asset).",
+      "kr": "미지급비용 = 손익계산서에 인식, 아직 미지급. 미리 지급한 것은 선급비용(자산)."
+    },
+    {
       "id": "fsa-m3-f01",
       "section": "1",
       "concept": "Classification rules",

@@ -305,6 +305,17 @@ The **cost formula** sets **both** COGS on the income statement **and** ending i
 
 ⚠️ "Prepaid expenses are expenses" is the swap — they're **assets** until used.
 
+> ### ⭐ YOU MISSED OFFICIAL Q11 HERE — what prepaying rent does to the balance sheet
+> You picked **assets ↓ and liabilities ↓**; correct is **one asset ↓ and another asset ↑**.
+> | Account | Change |
+> |---|---|
+> | Cash (asset) | **↓** |
+> | Prepaid rent (asset) | **↑** |
+> | Liabilities | — (nothing was owed) |
+> | Equity | — (no expense yet) |
+> An **asset swap**: total assets unchanged. "Assets ↓ and liabilities ↓" is what *paying off a payable* looks like — the mirror case.
+> **Fix — write both sides before reading the options:** *what goes out, what comes in?* Prepay → cash out, prepaid asset in. Pay a bill already owed → cash out, payable out. Accrue an expense → liability in, equity out.
+
 ---
 
 ## 5. Current Liabilities (§3.07)
@@ -673,7 +684,10 @@ SoCE (IFRS): C-R-O-R; NI→RE, OCI→AOCI,
 | Q7 | Debt due within a year | current | ✅ | — |
 | Q8 | Customer prepayment | asset + liability | ✅ | — |
 | Q9 | Contra asset example | depreciation expense | **allowance for doubtful accounts** | definition (expense ≠ accumulated) |
+| Q10 | Inventory carrying value | lower of cost and NRV | ✅ | — |
+| Q11 | Prepaying rent | assets ↓ + liabilities ↓ | **one asset ↓, another ↑** | direction (wrote the payable-settlement entry) |
+| Q12 | Accrued expenses | expensed, not yet paid | ✅ | — |
 
-**Running tally: 6 / 9.** Two misses on §2 (liquidity-based presentation), one on §3 (contra asset).
+**Running tally: 8 / 12.** Two misses on §2 (liquidity-based presentation), one on §3 (contra asset), one on §4 (prepaid entry).
 
 > **Note status: COMPLETE** — §3.01 through §3.11. No scored curriculum examples in this reading. Practice questions Q1–Q57 → Study Hub (Financial Statement Analysis → M3, `fsa-m3-q01…`).

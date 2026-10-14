@@ -26,9 +26,12 @@
         "M2 official Q6 now correct on retry (supply shifts right)",
         "M5 Ex4 Q3 (money supply ↑ → rates ↓; first direction miss since M3)",
         "M6 official Q6 (H–O: abundant factor gains, scarce loses — picked the flip)",
-        "M7 Ex2 Q3 + Q6 (X − M = (S − I) + (T − G): picked T ↑ and I ↓ to shrink a surplus — both grow it; fourth module with a sign miss on this identity)"
+        "M7 Ex2 Q3 + Q6 (X − M = (S − I) + (T − G): picked T ↑ and I ↓ to shrink a surplus — both grow it; fourth module with a sign miss on this identity)",
+        "FSA M3 official Q11 (prepaying rent = cash ↓ + prepaid asset ↑; picked assets ↓ + liabilities ↓ — the entry for paying off a payable)"
       ],
       "seed": [
+        "fsa-m3-p11",
+        "fsa-m3-q26",
         "econ-m7-p06",
         "econ-m7-p07",
         "econ-m7-q13",
@@ -757,6 +760,11 @@
       "qid": "fsa-m3-p09",
       "when": "2026-10-14",
       "note": "FSA M3 official Q9 — contra asset = allowance for doubtful accounts; picked depreciation EXPENSE (IS account; the contra asset is accumulated depreciation). (one-word definition)"
+    },
+    {
+      "qid": "fsa-m3-p11",
+      "when": "2026-10-14",
+      "note": "FSA M3 official Q11 — prepaying rent = one asset ↓ (cash), another ↑ (prepaid); picked assets ↓ + liabilities ↓ (that's settling a payable). Write both sides of the entry first. (direction)"
     }
   ]
 }
