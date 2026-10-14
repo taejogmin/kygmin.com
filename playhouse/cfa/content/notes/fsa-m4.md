@@ -172,6 +172,11 @@ Issue a **£30,000 180-day note** → pay for **inventory**; issue **£110,000 l
 
 ⚠️ "The direct method produces a higher CFO" ✗; "investing differs under the direct method" ✗.
 
+> ### ⭐ YOU MISSED OFFICIAL Q6 HERE — the method choice only exists for OPERATING
+> "Which component may be prepared using the indirect method?" → you picked **investing**; correct is **operating**.
+> Direct vs indirect is a choice about **how to present operating cash flow** (gross receipts vs net income + adjustments). Investing and financing have no "indirect" version — they always list the actual cash in and out.
+> **One line to store:** *direct / indirect = operating only.*
+
 ### Direct vs. indirect 🔴
 | | **Direct** | **Indirect** |
 |---|---|---|
@@ -547,8 +552,14 @@ Non-cash GAIN → subtract
 | Q2 | Sale of a building | operating | **investing** | confusion (long-term asset → investing) |
 | Q3 | Trading vs investment securities | only trading is operating | ✅ | — |
 | Q4 | Bond conversion | financing out + in | **supplementary disclosure** | off-model (no cash moved) |
+| Q5 | Non-cash PP&E transaction | note / supplementary schedule | ✅ | — |
+| Q6 | Which section can be indirect | investing | **operating** | truncated-rule (method = operating only) |
+| Q7 | Indirect starts with | net income | ✅ | — |
+| Q8 | Benefit of direct | specific sources | ✅ | — |
 
-**Running tally: 1 / 4.**
+**Final: 4 / 8 (50%).** Q1–Q4: 1/4; Q5–Q8: 3/4 — the second half came after the §1 re-read.
+
+**Diagnosis:** every miss is on §1–§2 fundamentals (what the three activities are, where a building goes, non-cash conversions, which section the method choice applies to) — no calculation was tested in this set. These are first-read gaps, not reasoning errors: the same concepts were answered correctly once re-read (Q5 non-cash, Q7–Q8 methods). Lock in the §1 classification table and the §2 "same CFO, operating format only" box; the bank's §1–§2 questions (q05–q18) cover all four misses.
 
 **Tally: 1 / 2.** Practice questions Q1–Q46 → Study Hub (Financial Statement Analysis → M4, `fsa-m4-q01…`).
 

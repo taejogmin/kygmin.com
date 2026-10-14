@@ -283,9 +283,12 @@
         "M7 Ex1 Q3 (hedged zero held to maturity = risk free; dropped the clause that switches rate risk off)",
         "FSA M1 official Q14 ('residual claim' → equity → balance sheet; skipped the translation step)",
         "FSA M2 Ex3 Q1 (OCI back-solve: dropped the dividend → €7m vs €10m; third module in a row a multi-term identity lost a term)",
-        "FSA M2 official Q6 ('derivative' matched the H in F-H-S-P; dropped 'unrealized' + 'accounted for as a hedge' → picked a realized non-hedge gain)"
+        "FSA M2 official Q6 ('derivative' matched the H in F-H-S-P; dropped 'unrealized' + 'accounted for as a hedge' → picked a realized non-hedge gain)",
+        "FSA M4 official Q6 (indirect method applies to which section → picked investing; the method choice exists for OPERATING only)"
       ],
       "seed": [
+        "fsa-m4-p08",
+        "fsa-m4-q13",
         "fsa-m2-p08",
         "fsa-m2-q50",
         "fsa-m2-p01",
@@ -806,6 +809,11 @@
       "qid": "fsa-m4-p06",
       "when": "2026-10-14",
       "note": "FSA M4 official Q4 — bond → stock conversion = non-cash → supplementary disclosure; picked financing outflow + inflow. (off-model)"
+    },
+    {
+      "qid": "fsa-m4-p08",
+      "when": "2026-10-14",
+      "note": "FSA M4 official Q6 — direct/indirect choice applies to OPERATING only; picked investing. (truncated rule)"
     }
   ]
 }

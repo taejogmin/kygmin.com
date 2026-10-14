@@ -892,6 +892,78 @@
       "kr": "현금 이동 없음 → 투자·재무 부분에 없음. 중요한 비현금 거래는 보충 정보(주석·명세)로 공시. B는 함정: 재무 거래처럼 보이지만 현금이 없음."
     },
     {
+      "id": "fsa-m4-p07",
+      "section": "1",
+      "concept": "Official Q5 — non-cash PP&E transaction",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "source": "cfai",
+      "stem": "A significant non-cash transaction affecting PP&E is most likely:",
+      "choices": {
+        "A": "reported in the investing section",
+        "B": "reported differently in CFO under the direct and indirect methods",
+        "C": "disclosed in a separate note or supplementary schedule"
+      },
+      "answer": "C",
+      "explanation": "No cash → not in the statement; significant non-cash transactions are disclosed in a note or supplementary schedule.",
+      "kr": "현금 없음 → 현금흐름표에 없음; 중요한 비현금 거래는 주석·보충명세로 공시."
+    },
+    {
+      "id": "fsa-m4-p08",
+      "section": "2",
+      "concept": "Official Q6 — which section uses indirect",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "truncated-rule",
+      "source": "cfai",
+      "stem": "Under both IFRS and US GAAP, which component of the cash flow statement may be prepared using the indirect method?",
+      "choices": {
+        "A": "Operating",
+        "B": "Investing",
+        "C": "Financing"
+      },
+      "answer": "A",
+      "explanation": "Direct vs indirect is a choice for the OPERATING section only. Investing and financing are always presented the same way (gross cash flows) regardless of method.",
+      "kr": "직접법/간접법 선택은 '영업' 부분에만 해당. 투자·재무는 방법과 무관하게 항상 같은 방식(총액 현금흐름)."
+    },
+    {
+      "id": "fsa-m4-p09",
+      "section": "2",
+      "concept": "Official Q7 — indirect starts with NI",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "source": "cfai",
+      "stem": "Under the indirect method, which item most likely appears in the operating section?",
+      "choices": {
+        "A": "Net income",
+        "B": "Cash paid to suppliers",
+        "C": "Cash received from customers"
+      },
+      "answer": "A",
+      "explanation": "Indirect starts from net income and adjusts. Cash paid/received lines are direct-method items.",
+      "kr": "간접법은 순이익에서 시작해 조정. 현금 지급/수취 항목은 직접법."
+    },
+    {
+      "id": "fsa-m4-p10",
+      "section": "2",
+      "concept": "Official Q8 — benefit of direct",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "confusion",
+      "source": "cfai",
+      "stem": "A benefit of the direct method over the indirect method is that it:",
+      "choices": {
+        "A": "mirrors a forecasting approach",
+        "B": "is easier and less costly",
+        "C": "provides specific information on the sources of operating cash flows"
+      },
+      "answer": "C",
+      "explanation": "Direct = specific sources of operating receipts and payments. A and B are the arguments FOR the indirect method.",
+      "kr": "직접법 = 영업 현금 수취·지급의 구체적 원천. A·B는 '간접법'의 장점."
+    },
+    {
       "id": "fsa-m4-f01",
       "section": "1",
       "concept": "Classification",
