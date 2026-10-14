@@ -99,6 +99,15 @@
       "short": "Income Statements",
       "notes": "content/notes/fsa-m2.md",
       "questions": "content/questions/fsa-m2.json"
+    },
+    {
+      "id": "fsa-m3",
+      "subject": "fsa",
+      "order": 3,
+      "title": "Analyzing Balance Sheets",
+      "short": "Balance Sheets",
+      "notes": "content/notes/fsa-m3.md",
+      "questions": "content/questions/fsa-m3.json"
     }
   ]
 }

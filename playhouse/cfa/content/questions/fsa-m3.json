@@ -1,0 +1,1044 @@
+{
+  "module": "fsa-m3",
+  "questions": [
+    {
+      "id": "fsa-m3-q01",
+      "section": "0",
+      "concept": "Book ≠ market — NOT a reason",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "negation",
+      "stem": "Which is LEAST likely a reason the balance sheet does not measure the market value of equity?",
+      "choices": {
+        "A": "Some items are measured at historical cost and others at fair value",
+        "B": "Fair-value items reflect values at the balance sheet date only",
+        "C": "Equity is calculated as assets minus liabilities"
+      },
+      "answer": "C",
+      "explanation": "Least-likely → T/F each. Mixed measurement (T reason) and point-in-time values (T reason). A − L = E is just the DEFINITION of book equity — it explains nothing about why book differs from market (F → answer). The third real reason: value depends on future cash flows and unrecorded items like reputation.",
+      "kr": "least likely → T/F. 혼합 측정(T), 시점 가치(T). A − L = E는 장부자본의 '정의'일 뿐 장부≠시장의 이유가 아님(F → 정답). 세 번째 진짜 이유: 미래 현금흐름·평판 등 기록되지 않는 항목."
+    },
+    {
+      "id": "fsa-m3-q02",
+      "section": "0",
+      "concept": "Recognition test",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "truncated-rule",
+      "stem": "An item is recognized on the balance sheet only if a future economic benefit is probable AND:",
+      "choices": {
+        "A": "it will be held for more than one year",
+        "B": "its cost or value can be measured reliably",
+        "C": "it is measured at fair value"
+      },
+      "answer": "B",
+      "explanation": "Two conditions: (1) probable flow of future benefit to/from the entity; (2) cost or value measurable with RELIABILITY.",
+      "kr": "두 조건: (1) 미래 경제적 효익의 유입/유출 가능성 높음, (2) 원가·가치를 '신뢰성 있게' 측정 가능."
+    },
+    {
+      "id": "fsa-m3-q03",
+      "section": "0",
+      "concept": "IFRS liquidity exception",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Under IFRS, a company may omit the current/non-current classification if:",
+      "choices": {
+        "A": "it also reports under US GAAP",
+        "B": "a liquidity-based presentation provides reliable and more relevant information",
+        "C": "its total assets exceed a size threshold"
+      },
+      "answer": "B",
+      "explanation": "IFRS exception: liquidity-based presentation when it is RELIABLE AND MORE RELEVANT — typically banks. US GAAP has no such exception in this reading.",
+      "kr": "IFRS 예외: 유동성 순서 표시가 '신뢰성 있고 더 목적적합'할 때 — 주로 은행."
+    },
+    {
+      "id": "fsa-m3-q04",
+      "section": "0",
+      "concept": "53-week year",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "which-quantity",
+      "stem": "Apple's occasional 53-week fiscal year is most relevant to the analysis of its:",
+      "choices": {
+        "A": "balance sheet",
+        "B": "income statement and cash flow statement",
+        "C": "statement of financial position"
+      },
+      "answer": "B",
+      "explanation": "An extra week adds a week of revenue, expense and cash flow — PERIOD statements. The balance sheet is a point-in-time snapshot (and C is just its other name).",
+      "kr": "1주 추가 → 수익·비용·현금흐름(기간 재무제표)에 영향. 재무상태표는 시점 스냅샷(C는 같은 표의 다른 이름)."
+    },
+    {
+      "id": "fsa-m3-q05",
+      "section": "0",
+      "concept": "Liquidity of an asset",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "The liquidity of an individual asset refers to:",
+      "choices": {
+        "A": "its historical cost",
+        "B": "its nearness to cash at a price close to fair market value",
+        "C": "whether it is classified as current"
+      },
+      "answer": "B",
+      "explanation": "Asset liquidity = 'nearness to cash' — convertible quickly at a price close to fair value (actively traded stock vs commercial real estate).",
+      "kr": "자산 유동성 = '현금 근접성' — 공정가치에 가까운 가격으로 빠르게 현금화 가능."
+    },
+    {
+      "id": "fsa-m3-q06",
+      "section": "1",
+      "concept": "Long operating cycle",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "truncated-rule",
+      "stem": "A distillery holds whisky for three years before sale; its operating cycle is three years. The inventory is most likely classified as:",
+      "choices": {
+        "A": "non-current, since it is held longer than one year",
+        "B": "current, since it will be sold within one operating cycle",
+        "C": "non-current, since the operating cycle exceeds one year"
+      },
+      "answer": "B",
+      "explanation": "Current = one year OR one operating cycle, WHICHEVER IS GREATER. The cycle is three years, so inventory sold within it is current.",
+      "kr": "유동 = 1년 또는 영업주기 중 '긴 쪽'. 영업주기 3년 → 그 안에 판매될 재고는 유동."
+    },
+    {
+      "id": "fsa-m3-q07",
+      "section": "1",
+      "concept": "Whichever is greater",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "direction",
+      "stem": "An asset is current if it is expected to be realized within one year or one operating cycle:",
+      "choices": {
+        "A": "whichever is shorter",
+        "B": "whichever is greater",
+        "C": "only if both are satisfied"
+      },
+      "answer": "B",
+      "explanation": "The rule is 'whichever is GREATER' — that is what keeps long-cycle inventory (tobacco, lumber, whisky) current.",
+      "kr": "규칙은 '긴 쪽' — 그래서 장기 영업주기 재고(담배·목재·위스키)도 유동."
+    },
+    {
+      "id": "fsa-m3-q08",
+      "section": "1",
+      "concept": "No right to defer",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "truncated-rule",
+      "stem": "A loan is due in 18 months, but the lender may demand repayment at any time. The liability is most likely:",
+      "choices": {
+        "A": "non-current, since it is due beyond one year",
+        "B": "current, since the entity has no unconditional right to defer settlement for at least one year",
+        "C": "non-current, since it is not held for trading"
+      },
+      "answer": "B",
+      "explanation": "Criterion 4: no UNCONDITIONAL right to defer settlement ≥ 1 year → current, regardless of the scheduled maturity. Any one of the four criteria suffices.",
+      "kr": "기준 4: 1년 이상 결제를 연기할 '무조건적 권리'가 없음 → 유동. 네 기준 중 하나만 충족해도 됨."
+    },
+    {
+      "id": "fsa-m3-q09",
+      "section": "1",
+      "concept": "Working capital calc",
+      "type": "calc",
+      "difficulty": 1,
+      "trap": "asked-quantity",
+      "stem": "Current assets 420; current liabilities 310; non-current liabilities 500. Working capital is closest to:",
+      "choices": {
+        "A": "110",
+        "B": "−390",
+        "C": "730"
+      },
+      "answer": "A",
+      "explanation": "Working capital = CA − CL = 420 − 310 = 110. Non-current liabilities are not in the formula — they are the distractor (B subtracts all liabilities).",
+      "kr": "운전자본 = 유동자산 − 유동부채 = 110. 비유동부채는 공식에 없음(B는 전체 부채를 뺌)."
+    },
+    {
+      "id": "fsa-m3-q10",
+      "section": "1",
+      "concept": "Excess working capital",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Excessive working capital is undesirable mainly because it:",
+      "choices": {
+        "A": "increases default risk",
+        "B": "ties up funds that could be used more productively",
+        "C": "reduces current assets"
+      },
+      "answer": "B",
+      "explanation": "Adequate working capital is essential; EXCESSIVE working capital leaves funds idle that could be used more productively elsewhere.",
+      "kr": "적정 운전자본은 필수, '과도한' 운전자본은 더 생산적으로 쓸 수 있는 자금을 묶어 둠."
+    },
+    {
+      "id": "fsa-m3-q11",
+      "section": "1",
+      "concept": "IFRS operating payables",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "truncated-rule",
+      "stem": "Under IFRS, trade payables to be settled more than one year after the balance sheet date are most likely classified as:",
+      "choices": {
+        "A": "non-current",
+        "B": "current, since they are part of the normal operating cycle",
+        "C": "equity"
+      },
+      "answer": "B",
+      "explanation": "IFRS: trade payables and operating accruals are part of working capital in the normal operating cycle → current even if settled more than 12 months out.",
+      "kr": "IFRS: 매입채무·영업 관련 미지급비용은 정상영업주기의 운전자본 → 12개월 넘게 결제돼도 유동."
+    },
+    {
+      "id": "fsa-m3-q12",
+      "section": "2",
+      "concept": "Liquidity-based format",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "A balance sheet listing all assets from cash through goodwill in order of liquidity, with no current/non-current subtotals, is best described as:",
+      "choices": {
+        "A": "a classified balance sheet",
+        "B": "a liquidity-based presentation",
+        "C": "a single-step balance sheet"
+      },
+      "answer": "B",
+      "explanation": "No current/non-current subtotals + liquidity ordering = liquidity-based presentation (HSBC). A classified balance sheet HAS those subtotals.",
+      "kr": "유동/비유동 소계 없음 + 유동성 순서 = 유동성 순서 표시(HSBC). 구분 재무상태표는 소계가 있음."
+    },
+    {
+      "id": "fsa-m3-q13",
+      "section": "2",
+      "concept": "Who uses liquidity-based",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Entities most likely to use a liquidity-based presentation are:",
+      "choices": {
+        "A": "manufacturers with long operating cycles",
+        "B": "banks",
+        "C": "retailers"
+      },
+      "answer": "B",
+      "explanation": "Banks — balance sheets dominated by financial instruments, where liquidity ordering is more relevant than the current/non-current split.",
+      "kr": "은행 — 금융상품 위주라 유동성 순서가 더 목적적합."
+    },
+    {
+      "id": "fsa-m3-q14",
+      "section": "3",
+      "concept": "Allowance gross-up",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "asked-quantity",
+      "stem": "A company reports net receivables of 2,400 after an allowance for doubtful accounts of 60. The percentage of gross receivables estimated to be uncollectible is closest to:",
+      "choices": {
+        "A": "2.50%",
+        "B": "2.44%",
+        "C": "2.56%"
+      },
+      "answer": "B",
+      "explanation": "Gross = net + allowance = 2,460. 60 / 2,460 = 2.44%. Choice A divides by the NET figure (60/2,400). Add the allowance back first.",
+      "kr": "총채권 = 순채권 + 충당금 = 2,460. 60/2,460 = 2.44%. A는 '순'채권으로 나눔. 충당금을 먼저 더하기."
+    },
+    {
+      "id": "fsa-m3-q15",
+      "section": "3",
+      "concept": "Write-off effect",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "truncated-rule",
+      "stem": "When a specific receivable is written off as uncollectible, the most likely effect is that:",
+      "choices": {
+        "A": "bad-debt expense increases",
+        "B": "net receivables are unchanged",
+        "C": "net income decreases"
+      },
+      "answer": "B",
+      "explanation": "Write-off: allowance ↓ and gross receivables ↓ by the same amount → net unchanged; NO income-statement effect (the expense was recognized when the allowance was built).",
+      "kr": "대손 확정(제각): 충당금 ↓, 총채권 ↓ 같은 금액 → 순채권 불변, 손익 영향 없음(비용은 충당금 설정 때 이미 인식)."
+    },
+    {
+      "id": "fsa-m3-q16",
+      "section": "3",
+      "concept": "Contra account",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "The allowance for doubtful accounts is best described as:",
+      "choices": {
+        "A": "a liability",
+        "B": "a contra account netted against accounts receivable",
+        "C": "an expense account"
+      },
+      "answer": "B",
+      "explanation": "A CONTRA-ASSET: it reduces gross receivables to net realizable value. Bad-debt EXPENSE is the income-statement account.",
+      "kr": "차감 계정(contra-asset): 총채권을 순실현가능가치로 줄임. 대손'비용'은 손익계산서 계정."
+    },
+    {
+      "id": "fsa-m3-q17",
+      "section": "3",
+      "concept": "Cash equivalents — NOT",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "negation",
+      "stem": "Which is LEAST likely a cash equivalent?",
+      "choices": {
+        "A": "A Treasury bill with two months to maturity",
+        "B": "A money market fund",
+        "C": "Cash restricted in use for 18 months"
+      },
+      "answer": "C",
+      "explanation": "Least-likely → T/F. T-bill ≤ 3 months (T), money market fund (T). Cash restricted for ≥ 12 months is EXCLUDED (F → answer).",
+      "kr": "least likely → T/F. 만기 3개월 이하 T-bill(T), MMF(T). 12개월 이상 사용 제한 현금은 '제외'(F → 정답)."
+    },
+    {
+      "id": "fsa-m3-q18",
+      "section": "3",
+      "concept": "Manipulation direction",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "direction",
+      "stem": "Management seeking to increase reported income this period would most likely:",
+      "choices": {
+        "A": "over-estimate bad-debt expense",
+        "B": "under-estimate collectability of receivables",
+        "C": "over-estimate collectability of receivables"
+      },
+      "answer": "C",
+      "explanation": "Over-estimating collectability → smaller allowance → lower bad-debt expense → HIGHER net income. A and B both RAISE expense (that's the good-year cushion move).",
+      "kr": "회수가능성 과대추정 → 충당금 ↓ → 대손비용 ↓ → 순이익 '증가'. A·B는 비용을 늘림(호황기 쿠션 쌓기)."
+    },
+    {
+      "id": "fsa-m3-q19",
+      "section": "3",
+      "concept": "Concentration — two measures",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "No customer accounts for 10% of a company's revenue, yet two customers each account for over 10% of its trade receivables. This best illustrates that:",
+      "choices": {
+        "A": "revenue concentration and receivables concentration are different measures",
+        "B": "the allowance is understated",
+        "C": "receivables are overstated"
+      },
+      "answer": "A",
+      "explanation": "Concentration can be low on revenue and high on receivables at the same time (Apple). They measure different exposures.",
+      "kr": "매출 집중도는 낮고 채권 집중도는 높을 수 있음(Apple). 서로 다른 지표."
+    },
+    {
+      "id": "fsa-m3-q20",
+      "section": "3",
+      "concept": "Receivables vs sales",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "direction",
+      "stem": "A significant increase in receivables relative to sales most likely signals:",
+      "choices": {
+        "A": "improved credit quality of customers",
+        "B": "problems collecting cash from customers",
+        "C": "a decrease in credit sales"
+      },
+      "answer": "B",
+      "explanation": "Receivables growing faster than sales → cash isn't being collected as quickly → potential collection problems.",
+      "kr": "매출보다 채권이 빠르게 증가 → 현금 회수 지연 → 회수 문제 가능성."
+    },
+    {
+      "id": "fsa-m3-q21",
+      "section": "4",
+      "concept": "IFRS inventory basis",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "off-model",
+      "stem": "Under IFRS, inventories are measured at:",
+      "choices": {
+        "A": "the lower of cost or market",
+        "B": "the lower of cost and net realizable value",
+        "C": "fair value"
+      },
+      "answer": "B",
+      "explanation": "IFRS: lower of cost and NRV — for ALL inventories. 'Lower of cost or market' is the US GAAP phrase for LIFO/retail only.",
+      "kr": "IFRS: 원가와 순실현가능가치 중 낮은 금액 — '모든' 재고. 'cost or market'은 US GAAP의 LIFO/소매 전용 표현."
+    },
+    {
+      "id": "fsa-m3-q22",
+      "section": "4",
+      "concept": "Write-down reversal",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "confusion",
+      "stem": "Reversal of a prior inventory write-down after the value recovers is:",
+      "choices": {
+        "A": "permitted under both IFRS and US GAAP",
+        "B": "permitted under IFRS but not US GAAP",
+        "C": "permitted under US GAAP but not IFRS"
+      },
+      "answer": "B",
+      "explanation": "IFRS permits reversal (capped at the original write-down); US GAAP prohibits it. The same split applies to PP&E impairment.",
+      "kr": "IFRS 환입 허용(원래 감액 한도), US GAAP 금지. 유형자산 손상차손 환입도 같은 구분."
+    },
+    {
+      "id": "fsa-m3-q23",
+      "section": "4",
+      "concept": "LIFO — not IFRS",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "negation",
+      "stem": "Which inventory cost formula is NOT permitted under IFRS?",
+      "choices": {
+        "A": "Weighted average cost",
+        "B": "First-in, first-out",
+        "C": "Last-in, first-out"
+      },
+      "answer": "C",
+      "explanation": "IFRS permits FIFO, weighted average and specific identification. LIFO is prohibited under IFRS (allowed under US GAAP).",
+      "kr": "IFRS 허용: FIFO·가중평균·개별법. LIFO는 IFRS 금지(US GAAP 허용)."
+    },
+    {
+      "id": "fsa-m3-q24",
+      "section": "4",
+      "concept": "Market under US GAAP",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "off-model",
+      "stem": "Under US GAAP, for LIFO inventory, 'market' is best described as:",
+      "choices": {
+        "A": "net realizable value",
+        "B": "current replacement cost, bounded above by NRV and below by NRV less a normal profit margin",
+        "C": "fair value less costs to sell"
+      },
+      "answer": "B",
+      "explanation": "Market = REPLACEMENT COST with a ceiling (NRV) and a floor (NRV − normal profit margin). Not fair value.",
+      "kr": "시가 = '현행 대체원가', 상한 NRV, 하한 NRV − 정상이익. 공정가치 아님."
+    },
+    {
+      "id": "fsa-m3-q25",
+      "section": "4",
+      "concept": "NRV definition",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "truncated-rule",
+      "stem": "Net realizable value is best described as estimated selling price:",
+      "choices": {
+        "A": "less estimated costs of completion and costs to make the sale",
+        "B": "less a normal profit margin",
+        "C": "plus costs of conversion"
+      },
+      "answer": "A",
+      "explanation": "NRV = selling price − costs to complete − costs to sell. Choice B describes the US GAAP market FLOOR.",
+      "kr": "NRV = 판매가 − 완성원가 − 판매비용. B는 US GAAP 시가의 '하한'."
+    },
+    {
+      "id": "fsa-m3-q26",
+      "section": "4",
+      "concept": "Prepaid insurance",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "A company pays a full year's insurance premium on 31 December. At that date it most likely:",
+      "choices": {
+        "A": "recognizes the full amount as an expense",
+        "B": "recognizes an asset, expensed one-twelfth per month",
+        "C": "recognizes a liability"
+      },
+      "answer": "B",
+      "explanation": "Expenses are recognized when incurred, not when paid → the prepayment is an ASSET (prepaid insurance), expensed 1/12 per month as it is used up.",
+      "kr": "비용은 지급 시점이 아니라 발생 시점에 인식 → 선급금은 '자산'(선급보험료), 매월 1/12씩 비용화."
+    },
+    {
+      "id": "fsa-m3-q27",
+      "section": "4",
+      "concept": "Reversal cap",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "truncated-rule",
+      "stem": "Under IFRS, the reversal of an inventory write-down is limited to:",
+      "choices": {
+        "A": "the amount of the original write-down",
+        "B": "net realizable value at the reversal date",
+        "C": "fair value"
+      },
+      "answer": "A",
+      "explanation": "IFRS allows reversal only up to the amount of the ORIGINAL write-down — carrying value can't rise above the pre-write-down cost basis.",
+      "kr": "IFRS 환입은 '원래 감액액'까지만."
+    },
+    {
+      "id": "fsa-m3-q28",
+      "section": "5",
+      "concept": "Current portion of LTD",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "The portion of a 10-year bond maturing within the next 12 months is most likely classified as:",
+      "choices": {
+        "A": "a non-current liability",
+        "B": "a current liability",
+        "C": "equity"
+      },
+      "answer": "B",
+      "explanation": "The current portion of long-term debt is a CURRENT liability (financial liabilities include it).",
+      "kr": "장기부채의 유동성 대체분 = '유동'부채."
+    },
+    {
+      "id": "fsa-m3-q29",
+      "section": "5",
+      "concept": "Deferred revenue at receipt",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "A company receives 500 in cash on the first day of a two-year service contract. At that date it most likely records:",
+      "choices": {
+        "A": "revenue of 500",
+        "B": "a liability of 500",
+        "C": "revenue of 250 and a liability of 250"
+      },
+      "answer": "B",
+      "explanation": "Cash before delivery → deferred revenue (a LIABILITY) of the full 500. Revenue is recognized as the service is delivered over two years — none on day one.",
+      "kr": "인도 전 현금 → 전액 500 선수수익('부채'). 2년에 걸쳐 수익 인식 — 첫날은 0."
+    },
+    {
+      "id": "fsa-m3-q30",
+      "section": "5",
+      "concept": "AP vs deferred revenue",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "confusion",
+      "stem": "For liquidity analysis, settling deferred revenue differs from settling accounts payable in that it:",
+      "choices": {
+        "A": "requires a larger cash outflow",
+        "B": "does not require a cash outflow",
+        "C": "requires payment to suppliers"
+      },
+      "answer": "B",
+      "explanation": "Deferred revenue is settled by DELIVERING the service — cash was already received. Accounts payable requires paying cash to suppliers.",
+      "kr": "선수수익은 서비스 '제공'으로 상환 — 현금은 이미 받음. 매입채무는 현금 지급 필요."
+    },
+    {
+      "id": "fsa-m3-q31",
+      "section": "5",
+      "concept": "Deferred revenue growth",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "direction",
+      "stem": "Investors monitor deferred revenue because growth in it most likely implies:",
+      "choices": {
+        "A": "deteriorating liquidity",
+        "B": "future growth in revenue",
+        "C": "rising accounts payable"
+      },
+      "answer": "B",
+      "explanation": "Deferred revenue becomes revenue as it is earned → growth in it signals future revenue growth.",
+      "kr": "선수수익은 나중에 수익이 됨 → 증가는 미래 수익 성장 신호."
+    },
+    {
+      "id": "fsa-m3-q32",
+      "section": "5",
+      "concept": "Accrued expenses",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Accrued expenses are best described as expenses that have been:",
+      "choices": {
+        "A": "paid but not yet recognized",
+        "B": "recognized on the income statement but not yet paid",
+        "C": "neither recognized nor paid"
+      },
+      "answer": "B",
+      "explanation": "Accrued = recognized (expensed) but not yet paid. 'Paid but not yet recognized' is a PREPAID expense (an asset).",
+      "kr": "미지급비용 = 인식(비용 처리)했지만 미지급. '지급했지만 미인식'은 선급비용(자산)."
+    },
+    {
+      "id": "fsa-m3-q33",
+      "section": "5",
+      "concept": "Tax on deferred revenue → DTA",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "direction",
+      "stem": "A company pays income tax on cash received for revenue not yet recognized for accounting purposes. The tax paid most likely creates:",
+      "choices": {
+        "A": "a deferred tax liability",
+        "B": "a deferred tax asset",
+        "C": "deferred revenue"
+      },
+      "answer": "B",
+      "explanation": "Tax paid BEFORE the related book tax expense → taxes payable > tax expense → DTA ('prepaid taxes').",
+      "kr": "장부상 법인세비용 '이전'에 세금 납부 → 납부세액 > 법인세비용 → 이연법인세자산('선급 세금')."
+    },
+    {
+      "id": "fsa-m3-q34",
+      "section": "5",
+      "concept": "Trade credit",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "confusion",
+      "stem": "Trade credit is best described as:",
+      "choices": {
+        "A": "credit a company extends to its customers",
+        "B": "credit provided to a company by its vendors",
+        "C": "a bank loan for trade finance"
+      },
+      "answer": "B",
+      "explanation": "Trade credit = credit from VENDORS (it shows up as trade payables) — a source of financing. Credit to customers shows up as receivables.",
+      "kr": "매입신용 = '공급자'가 제공하는 신용(매입채무) — 자금조달원. 고객에게 준 신용은 매출채권."
+    },
+    {
+      "id": "fsa-m3-q35",
+      "section": "6",
+      "concept": "Impairment calc",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "asked-quantity",
+      "stem": "An asset has a carrying amount of 800, fair value less costs to sell of 650, and value in use of 720. Under IFRS the impairment loss is closest to:",
+      "choices": {
+        "A": "150",
+        "B": "80",
+        "C": "0"
+      },
+      "answer": "B",
+      "explanation": "Recoverable = HIGHER of 650 and 720 = 720. Loss = 800 − 720 = 80. Choice A uses the lower (650).",
+      "kr": "회수가능액 = 650과 720 중 '큰' 값 = 720. 손상차손 = 800 − 720 = 80. A는 작은 값 사용."
+    },
+    {
+      "id": "fsa-m3-q36",
+      "section": "6",
+      "concept": "Recoverable amount",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "direction",
+      "stem": "Under IFRS, the recoverable amount of an asset is:",
+      "choices": {
+        "A": "the lower of fair value less costs to sell and value in use",
+        "B": "the higher of fair value less costs to sell and value in use",
+        "C": "value in use only"
+      },
+      "answer": "B",
+      "explanation": "Recoverable = HIGHER — the asset is worth the better of selling it or using it.",
+      "kr": "회수가능액 = '큰' 값 — 팔거나 쓰는 것 중 더 나은 쪽."
+    },
+    {
+      "id": "fsa-m3-q37",
+      "section": "6",
+      "concept": "Impairment reversal",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "confusion",
+      "stem": "Reversal of a previously recognized impairment loss on PP&E is:",
+      "choices": {
+        "A": "permitted under IFRS but not US GAAP",
+        "B": "permitted under US GAAP but not IFRS",
+        "C": "prohibited under both"
+      },
+      "answer": "A",
+      "explanation": "IFRS permits impairment reversal; US GAAP does not — the same split as inventory write-downs.",
+      "kr": "IFRS 손상차손 환입 허용, US GAAP 금지 — 재고 감액과 같은 구분."
+    },
+    {
+      "id": "fsa-m3-q38",
+      "section": "6",
+      "concept": "Revaluation — per class",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "truncated-rule",
+      "stem": "Under IFRS, a company using the revaluation model for PP&E must:",
+      "choices": {
+        "A": "apply it to all PP&E",
+        "B": "apply the same model to all assets within a class",
+        "C": "revalue every asset annually"
+      },
+      "answer": "B",
+      "explanation": "Models can differ BETWEEN classes, but must be the same WITHIN a class.",
+      "kr": "모형은 분류 '간'에는 달라도 되지만 분류 '내'에서는 동일해야 함."
+    },
+    {
+      "id": "fsa-m3-q39",
+      "section": "6",
+      "concept": "Investment property FV gains",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "off-model",
+      "stem": "Under IFRS, a gain from an increase in the fair value of investment property under the fair value model is recognized in:",
+      "choices": {
+        "A": "other comprehensive income",
+        "B": "profit or loss",
+        "C": "a revaluation reserve in equity"
+      },
+      "answer": "B",
+      "explanation": "Investment property fair value model → changes go to PROFIT OR LOSS. Don't carry over the PP&E revaluation idea (equity/OCI).",
+      "kr": "투자부동산 공정가치모형 → 변동은 '당기손익'. 유형자산 재평가(자본/OCI)와 혼동 금지."
+    },
+    {
+      "id": "fsa-m3-q40",
+      "section": "6",
+      "concept": "Not under US GAAP",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "negation",
+      "stem": "Which is NOT available under US GAAP?",
+      "choices": {
+        "A": "The cost model for PP&E",
+        "B": "The revaluation model for PP&E",
+        "C": "Straight-line depreciation"
+      },
+      "answer": "B",
+      "explanation": "US GAAP: cost model only. The revaluation model is IFRS-only.",
+      "kr": "US GAAP: 원가모형만. 재평가모형은 IFRS 전용."
+    },
+    {
+      "id": "fsa-m3-q41",
+      "section": "6",
+      "concept": "Value in use",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Value in use is best described as:",
+      "choices": {
+        "A": "the price obtainable in an arm's-length sale",
+        "B": "the present value of the asset's expected future cash flows",
+        "C": "historical cost less accumulated depreciation"
+      },
+      "answer": "B",
+      "explanation": "Value in use = PV of future cash flows from using the asset. Choice A is fair value (less costs to sell).",
+      "kr": "사용가치 = 자산 사용으로 기대되는 미래 현금흐름의 현재가치. A는 공정가치(처분부대원가 차감)."
+    },
+    {
+      "id": "fsa-m3-q42",
+      "section": "7",
+      "concept": "DTA direction",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "direction",
+      "stem": "A deferred tax asset most likely arises when, due to a temporary difference:",
+      "choices": {
+        "A": "income tax expense exceeds income tax payable",
+        "B": "income tax payable exceeds income tax expense",
+        "C": "book pre-tax income exceeds taxable income"
+      },
+      "answer": "B",
+      "explanation": "DTA: taxes PAYABLE > tax EXPENSE (taxable income > book income). Choices A and C describe the reverse — a deferred tax LIABILITY.",
+      "kr": "이연법인세자산: 납부세액 > 법인세비용(과세소득 > 회계이익). A·C는 반대 — 이연법인세'부채'."
+    },
+    {
+      "id": "fsa-m3-q43",
+      "section": "7",
+      "concept": "Warranty → DTA",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "direction",
+      "stem": "A company recognizes warranty expense this year in its financial statements but can deduct it for tax only when claims are paid later. This year it most likely records:",
+      "choices": {
+        "A": "a deferred tax liability",
+        "B": "a deferred tax asset",
+        "C": "no deferred tax item"
+      },
+      "answer": "B",
+      "explanation": "Expense booked now, deductible later → book income < taxable income → taxes payable > expense → DTA.",
+      "kr": "지금 비용 인식, 세무상 공제는 나중 → 회계이익 < 과세소득 → 납부세액 > 비용 → 이연법인세자산."
+    },
+    {
+      "id": "fsa-m3-q44",
+      "section": "7",
+      "concept": "DTA recognition",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "truncated-rule",
+      "stem": "A deferred tax asset should be recognized only if:",
+      "choices": {
+        "A": "the difference will reverse within one year",
+        "B": "future taxable income is expected against which it can be applied",
+        "C": "the company has an equal deferred tax liability"
+      },
+      "answer": "B",
+      "explanation": "No expected future taxable income → the benefit can never be used → no asset.",
+      "kr": "미래 과세소득이 예상되지 않으면 효익을 쓸 수 없음 → 자산 아님."
+    },
+    {
+      "id": "fsa-m3-q45",
+      "section": "7",
+      "concept": "Loss carryforward",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "definition",
+      "stem": "Which gives rise to a deferred tax asset but is NOT a temporary timing difference?",
+      "choices": {
+        "A": "Revenue taxed before it is recognized for accounting",
+        "B": "An unused tax loss carried forward",
+        "C": "An expense deducted for accounting before tax"
+      },
+      "answer": "B",
+      "explanation": "Loss/credit carryforwards create DTAs (they reduce future taxes) but are a separate source, not timing differences. A and C are the two timing routes.",
+      "kr": "결손금·세액공제 이월은 이연법인세자산을 만들지만 일시적 차이가 아닌 별도 원천. A·C는 두 가지 일시적 차이 경로."
+    },
+    {
+      "id": "fsa-m3-q46",
+      "section": "8",
+      "concept": "Shares outstanding",
+      "type": "calc",
+      "difficulty": 1,
+      "trap": "asked-quantity",
+      "stem": "A company has 10 million shares authorized, 8 million issued, and 1.5 million held in treasury. Shares outstanding are closest to:",
+      "choices": {
+        "A": "6.5 million",
+        "B": "8.0 million",
+        "C": "8.5 million"
+      },
+      "answer": "A",
+      "explanation": "Outstanding = issued − treasury = 8.0 − 1.5 = 6.5m. Authorized is irrelevant. Treasury shares are issued but not outstanding.",
+      "kr": "유통주식 = 발행 − 자기주식 = 6.5m. 수권주식은 무관. 자기주식은 발행됐지만 유통 아님."
+    },
+    {
+      "id": "fsa-m3-q47",
+      "section": "8",
+      "concept": "Mandatory-redeemable preferred",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "definition",
+      "stem": "Preferred shares with mandatory redemption at a fixed amount on a fixed date are most likely classified as:",
+      "choices": {
+        "A": "equity",
+        "B": "a financial liability",
+        "C": "treasury stock"
+      },
+      "answer": "B",
+      "explanation": "Classified by SUBSTANCE: a fixed obligation to pay cash on a fixed date is a liability. Perpetual, non-redeemable preferred is equity.",
+      "kr": "'실질'로 분류: 정해진 날 정해진 금액 상환 의무 → 부채. 영구·비상환 우선주는 자본."
+    },
+    {
+      "id": "fsa-m3-q48",
+      "section": "8",
+      "concept": "Treasury reissue",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "definition",
+      "stem": "When a company reissues treasury shares above their repurchase cost, it most likely:",
+      "choices": {
+        "A": "recognizes a gain on the income statement",
+        "B": "recognizes no gain or loss on the income statement",
+        "C": "reduces retained earnings"
+      },
+      "answer": "B",
+      "explanation": "Transactions in a company's own shares are owner transactions — NO gain or loss is recognized on the income statement.",
+      "kr": "자기주식 거래는 주주와의 거래 — 손익계산서에 손익 인식 없음."
+    },
+    {
+      "id": "fsa-m3-q49",
+      "section": "8",
+      "concept": "Not attributable to parent",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "negation",
+      "stem": "Which is LEAST likely a component of equity attributable to the owners of the parent?",
+      "choices": {
+        "A": "Accumulated other comprehensive income",
+        "B": "Non-controlling interest",
+        "C": "Treasury shares"
+      },
+      "answer": "B",
+      "explanation": "C-P-T-R-A-N: the first five belong to the parent's owners; NCI belongs to minority shareholders of subsidiaries.",
+      "kr": "C-P-T-R-A-N: 앞 다섯은 지배주주 귀속, 비지배지분은 종속회사 소수주주 몫."
+    },
+    {
+      "id": "fsa-m3-q50",
+      "section": "8",
+      "concept": "Repurchase effect",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "direction",
+      "stem": "A repurchase of shares held as treasury stock most likely:",
+      "choices": {
+        "A": "increases shareholders' equity",
+        "B": "reduces shareholders' equity by the cost of the repurchase",
+        "C": "has no effect on shares outstanding"
+      },
+      "answer": "B",
+      "explanation": "Treasury purchase → equity ↓ by the COST and shares outstanding ↓.",
+      "kr": "자기주식 취득 → 자본이 '원가'만큼 감소, 유통주식 감소."
+    },
+    {
+      "id": "fsa-m3-q51",
+      "section": "8",
+      "concept": "AOCI",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "The cumulative amount of other comprehensive income is reported in:",
+      "choices": {
+        "A": "retained earnings",
+        "B": "accumulated other comprehensive income",
+        "C": "share premium"
+      },
+      "answer": "B",
+      "explanation": "NI accumulates in retained earnings; OCI accumulates in AOCI.",
+      "kr": "순이익은 이익잉여금, OCI는 기타포괄손익누계액(AOCI)에 누적."
+    },
+    {
+      "id": "fsa-m3-q52",
+      "section": "9",
+      "concept": "SoCE four items — NOT",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "negation",
+      "stem": "Under IFRS, the statement of changes in equity is LEAST likely required to show:",
+      "choices": {
+        "A": "total comprehensive income for the period",
+        "B": "the effects of accounting changes applied retrospectively",
+        "C": "a reconciliation of total assets from beginning to end of the period"
+      },
+      "answer": "C",
+      "explanation": "C-R-O-R: comprehensive income, retrospective changes, owner transactions, reconciliation of each EQUITY component. Total assets are not reconciled here.",
+      "kr": "C-R-O-R: 포괄이익, 소급 변경, 주주거래, '자본 구성요소별' 조정. 총자산 조정은 아님."
+    },
+    {
+      "id": "fsa-m3-q53",
+      "section": "9",
+      "concept": "Dividends column",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "A cash dividend declared during the period is most likely shown in the statement of changes in equity as:",
+      "choices": {
+        "A": "an expense reducing net income",
+        "B": "a deduction from retained earnings",
+        "C": "a deduction from AOCI"
+      },
+      "answer": "B",
+      "explanation": "Dividends are a DISTRIBUTION to owners — deducted from retained earnings, never an expense.",
+      "kr": "배당은 주주에 대한 '분배' — 이익잉여금에서 차감, 비용 아님."
+    },
+    {
+      "id": "fsa-m3-q54",
+      "section": "9",
+      "concept": "Roll-forward OCI residual",
+      "type": "calc",
+      "difficulty": 3,
+      "trap": "truncated-rule",
+      "stem": "Beginning equity 500; net income 80; dividends 20; shares repurchased 30; share-based compensation 10; ending equity 545. OCI for the period is closest to:",
+      "choices": {
+        "A": "+5",
+        "B": "−35",
+        "C": "+45"
+      },
+      "answer": "A",
+      "explanation": "Expected end = 500 + 80 − 20 − 30 + 10 = 540. OCI = 545 − 540 = +5. Choice B stops after net income (545 − 500 − 80). Fill every slot before taking the residual.",
+      "kr": "기대 기말 = 500 + 80 − 20 − 30 + 10 = 540. OCI = 545 − 540 = +5. B는 순이익만 뺌. 모든 항목 채운 뒤 잔차."
+    },
+    {
+      "id": "fsa-m3-q55",
+      "section": "9",
+      "concept": "Cancelled repurchase",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "definition",
+      "stem": "A company that cancels repurchased shares rather than holding them in treasury will most likely show the repurchase as:",
+      "choices": {
+        "A": "a reduction in retained earnings and/or paid-in capital",
+        "B": "an increase in treasury stock",
+        "C": "a reduction in AOCI"
+      },
+      "answer": "A",
+      "explanation": "Cancelled shares → no treasury line; the cost is charged against retained earnings and/or paid-in capital (Apple charged RE).",
+      "kr": "소각 → 자기주식 계정 없음; 원가를 이익잉여금 및/또는 납입자본에서 차감(Apple은 이익잉여금)."
+    },
+    {
+      "id": "fsa-m3-q56",
+      "section": "9",
+      "concept": "OCI column",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "An unrealized loss on available-for-sale securities is most likely shown in the statement of changes in equity as a decrease in:",
+      "choices": {
+        "A": "retained earnings",
+        "B": "accumulated other comprehensive income",
+        "C": "contributed capital"
+      },
+      "answer": "B",
+      "explanation": "AFS unrealized gains/losses are OCI → AOCI column, not retained earnings.",
+      "kr": "매도가능증권 미실현손익 = OCI → AOCI 열, 이익잉여금 아님."
+    },
+    {
+      "id": "fsa-m3-q57",
+      "section": "9",
+      "concept": "Net issuance reduced equity",
+      "type": "mc",
+      "difficulty": 3,
+      "trap": "direction",
+      "stem": "A company issued 36.5 million shares to employees yet reported a $1.5bn decrease in equity from the transaction. This is best explained by:",
+      "choices": {
+        "A": "the shares were issued below par",
+        "B": "shares were withheld to settle employees' tax obligations and the cash was paid out",
+        "C": "share-based compensation expense was reversed"
+      },
+      "answer": "B",
+      "explanation": "Net settlement: the company withheld shares to cover employees' taxes and paid that cash to the tax authority — cash left the company, so equity fell even though the share count rose.",
+      "kr": "순결제: 직원 세금을 위해 주식을 원천징수하고 그 현금을 납부 — 현금 유출로 주식 수는 늘어도 자본은 감소."
+    },
+    {
+      "id": "fsa-m3-f01",
+      "section": "1",
+      "concept": "Classification rules",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "truncated-rule",
+      "front": "Current asset rule, the four current-liability criteria, the IFRS operating-payables rule, working capital",
+      "back": "CURRENT ASSET: trading, or realized within 1 year OR operating cycle, WHICHEVER IS GREATER (whisky/tobacco/lumber inventory still current; assume 1 yr if cycle unclear).\nCURRENT LIABILITY (any one): settled in operating CYCLE | held for TRADING | due within ONE YEAR | NO unconditional right to DEFER ≥ 1 yr.\nIFRS: trade payables/operating accruals current even if > 1 yr.\nWorking capital = CA − CL (not total liabilities); excessive = idle funds.\nIFRS exception: liquidity-based presentation (banks) if reliable and more relevant."
+    },
+    {
+      "id": "fsa-m3-f02",
+      "section": "3",
+      "concept": "Receivables & allowance",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "formula",
+      "front": "Gross-up formula, estimate vs write-off, what lowers the allowance, manipulation direction",
+      "back": "% uncollectible = allowance / GROSS; gross = net + allowance (58 / 17,932 = 0.32%).\nEstimate: bad-debt expense ↑, allowance ↑. Write-off: allowance ↓, gross A/R ↓ — NO IS effect, net unchanged.\nAllowance ↓: fewer credit sales (absolute); better credit quality, stricter policy, more insurance (%).\nOver-estimate collectability → lower expense → HIGHER NI.\nCash equivalents: original maturity ≤ 3 months; restricted ≥ 12 months excluded."
+    },
+    {
+      "id": "fsa-m3-f03",
+      "section": "4",
+      "concept": "Inventory grid",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "confusion",
+      "front": "IFRS vs US GAAP inventory: basis, market, reversal, cost formulas; NRV",
+      "back": "IFRS: lower of cost and NRV for ALL; reversal PERMITTED (up to original write-down); FIFO / weighted average / specific ID — NO LIFO.\nUS GAAP: lower of cost and NRV, EXCEPT LIFO/retail → lower of cost or MARKET; market = replacement cost, ceiling NRV, floor NRV − normal margin; reversal NOT permitted; LIFO allowed.\nNRV = selling price − costs to complete − costs to sell.\nPrepaid expense = ASSET until used."
+    },
+    {
+      "id": "fsa-m3-f04",
+      "section": "5",
+      "concept": "Current liabilities",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "definition",
+      "front": "Trade payables, financial liabilities, accrued expenses, deferred revenue — and Example 2",
+      "back": "Trade payables = owed to vendors (trade credit = vendor financing).\nFinancial liabilities = bank loans, notes, commercial paper + current portion of LTD.\nAccrued = recognized but NOT yet paid.\nDeferred revenue = cash before delivery → LIABILITY; settled by delivering (no cash outflow, unlike A/P); growth ⇒ future revenue.\nEx 2: cash +100, deferred revenue +100; tax 30 paid → cash −30, DTA +30."
+    },
+    {
+      "id": "fsa-m3-f05",
+      "section": "6",
+      "concept": "PP&E, impairment, investment property",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "formula",
+      "front": "Cost vs revaluation, the impairment test, reversal, investment property",
+      "back": "Cost model (both) vs revaluation (IFRS only; same model within a class; changes → equity or P&L depending).\nImpaired if carrying > RECOVERABLE = HIGHER of (fair value − costs to sell) and (value in use = PV of CFs). Loss = carrying − recoverable → IS. Reversal: IFRS yes, US GAAP no.\nInvestment property (IFRS only): cost or FAIR VALUE (all); FV changes → P&L."
+    },
+    {
+      "id": "fsa-m3-f06",
+      "section": "7",
+      "concept": "Deferred tax assets",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "direction",
+      "front": "When a DTA arises, the routes, the recognition condition",
+      "back": "DTA when taxes PAYABLE > tax EXPENSE (taxable income > book income) — temporary differences.\nRoutes: income taxed now/booked later (deferred revenue); expense booked now/deductible later (warranty). Plus loss/credit carryforwards (NOT timing).\nRecognize only if future taxable income is expected.\nReverse (payable < expense) = deferred tax LIABILITY."
+    },
+    {
+      "id": "fsa-m3-f07",
+      "section": "8",
+      "concept": "Equity components & SoCE",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "truncated-rule",
+      "front": "C-P-T-R-A-N, share counts, preferred, treasury rules, C-R-O-R, the roll-forward",
+      "back": "Six: Contributed capital | Preferred | Treasury | Retained earnings | AOCI | NCI (first five = parent).\nOutstanding = issued − treasury ≤ issued ≤ authorized.\nMandatory-redeemable preferred = LIABILITY; perpetual = equity.\nTreasury: equity ↓ by cost; no gain/loss on reissue; no vote; no dividends. Cancelled (Apple) → no treasury line.\nSoCE IFRS: Comprehensive income | Retrospective changes | Owner transactions | Reconciliation per component.\nEnd = Begin + NI ± OCI − dividends − repurchases + issuance/SBC. NI → RE; OCI → AOCI; dividends → RE ↓."
+    }
+  ]
+}
