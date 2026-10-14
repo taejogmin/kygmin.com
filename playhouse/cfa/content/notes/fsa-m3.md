@@ -138,6 +138,12 @@ $$
 ### Classified balance sheet 🟡
 A balance sheet with **separately classified** current and non-current items = a **classified balance sheet**. IFRS does **not** specify order or format.
 
+> ### ⭐ YOU MISSED OFFICIAL Q3 HERE — classified vs liquidity-based
+> *Current/non-current split with subtotals for current assets and current liabilities* → you picked **liquidity-based**; correct is **classified balance sheet**.
+> The two names sit side by side in §1–§2 and both talk about liquidity — the discriminator is the **subtotal**:
+> **classified = has "total current assets / total current liabilities"**; **liquidity-based = NO such subtotals**, just one list from most to least liquid (banks, HSBC).
+> **Fix:** when a stem says "subtotal for current", the answer is *classified*. "Order of liquidity, no subtotals" → *liquidity-based*.
+
 ---
 
 ## 2. Liquidity-Based Presentation (§3.04)
@@ -638,5 +644,15 @@ SoCE (IFRS): C-R-O-R; NI→RE, OCI→AOCI,
 8. Three reasons book ≠ market; recognition test
 9. Cash equivalents, prepaids, accrued expenses
 10. Exhibit specifics
+
+## 12. Official practice problems — log (paraphrased in the Study Hub as `fsa-m3-p01…`)
+
+| # | Topic | Your answer | Correct | Pattern |
+|---|---|---|---|---|
+| Q1 | Asset definition | assets | ✅ | — |
+| Q2 | Equity = A − L | A − L | ✅ | — |
+| Q3 | Current subtotals → which format | liquidity-based | **classified** | confusion (two adjacent format names) |
+
+**Running tally: 2 / 3.**
 
 > **Note status: COMPLETE** — §3.01 through §3.11. No scored curriculum examples in this reading. Practice questions Q1–Q57 → Study Hub (Financial Statement Analysis → M3, `fsa-m3-q01…`).

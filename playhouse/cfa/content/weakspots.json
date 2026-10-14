@@ -204,9 +204,12 @@
         "FSA M1 official Q5 (accrual definition → picked relevance, which isn't an assumption at all)",
         "FSA M1 official Q7 + Q8 (measurement bases: picked realizable for 'paid at acquisition', then avoided it for 'received in orderly disposal')",
         "FSA M1 official Q9 (performance element → picked assets; position = A/L/E, performance = income/expenses)",
-        "FSA M2 official Q4 (common-size: accepted 'standardizes but fails to reveal strategy' — second clause false)"
+        "FSA M2 official Q4 (common-size: accepted 'standardizes but fails to reveal strategy' — second clause false)",
+        "FSA M3 official Q3 (current subtotals = CLASSIFIED balance sheet; picked liquidity-based — two adjacent format names, the subtotal is the discriminator)"
       ],
       "seed": [
+        "fsa-m3-p03",
+        "fsa-m3-q12",
         "fsa-m2-p06",
         "fsa-m2-q39",
         "fsa-m1-p09",
@@ -733,6 +736,11 @@
       "qid": "fsa-m2-p08",
       "when": "2026-10-14",
       "note": "FSA M2 official Q6 — OCI item = FX translation; picked realized gain on a non-hedge derivative (both qualifiers fail). (truncated rule)"
+    },
+    {
+      "qid": "fsa-m3-p03",
+      "when": "2026-10-14",
+      "note": "FSA M3 official Q3 — current/non-current split with current subtotals = CLASSIFIED; picked liquidity-based (which has NO subtotals). (format-name swap)"
     }
   ]
 }

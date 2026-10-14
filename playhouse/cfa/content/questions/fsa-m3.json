@@ -971,6 +971,60 @@
       "kr": "순결제: 직원 세금을 위해 주식을 원천징수하고 그 현금을 납부 — 현금 유출로 주식 수는 늘어도 자본은 감소."
     },
     {
+      "id": "fsa-m3-p01",
+      "section": "0",
+      "concept": "Official Q1 — asset definition",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "source": "cfai",
+      "stem": "Resources a company controls as a result of past events, expected to bring future economic benefits, are:",
+      "choices": {
+        "A": "equity",
+        "B": "assets",
+        "C": "liabilities"
+      },
+      "answer": "B",
+      "explanation": "Asset = resource CONTROLLED from past events, benefits flow TO the entity. Liability = obligation, outflow FROM the entity. Equity = the residual.",
+      "kr": "자산 = 과거 사건의 결과로 '통제'하는 자원, 효익 유입. 부채 = 의무·유출. 자본 = 잔여."
+    },
+    {
+      "id": "fsa-m3-p02",
+      "section": "0",
+      "concept": "Official Q2 — equity",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "formula",
+      "source": "cfai",
+      "stem": "Equity is equal to:",
+      "choices": {
+        "A": "assets minus liabilities",
+        "B": "liabilities minus assets",
+        "C": "assets plus liabilities"
+      },
+      "answer": "A",
+      "explanation": "A = L + E → E = A − L (the residual claim).",
+      "kr": "A = L + E → E = A − L(잔여청구권)."
+    },
+    {
+      "id": "fsa-m3-p03",
+      "section": "1",
+      "concept": "Official Q3 — classified balance sheet",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "confusion",
+      "source": "cfai",
+      "stem": "A balance sheet that separates current from non-current items and shows subtotals for current assets and current liabilities is called:",
+      "choices": {
+        "A": "a classified balance sheet",
+        "B": "an unclassified balance sheet",
+        "C": "a liquidity-based balance sheet"
+      },
+      "answer": "A",
+      "explanation": "CLASSIFIED = current/non-current split WITH current subtotals. LIQUIDITY-BASED = all items in order of liquidity with NO current/non-current subtotals (banks). The subtotal is the discriminator.",
+      "kr": "'구분' 재무상태표 = 유동/비유동 구분 + 유동 소계. '유동성 순서' = 소계 없이 유동성 순서로 나열(은행). 소계 유무가 판별 기준."
+    },
+    {
       "id": "fsa-m3-f01",
       "section": "1",
       "concept": "Classification rules",
