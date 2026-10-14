@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-13",
+  "updated": "2026-10-14",
   "patterns": [
     {
       "id": "polarity",
@@ -227,8 +227,8 @@
         "kr": "규칙 일부 누락 — 규칙은 알았는데 한 조각을 빠뜨림"
       },
       "rule": {
-        "en": "The rule is a complete object — a full ranking, a full mapping, a trigger word, both halves of a two-object stem. Before reading options: (1) translate the stem into curriculum terms (fixed basket = Laspeyres; equipment sold to firms = I; rising costs = cost-push); (2) write the rule's right-hand side in full; (3) if the stem names two things, the option must cover two. Misses cluster on questions that FEEL easy — that's exactly when this step gets skipped.",
-        "kr": "규칙은 하나의 완전한 덩어리다 — 전체 순위, 전체 매핑, 트리거 단어, 두 대상을 묻는 지문의 양쪽. 선지를 읽기 전에 (1) 지문을 교재 용어로 번역(fixed basket = 라스파이레스; 기업용 설비 = I; 비용 상승 = cost-push); (2) 규칙의 우변을 끝까지 쓴다; (3) 지문이 두 가지를 말하면 선지도 두 가지를 덮어야 한다. 오답은 '쉬워 보이는' 문제에 몰린다 — 그때 이 단계를 건너뛴다."
+        "en": "The rule is a complete object — a full ranking, a full mapping, a trigger word, both halves of a two-object stem. Before reading options: (1) translate the stem into curriculum terms (fixed basket = Laspeyres; equipment sold to firms = I; rising costs = cost-push); (2) write the rule's right-hand side in full; (3) if the stem names two things, the option must cover two. Misses cluster on questions that FEEL easy — that's exactly when this step gets skipped. Equity roll-forward (FSA M2): write OCI = End − (Begin + NI − Div ± Shares) with all four slots filled before subtracting.",
+        "kr": "규칙은 하나의 완전한 덩어리다 — 전체 순위, 전체 매핑, 트리거 단어, 두 대상을 묻는 지문의 양쪽. 선지를 읽기 전에 (1) 지문을 교재 용어로 번역(fixed basket = 라스파이레스; 기업용 설비 = I; 비용 상승 = cost-push); (2) 규칙의 우변을 끝까지 쓴다; (3) 지문이 두 가지를 말하면 선지도 두 가지를 덮어야 한다. 오답은 '쉬워 보이는' 문제에 몰린다 — 그때 이 단계를 건너뛴다. 자본 변동(FSA M2): OCI = 기말 − (기초 + 순이익 − 배당 ± 주식거래), 네 칸을 다 채운 뒤 빼기."
       },
       "traps": [
         "truncated-rule"
@@ -247,9 +247,13 @@
         "M5 official Q2 (money-demand motives — second label swap; precautionary ∝ GDP)",
         "M6 official Q8 (patent FEES + legal services → current account services; picked financial)",
         "M7 Ex1 Q3 (hedged zero held to maturity = risk free; dropped the clause that switches rate risk off)",
-        "FSA M1 official Q14 ('residual claim' → equity → balance sheet; skipped the translation step)"
+        "FSA M1 official Q14 ('residual claim' → equity → balance sheet; skipped the translation step)",
+        "FSA M2 Ex3 Q1 (OCI back-solve: dropped the dividend → €7m vs €10m; third module in a row a multi-term identity lost a term)"
       ],
       "seed": [
+        "fsa-m2-p01",
+        "fsa-m2-q40",
+        "fsa-m2-q47",
         "fsa-m1-p14",
         "econ-m7-p03",
         "econ-m6-p08",
@@ -297,9 +301,12 @@
         "M5 official Q5 ('efficient markets' as the assumption behind monetary policy — not in the reading; it's short-run non-neutrality)",
         "M5 official Q7 (stable real rate → picked money neutrality; it's the Fisher effect)",
         "M7 Ex2 Q2 (what makes Marshall–Lerner more likely to hold = higher elasticities; picked lower ε_M + higher ω_M)",
-        "FSA M1 official Q2 ('accuracy' sounds like a qualitative characteristic; the framework says faithful representation)"
+        "FSA M1 official Q2 ('accuracy' sounds like a qualitative characteristic; the framework says faithful representation)",
+        "FSA M2 Ex3 Q2 (OCI = 'outside ordinary activities' — that's gains/losses, which ARE in NI; OCI is defined by reporting location)"
       ],
       "seed": [
+        "fsa-m2-p02",
+        "fsa-m2-q46",
         "fsa-m1-p02",
         "econ-m7-p05",
         "econ-m5-p07",
@@ -680,6 +687,16 @@
       "qid": "fsa-m1-p14",
       "when": "2026-10-13",
       "note": "FSA M1 official Q14 — 'residual claim on assets' = equity → BALANCE SHEET; picked cash flow statement. Translate the phrase to its element first, then the element to its statement. (definition / two-step)"
+    },
+    {
+      "qid": "fsa-m2-p01",
+      "when": "2026-10-14",
+      "note": "FSA M2 Example 3 Q1 — OCI back-solve: picked €7m (227 − 220, dividend dropped); correct €10m (227 − 217). (truncated rule)"
+    },
+    {
+      "qid": "fsa-m2-p02",
+      "when": "2026-10-14",
+      "note": "FSA M2 Example 3 Q2 — OCI definition: picked 'outside ordinary activities' (that describes gains, which are IN net income); correct 'raises equity, not in net income'. (off-model / adjacent axis)"
     }
   ]
 }

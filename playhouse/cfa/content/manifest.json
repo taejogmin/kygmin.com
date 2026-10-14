@@ -90,6 +90,15 @@
       "short": "Intro to Financial Reporting",
       "notes": "content/notes/fsa-m1.md",
       "questions": "content/questions/fsa-m1.json"
+    },
+    {
+      "id": "fsa-m2",
+      "subject": "fsa",
+      "order": 2,
+      "title": "Analyzing Income Statements",
+      "short": "Income Statements",
+      "notes": "content/notes/fsa-m2.md",
+      "questions": "content/questions/fsa-m2.json"
     }
   ]
 }

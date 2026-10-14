@@ -1,0 +1,995 @@
+{
+  "module": "fsa-m2",
+  "questions": [
+    {
+      "id": "fsa-m2-q01",
+      "section": "1",
+      "concept": "Revenue comparability — excise taxes",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "asked-quantity",
+      "stem": "Brewer X reports sales of $13.5bn, then deducts excise taxes of $2.5bn to show net sales of $11.0bn. Brewer Y reports revenue of $56bn, having deducted excise taxes before the top line (disclosed only in the notes). Y's revenue is most comparable to X's:",
+      "choices": {
+        "A": "sales",
+        "B": "net sales",
+        "C": "gross profit"
+      },
+      "answer": "B",
+      "explanation": "Y's 'revenue' is already net of excise taxes, so it matches X's NET sales, not X's gross sales. Comparable amounts require reading the notes and MD&A — labels alone mislead.",
+      "kr": "Y의 'revenue'는 이미 소비세 차감 후 → X의 '순매출(net sales)'과 비교 가능. 라벨만 보면 오해 — 주석·MD&A 확인 필요."
+    },
+    {
+      "id": "fsa-m2-q02",
+      "section": "1",
+      "concept": "By nature vs by function",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "A company reports one 'depreciation' line that combines depreciation on factory equipment and on head-office buildings. Its expenses are most likely grouped by:",
+      "choices": {
+        "A": "function",
+        "B": "nature",
+        "C": "segment"
+      },
+      "answer": "B",
+      "explanation": "BY NATURE pools expenses by what they ARE (all depreciation together). BY FUNCTION pools by what they are FOR (e.g. cost of goods sold including factory depreciation, labour, materials).",
+      "kr": "성격별(nature) = 무엇인지로 묶음(감가상각 전부 한 줄). 기능별(function) = 무엇을 위한 것인지로 묶음(예: 공장 감가상각·노무비·재료비를 포함한 매출원가)."
+    },
+    {
+      "id": "fsa-m2-q03",
+      "section": "1",
+      "concept": "Single-step format",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "An income statement that does not present a gross profit subtotal is best described as:",
+      "choices": {
+        "A": "single-step",
+        "B": "multi-step",
+        "C": "grouped by function"
+      },
+      "answer": "A",
+      "explanation": "Multi-step = shows a GROSS PROFIT subtotal. Single-step = no gross profit line (other subtotals like operating income may still appear — Danone is single-step).",
+      "kr": "다단계 = 매출총이익 소계가 있음. 단일단계 = 매출총이익 줄 없음(영업이익 등 다른 소계는 있을 수 있음 — Danone)."
+    },
+    {
+      "id": "fsa-m2-q04",
+      "section": "1",
+      "concept": "Gain on disposal",
+      "type": "calc",
+      "difficulty": 1,
+      "trap": "asked-quantity",
+      "stem": "A company sells land with a carrying value of 800 for 950. The land originally cost 600. The gain on disposal is closest to:",
+      "choices": {
+        "A": "350",
+        "B": "150",
+        "C": "950"
+      },
+      "answer": "B",
+      "explanation": "Gain = proceeds − CARRYING value = 950 − 800 = 150. Choice A uses original cost (950 − 600); choice C is the proceeds.",
+      "kr": "처분이익 = 처분대가 − '장부금액' = 950 − 800 = 150. A는 취득원가 사용(950 − 600), C는 처분대가 그대로."
+    },
+    {
+      "id": "fsa-m2-q05",
+      "section": "1",
+      "concept": "Operating profit ≠ EBIT",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "definition",
+      "stem": "Operating profit and EBIT are most likely to differ when a company reports, between operating income and net income:",
+      "choices": {
+        "A": "income tax expense",
+        "B": "interest expense",
+        "C": "its share of the results of associates"
+      },
+      "answer": "C",
+      "explanation": "EBIT = earnings before interest and taxes, so interest and tax alone don't separate the two. Items such as share of associates' results or discontinued operations also sit between operating income and net income — so operating profit is NOT necessarily EBIT.",
+      "kr": "EBIT = 이자·세금 전 이익이므로 이자·세금만으로는 둘이 갈리지 않음. 관계기업 지분손익·중단영업 같은 항목이 영업이익과 순이익 사이에 있어서 영업이익 ≠ EBIT가 될 수 있음."
+    },
+    {
+      "id": "fsa-m2-q06",
+      "section": "1",
+      "concept": "Financial companies — interest",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "For a bank, interest expense is most likely:",
+      "choices": {
+        "A": "excluded from operating profit",
+        "B": "deducted as an operating expense in arriving at operating profit",
+        "C": "reported in other comprehensive income"
+      },
+      "answer": "B",
+      "explanation": "For financial companies interest expense relates to OPERATING activities, so it is subtracted in arriving at operating profit. For non-financial companies operating profit is before interest.",
+      "kr": "금융회사의 이자비용은 '영업'활동 관련 → 영업이익 계산 시 차감. 비금융회사의 영업이익은 이자 전."
+    },
+    {
+      "id": "fsa-m2-q07",
+      "section": "1",
+      "concept": "53-week fiscal year",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "A company's fiscal year ends on the Saturday nearest 31 December, so it occasionally reports a 53-week year. The extra week is most likely material for:",
+      "choices": {
+        "A": "annual growth rates",
+        "B": "the quarter containing the extra week",
+        "C": "neither, since it is adjusted out"
+      },
+      "answer": "B",
+      "explanation": "One extra week is small against 52 but large against a 13-week quarter. Analysts should check for it in historical comparisons and forecasts.",
+      "kr": "52주 대비 1주는 작지만 13주 분기 대비는 큼. 과거 비교·예측 시 확인 필요."
+    },
+    {
+      "id": "fsa-m2-q08",
+      "section": "2",
+      "concept": "Five steps — timing",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "truncated-rule",
+      "stem": "Under the converged revenue standard, the step that governs the TIMING of revenue recognition is:",
+      "choices": {
+        "A": "determining the transaction price",
+        "B": "allocating the price to performance obligations",
+        "C": "recognizing revenue when a performance obligation is satisfied"
+      },
+      "answer": "C",
+      "explanation": "Contract → Obligations → Price → Allocate → Recognize. Steps 3–4 set the AMOUNT; step 5 (satisfaction of the obligation) sets the TIMING.",
+      "kr": "계약 → 수행의무 → 거래가격 → 배분 → 인식. 3–4단계 = '금액', 5단계(수행의무 이행) = '시점'."
+    },
+    {
+      "id": "fsa-m2-q09",
+      "section": "2",
+      "concept": "'Probable' under IFRS",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "confusion",
+      "stem": "Under IFRS, a contract exists only if collectability is 'probable', which means:",
+      "choices": {
+        "A": "more likely than not",
+        "B": "likely to occur",
+        "C": "virtually certain"
+      },
+      "answer": "A",
+      "explanation": "IFRS 'probable' = MORE LIKELY THAN NOT (>50%). US GAAP 'probable' = LIKELY TO OCCUR (higher bar). Same word, different threshold → similar contracts can be treated differently.",
+      "kr": "IFRS의 'probable' = 50% 초과(more likely than not). US GAAP = 'likely to occur'(더 높은 기준). 같은 단어, 다른 기준."
+    },
+    {
+      "id": "fsa-m2-q10",
+      "section": "2",
+      "concept": "Cost-to-cost revenue",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "asked-quantity",
+      "stem": "A contract has a transaction price of $2.4m and expected total costs of $1.8m. Costs of $900,000 are incurred in year 1. Using an input (cost-to-cost) method, year-1 revenue is closest to:",
+      "choices": {
+        "A": "$900,000",
+        "B": "$1,200,000",
+        "C": "$1,350,000"
+      },
+      "answer": "B",
+      "explanation": "Progress = 900k / 1.8m = 50%. Revenue = 50% × 2.4m = $1.2m. Choice A books the COST as revenue — progress is measured on costs but applied to the PRICE.",
+      "kr": "진행률 = 900k/1.8m = 50%. 수익 = 50% × 2.4m = 1.2m. A는 '원가'를 수익으로 인식 — 진행률은 원가로 재고, 거래'가격'에 곱함."
+    },
+    {
+      "id": "fsa-m2-q11",
+      "section": "2",
+      "concept": "Cumulative catch-up",
+      "type": "calc",
+      "difficulty": 3,
+      "trap": "formula",
+      "stem": "A contractor recognized $800,000 of revenue in year 1. In year 2 the contract is modified (not a new contract): the price becomes $2.3m and expected total costs $2.5m, with $1.2m incurred to date. The cumulative catch-up adjustment is closest to:",
+      "choices": {
+        "A": "$304,000",
+        "B": "$1,104,000",
+        "C": "$120,000"
+      },
+      "answer": "A",
+      "explanation": "Progress = 1.2 / 2.5 = 48% (NEW total costs). Cumulative revenue = 48% × 2.3m = $1,104,000. Catch-up = 1,104,000 − 800,000 already recognized = $304,000, booked at once. Choice B stops at cumulative revenue.",
+      "kr": "진행률 = 1.2/2.5 = 48%('새' 총원가). 누적수익 = 48% × 2.3m = 1,104,000. 누적효과 조정 = 1,104,000 − 이미 인식한 800,000 = 304,000, 한 번에 인식. B는 누적수익에서 멈춤."
+    },
+    {
+      "id": "fsa-m2-q12",
+      "section": "2",
+      "concept": "Variable consideration",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "definition",
+      "stem": "A builder with little experience in a contract type is entitled to a completion bonus, but completion depends on weather and permits. It should most likely:",
+      "choices": {
+        "A": "recognize the bonus in proportion to progress",
+        "B": "exclude the bonus until it can conclude the revenue will not be reversed",
+        "C": "recognize the full bonus at inception"
+      },
+      "answer": "B",
+      "explanation": "Variable consideration is included only if the company can conclude cumulative revenue will NOT have to be reversed. Limited experience + factors outside its control → exclude for now (Builder Co.).",
+      "kr": "변동대가는 누적수익이 '환입되지 않을 것'이라 결론 낼 수 있을 때만 포함. 경험 부족 + 통제 밖 요인 → 지금은 제외(Builder Co.)."
+    },
+    {
+      "id": "fsa-m2-q13",
+      "section": "2",
+      "concept": "Principal vs agent",
+      "type": "calc",
+      "difficulty": 1,
+      "trap": "asked-quantity",
+      "stem": "A website sells goods for suppliers who ship directly; it bears no inventory or credit risk, does not set prices, and keeps a 10% commission. On $500,000 of sales it reports revenue of:",
+      "choices": {
+        "A": "$500,000",
+        "B": "$50,000",
+        "C": "$450,000"
+      },
+      "answer": "B",
+      "explanation": "All four agent tests met (not primarily responsible, no inventory risk, no credit risk, no price discretion) → AGENT → report NET = the commission = 10% × 500,000 = $50,000.",
+      "kr": "대리인 요건 4개 충족(주된 책임 없음·재고위험 없음·신용위험 없음·가격결정권 없음) → '대리인' → 순액(수수료) = 10% × 500,000 = 50,000."
+    },
+    {
+      "id": "fsa-m2-q14",
+      "section": "2",
+      "concept": "Receivable vs contract asset",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "confusion",
+      "stem": "A seller has satisfied all performance obligations except receipt of payment. It should present:",
+      "choices": {
+        "A": "a contract asset",
+        "B": "a receivable",
+        "C": "a contract liability"
+      },
+      "answer": "B",
+      "explanation": "RECEIVABLE = everything done except payment. CONTRACT ASSET = revenue recognized but obligations remain. CONTRACT LIABILITY = cash received before delivery.",
+      "kr": "수취채권 = 대금 수령만 남음. 계약자산 = 수익은 인식했지만 의무가 남음. 계약부채 = 인도 전에 현금 수령."
+    },
+    {
+      "id": "fsa-m2-q15",
+      "section": "2",
+      "concept": "Distinct — two criteria",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "truncated-rule",
+      "stem": "A good or service is distinct if the customer can benefit from it on its own or with readily available resources AND:",
+      "choices": {
+        "A": "it is delivered at a point in time",
+        "B": "the promise to transfer it is separately identifiable from other promises in the contract",
+        "C": "its price exceeds a materiality threshold"
+      },
+      "answer": "B",
+      "explanation": "Both criteria are required: (1) benefit on its own / with readily available resources, and (2) separately identifiable. Builder Co.'s trades fail (2) — they are integrated into one building, so it's a single obligation.",
+      "kr": "두 기준 모두 필요: (1) 단독 또는 쉽게 구할 수 있는 자원과 함께 효익, (2) 계약 내 다른 약속과 '구별 가능'. Builder Co.는 (2) 실패 — 하나의 건물로 통합되므로 단일 수행의무."
+    },
+    {
+      "id": "fsa-m2-q16",
+      "section": "2",
+      "concept": "Capitalizing contract costs",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "direction",
+      "stem": "A company that previously expensed incremental costs of obtaining contracts must now capitalize them. All else equal, its reported profitability will initially:",
+      "choices": {
+        "A": "appear higher",
+        "B": "appear lower",
+        "C": "be unchanged"
+      },
+      "answer": "A",
+      "explanation": "Capitalizing moves the cost to the balance sheet → less expense now → HIGHER initial profit. The cost is recognized later.",
+      "kr": "자본화 → 비용이 재무상태표로 이동 → 지금 비용 감소 → 초기 이익 '증가'. 비용은 나중에 인식."
+    },
+    {
+      "id": "fsa-m2-q17",
+      "section": "3",
+      "concept": "Direct write-off",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Recognizing a loss on a receivable only when the customer actually defaults is best described as the:",
+      "choices": {
+        "A": "matching principle",
+        "B": "direct write-off method",
+        "C": "allowance method"
+      },
+      "answer": "B",
+      "explanation": "Direct write-off = wait for default, then recognize the loss — 'usually not consistent with GAAP' because the loss lands in a later period than the sale. Matching requires an estimate at the time of sale.",
+      "kr": "직접상각법 = 부도 시점에 손실 인식 — 손실이 매출보다 늦은 기간에 잡혀 '보통 GAAP과 불일치'. 대응원칙은 매출 시점에 추정 요구."
+    },
+    {
+      "id": "fsa-m2-q18",
+      "section": "3",
+      "concept": "Bad-debt placement",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "definition",
+      "stem": "Under the matching principle, the estimate of uncollectible receivables is recorded as:",
+      "choices": {
+        "A": "a direct reduction of revenue",
+        "B": "an expense on the income statement",
+        "C": "a reduction of cash"
+      },
+      "answer": "B",
+      "explanation": "The estimate is an EXPENSE on the income statement — not a direct reduction of revenue. It is based on experience (% of sales, % of receivables, or % overdue).",
+      "kr": "추정액은 손익계산서의 '비용' — 수익 직접 차감이 아님. 경험(매출의 %, 채권의 %, 연체채권의 %)에 근거."
+    },
+    {
+      "id": "fsa-m2-q19",
+      "section": "3",
+      "concept": "Warranty expense timing",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "truncated-rule",
+      "stem": "Under the matching principle, warranty expense should be recognized:",
+      "choices": {
+        "A": "when repairs are actually performed",
+        "B": "in the period of sale as an estimate, adjusted later for actual experience",
+        "C": "at the end of the warranty period"
+      },
+      "answer": "B",
+      "explanation": "Estimate at sale, expense in the period of sale, then ADJUST over the warranty life as actual experience comes in. Choice A fails matching.",
+      "kr": "판매 시 추정 → 판매 기간에 비용 인식 → 보증기간 동안 실제 경험으로 '조정'. A는 대응원칙 위반."
+    },
+    {
+      "id": "fsa-m2-q20",
+      "section": "3",
+      "concept": "Basis of bad-debt estimate",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Estimates of uncollectible accounts are most likely based on:",
+      "choices": {
+        "A": "the company's cost of capital",
+        "B": "previous experience with uncollectible accounts",
+        "C": "customers' stated intentions to pay"
+      },
+      "answer": "B",
+      "explanation": "The estimate rests primarily on PAST EXPERIENCE, expressed as a % of sales, of receivables, or of receivables overdue.",
+      "kr": "추정은 주로 '과거 경험'에 근거 — 매출·채권·연체채권의 %로 표현."
+    },
+    {
+      "id": "fsa-m2-q21",
+      "section": "4",
+      "concept": "Straight-line calc",
+      "type": "calc",
+      "difficulty": 1,
+      "trap": "formula",
+      "stem": "Equipment costs 50,000, has an estimated residual value of 5,000 and an 8-year useful life. Straight-line annual depreciation is closest to:",
+      "choices": {
+        "A": "6,250",
+        "B": "5,625",
+        "C": "6,875"
+      },
+      "answer": "B",
+      "explanation": "SL = (Cost − Residual) / Life = (50,000 − 5,000) / 8 = 5,625. Choice A ignores the residual value.",
+      "kr": "정액법 = (취득원가 − 잔존가치)/내용연수 = 45,000/8 = 5,625. A는 잔존가치 무시."
+    },
+    {
+      "id": "fsa-m2-q22",
+      "section": "4",
+      "concept": "DDB year 2",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "formula",
+      "stem": "Equipment costs 20,000 with a residual value of 2,000 and a 4-year life. Under double-declining balance, year-2 depreciation is closest to:",
+      "choices": {
+        "A": "4,500",
+        "B": "5,000",
+        "C": "10,000"
+      },
+      "answer": "B",
+      "explanation": "Rate = 2 × (1/4) = 50%, applied to NBV (residual NOT subtracted). Year 1: 50% × 20,000 = 10,000 → NBV 10,000. Year 2: 50% × 10,000 = 5,000 (NBV 5,000 > 2,000 floor, so no cap). Choice A applies the rate to cost − residual.",
+      "kr": "율 = 2 × 1/4 = 50%, 장부금액(NBV)에 적용(잔존가치 차감 X). 1년차 10,000 → NBV 10,000. 2년차 50% × 10,000 = 5,000(NBV 5,000 > 2,000 하한). A는 (원가 − 잔존가치)에 적용."
+    },
+    {
+      "id": "fsa-m2-q23",
+      "section": "4",
+      "concept": "DDB floor",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "truncated-rule",
+      "stem": "Under the diminishing balance method, depreciation stops when:",
+      "choices": {
+        "A": "the straight-line rate is reached",
+        "B": "net book value reaches the residual value",
+        "C": "accumulated depreciation equals half the cost"
+      },
+      "answer": "B",
+      "explanation": "Residual value is a FLOOR: the final year's charge is capped so that NBV ends exactly at residual value.",
+      "kr": "잔존가치는 '하한': 마지막 해 상각액은 NBV가 잔존가치에서 멈추도록 제한."
+    },
+    {
+      "id": "fsa-m2-q24",
+      "section": "4",
+      "concept": "Revaluation model",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "confusion",
+      "stem": "The revaluation model for property, plant, and equipment is:",
+      "choices": {
+        "A": "permitted under IFRS but not US GAAP",
+        "B": "permitted under US GAAP but not IFRS",
+        "C": "required under both"
+      },
+      "answer": "A",
+      "explanation": "IFRS: cost OR revaluation model. US GAAP: cost model only. (The other two differences: IFRS requires component depreciation and an annual review of residual value and useful life.)",
+      "kr": "IFRS: 원가모형 또는 재평가모형. US GAAP: 원가모형만. (나머지 차이: IFRS는 구성요소별 감가상각·잔존가치/내용연수 연차 검토 요구.)"
+    },
+    {
+      "id": "fsa-m2-q25",
+      "section": "4",
+      "concept": "Accelerated → early NI",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "direction",
+      "stem": "Compared with straight-line, an accelerated depreciation method most likely results in:",
+      "choices": {
+        "A": "higher net income in early years",
+        "B": "lower net income in early years",
+        "C": "higher total depreciation over the asset's life"
+      },
+      "answer": "B",
+      "explanation": "Accelerated = more expense early → LOWER early net income (conservative), higher later; total depreciation over the life is the SAME.",
+      "kr": "가속상각 = 초기 비용 ↑ → 초기 순이익 '감소'(보수적), 후기 증가; 전체 기간 총 상각액은 '동일'."
+    },
+    {
+      "id": "fsa-m2-q26",
+      "section": "4",
+      "concept": "Residual value sensitivity",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "direction",
+      "stem": "Holding cost and useful life constant, an increase in estimated residual value will most likely:",
+      "choices": {
+        "A": "increase annual straight-line depreciation",
+        "B": "decrease annual straight-line depreciation",
+        "C": "have no effect on net income"
+      },
+      "answer": "B",
+      "explanation": "Higher residual → smaller depreciable base (cost − residual) → LOWER expense → HIGHER net income. Longer life works the same way.",
+      "kr": "잔존가치 ↑ → 상각대상액(원가 − 잔존가치) ↓ → 비용 '감소' → 순이익 증가. 내용연수 연장도 같은 방향."
+    },
+    {
+      "id": "fsa-m2-q27",
+      "section": "4",
+      "concept": "Not amortised — goodwill",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "negation",
+      "stem": "Which of the following is LEAST likely to be depreciated or amortised?",
+      "choices": {
+        "A": "A patent with a set expiration date",
+        "B": "Goodwill",
+        "C": "Manufacturing equipment"
+      },
+      "answer": "B",
+      "explanation": "Least-likely stem → T/F each. Patent (finite life) → amortised (T). Equipment → depreciated (T). Goodwill → NOT amortised; tested at least annually for impairment (F → answer).",
+      "kr": "least likely 지문 → 선지별 T/F. 특허(유한) → 상각(T). 설비 → 감가상각(T). 영업권 → 상각 안 함, 매년 손상검사(F → 정답)."
+    },
+    {
+      "id": "fsa-m2-q28",
+      "section": "4",
+      "concept": "Component depreciation",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "confusion",
+      "stem": "Depreciating each significant component of an asset separately is:",
+      "choices": {
+        "A": "required under IFRS",
+        "B": "required under US GAAP",
+        "C": "prohibited under both"
+      },
+      "answer": "A",
+      "explanation": "Component depreciation is REQUIRED under IFRS and not required under US GAAP.",
+      "kr": "구성요소별 감가상각: IFRS '요구', US GAAP 요구하지 않음."
+    },
+    {
+      "id": "fsa-m2-q29",
+      "section": "5",
+      "concept": "US GAAP dividends paid",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "truncated-rule",
+      "stem": "Under US GAAP, dividends paid are classified in the cash flow statement as:",
+      "choices": {
+        "A": "operating",
+        "B": "investing",
+        "C": "financing"
+      },
+      "answer": "C",
+      "explanation": "US GAAP: interest received, dividends received and interest PAID are all operating; dividends PAID is the one exception → FINANCING.",
+      "kr": "US GAAP: 이자수취·배당수취·이자'지급' 모두 영업; 배당'지급'만 예외 → '재무'."
+    },
+    {
+      "id": "fsa-m2-q30",
+      "section": "5",
+      "concept": "US GAAP interest paid",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "truncated-rule",
+      "stem": "Under US GAAP, interest paid is classified in the cash flow statement as:",
+      "choices": {
+        "A": "operating",
+        "B": "investing",
+        "C": "financing"
+      },
+      "answer": "A",
+      "explanation": "Under US GAAP interest paid is OPERATING (it flows through net income). Putting it in financing is the common swap — only dividends paid is financing.",
+      "kr": "US GAAP에서 이자지급 = '영업'(순이익을 거침). 재무로 넣는 것이 흔한 실수 — 재무는 배당지급뿐."
+    },
+    {
+      "id": "fsa-m2-q31",
+      "section": "5",
+      "concept": "IFRS interest received",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "truncated-rule",
+      "stem": "Under IFRS, interest received may be classified in the cash flow statement as:",
+      "choices": {
+        "A": "operating or investing",
+        "B": "operating or financing",
+        "C": "financing only"
+      },
+      "answer": "A",
+      "explanation": "IFRS gives a choice: items RECEIVED → operating or investing; items PAID → operating or financing.",
+      "kr": "IFRS는 선택: '수취' 항목 → 영업 또는 투자; '지급' 항목 → 영업 또는 재무."
+    },
+    {
+      "id": "fsa-m2-q32",
+      "section": "5",
+      "concept": "Dividends received — non-financial",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "For a non-financial company, dividends received on an equity investment are most likely reported on the income statement as:",
+      "choices": {
+        "A": "revenue",
+        "B": "non-operating income",
+        "C": "a reduction of cost of sales"
+      },
+      "answer": "B",
+      "explanation": "For non-financial companies, interest, dividends and gains on securities are NON-OPERATING (investing income). For financial companies they are operating.",
+      "kr": "비금융회사의 이자·배당·증권처분이익 = '영업외'(투자수익). 금융회사는 영업."
+    },
+    {
+      "id": "fsa-m2-q33",
+      "section": "5",
+      "concept": "Operating — US GAAP definition",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "confusion",
+      "stem": "Under US GAAP, operating activities are best described as:",
+      "choices": {
+        "A": "activities normally regarded as operating, left undefined by the standard",
+        "B": "all transactions not defined as investing or financing",
+        "C": "activities that generate interest and dividend income"
+      },
+      "answer": "B",
+      "explanation": "US GAAP defines operating as the RESIDUAL — everything not investing or financing. Choice A is the IFRS position (no definition; reflect activities normally regarded as operating).",
+      "kr": "US GAAP: 영업 = '잔여' — 투자·재무가 아닌 모든 거래. A는 IFRS 입장(정의 없음)."
+    },
+    {
+      "id": "fsa-m2-q34",
+      "section": "5",
+      "concept": "Large financial income",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "A manufacturer reports a large amount of financial income. An analyst should most likely:",
+      "choices": {
+        "A": "treat it as recurring core income",
+        "B": "investigate the reasons for the company's investments in securities",
+        "C": "reclassify it as revenue"
+      },
+      "answer": "B",
+      "explanation": "For a non-financial company, significant financial income warrants further exploration — is it excess cash parked in securities, or strategic stakes? It is not core and may not recur.",
+      "kr": "비금융회사의 큰 금융수익은 추가 조사 대상 — 여유현금 운용인가, 전략적 지분인가? 핵심 아님, 반복 안 될 수 있음."
+    },
+    {
+      "id": "fsa-m2-q35",
+      "section": "6",
+      "concept": "Common-size calc",
+      "type": "calc",
+      "difficulty": 1,
+      "trap": "formula",
+      "stem": "Sales are 4.0m, cost of sales 2.6m and SG&A 0.6m. On a common-size income statement, gross profit and operating profit are closest to:",
+      "choices": {
+        "A": "35% and 20%",
+        "B": "65% and 15%",
+        "C": "35% and 15%"
+      },
+      "answer": "A",
+      "explanation": "Gross profit = (4.0 − 2.6)/4.0 = 1.4/4.0 = 35%. Operating profit = (1.4 − 0.6)/4.0 = 0.8/4.0 = 20%. Choice B shows cost of sales (65%) instead of gross profit.",
+      "kr": "매출총이익 = 1.4/4.0 = 35%. 영업이익 = 0.8/4.0 = 20%. B는 매출원가 비율(65%)을 매출총이익으로 착각."
+    },
+    {
+      "id": "fsa-m2-q36",
+      "section": "6",
+      "concept": "Margin vs dollar profit",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "asked-quantity",
+      "stem": "Company X earns operating profit of 1.5m on sales of 10m; Company Y earns 0.4m on sales of 2m. Based on common-size analysis, which is more profitable?",
+      "choices": {
+        "A": "X, since its operating profit is larger",
+        "B": "Y, since its operating margin is higher",
+        "C": "They are equally profitable"
+      },
+      "answer": "B",
+      "explanation": "X margin = 15%; Y margin = 20%. Common-size removes size: Y earns $5 more per $100 of sales. Larger dollar profit is the lure.",
+      "kr": "X 이익률 15%, Y 20%. 공통형은 규모 효과 제거: Y가 매출 100당 5 더 벌음. 큰 금액 이익이 유인."
+    },
+    {
+      "id": "fsa-m2-q37",
+      "section": "6",
+      "concept": "Tax denominator",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "asked-quantity",
+      "stem": "In common-size analysis, income tax expense is most meaningfully compared with:",
+      "choices": {
+        "A": "revenue",
+        "B": "pretax income",
+        "C": "operating profit"
+      },
+      "answer": "B",
+      "explanation": "Tax ÷ PRETAX income = the effective tax rate. Most other lines go over revenue, but tax over revenue is not meaningful.",
+      "kr": "세금 ÷ '세전이익' = 유효세율. 다른 항목은 매출로 나누지만 세금은 매출 대비가 의미 없음."
+    },
+    {
+      "id": "fsa-m2-q38",
+      "section": "6",
+      "concept": "Purpose of common-size",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Common-size income statements facilitate comparison across companies primarily because they:",
+      "choices": {
+        "A": "adjust for differences in accounting standards",
+        "B": "remove the effect of company size",
+        "C": "convert all figures to a common currency"
+      },
+      "answer": "B",
+      "explanation": "Stating every line as a % of revenue standardizes the statement and removes the effect of SIZE — allowing time-series and cross-sectional comparison.",
+      "kr": "모든 항목을 매출 대비 %로 → 규모 효과 제거 → 시계열·횡단면 비교 가능."
+    },
+    {
+      "id": "fsa-m2-q39",
+      "section": "6",
+      "concept": "Strategy in the structure",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "In the same industry, Company A has a 70% gross margin and spends heavily on R&D and advertising; Company B has a 25% gross margin and spends on neither. The most likely inference is that:",
+      "choices": {
+        "A": "B sells technologically superior products",
+        "B": "A sells premium, better-branded products while B competes on price",
+        "C": "A's cost accounting is less conservative"
+      },
+      "answer": "B",
+      "explanation": "A's high gross margin plus heavy R&D and advertising suggest technologically superior, better-branded products at premium prices; B sells cheaper products and skips the investment.",
+      "kr": "A의 높은 매출총이익률 + R&D·광고 대규모 → 기술·브랜드 우위 제품을 프리미엄에 판매. B는 저가 경쟁."
+    },
+    {
+      "id": "fsa-m2-q40",
+      "section": "7",
+      "concept": "OCI back-solve — share issue",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "truncated-rule",
+      "stem": "Beginning equity 600; net income 50; dividends 15; shares issued 25; ending equity 672. Other comprehensive income is closest to:",
+      "choices": {
+        "A": "12",
+        "B": "37",
+        "C": "−3"
+      },
+      "answer": "A",
+      "explanation": "OCI = End − (Begin + NI − Div + Shares) = 672 − (600 + 50 − 15 + 25) = 672 − 660 = 12. Choice B (37) treats the share issue as OCI; choice C (−3) drops the dividend.",
+      "kr": "OCI = 기말 − (기초 + 순이익 − 배당 + 신주) = 672 − 660 = 12. B(37)는 신주발행을 OCI로 처리, C(−3)는 배당 누락."
+    },
+    {
+      "id": "fsa-m2-q41",
+      "section": "7",
+      "concept": "Not OCI — gain on equipment",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "negation",
+      "stem": "Which of the following is LEAST likely an item of other comprehensive income?",
+      "choices": {
+        "A": "Foreign currency translation adjustments on a foreign subsidiary",
+        "B": "A gain on the sale of surplus equipment",
+        "C": "Unrealized gains on available-for-sale debt securities"
+      },
+      "answer": "B",
+      "explanation": "Least-likely → T/F each. FX translation (T, OCI). AFS debt unrealized gains (T, OCI). A realized gain on selling equipment is outside ordinary activities but IS in net income (F → answer).",
+      "kr": "least likely → T/F. 외화환산(T, OCI). 매도가능 채무증권 미실현이익(T, OCI). 설비 처분이익은 비경상이지만 '순이익'에 포함(F → 정답)."
+    },
+    {
+      "id": "fsa-m2-q42",
+      "section": "7",
+      "concept": "Held-to-maturity",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "truncated-rule",
+      "stem": "Unrealized gains on debt securities the company intends to hold to maturity are most likely:",
+      "choices": {
+        "A": "reported in net income",
+        "B": "reported in other comprehensive income",
+        "C": "not reported, since the securities are carried at amortised cost"
+      },
+      "answer": "C",
+      "explanation": "Held-to-maturity debt is carried at AMORTISED COST, so no unrealized gains or losses are reported anywhere — neither net income nor OCI.",
+      "kr": "만기보유 채무증권은 '상각후원가' → 미실현손익을 어디에도 보고하지 않음(순이익도 OCI도 아님)."
+    },
+    {
+      "id": "fsa-m2-q43",
+      "section": "7",
+      "concept": "US GAAP equity investments",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "confusion",
+      "stem": "Under US GAAP, unrealized gains on an equity investment that does not confer significant influence are reported in:",
+      "choices": {
+        "A": "net income",
+        "B": "other comprehensive income",
+        "C": "neither"
+      },
+      "answer": "A",
+      "explanation": "US GAAP: ALL such equity investments go through the income statement — there is no equity-at-OCI option. IFRS allows an irrevocable FVOCI election.",
+      "kr": "US GAAP: 이런 지분투자는 '전부' 손익계산서 — OCI 옵션 없음. IFRS는 FVOCI 취소불능 선택 허용."
+    },
+    {
+      "id": "fsa-m2-q44",
+      "section": "7",
+      "concept": "IFRS FVOCI election",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Under IFRS, an equity investment for which the company makes an irrevocable election at initial recognition to report gains in OCI is measured at:",
+      "choices": {
+        "A": "amortised cost",
+        "B": "fair value through profit or loss",
+        "C": "fair value through other comprehensive income"
+      },
+      "answer": "C",
+      "explanation": "Irrevocable election at initial recognition → FVOCI. Without the election, IFRS equity investments are FVPL.",
+      "kr": "최초 인식 시 취소불능 선택 → FVOCI. 선택하지 않으면 IFRS 지분투자는 FVPL."
+    },
+    {
+      "id": "fsa-m2-q45",
+      "section": "7",
+      "concept": "Price / comprehensive EPS",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "sign",
+      "stem": "A stock trades at $40 with EPS of $2.00. The company reported an OCI loss of $4.5m and has 15m shares. Its price-to-comprehensive-EPS ratio is closest to:",
+      "choices": {
+        "A": "20.0×",
+        "B": "23.5×",
+        "C": "17.4×"
+      },
+      "answer": "B",
+      "explanation": "OCI per share = −4.5 / 15 = −0.30. Comprehensive EPS = 2.00 − 0.30 = 1.70. Ratio = 40 / 1.70 = 23.5×. Choice C adds the OCI loss (2.30) — sign it first; choice A is the plain P/E.",
+      "kr": "주당 OCI = −4.5/15 = −0.30. 포괄EPS = 2.00 − 0.30 = 1.70. 비율 = 40/1.70 = 23.5×. C는 손실을 더함(2.30) — 부호 먼저."
+    },
+    {
+      "id": "fsa-m2-q46",
+      "section": "7",
+      "concept": "Gain on land — in NI",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "off-model",
+      "stem": "A gain on the sale of surplus land is most likely:",
+      "choices": {
+        "A": "other comprehensive income, since it is outside ordinary activities",
+        "B": "part of net income, even though it is outside ordinary activities",
+        "C": "excluded from both net income and comprehensive income"
+      },
+      "answer": "B",
+      "explanation": "'Outside ordinary activities' describes GAINS — which are reported IN net income. OCI is defined by where it is reported (equity ↑, net income unchanged), not by activity type.",
+      "kr": "'통상활동 밖'은 '차익(gain)'의 설명 — 순이익에 '포함'. OCI는 활동 종류가 아니라 보고 위치(자본 ↑, 순이익 불변)로 정의."
+    },
+    {
+      "id": "fsa-m2-q47",
+      "section": "4",
+      "concept": "DDB final-year cap",
+      "type": "calc",
+      "difficulty": 3,
+      "trap": "truncated-rule",
+      "stem": "An asset costs 10,000 with a residual value of 1,500 and a 3-year life. Under double-declining balance, year-2 depreciation is closest to:",
+      "choices": {
+        "A": "2,222",
+        "B": "1,833",
+        "C": "1,889"
+      },
+      "answer": "B",
+      "explanation": "Rate = 2/3 = 66.7%. Year 1: 66.7% × 10,000 = 6,667 → NBV 3,333. Year 2 mechanically 66.7% × 3,333 = 2,222 would take NBV to 1,111 < 1,500 floor → cap at 3,333 − 1,500 = 1,833. Choice A overshoots the floor; choice C applies the rate to cost − residual.",
+      "kr": "율 = 2/3. 1년차 6,667 → NBV 3,333. 2년차 기계적으로 2,222면 NBV 1,111 < 잔존가치 1,500 → 3,333 − 1,500 = 1,833으로 제한. A는 하한 초과, C는 (원가 − 잔존가치)에 적용."
+    },
+    {
+      "id": "fsa-m2-q48",
+      "section": "2",
+      "concept": "Contract liability",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "confusion",
+      "stem": "A software company receives a full year's subscription fee in advance. At the date of receipt it should record:",
+      "choices": {
+        "A": "revenue for the full year",
+        "B": "a contract liability (unearned revenue)",
+        "C": "a receivable"
+      },
+      "answer": "B",
+      "explanation": "Cash before delivery → a LIABILITY (contract liability / unearned revenue); revenue is recognized as the service is delivered over the year.",
+      "kr": "인도 전 현금 수령 → '부채'(계약부채·선수수익); 서비스 제공에 따라 1년에 걸쳐 수익 인식."
+    },
+    {
+      "id": "fsa-m2-q49",
+      "section": "5",
+      "concept": "IFRS dividends paid",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "truncated-rule",
+      "stem": "Under IFRS, dividends paid may be classified in the cash flow statement as:",
+      "choices": {
+        "A": "operating or investing",
+        "B": "operating or financing",
+        "C": "financing only"
+      },
+      "answer": "B",
+      "explanation": "IFRS: PAID items → operating or financing; RECEIVED items → operating or investing. 'Financing only' is the US GAAP answer.",
+      "kr": "IFRS: '지급' → 영업 또는 재무; '수취' → 영업 또는 투자. '재무만'은 US GAAP 답."
+    },
+    {
+      "id": "fsa-m2-q50",
+      "section": "7",
+      "concept": "OCI four types",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "negation",
+      "stem": "Which of the following is NOT one of the four types of OCI items common to IFRS and US GAAP?",
+      "choices": {
+        "A": "Certain costs of defined-benefit pension plans",
+        "B": "Unrealized gains on derivatives accounted for as hedges",
+        "C": "Unrealized gains on debt securities designated as trading"
+      },
+      "answer": "C",
+      "explanation": "F-H-S-P: FX translation, Hedges, certain Securities (AFS / FVOCI), Pensions. TRADING securities' gains go to net income, not OCI.",
+      "kr": "F-H-S-P: 외화환산·위험회피 파생·일부 증권(매도가능/FVOCI)·연금. '단기매매' 증권 손익은 순이익, OCI 아님."
+    },
+    {
+      "id": "fsa-m2-q51",
+      "section": "4",
+      "concept": "Amortisation — indefinite trademark",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "definition",
+      "stem": "A trademark with an indefinite useful life is most likely:",
+      "choices": {
+        "A": "amortised straight-line with no residual value",
+        "B": "not amortised, but tested at least annually for impairment",
+        "C": "depreciated using the diminishing balance method"
+      },
+      "answer": "B",
+      "explanation": "Indefinite-life intangibles (and goodwill) are NOT amortised; they are tested for impairment at least annually. Finite-life intangibles are amortised, usually straight-line with no residual.",
+      "kr": "무한 내용연수 무형자산(과 영업권)은 상각 안 함, 최소 매년 손상검사. 유한 무형자산은 보통 정액·잔존가치 0으로 상각."
+    },
+    {
+      "id": "fsa-m2-q52",
+      "section": "7",
+      "concept": "Excluded from NI ≠ from CI",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "truncated-rule",
+      "stem": "Under US GAAP, unrealized gains on available-for-sale debt securities are:",
+      "choices": {
+        "A": "excluded from both net income and comprehensive income",
+        "B": "excluded from net income but included in comprehensive income",
+        "C": "included in net income"
+      },
+      "answer": "B",
+      "explanation": "AFS gains go to OCI → excluded from net income but INCLUDED in comprehensive income (CI = NI + OCI).",
+      "kr": "매도가능 이익 → OCI → 순이익에서는 제외, 포괄이익에는 '포함'(CI = NI + OCI)."
+    },
+    {
+      "id": "fsa-m2-p01",
+      "section": "7",
+      "concept": "Ex3 Q1 — OCI back-solve with dividends",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "truncated-rule",
+      "source": "cfai",
+      "stem": "A company starts the year with equity of €200m, earns net income of €20m, pays €3m of dividends, and has no share transactions. Year-end equity is €227m. The amount that bypassed net income as OCI is closest to:",
+      "choices": {
+        "A": "€4m",
+        "B": "€7m",
+        "C": "€10m"
+      },
+      "answer": "C",
+      "explanation": "OCI = End − (Begin + NI − Div) = 227 − (200 + 20 − 3) = 227 − 217 = €10m. €7m comes from dropping the dividend (227 − 220). Fill all four bracket slots before subtracting.",
+      "kr": "OCI = 기말 − (기초 + 순이익 − 배당) = 227 − 217 = 10. 7은 배당 누락(227 − 220). 괄호 네 칸을 다 채운 뒤 빼기."
+    },
+    {
+      "id": "fsa-m2-p02",
+      "section": "7",
+      "concept": "Ex3 Q2 — what OCI is",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "off-model",
+      "source": "cfai",
+      "stem": "Other comprehensive income is best described as income that:",
+      "choices": {
+        "A": "has not yet been realized in cash",
+        "B": "increases shareholders' equity but is not reflected in net income",
+        "C": "arises from activities outside the company's ordinary business"
+      },
+      "answer": "B",
+      "explanation": "OCI is defined by WHERE it is reported: it raises equity but bypasses net income. 'Outside ordinary activities' describes gains and losses, which ARE in net income; 'not realized in cash' describes accruals generally. Neither says where the item is reported.",
+      "kr": "OCI는 '보고 위치'로 정의: 자본은 늘리지만 순이익을 거치지 않음. '통상활동 밖'은 차손익(순이익에 포함)의 설명, '현금 미실현'은 발생주의 일반. 둘 다 보고 위치를 말하지 않음."
+    },
+    {
+      "id": "fsa-m2-f01",
+      "section": "2",
+      "concept": "Five-step model + definitions",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "truncated-rule",
+      "front": "The five steps of revenue recognition (in order), what each governs, the 'probable' threshold and the distinct test",
+      "back": "1 Identify CONTRACT (commercial substance; collectability probable) → 2 identify distinct PERFORMANCE OBLIGATIONS → 3 determine TRANSACTION PRICE → 4 ALLOCATE price → 5 RECOGNIZE when/as satisfied.\n3–4 = AMOUNT; 5 = TIMING.\nProbable: IFRS = more likely than not; US GAAP = likely to occur (higher bar).\nDistinct = benefit on its own/with readily available resources AND separately identifiable.\nContract asset (obligations remain) | receivable (only payment left) | contract liability (cash first)."
+    },
+    {
+      "id": "fsa-m2-f02",
+      "section": "2",
+      "concept": "Builder Co. calculations",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "formula",
+      "front": "Cost-to-cost revenue, variable consideration, cumulative catch-up, principal vs agent",
+      "back": "Progress = costs to date ÷ total expected costs; revenue = progress × PRICE (420/700 = 60% × 1m = 600k).\nVariable consideration: include only if cumulative revenue won't be reversed.\nModification (not a new contract unless distinct new goods) → CATCH-UP: new price 1.35m, new costs 820k, 420/820 = 51.2% → 691,200 − 600,000 = 91,200 at once.\nAgent (not primarily responsible, no inventory risk, no credit risk, no price discretion) → NET commission; principal → GROSS."
+    },
+    {
+      "id": "fsa-m2-f03",
+      "section": "4",
+      "concept": "Depreciation formulas & rules",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "formula",
+      "front": "SL and DDB formulas, the residual floor, IFRS vs US GAAP differences, non-allocated assets",
+      "back": "SL = (Cost − Residual) / Life. Longer life or higher residual → lower expense → higher NI.\nDDB rate = 2 × (1/Life), applied to NBV (NOT cost − residual); stop at residual (cap final year).\nAccelerated → lower early NI, same total (conservative).\nIFRS only: revaluation model; IFRS requires component depreciation + annual review.\nNot allocated: land; goodwill and indefinite-life intangibles (annual impairment test)."
+    },
+    {
+      "id": "fsa-m2-f04",
+      "section": "5",
+      "concept": "Cash-flow classification grid",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "truncated-rule",
+      "front": "Interest and dividends, received and paid — IFRS vs US GAAP",
+      "back": "US GAAP: interest received, dividends received, interest PAID → OPERATING; dividends PAID → FINANCING.\nIFRS: received → operating OR investing; paid → operating OR financing.\nIncome statement (non-financial co.): interest/dividend income and interest expense = non-operating."
+    },
+    {
+      "id": "fsa-m2-f05",
+      "section": "3",
+      "concept": "Matching applications",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "definition",
+      "front": "Doubtful accounts and warranties under the matching principle",
+      "back": "Expense in the same period as the revenue it helps generate.\nBad debts: estimate at sale from experience (% of sales / receivables / overdue) as an EXPENSE (not a revenue reduction). Direct write-off = not GAAP.\nWarranties: estimate at sale, expense in period of sale, adjust over warranty life for actual experience."
+    },
+    {
+      "id": "fsa-m2-f06",
+      "section": "7",
+      "concept": "OCI back-solve, types, securities grid",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "truncated-rule",
+      "front": "OCI formula, the four OCI types, and where unrealized securities gains go",
+      "back": "OCI = End − (Begin + NI − Div ± Shares).\nF-H-S-P: FX translation | hedge derivatives | certain securities (US GAAP AFS debt; IFRS FVOCI, incl. equity by election) | defined-benefit pension costs.\nHTM debt → amortised cost → no unrealized gain anywhere.\nUS GAAP: trading debt + ALL equity → NI; AFS debt → OCI.\nIFRS: FVPL → NI; FVOCI (collect AND sell debt; elected equity) → OCI.\nComprehensive EPS = EPS + OCI/shares."
+    },
+    {
+      "id": "fsa-m2-f07",
+      "section": "1",
+      "concept": "Format distinctions",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "confusion",
+      "front": "Nature vs function; single vs multi-step; operating profit vs EBIT; common-size tax line",
+      "back": "By NATURE = what it is (one depreciation line). By FUNCTION = what it's for (COGS).\nMULTI-STEP = gross profit line; SINGLE-STEP = none.\nOperating profit before interest (non-financial); financial cos treat interest as operating. Operating profit ≠ EBIT necessarily (associates, discontinued ops).\nCommon-size: line ÷ revenue; TAX ÷ PRETAX income.\nGain on disposal = proceeds − carrying value."
+    }
+  ]
+}
