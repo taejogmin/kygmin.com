@@ -226,6 +226,16 @@ Amounts owed by **customers** for goods/services **already delivered**; reported
 
 ⚠️ A write-off does **not** hit the income statement, and **net receivables are unchanged** (gross ↓ and allowance ↓ equally).
 
+> ### ⭐ YOU MISSED OFFICIAL Q9 HERE — what counts as a contra asset
+> You picked **depreciation expense**; correct is **allowance for doubtful accounts**.
+> A **contra asset** sits on the **balance sheet** and reduces an asset. Two to know:
+> | Contra asset | Reduces | Its income-statement partner (NOT contra) |
+> |---|---|---|
+> | **Allowance for doubtful accounts** | Accounts receivable | Bad-debt **expense** |
+> | **Accumulated depreciation** | PP&E | Depreciation **expense** |
+> "Sales returns and allowances" is a contra-**revenue** account (reduces sales, not an asset).
+> **One-word trap:** *expense* vs *accumulated / allowance*. Expenses live on the income statement; contra assets live under the asset they reduce.
+
 ### Example 1 — the gross-up 🔴 CALCULATION
 
 $$
@@ -660,7 +670,10 @@ SoCE (IFRS): C-R-O-R; NI→RE, OCI→AOCI,
 | Q4 | Why book equity ≠ market | factors excluded | ✅ | — |
 | Q5 | Current liability — operating cycle | merchandise within cycle | ✅ | — |
 | Q6 | Who uses liquidity-based | software company | **bank** | off-model (receivables/payables *sound* liquid) |
+| Q7 | Debt due within a year | current | ✅ | — |
+| Q8 | Customer prepayment | asset + liability | ✅ | — |
+| Q9 | Contra asset example | depreciation expense | **allowance for doubtful accounts** | definition (expense ≠ accumulated) |
 
-**Running tally: 4 / 6.** Both misses are on §2 (liquidity-based presentation).
+**Running tally: 6 / 9.** Two misses on §2 (liquidity-based presentation), one on §3 (contra asset).
 
 > **Note status: COMPLETE** — §3.01 through §3.11. No scored curriculum examples in this reading. Practice questions Q1–Q57 → Study Hub (Financial Statement Analysis → M3, `fsa-m3-q01…`).

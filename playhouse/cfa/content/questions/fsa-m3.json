@@ -1079,6 +1079,60 @@
       "kr": "유동성 순서 표시는 '은행' 같은 기관이 사용. 매출채권·매입채무는 평범한 운전자본 항목 — 소프트웨어 회사는 일반 구분 재무상태표."
     },
     {
+      "id": "fsa-m3-p07",
+      "section": "1",
+      "concept": "Official Q7 — debt due within a year",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "source": "cfai",
+      "stem": "Debt due within one year is classified as:",
+      "choices": {
+        "A": "current",
+        "B": "preferred",
+        "C": "convertible"
+      },
+      "answer": "A",
+      "explanation": "Liabilities (including debt) due within one year are CURRENT. Preferred is a class of stock; convertible is a feature of bonds or preferred.",
+      "kr": "1년 이내 만기 부채 = '유동'. 우선주는 주식 종류, 전환은 채권·우선주의 특성."
+    },
+    {
+      "id": "fsa-m3-p08",
+      "section": "5",
+      "concept": "Official Q8 — customer prepayment",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "source": "cfai",
+      "stem": "Cash received from customers for products to be delivered later is recorded as:",
+      "choices": {
+        "A": "revenue and an asset",
+        "B": "an asset and a liability",
+        "C": "revenue and a liability"
+      },
+      "answer": "B",
+      "explanation": "Cash (asset ↑) and unearned/deferred revenue (liability ↑). Revenue is recognized only as the product is delivered, reducing the liability.",
+      "kr": "현금(자산 ↑)과 선수수익(부채 ↑). 수익은 인도 시점에 인식하며 부채가 감소."
+    },
+    {
+      "id": "fsa-m3-p09",
+      "section": "3",
+      "concept": "Official Q9 — contra asset",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "definition",
+      "source": "cfai",
+      "stem": "Which is an example of a contra asset account?",
+      "choices": {
+        "A": "Depreciation expense",
+        "B": "Sales returns and allowances",
+        "C": "Allowance for doubtful accounts"
+      },
+      "answer": "C",
+      "explanation": "A contra ASSET reduces an asset's balance: the allowance reduces receivables. Depreciation EXPENSE is an income-statement account — the contra asset is ACCUMULATED depreciation. Sales returns and allowances is a contra-REVENUE account.",
+      "kr": "차감 '자산' 계정은 자산 잔액을 줄임: 대손충당금 → 매출채권 차감. 감가상각'비용'은 손익계정 — 차감자산은 '감가상각누계액'. 매출환입·에누리는 '수익' 차감 계정."
+    },
+    {
       "id": "fsa-m3-f01",
       "section": "1",
       "concept": "Classification rules",
