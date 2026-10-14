@@ -1025,6 +1025,60 @@
       "kr": "'구분' 재무상태표 = 유동/비유동 구분 + 유동 소계. '유동성 순서' = 소계 없이 유동성 순서로 나열(은행). 소계 유무가 판별 기준."
     },
     {
+      "id": "fsa-m3-p04",
+      "section": "0",
+      "concept": "Official Q4 — book vs market equity",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "source": "cfai",
+      "stem": "Book equity most likely differs from the market value of equity because:",
+      "choices": {
+        "A": "all assets and liabilities are carried at historical cost",
+        "B": "some factors that drive future cash flows are not on the balance sheet",
+        "C": "book equity is updated continuously"
+      },
+      "answer": "B",
+      "explanation": "Reputation and management skill drive future cash flows but are not recognized. A is false (the model is MIXED — some items at fair value); C is false (MARKET value updates continuously; book value only at period end).",
+      "kr": "평판·경영 능력은 미래 현금흐름을 만들지만 인식되지 않음. A 거짓(혼합 측정), C 거짓(연속 갱신되는 건 '시장'가치, 장부가는 기말 기준)."
+    },
+    {
+      "id": "fsa-m3-p05",
+      "section": "1",
+      "concept": "Official Q5 — current liability",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "truncated-rule",
+      "source": "cfai",
+      "stem": "Which is most likely classified as a current liability?",
+      "choices": {
+        "A": "Cash received for a product to be delivered more than one year after the balance sheet date",
+        "B": "Amounts owed for merchandise, due more than one year out but within the normal operating cycle",
+        "C": "Debt due in six months that the company has an unconditional right to defer for at least one year"
+      },
+      "answer": "B",
+      "explanation": "Operating-cycle items are current even beyond 12 months. A: delivery obligation > 1 year → non-current (deferred revenue). C: an unconditional right to defer ≥ 1 year → non-current despite the six-month date.",
+      "kr": "영업주기 내 항목은 12개월이 넘어도 유동. A: 1년 이후 인도 의무 → 비유동 선수수익. C: 1년 이상 연기할 무조건적 권리 → 6개월 만기여도 비유동."
+    },
+    {
+      "id": "fsa-m3-p06",
+      "section": "2",
+      "concept": "Official Q6 — who uses liquidity-based",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "off-model",
+      "source": "cfai",
+      "stem": "Which entity is most likely to present its balance sheet in order of liquidity?",
+      "choices": {
+        "A": "A bank",
+        "B": "A computer manufacturer with inventories",
+        "C": "A software company with trade receivables and payables"
+      },
+      "answer": "A",
+      "explanation": "Liquidity-based presentation is used by entities like BANKS, where ordering by liquidity is reliable and more relevant. Receivables and payables are ordinary working-capital items — a software company presents a normal classified balance sheet.",
+      "kr": "유동성 순서 표시는 '은행' 같은 기관이 사용. 매출채권·매입채무는 평범한 운전자본 항목 — 소프트웨어 회사는 일반 구분 재무상태표."
+    },
+    {
       "id": "fsa-m3-f01",
       "section": "1",
       "concept": "Classification rules",

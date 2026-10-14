@@ -170,6 +170,11 @@ A balance sheet with **separately classified** current and non-current items = a
 
 ⚠️ What's *absent*: no "total current assets" line. That absence identifies the format.
 
+> ### ⭐ YOU MISSED OFFICIAL Q6 HERE — who uses liquidity-based (second miss on this format)
+> You picked **a software company with trade receivables and payables**; correct is **a bank**.
+> "Receivables and payables" *sound* like liquidity items, but they are ordinary working-capital lines that every company has — the software company presents a normal **classified** balance sheet. The liquidity-based format is for entities whose balance sheet is mostly **financial instruments** (banks), where "current vs non-current" says less than "how liquid".
+> **Q3 + Q6 together:** both misses were on §2, the one-page section. Store it as one sentence: ***banks → liquidity order, no current subtotals; everyone else → classified, with current subtotals.***
+
 | Stem describes... | Format |
 |---|---|
 | Separate current and non-current subtotals | **Classified** balance sheet |
@@ -652,7 +657,10 @@ SoCE (IFRS): C-R-O-R; NI→RE, OCI→AOCI,
 | Q1 | Asset definition | assets | ✅ | — |
 | Q2 | Equity = A − L | A − L | ✅ | — |
 | Q3 | Current subtotals → which format | liquidity-based | **classified** | confusion (two adjacent format names) |
+| Q4 | Why book equity ≠ market | factors excluded | ✅ | — |
+| Q5 | Current liability — operating cycle | merchandise within cycle | ✅ | — |
+| Q6 | Who uses liquidity-based | software company | **bank** | off-model (receivables/payables *sound* liquid) |
 
-**Running tally: 2 / 3.**
+**Running tally: 4 / 6.** Both misses are on §2 (liquidity-based presentation).
 
 > **Note status: COMPLETE** — §3.01 through §3.11. No scored curriculum examples in this reading. Practice questions Q1–Q57 → Study Hub (Financial Statement Analysis → M3, `fsa-m3-q01…`).

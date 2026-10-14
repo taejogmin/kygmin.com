@@ -322,9 +322,12 @@
         "M5 official Q7 (stable real rate → picked money neutrality; it's the Fisher effect)",
         "M7 Ex2 Q2 (what makes Marshall–Lerner more likely to hold = higher elasticities; picked lower ε_M + higher ω_M)",
         "FSA M1 official Q2 ('accuracy' sounds like a qualitative characteristic; the framework says faithful representation)",
-        "FSA M2 Ex3 Q2 (OCI = 'outside ordinary activities' — that's gains/losses, which ARE in NI; OCI is defined by reporting location)"
+        "FSA M2 Ex3 Q2 (OCI = 'outside ordinary activities' — that's gains/losses, which ARE in NI; OCI is defined by reporting location)",
+        "FSA M3 official Q6 (liquidity-based user = BANK; picked a software company because 'receivables and payables' sound like liquidity items — second §2 miss after Q3)"
       ],
       "seed": [
+        "fsa-m3-p06",
+        "fsa-m3-q13",
         "fsa-m2-p02",
         "fsa-m2-q46",
         "fsa-m1-p02",
@@ -741,6 +744,11 @@
       "qid": "fsa-m3-p03",
       "when": "2026-10-14",
       "note": "FSA M3 official Q3 — current/non-current split with current subtotals = CLASSIFIED; picked liquidity-based (which has NO subtotals). (format-name swap)"
+    },
+    {
+      "qid": "fsa-m3-p06",
+      "when": "2026-10-14",
+      "note": "FSA M3 official Q6 — liquidity-based presentation = BANK; picked software company with receivables/payables. Second miss on §2 (after Q3). (off-model lure)"
     }
   ]
 }
