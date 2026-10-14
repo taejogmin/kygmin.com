@@ -460,6 +460,12 @@ $$
 | **A** | **AOCI** (other reserves) | Cumulative OCI (🔗 F2 §7) |
 | **N** | **Non-controlling interest** | Minority shareholders' equity in subsidiaries not wholly owned |
 
+> ### ⭐ YOU MISSED OFFICIAL Q14 HERE — retained earnings is EQUITY
+> You picked **assets**; correct is **shareholders' equity**.
+> The intuition "earnings kept in the business = money the company has" is the trap. **Retained earnings is a claim, not a resource**: cumulative net income not paid out as dividends — the owners' share of whatever assets those earnings were reinvested in (inventory, PP&E, cash…). The **cash** is on the left side; the **RE** is on the right.
+> Apple: RE $98.3bn vs cash $20.3bn — RE can't be "the cash".
+> **Category check (third FSA miss of this kind, after M1 Q9 and Q14):** for any balance-sheet item, ask first *resource (asset) / obligation (liability) / owners' claim (equity)?* — then answer.
+
 ### Shares — the three counts 🔴
 
 $$
@@ -687,7 +693,12 @@ SoCE (IFRS): C-R-O-R; NI→RE, OCI→AOCI,
 | Q10 | Inventory carrying value | lower of cost and NRV | ✅ | — |
 | Q11 | Prepaying rent | assets ↓ + liabilities ↓ | **one asset ↓, another ↑** | direction (wrote the payable-settlement entry) |
 | Q12 | Accrued expenses | expensed, not yet paid | ✅ | — |
+| Q13 | NCI placement | separately within equity | ✅ | — |
+| Q14 | Retained earnings is a component of | assets | **shareholders' equity** | definition (element category) |
+| Q15 | Treasury purchase | assets ↓ + equity ↓ | ✅ | — |
 
-**Running tally: 8 / 12.** Two misses on §2 (liquidity-based presentation), one on §3 (contra asset), one on §4 (prepaid entry).
+**Final: 10 / 15 (67%).** Misses: §2 ×2 (liquidity-based), §3 contra asset, §4 prepaid entry, §8 retained earnings.
+
+**Diagnosis:** all five misses are *vocabulary / category*; zero calculation, and every calculation-adjacent item (working capital logic, current-liability criteria, inventory basis, treasury effect) was right. Three were "which bucket does this word belong in?" — classified vs liquidity-based, contra asset vs expense, equity vs asset — the same shape as the FSA M1 framework misses. One was an entry written backwards (prepaid). **Routine for FSA vocabulary items:** name the category the stem asks for → classify each option into a category → strike the ones in the wrong bucket.
 
 > **Note status: COMPLETE** — §3.01 through §3.11. No scored curriculum examples in this reading. Practice questions Q1–Q57 → Study Hub (Financial Statement Analysis → M3, `fsa-m3-q01…`).

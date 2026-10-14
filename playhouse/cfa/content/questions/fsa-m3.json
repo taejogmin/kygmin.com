@@ -1187,6 +1187,60 @@
       "kr": "미지급비용 = 손익계산서에 인식, 아직 미지급. 미리 지급한 것은 선급비용(자산)."
     },
     {
+      "id": "fsa-m3-p13",
+      "section": "8",
+      "concept": "Official Q13 — NCI placement",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "source": "cfai",
+      "stem": "Non-controlling interest in consolidated subsidiaries is presented on the balance sheet:",
+      "choices": {
+        "A": "as a long-term liability",
+        "B": "separately, as part of shareholders' equity",
+        "C": "as a mezzanine item between liabilities and equity"
+      },
+      "answer": "B",
+      "explanation": "NCI is the sixth equity component (C-P-T-R-A-N) — shown separately within equity, apart from equity attributable to the parent.",
+      "kr": "비지배지분은 자본의 여섯 번째 구성요소(C-P-T-R-A-N) — 자본 안에서 지배주주 몫과 별도로 표시."
+    },
+    {
+      "id": "fsa-m3-p14",
+      "section": "8",
+      "concept": "Official Q14 — retained earnings is equity",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "source": "cfai",
+      "stem": "Retained earnings is a component of:",
+      "choices": {
+        "A": "assets",
+        "B": "liabilities",
+        "C": "shareholders' equity"
+      },
+      "answer": "C",
+      "explanation": "Retained earnings = cumulative net income not paid out as dividends — an EQUITY claim, not a pile of cash. The earnings were reinvested in all kinds of assets; RE records the owners' claim on them.",
+      "kr": "이익잉여금 = 배당하지 않고 누적된 순이익 — '자본'(청구권)이지 현금 더미가 아님. 이익은 여러 자산에 재투자됐고, 이익잉여금은 그에 대한 주주 몫을 기록."
+    },
+    {
+      "id": "fsa-m3-p15",
+      "section": "8",
+      "concept": "Official Q15 — treasury purchase effect",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "direction",
+      "source": "cfai",
+      "stem": "When a company buys back its own shares to hold in treasury, it records a reduction in:",
+      "choices": {
+        "A": "assets and liabilities",
+        "B": "assets and shareholders' equity",
+        "C": "assets, with an increase in shareholders' equity"
+      },
+      "answer": "B",
+      "explanation": "Cash ↓ (asset) and treasury stock (a contra-equity deduction) ↑ → equity ↓ by the cost.",
+      "kr": "현금 ↓(자산), 자기주식(자본 차감) ↑ → 자본이 원가만큼 감소."
+    },
+    {
       "id": "fsa-m3-f01",
       "section": "1",
       "concept": "Classification rules",

@@ -190,8 +190,8 @@
         "kr": "정의의 한 단어 함정 · 범위 공백"
       },
       "rule": {
-        "en": "For 'best describes' stems, find the single wrong word in each distractor (maximum vs. natural, verifiable, resalable). Natural output is NOT the maximum — it has a modest, stable pool of unemployed. If a topic feels unfamiliar (personal income chain), flag it as a note gap rather than guessing. Part 3 growth terms: labor productivity (output/hour, measurable) vs TFP (residual, inferred) vs potential GDP (estimated). Two-clause options ('X but Y'): test each clause separately — one false clause kills the option.",
-        "kr": "'best describes' 문제는 각 오답 선지에서 틀린 단어 하나를 찾는다(maximum vs natural, verifiable, resalable). 자연산출은 '최대'가 아니라 소규모 안정적 실업 풀이 있는 수준. 낯선 주제(개인소득 체인)는 찍지 말고 노트 공백으로 표시. Part 3 성장 용어: 노동생산성(시간당 산출, 측정 가능) vs TFP(잔차, 추정) vs 잠재 GDP(추정치). 두 절로 된 선지('X이지만 Y'): 절마다 따로 판정 — 한 절이라도 거짓이면 오답."
+        "en": "For 'best describes' stems, find the single wrong word in each distractor (maximum vs. natural, verifiable, resalable). Natural output is NOT the maximum — it has a modest, stable pool of unemployed. If a topic feels unfamiliar (personal income chain), flag it as a note gap rather than guessing. Part 3 growth terms: labor productivity (output/hour, measurable) vs TFP (residual, inferred) vs potential GDP (estimated). Two-clause options ('X but Y'): test each clause separately — one false clause kills the option. FSA balance-sheet vocabulary: before matching, put each option in its bucket — resource (asset) / obligation (liability) / owners' claim (equity); balance-sheet vs income-statement account.",
+        "kr": "'best describes' 문제는 각 오답 선지에서 틀린 단어 하나를 찾는다(maximum vs natural, verifiable, resalable). 자연산출은 '최대'가 아니라 소규모 안정적 실업 풀이 있는 수준. 낯선 주제(개인소득 체인)는 찍지 말고 노트 공백으로 표시. Part 3 성장 용어: 노동생산성(시간당 산출, 측정 가능) vs TFP(잔차, 추정) vs 잠재 GDP(추정치). 두 절로 된 선지('X이지만 Y'): 절마다 따로 판정 — 한 절이라도 거짓이면 오답. FSA 재무상태표 용어: 대조 전에 선지마다 분류 — 자원(자산)/의무(부채)/주주 청구권(자본); 재무상태표 계정인가 손익계정인가."
       },
       "traps": [
         "definition"
@@ -209,9 +209,11 @@
         "FSA M1 official Q9 (performance element → picked assets; position = A/L/E, performance = income/expenses)",
         "FSA M2 official Q4 (common-size: accepted 'standardizes but fails to reveal strategy' — second clause false)",
         "FSA M3 official Q3 (current subtotals = CLASSIFIED balance sheet; picked liquidity-based — two adjacent format names, the subtotal is the discriminator)",
-        "FSA M3 official Q9 (contra asset: picked depreciation EXPENSE — the contra asset is ACCUMULATED depreciation; answer allowance for doubtful accounts)"
+        "FSA M3 official Q9 (contra asset: picked depreciation EXPENSE — the contra asset is ACCUMULATED depreciation; answer allowance for doubtful accounts)",
+        "FSA M3 official Q14 (retained earnings → picked ASSETS; it's an equity claim — third FSA element-category miss after M1 Q9/Q14)"
       ],
       "seed": [
+        "fsa-m3-p14",
         "fsa-m3-p09",
         "fsa-m3-q16",
         "fsa-m3-p03",
@@ -765,6 +767,11 @@
       "qid": "fsa-m3-p11",
       "when": "2026-10-14",
       "note": "FSA M3 official Q11 — prepaying rent = one asset ↓ (cash), another ↑ (prepaid); picked assets ↓ + liabilities ↓ (that's settling a payable). Write both sides of the entry first. (direction)"
+    },
+    {
+      "qid": "fsa-m3-p14",
+      "when": "2026-10-14",
+      "note": "FSA M3 official Q14 — retained earnings is EQUITY; picked assets ('kept earnings = money'). Third FSA element-category miss. (definition)"
     }
   ]
 }
