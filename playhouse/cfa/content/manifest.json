@@ -117,6 +117,15 @@
       "short": "Cash Flows I",
       "notes": "content/notes/fsa-m4.md",
       "questions": "content/questions/fsa-m4.json"
+    },
+    {
+      "id": "fsa-m5",
+      "subject": "fsa",
+      "order": 5,
+      "title": "Inventories",
+      "short": "Inventories",
+      "notes": "content/notes/fsa-m5.md",
+      "questions": "content/questions/fsa-m5.json"
     }
   ]
 }

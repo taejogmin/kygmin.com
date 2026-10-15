@@ -1,0 +1,1605 @@
+{
+  "module": "fsa-m5",
+  "questions": [
+    {
+      "id": "fsa-m5-q01",
+      "section": "0",
+      "concept": "Retailer category",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "A retailer most likely reports which inventory category?",
+      "choices": {
+        "A": "Raw materials",
+        "B": "Work in progress",
+        "C": "Finished goods"
+      },
+      "answer": "C",
+      "explanation": "Merchandisers (wholesalers, retailers) buy finished goods ready for sale — one category only. Raw materials and WIP belong to manufacturers.",
+      "kr": "유통업자(도·소매)는 판매용 완제품만 보유 — 한 범주. 원재료·재공품은 제조업."
+    },
+    {
+      "id": "fsa-m5-q02",
+      "section": "0",
+      "concept": "WIP definition",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Work-in-progress inventory is best described as goods that:",
+      "choices": {
+        "A": "have been purchased but not received",
+        "B": "have started conversion but are not yet ready for sale",
+        "C": "are complete and awaiting shipment"
+      },
+      "answer": "B",
+      "explanation": "WIP has started the conversion process from raw materials but is not yet finished goods.",
+      "kr": "재공품 = 원재료에서 전환을 시작했지만 아직 완제품이 아닌 것."
+    },
+    {
+      "id": "fsa-m5-q03",
+      "section": "0",
+      "concept": "Total-only disclosure",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "truncated-rule",
+      "stem": "A manufacturer reports only total inventory on its balance sheet. It most likely must:",
+      "choices": {
+        "A": "disclose raw materials, WIP and finished goods in a footnote",
+        "B": "restate inventory at fair value",
+        "C": "use FIFO"
+      },
+      "answer": "A",
+      "explanation": "If only the total is on the face, the three category amounts must be disclosed in a footnote.",
+      "kr": "재무상태표에 총액만 표시하면 세 범주 금액을 주석에 공시."
+    },
+    {
+      "id": "fsa-m5-q04",
+      "section": "0",
+      "concept": "LIFO not IFRS",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "confusion",
+      "stem": "Which method is permitted under US GAAP but NOT under IFRS?",
+      "choices": {
+        "A": "Weighted average cost",
+        "B": "Specific identification",
+        "C": "Last-in, first-out"
+      },
+      "answer": "C",
+      "explanation": "Same three everywhere (specific ID, FIFO, weighted average); LIFO is US GAAP only.",
+      "kr": "공통 3개(개별법·FIFO·가중평균), LIFO는 US GAAP만."
+    },
+    {
+      "id": "fsa-m5-q05",
+      "section": "0",
+      "concept": "What the method changes",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "The choice of inventory valuation method affects:",
+      "choices": {
+        "A": "the total cost of goods available for sale",
+        "B": "the allocation of goods available between ending inventory and cost of sales",
+        "C": "neither inventory nor cost of sales"
+      },
+      "answer": "B",
+      "explanation": "The method doesn't change the pool (beginning inventory + purchases); it only splits it between ending inventory and COGS.",
+      "kr": "방법은 판매가능상품 총액이 아니라 기말재고와 매출원가 사이의 '배분'을 바꿈."
+    },
+    {
+      "id": "fsa-m5-q06",
+      "section": "1",
+      "concept": "Costs capitalised",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "asked-quantity",
+      "stem": "Raw materials 400; direct labour 250; variable production overhead 60; fixed production overhead 40; freight-in on materials 20; abnormal waste 15; storage of finished goods 10; selling costs 30. The amount capitalised into inventory is closest to:",
+      "choices": {
+        "A": "770",
+        "B": "750",
+        "C": "785"
+      },
+      "answer": "A",
+      "explanation": "IN: 400 + 250 + 60 + 40 + 20 = 770 (fixed overhead and freight-in included). OUT: abnormal waste, finished-goods storage, selling. B drops fixed overhead or freight; C adds abnormal waste.",
+      "kr": "포함: 400 + 250 + 60 + 40 + 20 = 770(고정제조간접비·매입운임 포함). 제외: 비정상 손실, 완제품 보관, 판매비. C는 비정상 손실 포함."
+    },
+    {
+      "id": "fsa-m5-q07",
+      "section": "1",
+      "concept": "Excluded cost",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "negation",
+      "stem": "Under both IFRS and US GAAP, which cost is LEAST likely included in inventory?",
+      "choices": {
+        "A": "Transport costs for raw materials",
+        "B": "Fixed production overhead",
+        "C": "Storage of finished goods not required by production"
+      },
+      "answer": "C",
+      "explanation": "Least-likely → T/F. Freight-in (in), fixed production overhead (in). Storage of finished goods (not part of production) is expensed → answer.",
+      "kr": "least likely → T/F. 매입운임(포함), 고정제조간접비(포함). 생산에 필요 없는 완제품 보관비는 비용 → 정답."
+    },
+    {
+      "id": "fsa-m5-q08",
+      "section": "1",
+      "concept": "Capitalising admin overhead",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "direction",
+      "stem": "A company capitalises administrative overhead into inventory. Compared with correct treatment, in the current period it most likely reports:",
+      "choices": {
+        "A": "higher profit and higher inventory",
+        "B": "higher profit and lower inventory",
+        "C": "lower profit and higher inventory"
+      },
+      "answer": "A",
+      "explanation": "Wrongly capitalising defers the expense → profit AND inventory both overstated.",
+      "kr": "잘못 자본화 → 비용 이연 → 이익과 재고 '모두' 과대."
+    },
+    {
+      "id": "fsa-m5-q09",
+      "section": "1",
+      "concept": "Trade discount",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "A trade discount received on raw materials most likely:",
+      "choices": {
+        "A": "is recognised as revenue",
+        "B": "reduces the cost of purchase",
+        "C": "is reported in OCI"
+      },
+      "answer": "B",
+      "explanation": "Trade discounts, rebates and similar items reduce the cost of purchase.",
+      "kr": "매입할인·리베이트는 매입원가를 감소시킴."
+    },
+    {
+      "id": "fsa-m5-q10",
+      "section": "1",
+      "concept": "Storage exception",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "truncated-rule",
+      "stem": "Storage costs are included in the cost of inventory when:",
+      "choices": {
+        "A": "the inventory is finished goods",
+        "B": "storage is required as part of the production process",
+        "C": "the company uses LIFO"
+      },
+      "answer": "B",
+      "explanation": "Storage is excluded UNLESS required by production (e.g., ageing whisky or wine).",
+      "kr": "보관비는 생산 과정에 필요한 경우(위스키 숙성 등)만 포함."
+    },
+    {
+      "id": "fsa-m5-q11",
+      "section": "2",
+      "concept": "Specific identification",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "The specific identification method is most appropriate for:",
+      "choices": {
+        "A": "large numbers of interchangeable items",
+        "B": "precious gemstones that are uniquely identifiable",
+        "C": "commodities held in bulk"
+      },
+      "answer": "B",
+      "explanation": "Specific ID suits items not ordinarily interchangeable, segregated projects, and expensive unique goods. Interchangeable items use FIFO/average/LIFO assumptions.",
+      "kr": "개별법은 상호 대체 불가·고가·고유 식별 가능 품목(보석)에 적합."
+    },
+    {
+      "id": "fsa-m5-q12",
+      "section": "2",
+      "concept": "Rising prices — FIFO",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "direction",
+      "stem": "In rising prices, a company using FIFO rather than LIFO most likely reports:",
+      "choices": {
+        "A": "higher COGS and lower ending inventory",
+        "B": "lower COGS and higher ending inventory",
+        "C": "the same COGS"
+      },
+      "answer": "B",
+      "explanation": "FIFO sends the oldest (cheapest) costs to COGS and leaves the newest (dearest) in inventory.",
+      "kr": "FIFO는 오래된(싼) 원가를 매출원가로, 최신(비싼) 원가를 재고로."
+    },
+    {
+      "id": "fsa-m5-q13",
+      "section": "2",
+      "concept": "Falling prices — highest EI",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "direction",
+      "stem": "In falling prices, which method gives the highest ending inventory?",
+      "choices": {
+        "A": "FIFO",
+        "B": "LIFO",
+        "C": "Weighted average"
+      },
+      "answer": "B",
+      "explanation": "LIFO ending inventory holds the OLDEST costs — which are the HIGHEST when prices fall.",
+      "kr": "LIFO 기말재고 = 가장 오래된 원가 — 가격 하락기엔 가장 높음."
+    },
+    {
+      "id": "fsa-m5-q14",
+      "section": "2",
+      "concept": "Constant prices",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "If inventory costs are constant, the choice of inventory method most likely:",
+      "choices": {
+        "A": "significantly changes COGS",
+        "B": "is largely irrelevant",
+        "C": "affects only the balance sheet"
+      },
+      "answer": "B",
+      "explanation": "With constant prices all methods give nearly the same COGS and ending inventory.",
+      "kr": "가격 불변이면 모든 방법의 결과가 거의 같음."
+    },
+    {
+      "id": "fsa-m5-q15",
+      "section": "2",
+      "concept": "Consistency rule",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "truncated-rule",
+      "stem": "Under IFRS, a company must use:",
+      "choices": {
+        "A": "the same method for all inventory",
+        "B": "the same method for items of similar nature and use",
+        "C": "FIFO for finished goods"
+      },
+      "answer": "B",
+      "explanation": "Same method for items of SIMILAR NATURE AND USE; different nature or use may justify a different method.",
+      "kr": "성격·용도가 비슷한 항목엔 같은 방법; 다르면 다른 방법 가능."
+    },
+    {
+      "id": "fsa-m5-q16",
+      "section": "3",
+      "concept": "FIFO ending inventory",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "asked-quantity",
+      "stem": "Beginning inventory 50 units @ $8; purchases 100 @ $10 and 50 @ $12; 120 units sold. FIFO ending inventory is closest to:",
+      "choices": {
+        "A": "$800",
+        "B": "$900",
+        "C": "$960"
+      },
+      "answer": "B",
+      "explanation": "Units left = 200 − 120 = 80. FIFO EI = newest layers: 50 × 12 + 30 × 10 = 600 + 300 = 900. Check: FIFO COGS = 2,000 − 900 = 1,100.",
+      "kr": "남은 수량 80. FIFO 기말 = 최신: 50×12 + 30×10 = 900. 검산: 매출원가 = 2,000 − 900 = 1,100."
+    },
+    {
+      "id": "fsa-m5-q17",
+      "section": "3",
+      "concept": "LIFO COGS",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "asked-quantity",
+      "stem": "Using Q16's data, LIFO cost of goods sold is closest to:",
+      "choices": {
+        "A": "$1,300",
+        "B": "$1,200",
+        "C": "$1,100"
+      },
+      "answer": "A",
+      "explanation": "LIFO sells the newest first: 50 × 12 + 70 × 10 = 600 + 700 = 1,300. LIFO EI = 30 × 10 + 50 × 8 = 700; 1,300 + 700 = 2,000 ✓. C is FIFO COGS.",
+      "kr": "LIFO는 최신부터 판매: 50×12 + 70×10 = 1,300. 기말 = 30×10 + 50×8 = 700, 합 2,000 ✓. C는 FIFO."
+    },
+    {
+      "id": "fsa-m5-q18",
+      "section": "3",
+      "concept": "Weighted average cost",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "formula",
+      "stem": "Using Q16's data, weighted average cost per unit is closest to:",
+      "choices": {
+        "A": "$10.00",
+        "B": "$9.75",
+        "C": "$10.50"
+      },
+      "answer": "A",
+      "explanation": "Total cost 400 + 1,000 + 600 = 2,000 ÷ total units 200 = $10.00. Weight by units (incl. beginning inventory), not a simple average of prices (8, 10, 12 → also 10 here, but don't rely on it).",
+      "kr": "총원가 2,000 ÷ 총수량 200 = 10.00. 기초재고 포함, 수량 가중."
+    },
+    {
+      "id": "fsa-m5-q19",
+      "section": "3",
+      "concept": "Falling prices — highest GP",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "direction",
+      "stem": "With declining inventory costs, which method most likely reports the highest gross profit?",
+      "choices": {
+        "A": "FIFO",
+        "B": "LIFO",
+        "C": "Weighted average"
+      },
+      "answer": "B",
+      "explanation": "Falling prices: LIFO's COGS carries the newest (cheapest) costs → lowest COGS → highest gross profit (GSI: 75,600).",
+      "kr": "가격 하락: LIFO 매출원가 = 최신(가장 싼) → 매출원가 최저 → 매출총이익 최고(GSI 75,600)."
+    },
+    {
+      "id": "fsa-m5-q20",
+      "section": "3",
+      "concept": "First year goods available",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "In a company's first year, total cost of goods available for sale under FIFO vs LIFO is:",
+      "choices": {
+        "A": "higher",
+        "B": "lower",
+        "C": "the same"
+      },
+      "answer": "C",
+      "explanation": "No beginning inventory → goods available = purchases, identical under every method.",
+      "kr": "기초재고 없음 → 판매가능상품 = 매입액, 모든 방법 동일."
+    },
+    {
+      "id": "fsa-m5-q21",
+      "section": "3",
+      "concept": "Later years differ",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "definition",
+      "stem": "After the first year, cost of goods available typically differs across methods because:",
+      "choices": {
+        "A": "purchase prices differ by method",
+        "B": "beginning inventories differ by method",
+        "C": "sales differ by method"
+      },
+      "answer": "B",
+      "explanation": "Each method's prior ending inventory becomes its beginning inventory — those differ.",
+      "kr": "각 방법의 전기 기말재고(= 당기 기초)가 다름."
+    },
+    {
+      "id": "fsa-m5-q22",
+      "section": "3",
+      "concept": "LIFO EI — falling prices",
+      "type": "calc",
+      "difficulty": 3,
+      "trap": "asked-quantity",
+      "stem": "First year. Purchases: 40 @ $50, then 60 @ $45, then 50 @ $40. 110 units sold. LIFO ending inventory is closest to:",
+      "choices": {
+        "A": "$1,600",
+        "B": "$2,000",
+        "C": "$1,800"
+      },
+      "answer": "B",
+      "explanation": "Units left 150 − 110 = 40. LIFO EI = OLDEST layer: 40 × 50 = 2,000. A (1,600) is FIFO's EI (40 × 40).",
+      "kr": "남은 40. LIFO 기말 = 가장 오래된 층: 40×50 = 2,000. A는 FIFO(40×40)."
+    },
+    {
+      "id": "fsa-m5-q23",
+      "section": "3",
+      "concept": "FIFO COGS — falling prices",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "asked-quantity",
+      "stem": "Using Q22's data, FIFO cost of goods sold is closest to:",
+      "choices": {
+        "A": "$5,100",
+        "B": "$4,700",
+        "C": "$5,300"
+      },
+      "answer": "A",
+      "explanation": "FIFO COGS = 40 × 50 + 60 × 45 + 10 × 40 = 2,000 + 2,700 + 400 = 5,100. Check: 6,700 − EI 1,600 = 5,100. B is LIFO COGS (6,700 − 2,000).",
+      "kr": "FIFO 매출원가 = 2,000 + 2,700 + 400 = 5,100. B는 LIFO."
+    },
+    {
+      "id": "fsa-m5-q24",
+      "section": "3",
+      "concept": "Always in the middle",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Which method's cost of sales always falls between FIFO and LIFO?",
+      "choices": {
+        "A": "Specific identification",
+        "B": "Weighted average cost",
+        "C": "Neither"
+      },
+      "answer": "B",
+      "explanation": "Weighted average is always between; specific ID depends on which units were physically sold.",
+      "kr": "가중평균은 항상 중간; 개별법은 실제 판매 품목에 따라 다름."
+    },
+    {
+      "id": "fsa-m5-q25",
+      "section": "4",
+      "concept": "Same under both systems",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "truncated-rule",
+      "stem": "The allocation of goods available is the same under periodic and perpetual systems for:",
+      "choices": {
+        "A": "FIFO and LIFO",
+        "B": "specific identification and FIFO",
+        "C": "weighted average and LIFO"
+      },
+      "answer": "B",
+      "explanation": "Specific ID and FIFO: same. Weighted average (moving vs year-end average) and LIFO: generally different.",
+      "kr": "개별법·FIFO 동일. 가중평균(이동 vs 연말)·LIFO는 대체로 다름."
+    },
+    {
+      "id": "fsa-m5-q26",
+      "section": "4",
+      "concept": "Why no adjustment",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "definition",
+      "stem": "Analysts typically don't adjust when comparing a FIFO company with a weighted-average company because:",
+      "choices": {
+        "A": "both are required by IFRS",
+        "B": "perpetual systems dominate and the two give similar results under them",
+        "C": "the two give identical results under any system"
+      },
+      "answer": "B",
+      "explanation": "Under perpetual systems FIFO and (moving) weighted average are similar; disclosure is limited. Under periodic they can differ a lot, so C is false.",
+      "kr": "영구재고법에서는 FIFO와 이동평균이 비슷하고 공시가 제한적. 실지재고법에선 크게 다를 수 있어 C 거짓."
+    },
+    {
+      "id": "fsa-m5-q27",
+      "section": "4",
+      "concept": "LIFO — cash flow",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "direction",
+      "stem": "With rising costs and stable quantities, LIFO rather than FIFO most likely gives:",
+      "choices": {
+        "A": "lower net income and lower operating cash flow",
+        "B": "lower net income and higher operating cash flow",
+        "C": "higher net income and higher operating cash flow"
+      },
+      "answer": "B",
+      "explanation": "LIFO lowers income → lower taxes paid → HIGHER operating cash flow. COGS itself isn't cash; taxes are.",
+      "kr": "LIFO는 이익 ↓ → 세금 ↓ → 영업현금흐름 '증가'. 매출원가는 현금 아님, 세금은 현금."
+    },
+    {
+      "id": "fsa-m5-q28",
+      "section": "4",
+      "concept": "LIFO — balance sheet",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "direction",
+      "stem": "Under the same conditions, LIFO compared with FIFO results in:",
+      "choices": {
+        "A": "higher working capital",
+        "B": "lower current assets",
+        "C": "higher total assets"
+      },
+      "answer": "B",
+      "explanation": "LIFO inventory (oldest, cheapest costs) is lower → current assets, working capital and total assets lower.",
+      "kr": "LIFO 재고(싼 옛 원가) ↓ → 유동자산·운전자본·총자산 ↓."
+    },
+    {
+      "id": "fsa-m5-q29",
+      "section": "4",
+      "concept": "Periodic COGS",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "formula",
+      "stem": "Under a periodic system, cost of sales is determined as:",
+      "choices": {
+        "A": "the running total at each sale",
+        "B": "beginning inventory + purchases − ending inventory",
+        "C": "purchases − beginning inventory"
+      },
+      "answer": "B",
+      "explanation": "Periodic: COGS = goods available − ending inventory (often from a physical count).",
+      "kr": "실지재고법: 매출원가 = 판매가능 − 기말(실사)."
+    },
+    {
+      "id": "fsa-m5-q30",
+      "section": "4",
+      "concept": "Perpetual LIFO calc",
+      "type": "calc",
+      "difficulty": 3,
+      "trap": "asked-quantity",
+      "stem": "Buy 100 @ $10; sell 80; buy 100 @ $12; sell 60. Perpetual LIFO ending inventory is closest to:",
+      "choices": {
+        "A": "$660",
+        "B": "$600",
+        "C": "$680"
+      },
+      "answer": "C",
+      "explanation": "After sale 1: 20 @ 10. Buy → 20 @ 10 + 100 @ 12. Sale 2 takes 60 from the newest (12) → 20 @ 10 + 40 @ 12 = 200 + 480 = 680. B is periodic LIFO.",
+      "kr": "1차 판매 후 20@10. 매입 후 판매 60은 최신(12)에서 → 20@10 + 40@12 = 680. B는 실지재고 LIFO."
+    },
+    {
+      "id": "fsa-m5-q31",
+      "section": "4",
+      "concept": "Periodic LIFO calc",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "asked-quantity",
+      "stem": "Using Q30's data, periodic LIFO ending inventory is closest to:",
+      "choices": {
+        "A": "$600",
+        "B": "$660",
+        "C": "$720"
+      },
+      "answer": "A",
+      "explanation": "Periodic: 200 units available, 140 sold, 60 left — valued at the OLDEST costs: 60 × 10 = 600.",
+      "kr": "실지재고: 200개 중 140 판매, 60개를 가장 오래된 원가로: 600."
+    },
+    {
+      "id": "fsa-m5-q32",
+      "section": "5",
+      "concept": "FIFO = current balance sheet",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "confusion",
+      "stem": "Which method's balance-sheet inventory most closely reflects current replacement value?",
+      "choices": {
+        "A": "LIFO",
+        "B": "FIFO",
+        "C": "Weighted average"
+      },
+      "answer": "B",
+      "explanation": "FIFO ending inventory = most recent purchases. LIFO = current values on the INCOME statement.",
+      "kr": "FIFO 기말재고 = 최근 매입. LIFO는 손익계산서에 현행가치."
+    },
+    {
+      "id": "fsa-m5-q33",
+      "section": "5",
+      "concept": "LIFO = current income statement",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "confusion",
+      "stem": "LIFO is most likely to give a cost of sales that:",
+      "choices": {
+        "A": "reflects current replacement value more closely than FIFO",
+        "B": "reflects the oldest purchase costs",
+        "C": "equals FIFO cost of sales during inflation"
+      },
+      "answer": "A",
+      "explanation": "LIFO COGS = most recent costs → closest to current replacement value. B describes LIFO ending inventory.",
+      "kr": "LIFO 매출원가 = 최신 원가. B는 LIFO 기말재고."
+    },
+    {
+      "id": "fsa-m5-q34",
+      "section": "5",
+      "concept": "Declining costs — FIFO",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "direction",
+      "stem": "With declining unit costs and stable quantities, FIFO compared with LIFO reports:",
+      "choices": {
+        "A": "higher income before taxes",
+        "B": "lower gross profit",
+        "C": "higher ending inventory"
+      },
+      "answer": "B",
+      "explanation": "Declining costs: FIFO puts the older, HIGHER costs into COGS → lower gross profit and pre-tax income; FIFO EI holds the newest (lowest) costs.",
+      "kr": "원가 하락: FIFO는 오래된 '높은' 원가를 매출원가로 → 매출총이익 ↓, 기말재고는 최신(낮은) 원가."
+    },
+    {
+      "id": "fsa-m5-q35",
+      "section": "5",
+      "concept": "Deceptive turnover",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "off-model",
+      "stem": "Two identical companies differ only in LIFO vs FIFO. During inflation the LIFO company reports higher inventory turnover. This most likely indicates:",
+      "choices": {
+        "A": "the LIFO company manages inventory more efficiently",
+        "B": "an accounting effect of LIFO carrying amounts unaffected by inflation",
+        "C": "the LIFO company holds fewer units"
+      },
+      "answer": "B",
+      "explanation": "Same units, same prices — turnover is higher only because LIFO inventory stays at old costs. The curriculum calls the 'better management' reading deceptive.",
+      "kr": "수량·가격 동일 — LIFO 재고가 옛 원가에 머물러 회전율이 높을 뿐. '관리가 더 효율적'은 착시."
+    },
+    {
+      "id": "fsa-m5-q36",
+      "section": "5",
+      "concept": "Stable LIFO margin",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "definition",
+      "stem": "In Example 4, Company L's gross margin is constant because:",
+      "choices": {
+        "A": "its inventory is constant",
+        "B": "sales and cost of sales both rise at the inflation rate",
+        "C": "it uses a periodic system"
+      },
+      "answer": "B",
+      "explanation": "LIFO COGS = current-year purchases, rising with inflation just like sales → constant margin.",
+      "kr": "LIFO 매출원가 = 당해 매입, 매출과 같은 인플레이션율로 상승 → 이익률 일정."
+    },
+    {
+      "id": "fsa-m5-q37",
+      "section": "5",
+      "concept": "Liquidation → margin",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "direction",
+      "stem": "During inflation, a LIFO company sells more units than it buys. Compared with no liquidation, its gross margin is most likely:",
+      "choices": {
+        "A": "higher, because old low-cost layers flow into COGS",
+        "B": "lower, because COGS rises",
+        "C": "unaffected"
+      },
+      "answer": "A",
+      "explanation": "LIFO liquidation pushes old, cheap layers into COGS at current selling prices → higher (one-time) gross margin.",
+      "kr": "LIFO 청산 → 오래된 싼 원가가 매출원가로 → 일회성 이익률 상승."
+    },
+    {
+      "id": "fsa-m5-q38",
+      "section": "5",
+      "concept": "Turnover calc",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "asked-quantity",
+      "stem": "In Example 4, Company F's Year 3 inventory turnover (COGS ÷ ending inventory) is closest to:",
+      "choices": {
+        "A": "13.1",
+        "B": "12.1",
+        "C": "11.4"
+      },
+      "answer": "B",
+      "explanation": "208,732 / 17,306 = 12.1. A (13.1) is Company L's Year 3 (209,398 / 16,000).",
+      "kr": "208,732 / 17,306 = 12.1. A는 L사."
+    },
+    {
+      "id": "fsa-m5-q39",
+      "section": "6",
+      "concept": "LIFO reserve definition",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "The LIFO reserve is best described as:",
+      "choices": {
+        "A": "LIFO inventory minus FIFO inventory",
+        "B": "FIFO inventory minus LIFO inventory",
+        "C": "the cumulative tax saved by LIFO"
+      },
+      "answer": "B",
+      "explanation": "LIFO reserve = FIFO inventory − LIFO inventory (positive in rising prices). Tax saved ≈ reserve × t.",
+      "kr": "LIFO 충당금 = FIFO 재고 − LIFO 재고. 절세액 ≈ 충당금 × 세율."
+    },
+    {
+      "id": "fsa-m5-q40",
+      "section": "6",
+      "concept": "FIFO inventory",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "formula-assembly",
+      "stem": "A LIFO company reports inventory of $500m; its LIFO reserve was $80m at the start of the year and $95m at the end. FIFO inventory is closest to:",
+      "choices": {
+        "A": "$515m",
+        "B": "$580m",
+        "C": "$595m"
+      },
+      "answer": "C",
+      "explanation": "Balance sheet uses the reserve's LEVEL: 500 + 95 = 595. A adds only the change (trap 2); B uses the opening reserve.",
+      "kr": "재무상태표는 충당금 '잔액': 500 + 95 = 595. A는 변동분만 더함."
+    },
+    {
+      "id": "fsa-m5-q41",
+      "section": "6",
+      "concept": "FIFO COGS",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "formula-assembly",
+      "stem": "Using Q40's data and LIFO COGS of $2,000m, FIFO COGS is closest to:",
+      "choices": {
+        "A": "$1,985m",
+        "B": "$1,905m",
+        "C": "$2,015m"
+      },
+      "answer": "A",
+      "explanation": "Income statement uses the reserve's CHANGE: 2,000 − (95 − 80) = 1,985. B subtracts the level (trap 1); C has the wrong sign.",
+      "kr": "손익계산서는 충당금 '변동': 2,000 − 15 = 1,985. B는 잔액 차감, C는 부호 반대."
+    },
+    {
+      "id": "fsa-m5-q42",
+      "section": "6",
+      "concept": "Falling reserve",
+      "type": "calc",
+      "difficulty": 3,
+      "trap": "formula-assembly",
+      "stem": "A LIFO company's reserve fell from $60m to $45m. Relative to LIFO COGS, FIFO COGS is:",
+      "choices": {
+        "A": "$15m lower",
+        "B": "$15m higher",
+        "C": "$45m lower"
+      },
+      "answer": "B",
+      "explanation": "Reserve DECREASED by 15 → FIFO COGS = LIFO COGS + 15 (higher). A falling reserve usually means a LIFO liquidation or falling prices.",
+      "kr": "충당금 15 '감소' → FIFO 매출원가 = LIFO + 15(더 높음). 감소는 보통 LIFO 청산·가격 하락."
+    },
+    {
+      "id": "fsa-m5-q43",
+      "section": "6",
+      "concept": "LIFO ratios",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "direction",
+      "stem": "With rising costs, a company using LIFO rather than FIFO most likely reports:",
+      "choices": {
+        "A": "a higher current ratio",
+        "B": "a higher debt-to-equity ratio",
+        "C": "higher profitability ratios"
+      },
+      "answer": "B",
+      "explanation": "LIFO → lower retained earnings → lower equity → HIGHER D/E. Current ratio lower (inventory ↓), profitability lower.",
+      "kr": "LIFO → 이익잉여금 ↓ → 자본 ↓ → 부채비율 ↑. 유동비율 ↓, 수익성 ↓."
+    },
+    {
+      "id": "fsa-m5-q44",
+      "section": "6",
+      "concept": "LIFO conformity",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Under the LIFO conformity rule, a US company that uses LIFO for tax must:",
+      "choices": {
+        "A": "also use LIFO for financial reporting",
+        "B": "disclose FIFO income on the face",
+        "C": "switch to FIFO when prices fall"
+      },
+      "answer": "A",
+      "explanation": "LIFO for tax ⇒ LIFO for financial reporting.",
+      "kr": "세무상 LIFO ⇒ 재무보고도 LIFO."
+    },
+    {
+      "id": "fsa-m5-q45",
+      "section": "6",
+      "concept": "Why not LIFO when costs fall",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "direction",
+      "stem": "When inventory costs are falling, a company is least likely to adopt LIFO because LIFO would result in:",
+      "choices": {
+        "A": "higher cost of sales",
+        "B": "higher taxable income and income taxes",
+        "C": "lower ending inventory"
+      },
+      "answer": "B",
+      "explanation": "Falling costs: LIFO COGS = newest (cheapest) → lower COGS → higher taxable income and taxes. A and C are the rising-cost effects.",
+      "kr": "원가 하락: LIFO 매출원가 ↓ → 과세소득·세금 ↑. A·C는 상승기 효과."
+    },
+    {
+      "id": "fsa-m5-q46",
+      "section": "6",
+      "concept": "LIFO equity",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "direction",
+      "stem": "Compared with FIFO, LIFO during rising costs results in shareholders' equity that is:",
+      "choices": {
+        "A": "higher",
+        "B": "lower",
+        "C": "the same"
+      },
+      "answer": "B",
+      "explanation": "Cumulative lower net income → lower retained earnings → lower equity.",
+      "kr": "누적 순이익 ↓ → 이익잉여금 ↓ → 자본 ↓."
+    },
+    {
+      "id": "fsa-m5-q47",
+      "section": "7",
+      "concept": "Liquidation signal",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Which disclosure most likely indicates a LIFO liquidation?",
+      "choices": {
+        "A": "An increase in the LIFO reserve",
+        "B": "A decrease in the LIFO reserve from the prior period",
+        "C": "An increase in inventory units"
+      },
+      "answer": "B",
+      "explanation": "A declining LIFO reserve may indicate a liquidation (old layers sold off).",
+      "kr": "LIFO 충당금 감소 → 청산 가능성."
+    },
+    {
+      "id": "fsa-m5-q48",
+      "section": "7",
+      "concept": "Liquidation profit sustainability",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Gross profit created by a LIFO liquidation during rising costs is best described as:",
+      "choices": {
+        "A": "recurring operating profit",
+        "B": "a one-time, unsustainable increase",
+        "C": "a reduction in gross profit"
+      },
+      "answer": "B",
+      "explanation": "Old cheap layers can be liquidated only once — inventory profits are one-time and unsustainable.",
+      "kr": "옛 저가층은 한 번만 청산 가능 — 일회성, 지속 불가."
+    },
+    {
+      "id": "fsa-m5-q49",
+      "section": "7",
+      "concept": "Liquidation profit calc",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "formula",
+      "stem": "Current purchase cost is $50/unit. A LIFO company liquidates 4,000 units from a layer carried at $32. Gross profit attributable to the liquidation is closest to:",
+      "choices": {
+        "A": "$72,000",
+        "B": "$128,000",
+        "C": "$200,000"
+      },
+      "answer": "A",
+      "explanation": "4,000 × (50 − 32) = 72,000. B is the old layer's cost (4,000 × 32); C is current cost (4,000 × 50).",
+      "kr": "4,000 × (50 − 32) = 72,000. B는 옛 원가, C는 현재 원가."
+    },
+    {
+      "id": "fsa-m5-q50",
+      "section": "7",
+      "concept": "NI conversion",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "formula-assembly",
+      "stem": "A LIFO company's reserve increased by $100m; tax rate 25%. Converting to FIFO, net income changes by:",
+      "choices": {
+        "A": "+$75m",
+        "B": "+$100m",
+        "C": "−$75m"
+      },
+      "answer": "A",
+      "explanation": "FIFO COGS lower by 100 → pre-tax +100 → NI + 100 × (1 − 0.25) = +75.",
+      "kr": "FIFO 매출원가 100 ↓ → 세전 +100 → 순이익 +75."
+    },
+    {
+      "id": "fsa-m5-q51",
+      "section": "7",
+      "concept": "Equity conversion",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "formula-assembly",
+      "stem": "LIFO reserve at year-end $400m; tax 30%. Using the tax-adjusted approach, the FIFO adjustment to equity is closest to:",
+      "choices": {
+        "A": "+$400m",
+        "B": "+$280m",
+        "C": "+$120m"
+      },
+      "answer": "B",
+      "explanation": "Equity + reserve × (1 − t) = 400 × 0.7 = 280; the 120 becomes a deferred tax liability. A is the no-tax alternative.",
+      "kr": "자본 + 400 × 0.7 = 280, 120은 이연법인세부채. A는 세금 무시 방식."
+    },
+    {
+      "id": "fsa-m5-q52",
+      "section": "7",
+      "concept": "Deferred tax not cash",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "definition",
+      "stem": "When restating a LIFO balance sheet to FIFO for analysis (no actual change), the tax on the reserve is most appropriately shown as:",
+      "choices": {
+        "A": "a reduction in cash",
+        "B": "a deferred tax liability",
+        "C": "a reduction in inventory"
+      },
+      "answer": "B",
+      "explanation": "No conversion actually happens, so no cash is paid — show a deferred tax liability (Caterpillar: +1,924 inventory = +1,214 equity + 710 DTL).",
+      "kr": "실제 전환이 아니므로 현금 지급 없음 — 이연법인세부채로 표시."
+    },
+    {
+      "id": "fsa-m5-q53",
+      "section": "7",
+      "concept": "Falling reserve → FIFO CFO",
+      "type": "mc",
+      "difficulty": 3,
+      "trap": "direction",
+      "stem": "A LIFO company's reserve fell during the year. Converting to FIFO, operating cash flow (through taxes) would be:",
+      "choices": {
+        "A": "lower",
+        "B": "higher",
+        "C": "unchanged"
+      },
+      "answer": "B",
+      "explanation": "Falling reserve → FIFO COGS HIGHER → lower taxable income → less tax → FIFO CFO HIGHER. The usual 'LIFO → higher CFO' assumes a rising reserve (Caterpillar Q4).",
+      "kr": "충당금 감소 → FIFO 매출원가 ↑ → 세금 ↓ → FIFO 영업현금 ↑. 통상 결론은 충당금 증가 가정."
+    },
+    {
+      "id": "fsa-m5-q54",
+      "section": "7",
+      "concept": "Manipulation",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Management could inflate gross profit at year-end under LIFO by:",
+      "choices": {
+        "A": "increasing purchases before year-end",
+        "B": "deliberately reducing quantities so old layers are liquidated",
+        "C": "switching to weighted average"
+      },
+      "answer": "B",
+      "explanation": "Deliberately running inventory down liquidates old cheap layers into COGS → higher gross profit. A would add new expensive layers.",
+      "kr": "의도적 재고 축소 → 옛 저가층 청산 → 매출총이익 ↑. A는 비싼 신규층 추가."
+    },
+    {
+      "id": "fsa-m5-q55",
+      "section": "8",
+      "concept": "IFRS change condition",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Under IFRS, a change in inventory method is acceptable only if it:",
+      "choices": {
+        "A": "increases reported profit",
+        "B": "results in reliable and more relevant information",
+        "C": "is approved by tax authorities"
+      },
+      "answer": "B",
+      "explanation": "IFRS: only if reliable and more relevant information results.",
+      "kr": "IFRS: 신뢰성 있고 더 목적적합한 정보를 제공할 때만."
+    },
+    {
+      "id": "fsa-m5-q56",
+      "section": "8",
+      "concept": "To LIFO — prospective",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "truncated-rule",
+      "stem": "Under US GAAP, a company changing from FIFO to LIFO most likely:",
+      "choices": {
+        "A": "restates prior periods retrospectively",
+        "B": "applies the change prospectively, with the FIFO carrying amount becoming the first LIFO layer",
+        "C": "records the cumulative effect in current net income"
+      },
+      "answer": "B",
+      "explanation": "The exception: a change TO LIFO is prospective; the old carrying amount becomes the initial LIFO layer.",
+      "kr": "예외: LIFO로의 변경은 전진 적용; 기존 장부가가 최초 LIFO층."
+    },
+    {
+      "id": "fsa-m5-q57",
+      "section": "8",
+      "concept": "From LIFO — retrospective",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "truncated-rule",
+      "stem": "Under US GAAP, a change from LIFO to weighted average must be applied:",
+      "choices": {
+        "A": "prospectively",
+        "B": "retrospectively",
+        "C": "only with IFRS approval"
+      },
+      "answer": "B",
+      "explanation": "Leaving LIFO → look back (retrospective). Joining LIFO → look forward (prospective).",
+      "kr": "LIFO 이탈 → 소급, LIFO 도입 → 전진."
+    },
+    {
+      "id": "fsa-m5-q58",
+      "section": "8",
+      "concept": "Cumulative effect location",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "definition",
+      "stem": "A company changes its inventory method in 2018 and presents 2016–2018. The cumulative effect on periods before 2016 is recorded in:",
+      "choices": {
+        "A": "2018 net income",
+        "B": "the opening 2016 balance of retained earnings",
+        "C": "2016 OCI only"
+      },
+      "answer": "B",
+      "explanation": "Retrospective: restate 2016–2017; earlier effects go to the opening equity balance of the earliest period presented.",
+      "kr": "소급: 2016–17 재작성, 이전 효과는 최초 표시기간 기초 이익잉여금."
+    },
+    {
+      "id": "fsa-m5-q59",
+      "section": "8",
+      "concept": "US GAAP burden",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Compared with IFRS, US GAAP additionally requires a company changing its inventory method to:",
+      "choices": {
+        "A": "restate five years",
+        "B": "explain why the new method is superior and preferable",
+        "C": "use LIFO"
+      },
+      "answer": "B",
+      "explanation": "US GAAP: thoroughly explain why the new method is preferable.",
+      "kr": "US GAAP: 새 방법이 더 바람직한 이유를 충분히 설명."
+    },
+    {
+      "id": "fsa-m5-q60",
+      "section": "8",
+      "concept": "Real motive",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "definition",
+      "stem": "In rising costs, a company switches from FIFO to LIFO citing 'better matching.' The unstated purpose is most likely to:",
+      "choices": {
+        "A": "increase reported profits",
+        "B": "reduce income tax expense",
+        "C": "increase inventory turnover"
+      },
+      "answer": "B",
+      "explanation": "To LIFO in rising costs → higher COGS → lower taxes. (From LIFO → higher profits.)",
+      "kr": "상승기 LIFO 전환 → 매출원가 ↑ → 세금 ↓."
+    },
+    {
+      "id": "fsa-m5-q61",
+      "section": "9",
+      "concept": "IFRS reversal cap",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "truncated-rule",
+      "stem": "Under IFRS, inventory cost €800k; NRV €720k. Next year NRV rises to €850k. The reversal recognised next year is closest to:",
+      "choices": {
+        "A": "€130k",
+        "B": "€80k",
+        "C": "€50k"
+      },
+      "answer": "B",
+      "explanation": "Write-down 80; the reversal is capped at the original write-down → 80 (carrying amount back to cost 800, never above).",
+      "kr": "감액 80; 환입은 원래 감액액까지 → 80(원가 800 초과 불가)."
+    },
+    {
+      "id": "fsa-m5-q62",
+      "section": "9",
+      "concept": "Market — floor",
+      "type": "calc",
+      "difficulty": 3,
+      "trap": "formula",
+      "stem": "US GAAP (LIFO): cost $100; NRV $95; NRV less normal margin $80; replacement cost $75. Inventory is carried at:",
+      "choices": {
+        "A": "$95",
+        "B": "$80",
+        "C": "$75"
+      },
+      "answer": "B",
+      "explanation": "Market = middle of {75, 95, 80} = 80 (replacement 75 is below the floor). Lower of cost (100) and market (80) = 80.",
+      "kr": "시가 = {75, 95, 80}의 중간값 = 80(대체원가가 하한 미만). 원가 100과 비교 → 80."
+    },
+    {
+      "id": "fsa-m5-q63",
+      "section": "9",
+      "concept": "Market — ceiling",
+      "type": "calc",
+      "difficulty": 3,
+      "trap": "formula",
+      "stem": "Same as Q62 but replacement cost is $98. Inventory is carried at:",
+      "choices": {
+        "A": "$98",
+        "B": "$95",
+        "C": "$100"
+      },
+      "answer": "B",
+      "explanation": "Replacement 98 > ceiling NRV 95 → market = 95. Lower of cost (100) and market (95) = 95.",
+      "kr": "대체원가 98 > 상한 95 → 시가 95. 원가 100과 비교 → 95."
+    },
+    {
+      "id": "fsa-m5-q64",
+      "section": "9",
+      "concept": "Reversal location",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Under IFRS, a reversal of an inventory write-down is recognised as:",
+      "choices": {
+        "A": "a gain in OCI",
+        "B": "a reduction in cost of sales",
+        "C": "an increase in revenue"
+      },
+      "answer": "B",
+      "explanation": "IFRS reversal = reduction in cost of sales.",
+      "kr": "IFRS 환입 = 매출원가 감소."
+    },
+    {
+      "id": "fsa-m5-q65",
+      "section": "9",
+      "concept": "Write-down → turnover",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "direction",
+      "stem": "An inventory write-down will most likely:",
+      "choices": {
+        "A": "decrease inventory turnover",
+        "B": "increase inventory turnover",
+        "C": "increase the current ratio"
+      },
+      "answer": "B",
+      "explanation": "Smaller inventory denominator → turnover UP. Profitability, liquidity (current ratio) and solvency go down.",
+      "kr": "재고(분모) ↓ → 회전율 '상승'. 수익성·유동성·안정성은 하락."
+    },
+    {
+      "id": "fsa-m5-q66",
+      "section": "9",
+      "concept": "Agricultural exception",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "definition",
+      "stem": "A producer of agricultural products measures inventory at fair value less costs to sell. An increase in value above cost is:",
+      "choices": {
+        "A": "not recognised",
+        "B": "recognised in profit or loss",
+        "C": "recognised in OCI"
+      },
+      "answer": "B",
+      "explanation": "Outside IAS 2: changes in value (up or down) go to profit or loss, with no cost cap.",
+      "kr": "IAS 2 적용 제외: 가치 변동(증감)은 당기손익, 원가 상한 없음."
+    },
+    {
+      "id": "fsa-m5-q67",
+      "section": "9",
+      "concept": "LIFO writes down least",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "negation",
+      "stem": "With rising costs, write-downs are LEAST likely for a company using:",
+      "choices": {
+        "A": "FIFO",
+        "B": "weighted average",
+        "C": "LIFO"
+      },
+      "answer": "C",
+      "explanation": "LIFO inventory already carries the oldest, lowest costs → conservatively stated → write-downs less likely and smaller.",
+      "kr": "LIFO 재고는 이미 가장 낮은 옛 원가 → 감액 가능성 낮음."
+    },
+    {
+      "id": "fsa-m5-q68",
+      "section": "9",
+      "concept": "Removing an allowance increase",
+      "type": "calc",
+      "difficulty": 3,
+      "trap": "formula-assembly",
+      "stem": "A company's inventory obsolescence allowance rose from 400 to 460. Assuming changes go through cost of sales, removing the allowance changes cost of sales by:",
+      "choices": {
+        "A": "−60",
+        "B": "+60",
+        "C": "−460"
+      },
+      "answer": "A",
+      "explanation": "The 60 increase was charged to COGS; removing it lowers COGS by 60. Income statement uses the CHANGE, not the level (C).",
+      "kr": "증가분 60이 매출원가에 포함 → 제거 시 −60. 손익은 '변동', 잔액(C) 아님."
+    },
+    {
+      "id": "fsa-m5-q69",
+      "section": "9",
+      "concept": "Reluctance to write down",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Companies may be reluctant to record write-downs, especially under US GAAP, because:",
+      "choices": {
+        "A": "write-downs increase taxes",
+        "B": "write-downs reduce key ratios and cannot be reversed",
+        "C": "auditors must approve them"
+      },
+      "answer": "B",
+      "explanation": "Ratios suffer and, under US GAAP, the write-down can never be reversed.",
+      "kr": "비율 악화 + US GAAP는 환입 불가."
+    },
+    {
+      "id": "fsa-m5-q70",
+      "section": "10",
+      "concept": "Turnover calc",
+      "type": "calc",
+      "difficulty": 1,
+      "trap": "formula",
+      "stem": "Cost of sales 1,200; beginning inventory 180; ending inventory 220. Inventory turnover (average inventory) is closest to:",
+      "choices": {
+        "A": "5.5",
+        "B": "6.0",
+        "C": "6.7"
+      },
+      "answer": "B",
+      "explanation": "Average inventory = (180 + 220)/2 = 200; 1,200 / 200 = 6.0. A uses ending (5.45); C uses beginning.",
+      "kr": "평균재고 200; 1,200/200 = 6.0."
+    },
+    {
+      "id": "fsa-m5-q71",
+      "section": "10",
+      "concept": "Days on hand — ending",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "asked-quantity",
+      "stem": "Using Q70's data, days of inventory on hand based on ENDING inventory is closest to:",
+      "choices": {
+        "A": "60.8",
+        "B": "66.9",
+        "C": "54.8"
+      },
+      "answer": "B",
+      "explanation": "Ending basis: turnover = 1,200 / 220 = 5.45 → 365 / 5.45 = 66.9 days. A uses the average basis (365/6.0).",
+      "kr": "기말 기준: 1,200/220 = 5.45 → 66.9일. A는 평균 기준."
+    },
+    {
+      "id": "fsa-m5-q72",
+      "section": "10",
+      "concept": "High turnover, slow sales",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "definition",
+      "stem": "Inventory turnover is well above the industry average but sales growth is well below it. The most likely explanation is:",
+      "choices": {
+        "A": "highly efficient inventory management",
+        "B": "inadequate inventory levels",
+        "C": "obsolete inventory"
+      },
+      "answer": "B",
+      "explanation": "High turnover + slower sales growth → too little inventory (lost sales / stock-outs).",
+      "kr": "높은 회전율 + 낮은 매출성장 → 재고 부족."
+    },
+    {
+      "id": "fsa-m5-q73",
+      "section": "10",
+      "concept": "High turnover, good signs",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "High turnover with minimal write-downs and sales growth at or above the industry most likely indicates:",
+      "choices": {
+        "A": "inventory shortages",
+        "B": "efficient inventory management",
+        "C": "aggressive write-downs"
+      },
+      "answer": "B",
+      "explanation": "The supporting evidence for efficiency: few write-downs + sales growth ≥ industry.",
+      "kr": "효율 근거: 감액 적음 + 매출성장 ≥ 업계."
+    },
+    {
+      "id": "fsa-m5-q74",
+      "section": "10",
+      "concept": "Low turnover",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "A low inventory turnover relative to industry most likely indicates:",
+      "choices": {
+        "A": "slow-moving or obsolete inventory",
+        "B": "inadequate inventory levels",
+        "C": "strong sales growth"
+      },
+      "answer": "A",
+      "explanation": "Low turnover / high days → slow-moving or obsolete inventory.",
+      "kr": "낮은 회전율 → 진부·저회전 재고."
+    },
+    {
+      "id": "fsa-m5-q75",
+      "section": "10",
+      "concept": "IFRS-only disclosure",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "negation",
+      "stem": "Which disclosure is required under IFRS but NOT under US GAAP?",
+      "choices": {
+        "A": "The cost formula used",
+        "B": "The amount of any reversal of a write-down",
+        "C": "The carrying amount pledged as security"
+      },
+      "answer": "B",
+      "explanation": "US GAAP prohibits reversals, so reversal disclosures (items f, g) don't apply.",
+      "kr": "US GAAP는 환입 금지 → 환입 공시 해당 없음."
+    },
+    {
+      "id": "fsa-m5-q76",
+      "section": "10",
+      "concept": "US GAAP-only disclosure",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "confusion",
+      "stem": "US GAAP, but not IFRS, requires disclosure of:",
+      "choices": {
+        "A": "material income from LIFO liquidation",
+        "B": "inventories at fair value less costs to sell",
+        "C": "the amount of inventory expensed"
+      },
+      "answer": "A",
+      "explanation": "LIFO exists only under US GAAP, so only US GAAP requires LIFO-liquidation income disclosure (plus significant estimates).",
+      "kr": "LIFO는 US GAAP만 → LIFO 청산이익 공시도 US GAAP만."
+    },
+    {
+      "id": "fsa-m5-q77",
+      "section": "10",
+      "concept": "Luxury vs staples",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Compared with a seller of staples, a seller of luxury products most likely has:",
+      "choices": {
+        "A": "higher margin and higher turnover",
+        "B": "higher margin and lower turnover",
+        "C": "lower margin and lower turnover"
+      },
+      "answer": "B",
+      "explanation": "Luxury: high margins, much lower turnover.",
+      "kr": "명품: 높은 이익률, 낮은 회전율."
+    },
+    {
+      "id": "fsa-m5-q78",
+      "section": "11",
+      "concept": "RM/WIP up",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "A manufacturer's raw materials and WIP rise significantly due to higher volumes. This most likely signals:",
+      "choices": {
+        "A": "declining demand",
+        "B": "anticipated higher demand and sales",
+        "C": "an imminent write-down"
+      },
+      "answer": "B",
+      "explanation": "Building inputs in volume → expects more demand.",
+      "kr": "투입재 수량 증가 → 수요 증가 예상."
+    },
+    {
+      "id": "fsa-m5-q79",
+      "section": "11",
+      "concept": "FG up, RM/WIP down",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "definition",
+      "stem": "Finished goods rise substantially while raw materials and WIP decline. This most likely signals:",
+      "choices": {
+        "A": "expected higher demand",
+        "B": "declining demand and a possible future write-down",
+        "C": "a LIFO liquidation"
+      },
+      "answer": "B",
+      "explanation": "Unsold finished goods piling up while production inputs are cut → falling demand.",
+      "kr": "완제품 적체 + 투입 축소 → 수요 감소."
+    },
+    {
+      "id": "fsa-m5-q80",
+      "section": "11",
+      "concept": "FG growth > sales growth",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "Finished goods grow 15% while sales grow 3%. The analyst should be most concerned about:",
+      "choices": {
+        "A": "future mark-downs or write-downs",
+        "B": "inadequate inventory",
+        "C": "rising gross margins"
+      },
+      "answer": "A",
+      "explanation": "Inventory outgrowing sales → mark-downs or obsolescence write-downs ahead.",
+      "kr": "재고가 매출보다 빠르게 증가 → 가격인하·감액 우려."
+    },
+    {
+      "id": "fsa-m5-q81",
+      "section": "11",
+      "concept": "Restate LIFO to FIFO",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "To compare a US LIFO company with an IFRS company, an analyst should most appropriately:",
+      "choices": {
+        "A": "restate the IFRS company to LIFO",
+        "B": "restate the LIFO company to FIFO",
+        "C": "compare reported ratios directly"
+      },
+      "answer": "B",
+      "explanation": "IFRS forbids LIFO; restate the LIFO company to FIFO using the reserve.",
+      "kr": "IFRS는 LIFO 금지 → LIFO 회사를 FIFO로 재작성."
+    },
+    {
+      "id": "fsa-m5-q82",
+      "section": "11",
+      "concept": "FIFO ROE — both years",
+      "type": "calc",
+      "difficulty": 3,
+      "trap": "formula-assembly",
+      "stem": "LIFO company: FIFO net income 500; equity 10,000 (end) and 9,600 (start); LIFO reserve 1,000 (end) and 800 (start); tax 25%. FIFO ROE (average equity) is closest to:",
+      "choices": {
+        "A": "4.7%",
+        "B": "5.1%",
+        "C": "4.5%"
+      },
+      "answer": "A",
+      "explanation": "FIFO equity end = 10,000 + 1,000 × 0.75 = 10,750; start = 9,600 + 800 × 0.75 = 10,200; average 10,475. ROE = 500 / 10,475 = 4.77% → closest to 4.7%. B uses unadjusted equity (500/9,800); C adds the full reserve with no tax.",
+      "kr": "FIFO 자본 기말 10,750, 기초 10,200, 평균 10,475 → 500/10,475 = 4.77%. B는 미조정, C는 세금 무시."
+    },
+    {
+      "id": "fsa-m5-q83",
+      "section": "11",
+      "concept": "Costs of excess inventory",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "negation",
+      "stem": "Holding too much inventory LEAST likely results in:",
+      "choices": {
+        "A": "higher storage and insurance costs",
+        "B": "less cash for other purposes",
+        "C": "higher inventory turnover"
+      },
+      "answer": "C",
+      "explanation": "Excess inventory raises storage/insurance and ties up cash; it LOWERS turnover (bigger denominator).",
+      "kr": "과잉재고 → 보관·보험비 ↑, 현금 묶임; 회전율은 '하락'."
+    },
+    {
+      "id": "fsa-m5-q84",
+      "section": "12",
+      "concept": "Historical cost",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "formula",
+      "stem": "Reported inventory (net) is €1,200m and the valuation allowance is €300m. Historical cost is closest to:",
+      "choices": {
+        "A": "€900m",
+        "B": "€1,500m",
+        "C": "€1,200m"
+      },
+      "answer": "B",
+      "explanation": "Historical cost = carrying amount + allowance = 1,500.",
+      "kr": "취득원가 = 장부가 + 충당금 = 1,500."
+    },
+    {
+      "id": "fsa-m5-q85",
+      "section": "12",
+      "concept": "Allowance trend",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "definition",
+      "stem": "An inventory valuation allowance rises from 10% to 20% of gross inventory over two years. This most likely indicates:",
+      "choices": {
+        "A": "improving inventory management",
+        "B": "increasing obsolescence",
+        "C": "a switch to LIFO"
+      },
+      "answer": "B",
+      "explanation": "A growing share of inventory impaired → obsolescence warning (Jollof: 13.6% → 22.3%).",
+      "kr": "손상 비중 증가 → 진부화 경고(Jollof)."
+    },
+    {
+      "id": "fsa-m5-q86",
+      "section": "12",
+      "concept": "FIFO → weighted avg: turnover",
+      "type": "mc",
+      "difficulty": 2,
+      "trap": "direction",
+      "stem": "With rising costs and stable quantities, a FIFO company would report under weighted average an inventory turnover that is:",
+      "choices": {
+        "A": "lower",
+        "B": "higher",
+        "C": "unchanged"
+      },
+      "answer": "B",
+      "explanation": "Weighted average: COGS higher (numerator ↑) and inventory lower (denominator ↓) → turnover higher.",
+      "kr": "가중평균: 매출원가 ↑, 재고 ↓ → 회전율 ↑."
+    },
+    {
+      "id": "fsa-m5-q87",
+      "section": "12",
+      "concept": "FIFO → weighted avg: ROA",
+      "type": "mc",
+      "difficulty": 3,
+      "trap": "direction",
+      "stem": "Under the same conditions, ROA under weighted average vs FIFO is most likely:",
+      "choices": {
+        "A": "higher, because total assets are lower",
+        "B": "lower, because the decrease in net income outweighs the decrease in assets",
+        "C": "unchanged"
+      },
+      "answer": "B",
+      "explanation": "The same absolute change hits NI and assets, but NI is far smaller: €3m/€100m = 3.00% vs €4m/€101m = 3.96%. Numerator effect dominates.",
+      "kr": "같은 금액이 순이익·자산에 영향, 순이익이 훨씬 작음 → 분자 효과 우세."
+    },
+    {
+      "id": "fsa-m5-q88",
+      "section": "12",
+      "concept": "FIFO → weighted avg: D/E",
+      "type": "mc",
+      "difficulty": 1,
+      "trap": "direction",
+      "stem": "Under the same conditions, debt-to-equity under weighted average vs FIFO is:",
+      "choices": {
+        "A": "lower",
+        "B": "higher",
+        "C": "unchanged"
+      },
+      "answer": "B",
+      "explanation": "Lower NI → lower retained earnings → lower equity → higher D/E.",
+      "kr": "순이익 ↓ → 자본 ↓ → 부채비율 ↑."
+    },
+    {
+      "id": "fsa-m5-q89",
+      "section": "12",
+      "concept": "Debt definition",
+      "type": "calc",
+      "difficulty": 2,
+      "trap": "asked-quantity",
+      "stem": "Long-term bonds 3,000; other long-term debt 100; current portion of LTD 400; pension liabilities 2,000; equity 5,000. Debt-to-equity using only interest-bearing debt is closest to:",
+      "choices": {
+        "A": "0.70",
+        "B": "1.10",
+        "C": "0.62"
+      },
+      "answer": "A",
+      "explanation": "Debt = 3,000 + 100 + 400 = 3,500 / 5,000 = 0.70. Pensions excluded (B includes them). C drops the current portion.",
+      "kr": "부채 = 3,500 / 5,000 = 0.70. 연금 제외(B 포함), C는 유동성 대체분 누락."
+    },
+    {
+      "id": "fsa-m5-q90",
+      "section": "12",
+      "concept": "Falling costs — switch",
+      "type": "mc",
+      "difficulty": 3,
+      "trap": "direction",
+      "stem": "If replacement costs were FALLING, a switch from FIFO to weighted average would most likely result in:",
+      "choices": {
+        "A": "higher gross margin and higher inventory",
+        "B": "lower gross margin and lower inventory",
+        "C": "higher inventory turnover"
+      },
+      "answer": "A",
+      "explanation": "Falling costs: weighted average COGS is LOWER than FIFO (FIFO expenses the older, higher costs) and inventory HIGHER → every rising-cost conclusion reverses; turnover falls.",
+      "kr": "원가 하락: 가중평균 매출원가 < FIFO, 재고 ↑ → 상승기 결론 모두 반대, 회전율 ↓."
+    },
+    {
+      "id": "fsa-m5-f01",
+      "section": "1",
+      "concept": "Costs in vs out",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "truncated-rule",
+      "front": "What is capitalised into inventory, what is expensed, and the direction if you get it wrong",
+      "back": "IN: purchase price, import duties, freight-in, transit insurance, handling, direct labour, FIXED and variable production overhead. Trade discounts REDUCE cost.\nOUT (WSAS): abnormal Waste, Storage (unless needed for production), Admin overhead, Selling (incl. freight-out).\nWrongly capitalising → profit AND inventory both overstated."
+    },
+    {
+      "id": "fsa-m5-f02",
+      "section": "3",
+      "concept": "Cost-flow direction table",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "direction",
+      "front": "FIFO vs LIFO vs weighted average in rising and falling prices",
+      "back": "Rule: LIFO's COGS and FIFO's EI carry the NEWEST prices.\nRISING: FIFO → COGS low, EI high, profit high; LIFO → COGS high, EI low, profit low.\nFALLING: everything reverses (GSI: LIFO GP highest).\nWeighted average always between; specific ID not necessarily.\nCheck: COGS + EI = goods available. Weighted avg = total cost ÷ total UNITS available."
+    },
+    {
+      "id": "fsa-m5-f03",
+      "section": "4",
+      "concept": "LIFO effects list",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "direction",
+      "front": "LIFO vs FIFO with rising costs and stable/rising units — every statement and ratio",
+      "back": "IS: COGS ↑; GP, op. income, pre-tax, tax, NI ↓.\nBS: inventory, CA, working capital, total assets, RE, equity ↓.\nCF: OPERATING CASH FLOW ↑ (lower taxes).\nRatios: current ratio ↓, D/E ↑, profitability ↓, turnover ↑ (deceptive).\nFIFO = current values on balance sheet; LIFO = current values on income statement.\nPeriodic = perpetual for specific ID and FIFO only."
+    },
+    {
+      "id": "fsa-m5-f04",
+      "section": "6",
+      "concept": "LIFO → FIFO conversion",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "formula-assembly",
+      "front": "The four conversion lines (inventory, COGS, NI, equity)",
+      "back": "Reserve = FIFO inv − LIFO inv.\nFIFO inventory = LIFO inventory + reserve (LEVEL).\nFIFO COGS = LIFO COGS − (end reserve − begin reserve) (CHANGE; falling reserve → ADD).\nFIFO NI = LIFO NI + Δreserve × (1 − t).\nFIFO equity = LIFO equity + reserve × (1 − t); reserve × t = deferred tax LIABILITY (not cash)."
+    },
+    {
+      "id": "fsa-m5-f05",
+      "section": "7",
+      "concept": "LIFO liquidation",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "definition",
+      "front": "What it is, the signal, the profit calc, why unsustainable",
+      "back": "Units sold > units bought → old cheap layers into COGS → one-time profit.\nSignal: DECLINE in the LIFO reserve.\nCauses: supplier strike, recession, deliberate manipulation.\nProfit = units liquidated × (current cost − old layer cost). RF: 1,000 × (115 − 100) = 15,000.\nWith a falling reserve LIFO looks MORE profitable and FIFO CFO is HIGHER."
+    },
+    {
+      "id": "fsa-m5-f06",
+      "section": "9",
+      "concept": "Write-downs",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "confusion",
+      "front": "IFRS vs US GAAP write-down and reversal rules, market, ratio effects",
+      "back": "IFRS: lower of cost and NRV; reversal REQUIRED, capped at original write-down, as a reduction of COGS.\nUS GAAP: lower of cost or NRV; LIFO/retail → lower of cost or MARKET (replacement cost; ceiling NRV; floor NRV − normal margin = MIDDLE value); NO reversals.\nAgri/forest/mineral producers, broker-traders: fair value less costs to sell, changes in P&L.\nWrite-down: profitability, liquidity, solvency ↓; ACTIVITY (turnover) ↑. LIFO firms write down less."
+    },
+    {
+      "id": "fsa-m5-f07",
+      "section": "10",
+      "concept": "Ratios and method changes",
+      "type": "flash",
+      "difficulty": 1,
+      "trap": "formula",
+      "front": "Inventory ratios, the turnover diagnosis, method changes",
+      "back": "Turnover = COGS ÷ average inventory; days = 365 ÷ turnover (may use ending inventory); GM = GP ÷ sales.\nHigh turnover: efficient (few write-downs, sales growth ≥ industry) OR too little inventory (slow sales growth) OR write-downs. Low: slow/obsolete.\nMethod change: retrospective (restate; earlier effect → opening RE) EXCEPT US GAAP change TO LIFO = prospective (old carrying amount = first layer).\nTo LIFO = lower tax; from LIFO = higher profit."
+    }
+  ]
+}
