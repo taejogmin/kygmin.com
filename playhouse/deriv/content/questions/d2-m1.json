@@ -274,6 +274,601 @@
    "explanation": "Offer rate가 항상 높다. 그 차이가 딜러의 수익."
   },
   {
+   "id": "d2-m1-q17",
+   "section": "3",
+   "concept": "이자율스왑 원금",
+   "type": "mc",
+   "difficulty": 1,
+   "trap": "definition",
+   "stem": "이자율스왑에 대한 설명으로 옳은 것은?",
+   "choices": {
+    "1": "명목원금을 초기와 만기에 교환한다",
+    "2": "명목원금은 교환하지 않고 고정금리와 변동금리 이자만 교환한다",
+    "3": "이자교환 없이 원금만 교환한다",
+    "4": "단기계약으로 외환수급 불일치 해소에 쓴다"
+   },
+   "answer": "2",
+   "explanation": "이자율스왑은 명목원금 교환이 없다. ①은 통화스왑, ③④는 외환스왑."
+  },
+  {
+   "id": "d2-m1-q18",
+   "section": "3",
+   "concept": "통화스왑 구조",
+   "type": "mc",
+   "difficulty": 2,
+   "trap": "matching",
+   "stem": "통화스왑에 대한 설명으로 옳지 않은 것은?",
+   "choices": {
+    "1": "초기와 만기에 두 통화 간 원금을 교환한다",
+    "2": "중간에 이자를 교환한다",
+    "3": "만기 원금교환에는 만기 시점의 선물환율을 적용한다",
+    "4": "환위험과 금리위험의 헤지수단이다"
+   },
+   "answer": "3",
+   "explanation": "통화스왑의 만기 원금교환은 초기 거래시점 환율을 적용한다. 선물환율을 쓰는 것은 외환스왑."
+  },
+  {
+   "id": "d2-m1-q19",
+   "section": "3",
+   "concept": "외환스왑 구조",
+   "type": "mc",
+   "difficulty": 2,
+   "trap": "matching",
+   "stem": "외환스왑에 대한 설명으로 옳은 것은?",
+   "choices": {
+    "1": "원금교환은 있고 이자교환은 없다",
+    "2": "원금교환 없이 이자만 교환한다",
+    "3": "초기와 만기 모두 현물환율을 적용한다",
+    "4": "장기 금리위험 헤지수단이다"
+   },
+   "answer": "1",
+   "explanation": "외환스왑: 원금교환 O, 이자교환 없음. 초기 현물환율, 만기 선물환율."
+  },
+  {
+   "id": "d2-m1-q20",
+   "section": "3",
+   "concept": "적용 환율",
+   "type": "mc",
+   "difficulty": 3,
+   "trap": "confusion",
+   "stem": "만기 원금교환에 적용하는 환율로 옳은 것은?",
+   "choices": {
+    "1": "통화스왑: 초기 거래시점 환율 / 외환스왑: 선물환율",
+    "2": "통화스왑: 선물환율 / 외환스왑: 초기 거래시점 환율",
+    "3": "둘 다 만기 시점의 현물환율",
+    "4": "둘 다 선물환율"
+   },
+   "answer": "1",
+   "explanation": "통화스왑은 중간에 이자를 교환하므로 만기에 처음 환율로 되돌리고, 외환스왑은 이자교환이 없어 선물환율에 금리차가 반영된다."
+  },
+  {
+   "id": "d2-m1-q21",
+   "section": "3",
+   "concept": "외환스왑 용도",
+   "type": "mc",
+   "difficulty": 2,
+   "trap": "matching",
+   "stem": "외환스왑의 용도로 옳은 것은?",
+   "choices": {
+    "1": "외환수급시기 불일치 해소, 선물환 만기연장 또는 단축",
+    "2": "장기 금리위험 헤지",
+    "3": "신용위험 이전",
+    "4": "주가변동위험 헤지"
+   },
+   "answer": "1",
+   "explanation": "외환스왑은 외환 수급 시점의 불일치를 메우거나 선물환 만기를 조정하는 수단."
+  },
+  {
+   "id": "d2-m1-q22",
+   "section": "3",
+   "concept": "이자교환 여부",
+   "type": "mc",
+   "difficulty": 2,
+   "trap": "matching",
+   "stem": "이자를 교환하지 않는 스왑은?",
+   "choices": {
+    "1": "이자율스왑",
+    "2": "통화스왑",
+    "3": "외환스왑",
+    "4": "베이시스 스왑"
+   },
+   "answer": "3",
+   "explanation": "외환스왑은 원금만 교환한다."
+  },
+  {
+   "id": "d2-m1-q23",
+   "section": "3",
+   "concept": "헤지 대상",
+   "type": "mc",
+   "difficulty": 2,
+   "trap": "matching",
+   "stem": "스왑과 주된 헤지 대상의 연결이 옳은 것은?",
+   "choices": {
+    "1": "이자율스왑 — 금리위험 / 통화스왑 — 환위험 + 금리위험",
+    "2": "이자율스왑 — 환위험 / 통화스왑 — 금리위험",
+    "3": "이자율스왑 — 신용위험 / 통화스왑 — 환위험",
+    "4": "이자율스왑 — 환위험 + 금리위험 / 통화스왑 — 금리위험"
+   },
+   "answer": "1",
+   "explanation": "이자율스왑은 금리위험, 통화스왑은 환위험과 금리위험을 함께 헤지한다."
+  },
+  {
+   "id": "d2-m1-q24",
+   "section": "4.1",
+   "concept": "변동금리 차입자",
+   "type": "mc",
+   "difficulty": 2,
+   "trap": "hedge-direction",
+   "stem": "변동금리 차입자가 노출된 위험과 필요한 스왑은?",
+   "choices": {
+    "1": "금리 상승 위험, 고정금리 지불스왑",
+    "2": "금리 상승 위험, 고정금리 수취스왑",
+    "3": "금리 하락 위험, 고정금리 지불스왑",
+    "4": "금리 하락 위험, 고정금리 수취스왑"
+   },
+   "answer": "1",
+   "explanation": "금리가 오르면 이자 부담이 늘어난다. 고정금리를 지불하고 변동금리를 받아 고정금리 차입으로 전환."
+  },
+  {
+   "id": "d2-m1-q25",
+   "section": "4.1",
+   "concept": "고정금리 차입자",
+   "type": "mc",
+   "difficulty": 2,
+   "trap": "hedge-direction",
+   "stem": "고정금리 차입자가 노출된 위험과 필요한 스왑은?",
+   "choices": {
+    "1": "금리 상승 위험, 고정금리 지불스왑",
+    "2": "금리 상승 위험, 고정금리 수취스왑",
+    "3": "금리 하락 위험, 고정금리 지불스왑",
+    "4": "금리 하락 위험, 고정금리 수취스왑"
+   },
+   "answer": "4",
+   "explanation": "금리가 내려도 높은 고정금리를 계속 내야 한다. 고정금리를 수취하고 변동금리를 지불해 변동금리 차입으로 전환."
+  },
+  {
+   "id": "d2-m1-q26",
+   "section": "4.2",
+   "concept": "변동금리 운용자",
+   "type": "mc",
+   "difficulty": 2,
+   "trap": "hedge-direction",
+   "stem": "변동금리 운용자(투자자)가 노출된 위험과 필요한 스왑은?",
+   "choices": {
+    "1": "금리 상승 위험, 고정금리 지불스왑",
+    "2": "금리 하락 위험, 고정금리 수취스왑",
+    "3": "금리 하락 위험, 고정금리 지불스왑",
+    "4": "금리 상승 위험, 고정금리 수취스왑"
+   },
+   "answer": "2",
+   "explanation": "금리가 내리면 이자수입이 줄어든다. 고정금리 수취스왑으로 고정금리 운용 전환."
+  },
+  {
+   "id": "d2-m1-q27",
+   "section": "4.2",
+   "concept": "고정금리 운용자",
+   "type": "mc",
+   "difficulty": 2,
+   "trap": "hedge-direction",
+   "stem": "고정금리 운용자(투자자)가 노출된 위험과 필요한 스왑은?",
+   "choices": {
+    "1": "금리 상승 위험, 고정금리 지불스왑",
+    "2": "금리 하락 위험, 고정금리 수취스왑",
+    "3": "금리 하락 위험, 고정금리 지불스왑",
+    "4": "금리 상승 위험, 고정금리 수취스왑"
+   },
+   "answer": "1",
+   "explanation": "금리가 올라도 낮은 고정금리만 받는다. 고정금리 지불스왑으로 변동금리 운용 전환."
+  },
+  {
+   "id": "d2-m1-q28",
+   "section": "4.2",
+   "concept": "스왑 선택",
+   "type": "mc",
+   "difficulty": 3,
+   "trap": "matching",
+   "stem": "고정금리 수취스왑이 필요한 경우만 묶은 것은?",
+   "choices": {
+    "1": "고정금리 차입자, 변동금리 운용자",
+    "2": "변동금리 차입자, 고정금리 운용자",
+    "3": "변동금리 차입자, 변동금리 운용자",
+    "4": "고정금리 차입자, 고정금리 운용자"
+   },
+   "answer": "1",
+   "explanation": "금리 하락이 위험인 쪽(고정금리 차입자, 변동금리 운용자)이 고정금리를 수취한다."
+  },
+  {
+   "id": "d2-m1-q29",
+   "section": "4.1",
+   "concept": "전환효과",
+   "type": "mc",
+   "difficulty": 2,
+   "trap": "matching",
+   "stem": "변동금리 차입자가 고정금리 지불스왑을 체결한 결과는?",
+   "choices": {
+    "1": "고정금리 차입 전환효과",
+    "2": "변동금리 운용 전환효과",
+    "3": "고정금리 운용 전환효과",
+    "4": "차입금 상환효과"
+   },
+   "answer": "1",
+   "explanation": "변동금리 지급이 스왑의 변동금리 수취로 상쇄되어 고정금리만 남는다."
+  },
+  {
+   "id": "d2-m1-q30",
+   "section": "4.1",
+   "concept": "최종 부담금리",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "formula-assembly",
+   "stem": "SOFR + 1.0%로 변동금리 차입을 한 기업이 고정금리 4.0%를 지불하고 SOFR를 수취하는 스왑을 체결했다. 최종 부담금리는?",
+   "choices": {
+    "1": "3.0% 고정",
+    "2": "4.0% 고정",
+    "3": "5.0% 고정",
+    "4": "SOFR + 5.0%"
+   },
+   "answer": "3",
+   "explanation": "(SOFR + 1.0%) + 4.0% − SOFR = 5.0% 고정."
+  },
+  {
+   "id": "d2-m1-q31",
+   "section": "4.1",
+   "concept": "최종 부담금리",
+   "type": "calc",
+   "difficulty": 3,
+   "trap": "formula-assembly",
+   "stem": "고정금리 5.0%로 차입한 기업이 고정금리 4.2%를 수취하고 SOFR를 지불하는 스왑을 체결했다. 최종 부담금리는?",
+   "choices": {
+    "1": "SOFR − 0.8%",
+    "2": "SOFR + 0.8%",
+    "3": "0.8% 고정",
+    "4": "SOFR + 9.2%"
+   },
+   "answer": "2",
+   "explanation": "5.0% + SOFR − 4.2% = SOFR + 0.8%."
+  },
+  {
+   "id": "d2-m1-q32",
+   "section": "4.2",
+   "concept": "최종 운용수익률",
+   "type": "calc",
+   "difficulty": 3,
+   "trap": "formula-assembly",
+   "stem": "SOFR + 0.5%의 변동금리채권에 투자한 투자자가 고정금리 3.8%를 수취하고 SOFR를 지불하는 스왑을 체결했다. 최종 운용수익률은?",
+   "choices": {
+    "1": "3.3% 고정",
+    "2": "3.8% 고정",
+    "3": "4.3% 고정",
+    "4": "SOFR + 4.3%"
+   },
+   "answer": "3",
+   "explanation": "(SOFR + 0.5%) + 3.8% − SOFR = 4.3% 고정."
+  },
+  {
+   "id": "d2-m1-q33",
+   "section": "4.3",
+   "concept": "비교우위 총 이익",
+   "type": "calc",
+   "difficulty": 3,
+   "trap": "formula",
+   "stem": "A기업은 고정금리 5.0% 또는 SOFR + 0.5%로, B기업은 고정금리 7.0% 또는 SOFR + 1.5%로 차입할 수 있다. 비교우위에 따라 차입한 뒤 스왑을 하면 두 기업이 얻는 총 절감효과는?",
+   "choices": {
+    "1": "0.5%",
+    "2": "1.0%",
+    "3": "2.0%",
+    "4": "3.0%"
+   },
+   "answer": "2",
+   "explanation": "고정금리 차이 2.0% − 변동금리 차이 1.0% = 1.0%."
+  },
+  {
+   "id": "d2-m1-q34",
+   "section": "4.3",
+   "concept": "비교우위 차입",
+   "type": "mc",
+   "difficulty": 3,
+   "trap": "matching",
+   "stem": "A기업은 고정금리 5.0% 또는 SOFR + 0.5%로, B기업은 고정금리 7.0% 또는 SOFR + 1.5%로 차입할 수 있다. 비교우위에 따른 차입으로 옳은 것은?",
+   "choices": {
+    "1": "A는 고정금리, B는 변동금리로 차입",
+    "2": "A는 변동금리, B는 고정금리로 차입",
+    "3": "둘 다 고정금리로 차입",
+    "4": "둘 다 변동금리로 차입"
+   },
+   "answer": "1",
+   "explanation": "A는 두 시장 모두 유리하지만 격차가 더 큰 고정금리 시장(2.0%)에 비교우위가 있다. B는 격차가 작은 변동금리 시장에 비교우위."
+  },
+  {
+   "id": "d2-m1-q35",
+   "section": "4.3",
+   "concept": "비교우위 총 이익",
+   "type": "calc",
+   "difficulty": 3,
+   "trap": "formula",
+   "stem": "A기업은 고정금리 4.0% 또는 SOFR + 0.2%로, B기업은 고정금리 5.5% 또는 SOFR + 0.9%로 차입할 수 있다. 스왑으로 얻는 총 절감효과를 두 기업이 똑같이 나누면 각자의 절감효과는?",
+   "choices": {
+    "1": "0.35%",
+    "2": "0.40%",
+    "3": "0.70%",
+    "4": "0.80%"
+   },
+   "answer": "2",
+   "explanation": "고정 차이 1.5% − 변동 차이 0.7% = 0.8%. 절반씩이면 0.40%."
+  },
+  {
+   "id": "d2-m1-q36",
+   "section": "4.4",
+   "concept": "투기적 스왑",
+   "type": "mc",
+   "difficulty": 2,
+   "trap": "direction",
+   "stem": "금리 상승이 예상될 때 취하는 스왑 포지션은?",
+   "choices": {
+    "1": "Long Swap(고정금리 지불스왑)",
+    "2": "Short Swap(고정금리 수취스왑)",
+    "3": "Long Swap(고정금리 수취스왑)",
+    "4": "Short Swap(고정금리 지불스왑)"
+   },
+   "answer": "1",
+   "explanation": "금리가 오르면 받는 변동금리가 늘어난다. 고정금리를 지불하는 스왑 매수포지션."
+  },
+  {
+   "id": "d2-m1-q37",
+   "section": "4.4",
+   "concept": "투기적 스왑",
+   "type": "mc",
+   "difficulty": 2,
+   "trap": "direction",
+   "stem": "금리 하락이 예상될 때 취하는 스왑 포지션은?",
+   "choices": {
+    "1": "Long Swap(고정금리 지불스왑)",
+    "2": "Short Swap(고정금리 수취스왑)",
+    "3": "Long Swap(고정금리 수취스왑)",
+    "4": "Short Swap(고정금리 지불스왑)"
+   },
+   "answer": "2",
+   "explanation": "금리가 내리면 지불하는 변동금리가 줄어든다. 고정금리를 수취하는 Short Swap."
+  },
+  {
+   "id": "d2-m1-q38",
+   "section": "4.4",
+   "concept": "FRA와의 관계",
+   "type": "mc",
+   "difficulty": 3,
+   "trap": "matching",
+   "stem": "Long Swap Position과 성격이 유사한 것은?",
+   "choices": {
+    "1": "금리선도계약(FRA) 매수",
+    "2": "금리선도계약(FRA) 매도",
+    "3": "채권 매수",
+    "4": "고정금리 수취스왑"
+   },
+   "answer": "1",
+   "explanation": "Long Swap = 고정금리 지불스왑 ≈ FRA 매수(금리 상승 시 이익). Short Swap ≈ FRA 매도."
+  },
+  {
+   "id": "d2-m1-q39",
+   "section": "4.4",
+   "concept": "Long Swap의 의미",
+   "type": "mc",
+   "difficulty": 2,
+   "trap": "definition",
+   "stem": "스왑 매수포지션(Long Swap Position)이란?",
+   "choices": {
+    "1": "고정금리를 지불하고 변동금리를 수취하는 포지션",
+    "2": "고정금리를 수취하고 변동금리를 지불하는 포지션",
+    "3": "변동금리끼리 교환하는 포지션",
+    "4": "원금만 교환하는 포지션"
+   },
+   "answer": "1",
+   "explanation": "스왑에서 매수 = 고정금리 지불."
+  },
+  {
+   "id": "d2-m1-q40",
+   "section": "4.5",
+   "concept": "용어",
+   "type": "mc",
+   "difficulty": 1,
+   "trap": "definition",
+   "stem": "swap rate의 의미로 옳은 것은?",
+   "choices": {
+    "1": "변동금리와 교환되는 고정금리",
+    "2": "고정금리와 교환되는 변동금리",
+    "3": "스왑금리와 국채수익률의 차이",
+    "4": "두 통화의 교환비율"
+   },
+   "answer": "1",
+   "explanation": "③은 swap spread."
+  },
+  {
+   "id": "d2-m1-q41",
+   "section": "5",
+   "concept": "basis swap",
+   "type": "mc",
+   "difficulty": 2,
+   "trap": "definition",
+   "stem": "변동금리와 변동금리를 교환하는 비표준형 스왑은?",
+   "choices": {
+    "1": "basis swap",
+    "2": "step-up swap",
+    "3": "accreting swap",
+    "4": "forward start swap"
+   },
+   "answer": "1",
+   "explanation": "표준형은 고정금리와 변동금리를 교환한다. 변동 대 변동은 basis swap."
+  },
+  {
+   "id": "d2-m1-q42",
+   "section": "5",
+   "concept": "명목원금 변동",
+   "type": "mc",
+   "difficulty": 2,
+   "trap": "matching",
+   "stem": "명목원금이 변하는 스왑과 그 형태의 연결이 옳지 않은 것은?",
+   "choices": {
+    "1": "accreting swap — 증가형",
+    "2": "amortizing swap — 감소형",
+    "3": "rollercoaster swap — 증감형",
+    "4": "step-up swap — 증가형"
+   },
+   "answer": "4",
+   "explanation": "step-up swap은 명목원금이 아니라 고정금리(스왑금리)가 주기적으로 상승하는 스왑이다."
+  },
+  {
+   "id": "d2-m1-q43",
+   "section": "5",
+   "concept": "step-up swap",
+   "type": "mc",
+   "difficulty": 2,
+   "trap": "definition",
+   "stem": "step-up swap에 대한 설명으로 옳은 것은?",
+   "choices": {
+    "1": "고정금리가 주기적으로 상승한다",
+    "2": "명목원금이 증가한다",
+    "3": "효력 발생일이 미래 시점이다",
+    "4": "변동금리끼리 교환한다"
+   },
+   "answer": "1",
+   "explanation": "②는 accreting swap, ③은 forward start swap, ④는 basis swap."
+  },
+  {
+   "id": "d2-m1-q44",
+   "section": "5",
+   "concept": "효력 발생일",
+   "type": "mc",
+   "difficulty": 2,
+   "trap": "definition",
+   "stem": "표준형 스왑의 효력 발생일은?",
+   "choices": {
+    "1": "계약일 당일",
+    "2": "계약일로부터 2영업일 후",
+    "3": "계약일로부터 1개월 후",
+    "4": "당사자가 정한 미래 시점"
+   },
+   "answer": "2",
+   "explanation": "표준형은 계약일로부터 2영업일 후. 미래 시점에 시작하면 forward start swap(선도스왑)."
+  },
+  {
+   "id": "d2-m1-q45",
+   "section": "5",
+   "concept": "옵션조항",
+   "type": "mc",
+   "difficulty": 3,
+   "trap": "matching",
+   "stem": "Callable swap과 Puttable swap에서 조기종결 권리를 가진 자의 연결이 옳은 것은?",
+   "choices": {
+    "1": "Callable: 고정금리 지급자 / Puttable: 고정금리 수취자",
+    "2": "Callable: 고정금리 수취자 / Puttable: 고정금리 지급자",
+    "3": "둘 다 고정금리 지급자",
+    "4": "둘 다 고정금리 수취자"
+   },
+   "answer": "1",
+   "explanation": "Callable swap은 고정금리 지급자, Puttable swap은 고정금리 수취자."
+  },
+  {
+   "id": "d2-m1-q46",
+   "section": "5",
+   "concept": "스왑션",
+   "type": "mc",
+   "difficulty": 3,
+   "trap": "matching",
+   "stem": "스왑션(Swaption)과 대응되는 금리옵션의 연결이 옳은 것은?",
+   "choices": {
+    "1": "payer's swaption — cap / receiver's swaption — floor",
+    "2": "payer's swaption — floor / receiver's swaption — cap",
+    "3": "둘 다 cap",
+    "4": "둘 다 floor"
+   },
+   "answer": "1",
+   "explanation": "payer's swaption(고정금리 지불 권리)은 금리 상승에 대비하므로 cap, receiver's swaption은 floor."
+  },
+  {
+   "id": "d2-m1-q47",
+   "section": "5",
+   "concept": "표준형 스왑",
+   "type": "mc",
+   "difficulty": 2,
+   "trap": "negation",
+   "stem": "표준형 이자율스왑의 조건으로 옳지 않은 것은?",
+   "choices": {
+    "1": "고정금리와 변동금리를 교환한다",
+    "2": "명목원금이 고정되어 있다",
+    "3": "옵션조항이 없다",
+    "4": "고정금리를 만기에 일시지급한다"
+   },
+   "answer": "4",
+   "explanation": "표준형의 고정금리 지급 주기는 1년·6개월·3개월. 만기 일시지급은 무이표채 스왑(비표준형)."
+  },
+  {
+   "id": "d2-m1-q48",
+   "section": "5",
+   "concept": "변동금리 지표",
+   "type": "mc",
+   "difficulty": 2,
+   "trap": "matching",
+   "stem": "표준형 스왑의 변동금리와 그에 대응하는 비표준형의 연결이 옳은 것은?",
+   "choices": {
+    "1": "표준형: SOFR / 비표준형: OIS(overnight index swap)",
+    "2": "표준형: OIS / 비표준형: SOFR",
+    "3": "표준형: CD / 비표준형: basis swap",
+    "4": "표준형: 고정 / 비표준형: step-down swap"
+   },
+   "answer": "1",
+   "explanation": "교재 표의 변동금리 행: 표준형 SOFR, 비표준형 OIS."
+  },
+  {
+   "id": "d2-m1-q49",
+   "section": "6",
+   "concept": "통화스왑 유용성",
+   "type": "mc",
+   "difficulty": 2,
+   "trap": "negation",
+   "stem": "통화스왑의 유용성으로 옳지 않은 것은?",
+   "choices": {
+    "1": "비교우위에 의한 유리한 자금차입",
+    "2": "외화자산·외화부채의 환위험 헤지",
+    "3": "비교우위 모형에 의한 비용절감",
+    "4": "외환수급시기 불일치의 단기 해소"
+   },
+   "answer": "4",
+   "explanation": "④는 외환스왑의 용도."
+  },
+  {
+   "id": "d2-m1-q50",
+   "section": "6",
+   "concept": "통화스왑 고시 (고정)",
+   "type": "mc",
+   "difficulty": 3,
+   "trap": "matching",
+   "stem": "U$ SOFR(변동금리)와 원화 고정금리를 교환하는 통화스왑의 가격 고시 방법은?",
+   "choices": {
+    "1": "변동금리와 교환되는 고정금리의 절대수준을 직접 고시",
+    "2": "두 통화 변동금리의 베이시스 형식으로 고시",
+    "3": "현물환율과 선물환율의 차이로 고시",
+    "4": "국채수익률에 가산하는 스프레드로 고시"
+   },
+   "answer": "1",
+   "explanation": "고정금리 교환 시에는 그 고정금리의 절대수준을 직접 고시한다."
+  },
+  {
+   "id": "d2-m1-q51",
+   "section": "6",
+   "concept": "통화스왑 고시 (변동)",
+   "type": "mc",
+   "difficulty": 3,
+   "trap": "matching",
+   "stem": "U$ SOFR(변동금리)와 원화 변동금리(CD)를 교환하는 통화스왑의 가격 고시 방법은?",
+   "choices": {
+    "1": "변동금리와 교환되는 고정금리의 절대수준을 직접 고시",
+    "2": "수취 또는 지급하는 변동금리에 가감하는 스프레드를 고시(베이시스 형식)",
+    "3": "원금 교환비율을 고시",
+    "4": "스왑포인트로 고시"
+   },
+   "answer": "2",
+   "explanation": "변동 대 변동 교환은 베이시스 형식 — 변동금리에 가감하는 스프레드를 고시."
+  },
+  {
    "id": "d2-m1-f01",
    "section": "1",
    "concept": "스왑금리",
@@ -292,6 +887,46 @@
    "trap": "matching",
    "front": "달러 이자율스왑의 Offer rate와 Bid rate",
    "back": "Offer rate = 미국채 bid 수익률 + offer swap spread\nBid rate = 미국채 offer 수익률 + bid swap spread\n(국채 수익률만 엇갈린다)"
+  },
+  {
+   "id": "d2-m1-f03",
+   "section": "3",
+   "concept": "스왑 3종 비교",
+   "type": "flash",
+   "difficulty": 1,
+   "trap": "matching",
+   "front": "이자율스왑·통화스왑·외환스왑의 원금·이자·환율",
+   "back": "이자율스왑: 원금교환 X, 고정↔변동 이자, 금리위험 헤지\n통화스왑: 원금교환(초기·만기) + 이자교환(중간), 만기환율 = 초기환율, 환위험 + 금리위험\n외환스왑: 원금교환 O, 이자교환 X, 초기 현물환율·만기 선물환율, 외환수급 불일치 해소"
+  },
+  {
+   "id": "d2-m1-f04",
+   "section": "4.1",
+   "concept": "부채스왑·자산스왑",
+   "type": "flash",
+   "difficulty": 1,
+   "trap": "hedge-direction",
+   "front": "차입자·운용자별 위험과 필요한 스왑",
+   "back": "변동금리 차입자: 금리 상승 위험 → 고정금리 지불스왑\n고정금리 차입자: 금리 하락 위험 → 고정금리 수취스왑\n변동금리 운용자: 금리 하락 위험 → 고정금리 수취스왑\n고정금리 운용자: 금리 상승 위험 → 고정금리 지불스왑"
+  },
+  {
+   "id": "d2-m1-f05",
+   "section": "4.4",
+   "concept": "투기적 스왑",
+   "type": "flash",
+   "difficulty": 1,
+   "trap": "direction",
+   "front": "금리 전망별 스왑 포지션",
+   "back": "금리 상승 예상: Long Swap = 고정금리 지불스왑 ≈ FRA 매수\n금리 하락 예상: Short Swap = 고정금리 수취스왑 ≈ FRA 매도"
+  },
+  {
+   "id": "d2-m1-f06",
+   "section": "5",
+   "concept": "비표준형 스왑",
+   "type": "flash",
+   "difficulty": 1,
+   "trap": "matching",
+   "front": "비표준형 스왑의 종류",
+   "back": "basis: 변동↔변동\nstep-up/down: 고정금리가 변함\n무이표채 스왑: 만기 일시지급\naccreting 증가형 / amortizing 감소형 / rollercoaster 증감형\nforward start: 선도스왑\nOIS\nCallable: 고정금리 지급자 / Puttable: 고정금리 수취자\nSwaption: payer(cap), receiver(floor)"
   }
  ]
 }
