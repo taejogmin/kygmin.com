@@ -1,4 +1,297 @@
 {
  "module": "d2-m1",
- "questions": []
+ "questions": [
+  {
+   "id": "d2-m1-q01",
+   "section": "1",
+   "concept": "스왑금리 계산",
+   "type": "calc",
+   "difficulty": 1,
+   "trap": "units",
+   "stem": "3년 만기 국채수익률이 3.50%, 3년 스왑스프레드가 45bp일 때 3년 스왑금리는?",
+   "choices": {
+    "1": "3.05%",
+    "2": "3.545%",
+    "3": "3.95%",
+    "4": "8.00%"
+   },
+   "answer": "3",
+   "explanation": "3.50% + 0.45%p = 3.95%. 1bp = 0.01%p. ②는 45bp를 0.045%p로 본 값."
+  },
+  {
+   "id": "d2-m1-q02",
+   "section": "1",
+   "concept": "스왑스프레드 계산",
+   "type": "calc",
+   "difficulty": 1,
+   "trap": "formula",
+   "stem": "5년 스왑금리가 4.20%, 5년 국채수익률이 3.85%일 때 스왑스프레드는?",
+   "choices": {
+    "1": "3.5bp",
+    "2": "35bp",
+    "3": "350bp",
+    "4": "805bp"
+   },
+   "answer": "2",
+   "explanation": "4.20% − 3.85% = 0.35%p = 35bp."
+  },
+  {
+   "id": "d2-m1-q03",
+   "section": "1",
+   "concept": "국채수익률 역산",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "asked-quantity",
+   "stem": "스왑금리가 4.10%, 스왑스프레드가 28bp일 때 국채수익률은?",
+   "choices": {
+    "1": "3.82%",
+    "2": "4.07%",
+    "3": "4.38%",
+    "4": "4.128%"
+   },
+   "answer": "1",
+   "explanation": "국채수익률 = 스왑금리 − 스왑스프레드 = 4.10% − 0.28%p = 3.82%."
+  },
+  {
+   "id": "d2-m1-q04",
+   "section": "1",
+   "concept": "스프레드 변화",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "direction",
+   "stem": "국채수익률이 3.60%로 변하지 않은 채 스왑금리가 3.90%에서 4.00%로 올랐다. 스왑스프레드의 변화는?",
+   "choices": {
+    "1": "30bp → 40bp로 확대",
+    "2": "40bp → 30bp로 축소",
+    "3": "30bp로 변화 없음",
+    "4": "10bp → 40bp로 확대"
+   },
+   "answer": "1",
+   "explanation": "3.90 − 3.60 = 30bp, 4.00 − 3.60 = 40bp. 스프레드가 10bp 확대."
+  },
+  {
+   "id": "d2-m1-q05",
+   "section": "1",
+   "concept": "스왑금리 정의",
+   "type": "mc",
+   "difficulty": 1,
+   "trap": "formula",
+   "stem": "스왑금리를 구하는 식으로 옳은 것은?",
+   "choices": {
+    "1": "국채수익률 + 스왑스프레드",
+    "2": "국채수익률 − 스왑스프레드",
+    "3": "스왑스프레드 − 국채수익률",
+    "4": "국채수익률 × 스왑스프레드"
+   },
+   "answer": "1",
+   "explanation": "스왑금리 = 국채수익률 + 스왑스프레드."
+  },
+  {
+   "id": "d2-m1-q06",
+   "section": "1",
+   "concept": "스왑스프레드 정의",
+   "type": "mc",
+   "difficulty": 1,
+   "trap": "definition",
+   "stem": "스왑스프레드의 정의로 옳은 것은?",
+   "choices": {
+    "1": "스왑금리 − 국채수익률",
+    "2": "국채수익률 − 스왑금리",
+    "3": "스왑 offer rate − 스왑 bid rate",
+    "4": "변동금리 − 고정금리"
+   },
+   "answer": "1",
+   "explanation": "스왑스프레드 = 스왑금리 − 국채수익률. ③은 딜러의 bid-offer 스프레드."
+  },
+  {
+   "id": "d2-m1-q07",
+   "section": "2",
+   "concept": "Offer rate 계산",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "matching",
+   "stem": "미국채 수익률이 bid 4.02%, offer 4.00%이고 스왑스프레드가 bid 30bp, offer 34bp이다. 달러 이자율스왑의 offer rate는?",
+   "choices": {
+    "1": "4.30%",
+    "2": "4.32%",
+    "3": "4.34%",
+    "4": "4.36%"
+   },
+   "answer": "4",
+   "explanation": "Offer rate = 미국채 bid 수익률 + offer swap spread = 4.02% + 0.34%p = 4.36%. ③은 offer 수익률 + offer spread로 묶은 값."
+  },
+  {
+   "id": "d2-m1-q08",
+   "section": "2",
+   "concept": "Bid rate 계산",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "matching",
+   "stem": "미국채 수익률이 bid 4.02%, offer 4.00%이고 스왑스프레드가 bid 30bp, offer 34bp이다. 달러 이자율스왑의 bid rate는?",
+   "choices": {
+    "1": "4.30%",
+    "2": "4.32%",
+    "3": "4.34%",
+    "4": "4.36%"
+   },
+   "answer": "1",
+   "explanation": "Bid rate = 미국채 offer 수익률 + bid swap spread = 4.00% + 0.30%p = 4.30%. ②는 bid 수익률 + bid spread로 묶은 값."
+  },
+  {
+   "id": "d2-m1-q09",
+   "section": "2",
+   "concept": "Bid-offer 차이",
+   "type": "calc",
+   "difficulty": 3,
+   "trap": "asked-quantity",
+   "stem": "미국채 수익률이 bid 4.02%, offer 4.00%이고 스왑스프레드가 bid 30bp, offer 34bp이다. 스왑 offer rate와 bid rate의 차이는?",
+   "choices": {
+    "1": "2bp",
+    "2": "4bp",
+    "3": "6bp",
+    "4": "8bp"
+   },
+   "answer": "3",
+   "explanation": "Offer 4.36% − Bid 4.30% = 6bp (국채 수익률 차이 2bp + 스프레드 차이 4bp)."
+  },
+  {
+   "id": "d2-m1-q10",
+   "section": "2",
+   "concept": "Offer rate 계산",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "matching",
+   "stem": "미국채 5년물 수익률이 bid 3.76%, offer 3.74%이고 5년 스왑스프레드가 bid 40bp, offer 43bp이다. 스왑 offer rate와 bid rate는?",
+   "choices": {
+    "1": "offer 4.19%, bid 4.14%",
+    "2": "offer 4.17%, bid 4.16%",
+    "3": "offer 4.14%, bid 4.19%",
+    "4": "offer 4.19%, bid 4.16%"
+   },
+   "answer": "1",
+   "explanation": "Offer = 3.76 + 0.43 = 4.19%, Bid = 3.74 + 0.40 = 4.14%."
+  },
+  {
+   "id": "d2-m1-q11",
+   "section": "2",
+   "concept": "스프레드 역산",
+   "type": "calc",
+   "difficulty": 3,
+   "trap": "asked-quantity",
+   "stem": "달러 이자율스왑의 offer rate가 4.50%, 미국채 bid 수익률이 4.12%, offer 수익률이 4.10%이다. offer swap spread는?",
+   "choices": {
+    "1": "36bp",
+    "2": "38bp",
+    "3": "40bp",
+    "4": "42bp"
+   },
+   "answer": "2",
+   "explanation": "Offer rate = 미국채 bid 수익률 + offer swap spread → 4.50 − 4.12 = 38bp. ③은 offer 수익률을 뺀 값."
+  },
+  {
+   "id": "d2-m1-q12",
+   "section": "2",
+   "concept": "Offer rate 구성",
+   "type": "mc",
+   "difficulty": 2,
+   "trap": "matching",
+   "stem": "달러 이자율스왑의 offer rate를 구하는 식으로 옳은 것은?",
+   "choices": {
+    "1": "미국채 bid 수익률 + offer swap spread",
+    "2": "미국채 offer 수익률 + offer swap spread",
+    "3": "미국채 bid 수익률 + bid swap spread",
+    "4": "미국채 offer 수익률 + bid swap spread"
+   },
+   "answer": "1",
+   "explanation": "국채 수익률만 엇갈려 붙는다: offer rate ← bid 수익률 + offer spread."
+  },
+  {
+   "id": "d2-m1-q13",
+   "section": "2",
+   "concept": "Bid rate 구성",
+   "type": "mc",
+   "difficulty": 2,
+   "trap": "matching",
+   "stem": "달러 이자율스왑의 bid rate를 구하는 식으로 옳은 것은?",
+   "choices": {
+    "1": "미국채 bid 수익률 + offer swap spread",
+    "2": "미국채 offer 수익률 + offer swap spread",
+    "3": "미국채 bid 수익률 + bid swap spread",
+    "4": "미국채 offer 수익률 + bid swap spread"
+   },
+   "answer": "4",
+   "explanation": "Bid rate = 미국채 offer 수익률 + bid swap spread."
+  },
+  {
+   "id": "d2-m1-q14",
+   "section": "2",
+   "concept": "국채 bid·offer 수익률",
+   "type": "mc",
+   "difficulty": 3,
+   "trap": "direction",
+   "stem": "국채의 bid 수익률과 offer 수익률의 관계로 옳은 것은?",
+   "choices": {
+    "1": "bid 수익률이 offer 수익률보다 높다",
+    "2": "bid 수익률이 offer 수익률보다 낮다",
+    "3": "항상 같다",
+    "4": "만기에 따라 다르다"
+   },
+   "answer": "1",
+   "explanation": "bid 가격이 offer 가격보다 낮고, 가격과 수익률은 반대로 움직이므로 bid 수익률이 더 높다."
+  },
+  {
+   "id": "d2-m1-q15",
+   "section": "2",
+   "concept": "딜러 입장",
+   "type": "mc",
+   "difficulty": 3,
+   "trap": "direction",
+   "stem": "스왑딜러가 고시하는 offer rate의 의미는?",
+   "choices": {
+    "1": "딜러가 고정금리를 수취하고 변동금리를 지급하려는 금리",
+    "2": "딜러가 고정금리를 지급하고 변동금리를 수취하려는 금리",
+    "3": "딜러가 변동금리끼리 교환하려는 금리",
+    "4": "국채수익률과 같은 금리"
+   },
+   "answer": "1",
+   "explanation": "딜러는 높은 금리(offer)로 고정금리를 받고, 낮은 금리(bid)로 고정금리를 준다."
+  },
+  {
+   "id": "d2-m1-q16",
+   "section": "2",
+   "concept": "Offer와 Bid의 대소",
+   "type": "mc",
+   "difficulty": 1,
+   "trap": "direction",
+   "stem": "스왑 offer rate와 bid rate의 관계로 옳은 것은?",
+   "choices": {
+    "1": "offer rate > bid rate",
+    "2": "offer rate < bid rate",
+    "3": "offer rate = bid rate",
+    "4": "스왑스프레드가 음수일 때만 offer rate가 높다"
+   },
+   "answer": "1",
+   "explanation": "Offer rate가 항상 높다. 그 차이가 딜러의 수익."
+  },
+  {
+   "id": "d2-m1-f01",
+   "section": "1",
+   "concept": "스왑금리",
+   "type": "flash",
+   "difficulty": 1,
+   "trap": "formula",
+   "front": "스왑금리와 스왑스프레드의 관계",
+   "back": "스왑금리 = 국채수익률 + 스왑스프레드\n스왑스프레드 = 스왑금리 − 국채수익률"
+  },
+  {
+   "id": "d2-m1-f02",
+   "section": "2",
+   "concept": "달러 스왑금리 결정",
+   "type": "flash",
+   "difficulty": 1,
+   "trap": "matching",
+   "front": "달러 이자율스왑의 Offer rate와 Bid rate",
+   "back": "Offer rate = 미국채 bid 수익률 + offer swap spread\nBid rate = 미국채 offer 수익률 + bid swap spread\n(국채 수익률만 엇갈린다)"
+  }
+ ]
 }

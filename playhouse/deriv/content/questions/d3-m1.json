@@ -1,4 +1,1166 @@
 {
  "module": "d3-m1",
- "questions": []
+ "questions": [
+  {
+   "id": "d3-m1-q01",
+   "section": "1",
+   "concept": "단순이동평균 분산",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "formula",
+   "stem": "최근 4일의 일간 수익률이 +1%, −2%, +2%, −1%였다. 단순이동평균법(m = 4)으로 추정한 일간 변동성(σ)에 가장 가까운 것은?",
+   "choices": {
+    "1": "0%",
+    "2": "1.50%",
+    "3": "1.58%",
+    "4": "2.50%"
+   },
+   "answer": "3",
+   "explanation": "σ² = (1 + 4 + 4 + 1) ÷ 4 = 2.5(%²) → σ = √2.5 = 1.58%. ④는 제곱근을 씌우지 않은 분산, ②는 절대값의 평균."
+  },
+  {
+   "id": "d3-m1-q02",
+   "section": "1",
+   "concept": "단순이동평균 분산",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "asked-quantity",
+   "stem": "최근 5일의 일간 수익률이 +2%, −2%, +2%, −2%, +2%였다. 단순이동평균법(m = 5)으로 추정한 일간 분산(σ²)은?",
+   "choices": {
+    "1": "0.4(%²)",
+    "2": "2(%²)",
+    "3": "4(%²)",
+    "4": "20(%²)"
+   },
+   "answer": "3",
+   "explanation": "(4 + 4 + 4 + 4 + 4) ÷ 5 = 4(%²). 변동성은 √4 = 2%. 묻는 것이 분산인지 변동성인지 확인."
+  },
+  {
+   "id": "d3-m1-q03",
+   "section": "1",
+   "concept": "가중치",
+   "type": "mc",
+   "difficulty": 2,
+   "trap": "definition",
+   "stem": "단순이동평균법으로 변동성을 추정할 때 과거 수익률에 부여하는 가중치는?",
+   "choices": {
+    "1": "최근 수익률일수록 큰 가중치",
+    "2": "모든 수익률에 동일한 가중치",
+    "3": "오래된 수익률일수록 큰 가중치",
+    "4": "수익률의 크기에 비례하는 가중치"
+   },
+   "answer": "2",
+   "explanation": "σ² = (1/m)Σr². m개 수익률 제곱에 똑같이 1/m을 곱한다."
+  },
+  {
+   "id": "d3-m1-q04",
+   "section": "1",
+   "concept": "단순이동평균 식",
+   "type": "mc",
+   "difficulty": 1,
+   "trap": "formula",
+   "stem": "단순이동평균법의 분산 추정식으로 옳은 것은?",
+   "choices": {
+    "1": "최근 m개 수익률 제곱의 평균",
+    "2": "최근 m개 수익률의 평균",
+    "3": "최근 m개 수익률 제곱의 합",
+    "4": "최근 m개 수익률 절대값의 평균"
+   },
+   "answer": "1",
+   "explanation": "σ² = (1/m) × Σ r². 제곱해서 평균을 낸다."
+  },
+  {
+   "id": "d3-m1-q05",
+   "section": "2",
+   "concept": "기간 전환",
+   "type": "calc",
+   "difficulty": 1,
+   "trap": "units",
+   "stem": "1일 VaR가 10억원일 때 10일 VaR에 가장 가까운 것은? (√10 = 3.16)",
+   "choices": {
+    "1": "31.6억원",
+    "2": "100억원",
+    "3": "10억원",
+    "4": "3.16억원"
+   },
+   "answer": "1",
+   "explanation": "10억 × √10 = 31.6억원. ②는 N을 그대로 곱한 값."
+  },
+  {
+   "id": "d3-m1-q06",
+   "section": "2",
+   "concept": "기간 전환",
+   "type": "calc",
+   "difficulty": 1,
+   "trap": "units",
+   "stem": "1일 VaR가 5억원일 때 4일 VaR는?",
+   "choices": {
+    "1": "10억원",
+    "2": "20억원",
+    "3": "2.5억원",
+    "4": "5억원"
+   },
+   "answer": "1",
+   "explanation": "5억 × √4 = 10억원."
+  },
+  {
+   "id": "d3-m1-q07",
+   "section": "2",
+   "concept": "기간 역전환",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "asked-quantity",
+   "stem": "25일 VaR가 50억원일 때 1일 VaR는?",
+   "choices": {
+    "1": "2억원",
+    "2": "10억원",
+    "3": "250억원",
+    "4": "1,250억원"
+   },
+   "answer": "2",
+   "explanation": "50억 ÷ √25 = 10억원. ①은 25로 나눈 값."
+  },
+  {
+   "id": "d3-m1-q08",
+   "section": "2",
+   "concept": "기간 전환",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "units",
+   "stem": "1일 VaR가 8억원일 때 9일 VaR는?",
+   "choices": {
+    "1": "24억원",
+    "2": "72억원",
+    "3": "2.67억원",
+    "4": "16억원"
+   },
+   "answer": "1",
+   "explanation": "8억 × √9 = 24억원."
+  },
+  {
+   "id": "d3-m1-q09",
+   "section": "2",
+   "concept": "신뢰수준 전환",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "formula",
+   "stem": "95% 신뢰수준(α = 1.65)의 VaR가 10억원이다. 99% 신뢰수준(α = 2.33)의 VaR에 가장 가까운 것은?",
+   "choices": {
+    "1": "7.08억원",
+    "2": "10.42억원",
+    "3": "14.12억원",
+    "4": "23.30억원"
+   },
+   "answer": "3",
+   "explanation": "10억 × 2.33 ÷ 1.65 = 14.12억원. ②는 99 ÷ 95를 곱한 값, ①은 비율을 뒤집은 값."
+  },
+  {
+   "id": "d3-m1-q10",
+   "section": "2",
+   "concept": "신뢰수준 전환",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "reciprocal",
+   "stem": "99% 신뢰수준(α = 2.33)의 VaR가 23.3억원이다. 95% 신뢰수준(α = 1.65)의 VaR는?",
+   "choices": {
+    "1": "14.1억원",
+    "2": "16.5억원",
+    "3": "22.4억원",
+    "4": "32.9억원"
+   },
+   "answer": "2",
+   "explanation": "23.3억 × 1.65 ÷ 2.33 = 16.5억원. ④는 비율을 뒤집은 값."
+  },
+  {
+   "id": "d3-m1-q11",
+   "section": "2",
+   "concept": "기간·신뢰수준 동시 전환",
+   "type": "calc",
+   "difficulty": 3,
+   "trap": "formula-assembly",
+   "stem": "95% 신뢰수준(α = 1.65) 1일 VaR가 10억원이다. 99% 신뢰수준(α = 2.33) 10일 VaR에 가장 가까운 것은? (√10 = 3.16)",
+   "choices": {
+    "1": "14.1억원",
+    "2": "31.6억원",
+    "3": "44.7억원",
+    "4": "141.2억원"
+   },
+   "answer": "3",
+   "explanation": "10억 × √10 × (2.33 ÷ 1.65) = 10 × 3.16 × 1.412 = 44.7억원. ①은 신뢰수준만, ②는 기간만 바꾼 값."
+  },
+  {
+   "id": "d3-m1-q12",
+   "section": "2",
+   "concept": "기간·신뢰수준 동시 전환",
+   "type": "calc",
+   "difficulty": 3,
+   "trap": "formula-assembly",
+   "stem": "99% 신뢰수준(α = 2.33) 1일 VaR가 23.3억원이다. 95% 신뢰수준(α = 1.65) 4일 VaR는?",
+   "choices": {
+    "1": "16.5억원",
+    "2": "33.0억원",
+    "3": "46.6억원",
+    "4": "66.0억원"
+   },
+   "answer": "2",
+   "explanation": "23.3억 × √4 × (1.65 ÷ 2.33) = 23.3 × 2 × 0.708 = 33.0억원."
+  },
+  {
+   "id": "d3-m1-q13",
+   "section": "2",
+   "concept": "√N 규칙의 가정",
+   "type": "mc",
+   "difficulty": 2,
+   "trap": "definition",
+   "stem": "N일 VaR = 1일 VaR × √N 이 성립하기 위한 가정은?",
+   "choices": {
+    "1": "수익률이 시계열적으로 독립적이고 동일한 분포를 따른다",
+    "2": "수익률이 매일 같은 방향으로 움직인다",
+    "3": "포트폴리오가 옵션으로만 구성된다",
+    "4": "신뢰수준이 99%이다"
+   },
+   "answer": "1",
+   "explanation": "iid(independent and identically distributed) 가정."
+  },
+  {
+   "id": "d3-m1-q14",
+   "section": "2",
+   "concept": "VaR의 방향",
+   "type": "mc",
+   "difficulty": 1,
+   "trap": "direction",
+   "stem": "다른 조건이 같을 때 VaR가 커지는 경우는?",
+   "choices": {
+    "1": "보유기간을 줄이고 신뢰수준을 낮춘다",
+    "2": "보유기간을 늘리고 신뢰수준을 높인다",
+    "3": "보유기간과 신뢰수준은 VaR에 영향을 주지 않는다",
+    "4": "변동성이 감소한다"
+   },
+   "answer": "2",
+   "explanation": "기간이 길수록(√N), 신뢰수준이 높을수록(α) VaR는 커진다."
+  },
+  {
+   "id": "d3-m1-q15",
+   "section": "2",
+   "concept": "신뢰수준 전환식",
+   "type": "mc",
+   "difficulty": 2,
+   "trap": "formula",
+   "stem": "신뢰수준 변경 시 VaR 전환식으로 옳은 것은?",
+   "choices": {
+    "1": "old VaR × (new 신뢰수준 계수 / old 신뢰수준 계수)",
+    "2": "old VaR × (old 신뢰수준 계수 / new 신뢰수준 계수)",
+    "3": "old VaR × √(new 신뢰수준 계수 / old 신뢰수준 계수)",
+    "4": "old VaR + (new 신뢰수준 계수 − old 신뢰수준 계수)"
+   },
+   "answer": "1",
+   "explanation": "신뢰수준은 α의 비율을 그대로 곱한다(제곱근은 기간에만)."
+  },
+  {
+   "id": "d3-m1-q16",
+   "section": "3.1",
+   "concept": "개별 VaR",
+   "type": "calc",
+   "difficulty": 1,
+   "trap": "formula",
+   "stem": "주식 포지션 100억원, 일간 변동성 2%일 때 95% 신뢰수준(α = 1.65)의 1일 VaR는?",
+   "choices": {
+    "1": "2.0억원",
+    "2": "3.3억원",
+    "3": "4.66억원",
+    "4": "33억원"
+   },
+   "answer": "2",
+   "explanation": "1.65 × 100억 × 0.02 = 3.3억원. ①은 α 누락, ③은 99%의 α를 쓴 값."
+  },
+  {
+   "id": "d3-m1-q17",
+   "section": "3.1",
+   "concept": "개별 VaR",
+   "type": "calc",
+   "difficulty": 1,
+   "trap": "formula",
+   "stem": "주식 포지션 100억원, 일간 변동성 2%일 때 99% 신뢰수준(α = 2.33)의 1일 VaR는?",
+   "choices": {
+    "1": "2.0억원",
+    "2": "3.3억원",
+    "3": "4.66억원",
+    "4": "46.6억원"
+   },
+   "answer": "3",
+   "explanation": "2.33 × 100억 × 0.02 = 4.66억원."
+  },
+  {
+   "id": "d3-m1-q18",
+   "section": "3.1",
+   "concept": "개별 VaR",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "formula",
+   "stem": "주식 포지션 50억원, 일간 변동성 3%일 때 95% 신뢰수준(α = 1.65)의 1일 VaR에 가장 가까운 것은?",
+   "choices": {
+    "1": "1.5억원",
+    "2": "2.48억원",
+    "3": "3.50억원",
+    "4": "4.95억원"
+   },
+   "answer": "2",
+   "explanation": "1.65 × 50억 × 0.03 = 2.475억원."
+  },
+  {
+   "id": "d3-m1-q19",
+   "section": "3.1",
+   "concept": "개별 VaR + 기간",
+   "type": "calc",
+   "difficulty": 3,
+   "trap": "formula-assembly",
+   "stem": "주식 포지션 100억원, 일간 변동성 2%이다. 95% 신뢰수준(α = 1.65)의 10일 VaR에 가장 가까운 것은? (√10 = 3.16)",
+   "choices": {
+    "1": "3.3억원",
+    "2": "10.4억원",
+    "3": "20.0억원",
+    "4": "33.0억원"
+   },
+   "answer": "2",
+   "explanation": "1일 VaR 3.3억 × √10 = 10.4억원. ④는 10을 그대로 곱한 값."
+  },
+  {
+   "id": "d3-m1-q20",
+   "section": "3.1",
+   "concept": "변동성 역산",
+   "type": "calc",
+   "difficulty": 3,
+   "trap": "asked-quantity",
+   "stem": "포지션 200억원의 95% 신뢰수준(α = 1.65) 1일 VaR가 6.6억원이다. 일간 변동성은?",
+   "choices": {
+    "1": "1.0%",
+    "2": "2.0%",
+    "3": "3.3%",
+    "4": "5.4%"
+   },
+   "answer": "2",
+   "explanation": "σ = 6.6억 ÷ (1.65 × 200억) = 0.02 = 2.0%. ③은 α로 나누지 않은 값."
+  },
+  {
+   "id": "d3-m1-q21",
+   "section": "3.1",
+   "concept": "VaR 구성요소",
+   "type": "mc",
+   "difficulty": 1,
+   "trap": "formula",
+   "stem": "개별 주식의 VaR 식으로 옳은 것은?",
+   "choices": {
+    "1": "α × V × σ",
+    "2": "α × V ÷ σ",
+    "3": "V × σ ÷ α",
+    "4": "α + V + σ"
+   },
+   "answer": "1",
+   "explanation": "신뢰수준 계수 × 포지션 금액 × 변동성."
+  },
+  {
+   "id": "d3-m1-q22",
+   "section": "3.2",
+   "concept": "옵션 VaR",
+   "type": "calc",
+   "difficulty": 1,
+   "trap": "formula",
+   "stem": "기초자산의 VaR가 5억원이고 콜옵션의 델타가 0.6일 때 옵션의 VaR는?",
+   "choices": {
+    "1": "2억원",
+    "2": "3억원",
+    "3": "5억원",
+    "4": "8.3억원"
+   },
+   "answer": "2",
+   "explanation": "옵션의 VaR = 기초자산 VaR × 옵션델타 = 5억 × 0.6 = 3억원. ④는 델타로 나눈 값."
+  },
+  {
+   "id": "d3-m1-q23",
+   "section": "3.2",
+   "concept": "옵션 VaR",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "sign",
+   "stem": "기초자산의 VaR가 5억원이고 풋옵션의 델타가 −0.4일 때 옵션의 VaR(크기)는?",
+   "choices": {
+    "1": "−2억원",
+    "2": "2억원",
+    "3": "3억원",
+    "4": "7억원"
+   },
+   "answer": "2",
+   "explanation": "5억 × |−0.4| = 2억원. VaR는 손실의 크기이므로 양수로 표시한다."
+  },
+  {
+   "id": "d3-m1-q24",
+   "section": "3.2",
+   "concept": "옵션 VaR 조립",
+   "type": "calc",
+   "difficulty": 3,
+   "trap": "formula-assembly",
+   "stem": "기초자산 포지션 100억원, 일간 변동성 2%, 옵션 델타 0.5이다. 95% 신뢰수준(α = 1.65)에서 옵션의 1일 VaR는?",
+   "choices": {
+    "1": "1.0억원",
+    "2": "1.65억원",
+    "3": "3.3억원",
+    "4": "6.6억원"
+   },
+   "answer": "2",
+   "explanation": "기초자산 VaR = 1.65 × 100억 × 0.02 = 3.3억. 옵션 VaR = 3.3억 × 0.5 = 1.65억원."
+  },
+  {
+   "id": "d3-m1-q25",
+   "section": "3.2",
+   "concept": "델타와 옵션 VaR",
+   "type": "mc",
+   "difficulty": 2,
+   "trap": "direction",
+   "stem": "다른 조건이 같을 때 옵션 델타의 절대값이 커지면 옵션의 VaR는?",
+   "choices": {
+    "1": "커진다",
+    "2": "작아진다",
+    "3": "변하지 않는다",
+    "4": "0이 된다"
+   },
+   "answer": "1",
+   "explanation": "옵션의 VaR = 기초자산 VaR × 옵션델타."
+  },
+  {
+   "id": "d3-m1-q26",
+   "section": "4.2",
+   "concept": "포트폴리오 VaR (ρ = 0)",
+   "type": "calc",
+   "difficulty": 1,
+   "trap": "formula",
+   "stem": "자산 A의 VaR가 3억원, B의 VaR가 4억원이고 둘 다 매수포지션이다. 상관계수가 0일 때 포트폴리오 VaR는?",
+   "choices": {
+    "1": "1억원",
+    "2": "5억원",
+    "3": "7억원",
+    "4": "25억원"
+   },
+   "answer": "2",
+   "explanation": "√(3² + 4² + 0) = √25 = 5억원. ④는 제곱근을 빼먹은 값."
+  },
+  {
+   "id": "d3-m1-q27",
+   "section": "4.2",
+   "concept": "포트폴리오 VaR (ρ = +1)",
+   "type": "calc",
+   "difficulty": 1,
+   "trap": "formula",
+   "stem": "자산 A의 VaR가 3억원, B의 VaR가 4억원이고 둘 다 매수포지션이다. 상관계수가 +1일 때 포트폴리오 VaR는?",
+   "choices": {
+    "1": "1억원",
+    "2": "5억원",
+    "3": "7억원",
+    "4": "12억원"
+   },
+   "answer": "3",
+   "explanation": "√(9 + 16 + 2 × 3 × 4 × 1) = √49 = 7억원 = VaR_A + VaR_B. 분산효과 없음."
+  },
+  {
+   "id": "d3-m1-q28",
+   "section": "4.2",
+   "concept": "포트폴리오 VaR (ρ = −1)",
+   "type": "calc",
+   "difficulty": 1,
+   "trap": "formula",
+   "stem": "자산 A의 VaR가 3억원, B의 VaR가 4억원이고 둘 다 매수포지션이다. 상관계수가 −1일 때 포트폴리오 VaR는?",
+   "choices": {
+    "1": "0원",
+    "2": "1억원",
+    "3": "5억원",
+    "4": "7억원"
+   },
+   "answer": "2",
+   "explanation": "√(9 + 16 − 24) = √1 = 1억원 = |VaR_A − VaR_B|. 분산효과 최대."
+  },
+  {
+   "id": "d3-m1-q29",
+   "section": "4.2",
+   "concept": "포트폴리오 VaR (ρ = 0.5)",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "formula",
+   "stem": "자산 A의 VaR가 3억원, B의 VaR가 4억원이고 둘 다 매수포지션이다. 상관계수가 0.5일 때 포트폴리오 VaR에 가장 가까운 것은?",
+   "choices": {
+    "1": "3.61억원",
+    "2": "5.00억원",
+    "3": "6.08억원",
+    "4": "7.00억원"
+   },
+   "answer": "3",
+   "explanation": "√(9 + 16 + 2 × 3 × 4 × 0.5) = √37 = 6.08억원. ①은 교차항을 뺀 값(√13)."
+  },
+  {
+   "id": "d3-m1-q30",
+   "section": "4.2",
+   "concept": "포트폴리오 VaR (ρ = 0)",
+   "type": "calc",
+   "difficulty": 1,
+   "trap": "formula",
+   "stem": "자산 A의 VaR가 6억원, B의 VaR가 8억원이고 둘 다 매수포지션이다. 상관계수가 0일 때 포트폴리오 VaR는?",
+   "choices": {
+    "1": "2억원",
+    "2": "10억원",
+    "3": "14억원",
+    "4": "100억원"
+   },
+   "answer": "2",
+   "explanation": "√(36 + 64) = 10억원."
+  },
+  {
+   "id": "d3-m1-q31",
+   "section": "4.2",
+   "concept": "포트폴리오 VaR (ρ = 0.25)",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "formula",
+   "stem": "자산 A의 VaR가 5억원, B의 VaR가 12억원이고 둘 다 매수포지션이다. 상관계수가 0.25일 때 포트폴리오 VaR에 가장 가까운 것은?",
+   "choices": {
+    "1": "7.0억원",
+    "2": "13.0억원",
+    "3": "14.1억원",
+    "4": "17.0억원"
+   },
+   "answer": "3",
+   "explanation": "√(25 + 144 + 2 × 5 × 12 × 0.25) = √199 = 14.1억원. ②는 ρ = 0일 때의 값."
+  },
+  {
+   "id": "d3-m1-q32",
+   "section": "4.3",
+   "concept": "VaR 범위",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "formula",
+   "stem": "자산 A의 VaR가 3억원, B의 VaR가 4억원일 때 포트폴리오 VaR가 가질 수 있는 범위는?",
+   "choices": {
+    "1": "1억원 이상 7억원 이하",
+    "2": "0원 이상 7억원 이하",
+    "3": "3억원 이상 4억원 이하",
+    "4": "5억원 이상 7억원 이하"
+   },
+   "answer": "1",
+   "explanation": "|VaR_A − VaR_B| ≤ VaR_P ≤ VaR_A + VaR_B → 1억 ≤ VaR_P ≤ 7억."
+  },
+  {
+   "id": "d3-m1-q33",
+   "section": "4.3",
+   "concept": "VaR 범위 식",
+   "type": "mc",
+   "difficulty": 2,
+   "trap": "formula",
+   "stem": "포트폴리오 VaR의 크기에 대한 부등식으로 옳은 것은?",
+   "choices": {
+    "1": "|VaR_A − VaR_B| ≤ VaR_P ≤ VaR_A + VaR_B",
+    "2": "0 ≤ VaR_P ≤ |VaR_A − VaR_B|",
+    "3": "VaR_A + VaR_B ≤ VaR_P",
+    "4": "VaR_P ≤ |VaR_A − VaR_B|"
+   },
+   "answer": "1",
+   "explanation": "포트폴리오 VaR는 개별 VaR의 차이보다 작을 수 없고 합보다 클 수 없다."
+  },
+  {
+   "id": "d3-m1-q34",
+   "section": "4.2",
+   "concept": "분산효과 (long-long)",
+   "type": "mc",
+   "difficulty": 1,
+   "trap": "direction",
+   "stem": "자산 A, B 모두 매수(long) 포지션일 때 분산효과가 최대가 되는 상관계수는?",
+   "choices": {
+    "1": "+1",
+    "2": "0",
+    "3": "−1",
+    "4": "+0.5"
+   },
+   "answer": "3",
+   "explanation": "둘 다 매수면 반대로 움직일 때(ρ = −1) 손실이 가장 많이 상쇄된다."
+  },
+  {
+   "id": "d3-m1-q35",
+   "section": "4.2",
+   "concept": "분산효과 (long-long)",
+   "type": "mc",
+   "difficulty": 1,
+   "trap": "direction",
+   "stem": "자산 A, B 모두 매수(long) 포지션일 때 분산효과가 없는 상관계수는?",
+   "choices": {
+    "1": "+1",
+    "2": "0",
+    "3": "−1",
+    "4": "−0.5"
+   },
+   "answer": "1",
+   "explanation": "ρ = +1이면 VaR_P = VaR_A + VaR_B. 분산효과 없음."
+  },
+  {
+   "id": "d3-m1-q36",
+   "section": "4.4",
+   "concept": "long-short VaR (ρ = +1)",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "sign",
+   "stem": "자산 A는 매수(VaR 3억원), B는 매도(VaR 4억원) 포지션이다. 상관계수가 +1일 때 포트폴리오 VaR는?",
+   "choices": {
+    "1": "1억원",
+    "2": "5억원",
+    "3": "7억원",
+    "4": "0원"
+   },
+   "answer": "1",
+   "explanation": "√(3² + (−4)² + 2 × 3 × (−4) × 1) = √(25 − 24) = 1억원. 매도 포지션은 −VaR_B로 넣는다."
+  },
+  {
+   "id": "d3-m1-q37",
+   "section": "4.4",
+   "concept": "long-short VaR (ρ = −1)",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "sign",
+   "stem": "자산 A는 매수(VaR 3억원), B는 매도(VaR 4억원) 포지션이다. 상관계수가 −1일 때 포트폴리오 VaR는?",
+   "choices": {
+    "1": "1억원",
+    "2": "5억원",
+    "3": "7억원",
+    "4": "0원"
+   },
+   "answer": "3",
+   "explanation": "√(9 + 16 + 2 × 3 × (−4) × (−1)) = √49 = 7억원. 분산효과 없음."
+  },
+  {
+   "id": "d3-m1-q38",
+   "section": "4.4",
+   "concept": "long-short VaR (ρ = 0.5)",
+   "type": "calc",
+   "difficulty": 3,
+   "trap": "sign",
+   "stem": "자산 A는 매수(VaR 3억원), B는 매도(VaR 4억원) 포지션이다. 상관계수가 0.5일 때 포트폴리오 VaR에 가장 가까운 것은?",
+   "choices": {
+    "1": "3.61억원",
+    "2": "5.00억원",
+    "3": "6.08억원",
+    "4": "7.00억원"
+   },
+   "answer": "1",
+   "explanation": "√(9 + 16 + 2 × 3 × (−4) × 0.5) = √13 = 3.61억원. ③은 둘 다 매수로 계산한 값(√37)."
+  },
+  {
+   "id": "d3-m1-q39",
+   "section": "4.4",
+   "concept": "long-short VaR (ρ = 0)",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "formula",
+   "stem": "자산 A는 매수(VaR 6억원), B는 매도(VaR 8억원) 포지션이다. 상관계수가 0일 때 포트폴리오 VaR는?",
+   "choices": {
+    "1": "2억원",
+    "2": "10억원",
+    "3": "14억원",
+    "4": "−2억원"
+   },
+   "answer": "2",
+   "explanation": "교차항이 0이므로 √(36 + 64) = 10억원. ρ = 0이면 매수·매도 여부와 무관하다."
+  },
+  {
+   "id": "d3-m1-q40",
+   "section": "4.4",
+   "concept": "분산효과 (long-short)",
+   "type": "mc",
+   "difficulty": 2,
+   "trap": "direction",
+   "stem": "자산 A는 매수(long), B는 매도(short) 포지션일 때 분산효과가 최대가 되는 상관계수는?",
+   "choices": {
+    "1": "+1",
+    "2": "0",
+    "3": "−1",
+    "4": "−0.5"
+   },
+   "answer": "1",
+   "explanation": "같이 움직이는 두 자산을 하나는 사고 하나는 팔았으므로 ρ = +1에서 손익이 가장 많이 상쇄된다."
+  },
+  {
+   "id": "d3-m1-q41",
+   "section": "4.4",
+   "concept": "분산효과 (long-short)",
+   "type": "mc",
+   "difficulty": 2,
+   "trap": "direction",
+   "stem": "자산 A는 매수(long), B는 매도(short) 포지션일 때 분산효과가 없는 상관계수는?",
+   "choices": {
+    "1": "+1",
+    "2": "0",
+    "3": "−1",
+    "4": "+0.5"
+   },
+   "answer": "3",
+   "explanation": "ρ = −1이면 A 매수와 B 매도가 같은 방향으로 손익이 나므로 VaR_P = VaR_A + VaR_B."
+  },
+  {
+   "id": "d3-m1-q42",
+   "section": "4.4",
+   "concept": "분산효과 비교",
+   "type": "mc",
+   "difficulty": 3,
+   "trap": "confusion",
+   "stem": "분산효과에 대한 설명으로 옳지 않은 것은?",
+   "choices": {
+    "1": "둘 다 매수포지션이면 ρ = −1일 때 분산효과가 최대다",
+    "2": "둘 다 매수포지션이면 ρ = +1일 때 분산효과가 없다",
+    "3": "매수·매도 조합이면 ρ = +1일 때 분산효과가 최대다",
+    "4": "매수·매도 조합이면 ρ = +1일 때 분산효과가 없다"
+   },
+   "answer": "4",
+   "explanation": "매수·매도 조합에서는 ρ = −1일 때 분산효과가 없다."
+  },
+  {
+   "id": "d3-m1-q43",
+   "section": "4.4",
+   "concept": "long-short 식",
+   "type": "mc",
+   "difficulty": 2,
+   "trap": "sign",
+   "stem": "A는 매수, B는 매도 포지션일 때 포트폴리오 VaR 식으로 옳은 것은?",
+   "choices": {
+    "1": "√(VaR_A² + (−VaR_B)² + 2·VaR_A·(−VaR_B)·ρ)",
+    "2": "√(VaR_A² − VaR_B² + 2·VaR_A·VaR_B·ρ)",
+    "3": "√(VaR_A² + VaR_B² + 2·VaR_A·VaR_B·ρ)",
+    "4": "VaR_A − VaR_B"
+   },
+   "answer": "1",
+   "explanation": "매도 포지션의 VaR에 음의 부호를 붙인다. 제곱항은 그대로 양수, 교차항의 부호만 바뀐다."
+  },
+  {
+   "id": "d3-m1-q44",
+   "section": "4.1",
+   "concept": "포트폴리오 변동성",
+   "type": "calc",
+   "difficulty": 3,
+   "trap": "formula",
+   "stem": "자산 A(비중 50%, 변동성 20%)와 자산 B(비중 50%, 변동성 10%)의 상관계수가 0일 때 포트폴리오 변동성에 가장 가까운 것은?",
+   "choices": {
+    "1": "11.18%",
+    "2": "15.00%",
+    "3": "22.36%",
+    "4": "125.00%"
+   },
+   "answer": "1",
+   "explanation": "σ_P = √(0.5² × 20² + 0.5² × 10²) = √(100 + 25) = √125 = 11.18%. ②는 가중평균(ρ = +1일 때의 값)."
+  },
+  {
+   "id": "d3-m1-q45",
+   "section": "4.1",
+   "concept": "포트폴리오 변동성 (ρ = +1)",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "formula",
+   "stem": "자산 A(비중 50%, 변동성 20%)와 자산 B(비중 50%, 변동성 10%)의 상관계수가 +1일 때 포트폴리오 변동성은?",
+   "choices": {
+    "1": "5.00%",
+    "2": "11.18%",
+    "3": "15.00%",
+    "4": "30.00%"
+   },
+   "answer": "3",
+   "explanation": "ρ = +1이면 σ_P = 0.5 × 20 + 0.5 × 10 = 15%. 개별 변동성의 가중평균과 같다."
+  },
+  {
+   "id": "d3-m1-q46",
+   "section": "4.1",
+   "concept": "σ_P로 VaR",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "formula",
+   "stem": "포트폴리오 금액 200억원, 포트폴리오 일간 변동성 1.5%일 때 99% 신뢰수준(α = 2.33)의 1일 VaR는?",
+   "choices": {
+    "1": "3.00억원",
+    "2": "4.95억원",
+    "3": "6.99억원",
+    "4": "69.9억원"
+   },
+   "answer": "3",
+   "explanation": "2.33 × 200억 × 0.015 = 6.99억원."
+  },
+  {
+   "id": "d3-m1-q47",
+   "section": "5",
+   "concept": "VaR 감소액",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "asked-quantity",
+   "stem": "자산 A의 VaR 3억원, B의 VaR 4억원(둘 다 매수), 상관계수 0이다. 분산효과로 인한 VaR 감소액은?",
+   "choices": {
+    "1": "1억원",
+    "2": "2억원",
+    "3": "5억원",
+    "4": "7억원"
+   },
+   "answer": "2",
+   "explanation": "VaR_P = 5억. 감소액 = (3 + 4) − 5 = 2억원. ③은 포트폴리오 VaR 자체."
+  },
+  {
+   "id": "d3-m1-q48",
+   "section": "5",
+   "concept": "VaR 감소액",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "asked-quantity",
+   "stem": "자산 A의 VaR 3억원, B의 VaR 4억원(둘 다 매수), 상관계수 +1이다. 분산효과로 인한 VaR 감소액은?",
+   "choices": {
+    "1": "0원",
+    "2": "1억원",
+    "3": "2억원",
+    "4": "7억원"
+   },
+   "answer": "1",
+   "explanation": "VaR_P = 7억. 감소액 = 7 − 7 = 0. ρ = +1이면 분산효과가 없다."
+  },
+  {
+   "id": "d3-m1-q49",
+   "section": "5",
+   "concept": "VaR 감소액",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "asked-quantity",
+   "stem": "자산 A의 VaR 3억원, B의 VaR 4억원(둘 다 매수), 상관계수 −1이다. 분산효과로 인한 VaR 감소액은?",
+   "choices": {
+    "1": "1억원",
+    "2": "2억원",
+    "3": "6억원",
+    "4": "7억원"
+   },
+   "answer": "3",
+   "explanation": "VaR_P = 1억. 감소액 = 7 − 1 = 6억원(최대)."
+  },
+  {
+   "id": "d3-m1-q50",
+   "section": "5",
+   "concept": "VaR 감소액 (long-short)",
+   "type": "calc",
+   "difficulty": 3,
+   "trap": "sign",
+   "stem": "자산 A는 매수(VaR 3억원), B는 매도(VaR 4억원), 상관계수 +1이다. 분산효과로 인한 VaR 감소액은?",
+   "choices": {
+    "1": "0원",
+    "2": "1억원",
+    "3": "6억원",
+    "4": "7억원"
+   },
+   "answer": "3",
+   "explanation": "VaR_P = 1억. 감소액 = |3| + |4| − 1 = 6억원. 개별 VaR는 절대값으로 더한다."
+  },
+  {
+   "id": "d3-m1-q51",
+   "section": "5",
+   "concept": "VaR 감소액",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "asked-quantity",
+   "stem": "자산 A의 VaR 6억원, B의 VaR 8억원(둘 다 매수), 상관계수 0이다. 분산효과로 인한 VaR 감소액은?",
+   "choices": {
+    "1": "2억원",
+    "2": "4억원",
+    "3": "10억원",
+    "4": "14억원"
+   },
+   "answer": "2",
+   "explanation": "VaR_P = 10억. 감소액 = 14 − 10 = 4억원."
+  },
+  {
+   "id": "d3-m1-q52",
+   "section": "5",
+   "concept": "감소액 식",
+   "type": "mc",
+   "difficulty": 1,
+   "trap": "formula",
+   "stem": "분산효과로 인한 VaR 감소액을 구하는 식은?",
+   "choices": {
+    "1": "(VaR_A + VaR_B) − VaR_P",
+    "2": "VaR_P − (VaR_A + VaR_B)",
+    "3": "VaR_A × VaR_B − VaR_P",
+    "4": "|VaR_A − VaR_B| − VaR_P"
+   },
+   "answer": "1",
+   "explanation": "개별 VaR의 단순합에서 포트폴리오 VaR를 뺀다."
+  },
+  {
+   "id": "d3-m1-q53",
+   "section": "6",
+   "concept": "기대손실",
+   "type": "calc",
+   "difficulty": 1,
+   "trap": "formula",
+   "stem": "부도확률(PD) 2%, 익스포저(EAD) 100억원, 손실률(LGD) 60%일 때 기대손실(EL)은?",
+   "choices": {
+    "1": "0.8억원",
+    "2": "1.2억원",
+    "3": "2.0억원",
+    "4": "60억원"
+   },
+   "answer": "2",
+   "explanation": "EL = 0.02 × 100억 × 0.6 = 1.2억원. ①은 회수율 40%를 곱한 값, ③은 LGD 누락."
+  },
+  {
+   "id": "d3-m1-q54",
+   "section": "6",
+   "concept": "회수율 → LGD",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "confusion",
+   "stem": "부도확률 4%, 익스포저 50억원, 회수율 30%일 때 기대손실(EL)은?",
+   "choices": {
+    "1": "0.6억원",
+    "2": "1.4억원",
+    "3": "2.0억원",
+    "4": "35억원"
+   },
+   "answer": "2",
+   "explanation": "LGD = 1 − 0.3 = 0.7. EL = 0.04 × 50억 × 0.7 = 1.4억원. ①은 회수율을 그대로 곱한 값."
+  },
+  {
+   "id": "d3-m1-q55",
+   "section": "6",
+   "concept": "기대손실",
+   "type": "calc",
+   "difficulty": 1,
+   "trap": "formula",
+   "stem": "부도확률 1%, 익스포저 200억원, 손실률 45%일 때 기대손실(EL)은?",
+   "choices": {
+    "1": "0.9억원",
+    "2": "1.1억원",
+    "3": "2.0억원",
+    "4": "90억원"
+   },
+   "answer": "1",
+   "explanation": "0.01 × 200억 × 0.45 = 0.9억원."
+  },
+  {
+   "id": "d3-m1-q56",
+   "section": "6",
+   "concept": "PD 역산",
+   "type": "calc",
+   "difficulty": 3,
+   "trap": "asked-quantity",
+   "stem": "익스포저 100억원, 손실률 50%인 여신의 기대손실이 1.5억원이다. 부도확률은?",
+   "choices": {
+    "1": "0.75%",
+    "2": "1.5%",
+    "3": "3.0%",
+    "4": "7.5%"
+   },
+   "answer": "3",
+   "explanation": "PD = 1.5억 ÷ (100억 × 0.5) = 3.0%. ②는 LGD를 빼먹은 값."
+  },
+  {
+   "id": "d3-m1-q57",
+   "section": "6",
+   "concept": "기대외손실",
+   "type": "calc",
+   "difficulty": 3,
+   "trap": "formula",
+   "stem": "부도확률 2%, 익스포저 100억원, 손실률 60%, α = 1일 때 기대외손실(UL)은? (√(0.02 × 0.98) = 0.14)",
+   "choices": {
+    "1": "1.2억원",
+    "2": "8.4억원",
+    "3": "14.0억원",
+    "4": "60.0억원"
+   },
+   "answer": "2",
+   "explanation": "UL = 1 × 0.14 × 100억 × 0.6 = 8.4억원. ①은 기대손실(EL), ③은 LGD 누락."
+  },
+  {
+   "id": "d3-m1-q58",
+   "section": "6",
+   "concept": "기대외손실",
+   "type": "calc",
+   "difficulty": 3,
+   "trap": "formula",
+   "stem": "부도확률 10%, 익스포저 50억원, 손실률 40%, α = 2일 때 기대외손실(UL)은? (√(0.1 × 0.9) = 0.3)",
+   "choices": {
+    "1": "2억원",
+    "2": "6억원",
+    "3": "12억원",
+    "4": "30억원"
+   },
+   "answer": "3",
+   "explanation": "UL = 2 × 0.3 × 50억 × 0.4 = 12억원. ①은 EL(0.1 × 50억 × 0.4), ②는 α 누락."
+  },
+  {
+   "id": "d3-m1-q59",
+   "section": "6",
+   "concept": "EL 식",
+   "type": "mc",
+   "difficulty": 1,
+   "trap": "formula",
+   "stem": "기대손실(EL)의 식으로 옳은 것은?",
+   "choices": {
+    "1": "PD × EAD × LGD",
+    "2": "PD × EAD × 회수율",
+    "3": "PD + EAD + LGD",
+    "4": "√(PD × (1 − PD)) × EAD"
+   },
+   "answer": "1",
+   "explanation": "부도확률 × 익스포저 × 손실률."
+  },
+  {
+   "id": "d3-m1-q60",
+   "section": "6",
+   "concept": "UL 식",
+   "type": "mc",
+   "difficulty": 2,
+   "trap": "formula",
+   "stem": "기대외손실(UL)의 식으로 옳은 것은?",
+   "choices": {
+    "1": "α × √(PD × (1 − PD)) × EAD × LGD",
+    "2": "α × PD × EAD × LGD",
+    "3": "α × PD × (1 − PD) × EAD × LGD",
+    "4": "√(PD × EAD × LGD)"
+   },
+   "answer": "1",
+   "explanation": "부도 여부의 표준편차 √(PD(1 − PD))에 익스포저, 손실률, 신뢰수준 계수를 곱한다."
+  },
+  {
+   "id": "d3-m1-q61",
+   "section": "6",
+   "concept": "기호",
+   "type": "mc",
+   "difficulty": 1,
+   "trap": "definition",
+   "stem": "신용리스크 측정요소의 설명으로 옳지 않은 것은?",
+   "choices": {
+    "1": "PD: 부도확률",
+    "2": "EAD: 부도 시 익스포저",
+    "3": "LGD: 부도 시 회수율",
+    "4": "EL: 기대손실"
+   },
+   "answer": "3",
+   "explanation": "LGD는 부도 시 손실률(= 1 − 회수율)이다."
+  },
+  {
+   "id": "d3-m1-q62",
+   "section": "6",
+   "concept": "EL과 UL의 대비",
+   "type": "mc",
+   "difficulty": 2,
+   "trap": "confusion",
+   "stem": "기대손실과 기대외손실에 대한 설명으로 옳은 것은?",
+   "choices": {
+    "1": "기대손실은 자기자본으로, 기대외손실은 대손충당금으로 대비한다",
+    "2": "기대손실은 대손충당금으로, 기대외손실은 자기자본으로 대비한다",
+    "3": "둘 다 대손충당금으로 대비한다",
+    "4": "기대외손실은 평균적으로 예상되는 손실이다"
+   },
+   "answer": "2",
+   "explanation": "예상되는 손실(EL)은 충당금으로 미리 비용 처리하고, 예상을 벗어나는 손실(UL)은 자본으로 흡수한다."
+  },
+  {
+   "id": "d3-m1-q63",
+   "section": "6",
+   "concept": "LGD와 EL",
+   "type": "mc",
+   "difficulty": 1,
+   "trap": "direction",
+   "stem": "다른 조건이 같을 때 회수율이 높아지면 기대손실은?",
+   "choices": {
+    "1": "증가한다",
+    "2": "감소한다",
+    "3": "변하지 않는다",
+    "4": "0이 된다"
+   },
+   "answer": "2",
+   "explanation": "회수율 ↑ → LGD(= 1 − 회수율) ↓ → EL ↓."
+  },
+  {
+   "id": "d3-m1-f01",
+   "section": "1",
+   "concept": "단순이동평균법",
+   "type": "flash",
+   "difficulty": 1,
+   "trap": "formula",
+   "front": "단순이동평균법의 분산 추정식",
+   "back": "σ² = (1/m) × Σ r²\n최근 m개 수익률 제곱의 평균, 모든 관측치에 동일 가중치"
+  },
+  {
+   "id": "d3-m1-f02",
+   "section": "2",
+   "concept": "VaR 전환",
+   "type": "flash",
+   "difficulty": 1,
+   "trap": "units",
+   "front": "기간·신뢰수준 변경 시 VaR 전환",
+   "back": "N일 VaR = 1일 VaR × √N (iid 가정)\n신뢰수준: old VaR × (new α / old α)\n둘 다: old VaR × (√new 기간/√old 기간) × (new α / old α)"
+  },
+  {
+   "id": "d3-m1-f03",
+   "section": "3.1",
+   "concept": "개별 VaR",
+   "type": "flash",
+   "difficulty": 1,
+   "trap": "formula",
+   "front": "개별 주식의 VaR",
+   "back": "VaR = α × V × σ\n95%: α = 1.65, 99%: α = 2.33"
+  },
+  {
+   "id": "d3-m1-f04",
+   "section": "3.2",
+   "concept": "옵션 VaR",
+   "type": "flash",
+   "difficulty": 1,
+   "trap": "formula",
+   "front": "옵션의 VaR",
+   "back": "옵션의 VaR = 기초자산 VaR × 옵션델타"
+  },
+  {
+   "id": "d3-m1-f05",
+   "section": "4.2",
+   "concept": "포트폴리오 VaR",
+   "type": "flash",
+   "difficulty": 1,
+   "trap": "formula",
+   "front": "개별 VaR와 상관계수로 포트폴리오 VaR 구하기 (둘 다 매수)",
+   "back": "VaR_P = √(VaR_A² + VaR_B² + 2·VaR_A·VaR_B·ρ)\nρ = −1: 분산효과 최대, ρ = +1: 분산효과 없음"
+  },
+  {
+   "id": "d3-m1-f06",
+   "section": "4.3",
+   "concept": "VaR 범위",
+   "type": "flash",
+   "difficulty": 1,
+   "trap": "formula",
+   "front": "포트폴리오 VaR의 크기 범위",
+   "back": "|VaR_A − VaR_B| ≤ VaR_P ≤ VaR_A + VaR_B"
+  },
+  {
+   "id": "d3-m1-f07",
+   "section": "4.4",
+   "concept": "매수·매도 조합",
+   "type": "flash",
+   "difficulty": 1,
+   "trap": "sign",
+   "front": "A 매수, B 매도일 때 포트폴리오 VaR와 분산효과",
+   "back": "VaR_P = √(VaR_A² + (−VaR_B)² + 2·VaR_A·(−VaR_B)·ρ)\nρ = +1: 분산효과 최대, ρ = −1: 분산효과 없음 (둘 다 매수일 때와 반대)"
+  },
+  {
+   "id": "d3-m1-f08",
+   "section": "5",
+   "concept": "VaR 감소액",
+   "type": "flash",
+   "difficulty": 1,
+   "trap": "formula",
+   "front": "분산효과로 인한 VaR 감소액",
+   "back": "(VaR_A + VaR_B) − VaR_P\n매수·매도 조합: |VaR_A| + |VaR_B| − VaR_P"
+  },
+  {
+   "id": "d3-m1-f09",
+   "section": "6",
+   "concept": "EL과 UL",
+   "type": "flash",
+   "difficulty": 1,
+   "trap": "formula",
+   "front": "기대손실(EL)과 기대외손실(UL)",
+   "back": "EL = PD × EAD × LGD\nUL = α × √(PD × (1 − PD)) × EAD × LGD\nLGD = 1 − 회수율"
+  }
+ ]
 }

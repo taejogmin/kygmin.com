@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Derivatives Advisor Study Hub &mdash; KYGMIN</title>
-<meta name="description" content="Read the notes, drill exam-style questions for the Korean derivatives investment advisor exam (파생상품투자권유자문인력), keep a wrong-answer notebook and see which concepts keep tripping you up. Progress syncs to your account when you sign in." />
+<title>파생상품투자권유자문인력 스터디 허브 &mdash; KYGMIN</title>
+<meta name="description" content="파생상품투자권유자문인력 시험 대비 — 노트를 읽고, 4지선다 문제를 풀고, 오답노트와 약점 분석으로 반복해서 틀리는 개념을 잡습니다." />
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 <!-- 언어는 localStorage 에 두고, 다음 페이지에서 첫 페인트 전에 복원한다 -->
 <script>
-window.KYG_LANG=(function(){try{var v=localStorage.getItem('kyg_lang');if(v==='kr'||v==='en')return v;}catch(e){}return 'en';})();
+window.KYG_LANG='kr'; // 이 허브는 한국어 전용 — 사이트 공용 언어 설정(kyg_lang)은 읽지도 쓰지도 않는다
 window.APP_LANG=window.KYG_LANG;
 if(window.KYG_LANG!=='en'){
   document.documentElement.setAttribute('lang','ko');
@@ -282,7 +282,7 @@ footer{border-top:3px solid var(--ink);padding:20px 0;}
 .foot-inner{max-width:1040px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:12px;color:#4A4A46;}
 
 /* ── 언어 토글 (사이트 공통) ── */
-#langtoggle{position:fixed;right:20px;bottom:20px;z-index:50;display:inline-flex;border:2px solid var(--ink);box-shadow:3px 3px 0 var(--ink);background:#fff;
+#langtoggle{display:none !important;position:fixed;right:20px;bottom:20px;z-index:50;display:inline-flex;border:2px solid var(--ink);box-shadow:3px 3px 0 var(--ink);background:#fff;
   font-family:var(--arch);font-weight:700;font-size:12px;overflow:hidden;}
 #langtoggle button{font:inherit;border:none;background:none;cursor:pointer;padding:9px 14px;color:var(--ink);letter-spacing:.5px;transition:background .1s,color .1s;}
 #langtoggle button.on{background:var(--green);color:var(--paper);}

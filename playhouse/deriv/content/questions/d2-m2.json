@@ -1,4 +1,718 @@
 {
  "module": "d2-m2",
- "questions": []
+ "questions": [
+  {
+   "id": "d2-m2-q01",
+   "section": "1",
+   "concept": "평균가격 콜",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "which-average",
+   "stem": "대상기간 동안 기초자산가격이 100, 104, 108, 112(만기일)였다. 행사가격 100인 평균가격 콜옵션의 만기 수익은?",
+   "choices": {
+    "1": "0",
+    "2": "6",
+    "3": "8",
+    "4": "12"
+   },
+   "answer": "2",
+   "explanation": "평균 = (100 + 104 + 108 + 112) ÷ 4 = 106. Max(106 − 100, 0) = 6. ④는 표준옵션처럼 만기가격을 쓴 값."
+  },
+  {
+   "id": "d2-m2-q02",
+   "section": "1",
+   "concept": "평균가격 풋",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "which-average",
+   "stem": "대상기간 동안 기초자산가격이 100, 104, 108, 112(만기일)였다. 행사가격 110인 평균가격 풋옵션의 만기 수익은?",
+   "choices": {
+    "1": "0",
+    "2": "2",
+    "3": "4",
+    "4": "6"
+   },
+   "answer": "3",
+   "explanation": "Max(110 − 106, 0) = 4. ①은 만기가격 112를 쓴 값."
+  },
+  {
+   "id": "d2-m2-q03",
+   "section": "2",
+   "concept": "평균행사가격 콜",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "which-average",
+   "stem": "대상기간 동안 기초자산가격이 100, 104, 108, 112(만기일)였다. 평균행사가격 콜옵션의 만기 수익은?",
+   "choices": {
+    "1": "0",
+    "2": "6",
+    "3": "8",
+    "4": "12"
+   },
+   "answer": "2",
+   "explanation": "Max(S_T − S_avg, 0) = Max(112 − 106, 0) = 6."
+  },
+  {
+   "id": "d2-m2-q04",
+   "section": "2",
+   "concept": "평균행사가격 풋",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "sign",
+   "stem": "대상기간 동안 기초자산가격이 100, 104, 108, 112(만기일)였다. 평균행사가격 풋옵션의 만기 수익은?",
+   "choices": {
+    "1": "0",
+    "2": "4",
+    "3": "6",
+    "4": "12"
+   },
+   "answer": "1",
+   "explanation": "Max(S_avg − S_T, 0) = Max(106 − 112, 0) = 0."
+  },
+  {
+   "id": "d2-m2-q05",
+   "section": "1",
+   "concept": "평균가격 콜",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "which-average",
+   "stem": "대상기간 동안 기초자산가격이 110, 100, 90, 96(만기일)이었다. 행사가격 95인 평균가격 콜옵션의 만기 수익은?",
+   "choices": {
+    "1": "0",
+    "2": "1",
+    "3": "4",
+    "4": "15"
+   },
+   "answer": "3",
+   "explanation": "평균 = (110 + 100 + 90 + 96) ÷ 4 = 99. Max(99 − 95, 0) = 4. ②는 만기가격 96을 쓴 값."
+  },
+  {
+   "id": "d2-m2-q06",
+   "section": "2",
+   "concept": "평균행사가격 콜",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "sign",
+   "stem": "대상기간 동안 기초자산가격이 110, 100, 90, 96(만기일)이었다. 평균행사가격 콜옵션의 만기 수익은?",
+   "choices": {
+    "1": "0",
+    "2": "3",
+    "3": "4",
+    "4": "6"
+   },
+   "answer": "1",
+   "explanation": "Max(96 − 99, 0) = 0."
+  },
+  {
+   "id": "d2-m2-q07",
+   "section": "2",
+   "concept": "평균행사가격 풋",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "which-average",
+   "stem": "대상기간 동안 기초자산가격이 110, 100, 90, 96(만기일)이었다. 평균행사가격 풋옵션의 만기 수익은?",
+   "choices": {
+    "1": "0",
+    "2": "3",
+    "3": "4",
+    "4": "14"
+   },
+   "answer": "2",
+   "explanation": "Max(S_avg − S_T, 0) = Max(99 − 96, 0) = 3."
+  },
+  {
+   "id": "d2-m2-q08",
+   "section": "3",
+   "concept": "룩백 콜",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "matching",
+   "stem": "대상기간 동안 기초자산가격이 110, 100, 90, 96(만기일)이었다. 룩백 콜옵션의 만기 수익은?",
+   "choices": {
+    "1": "0",
+    "2": "6",
+    "3": "14",
+    "4": "20"
+   },
+   "answer": "2",
+   "explanation": "Max(S_T − S_low, 0) = 96 − 90 = 6. ③은 풋의 식(S_high − S_T)을 쓴 값."
+  },
+  {
+   "id": "d2-m2-q09",
+   "section": "3",
+   "concept": "룩백 풋",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "matching",
+   "stem": "대상기간 동안 기초자산가격이 110, 100, 90, 96(만기일)이었다. 룩백 풋옵션의 만기 수익은?",
+   "choices": {
+    "1": "0",
+    "2": "6",
+    "3": "14",
+    "4": "20"
+   },
+   "answer": "3",
+   "explanation": "Max(S_high − S_T, 0) = 110 − 96 = 14. ④는 최고가 − 최저가."
+  },
+  {
+   "id": "d2-m2-q10",
+   "section": "3",
+   "concept": "룩백 콜",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "matching",
+   "stem": "대상기간 동안 기초자산가격의 최저가는 88, 최고가는 115, 평균은 101, 만기일 가격은 104였다. 룩백 콜옵션의 만기 수익은?",
+   "choices": {
+    "1": "3",
+    "2": "11",
+    "3": "16",
+    "4": "27"
+   },
+   "answer": "3",
+   "explanation": "S_T − S_low = 104 − 88 = 16."
+  },
+  {
+   "id": "d2-m2-q11",
+   "section": "3",
+   "concept": "룩백 풋",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "matching",
+   "stem": "대상기간 동안 기초자산가격의 최저가는 88, 최고가는 115, 평균은 101, 만기일 가격은 104였다. 룩백 풋옵션의 만기 수익은?",
+   "choices": {
+    "1": "3",
+    "2": "11",
+    "3": "16",
+    "4": "27"
+   },
+   "answer": "2",
+   "explanation": "S_high − S_T = 115 − 104 = 11."
+  },
+  {
+   "id": "d2-m2-q12",
+   "section": "2",
+   "concept": "평균행사가격 콜",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "which-average",
+   "stem": "대상기간 동안 기초자산가격의 최저가는 88, 최고가는 115, 평균은 101, 만기일 가격은 104였다. 평균행사가격 콜옵션의 만기 수익은?",
+   "choices": {
+    "1": "3",
+    "2": "11",
+    "3": "13",
+    "4": "16"
+   },
+   "answer": "1",
+   "explanation": "S_T − S_avg = 104 − 101 = 3."
+  },
+  {
+   "id": "d2-m2-q13",
+   "section": "1",
+   "concept": "평균가격 풋",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "which-average",
+   "stem": "대상기간 동안 기초자산가격의 최저가는 88, 최고가는 115, 평균은 101, 만기일 가격은 104였다. 행사가격 105인 평균가격 풋옵션의 만기 수익은?",
+   "choices": {
+    "1": "0",
+    "2": "1",
+    "3": "4",
+    "4": "17"
+   },
+   "answer": "3",
+   "explanation": "K − S_avg = 105 − 101 = 4. ②는 만기가격 104를 쓴 값."
+  },
+  {
+   "id": "d2-m2-q14",
+   "section": "3",
+   "concept": "이색옵션 수익 비교",
+   "type": "calc",
+   "difficulty": 3,
+   "trap": "confusion",
+   "stem": "대상기간 동안 기초자산가격의 최저가는 88, 최고가는 115, 평균은 101, 만기일 가격은 104였다. 다음 중 만기 수익이 가장 큰 옵션은?",
+   "choices": {
+    "1": "행사가격 100인 표준 콜옵션",
+    "2": "행사가격 100인 평균가격 콜옵션",
+    "3": "평균행사가격 콜옵션",
+    "4": "룩백 콜옵션"
+   },
+   "answer": "4",
+   "explanation": "표준 콜 104 − 100 = 4, 평균가격 콜 101 − 100 = 1, 평균행사가격 콜 104 − 101 = 3, 룩백 콜 104 − 88 = 16."
+  },
+  {
+   "id": "d2-m2-q15",
+   "section": "1",
+   "concept": "평균가격 옵션 식",
+   "type": "mc",
+   "difficulty": 1,
+   "trap": "confusion",
+   "stem": "평균가격 콜옵션(Average rate option)의 만기 수익구조는?",
+   "choices": {
+    "1": "Max[S_avg − K, 0]",
+    "2": "Max[S_T − S_avg, 0]",
+    "3": "Max[S_T − S_low, 0]",
+    "4": "Max[S_high − S_T, 0]"
+   },
+   "answer": "1",
+   "explanation": "만기가격 자리에 평균가격이 들어간다. ②는 평균행사가격 콜, ③은 룩백 콜, ④는 룩백 풋."
+  },
+  {
+   "id": "d2-m2-q16",
+   "section": "2",
+   "concept": "평균행사가격 옵션 식",
+   "type": "mc",
+   "difficulty": 1,
+   "trap": "confusion",
+   "stem": "평균행사가격 콜옵션(Average strike option)의 만기 수익구조는?",
+   "choices": {
+    "1": "Max[S_avg − K, 0]",
+    "2": "Max[S_T − S_avg, 0]",
+    "3": "Max[S_avg − S_T, 0]",
+    "4": "Max[K − S_avg, 0]"
+   },
+   "answer": "2",
+   "explanation": "행사가격 자리에 평균가격이 들어간다. ③은 평균행사가격 풋."
+  },
+  {
+   "id": "d2-m2-q17",
+   "section": "2",
+   "concept": "평균행사가격 풋 식",
+   "type": "mc",
+   "difficulty": 2,
+   "trap": "sign",
+   "stem": "평균행사가격 풋옵션의 만기 수익구조는?",
+   "choices": {
+    "1": "Max[K − S_avg, 0]",
+    "2": "Max[S_T − S_avg, 0]",
+    "3": "Max[S_avg − S_T, 0]",
+    "4": "Max[S_high − S_T, 0]"
+   },
+   "answer": "3",
+   "explanation": "풋은 행사가격(= 평균가격)에서 만기가격을 뺀다."
+  },
+  {
+   "id": "d2-m2-q18",
+   "section": "3",
+   "concept": "룩백 콜 식",
+   "type": "mc",
+   "difficulty": 1,
+   "trap": "matching",
+   "stem": "룩백 콜옵션의 만기 수익구조는?",
+   "choices": {
+    "1": "Max[S_T − S_low, 0]",
+    "2": "Max[S_T − S_high, 0]",
+    "3": "Max[S_high − S_T, 0]",
+    "4": "Max[S_avg − S_low, 0]"
+   },
+   "answer": "1",
+   "explanation": "콜은 기간 중 최저가격에 사는 것과 같다."
+  },
+  {
+   "id": "d2-m2-q19",
+   "section": "3",
+   "concept": "룩백 풋 식",
+   "type": "mc",
+   "difficulty": 1,
+   "trap": "matching",
+   "stem": "룩백 풋옵션의 만기 수익구조는?",
+   "choices": {
+    "1": "Max[S_T − S_low, 0]",
+    "2": "Max[S_low − S_T, 0]",
+    "3": "Max[S_high − S_T, 0]",
+    "4": "Max[S_high − S_low, 0]"
+   },
+   "answer": "3",
+   "explanation": "풋은 기간 중 최고가격에 파는 것과 같다."
+  },
+  {
+   "id": "d2-m2-q20",
+   "section": "3",
+   "concept": "룩백옵션의 행사가격",
+   "type": "mc",
+   "difficulty": 2,
+   "trap": "matching",
+   "stem": "룩백옵션에서 행사가격 역할을 하는 가격으로 옳은 것은?",
+   "choices": {
+    "1": "콜: 기간 중 최저가격, 풋: 기간 중 최고가격",
+    "2": "콜: 기간 중 최고가격, 풋: 기간 중 최저가격",
+    "3": "콜·풋 모두 기간 중 평균가격",
+    "4": "콜·풋 모두 만기일 가격"
+   },
+   "answer": "1",
+   "explanation": "보유자에게 가장 유리한 가격 — 콜은 가장 싸게 사고, 풋은 가장 비싸게 판다."
+  },
+  {
+   "id": "d2-m2-q21",
+   "section": "1",
+   "concept": "평균옵션 프리미엄",
+   "type": "mc",
+   "difficulty": 2,
+   "trap": "direction",
+   "stem": "다른 조건이 같을 때 평균가격 옵션의 프리미엄이 표준옵션보다 낮은 이유는?",
+   "choices": {
+    "1": "평균가격의 변동성이 만기가격의 변동성보다 작기 때문이다",
+    "2": "행사가격이 더 높기 때문이다",
+    "3": "만기가 더 짧기 때문이다",
+    "4": "매수자에게 가장 유리한 가격으로 행사되기 때문이다"
+   },
+   "answer": "1",
+   "explanation": "평균을 내면 변동성이 줄어 옵션 가치가 낮아진다. ④는 룩백옵션(프리미엄이 비싼 이유)."
+  },
+  {
+   "id": "d2-m2-q22",
+   "section": "3",
+   "concept": "프리미엄 비교",
+   "type": "mc",
+   "difficulty": 2,
+   "trap": "ordering",
+   "stem": "다른 조건이 같을 때 프리미엄이 가장 비싼 옵션은?",
+   "choices": {
+    "1": "표준옵션",
+    "2": "평균가격 옵션",
+    "3": "룩백옵션",
+    "4": "모두 같다"
+   },
+   "answer": "3",
+   "explanation": "룩백옵션은 보유자에게 가장 유리한 가격이 적용되므로 가장 비싸다. 평균가격 옵션은 표준옵션보다 싸다."
+  },
+  {
+   "id": "d2-m2-q23",
+   "section": "3",
+   "concept": "경로의존형",
+   "type": "mc",
+   "difficulty": 2,
+   "trap": "definition",
+   "stem": "만기일의 가격뿐 아니라 기간 중 가격 경로에 따라 수익이 결정되는 옵션끼리 묶은 것은?",
+   "choices": {
+    "1": "평균가격 옵션, 룩백옵션",
+    "2": "표준 콜옵션, 표준 풋옵션",
+    "3": "평균가격 옵션, 표준 콜옵션",
+    "4": "룩백옵션, 표준 풋옵션"
+   },
+   "answer": "1",
+   "explanation": "평균옵션과 룩백옵션은 경로의존형. 표준옵션은 만기가격만으로 수익이 정해진다."
+  },
+  {
+   "id": "d2-m2-q24",
+   "section": "2",
+   "concept": "기호 구분",
+   "type": "mc",
+   "difficulty": 1,
+   "trap": "definition",
+   "stem": "이색옵션 수익구조의 기호 설명으로 옳지 않은 것은?",
+   "choices": {
+    "1": "S_T: 만기일의 기초자산가격",
+    "2": "S_avg: 대상기간 동안 기초자산가격의 평균",
+    "3": "S_low: 대상기간 중 가장 낮은 기초자산가격",
+    "4": "S_high: 대상기간 중 기초자산가격의 평균"
+   },
+   "answer": "4",
+   "explanation": "S_high는 대상기간 중 가장 높은 가격이다."
+  },
+  {
+   "id": "d2-m2-q25",
+   "section": "4.1",
+   "concept": "콜 ELW 패리티",
+   "type": "calc",
+   "difficulty": 1,
+   "trap": "reciprocal",
+   "stem": "기초자산가격 55,000원, 행사가격 50,000원인 콜 ELW의 패리티는?",
+   "choices": {
+    "1": "90.9%",
+    "2": "100%",
+    "3": "110%",
+    "4": "121%"
+   },
+   "answer": "3",
+   "explanation": "기초자산가격 ÷ 행사가격 × 100 = 55,000 ÷ 50,000 × 100 = 110%. ①은 풋의 식을 쓴 값."
+  },
+  {
+   "id": "d2-m2-q26",
+   "section": "4.1",
+   "concept": "풋 ELW 패리티",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "reciprocal",
+   "stem": "기초자산가격 40,000원, 행사가격 50,000원인 풋 ELW의 패리티는?",
+   "choices": {
+    "1": "80%",
+    "2": "100%",
+    "3": "120%",
+    "4": "125%"
+   },
+   "answer": "4",
+   "explanation": "행사가격 ÷ 기초자산가격 × 100 = 50,000 ÷ 40,000 × 100 = 125%. ①은 콜의 식을 쓴 값."
+  },
+  {
+   "id": "d2-m2-q27",
+   "section": "4.1",
+   "concept": "패리티와 가격상태",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "reciprocal",
+   "stem": "기초자산가격 48,000원, 행사가격 50,000원인 콜 ELW의 패리티와 상태는?",
+   "choices": {
+    "1": "96%, 외가격",
+    "2": "96%, 내가격",
+    "3": "104.2%, 내가격",
+    "4": "104.2%, 외가격"
+   },
+   "answer": "1",
+   "explanation": "48,000 ÷ 50,000 × 100 = 96%. 100% 미만이므로 외가격."
+  },
+  {
+   "id": "d2-m2-q28",
+   "section": "4.1",
+   "concept": "패리티와 가격상태",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "reciprocal",
+   "stem": "기초자산가격 48,000원, 행사가격 50,000원인 풋 ELW의 패리티와 상태는?",
+   "choices": {
+    "1": "96%, 외가격",
+    "2": "96%, 내가격",
+    "3": "104.2%, 내가격",
+    "4": "104.2%, 외가격"
+   },
+   "answer": "3",
+   "explanation": "50,000 ÷ 48,000 × 100 = 104.2%. 100% 초과이므로 내가격."
+  },
+  {
+   "id": "d2-m2-q29",
+   "section": "4.1",
+   "concept": "기초자산가격 역산",
+   "type": "calc",
+   "difficulty": 3,
+   "trap": "asked-quantity",
+   "stem": "행사가격 20,000원인 콜 ELW의 패리티가 115%일 때 기초자산가격은?",
+   "choices": {
+    "1": "17,391원",
+    "2": "20,000원",
+    "3": "23,000원",
+    "4": "26,450원"
+   },
+   "answer": "3",
+   "explanation": "기초자산가격 = 20,000 × 1.15 = 23,000원. ①은 풋의 식으로 계산한 값."
+  },
+  {
+   "id": "d2-m2-q30",
+   "section": "4.1",
+   "concept": "패리티 해석",
+   "type": "mc",
+   "difficulty": 1,
+   "trap": "definition",
+   "stem": "ELW의 패리티가 100%를 초과할 때의 상태는?",
+   "choices": {
+    "1": "내가격",
+    "2": "등가격",
+    "3": "외가격",
+    "4": "패리티로는 알 수 없다"
+   },
+   "answer": "1",
+   "explanation": "패리티 > 100% 내가격, = 100% 등가격, < 100% 외가격."
+  },
+  {
+   "id": "d2-m2-q31",
+   "section": "4.1",
+   "concept": "패리티 식",
+   "type": "mc",
+   "difficulty": 2,
+   "trap": "reciprocal",
+   "stem": "ELW 패리티 식으로 옳은 것은?",
+   "choices": {
+    "1": "콜: 기초자산가격/행사가격 × 100, 풋: 행사가격/기초자산가격 × 100",
+    "2": "콜: 행사가격/기초자산가격 × 100, 풋: 기초자산가격/행사가격 × 100",
+    "3": "콜·풋 모두 기초자산가격/행사가격 × 100",
+    "4": "콜·풋 모두 ELW가격/기초자산가격 × 100"
+   },
+   "answer": "1",
+   "explanation": "콜은 기초자산가격이 분자, 풋은 행사가격이 분자."
+  },
+  {
+   "id": "d2-m2-q32",
+   "section": "4.2",
+   "concept": "콜 ELW 손익분기점",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "divide-vs-multiply",
+   "stem": "행사가격 50,000원, ELW가격 1,000원, 전환비율 0.2인 콜 ELW의 손익분기점은?",
+   "choices": {
+    "1": "50,200원",
+    "2": "51,000원",
+    "3": "55,000원",
+    "4": "45,000원"
+   },
+   "answer": "3",
+   "explanation": "50,000 + 1,000 ÷ 0.2 = 50,000 + 5,000 = 55,000원. ①은 전환비율을 곱한 값, ②는 전환비율 무시."
+  },
+  {
+   "id": "d2-m2-q33",
+   "section": "4.2",
+   "concept": "풋 ELW 손익분기점",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "sign",
+   "stem": "행사가격 50,000원, ELW가격 600원, 전환비율 0.1인 풋 ELW의 손익분기점은?",
+   "choices": {
+    "1": "44,000원",
+    "2": "49,400원",
+    "3": "49,940원",
+    "4": "56,000원"
+   },
+   "answer": "1",
+   "explanation": "50,000 − 600 ÷ 0.1 = 50,000 − 6,000 = 44,000원. ④는 콜처럼 더한 값."
+  },
+  {
+   "id": "d2-m2-q34",
+   "section": "4.2",
+   "concept": "콜 ELW 손익분기점",
+   "type": "calc",
+   "difficulty": 2,
+   "trap": "divide-vs-multiply",
+   "stem": "행사가격 80,000원, ELW가격 2,400원, 전환비율 0.5인 콜 ELW의 손익분기점은?",
+   "choices": {
+    "1": "81,200원",
+    "2": "82,400원",
+    "3": "84,800원",
+    "4": "75,200원"
+   },
+   "answer": "3",
+   "explanation": "80,000 + 2,400 ÷ 0.5 = 80,000 + 4,800 = 84,800원."
+  },
+  {
+   "id": "d2-m2-q35",
+   "section": "4.2",
+   "concept": "ELW가격 역산",
+   "type": "calc",
+   "difficulty": 3,
+   "trap": "asked-quantity",
+   "stem": "행사가격 60,000원, 전환비율 0.5인 콜 ELW의 손익분기점이 62,000원이다. ELW가격은?",
+   "choices": {
+    "1": "500원",
+    "2": "1,000원",
+    "3": "2,000원",
+    "4": "4,000원"
+   },
+   "answer": "2",
+   "explanation": "ELW가격 ÷ 0.5 = 2,000 → ELW가격 = 1,000원. ④는 전환비율로 한 번 더 나눈 값."
+  },
+  {
+   "id": "d2-m2-q36",
+   "section": "4.2",
+   "concept": "손익분기점까지 상승률",
+   "type": "calc",
+   "difficulty": 3,
+   "trap": "asked-quantity",
+   "stem": "기초자산가격 50,000원, 행사가격 52,000원, ELW가격 300원, 전환비율 0.1인 콜 ELW가 있다. 만기에 손익분기점에 도달하려면 기초자산가격이 얼마나 올라야 하는가?",
+   "choices": {
+    "1": "4%",
+    "2": "6%",
+    "3": "10%",
+    "4": "0.6%"
+   },
+   "answer": "3",
+   "explanation": "손익분기점 = 52,000 + 300 ÷ 0.1 = 55,000원. 55,000 ÷ 50,000 − 1 = 10%."
+  },
+  {
+   "id": "d2-m2-q37",
+   "section": "4.2",
+   "concept": "손익분기점 식",
+   "type": "mc",
+   "difficulty": 1,
+   "trap": "sign",
+   "stem": "ELW 손익분기점 식으로 옳은 것은?",
+   "choices": {
+    "1": "콜: 행사가격 + ELW가격/전환비율, 풋: 행사가격 − ELW가격/전환비율",
+    "2": "콜: 행사가격 − ELW가격/전환비율, 풋: 행사가격 + ELW가격/전환비율",
+    "3": "콜: 행사가격 + ELW가격 × 전환비율, 풋: 행사가격 − ELW가격 × 전환비율",
+    "4": "콜·풋 모두 행사가격 + ELW가격"
+   },
+   "answer": "1",
+   "explanation": "ELW가격을 전환비율로 나눠 기초자산 1주 기준 프리미엄으로 환산한 뒤, 콜은 더하고 풋은 뺀다."
+  },
+  {
+   "id": "d2-m2-q38",
+   "section": "4.2",
+   "concept": "전환비율",
+   "type": "mc",
+   "difficulty": 2,
+   "trap": "definition",
+   "stem": "ELW의 전환비율에 대한 설명으로 옳은 것은?",
+   "choices": {
+    "1": "ELW 1증권으로 취득할 수 있는 기초자산의 수",
+    "2": "기초자산가격을 행사가격으로 나눈 값",
+    "3": "ELW가격을 기초자산가격으로 나눈 값",
+    "4": "ELW의 잔존만기"
+   },
+   "answer": "1",
+   "explanation": "전환비율 0.2면 ELW 5증권으로 기초자산 1주에 대한 권리를 가진다. ②는 콜 패리티."
+  },
+  {
+   "id": "d2-m2-q39",
+   "section": "4.2",
+   "concept": "전환비율과 손익분기점",
+   "type": "mc",
+   "difficulty": 3,
+   "trap": "direction",
+   "stem": "다른 조건이 같을 때 전환비율이 작아지면 콜 ELW의 손익분기점은?",
+   "choices": {
+    "1": "높아진다",
+    "2": "낮아진다",
+    "3": "변하지 않는다",
+    "4": "행사가격과 같아진다"
+   },
+   "answer": "1",
+   "explanation": "ELW가격 ÷ 전환비율이 커지므로 행사가격에 더하는 금액이 늘어난다."
+  },
+  {
+   "id": "d2-m2-f01",
+   "section": "1",
+   "concept": "평균가격 옵션",
+   "type": "flash",
+   "difficulty": 1,
+   "trap": "confusion",
+   "front": "평균가격 옵션(Average rate)의 수익구조",
+   "back": "콜: Max[S_avg − K, 0]\n풋: Max[K − S_avg, 0]\n만기가격 자리에 평균가격"
+  },
+  {
+   "id": "d2-m2-f02",
+   "section": "2",
+   "concept": "평균행사가격 옵션",
+   "type": "flash",
+   "difficulty": 1,
+   "trap": "confusion",
+   "front": "평균행사가격 옵션(Average strike)의 수익구조",
+   "back": "콜: Max[S_T − S_avg, 0]\n풋: Max[S_avg − S_T, 0]\n행사가격 자리에 평균가격"
+  },
+  {
+   "id": "d2-m2-f03",
+   "section": "3",
+   "concept": "룩백옵션",
+   "type": "flash",
+   "difficulty": 1,
+   "trap": "matching",
+   "front": "룩백옵션의 수익구조",
+   "back": "콜: Max[S_T − S_low, 0] (최저가에 매수)\n풋: Max[S_high − S_T, 0] (최고가에 매도)"
+  },
+  {
+   "id": "d2-m2-f04",
+   "section": "4.1",
+   "concept": "ELW 패리티",
+   "type": "flash",
+   "difficulty": 1,
+   "trap": "reciprocal",
+   "front": "ELW 패리티 (콜·풋)",
+   "back": "콜: 기초자산가격/행사가격 × 100(%)\n풋: 행사가격/기초자산가격 × 100(%)\n100% 초과 = 내가격"
+  },
+  {
+   "id": "d2-m2-f05",
+   "section": "4.2",
+   "concept": "ELW 손익분기점",
+   "type": "flash",
+   "difficulty": 1,
+   "trap": "divide-vs-multiply",
+   "front": "ELW 손익분기점 (콜·풋)",
+   "back": "콜: 행사가격 + ELW가격/전환비율\n풋: 행사가격 − ELW가격/전환비율"
+  }
+ ]
 }
