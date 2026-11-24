@@ -1,0 +1,135 @@
+{
+  "version": 1,
+  "exam": {
+    "label": "파생상품투자권유자문인력 — 제39회 (2026-12-20)",
+    "defaultDate": "2026-12-20"
+  },
+  "subjects": [
+    {
+      "id": "d1",
+      "name": "파생상품 Ⅰ",
+      "short": "파생상품 Ⅰ",
+      "weight": "제1과목 · 25문항"
+    },
+    {
+      "id": "d2",
+      "name": "파생상품 Ⅱ",
+      "short": "파생상품 Ⅱ",
+      "weight": "제2과목 · 25문항"
+    },
+    {
+      "id": "d3",
+      "name": "리스크관리 및 직무윤리",
+      "short": "리스크관리 및 직무윤리",
+      "weight": "제3과목 · 25문항"
+    },
+    {
+      "id": "d4",
+      "name": "파생상품법규",
+      "short": "파생상품법규",
+      "weight": "제4과목 · 25문항"
+    }
+  ],
+  "modules": [
+    {
+      "id": "d1-m1",
+      "subject": "d1",
+      "order": 1,
+      "title": "선물 (13문항)",
+      "short": "선물",
+      "items": 13,
+      "notes": "content/notes/d1-m1.md",
+      "questions": "content/questions/d1-m1.json"
+    },
+    {
+      "id": "d1-m2",
+      "subject": "d1",
+      "order": 2,
+      "title": "옵션 (12문항)",
+      "short": "옵션",
+      "items": 12,
+      "notes": "content/notes/d1-m2.md",
+      "questions": "content/questions/d1-m2.json"
+    },
+    {
+      "id": "d2-m1",
+      "subject": "d2",
+      "order": 1,
+      "title": "스왑 (8문항)",
+      "short": "스왑",
+      "items": 8,
+      "notes": "content/notes/d2-m1.md",
+      "questions": "content/questions/d2-m1.json"
+    },
+    {
+      "id": "d2-m2",
+      "subject": "d2",
+      "order": 2,
+      "title": "기타 파생상품·파생결합증권 (17문항)",
+      "short": "기타 파생상품·파생결합증권",
+      "items": 17,
+      "notes": "content/notes/d2-m2.md",
+      "questions": "content/questions/d2-m2.json"
+    },
+    {
+      "id": "d3-m1",
+      "subject": "d3",
+      "order": 1,
+      "title": "리스크관리 (8문항)",
+      "short": "리스크관리",
+      "items": 8,
+      "notes": "content/notes/d3-m1.md",
+      "questions": "content/questions/d3-m1.json"
+    },
+    {
+      "id": "d3-m2",
+      "subject": "d3",
+      "order": 2,
+      "title": "영업실무 (5문항)",
+      "short": "영업실무",
+      "items": 5,
+      "notes": "content/notes/d3-m2.md",
+      "questions": "content/questions/d3-m2.json"
+    },
+    {
+      "id": "d3-m3",
+      "subject": "d3",
+      "order": 3,
+      "title": "직무윤리·투자자분쟁예방 (12문항)",
+      "short": "직무윤리·투자자분쟁예방",
+      "items": 12,
+      "notes": "content/notes/d3-m3.md",
+      "questions": "content/questions/d3-m3.json"
+    },
+    {
+      "id": "d4-m1",
+      "subject": "d4",
+      "order": 1,
+      "title": "자본시장 관련 법규 (17문항)",
+      "short": "자본시장 관련 법규",
+      "items": 17,
+      "notes": "content/notes/d4-m1.md",
+      "questions": "content/questions/d4-m1.json"
+    },
+    {
+      "id": "d4-m2",
+      "subject": "d4",
+      "order": 2,
+      "title": "한국금융투자협회규정 (4문항)",
+      "short": "한국금융투자협회규정",
+      "items": 4,
+      "notes": "content/notes/d4-m2.md",
+      "questions": "content/questions/d4-m2.json"
+    },
+    {
+      "id": "d4-m3",
+      "subject": "d4",
+      "order": 3,
+      "title": "한국거래소규정 (4문항)",
+      "short": "한국거래소규정",
+      "items": 4,
+      "notes": "content/notes/d4-m3.md",
+      "questions": "content/questions/d4-m3.json"
+    }
+  ]
+}
