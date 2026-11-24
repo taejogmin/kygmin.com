@@ -236,7 +236,7 @@ label.opt.subj{border-width:3px;font-weight:600;}
 .qprog{font-family:var(--mono);font-size:12px;color:#4A4A46;}
 .qbar{height:8px;border:2px solid var(--ink);background:#fff;margin-bottom:18px;}
 .qbar i{display:block;height:100%;background:var(--ink);}
-.stem{font-family:var(--arch);font-weight:700;font-size:18px;line-height:1.45;margin:10px 0 18px;letter-spacing:-.2px;}
+.stem{font-family:var(--arch);font-weight:700;font-size:18px;line-height:1.45;margin:10px 0 18px;letter-spacing:-.2px;white-space:pre-line;}
 .choices{display:grid;gap:10px;margin-bottom:18px;}
 .choice{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start;text-align:left;font:inherit;font-size:15px;line-height:1.5;
   border:3px solid var(--ink);background:#fff;padding:12px 14px;cursor:pointer;box-shadow:4px 4px 0 var(--ink);transition:transform .1s, box-shadow .1s;color:var(--ink);}
@@ -468,7 +468,7 @@ var T = {
     exam:'EXAM', days:'days', examPast:'done', loading:'Loading content…', loadFail:'Could not load the study content. Reload the page.',
     h_overview:'Overview', h_modules:'Modules', h_weak:'Weak spots', h_sync:'Your data',
     attempts:'ANSWERED', accuracy:'ACCURACY', due:'DUE FOR REVIEW', streak:'DAY STREAK', questions:'QUESTIONS', read:'READ',
-    read_btn:'Read', quiz_btn:'Quiz', notes:'notes', qs:'questions', secs:'sections', modules_n:'modules', answered_l:'answered', src_cfai:'Past-exam style (paraphrased)', h_patterns:'My error patterns', pat_sub:'the ways you lose points — kept here until they stop happening', pat_open:'official misses still open', pat_evidence:'Evidence', r_official:'Official practice misses', r_official_sub:'Questions you missed in past-exam style sets — they stay here until you get them right twice in a row in this app.', r_official_all:'Retry all',
+    read_btn:'Read', quiz_btn:'Quiz', notes:'notes', qs:'questions', secs:'sections', modules_n:'modules', answered_l:'answered', src_cfai:'Textbook question (paraphrased)', h_patterns:'My error patterns', pat_sub:'the ways you lose points — kept here until they stop happening', pat_open:'official misses still open', pat_evidence:'Evidence', r_official:'Official practice misses', r_official_sub:'Questions you missed in past-exam style sets — they stay here until you get them right twice in a row in this app.', r_official_all:'Retry all',
     noweak:'No weak spots yet — answer a few questions and the concepts you miss most will show up here.',
     drill:'Drill', drillWeak:'Drill weak spots', misses:'misses', ofN:'of',
     guest:'Guest mode — your progress is kept in this browser only. Sign in (bottom-left chip) to sync across devices.',
@@ -492,7 +492,7 @@ var T = {
     exam:'시험', days:'일', examPast:'종료', loading:'콘텐츠를 불러오는 중…', loadFail:'학습 콘텐츠를 불러오지 못했습니다. 페이지를 새로 고치세요.',
     h_overview:'현황', h_modules:'모듈', h_weak:'약점', h_sync:'내 데이터',
     attempts:'푼 문제', accuracy:'정답률', due:'복습 대기', streak:'연속 학습일', questions:'문제 수', read:'읽음',
-    read_btn:'읽기', quiz_btn:'퀴즈', notes:'노트', qs:'문제', secs:'섹션', modules_n:'모듈', answered_l:'풀이', src_cfai:'기출 유형(재구성)', h_patterns:'내 오류 패턴', pat_sub:'점수를 잃는 방식 — 사라질 때까지 여기 고정', pat_open:'공식 문제 오답 미해결', pat_evidence:'근거', r_official:'공식 연습문제 오답', r_official_sub:'기출 유형 문제에서 틀린 문제 — 이 앱에서 2회 연속 맞힐 때까지 남습니다.', r_official_all:'전부 다시 풀기',
+    read_btn:'읽기', quiz_btn:'퀴즈', notes:'노트', qs:'문제', secs:'섹션', modules_n:'모듈', answered_l:'풀이', src_cfai:'교재 문제(재구성)', h_patterns:'내 오류 패턴', pat_sub:'점수를 잃는 방식 — 사라질 때까지 여기 고정', pat_open:'공식 문제 오답 미해결', pat_evidence:'근거', r_official:'공식 연습문제 오답', r_official_sub:'기출 유형 문제에서 틀린 문제 — 이 앱에서 2회 연속 맞힐 때까지 남습니다.', r_official_all:'전부 다시 풀기',
     noweak:'아직 약점 데이터가 없습니다. 문제를 몇 개 풀면 자주 틀리는 개념이 여기 표시됩니다.',
     drill:'집중 풀기', drillWeak:'약점 집중 풀기', misses:'오답', ofN:'/',
     guest:'게스트 모드 — 진도가 이 브라우저에만 저장됩니다. 왼쪽 아래 칩에서 로그인하면 기기 간 동기화됩니다.',
