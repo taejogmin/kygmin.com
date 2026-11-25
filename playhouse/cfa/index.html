@@ -483,7 +483,7 @@ var T = {
     r_due:'due', r_mastered:'mastered', r_lastWrong:'last attempt wrong', r_needOne:'one more correct to clear', r_drill:'Drill all due', r_retry:'Retry', r_wrongN:'wrong',
     i_title:'Where you lose points', i_overall:'Overall', i_module:'By module', i_section:'By section', i_trap:'By error pattern', i_type:'By question type', i_repeat:'Repeat misses', i_trend:'Last 14 days',
     i_min:'min. 2 attempts', i_none:'Not enough data yet.', i_export:'Export JSON', i_clear:'Clear local data', i_clear2:'Tap again to clear', i_cleared:'Cleared.', i_date:'Exam date',
-    i_exportNote:'Export your attempts as JSON and hand the file to Claude for a deeper analysis of why you miss what you miss.',
+    w_title:'My error record', w_sub:'private — stored with your account only', w_now:'patterns', w_now2:'practice misses', w_local:'this browser only (sign in to sync)', w_acct:'synced to your account', w_ph:'Paste the import link or code here', w_btn:'Import', w_file:'Import from file', w_ok:'Imported {p} pattern(s), {m} miss(es).', w_bad:'Could not read that code.', w_note:'Open the import link, paste it here, or choose the import file. Nothing in this section is published on the site.', i_exportNote:'Export your attempts as JSON and hand the file to Claude for a deeper analysis of why you miss what you miss.',
     i_timeAvg:'avg time', i_wrongRate:'wrong rate', i_noTrend:'No answers in the last 14 days.',
     trap_names:{direction:'Direction / polarity flip', sign:'Sign interpretation', units:'Units & scaling', reciprocal:'Slope vs. coefficient (reciprocal)', 'avg-vs-marginal':'Average vs. marginal', definition:'Definition recall', 'which-curve':'Firm vs. market curve', 'min-ATC-vs-profit':'Min ATC vs. profit max', 'price-off-demand':'Price from demand, not MR', convention:'Notation convention', 'long-run-vs-short-run':'Short run vs. long run', 'inverse-vs-direct':'Inverse vs. direct form', half:'Forgot the ½', formula:'Formula recall', 'second-order':'Second-order condition', 'which-intercept':'Which intercept', 'p-vs-q':'Price vs. quantity asked', exception:'Exception to the rule', confusion:'Confusing two concepts', 'size-vs-efficiency':'Size vs. efficiency', 'twice-as-steep':'MR twice as steep', 'divide-vs-multiply':'Divide vs. multiply', 'non-monotonic':'Non-monotonic table column', 'for-whom':'Desirable for whom', 'absolute-claim':'Absolute claims', 'capital-intensive':'Capital intensity ≠ barriers', 'opportunity-cost':'Opportunity cost', 'most-common':'Most common case', mechanism:'Mechanism', ordering:'Ordering', 'second-vs-third':'2nd vs. 3rd degree', 'technology-detail':'Technology detail', matching:'Matching', 'which-average':'Which average', compounding:'Annualizing / compounding', 'asked-quantity':'Answered the wrong quantity', 'wrong-reason':'Right answer, wrong reason', 'shift-vs-along':'Shift vs. movement along', 'parallel-inputs':'Parallel inputs (value added)', 'formula-assembly':'Formula assembly (coefficient × x/Q)', 'truncated-rule':'Truncated rule (dropped a piece)', 'off-model':'Off-model option', negation:'Stem negation (NOT / least likely)', 'which-quantity':'Which quantities held fixed', 'hedge-direction':'Hedge direction (sell what you are long)'}
   },
@@ -507,7 +507,7 @@ var T = {
     r_due:'복습 대기', r_mastered:'완료', r_lastWrong:'마지막 시도 오답', r_needOne:'한 번 더 맞히면 완료', r_drill:'대기 문제 전부 풀기', r_retry:'다시 풀기', r_wrongN:'회 오답',
     i_title:'어디서 점수를 잃는가', i_overall:'전체', i_module:'모듈별', i_section:'섹션별', i_trap:'오류 패턴별', i_type:'문제 유형별', i_repeat:'반복 오답', i_trend:'최근 14일',
     i_min:'2회 이상 시도', i_none:'데이터가 아직 충분하지 않습니다.', i_export:'JSON 내보내기', i_clear:'로컬 데이터 삭제', i_clear2:'한 번 더 누르면 삭제', i_cleared:'삭제했습니다.', i_date:'시험일',
-    i_exportNote:'풀이 기록을 JSON으로 내보내 Claude에게 주면 왜 반복해서 틀리는지 더 깊이 분석해 줍니다.',
+    w_title:'내 오답 기록', w_sub:'비공개 — 내 계정에만 저장됩니다', w_now:'오류 패턴', w_now2:'연습문제 오답', w_local:'이 브라우저에만 저장됨(로그인하면 계정에 동기화)', w_acct:'계정에 동기화됨', w_ph:'가져오기 링크나 코드를 여기에 붙여 넣으세요', w_btn:'가져오기', w_file:'파일에서 가져오기', w_ok:'오류 패턴 {p}개, 오답 {m}개를 가져왔습니다.', w_bad:'코드를 읽을 수 없습니다.', w_note:'가져오기 링크를 열거나, 여기에 붙여 넣거나, 가져오기 파일을 선택하면 됩니다. 이 기록은 사이트에 공개되지 않습니다.', i_exportNote:'풀이 기록을 JSON으로 내보내 Claude에게 주면 왜 반복해서 틀리는지 더 깊이 분석해 줍니다.',
     i_timeAvg:'평균 시간', i_wrongRate:'오답률', i_noTrend:'최근 14일간 풀이 기록이 없습니다.',
     trap_names:{direction:'방향/극성 뒤집힘', sign:'부호 해석', units:'단위·스케일', reciprocal:'기울기 vs 계수(역수)', 'avg-vs-marginal':'평균 vs 한계', definition:'정의 암기', 'which-curve':'기업 vs 시장 곡선', 'min-ATC-vs-profit':'최소 ATC vs 이윤 극대', 'price-off-demand':'가격은 수요곡선에서', convention:'표기 관례', 'long-run-vs-short-run':'단기 vs 장기', 'inverse-vs-direct':'역함수 vs 직접 형태', half:'½ 누락', formula:'공식 암기', 'second-order':'2차 조건', 'which-intercept':'어느 절편', 'p-vs-q':'가격/수량 혼동', exception:'규칙의 예외', confusion:'두 개념 혼동', 'size-vs-efficiency':'규모 vs 효율', 'twice-as-steep':'MR 기울기 2배', 'divide-vs-multiply':'나누기 vs 곱하기', 'non-monotonic':'표의 비단조 열', 'for-whom':'누구에게 바람직한가', 'absolute-claim':'절대적 주장', 'capital-intensive':'자본집약 ≠ 장벽', 'opportunity-cost':'기회비용', 'most-common':'가장 흔한 경우', mechanism:'메커니즘', ordering:'순서', 'second-vs-third':'2차 vs 3차 차별', 'technology-detail':'기술 세부', matching:'매칭', 'which-average':'어느 평균', compounding:'연율화·복리', 'asked-quantity':'묻는 양과 다른 답', 'wrong-reason':'이유가 틀림', 'shift-vs-along':'이동 vs 곡선 위 이동', 'parallel-inputs':'병렬 투입(부가가치)', 'formula-assembly':'공식 조립(계수 × x/Q)', 'truncated-rule':'규칙 일부 누락', 'off-model':'교재에 없는 선지', negation:'부정 지문(NOT / least likely)', 'which-quantity':'어느 수량을 고정하나', 'hedge-direction':'헤지 방향(롱인 통화를 선도 매도)'}
   }
@@ -531,19 +531,63 @@ function secKeyMatches(qSection, secNum){ // question.section "9.3" belongs to "
 
 /* ── state ──────────────────────────────────────────────────────────── */
 var MANIFEST=null, WEAK=null, MODULES=[], QBYID={}, QLIST=[], NOTES={}, SECTIONS={};   // SECTIONS[moduleId] = [{num,title,level,id}]
-var STORE = { owner:'guest', attempts:[], progress:{ read:{}, settings:{} } };
+var STORE = { owner:'guest', attempts:[], progress:{ read:{}, settings:{}, weak:{patterns:[],official_misses:[],_t:0} } };
 var AUTH = { user:null, client:null, ready:false }, lastUserId=null, syncState='local', syncMsg=null;
-var view='home', studyModule=null, quiz=null, clearArmed=false;
+var view='home', studyModule=null, quiz=null, clearArmed=false, NOTICE=null;
 var LASTMOD=(function(){ try{ return JSON.parse(localStorage.getItem('cfa_lastmod')||'{}')||{}; }catch(e){ return {}; } })();
 function rememberMod(id){ var m=modById(id); if(!m) return; LASTMOD[m.subject]=id; LASTMOD._last=id; try{ localStorage.setItem('cfa_lastmod', JSON.stringify(LASTMOD)); }catch(e){} }
 function subjEntry(sid){ var id=LASTMOD[sid], m=id&&modById(id); return (m&&m.subject===sid)?id:((modulesOf(sid)[0]||{}).id); }
+
+/* ── personal error patterns & practice misses ───────────────────────────
+   These used to live in a public content/weakspots.json. They are personal,
+   so they now live with the account: localStorage for this browser and the
+   cfa_progress row keyed "weakspots" (RLS: owner only) when signed in.
+   New entries arrive as an import code (link #import=…, pasted text or a file). */
+function normWeak(w){ w=w||{}; return { patterns:Array.isArray(w.patterns)?w.patterns:[], official_misses:Array.isArray(w.official_misses)?w.official_misses:[], _t:w._t||0 }; }
+function refreshWeak(){ var w=STORE.progress.weak=normWeak(STORE.progress.weak); WEAK=(w.patterns.length||w.official_misses.length)?w:null; }
+function mergeWeak(base, inc, incWins){ // union by pattern id / miss qid; on a clash the winner's item is kept
+  base=normWeak(base); inc=normWeak(inc);
+  function merge(a,b,key){ var out=a.slice(), idx={}; out.forEach(function(x,i){ idx[x[key]]=i; });
+    b.forEach(function(x){ if(x==null||x[key]==null) return; if(idx[x[key]]===undefined){ idx[x[key]]=out.length; out.push(x); } else if(incWins){ out[idx[x[key]]]=x; } }); return out; }
+  return { patterns:merge(base.patterns,inc.patterns,'id'), official_misses:merge(base.official_misses,inc.official_misses,'qid'), _t:Math.max(base._t,inc._t) };
+}
+function b64urlBytes(t){ var b=t.replace(/-/g,'+').replace(/_/g,'/'); while(b.length%4) b+='='; var bin=atob(b); var bytes=new Uint8Array(bin.length); for(var i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i); return bytes; }
+function decodeImport(text){ // accepts a full link, a bare code ("z." = deflate-compressed), or raw JSON → Promise<weak|null>
+  return new Promise(function(resolve){
+    text=String(text||'').trim(); if(!text) return resolve(null);
+    var m=/[#&?]import=([A-Za-z0-9_\-.]+)/.exec(text); if(m) text=m[1];
+    if(text.charAt(0)==='{') return resolve(text);
+    if(text.indexOf('z.')===0){
+      if(typeof DecompressionStream==='undefined') return resolve(null);
+      return resolve(new Response(new Blob([b64urlBytes(text.slice(2))]).stream().pipeThrough(new DecompressionStream('deflate'))).text());
+    }
+    resolve(new TextDecoder('utf-8').decode(b64urlBytes(text)));
+  }).then(function(json){
+    if(!json) return null;
+    var obj=JSON.parse(json); if(!obj||typeof obj!=='object') return null;
+    var w=normWeak(obj);
+    w.patterns=w.patterns.filter(function(x){ return x&&x.id&&x.name&&x.rule&&Array.isArray(x.traps); });
+    w.official_misses=w.official_misses.filter(function(x){ return x&&x.qid; });
+    return (w.patterns.length||w.official_misses.length)?w:null;
+  }).catch(function(){ return null; });
+}
+function importWeak(text){ // → Promise<{patterns,misses}|null>
+  return decodeImport(text).then(function(inc){
+    if(!inc) return null;
+    var merged=mergeWeak(normWeak(STORE.progress.weak), inc, true); merged._t=Date.now();
+    STORE.progress.weak=merged; refreshWeak(); saveLocal(); pushProgress();
+    return { patterns:inc.patterns.length, misses:inc.official_misses.length };
+  });
+}
+function importDone(r){ render(); var wm=$('weakMsg'); if(wm) wm.textContent = r ? t('w_ok').replace('{p}',r.patterns).replace('{m}',r.misses) : t('w_bad'); }
 
 /* ── local storage ──────────────────────────────────────────────────── */
 function loadLocal(){
   try{
     var a=JSON.parse(localStorage.getItem('cfa_attempts')||'[]'); var p=JSON.parse(localStorage.getItem('cfa_progress')||'{}'); var o=localStorage.getItem('cfa_owner')||'guest';
-    STORE.attempts=Array.isArray(a)?a:[]; STORE.progress={ read:(p&&p.read)||{}, settings:(p&&p.settings)||{} }; STORE.owner=o;
-  }catch(e){ STORE={ owner:'guest', attempts:[], progress:{read:{},settings:{}} }; }
+    STORE.attempts=Array.isArray(a)?a:[]; STORE.progress={ read:(p&&p.read)||{}, settings:(p&&p.settings)||{}, weak:normWeak(p&&p.weak) }; STORE.owner=o;
+  }catch(e){ STORE={ owner:'guest', attempts:[], progress:{read:{},settings:{},weak:normWeak(null)} }; }
+  refreshWeak();
 }
 function saveLocal(){
   try{ localStorage.setItem('cfa_attempts', JSON.stringify(STORE.attempts)); localStorage.setItem('cfa_progress', JSON.stringify(STORE.progress)); localStorage.setItem('cfa_owner', STORE.owner); }catch(e){}
@@ -562,7 +606,7 @@ function syncAll(uid){
   syncState='syncing'; render();
   var localGuest = (STORE.owner==='guest');
   if(STORE.owner!=='guest' && STORE.owner!==uid){ // another account's cache in this browser — start clean
-    STORE={ owner:uid, attempts:[], progress:{read:{},settings:{}} };
+    STORE={ owner:uid, attempts:[], progress:{read:{},settings:{},weak:normWeak(null)} }; refreshWeak();
   }
   var c=AUTH.client;
   return fetchAllAttempts(c).then(function(serverRows){
@@ -589,6 +633,10 @@ function syncAll(uid){
     var ls=STORE.progress.settings||{}; var ss=(server.settings&&server.settings.value)||{};
     var lt=ls._t||0, st=(server.settings&&Date.parse(server.settings.updated_at))||0;
     STORE.progress.settings = (st>lt) ? Object.assign({}, ls, ss, {_t:st}) : Object.assign({}, ss, ls);
+    // weakspots: union; on a clash the side edited last wins
+    var lw=normWeak(STORE.progress.weak); var sw=normWeak(server.weakspots&&server.weakspots.value);
+    STORE.progress.weak = (sw._t>lw._t) ? mergeWeak(lw, sw, true) : mergeWeak(sw, lw, true);
+    refreshWeak();
     saveLocal();
     return pushProgress();
   }).then(function(){ syncState='account'; syncMsg=null; render(); })
@@ -614,7 +662,8 @@ function pushProgress(){
   STORE.progress.settings._t=Date.now();
   return AUTH.client.from('cfa_progress').upsert([
     { user_id:uid, key:'read', value:STORE.progress.read||{}, updated_at:now },
-    { user_id:uid, key:'settings', value:STORE.progress.settings||{}, updated_at:now }
+    { user_id:uid, key:'settings', value:STORE.progress.settings||{}, updated_at:now },
+    { user_id:uid, key:'weakspots', value:normWeak(STORE.progress.weak), updated_at:now }
   ], { onConflict:'user_id,key' }).then(function(res){ if(res.error) console.error('cfa_progress upsert', res.error); });
 }
 
@@ -624,7 +673,7 @@ function fetchText(u){ return fetch(u,{cache:'no-cache'}).then(function(r){ if(!
 function loadContent(){
   return fetchJSON('content/manifest.json').then(function(m){
     MANIFEST=m; var sidx={}; (m.subjects||[]).forEach(function(sj,i){ sidx[sj.id]=i; }); MODULES=m.modules.slice().sort(function(a,b){ return ((sidx[a.subject]||0)-(sidx[b.subject]||0)) || (a.order-b.order); });
-    var weakP=fetchJSON('content/weakspots.json').then(function(w){ WEAK=w; }, function(){ WEAK=null; });
+    var weakP=Promise.resolve();   // personal — see normWeak/refreshWeak above
     return Promise.all([weakP].concat(MODULES.map(function(mod){
       return Promise.all([fetchText(mod.notes), fetchJSON(mod.questions)]).then(function(r){
         NOTES[mod.id]=r[0]; SECTIONS[mod.id]=parseSections(r[0]);
@@ -703,7 +752,8 @@ function syncLine(){
 function renderHome(){
   var el=$('view-home'); var n=STORE.attempts.filter(function(a){ return a.qtype!=='flash'; }).length; var c=STORE.attempts.filter(function(a){ return a.qtype!=='flash'&&a.correct; }).length;
   var due=dueItems().length; var streak=streakDays(); var acc=pct(c,n);
-  var html='<div class="panel"><h2>'+esc(t('h_overview'))+'<span class="sub mono">'+QLIST.length+' '+esc(t('qs'))+' · '+MODULES.length+' '+esc(t('notes'))+'</span></h2>'
+  var notice=''; if(NOTICE){ notice='<div class="panel" style="border-color:var(--green-deep)"><p style="margin:0;font-weight:700">'+esc(NOTICE)+'</p><p class="fine" style="margin:6px 0 0">'+esc(STORE.owner==='guest'?t('w_local'):t('w_acct'))+'</p></div>'; NOTICE=null; }
+  var html=notice+'<div class="panel"><h2>'+esc(t('h_overview'))+'<span class="sub mono">'+QLIST.length+' '+esc(t('qs'))+' · '+MODULES.length+' '+esc(t('notes'))+'</span></h2>'
     +'<div class="chips">'
     +'<div class="chip"><span class="k">'+esc(t('attempts'))+'</span><span class="v">'+n+'</span></div>'
     +'<div class="chip '+(n?(acc>=70?'good':'bad'):'')+'"><span class="k">'+esc(t('accuracy'))+'</span><span class="v">'+(n?acc+'%':'—')+'</span></div>'
@@ -964,7 +1014,11 @@ function renderInsights(){
   h+='<div class="panel"><h2>'+esc(t('i_repeat'))+'</h2>'; if(!rep.length) h+='<p class="empty">'+esc(t('i_none'))+'</p>'; rep.forEach(function(x){ var m=modById(x.q.module); h+='<div class="row"><div class="k"><b>'+esc(x.q.type==='flash'?x.q.front:x.q.stem)+'</b><small>'+esc(m?m.short:'')+' · §'+esc(x.q.section)+' · '+esc(x.q.concept)+' · '+esc(trapName(x.q.trap))+'</small></div><div class="v" style="color:var(--red)">'+x.s.wrong+'×</div><button class="btn sm" data-retry="'+esc(x.q.id)+'">'+esc(t('r_retry'))+'</button></div>'; }); h+='</div>';
   // settings / export
   h+='<div class="panel"><h2>'+esc(t('h_sync'))+'</h2><div class="acts" style="margin-bottom:12px"><label class="mono" style="font-size:12px">'+esc(t('i_date'))+' <input type="date" id="examDate" value="'+esc(examDate())+'" /></label></div>'
-    +'<div class="acts"><button class="btn" id="exportBtn">'+esc(t('i_export'))+'</button><button class="btn" id="clearBtn">'+esc(clearArmed?t('i_clear2'):t('i_clear'))+'</button><span class="mono muted" id="clearMsg" style="font-size:12px"></span></div><p class="fine">'+esc(t('i_exportNote'))+'</p>'+syncLine()+'</div>';
+    +'<div class="acts"><button class="btn" id="exportBtn">'+esc(t('i_export'))+'</button><button class="btn" id="clearBtn">'+esc(clearArmed?t('i_clear2'):t('i_clear'))+'</button><span class="mono muted" id="clearMsg" style="font-size:12px"></span></div><p class="fine">'+esc(t('i_exportNote'))+'</p>'
+    +'<h2 style="margin-top:22px">'+esc(t('w_title'))+'<span class="sub">'+esc(t('w_sub'))+'</span></h2>'
+    +'<p class="fine">'+esc(t('w_now'))+' '+((WEAK&&WEAK.patterns.length)||0)+' · '+esc(t('w_now2'))+' '+((WEAK&&WEAK.official_misses.length)||0)+' · '+esc(STORE.owner==='guest'?t('w_local'):t('w_acct'))+'</p>'
+    +'<textarea id="weakIn" rows="3" style="width:100%;box-sizing:border-box;font:inherit;font-size:13px;border:2px solid var(--ink);padding:10px;background:#fff" placeholder="'+esc(t('w_ph'))+'"></textarea>'
+    +'<div class="acts" style="margin-top:10px"><button class="btn green" id="weakBtn">'+esc(t('w_btn'))+'</button><label class="btn" style="cursor:pointer">'+esc(t('w_file'))+'<input type="file" id="weakFile" accept=".json,.txt,application/json,text/plain" style="display:none"></label><span class="mono muted" id="weakMsg" style="font-size:12px"></span></div><p class="fine">'+esc(t('w_note'))+'</p>'+syncLine()+'</div>';
   el.innerHTML=h;
   $('examDate').addEventListener('change', function(){ if(!this.value) return; STORE.progress.settings.examDate=this.value; saveLocal(); pushProgress(); renderDday(); });
 }
@@ -1016,9 +1070,10 @@ document.addEventListener('click', function(e){
   if(e.target.closest('#retryWrong')){ var w=quiz.results.filter(function(x){ return !x.correct; }).map(function(x){ return x.q; }); startQuiz(shuffle(w),'review'); return; }
   if(e.target.closest('#newQuiz')){ quiz=null; renderQuiz(); return; }
   if(e.target.closest('#exportBtn')){ exportJSON(); return; }
+  if(e.target.closest('#weakBtn')){ importWeak($('weakIn').value).then(importDone); return; }
   if(e.target.closest('#clearBtn')){
     if(!clearArmed){ clearArmed=true; e.target.closest('#clearBtn').textContent=t('i_clear2'); setTimeout(function(){ clearArmed=false; var cb=$('clearBtn'); if(cb) cb.textContent=t('i_clear'); }, 4000); return; }
-    clearArmed=false; STORE={ owner:'guest', attempts:[], progress:{read:{},settings:{}} }; saveLocal(); $('clearMsg').textContent=t('i_cleared'); render(); return; }
+    clearArmed=false; STORE={ owner:'guest', attempts:[], progress:{read:{},settings:{},weak:normWeak(null)} }; refreshWeak(); saveLocal(); $('clearMsg').textContent=t('i_cleared'); render(); return; }
   // setup toggles
   var lab=e.target.closest('label.opt'); if(lab && $('view-quiz').contains(lab)){ setTimeout(function(){
     var inp=lab.querySelector('input'); if(inp.dataset.smod!==undefined) SETUP.modules[inp.dataset.smod]=inp.checked; if(inp.dataset.ssubj!==undefined) modulesOf(inp.dataset.ssubj).forEach(function(m){ SETUP.modules[m.id]=inp.checked; }); if(inp.dataset.stype!==undefined) SETUP.types[inp.dataset.stype]=inp.checked;
@@ -1030,12 +1085,16 @@ document.addEventListener('click', function(e){
 window.APP_LANG_LISTENERS = window.APP_LANG_LISTENERS || [];
 window.APP_LANG_LISTENERS.push(function(){ render(); });
 
+document.addEventListener('change', function(e){ var f=e.target; if(f&&f.id==='weakFile'&&f.files&&f.files[0]){ f.files[0].text().then(importWeak).then(importDone, function(){ importDone(null); }); } });
+
 /* ── boot ───────────────────────────────────────────────────────────── */
 loadLocal();
 $('view-home').innerHTML='<p class="empty">'+esc(t('loading'))+'</p>';
 loadContent().then(function(){
-  var hash=(location.hash||'').replace('#',''); if(['home','study','quiz','review','insights'].indexOf(hash)>=0) view=hash;
-  setView(view);
+  var hash=(location.hash||'').replace('#','');
+  var go=function(){ if(['home','study','quiz','review','insights'].indexOf(hash)>=0) view=hash; setView(view); };
+  if(hash.indexOf('import=')===0){ importWeak(location.hash).then(function(ir){ NOTICE = ir ? t('w_ok').replace('{p}',ir.patterns).replace('{m}',ir.misses) : t('w_bad'); hash='home'; view='home'; go(); }); }
+  else go();
 }).catch(function(e){ console.error(e); $('view-home').innerHTML='<div class="panel"><p class="empty">'+esc(t('loadFail'))+'</p></div>'; });
 })();
 </script>

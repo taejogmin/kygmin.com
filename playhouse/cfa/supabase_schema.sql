@@ -45,7 +45,7 @@ create policy "cfa_attempts: own rows delete" on public.cfa_attempts
 -- ── 2. Small per-user state blobs (read sections, settings, custom questions) ──
 create table if not exists public.cfa_progress (
   user_id     uuid        not null references auth.users(id) on delete cascade,
-  key         text        not null,              -- "read" | "settings" | "custom_questions" | …
+  key         text        not null,              -- "read" | "settings" | "weakspots" | …
   value       jsonb       not null default '{}'::jsonb,
   updated_at  timestamptz not null default now(),
   primary key (user_id, key)
