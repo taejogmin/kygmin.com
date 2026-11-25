@@ -1,5 +1,41 @@
 {
- "updated": "2026-11-24",
- "patterns": [],
- "official_misses": []
+ "updated": "2026-11-25",
+ "patterns": [
+  {
+   "id": "qualifier",
+   "name": {
+    "en": "One-word qualifier swap",
+    "kr": "수식어 한 단어 바꿔치기"
+   },
+   "rule": {
+    "en": "When the number in a statement looks right, re-read the words around it: 매월 vs 각 결제월, 모두 vs 일부, 이상 vs 초과, 유지 vs 개시. Wrong statements in this exam usually keep the number and change one qualifier.",
+    "kr": "숫자가 맞아 보이는 지문일수록 그 앞뒤 수식어를 한 번 더 읽는다: 매월 ↔ 각 결제월, 모두 ↔ 일부, 이상 ↔ 초과, 유지증거금 ↔ 개시증거금. 이 시험의 틀린 지문은 숫자는 그대로 두고 수식어 하나만 바꾼 경우가 많다."
+   },
+   "traps": [
+    "qualifier",
+    "truncated-rule",
+    "exception"
+   ],
+   "evidence": [
+    "길라잡이 제1장 10번 (최종거래일: '매월' 두 번째 목요일 → 각 결제월)"
+   ],
+   "seed": [
+    "d1-m1-q203",
+    "d1-m1-q220",
+    "d1-m1-q221",
+    "d1-m1-q230",
+    "d1-m1-q201",
+    "d1-m1-q160",
+    "d1-m1-q187",
+    "d1-m1-q188"
+   ]
+  }
+ ],
+ "official_misses": [
+  {
+   "qid": "d1-m1-q203",
+   "when": "2026-11-25",
+   "note": "길라잡이 제1장 10번 오답. 틀린 지문은 '최종거래일은 매월 두 번째 목요일' — 숫자(두 번째 목요일)는 맞고 수식어(매월 → 각 결제월 3·6·9·12월)가 틀렸다."
+  }
+ ]
 }
